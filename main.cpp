@@ -20,11 +20,6 @@ int main(int argc,char* argv[])
 	///*
 	CScreen::start(640,480,32,2.0,2.0,false);
 
-
-	funcEstres(100);
-
-
-
 	CEngine** engine = new CEngine*[20];
 	
 	engine[0] = new CTestA0GameInterface(CLibrary::getLibrary());

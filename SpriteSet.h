@@ -3,7 +3,6 @@
 
 #include "Sprite.h"
 #include "parserXML.h"
-#include "SDL_rotozoom.h"
 #include <vector>
 
 typedef vector<CSprite*> SpriteCollection;
@@ -21,6 +20,8 @@ private :
 	static Uint16 globalAuxiliar;
 	//Inicializa Spriteset con los contenidos del fichero de tipo gráfico, cuyo nombre es obtenido por el constructor.
 	void loadChipset(string& c,Uint8 mode=ONLY_TEXTURE,string* cPrev=NULL);
+
+	SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor=1);
 
 	string name;
 	//Contenedor de Sprites.
