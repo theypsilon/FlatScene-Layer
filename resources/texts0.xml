@@ -1,0 +1,11 @@
+﻿<TextList>
+	<text id="0" msg="Bienvenido al Test de diálogos!" x="20" y="20" w="120" next="1"/>
+	<text id="1" msg="Esto es un diálogo de texto, al que le aplico una transparencia." x="20" y="20" w="120" next="2"/>
+	<text id="2" msg="Estos diálogos están definidos en el archivo 'texts0.xml' de la carpeta 'resources'" x="20" y="20" w="120" next="3"/>
+	<text id="3" msg="Cuando termina un diálogo, comienza el siguiente según el parámetro 'next'" x="20" y="20" w="120" next="4"/>
+	<text id="4" msg="Es muy cómodo tratar los textos gracias a XML." x="20" y="20" w="140" next="5"/>
+	<text id="5" msg="FIN." x="40" y="40" w="50" next="0"/>
+	<text id="6" msg="Este texto no sale porque no lo llamo." x="150" y="80" w="160" next="7"/>
+	<text id="7" msg="Pero bastaría llamar a la función Write.inBox pasándole los parámetros apropiados'." x="150" y="180" w="160" next="8"/>
+	<text id="8" msg="Pruebalo!" x="150" y="80" w="160" next="6"/>
+</TextList>

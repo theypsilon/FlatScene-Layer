@@ -1,0 +1,294 @@
+<System>
+	<mode width="640" height="480" bpp="32"/>
+	<lenguage lan="spanish"/>
+	<fullscreen option="no"/>
+	<demonpc cant="0" initial-map="mapa1"/>
+</System>
+<Keys>
+	<Player id="0">
+		<buttom id="UP" value="SDLK_UP"/>
+		<buttom id="DOWN" value="SDLK_DOWN"/>
+		<buttom id="LEFT" value="SDLK_LEFT"/>
+		<buttom id="RIGHT" value="SDLK_RIGHT"/>
+												
+		<buttom id="B1" value="SDLK_a"/>		
+		<buttom id="B2" value="SDLK_z"/>
+		<buttom id="B3" value="SDLK_x"/>
+		<buttom id="B4" value="SDLK_s"/>
+	</Player>		
+	<Player id="1">
+		<buttom id="UP" value="SDLK_i"/>
+		<buttom id="DOWN" value="SDLK_k"/>
+		<buttom id="LEFT" value="SDLK_j"/>
+		<buttom id="RIGHT" value="SDLK_l"/>
+
+		<buttom id="B1" value="SDLK_KP0"/>
+		<buttom id="B2" value="SDLK_KP1"/>
+		<buttom id="B3" value="SDLK_KP2"/>												
+		<buttom id="B4" value="SDLK_KP3"/>			
+	</Player>
+	<Player id="2">
+		<buttom id="UP" value="NULL"/>
+		<buttom id="DOWN" value="NULL"/>
+		<buttom id="LEFT" value="NULL"/>
+		<buttom id="RIGHT" value="NULL"/>
+		<buttom id="B1" value="NULL"/>
+		<buttom id="B2" value="NULL"/>
+		<buttom id="B3" value="NULL"/>												
+		<buttom id="B4" value="NULL"/>			
+	</Player>
+	<Player id="3">
+		<buttom id="UP" value="NULL"/>
+		<buttom id="DOWN" value="NULL"/>
+		<buttom id="LEFT" value="NULL"/>
+		<buttom id="RIGHT" value="NULL"/>
+		<buttom id="B1" value="NULL"/>
+		<buttom id="B2" value="NULL"/>
+		<buttom id="B3" value="NULL"/>												
+		<buttom id="B4" value="NULL"/>			
+	</Player>	
+	<Alias id="SDL" total="232">
+
+		<keyalias id="SDLK_UNKNOWN" value="0"/>
+		<keyalias id="SDLK_FIRST" value="0"/>
+		<keyalias id="SDLK_BACKSPACE" value="8"/>
+		<keyalias id="SDLK_TAB" value="9"/>
+		<keyalias id="SDLK_CLEAR	" value="12"/>
+		<keyalias id="SDLK_RETURN	" value="13"/>
+		<keyalias id="SDLK_PAUSE" value="19"/>
+		<keyalias id="SDLK_ESCAPE" value="27"/>
+		<keyalias id="SDLK_SPACE" value="32"/>
+		<keyalias id="SDLK_EXCLAIM" value="33"/>
+		<keyalias id="SDLK_QUOTEDBL" value="34"/>
+		<keyalias id="SDLK_HASH" value="35"/>
+		<keyalias id="SDLK_DOLLAR" value="36"/>
+		<keyalias id="SDLK_AMPERSAND" value="38"/>
+		<keyalias id="SDLK_QUOTE" value="39"/>
+		<keyalias id="SDLK_LEFTPAREN" value="40"/>
+		<keyalias id="SDLK_RIGHTPAREN" value="41"/>
+		<keyalias id="SDLK_ASTERISK" value="42"/>
+		<keyalias id="SDLK_PLUS" value="43"/>
+		<keyalias id="SDLK_COMMA" value="44"/>
+		<keyalias id="SDLK_MINUS" value="45"/>
+		<keyalias id="SDLK_PERIOD" value="46"/>
+		<keyalias id="SDLK_SLASH" value="47"/>
+		<keyalias id="SDLK_0" value="48"/>
+		<keyalias id="SDLK_1" value="49"/>
+		<keyalias id="SDLK_2" value="50"/>
+		<keyalias id="SDLK_3" value="51"/>
+		<keyalias id="SDLK_4" value="52"/>
+		<keyalias id="SDLK_5" value="53"/>
+		<keyalias id="SDLK_6" value="54"/>
+		<keyalias id="SDLK_7" value="55"/>
+		<keyalias id="SDLK_8" value="56"/>
+		<keyalias id="SDLK_9" value="57"/>
+		<keyalias id="SDLK_COLON" value="58"/>
+		<keyalias id="SDLK_SEMICOLON" value="59"/>
+		<keyalias id="SDLK_LESS" value="60"/>
+		<keyalias id="SDLK_EQUALS" value="61"/>
+		<keyalias id="SDLK_GREATER" value="62"/>
+		<keyalias id="SDLK_QUESTION" value="63"/>
+		<keyalias id="SDLK_AT" value="64"/>
+	
+		<keyalias id="SDLK_LEFTBRACKET" value="91"/>
+		<keyalias id="SDLK_BACKSLASH" value="92"/>
+		<keyalias id="SDLK_RIGHTBRACKET" value="93"/>
+		<keyalias id="SDLK_CARET" value="94"/>
+		<keyalias id="SDLK_UNDERSCORE" value="95"/>
+		<keyalias id="SDLK_BACKQUOTE" value="96"/>
+		<keyalias id="SDLK_a" value="97"/>
+		<keyalias id="SDLK_b" value="98"/>
+		<keyalias id="SDLK_c" value="99"/>
+		<keyalias id="SDLK_d" value="100"/>
+		<keyalias id="SDLK_e" value="101"/>
+		<keyalias id="SDLK_f" value="102"/>
+		<keyalias id="SDLK_g" value="103"/>
+		<keyalias id="SDLK_h" value="104"/>
+		<keyalias id="SDLK_i" value="105"/>
+		<keyalias id="SDLK_j" value="106"/>
+		<keyalias id="SDLK_k" value="107"/>
+		<keyalias id="SDLK_l" value="108"/>
+		<keyalias id="SDLK_m" value="109"/>
+		<keyalias id="SDLK_n" value="110"/>
+		<keyalias id="SDLK_o" value="111"/>
+		<keyalias id="SDLK_p" value="112"/>
+		<keyalias id="SDLK_q" value="113"/>
+		<keyalias id="SDLK_r" value="114"/>
+		<keyalias id="SDLK_s" value="115"/>
+		<keyalias id="SDLK_t" value="116"/>
+		<keyalias id="SDLK_u" value="117"/>
+		<keyalias id="SDLK_v" value="118"/>
+		<keyalias id="SDLK_w" value="119"/>
+		<keyalias id="SDLK_x" value="120"/>
+		<keyalias id="SDLK_y" value="121"/>
+		<keyalias id="SDLK_z" value="122"/>
+		<keyalias id="SDLK_DELETE" value="127"/>
+	
+		<keyalias id="SDLK_WORLD_0" value="160"/>
+		<keyalias id="SDLK_WORLD_1" value="161"/>
+		<keyalias id="SDLK_WORLD_2" value="162"/>
+		<keyalias id="SDLK_WORLD_3" value="163"/>
+		<keyalias id="SDLK_WORLD_4" value="164"/>
+		<keyalias id="SDLK_WORLD_5" value="165"/>
+		<keyalias id="SDLK_WORLD_6" value="166"/>
+		<keyalias id="SDLK_WORLD_7" value="167"/>
+		<keyalias id="SDLK_WORLD_8" value="168"/>
+		<keyalias id="SDLK_WORLD_9" value="169"/>
+		<keyalias id="SDLK_WORLD_10" value="170"/>
+		<keyalias id="SDLK_WORLD_11" value="171"/>
+		<keyalias id="SDLK_WORLD_12" value="172"/>
+		<keyalias id="SDLK_WORLD_13" value="173"/>
+		<keyalias id="SDLK_WORLD_14" value="174"/>
+		<keyalias id="SDLK_WORLD_15" value="175"/>
+		<keyalias id="SDLK_WORLD_16" value="176"/>
+		<keyalias id="SDLK_WORLD_17" value="177"/>
+		<keyalias id="SDLK_WORLD_18" value="178"/>
+		<keyalias id="SDLK_WORLD_19" value="179"/>
+		<keyalias id="SDLK_WORLD_20" value="180"/>
+		<keyalias id="SDLK_WORLD_21" value="181"/>
+		<keyalias id="SDLK_WORLD_22" value="182"/>
+		<keyalias id="SDLK_WORLD_23" value="183"/>
+		<keyalias id="SDLK_WORLD_24" value="184"/>
+		<keyalias id="SDLK_WORLD_25" value="185"/>
+		<keyalias id="SDLK_WORLD_26" value="186"/>
+		<keyalias id="SDLK_WORLD_27" value="187"/>
+		<keyalias id="SDLK_WORLD_28" value="188"/>
+		<keyalias id="SDLK_WORLD_29" value="189"/>
+		<keyalias id="SDLK_WORLD_30" value="190"/>
+		<keyalias id="SDLK_WORLD_31" value="191"/>
+		<keyalias id="SDLK_WORLD_32" value="192"/>
+		<keyalias id="SDLK_WORLD_33" value="193"/>
+		<keyalias id="SDLK_WORLD_34" value="194"/>
+		<keyalias id="SDLK_WORLD_35" value="195"/>
+		<keyalias id="SDLK_WORLD_36" value="196"/>
+		<keyalias id="SDLK_WORLD_37" value="197"/>
+		<keyalias id="SDLK_WORLD_38" value="198"/>
+		<keyalias id="SDLK_WORLD_39" value="199"/>
+		<keyalias id="SDLK_WORLD_40" value="200"/>
+		<keyalias id="SDLK_WORLD_41" value="201"/>
+		<keyalias id="SDLK_WORLD_42" value="202"/>
+		<keyalias id="SDLK_WORLD_43" value="203"/>
+		<keyalias id="SDLK_WORLD_44" value="204"/>
+		<keyalias id="SDLK_WORLD_45" value="205"/>
+		<keyalias id="SDLK_WORLD_46" value="206"/>
+		<keyalias id="SDLK_WORLD_47" value="207"/>
+		<keyalias id="SDLK_WORLD_48" value="208"/>
+		<keyalias id="SDLK_WORLD_49" value="209"/>
+		<keyalias id="SDLK_WORLD_50" value="210"/>
+		<keyalias id="SDLK_WORLD_51" value="211"/>
+		<keyalias id="SDLK_WORLD_52" value="212"/>
+		<keyalias id="SDLK_WORLD_53" value="213"/>
+		<keyalias id="SDLK_WORLD_54" value="214"/>
+		<keyalias id="SDLK_WORLD_55" value="215"/>
+		<keyalias id="SDLK_WORLD_56" value="216"/>
+		<keyalias id="SDLK_WORLD_57" value="217"/>
+		<keyalias id="SDLK_WORLD_58" value="218"/>
+		<keyalias id="SDLK_WORLD_59" value="219"/>
+		<keyalias id="SDLK_WORLD_60" value="220"/>
+		<keyalias id="SDLK_WORLD_61" value="221"/>
+		<keyalias id="SDLK_WORLD_62" value="222"/>
+		<keyalias id="SDLK_WORLD_63" value="223"/>
+		<keyalias id="SDLK_WORLD_64" value="224"/>
+		<keyalias id="SDLK_WORLD_65" value="225"/>
+		<keyalias id="SDLK_WORLD_66" value="226"/>
+		<keyalias id="SDLK_WORLD_67" value="227"/>
+		<keyalias id="SDLK_WORLD_68" value="228"/>
+		<keyalias id="SDLK_WORLD_69" value="229"/>
+		<keyalias id="SDLK_WORLD_70" value="230"/>
+		<keyalias id="SDLK_WORLD_71" value="231"/>
+		<keyalias id="SDLK_WORLD_72" value="232"/>
+		<keyalias id="SDLK_WORLD_73" value="233"/>
+		<keyalias id="SDLK_WORLD_74" value="234"/>
+		<keyalias id="SDLK_WORLD_75" value="235"/>
+		<keyalias id="SDLK_WORLD_76" value="236"/>
+		<keyalias id="SDLK_WORLD_77" value="237"/>
+		<keyalias id="SDLK_WORLD_78" value="238"/>
+		<keyalias id="SDLK_WORLD_79" value="239"/>
+		<keyalias id="SDLK_WORLD_80" value="240"/>
+		<keyalias id="SDLK_WORLD_81" value="241"/>
+		<keyalias id="SDLK_WORLD_82" value="242"/>
+		<keyalias id="SDLK_WORLD_83" value="243"/>
+		<keyalias id="SDLK_WORLD_84" value="244"/>
+		<keyalias id="SDLK_WORLD_85" value="245"/>
+		<keyalias id="SDLK_WORLD_86" value="246"/>
+		<keyalias id="SDLK_WORLD_87" value="247"/>
+		<keyalias id="SDLK_WORLD_88" value="248"/>
+		<keyalias id="SDLK_WORLD_89" value="249"/>
+		<keyalias id="SDLK_WORLD_90" value="250"/>
+		<keyalias id="SDLK_WORLD_91" value="251"/>
+		<keyalias id="SDLK_WORLD_92" value="252"/>
+		<keyalias id="SDLK_WORLD_93" value="253"/>
+		<keyalias id="SDLK_WORLD_94" value="254"/>
+		<keyalias id="SDLK_WORLD_95" value="255"/>
+	
+		<keyalias id="SDLK_KP0" value="256"/>
+		<keyalias id="SDLK_KP1" value="257"/>
+		<keyalias id="SDLK_KP2" value="258"/>
+		<keyalias id="SDLK_KP3" value="259"/>
+		<keyalias id="SDLK_KP4" value="260"/>
+		<keyalias id="SDLK_KP5" value="261"/>
+		<keyalias id="SDLK_KP6" value="262"/>
+		<keyalias id="SDLK_KP7" value="263"/>
+		<keyalias id="SDLK_KP8" value="264"/>
+		<keyalias id="SDLK_KP9" value="265"/>
+		<keyalias id="SDLK_KP_PERIOD" value="266"/>
+		<keyalias id="SDLK_KP_DIVIDE" value="267"/>
+		<keyalias id="SDLK_KP_MULTIPLY" value="268"/>
+		<keyalias id="SDLK_KP_MINUS" value="269"/>
+		<keyalias id="SDLK_KP_PLUS" value="270"/>
+		<keyalias id="SDLK_KP_ENTER" value="271"/>
+		<keyalias id="SDLK_KP_EQUALS" value="272"/>
+	
+		<keyalias id="SDLK_UP" value="273"/>
+		<keyalias id="SDLK_DOWN" value="274"/>
+		<keyalias id="SDLK_RIGHT" value="275"/>
+		<keyalias id="SDLK_LEFT" value="276"/>
+		<keyalias id="SDLK_INSERT" value="277"/>
+		<keyalias id="SDLK_HOME" value="278"/>
+		<keyalias id="SDLK_END" value="279"/>
+		<keyalias id="SDLK_PAGEUP" value="280"/>
+		<keyalias id="SDLK_PAGEDOWN" value="281"/>
+	
+		<keyalias id="SDLK_F1" value="282"/>
+		<keyalias id="SDLK_F2" value="283"/>
+		<keyalias id="SDLK_F3" value="284"/>
+		<keyalias id="SDLK_F4" value="285"/>
+		<keyalias id="SDLK_F5" value="286"/>
+		<keyalias id="SDLK_F6" value="287"/>
+		<keyalias id="SDLK_F7" value="288"/>
+		<keyalias id="SDLK_F8" value="289"/>
+		<keyalias id="SDLK_F9" value="290"/>
+		<keyalias id="SDLK_F10" value="291"/>
+		<keyalias id="SDLK_F11" value="292"/>
+		<keyalias id="SDLK_F12" value="293"/>
+		<keyalias id="SDLK_F13" value="294"/>
+		<keyalias id="SDLK_F14" value="295"/>
+		<keyalias id="SDLK_F15" value="296"/>
+	
+		<keyalias id="SDLK_NUMLOCK" value="300"/>
+		<keyalias id="SDLK_CAPSLOCK" value="301"/>
+		<keyalias id="SDLK_SCROLLOCK" value="302"/>
+		<keyalias id="SDLK_RSHIFT" value="303"/>
+		<keyalias id="SDLK_LSHIFT" value="304"/>
+		<keyalias id="SDLK_RCTRL" value="305"/>
+		<keyalias id="SDLK_LCTRL" value="306"/>
+		<keyalias id="SDLK_RALT" value="307"/>
+		<keyalias id="SDLK_LALT" value="308"/>
+		<keyalias id="SDLK_RMETA" value="309"/>
+		<keyalias id="SDLK_LMETA" value="310"/>
+		<keyalias id="SDLK_LSUPER" value="311"/>	
+		<keyalias id="SDLK_RSUPER" value="312"/>
+		<keyalias id="SDLK_MODE" value="313"/>
+		<keyalias id="SDLK_COMPOSE" value="314"/>
+	
+		<keyalias id="SDLK_HELP" value="315"/>
+		<keyalias id="SDLK_PRINT" value="316"/>
+		<keyalias id="SDLK_SYSREQ" value="317"/>
+		<keyalias id="SDLK_BREAK" value="318"/>
+		<keyalias id="SDLK_MENU" value="319"/>
+		<keyalias id="SDLK_POWER" value="320"/>	
+		<keyalias id="SDLK_EURO" value="321"/>	
+		<keyalias id="SDLK_UNDO" value="322"/>	
+		
+	</Alias>		
+</Keys>	
