@@ -1,7 +1,7 @@
 #ifndef __RECTANGLE_H__
 #define __RECTANGLE_H__
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include "Point.h"
 
 //CRectangle--abstract an SDL_Rect

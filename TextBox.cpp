@@ -1,6 +1,6 @@
 #include "TextBox.h"
 #include "Time.h"
-#include "SDL/SDL.h"
+#include "SDL.h"
 
 #include "SDL_rotozoom.h"
 #include "Library.h"

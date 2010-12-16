@@ -2,7 +2,7 @@
 #define __TIME_H__
 
 #include <map>
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include "definitions.h"
 
 class CEngine;

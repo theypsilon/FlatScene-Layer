@@ -1,7 +1,7 @@
 #ifndef __WRITE_H__
 #define __WRITE_H__
 
-#include "SDL/SDL_ttf.h"
+#include "SDL_ttf.h"
 #include <map>
 #include <stack>
 #include <list>

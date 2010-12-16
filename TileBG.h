@@ -1,7 +1,7 @@
 #ifndef __TILE_BG__
 #define __TILE_BG__
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 #include <string>
 using namespace std;
 

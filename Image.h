@@ -7,8 +7,8 @@
 
 #include "GL/gl.h"			// Librería OpenGL32 
 #include "GL/glu.h"
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
+#include "SDL.h"
+#include "SDL_image.h"
 #include "definitions.h"
 #include "Rectangle.h"
 #include "FloatPoint.h"

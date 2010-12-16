@@ -1,7 +1,7 @@
 #ifndef __COLOR_H__
 #define __COLOR_H__
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 
 class CColor  
 {
