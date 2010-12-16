@@ -60,6 +60,7 @@ private:
 	friend class CScreen;
 
 	static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, float sp_scale=1.0);
+	static SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor=1);
 
 	static inline Uint32 pow2 (Uint32 n);
 

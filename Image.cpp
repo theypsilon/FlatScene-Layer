@@ -397,6 +397,66 @@ void CImage::put ( CPoint& ptDst, Uint8 flags)
 
 }
 
+
+SDL_Surface* CImage::scaleSurface( SDL_Surface* s_surf, int factor) {
+
+	SDL_Surface* ret = NULL;
+
+	if (s_surf == NULL || factor <= 1)
+		return ret;
+
+	factor = 2;
+
+	Uint8 bpp = s_surf->format->BytesPerPixel;
+
+	if (bpp == 4) // 32 bits
+
+		ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,s_surf->format->Rmask,s_surf->format->Gmask,s_surf->format->Bmask,s_surf->format->Amask);
+
+	else if (bpp == 1) // 8 bits
+
+		ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,0,0,0,0);
+
+	else {
+		CLibrary::Error("depth mode not valid",TE_SDL_NOMSG);
+		return ret;
+
+	}
+
+	char* newPixels = (char*) ret->pixels;
+	char* oldPixels = (char*) s_surf->pixels;
+
+	SDL_LockSurface(ret);
+	SDL_LockSurface(s_surf);
+
+	for (int y=0;y<s_surf->h;y++) {
+
+		for (int x=0;x<s_surf->w;x++) {
+
+			int pos_old = y * s_surf->pitch + x * bpp;
+
+			for (int fx = 0 ; fx<factor;fx++) {
+				for (int fy = 0 ; fy < factor ; fy++) {
+					
+					int pos_new = (y*factor + fy) * ret->pitch + (x*factor +fx) * bpp;
+
+					for (int b=0;b<bpp;b++) {
+
+						newPixels[pos_new+b]=oldPixels[pos_old+b];
+					}
+				}
+			}
+
+		}
+
+	}
+
+	SDL_UnlockSurface(s_surf);
+	SDL_UnlockSurface(ret);
+
+	return ret;
+}
+
 SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, float sp_scale) {
 
 	if (pow2(mode) != mode)

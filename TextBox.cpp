@@ -2,7 +2,6 @@
 #include "Time.h"
 #include "SDL.h"
 
-#include "SDL_rotozoom.h"
 #include "Library.h"
 #include "ControlOutputText.h"
 
@@ -118,7 +117,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 	SDL_FreeSurface(surf);
 	SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,50,50,150));
 	#if TEXT_BASE_SCALE > 1
-    surf = rotozoomSurface(temp,0,CScreen::getScaleX() ,0);
+	surf = CImage::scaleSurface(temp,CScreen::getScaleX());
     if (!surf)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
     SDL_FreeSurface(temp);
     #else     
@@ -219,7 +218,7 @@ void CTextBox::createBox() {
 	SDL_FreeSurface(surf);
 	SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,50,50,150));
 	#if TEXT_BASE_SCALE > 1
-    surf = rotozoomSurface(temp,0,TEXT_BASE_SCALE ,0);
+    surf = CImage::scaleSurface(temp,TEXT_BASE_SCALE );
     if (!surf)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
     SDL_FreeSurface(temp);
     #else     

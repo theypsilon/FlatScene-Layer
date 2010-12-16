@@ -125,7 +125,6 @@
     <ClCompile Include="RutinaColision.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScrollCamera.cpp" />
-    <ClCompile Include="SDL_rotozoom.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteSet.cpp" />
     <ClCompile Include="TestA0GameInterface.cpp" />
