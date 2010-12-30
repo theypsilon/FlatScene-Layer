@@ -533,14 +533,14 @@ string CLibrary::toStringErrorGL(GLenum e) {
 
 string CLibrary::readLastError() {
 	if (errors.empty())
-		return NOERROR;
+		return SINERROR;
 	else
 		return errors.back();
 }
 
 string CLibrary::popError() {
 	if (errors.empty())
-		return NOERROR;
+		return SINERROR;
 	else {
 		string ret = errors.back();
 		errors.pop_back();
