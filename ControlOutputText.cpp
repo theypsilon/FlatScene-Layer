@@ -5,7 +5,7 @@
 
 CControlOutputText* CControlOutputText::singleton=NULL;
 
-CControlOutputText::CControlOutputText() : admin((CEngine*)0xFFFFFFFF), data(NULL), fontSize(10) {
+CControlOutputText::CControlOutputText() : admin((CEngine*)0xFFFFFFFF), data(NULL), fontSize(20) {
 	singleton = NULL;
 
 	if (TTF_Init()==-1) {
@@ -170,7 +170,7 @@ int CControlOutputText::loadFont(const char* fuente) {
 			}
 		}
 		font_ttf = Fonts[ret] = new SFont;
-		font_ttf->fuente=TTF_OpenFont(resource((s+".ttf").c_str()).c_str(),fontSize * CScreen::getScaleX());
+		font_ttf->fuente=TTF_OpenFont(resource((s+".ttf").c_str()).c_str(),fontSize);
 		if (font_ttf->fuente==NULL) {
 			CLibrary::Error("No se ha cargado la fuente: "+s+".ttf  ",TE_fileExists);
 			delete font_ttf;
@@ -317,7 +317,7 @@ int CControlOutputText::line(int fuente, int x,int y, const char* text,...) {
 		string allText(buffer);
 
 		float currentX = x;
-		float currentY = y + ((float)TTF_FontAscent(t->Line->fuente->fuente))/((float)CScreen::getScaleX()) -3;
+		float currentY = y + (float)TTF_FontAscent(t->Line->fuente->fuente) -3;
 
 		size_t length = allText.length();
 
@@ -351,16 +351,13 @@ int CControlOutputText::line(int fuente, int x,int y, const char* text,...) {
 
 			if (newChar == '\n') {
 				currentX = x;
-				currentY += ((float)TTF_FontLineSkip(t->Line->fuente->fuente)) /((float)CScreen::getScaleY());
+				currentY += (float)TTF_FontLineSkip(t->Line->fuente->fuente);
 			} else {
 
 				SChar newT;
 
-				currentX += ((float)minx) /((float)CScreen::getScaleX());
-				currentY -= ((float)maxy) /((float)CScreen::getScaleY());
-				newT.p = new CFloatPoint(currentX,currentY);
-				currentX += ((float)advance) /((float)CScreen::getScaleX()) - ((float)minx) /((float)CScreen::getScaleX());
-				currentY += ((float)maxy) /((float)CScreen::getScaleY());
+				newT.p = new CFloatPoint(currentX+(float)minx,currentY-(float)maxy);
+				currentX += (float)advance;
 
 				if (t->Line->fuente->render.find(newChar)==t->Line->fuente->render.end()) {
 					SDL_Color fg;
@@ -605,11 +602,9 @@ int CControlOutputText::render() {
 
 
 	if ( width == 0.0 || height == 0.0) 
-		CScreen::locateRenderScene(0,0,CScreen::getWidth()/CScreen::getScaleX(),CScreen::getHeight()/CScreen::getScaleY(),zoom); //
+		CScreen::locateRenderScene(0,0,CScreen::getWidth(),CScreen::getHeight(),0); //
 	else
 		CScreen::locateRenderScene(posx,posy,width,height,zoom);
-
-	CScreen::scale(CScreen::getScaleX(),CScreen::getScaleY(),0.0);
 
 
 	map<int,SText*> deleteText;

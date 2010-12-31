@@ -106,7 +106,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	int ancho=0;
 	int alto=0;
 
-	float sp_scale = 1.0;
+	int sp_scale = 1;
 
 	SDL_Surface* chipset = NULL;
 
@@ -194,18 +194,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 			return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
 		}
 
-		if (sp_scale > 0 && sp_scale != 1.0) {
-
-			Uint32 colorkey = sdl_surf->format->colorkey;
-
-			chipset = CImage::scaleSurface(sdl_surf,sp_scale);
-			SDL_FreeSurface(sdl_surf);
-			sdl_surf=NULL;
-			SDL_SetColorKey(chipset,SDL_SRCCOLORKEY,colorkey);		// Reasignamos los formatos.
-
-		}
-
-		CSprite* pspt=new CSprite(CImage::toSCanvas(chipset,mode,sp_scale));
+		CSprite* pspt=new CSprite(CImage::toSCanvas(chipset,mode));
 
 		pspt->setName(s_aux.c_str());
 
@@ -249,7 +238,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		simple=true;	// Si el spriteset es de tipo simple, activamos este booleano.
 
 	if (input.Element()->Attribute("sp-scale"))
-		input.Element()->QueryFloatAttribute("sp-scale",&sp_scale); // Hay escalado predefinido de SDL_Surface
+		input.Element()->QueryIntAttribute("sp-scale",&sp_scale); // Hay escalado predefinido de SDL_Surface
 
 	// Primer lote de la estructura de datos procesado
 	// Ahora se empieza a carga la imagen con los datos obtenidos
@@ -310,7 +299,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 				atoi(img->Attribute("x"))>=0 && atoi(img->Attribute("x"))<=ancho && 
 				atoi(img->Attribute("y"))>=0 && atoi(img->Attribute("y"))<=alto)) 
 					CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores de punto centro global erróneos.").c_str());
-			globalCP.set(atoi(img->Attribute("x")),atoi(img->Attribute("y")));	// Lo asignamos.
+			globalCP.set(atoi(img->Attribute("x"))*sp_scale,atoi(img->Attribute("y"))*sp_scale);	// Lo asignamos.
 		}
 
 		img = input.FirstChildElement("globalareas").FirstChildElement("area").ToElement();
@@ -329,10 +318,10 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 					CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo un área global erróneos.").c_str());
 
 				SDL_Rect_Signed rc;
-				rc.x = atoi(rectNode->Attribute("x1"));
-				rc.w = atoi(rectNode->Attribute("x2"));
-				rc.y = atoi(rectNode->Attribute("y1"));
-				rc.h = atoi(rectNode->Attribute("y2"));
+				rc.x = atoi(rectNode->Attribute("x1")) *sp_scale;
+				rc.w = atoi(rectNode->Attribute("x2")) *sp_scale;
+				rc.y = atoi(rectNode->Attribute("y1")) *sp_scale;
+				rc.h = atoi(rectNode->Attribute("y2")) *sp_scale;
 
 				globalAreas[idArea].v.push_back(rc);	// Y la añadimos al vector pertinente del mapa, para luego reescatarla directamente del mapa.
 			}
@@ -392,7 +381,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 			SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,chipset->format->colorkey);		// Reasignamos los formatos.
 		}
 
-		m_pImage=CImage::toSCanvas(sdl_surf,mode,sp_scale);		// Convertimos la SDL_Surface en SCanvas
+		m_pImage=CImage::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas
 
 		//Imagen creada, ahora el resto de su estructura de datos.
 
@@ -402,13 +391,13 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 		if (cpoint) {	// Si es procedente rescatar el cpoint...
 			#ifdef LOG_SPRITESET_INFO
-				printf("\tCP : %d,%d\n",atoi(cpoint->Attribute("x")),atoi(cpoint->Attribute("y")));
+				printf("\tCP : %d,%d\n",atoi(cpoint->Attribute("x"))*sp_scale,atoi(cpoint->Attribute("y"))*sp_scale);
 			#endif
 			if (!(cpoint->Attribute("x") && cpoint->Attribute("y") && 
 				atoi(cpoint->Attribute("x"))>=0 && atoi(cpoint->Attribute("x"))<=iinfo.w && 
 				atoi(cpoint->Attribute("y"))>=0 && atoi(cpoint->Attribute("y"))<=iinfo.h)) 
 					CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en el punto centro de la imagen "+iinfo.name+" erróneos.").c_str());
-			m_pSprite=new CSprite(m_pImage,new CPoint(atoi(cpoint->Attribute("x")),atoi(cpoint->Attribute("y"))));
+			m_pSprite=new CSprite(m_pImage,new CPoint(atoi(cpoint->Attribute("x"))*sp_scale,atoi(cpoint->Attribute("y"))*sp_scale));
 		} else if (globalCP.X()>=0) { // Si existe un global cpoint...
 			m_pSprite=new CSprite(m_pImage,new CPoint(globalCP));
 		} else {	
@@ -447,9 +436,9 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 					if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) || */(rc.w<rc.x) || (rc.h<rc.y))
 						CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo de la imagen "+iinfo.name+" conflictivos.").c_str());
 
-					rArea->push_back(new CRectangle(rc.x,rc.y,rc.w,rc.h));	// Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
+					rArea->push_back(new CRectangle(rc.x *sp_scale,rc.y *sp_scale,rc.w *sp_scale,rc.h *sp_scale));	// Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
 				#ifdef LOG_SPRITESET_INFO
-					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x,rc.w,rc.y,rc.h);
+					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x*sp_scale,rc.w*sp_scale,rc.y*sp_scale,rc.h*sp_scale);
 					idebug++;
 				#endif
 				}
@@ -466,9 +455,9 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 					if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) ||*/ (rc.w<rc.x) || (rc.h<rc.y))
 						CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo global aplicado la imagen "+iinfo.name+" conflictivos.").c_str());
 
-					rArea->push_back(new CRectangle(rc.x,rc.y,rc.w,rc.h)); // Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
+					rArea->push_back(new CRectangle(rc.x*sp_scale,rc.y*sp_scale,rc.w*sp_scale,rc.h*sp_scale)); // Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
 				#ifdef LOG_SPRITESET_INFO
-					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x,rc.w,rc.y,rc.h);
+					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x*sp_scale,rc.w*sp_scale,rc.y*sp_scale,rc.h*sp_scale);
 					idebug++;
 				#endif
 				}

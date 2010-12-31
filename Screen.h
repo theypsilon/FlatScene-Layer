@@ -85,8 +85,6 @@ private:
 
 	static int m_Width,m_Height,m_Bpp;
 
-	static float m_ScaleX,m_ScaleY;
-
 	static list<SToRender*> graphicMaterial;
 
 	static list<CSprite*> spriteToDelete;
@@ -150,9 +148,6 @@ public:
 	static int popMatrix();
 
 	static int locateRenderScene ( float posx=0.0, float posy=0.0, float width=m_Width, float height=m_Height, float zoom = 1.0) ;
-
-	static float getScaleX();
-	static float getScaleY();
 
 	static Uint8 getBpp();
 

@@ -1,4 +1,4 @@
-<Spriteset sprites='1' cellwidth='5' cellheight='5' sp-scale='2.0'>
+<Spriteset sprites='1' cellwidth='5' cellheight='5'>
 	<img id='0'>
 		<cpoint x='2' y='2'/>
 	</img>

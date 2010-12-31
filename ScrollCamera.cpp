@@ -22,14 +22,14 @@ CCamera(target,area,pmhParent) {
 	if (margenDesp >= 0.9) {
 		margenDesp = 0;
 	}
-	intraMargenX=(int)(((float)area->getW()/(CScreen::getScaleX()))*margenDesp);
+	intraMargenX=(int)((float)area->getW()*margenDesp);
 
 	if (intraMargenX > centro->getX()) {
 		intraMargenX = centro->getX();
 	} else if (intraMargenX > (area->getW() - centro->getX())) {
 		intraMargenX = area->getW() - centro->getX();
 	}
-	intraMargenY=(int)(((float)area->getH()/(CScreen::getScaleY()))*margenDesp);
+	intraMargenY=(int)((float)area->getH()*margenDesp);
 	if (intraMargenY > centro->getY()) {
 		intraMargenY = centro->getY();
 	} else if (intraMargenY > (area->getH() - centro->getY())) {
@@ -171,8 +171,8 @@ int CScrollCamera::refresh() {
     scrolltarget->m_Coordxy.Y() = scrolltarget->m_Scrollxy.Y() -(CY() - (area->getH()/2));
 
 #ifdef MENSAJES_COORDENADAS
-	Write.erase(Write.line(0,area->getX()+area->getW()-150,area->getY()+area->getH()-30,"Scroll X: %d        Scroll Y: %d", scrolltarget->m_Scrollxy.X(),scrolltarget->m_Scrollxy.Y()),true);
-	Write.erase(Write.line(0,area->getX()+area->getW()-150,area->getY()+area->getH()-15,"ScrollCamera X %d   ScrollCamera Y %d",CX(),CY()),true);
+	Write.erase(Write.line(0,area->getX()*2+area->getW()*2-300,area->getY()*2+area->getH()*2-60,"Scroll X: %d    Scroll Y: %d", scrolltarget->m_Scrollxy.X(),scrolltarget->m_Scrollxy.Y()),true);
+	Write.erase(Write.line(0,area->getX()*2+area->getW()*2-300,area->getY()*2+area->getH()*2-30,"Camera X: %d    Camera Y: %d",CX(),CY()),true);
 	
 #endif
 
@@ -194,6 +194,10 @@ int CScrollCamera::refresh() {
 	setZoom(zoom*1.01);
 	}
 #endif
+
+	CScreen::scale(2.0,2.0,1.0);
+
+	//CScreen::translate(320.0/2,240.0/2,-120.0);
 
 	for (int i=0;i<Pisos.size();i++) {
 		Pisos[i]->refresh(CX()-centro->getX(),CY()-centro->getY());

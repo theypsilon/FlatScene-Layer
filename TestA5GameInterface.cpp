@@ -124,15 +124,15 @@ int  CTestA5GameInterface::onInit() {
 
 	Write.color(Write.inBox("texts0",0),1.0,1.0,1.0,0.7,TCTB_BOX,true);
 
-	Write.line(0,130,5,"ESC para Menu.");
+	Write.line(0,260,10,"ESC para Menu.");
 
 
-	Write.line(0,230,5,"Teclas:");
-	Write.line(0,230,20,"cursores : andar");
-	Write.line(0,230,35,"a : atacar");
-	Write.line(0,230,50,"F1 : siguiente test");
+	Write.line(0,460,10,"Teclas:");
+	Write.line(0,460,40,"cursores : andar");
+	Write.line(0,460,70,"a : atacar");
+	Write.line(0,460,100,"F1 : siguiente test");
 
-	Write.line(0,130,230,"Test 5");
+	Write.line(0,260,450,"Test 5");
 
 	return EXITO;
 }
@@ -143,7 +143,7 @@ int CTestA5GameInterface::drawFrame() {
 
 	for (int i=0;i<cams.size();i++) {
 
-		cams[i]->locateRenderScene();
+		cams[i]->locateRenderScene(cams[i]->getArea()->X()*2,cams[i]->getArea()->Y()*2,cams[i]->getArea()->W()*2,cams[i]->getArea()->H()*2);
 
 		cams[i]->rotate(40,1.0,1.0,0.0);
 

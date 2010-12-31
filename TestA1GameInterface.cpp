@@ -26,7 +26,7 @@ int CTestA1GameInterface::drawFrame() {
 
 	for (int i=0;i<cams.size();i++) {
 
-		cams[i]->locateRenderScene();
+		cams[i]->locateRenderScene(cams[i]->getArea()->X()*2,cams[i]->getArea()->Y()*2,cams[i]->getArea()->W()*2,cams[i]->getArea()->H()*2);
 		cams[i]->render();
 
 	}
@@ -88,12 +88,12 @@ int CTestA1GameInterface::onInit() {
 	cams.push_back(new CScrollCamera((CActor*)player[0],new CRectangle(RESOLUCION_X/2,RESOLUCION_Y/2,RESOLUCION_X/2,RESOLUCION_Y/2)));
 
 
-	Write.line(0,230,5,"Teclas:");
-	Write.line(0,230,20,"cursores : andar");
-	Write.line(0,230,35,"a : atacar");
-	Write.line(0,230,50,"F1 : siguiente test");
+	Write.line(0,460,10,"Teclas:");
+	Write.line(0,460,40,"cursores : andar");
+	Write.line(0,460,70,"a : atacar");
+	Write.line(0,460,100,"F1 : siguiente test");
 
-	Write.line(0,130,230,"Test 1");
+	Write.line(0,260,450,"Test 1");
 
 	return EXITO;
 }

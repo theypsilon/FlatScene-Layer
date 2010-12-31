@@ -124,17 +124,17 @@ int  CTestA0GameInterface::onInit() {
 
 	Write.color(Write.inBox("texts0",0),1.0,1.0,1.0,0.7,TCTB_BOX,true);
 
-	Write.line(0,130,5,"ESC para Menu.");
+	Write.line(0,260,10,"ESC para Menu.");
 
 
-	Write.line(0,230,5,"Teclas:");
-	Write.line(0,230,20,"cursores : andar");
-	Write.line(0,230,35,"a : atacar");
-	Write.line(0,230,50,"F1 : siguiente test");
-	Write.line(0,230,65,"u : estres de universos");
+	Write.line(0,460,10,"Teclas:");
+	Write.line(0,460,40,"cursores : andar");
+	Write.line(0,460,70,"a : atacar");
+	Write.line(0,460,100,"F1 : siguiente test");
+	Write.line(0,460,130,"u : estres de universos");
 
 
-	Write.line(0,130,230,"Test 0");
+	Write.line(0,260,450,"Test 0");
 
 	return EXITO;
 }

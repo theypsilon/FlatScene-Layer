@@ -28,8 +28,6 @@ int CTestBGameInterface::onInit() {
 
 	CScreen::clear();
 
-	CScreen::scale(CScreen::getScaleX() ,CScreen::getScaleY() ,1.0);
-
 /*	int num=1;
 	int* sequence = alloc(int,num);
 	for (int i=0;i<num;i++)

@@ -1,4 +1,4 @@
-<Spriteset sprites='15' cellwidth='50' cellheight='56' sp-scale='2.0'>
+<Spriteset sprites='15' cellwidth='50' cellheight='56'>
   <globalareas>
     <area id='0' relative='true'>
       <rectangle x1='-6' x2='6' y1='-6' y2='6'/>

@@ -29,7 +29,9 @@ int CTestAGameInterface::drawFrame() {
 
 	for (int i=0;i<cams.size();i++) {
 
-		cams[i]->locateRenderScene();
+		cams[i]->locateRenderScene(cams[i]->getArea()->X()*2,cams[i]->getArea()->Y()*2,cams[i]->getArea()->W()*2,cams[i]->getArea()->H()*2);
+
+		//cams[i]->scale(2.0,2.0,1.0);
 
 		cams[i]->render();
 

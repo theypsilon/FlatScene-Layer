@@ -43,10 +43,10 @@ int CMenuAGameInterface::onInit() {
 	texts.push_back("Reiniciar");
 	texts.push_back("Salir");
 
-	int y = 20;
+	int y = 40;
 	for (list<string>::iterator it=texts.begin();it!=texts.end();++it) {
-		IdTexts.push_back(Write.line(0,30,y,"%s",it->c_str()));
-		y+=15;
+		IdTexts.push_back(Write.line(0,60,y,"%s",it->c_str()));
+		y+=30;
 	}
 
 	char c[32];
@@ -55,7 +55,7 @@ int CMenuAGameInterface::onInit() {
 	else
 		sprintf(c,"Pantalla Completa");
 
-	IdTexts.push_back(Write.line(0,116,35,"%s",c));
+	IdTexts.push_back(Write.line(0,232,70,"%s",c));
 
 	int aux = Chrono.setInterval(0,Chrono.isTimeForAll());
 	if (aux == 0) {
@@ -65,7 +65,7 @@ int CMenuAGameInterface::onInit() {
 		Chrono.setInterval(aux,Chrono.isTimeForAll());
 	}
 
-	IdTexts.push_back(Write.line(0,55,50,"%s",c));
+	IdTexts.push_back(Write.line(0,110,100,"%s",c));
 
 	return EXITO;
 }
@@ -75,11 +75,17 @@ int CMenuAGameInterface::onIdle()
 {
 	CScreen::clear();
 
-	CScreen::locateRenderScene(0,0,RESOLUCION_X,RESOLUCION_Y);
+	CScreen::locateRenderScene(0,0,RESOLUCION_X*2,RESOLUCION_Y*2);
 
 	CPoint m = dest;
 
+	CScreen::pushMatrix();
+
+	CScreen::scale(2.0,2.0,1.0);
+
 	CImg.get(file)->get(0)->put(m);
+
+	CScreen::popMatrix();
 
 	Write.render();
 	
@@ -153,7 +159,7 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 			try {
 				int& y = IdTexts.at(texts.size()+0);
 				Write.erase(y);
-				y=Write.line(0,116,35,"%s",c);
+				y=Write.line(0,232,70,"%s",c);
 			} catch (...) {
 				CLibrary::Error("MenuA IdTexts vector bad access");
 			}
@@ -183,7 +189,7 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 			try {
 				int& y = IdTexts.at(texts.size()+1);
 				Write.erase(y);
-				y=Write.line(0,55,50,"%s",c);
+				y=Write.line(0,110,100,"%s",c);
 			} catch (...) {
 				CLibrary::Error("MenuA IdTexts vector bad access");
 			}

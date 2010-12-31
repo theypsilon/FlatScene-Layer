@@ -16,9 +16,6 @@ int CScreen::m_Bpp=0;
 int CScreen::m_Width=0;
 int CScreen::m_Height=0;
 
-float CScreen::m_ScaleX=0.0;
-float CScreen::m_ScaleY=0.0;
-
 float CScreen::alpha =1.0;
 float CScreen::red =1.0;
 float CScreen::green =1.0;
@@ -76,9 +73,6 @@ int CScreen::start(int width, int height, int bpp, bool fullscreen, bool doubleb
 		CLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
-
-	m_ScaleX=((float)width)/((float)RESOLUCION_X);
-	m_ScaleY=((float)height)/((float)RESOLUCION_Y);
 
 	m_FullScreen=fullscreen;
 	m_Doublebuff=doublebuff;
@@ -147,9 +141,6 @@ int CScreen::start(int width, int height, int bpp, float scalex, float scaley, b
 		CLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
-
-	m_ScaleX=scalex;
-	m_ScaleY=scaley;
 
 	m_FullScreen=fullscreen;
 	m_Doublebuff=doublebuff;
@@ -519,7 +510,7 @@ void CScreen::procRendCanvas(void* pointer) {
 		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
 		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
 
-		glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
+		//glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
 
 		glBegin(GL_QUADS);
 			if (flags == 0) {
@@ -583,7 +574,7 @@ void CScreen::procRendFloatCanvas(void* pointer) {
 		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
 		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
 
-		glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
+		//glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
 
 		glBegin(GL_QUADS);
 			if (flags == 0) {
@@ -673,20 +664,23 @@ void CScreen::procRendLocation(void* pointer) {
 
 	delete n;
 
-	glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
+	//glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
+	glViewport(posx,posy,width,height);
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
 
 	if (trp == TRP_ORTHO) {
 
 		//Opción ortogonal
-		glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
+		//glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
+
+		glOrtho( 0.0, (double)width, (double)height, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
 
 	} else {
 
 		//Opción de perspectiva 1
 		gluPerspective(90.0f,width/height,1.0,m_maxZ);
-		glTranslatef(-width,height,-240.0);
+		glTranslatef(-width/2,height/2,-240.0);
 		glRotatef(180.0,1.0,0.0,0.0);
 
 		//Opción de perspectiva 2
@@ -710,6 +704,8 @@ void CScreen::procRendLocation(void* pointer) {
 }
 
 void CScreen::procRendPush(void* pointer) {
+
+	glMatrixMode(GL_MODELVIEW);
 
 	glPushMatrix();
 
@@ -794,14 +790,6 @@ int CScreen::quit()
 	SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
 	return EXITO;
-}
-
-float CScreen::getScaleX(){
-	return m_ScaleX;
-}
-
-float CScreen::getScaleY() {
-	return m_ScaleY;
 }
 
 Uint8 CScreen::getBpp() {

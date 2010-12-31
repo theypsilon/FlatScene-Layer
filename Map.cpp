@@ -432,8 +432,8 @@ void CMap::rescataChar(string& cad,int size, int n, FILE *f) {
 }
 
 Uint32 CMap::getPixel(int x, int y,int z) {
-	int j=x/TAM_TILE;
-	int i=y/TAM_TILE;
+	int j=x/getTileW();
+	int i=y/getTileH();
 	if (j>=0 && i>=0 && j<mapWidth && i<mapHeight) {
 		int tile_pisado=dur[z][i][j].dur;
 		
@@ -445,6 +445,11 @@ Uint32 CMap::getPixel(int x, int y,int z) {
 
 			x=x%(canv->getWidth());
 			y=y%(canv->getHeight());
+
+			/*x=x%(canv->getWidth()*2);
+			x/=2;
+			y=y%(canv->getHeight()*2);
+			y/=2;*/
 
 			if (flags & 0x01) {
 				x=canv->getWidth() - x -1;

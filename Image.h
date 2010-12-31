@@ -25,7 +25,6 @@ typedef struct {
 	int w2,h2;			/* Valor previo desplazado a la potencia de 2 superior o igual más próxima. */
 	Uint8 bpp;
 	SDL_Surface* sdl_surf; // NULL or not null, thats the question.
-	float sp_scale;
 }SCanvas;
 
 struct SToRender;
@@ -59,8 +58,8 @@ private:
 	friend class CControlImages;
 	friend class CScreen;
 
-	static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, float sp_scale=1.0);
-	static SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor=1);
+	static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+	static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
 	static inline Uint32 pow2 (Uint32 n);
 

@@ -205,10 +205,11 @@ void CFloor::refresh(int cx, int cy) {
 	int cxl=cx/tam_tile_w;
 	int cyl=cy/tam_tile_h;
 
+	//CScreen::rotate(40,1.0,1.0,0.0);
 
 	CScreen::pushMatrix();
 
-	CScreen::translate((float)(-cx%tam_tile_w)*CScreen::getScaleX(),(float)(-cy%tam_tile_h)*CScreen::getScaleY(),0.0);
+	CScreen::translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
 
 	for (;capa<Layer.size() && !capaSuperior(Layer[capa]);capa++) {
 		Layer[capa]->refresh(cxl,cyl);
@@ -250,7 +251,7 @@ void CFloor::refresh(int cx, int cy) {
 
 	CScreen::pushMatrix();
 
-	CScreen::translate((float)(-cx%tam_tile_w)*CScreen::getScaleX(),(float)(-cy%tam_tile_h)*CScreen::getScaleY(),0.0);
+	CScreen::translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
 
 	for (;capa<Layer.size();capa++) {
 		Layer[capa]->refresh(cxl,cyl);

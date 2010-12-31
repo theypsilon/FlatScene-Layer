@@ -105,7 +105,7 @@ int CTestA3GameInterface::onInit() {
 	cams.push_back(new CScrollCamera((CActor*)player[0],new CRectangle(0,0,RESOLUCION_X/2,RESOLUCION_Y),NULL,0.35));
 	cams.push_back(new CScrollCamera((CActor*)player[1],new CRectangle(RESOLUCION_X/2,0,RESOLUCION_X/2,RESOLUCION_Y),NULL,0));
 
-	Write.line(0,130,5,"ESC para Menu.");
+	Write.line(0,260,10,"ESC para Menu.");
 
 	//Write.line(0,230,5,"Teclas:");
 	//Write.line(0,230,20,"cursores : andar p1");
@@ -144,8 +144,8 @@ int CTestA3GameInterface::onExit()
 
 int CTestA3GameInterface::drawFrame() {
 
-	int l1 = Write.line(0,60,220,"Score: %d",score1);
-	int l2 = Write.line(0,220,220,"Score: %d",score2);
+	int l1 = Write.line(0,120,430,"Score: %d",score1);
+	int l2 = Write.line(0,440,430,"Score: %d",score2);
 
 	Write.erase(l1,true);
 	Write.erase(l2,true);
