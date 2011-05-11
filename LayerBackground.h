@@ -1,13 +1,13 @@
 #ifndef __LAYER_BACKGROUNDS__
 #define __LAYER_BACKGROUNDS__
 
-#include "MessageHandler.h"
-#include "Actor.h"
-#include "SpriteSet.h"
-#include "Rectangle.h"
-#include "Image.h"
-#include "Color.h"
-#include "ControlImages.h"
+#include "FSMessageHandler.h"
+#include "FSActor.h"
+#include "FSSpriteSet.h"
+#include "FSRectangle.h"
+#include "FSImage.h"
+#include "FSColor.h"
+#include "FSControlImages.h"
 #include "Map.h"
 #include <math.h>
 #include <vector>

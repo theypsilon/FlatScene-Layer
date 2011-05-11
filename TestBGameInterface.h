@@ -1,8 +1,8 @@
 #ifndef __TESTBGAMEINTERFACE_H__
 #define __TESTBGAMEINTERFACE_H__
 
-#include "Engine.h"
-#include "definitions.h"
+#include "FSEngine.h"
+#include "FSdefinitions.h"
 #include "PAnimation.h"
 
 #define TestIdB "TestB"

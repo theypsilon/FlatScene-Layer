@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "TestBGameInterface.h"
-#include "Library.h"
-#include "Screen.h"
+#include "FSLibrary.h"
+#include "FSScreen.h"
 
 //constructor
 CTestBGameInterface::CTestBGameInterface(CMessageHandler* pmhParent) : CEngine(pmhParent), actZone(0)

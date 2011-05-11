@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "TestA0GameInterface.h"
-#include "Library.h"
-#include "ControlOutputText.h"
+#include "FSLibrary.h"
+#include "FSControlOutputText.h"
 
 #include "EnemyPunto.h"
 #include "EnemyNPC.h"

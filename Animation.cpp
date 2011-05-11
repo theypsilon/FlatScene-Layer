@@ -1,6 +1,6 @@
 #include "Animation.h"
-#include "Library.h"
-#include "ControlImages.h"
+#include "FSLibrary.h"
+#include "FSControlImages.h"
 
 CAnimation::CAnimation() : seq(0), paso(0) {
 }

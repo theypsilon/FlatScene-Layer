@@ -1,7 +1,10 @@
 #ifndef __ACTORSCROLLMAP_H__
 #define __ACTORSCROLLMAP_H__
 
-#include "Actor.h"
+#include "FSActor.h"
+#include "Action.h"
+#include "GarbageCollector.h"
+#include "OrderGraph.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 #include "OrderGraph.h"
-#include "Library.h"
+#include "FSLibrary.h"
 
 CEnlace::CEnlace(string referencia,string tecla,string evento) : referencia(referencia), tecla(tecla), evento(evento) {}
 CEnlace::~CEnlace() {}

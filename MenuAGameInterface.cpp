@@ -1,8 +1,8 @@
 #include "MenuAGameInterface.h"
-#include "Library.h"
-#include "ControlImages.h"
-#include "ControlOutputText.h"
-#include "Screen.h"
+#include "FSLibrary.h"
+#include "FSControlImages.h"
+#include "FSControlOutputText.h"
+#include "FSScreen.h"
 
 //constructor
 CMenuAGameInterface::CMenuAGameInterface(CMessageHandler* pmhParent) : CEngine(pmhParent)

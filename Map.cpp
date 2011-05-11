@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "TestAGameInterface.h"
-#include "Library.h"
+#include "FSLibrary.h"
 
 CMap::CMap(string name) : CUniverse(name) {
 #ifdef LOG_MAPAS

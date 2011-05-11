@@ -3,7 +3,7 @@
 #include "ActionWalkAuto0.h"
 #include "ActionQuietAuto0.h"
 #include "Player.h"
-#include "Library.h"
+#include "FSLibrary.h"
 
 /*
 CActionMove::CActionMove(int x, int y,int ppf,int i) : movx(x),movy(y), ppf(ppf), timeOld(0), timeNew(0), MsgID(CPlayer::MSGID_CharSpeed), CAction(i){ 

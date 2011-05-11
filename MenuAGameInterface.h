@@ -1,9 +1,9 @@
 #ifndef __MENUAGAMEINTERFACE_H__
 #define __MENUAGAMEINTERFACE_H__
 
-#include "Engine.h"
-#include "definitions.h"
-#include "Point.h"
+#include "FSEngine.h"
+#include "FSdefinitions.h"
+#include "FSPoint.h"
 #include <vector>
 #include <string>
  

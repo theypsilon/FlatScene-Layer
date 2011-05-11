@@ -1,6 +1,6 @@
 #include "ScrollCamera.h"
-#include "Library.h"
-#include "Screen.h"
+#include "FSLibrary.h"
+#include "FSScreen.h"
 
 CScrollCamera::CScrollCamera(CActor* target, CRectangle* area,CMessageHandler* pmhParent) :
 CCamera(target,area,pmhParent), centro(new CPoint(area->getW()/2,area->getH()/2)) {

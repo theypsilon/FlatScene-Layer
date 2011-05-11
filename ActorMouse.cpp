@@ -1,4 +1,5 @@
 #include "ActorMouse.h"
+#include "FSControlImages.h"
 
 CActorMouse::CActorMouse(CMessageHandler* pmhParent) : 
 // Se ha de llamar a la clase Base para una correcta inicialización

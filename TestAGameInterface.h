@@ -1,16 +1,16 @@
 #ifndef __TESTAGAMEINTERFACE_H__
 #define __TESTAGAMEINTERFACE_H__
 
-#include "Engine.h"
-#include "definitions.h"
-#include "Screen.h"
+#include "FSEngine.h"
+#include "FSdefinitions.h"
+#include "FSScreen.h"
 #include "ActionMove.h"
 #include "ActionFight.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "ScrollCamera.h"
-#include "ControlMultiverse.h"
-#include "ControlImages.h"
+#include "FSControlMultiverse.h"
+#include "FSControlImages.h"
  
 #include "TileBG.h"
 #include <vector>

@@ -1,5 +1,5 @@
 #include "Enemy.h"
-#include "Library.h"
+#include "FSLibrary.h"
 #include "TestAGameInterface.h"
 
 CEnemy::CEnemy(const char* creature,CMessageHandler* pmhParent) : CActorScrollMap(creature,pmhParent) {

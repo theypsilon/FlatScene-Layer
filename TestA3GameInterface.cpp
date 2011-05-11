@@ -1,6 +1,6 @@
 #include "TestA3GameInterface.h"
-#include "Library.h"
-#include "ControlOutputText.h"
+#include "FSLibrary.h"
+#include "FSControlOutputText.h"
 #include "FreezeGameInterface.h"
 #include "MenuAGameInterface.h"
 

@@ -1,8 +1,8 @@
 #ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
-#include "MessageHandler.h"
-#include "SpriteSet.h"
+#include "FSMessageHandler.h"
+#include "FSSpriteSet.h"
 #include <string>
 #include <vector>
 

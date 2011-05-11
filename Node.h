@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SDL.h"
-#include "definitions.h"
+#include "FSdefinitions.h"
 
 class CNode {
 private:

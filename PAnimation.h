@@ -1,8 +1,8 @@
 #ifndef __PANIMATION_H__
 #define __PANIMATION_H__
 
-#include "MessageHandler.h"
-#include "SpriteSet.h"
+#include "FSMessageHandler.h"
+#include "FSSpriteSet.h"
 #include <string>
 #include <vector>
 using namespace std;

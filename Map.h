@@ -2,7 +2,7 @@
 #define __M_A_P__
 
 #include <stdio.h>
-#include "Universe.h"
+#include "FSUniverse.h"
 #include "TileBG.h"
 #include "ActorScrollMap.h"
 #include <list>

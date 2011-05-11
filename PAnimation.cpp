@@ -1,6 +1,6 @@
 #include "PAnimation.h"
-#include "ControlImages.h"
-#include "Library.h"
+#include "FSControlImages.h"
+#include "FSLibrary.h"
 
 PAnimation::PAnimation(int num ,int* sequence, int sptset ) : CMessageHandler(NULL), control(new PControlAnimation(num,sequence)), img(new PImage(sptset)), _retardo(16) {
 }

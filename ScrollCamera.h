@@ -1,14 +1,14 @@
 #ifndef __SCROLL_CAMERA_H__
 #define __SCROLL_CAMERA_H__
 
-#include "Camera.h"
+#include "FSCamera.h"
 #include "ActorScrollMap.h"
  
 #include "LayerBackground.h"
-#include "Rectangle.h"
-#include "Image.h"
+#include "FSRectangle.h"
+#include "FSImage.h"
 #include "Map.h"
-#include "ControlMultiverse.h"
+#include "FSControlMultiverse.h"
 #include <vector>
 #include <string>
 

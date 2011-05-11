@@ -1,12 +1,12 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "MessageHandler.h"
+#include "FSMessageHandler.h"
 #include "ActorScrollMap.h"
-#include "Point.h"
+#include "FSPoint.h"
 #include "TileBG.h"
 #include <list>
-#include "parserXML.h" 
+#include "FSparserXML.h" 
 using namespace std;
 
 class CPlayer : public CActorScrollMap {

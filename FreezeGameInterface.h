@@ -1,8 +1,8 @@
 #ifndef __FREEZEGAMEINTERFACE_H__
 #define __FREEZEGAMEINTERFACE_H__
 
-#include "Engine.h"
-#include "definitions.h"
+#include "FSEngine.h"
+#include "FSdefinitions.h"
  
 using namespace std;
 

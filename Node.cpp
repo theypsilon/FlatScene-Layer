@@ -1,5 +1,5 @@
 #include "Node.h"
-#include "Library.h"
+#include "FSLibrary.h"
 
 CNode::CNode(int numLinks) {
 	this->numLinks=numLinks;

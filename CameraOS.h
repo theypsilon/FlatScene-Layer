@@ -1,7 +1,7 @@
 #ifndef __CAMERA_OS__
 #define __CAMERA_OS__
 
-#include "Camera.h"
+#include "FSCamera.h"
 
 class CCameraOS : public CCamera {
 private:

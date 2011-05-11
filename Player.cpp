@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "TestAGameInterface.h"
-#include "Library.h"
+#include "FSLibrary.h"
 
 CPlayer::CPlayer(CMessageHandler* pmhParent) : CActorScrollMap("PJ0",pmhParent) {
 #ifdef MENSAJES_ACCIONES

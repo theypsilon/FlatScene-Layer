@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "FreezeGameInterface.h"
-#include "Library.h"
+#include "FSLibrary.h"
 
 
 Uint32 CFreezeGameInterface::MSGID_PreviousEngine=CMessageHandler::getNextMSGID();

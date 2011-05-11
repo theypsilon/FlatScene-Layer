@@ -1,5 +1,5 @@
 #include "CameraOS.h"
-#include "Library.h"
+#include "FSLibrary.h"
 
 // Library.h es necesario para el manejo de errores.
 

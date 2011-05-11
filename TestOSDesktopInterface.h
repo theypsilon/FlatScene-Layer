@@ -1,7 +1,7 @@
 #ifndef  __TESTOSDESKTOPINTERFACE_H__
 #define __TESTOSDESKTOPINTERFACE_H__
 
-#include "Library.h"
+#include "FSLibrary.h"
 
 #include "ActorMouse.h"
 #include "CameraOS.h"

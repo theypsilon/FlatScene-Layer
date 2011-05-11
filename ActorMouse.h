@@ -1,7 +1,7 @@
 #ifndef __CACTOR_MOUSE__
 #define __CACTOR_MOUSE__
 
-#include "Actor.h"
+#include "FSActor.h"
 
 
 class CActorMouse : public CActor

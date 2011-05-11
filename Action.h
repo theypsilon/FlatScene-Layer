@@ -1,17 +1,17 @@
 #ifndef __ACTION_H__
 #define __ACTION_H__
 
-#include "ControlImages.h"
+#include "FSControlImages.h"
 #include "Animation.h"
-#include "definitions.h"
+#include "FSdefinitions.h"
 #include "Node.h"
-#include "Time.h"
+#include "FSTime.h"
 #include "Animation.h"
 #include <string>
 #include <stdio.h>
 #include <list>
 #include <typeinfo>
-#include "MessageHandler.h"
+#include "FSMessageHandler.h"
 using namespace std;
 
 

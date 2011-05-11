@@ -1,6 +1,6 @@
 #include "Action.h"
 #include "Player.h"
-#include "Library.h"
+#include "FSLibrary.h"
 
 CAction::CAction(CActorScrollMap* executor,TiXmlElement* fuente,const char* i) : priority(0), executor(executor), id(i), activo(false), predecesor(NULL), sucesor(NULL), actionBrothers(NULL),
 CNode(16), CAnimation() {

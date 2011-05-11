@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "TestA1GameInterface.h"
-#include "Library.h"
+#include "FSLibrary.h"
 #include "FreezeGameInterface.h"
 #include "MenuAGameInterface.h"
 

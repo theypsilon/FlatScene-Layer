@@ -3,14 +3,14 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "TestAGameInterface.h"
-#include "Library.h"
+#include "FSLibrary.h"
 #include "TestA0GameInterface.h"
 #include "TestA1GameInterface.h"
 #include "TestA2GameInterface.h"
 
 #include "Map.h"
 
-#include "ControlOutputText.h"
+#include "FSControlOutputText.h"
 
 Uint32 CTestAGameInterface::MSGID_ChangeMap=CMessageHandler::getNextMSGID(false);
 Uint32 CTestAGameInterface::MSGID_DeleteMap=CMessageHandler::getNextMSGID(false);
