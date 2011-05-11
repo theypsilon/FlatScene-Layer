@@ -79,6 +79,8 @@ private:
 
 public:
 
+	SCanvas* getCanvas();
+
 	// Funciona sólo si hay SDL_Surface
 	Uint32 getPixel ( int x , int y ) ;
 

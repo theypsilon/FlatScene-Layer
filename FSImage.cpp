@@ -37,6 +37,10 @@ void CImage::clearSurface ( )
 
 }
 
+SCanvas* CImage::getCanvas() {
+	return &m_pSurface;
+}
+
 Uint32 CImage::getPixel ( int x , int y ) 
 {
 	SDL_Surface* surface= m_pSurface.sdl_surf;
