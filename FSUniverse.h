@@ -2,8 +2,8 @@
 #define __UNIVERSE_H__
 
 #include <stdio.h>
-#include "MessageHandler.h"
-#include "Actor.h"
+#include "FSMessageHandler.h"
+#include "FSActor.h"
 #include <list>
 #include <string>
 

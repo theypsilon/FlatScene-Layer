@@ -1,7 +1,7 @@
 #ifndef __SPRITE_H__
 #define __SPRITE_H__
 
-#include "Image.h"
+#include "FSImage.h"
 #include <string>
 #include <vector>
 using namespace std;

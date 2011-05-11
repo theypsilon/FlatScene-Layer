@@ -5,12 +5,12 @@
 #include <map>
 #include <stack>
 #include <list>
-#include "Sprite.h"
-#include "Color.h"
-#include "Point.h"
-#include "FloatPoint.h"
-#include "definitions.h"
-#include "TextBox.h"
+#include "FSSprite.h"
+#include "FSColor.h"
+#include "FSPoint.h"
+#include "FSFloatPoint.h"
+#include "FSdefinitions.h"
+#include "FSTextBox.h"
 
 class CEngine;
 

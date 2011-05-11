@@ -1,9 +1,9 @@
 #ifndef __TEXTT_BOX_H__
 #define __TEXTT_BOX_H__
 
-#include "MessageHandler.h"
-#include "FloatPoint.h"
-#include "Image.h"
+#include "FSMessageHandler.h"
+#include "FSFloatPoint.h"
+#include "FSImage.h"
 #include <list>
 #include <stack>
 #include <map>

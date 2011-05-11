@@ -1,5 +1,5 @@
 // Rect.cpp: implementation of the CRectangle class.
-#include "Rectangle.h"
+#include "FSRectangle.h"
 
 CRectangle::CRectangle ( Sint16 x , Sint16 y , Sint16 w , Sint16 h ) 
 {

@@ -1,7 +1,7 @@
 #ifndef __COLLECTION_IMAGES__
 #define __COLLECTION_IMAGES__
 
-#include "SpriteSet.h"
+#include "FSSpriteSet.h"
 #include <stack>
 #include <string>
 #include <map>

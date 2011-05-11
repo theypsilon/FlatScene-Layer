@@ -1,5 +1,5 @@
-#include "Camera.h"
-#include "Library.h"
+#include "FSCamera.h"
+#include "FSLibrary.h"
 
 map<TypeResource,void (*)(void*)> CCamera::procRenders;
 

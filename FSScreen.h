@@ -1,9 +1,9 @@
 #ifndef __MAINCANVAS_H__
 #define __MAINCANVAS_H__
 
-#include "Image.h"
-#include "ControlImages.h"
-#include "Color.h"
+#include "FSImage.h"
+#include "FSControlImages.h"
+#include "FSColor.h"
 #include <list>
 
 #define RENDER_TEXTURE_STANDARD 0x00000001

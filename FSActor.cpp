@@ -1,7 +1,7 @@
-#include "Actor.h"
-#include "Library.h"
+#include "FSActor.h"
+#include "FSLibrary.h"
 #include "RutinaColision.h"
-#include "Universe.h"
+#include "FSUniverse.h"
 #include "tests.h"
 
 CActor::CActor(const char* creature,CMessageHandler* pmhParent) : 

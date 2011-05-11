@@ -1,5 +1,5 @@
-#include "Image.h"
-#include "Library.h"
+#include "FSImage.h"
+#include "FSLibrary.h"
 
 CImage::CImage ( SCanvas pSurface ) 
 {

@@ -1,7 +1,7 @@
-#include "Screen.h"
-#include "Library.h"
-#include "Engine.h"
-#include "ControlOutputText.h"
+#include "FSScreen.h"
+#include "FSLibrary.h"
+#include "FSEngine.h"
+#include "FSControlOutputText.h"
 
 SDL_Surface* CScreen::m_SDL_Surface=NULL;
 

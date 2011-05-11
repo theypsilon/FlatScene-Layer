@@ -1,9 +1,9 @@
-#include "TextBox.h"
-#include "Time.h"
+#include "FSTextBox.h"
+#include "FSTime.h"
 #include "SDL.h"
 
-#include "Library.h"
-#include "ControlOutputText.h"
+#include "FSLibrary.h"
+#include "FSControlOutputText.h"
 
 #define MARGEN 20
 

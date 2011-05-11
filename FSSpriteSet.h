@@ -1,8 +1,8 @@
 #ifndef __SPRITESET_H__
 #define __SPRITESET_H__
 
-#include "Sprite.h"
-#include "parserXML.h"
+#include "FSSprite.h"
+#include "FSparserXML.h"
 #include <vector>
 
 typedef vector<CSprite*> SpriteCollection;

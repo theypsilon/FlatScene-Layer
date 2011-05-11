@@ -1,5 +1,5 @@
-#include "Sprite.h"
-#include "Screen.h"
+#include "FSSprite.h"
+#include "FSScreen.h"
 
 CSprite::CSprite ( SCanvas pSurface, CPoint* zerocpSource) : CImage(pSurface) {
 

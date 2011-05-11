@@ -1,4 +1,4 @@
-#include "Coordinate.h"
+#include "FSCoordinate.h"
 #include <math.h>
 
 //constructor

@@ -2,7 +2,7 @@
 #ifndef  __COORDINATE_H__
 #define __COORDINATE_H__
 
-#include "Point.h"
+#include "FSPoint.h"
 
 //point class
 class CCoordinate : public CPoint{

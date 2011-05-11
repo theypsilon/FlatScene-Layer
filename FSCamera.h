@@ -1,15 +1,15 @@
 #ifndef ___CAMERA___
 #define ___CAMERA___
 
-#include "MessageHandler.h"
-#include "Actor.h"
+#include "FSMessageHandler.h"
+#include "FSActor.h"
  
 #include "LayerBackground.h"
-#include "Rectangle.h"
-#include "Image.h"
+#include "FSRectangle.h"
+#include "FSImage.h"
 #include "Map.h"
-#include "ControlMultiverse.h"
-#include "Screen.h"
+#include "FSControlMultiverse.h"
+#include "FSScreen.h"
 #include <vector>
 #include <string>
 

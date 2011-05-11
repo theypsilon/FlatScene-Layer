@@ -9,10 +9,10 @@
 #include "GL/glu.h"
 #include "SDL.h"
 #include "SDL_image.h"
-#include "definitions.h"
-#include "Rectangle.h"
-#include "FloatPoint.h"
-#include "Color.h"
+#include "FSdefinitions.h"
+#include "FSRectangle.h"
+#include "FSFloatPoint.h"
+#include "FSColor.h"
 #include <string>
 #include <list>
 #include <map>

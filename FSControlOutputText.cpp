@@ -1,7 +1,7 @@
-#include "ControlOutputText.h"
-#include "Library.h"
-#include "parserXML.h"
-#include "Screen.h"
+#include "FSControlOutputText.h"
+#include "FSLibrary.h"
+#include "FSparserXML.h"
+#include "FSScreen.h"
 
 CControlOutputText* CControlOutputText::singleton=NULL;
 
