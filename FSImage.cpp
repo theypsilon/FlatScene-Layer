@@ -19,10 +19,6 @@ CImage::~CImage ( )
 	clearSurface();
 }
 
-SCanvas* CImage::getCanvas() {
-	return (& m_pSurface);
-}
-
 void CImage::initProcRenders() {
 
 	procRenders[TR_ROTATION] = procRendRotation;
@@ -58,18 +54,12 @@ Uint32 CImage::getPixel ( int x , int y )
 
 int CImage::getWidth () 
 {
-	if (m_pSurface.sp_scale != 1.0)
-		return ( m_pSurface.w2 / m_pSurface.sp_scale ) ;	
-	else
-		return ( m_pSurface.w2 );
+	return ( m_pSurface.w2 );
 }
 
 int CImage::getHeight () 
 {
-	if (m_pSurface.sp_scale != 1.0)
-		return ( m_pSurface.h2 / m_pSurface.sp_scale ) ;	
-	else
-		return ( m_pSurface.h2 ) ;	
+	return ( m_pSurface.h2 ) ;	
 }
 
 void CImage::put ( CFloatPoint& ptDst, Uint8 flags) 
@@ -85,25 +75,6 @@ void CImage::put ( CFloatPoint& ptDst, Uint8 flags)
 	em->pointer = NULL;
 
 	CScreen::graphicMaterial.push_back(em);
-
-	if (m_pSurface.sp_scale != 1.0) {
-
-		//SCALATE
-
-		SRenderTranscalation* s_init = new SRenderTranscalation();
-
-		s_init->x = m_pSurface.sp_scale;
-		s_init->y = m_pSurface.sp_scale;
-		s_init->z = 0.0;
-
-		em = new SToRender();
-
-		em->type = TR_SCALATION;
-		em->pointer = (void*) s_init;
-
-		CScreen::graphicMaterial.push_back(em);
-
-	}
 
 	//TRANSLATE
 
@@ -256,25 +227,6 @@ void CImage::put ( CPoint& ptDst, Uint8 flags)
 
 	CScreen::graphicMaterial.push_back(em);
 
-	if (m_pSurface.sp_scale != 1.0) {
-
-		//SCALATE
-
-		SRenderTranscalation* s_init = new SRenderTranscalation();
-
-		s_init->x = m_pSurface.sp_scale;
-		s_init->y = m_pSurface.sp_scale;
-		s_init->z = 0.0;
-
-		em = new SToRender();
-
-		em->type = TR_SCALATION;
-		em->pointer = (void*) s_init;
-
-		CScreen::graphicMaterial.push_back(em);
-
-	}
-
 	//TRANSLATE
 
 	SRenderTranscalation* c_init = new SRenderTranscalation();
@@ -409,8 +361,6 @@ SDL_Surface* CImage::scaleSurface( SDL_Surface* s_surf, int factor) {
 	if (s_surf == NULL || factor <= 1)
 		return ret;
 
-	factor = 2;
-
 	Uint8 bpp = s_surf->format->BytesPerPixel;
 
 	if (bpp == 4) // 32 bits
@@ -461,7 +411,7 @@ SDL_Surface* CImage::scaleSurface( SDL_Surface* s_surf, int factor) {
 	return ret;
 }
 
-SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, float sp_scale) {
+SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
 	if (pow2(mode) != mode)
 		CLibrary::Error("CCanvas::LoadIMG -> modo erroneo.");
@@ -482,7 +432,6 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, float sp_scale) {
 	pSurface.w2 = surface->w;
 	pSurface.h2 = surface->h;
 	pSurface.tex = 0;
-	pSurface.sp_scale = sp_scale;
     pSurface.w = pow2((Uint32)surface->w);
     pSurface.h = pow2((Uint32)surface->h);
 	pSurface.bpp = surface->format->BytesPerPixel;
@@ -543,8 +492,11 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, float sp_scale) {
 		glBindTexture( GL_TEXTURE_2D,pSurface.tex );
 	    
 		// Set the texture's stretching properties
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_LINEAR );
+		if (filter != GL_NEAREST || filter != GL_LINEAR)
+			filter = GL_NEAREST;
+
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter);
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter);
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
 	    

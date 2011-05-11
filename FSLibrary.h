@@ -121,7 +121,7 @@ public:
 
 };
 
-#define NOERROR "|-| No error"
+#define SINERROR "|-| No error"
 
 string resource(const char* c);
 
