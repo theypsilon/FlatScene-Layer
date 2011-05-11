@@ -4,10 +4,8 @@
 #include "FSMessageHandler.h"
 #include "FSActor.h"
  
-#include "LayerBackground.h"
 #include "FSRectangle.h"
 #include "FSImage.h"
-#include "Map.h"
 #include "FSControlMultiverse.h"
 #include "FSScreen.h"
 #include <vector>
