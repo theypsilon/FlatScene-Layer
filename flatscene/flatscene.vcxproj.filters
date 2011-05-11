@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de código fuente">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Library">
+      <UniqueIdentifier>{8e842b98-a4a0-4af2-83ab-1d19775dab3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Library">
+      <UniqueIdentifier>{2c03b191-a18a-47ed-8446-a88df9cda7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\TinyXML">
+      <UniqueIdentifier>{980db028-4e69-47b8-b3cb-32516a2c2c54}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
+      <Filter>Archivos de código fuente\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="FSControlOutputText.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSCoordinate.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSEngine.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSFloatPoint.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSImage.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSLibrary.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMessageHandler.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSPoint.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSRectangle.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSScreen.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSSprite.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSSpriteSet.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSTextBox.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSTime.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSUniverse.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSActor.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSCamera.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSColor.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSControlImages.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="FSControlMultiverse.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FSActor.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSCamera.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSColor.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSControlImages.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSControlMultiverse.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSControlOutputText.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSCoordinate.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSdefinitions.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSEngine.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSFloatPoint.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSImage.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSLibrary.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMessageHandler.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSparserXML.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSPoint.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSRectangle.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSScreen.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSSprite.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSSpriteSet.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSTextBox.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSTime.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="FSUniverse.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

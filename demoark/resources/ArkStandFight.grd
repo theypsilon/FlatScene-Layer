@@ -1,0 +1,100 @@
+<Spriteset sprites='15' cellwidth='50' cellheight='56'>
+  <globalareas>
+    <area id='0' relative='true'>
+      <rectangle x1='-6' x2='6' y1='-6' y2='6'/>
+    </area>
+    <area id='1' relative='true'>
+      <rectangle x1='-6' x2='6' y1='-6' y2='6'/>
+    </area>
+  </globalareas>
+  <img id='0' name='right0' width='31' height='29'>
+    <cpoint x='10' y='24'/>
+    <area id='2'>
+      <!--<rectangle x1='16' x2='18' y1='27' y2='53'/>-->
+    </area>
+  </img>
+  <img id='1' name='right1' width='42' height='27'>
+    <cpoint x='7' y='22'/>
+    <area id='2'>
+      <rectangle x1='21' x2='42' y1='10' y2='17'/>
+    </area>
+  </img>
+  <img id='2' name='right2' width='50' height='27'>
+    <cpoint x='7' y='22'/>
+    <area id='2'>
+      <rectangle x1='37' x2='50' y1='3' y2='17'/>
+    </area>
+  </img>
+  <img id='3' name='right3' width='48' height='27'>
+    <cpoint x='7' y='22'/>
+    <area id='2'>
+      <!--<rectangle x1='4' x2='7' y1='27' y2='53'/>-->
+    </area>
+  </img>
+  <img id='4' name='right4' width='48' height='29'>
+    <cpoint x='10' y='24'/>
+    <area id='2'>
+      <!--<rectangle x1='0' x2='2' y1='27' y2='53'/>-->
+    </area>
+  </img>
+  <img id='5' name='up0' width='19' height='27'>
+    <cpoint x='11' y='26'/>
+    <area id='2'>
+      <!--<rectangle x1='0' x2='28' y1='14' y2='16'/>-->
+    </area>
+  </img>
+  <img id='6' name='up1' width='16' height='41'>
+    <cpoint x='8' y='40'/>
+    <area id='2'>
+      <rectangle x1='6' x2='14' y1='0' y2='21'/>
+    </area>
+  </img>
+  <img id='7' name='up2' width='17' height='47'>
+    <cpoint x='8' y='46'/>
+    <area id='2'>
+      <rectangle x1='3' x2='17' y1='0' y2='14'/>
+    </area>
+  </img>
+  <img id='8' name='up3' width='16' height='45'>
+    <cpoint x='8' y='44'/>
+    <area id='2'>
+      <!--<rectangle x1='0' x2='28' y1='9' y2='13'/>-->
+    </area>
+  </img>
+  <img id='9' name='up4' width='19' height='42'>
+    <cpoint x='11' y='41'/>
+    <area id='2'>
+      <!--<rectangle x1='0' x2='28' y1='5' y2='13'/>-->
+    </area>
+  </img>
+  <img id='10' name='down0' width='18' height='30'>
+    <cpoint x='8' y='24'/>
+    <area id='2'>
+      <!--<rectangle x1='13' x2='16' y1='0' y2='27'/>-->
+    </area>
+  </img>
+  <img id='11' name='down1'  width='16' height='49'>
+    <cpoint x='6' y='22'/>
+    <area id='2'>
+      <rectangle x1='5' x2='12' y1='27' y2='48'/>
+    </area>
+  </img>
+  <img id='12' name='down2' width='17' height='55'>
+    <cpoint x='6' y='22'/>
+    <area id='2'>
+      <rectangle x1='3' x2='17' y1='41' y2='55'/>
+    </area>
+  </img>
+  <img id='13' name='down3' width='16' height='53'>
+    <cpoint x='6' y='22'/>
+    <area id='2'>
+      <!--<rectangle x1='3' x2='6' y1='0' y2='27'/>-->
+    </area>
+  </img>
+  <img id='14' name='down4' width='18' height='53'>
+    <cpoint x='8' y='24'/>
+    <area id='2'>
+      <!--<rectangle x1='0' x2='3' y1='0' y2='27'/>-->
+    </area>
+  </img>
+</Spriteset>

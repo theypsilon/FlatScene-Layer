@@ -1,0 +1,8 @@
+#include "ActionComboDemo0.h"
+#include "ActionComboDemo1.h"
+#include "ActionSimpleDemo0.h"
+#include "ActionWalk0.h"
+#include "ActionQuiet0.h"
+#include "ActionWalkAuto0.h"
+#include "ActionQuietAuto0.h"
+#include "ActionXPunto.h"

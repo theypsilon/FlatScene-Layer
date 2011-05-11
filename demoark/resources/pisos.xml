@@ -1,0 +1,21 @@
+<Map width="12" height="10" layers="3" tileWidth="32" tileHeight="32" name="pisos">
+    <Music>
+        <Midi name="soerat" />
+    </Music>
+    <TileGraphs>
+        <Spriteset name="tilp" />
+    </TileGraphs>
+    <TileCollisions>
+        <Spriteset name="durp" />
+    </TileCollisions>
+    <LayerList>
+        <Layer type="lower" floor="0" />
+        <Layer type="lower" floor="1" />
+        <Layer type="lower" floor="2" />
+    </LayerList>
+    <GateList>
+        <Gate target="mapa5" x1="192" x2="224" y1="32" y2="96" z="1" target-x="150" target-y="150" target-z="0" />
+        <Gate target="mapa1" x1="160" x2="192" y1="192" y2="224" z="2" target-x="300" target-y="200" target-z="0" />
+        <Gate target="pisos" x1="64" x2="96" y1="224" y2="256" z="0" target-x="300" target-y="200" target-z="0" />
+    </GateList>
+</Map>

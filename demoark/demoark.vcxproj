@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B34E9CEF-E7BE-4D6B-AF79-9901613C555A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>demoark</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Programacion\VS Workspace\flatscene - lib\flatscene;C:\Programacion\cLibs\SDL-1.2.14\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>flatscenedebug.lib;opengl32.lib;glu32.lib;sdl.lib;sdlmain.lib;sdl_ttf.lib;sdl_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Programacion\VS Workspace\flatscene - lib\flatscene\lib;C:\Programacion\cLibs\SDL-1.2.14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Programacion\VS Workspace\flatscene - lib\flatscene;C:\Programacion\cLibs\SDL-1.2.14\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>flatscene.lib;opengl32.lib;glu32.lib;sdl.lib;sdlmain.lib;sdl_ttf.lib;sdl_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Programacion\VS Workspace\flatscene - lib\flatscene\lib;C:\Programacion\cLibs\SDL-1.2.14\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Action.h" />
+    <ClInclude Include="ActionComboDemo0.h" />
+    <ClInclude Include="ActionComboDemo1.h" />
+    <ClInclude Include="ActionFight.h" />
+    <ClInclude Include="ActionMove.h" />
+    <ClInclude Include="ActionQuiet0.h" />
+    <ClInclude Include="ActionQuietAuto0.h" />
+    <ClInclude Include="actions.h" />
+    <ClInclude Include="ActionSimpleDemo0.h" />
+    <ClInclude Include="ActionWalk0.h" />
+    <ClInclude Include="ActionWalkAuto0.h" />
+    <ClInclude Include="ActionXPunto.h" />
+    <ClInclude Include="ActorMouse.h" />
+    <ClInclude Include="ActorScrollMap.h" />
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="CameraOS.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyNPC.h" />
+    <ClInclude Include="EnemyPunto.h" />
+    <ClInclude Include="FreezeGameInterface.h" />
+    <ClInclude Include="GarbageCollector.h" />
+    <ClInclude Include="LayerBackground.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MenuAGameInterface.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="OrderGraph.h" />
+    <ClInclude Include="PAnimation.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="RutinaColision.h" />
+    <ClInclude Include="ScrollCamera.h" />
+    <ClInclude Include="TestA0GameInterface.h" />
+    <ClInclude Include="TestA1GameInterface.h" />
+    <ClInclude Include="TestA2GameInterface.h" />
+    <ClInclude Include="TestA3GameInterface.h" />
+    <ClInclude Include="TestA4GameInterface.h" />
+    <ClInclude Include="TestA5GameInterface.h" />
+    <ClInclude Include="TestAGameInterface.h" />
+    <ClInclude Include="TestBGameInterface.h" />
+    <ClInclude Include="TestOSDesktopInterface.h" />
+    <ClInclude Include="tests.h" />
+    <ClInclude Include="TileBG.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Action.cpp" />
+    <ClCompile Include="ActionComboDemo0.cpp" />
+    <ClCompile Include="ActionComboDemo1.cpp" />
+    <ClCompile Include="ActionFight.cpp" />
+    <ClCompile Include="ActionMove.cpp" />
+    <ClCompile Include="ActionQuiet0.cpp" />
+    <ClCompile Include="ActionQuietAuto0.cpp" />
+    <ClCompile Include="ActionSimpleDemo0.cpp" />
+    <ClCompile Include="ActionWalk0.cpp" />
+    <ClCompile Include="ActionWalkAuto0.cpp" />
+    <ClCompile Include="ActionXPunto.cpp" />
+    <ClCompile Include="ActorMouse.cpp" />
+    <ClCompile Include="ActorScrollMap.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="CameraOS.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyNPC.cpp" />
+    <ClCompile Include="EnemyPunto.cpp" />
+    <ClCompile Include="FreezeGameInterface.cpp" />
+    <ClCompile Include="GarbageCollector.cpp" />
+    <ClCompile Include="LayerBackground.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MenuAGameInterface.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="OrderGraph.cpp" />
+    <ClCompile Include="PAnimation.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RutinaColision.cpp" />
+    <ClCompile Include="ScrollCamera.cpp" />
+    <ClCompile Include="TestA0GameInterface.cpp" />
+    <ClCompile Include="TestA1GameInterface.cpp" />
+    <ClCompile Include="TestA2GameInterface.cpp" />
+    <ClCompile Include="TestA3GameInterface.cpp" />
+    <ClCompile Include="TestA4GameInterface.cpp" />
+    <ClCompile Include="TestA5GameInterface.cpp" />
+    <ClCompile Include="TestAGameInterface.cpp" />
+    <ClCompile Include="TestBGameInterface.cpp" />
+    <ClCompile Include="TestOSDesktopInterface.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

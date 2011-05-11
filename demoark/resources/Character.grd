@@ -1,0 +1,73 @@
+<Spriteset sprites='21' cellwidth='32' cellheight='32'>
+	<globalareas>
+		<area id='0' relative='true'>
+      <rectangle x1='-6' x2='6' y1='-6' y2='6'/>
+		</area>
+		<area id='1' relative='true'>
+			<rectangle x1='-6' x2='6' y1='-20' y2='6'/>
+		</area>
+	</globalareas>
+	<img id='0' name='down0' width='17' height='31'>
+		<cpoint x='7' y='27'/>
+	</img>
+	<img id='1' width='18' height='30'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='2' name='down2' width='19' height='30'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='3' name='down3' width='20' height='29'>
+		<cpoint x='9' y='27'/>
+	</img>
+	<img id='4' name='down4' width='20' height='29'>
+		<cpoint x='9' y='27'/>
+	</img>
+	<img id='5' name='down5' width='19' height='30'>
+		<cpoint x='9' y='27'/>
+	</img>
+	<img id='6' name='down6' width='18' height='30'>
+		<cpoint x='9' y='27'/>
+	</img>
+	<img id='7' name='up0' width='17' height='31'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='8' name='up1' width='20' height='31'>
+		<cpoint x='10' y='27'/>
+	</img>
+	<img id='9' name='up2' width='17' height='31'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='10' name='up3' width='19' height='30'>
+		<cpoint x='9' y='27'/>
+	</img>
+	<img id='11' name='up4' width='19' height='30'>
+		<cpoint x='9' y='27'/>
+	</img>
+	<img id='12' name='up5' width='17' height='31'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='13' name='up6' width='20' height='31'>
+		<cpoint x='10' y='27'/>
+	</img>
+	<img id='14' name='left0' width='16' height='32'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='15' name='left1' width='22' height='32'>
+		<cpoint x='11' y='27'/>
+	</img>
+	<img id='16' name='left2' width='16' height='32'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='17' name='left3' width='16' height='31'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='18' name='left4' width='20' height='32'>
+		<cpoint x='10' y='27'/>
+	</img>
+	<img id='19' name='left5' width='16' height='32'>
+		<cpoint x='8' y='27'/>
+	</img>
+	<img id='20' name='left6' width='16' height='31'>
+		<cpoint x='8' y='27'/>
+	</img>
+</Spriteset>
