@@ -4,8 +4,6 @@
 #include "MessageHandler.h"
 #include "Coordinate.h"
 #include "Sprite.h"
-#include "Action.h"
-#include "OrderGraph.h"
 #include <string>
 #include <map>
 #include <vector>

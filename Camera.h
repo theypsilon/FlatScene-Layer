@@ -4,10 +4,8 @@
 #include "MessageHandler.h"
 #include "Actor.h"
  
-#include "LayerBackground.h"
 #include "Rectangle.h"
 #include "Image.h"
-#include "Map.h"
 #include "ControlMultiverse.h"
 #include "Screen.h"
 #include <vector>
