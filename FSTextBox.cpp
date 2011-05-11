@@ -1,14 +1,14 @@
-#include "FSTextBox.h"
-#include "FSTime.h"
+#include "TextBox.h"
+#include "Time.h"
 #include "SDL.h"
 
-#include "FSLibrary.h"
-#include "FSControlOutputText.h"
+#include "Library.h"
+#include "ControlOutputText.h"
 
-#define MARGEN 10
+#define MARGEN 20
 
 CTextBox::CTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) : 
-file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL),
+file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
 timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 	string allText(text);
@@ -55,43 +55,40 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 		if (newChar == ' ' ) {
 			const char* caux = allText.c_str();
-			float cuenta = ((float)advance) /((float)CScreen::getScaleX());
+			float cuenta = (float)advance;
 
 			for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
 				if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
 					CLibrary::Error("TTF_GlyphMetrics fallo.");
 
-				cuenta += ((float)minx) /((float)CScreen::getScaleX());
+				cuenta += (float)minx;
 
 			}
 
 			if ((currentX + cuenta - x)>= (limite - MARGEN)) {
 				currentX = upleft.X() + MARGEN;
-				currentY += ((float)TTF_FontLineSkip(fuente->fuente)) /((float)CScreen::getScaleY());
+				currentY += (float)TTF_FontLineSkip(fuente->fuente);
 			} else {
 				maxStep++;
-				currentX += ((float)advance) /((float)CScreen::getScaleX());
+				currentX += (float)advance;
 				SChar newT;
 
 				newT.p=NULL;
 
 				charInDisplay.push_back(newT);
 			}
-
+			
 		} else if (newChar == '\n') {
 			currentX = upleft.X() + MARGEN;
-			currentY += ((float)TTF_FontLineSkip(fuente->fuente)) /((float)CScreen::getScaleY());
+			currentY += (float)TTF_FontLineSkip(fuente->fuente);
 		} else {
 			maxStep++;
 
 			SChar newT;
 
-			currentX += ((float)minx) /((float)CScreen::getScaleX());
-			currentY -= ((float)maxy) /((float)CScreen::getScaleY());
-			newT.p = new CFloatPoint(currentX,currentY);
-			currentX += ((float)advance) /((float)CScreen::getScaleX()) - ((float)minx) /((float)CScreen::getScaleX());
-			currentY += ((float)maxy) /((float)CScreen::getScaleY());
+			newT.p = new CFloatPoint(currentX+(float)minx,currentY-(float)maxy);
+			currentX += (float)advance;
 
 			if (fuente->render.find(newChar)==fuente->render.end()) {
 				fuente->render[newChar] = new CImage(CImage::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
@@ -106,30 +103,11 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 	 currentY -= (float)y;
 
-	 currentY += (float)TTF_FontLineSkip(fuente->fuente) /((float)CScreen::getScaleY());
-
-	 SDL_Surface* surf,* temp;
-
-	 surf = SDL_CreateRGBSurface(0,limite,(int)currentY,32,0,0,255,0);
-	if (!surf)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
-	temp = SDL_DisplayFormat(surf);
-	if (!temp)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
-	SDL_FreeSurface(surf);
-	SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,50,50,150));
-	#if TEXT_BASE_SCALE > 1
-	surf = CImage::scaleSurface(temp,CScreen::getScaleX());
-    if (!surf)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
-    SDL_FreeSurface(temp);
-    #else     
-	surf=temp;
-	#endif
+	 currentY += (float)TTF_FontLineSkip(fuente->fuente);
 
 	yBox = (Uint8) currentY;
 
-	//SDL_SetAlpha(surf,0,255);
-
-
-	box = new CImage(CImage::toSCanvas(surf));
+	createBox();
 
 }
 
@@ -211,21 +189,16 @@ void CTextBox::createBox() {
 		return;
 	}
 
-	SDL_Surface* surf = SDL_CreateRGBSurface(0,xBox,yBox,32,0,0,255,0);
-	if (!surf)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
-	SDL_Surface* temp = SDL_DisplayFormat(surf);
-	if (!temp)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
-	SDL_FreeSurface(surf);
-	SDL_FillRect(temp,NULL,SDL_MapRGB(temp->format,50,50,150));
-	#if TEXT_BASE_SCALE > 1
-    surf = CImage::scaleSurface(temp,TEXT_BASE_SCALE );
-    if (!surf)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
-    SDL_FreeSurface(temp);
-    #else     
-	surf=temp;
-	#endif
+	SDL_Surface *surface, *aux_surf;
 
-	box = new CImage(CImage::toSCanvas(surf));
+	aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,CScreen::getBpp(),0,0,255,0);
+	if (!aux_surf)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
+	surface = SDL_DisplayFormat(aux_surf);
+	if (!surface)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
+	SDL_FreeSurface(aux_surf);
+	SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
+
+	box = new CImage(CImage::toSCanvas(surface));
 }
 
 int CTextBox::finish() {

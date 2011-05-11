@@ -1,6 +1,8 @@
-#include "FSActor.h"
-#include "FSLibrary.h"
-#include "FSUniverse.h"
+#include "Actor.h"
+#include "Library.h"
+#include "RutinaColision.h"
+#include "Universe.h"
+#include "tests.h"
 
 CActor::CActor(const char* creature,CMessageHandler* pmhParent) : 
 file(0), graph(0), flags(0), inUniverse(NULL), creature(creature), 

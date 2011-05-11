@@ -1,5 +1,5 @@
-#include "FSControlImages.h"
-#include "FSLibrary.h"
+#include "ControlImages.h"
+#include "Library.h"
 
 CControlImages* CControlImages::singleton=NULL;
 
@@ -45,11 +45,6 @@ int CControlImages::add(const char* name,Uint8 mode) {
 
 	int ret=search(name);
 	if (ret <0) {
-		if (SDL_GetVideoSurface() == NULL && mode != ONLY_SDL_SURFACE) {
-			CLibrary::Error("Pantalla no inicializada");
-			return ERROR;
-		}
-
 		if (!lastIndexAdded.empty()) {
 			ret=lastIndexAdded.top();
 			lastIndexAdded.pop();

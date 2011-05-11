@@ -1,7 +1,8 @@
-#include "FSControlOutputText.h"
-#include "FSLibrary.h"
-#include "FSparserXML.h"
-#include "FSScreen.h"
+#include "ControlOutputText.h"
+#include "Library.h"
+#include "parserXML.h"
+#include "Screen.h"
+
 CControlOutputText* CControlOutputText::singleton=NULL;
 
 CControlOutputText::CControlOutputText() : admin((CEngine*)0xFFFFFFFF), data(NULL), fontSize(20) {

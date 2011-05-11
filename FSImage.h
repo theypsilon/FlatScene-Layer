@@ -9,10 +9,10 @@
 #include "GL/glu.h"
 #include "SDL.h"
 #include "SDL_image.h"
-#include "FSdefinitions.h"
-#include "FSRectangle.h"
-#include "FSFloatPoint.h"
-#include "FSColor.h"
+#include "definitions.h"
+#include "Rectangle.h"
+#include "FloatPoint.h"
+#include "Color.h"
 #include <string>
 #include <list>
 #include <map>
@@ -25,7 +25,6 @@ typedef struct {
 	int w2,h2;			/* Valor previo desplazado a la potencia de 2 superior o igual más próxima. */
 	Uint8 bpp;
 	SDL_Surface* sdl_surf; // NULL or not null, thats the question.
-	float sp_scale;
 }SCanvas;
 
 struct SToRender;
@@ -59,8 +58,8 @@ private:
 	friend class CControlImages;
 	friend class CScreen;
 
-	static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter = GL_NEAREST);
-	static SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor=1);
+	static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+	static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
 	static inline Uint32 pow2 (Uint32 n);
 
@@ -80,7 +79,6 @@ private:
 
 public:
 
-	SCanvas* getCanvas();
 	// Funciona sólo si hay SDL_Surface
 	Uint32 getPixel ( int x , int y ) ;
 

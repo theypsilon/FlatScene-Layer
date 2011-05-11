@@ -1,4 +1,4 @@
-#include "FSPoint.h"
+#include "Point.h"
 #include <math.h>
 
 //constructor

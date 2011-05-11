@@ -1,4 +1,4 @@
-#include "FSColor.h"
+#include "Color.h"
 //standard constructor
 CColor::CColor(Uint8 r,Uint8 g,Uint8 b)
 {

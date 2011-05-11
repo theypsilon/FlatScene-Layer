@@ -1,8 +1,8 @@
 #ifndef __C_COLLECTION_M__
 #define __C_COLLECTION_M__
 
-#include "FSUniverse.h"
-#include "FSMessageHandler.h"
+#include "Universe.h"
+#include "MessageHandler.h"
 #include <map>
 #include <string>
 

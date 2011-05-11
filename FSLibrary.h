@@ -4,22 +4,22 @@
 
 //include message handler(base class)
 
-#include "FSMessageHandler.h"
+#include "MessageHandler.h"
 
-#include "FSScreen.h"
-#include "FSEngine.h"
+#include "Screen.h"
+#include "Engine.h"
 
-#include "FSControlImages.h"
-#include "FSControlMultiverse.h"
-#include "FSControlOutputText.h"
-#include "FSTime.h"
+#include "ControlImages.h"
+#include "ControlMultiverse.h"
+#include "ControlOutputText.h"
+#include "Time.h"
 
-#include "FSCamera.h"
-#include "FSUniverse.h"
-#include "FSActor.h"
+#include "Camera.h"
+#include "Universe.h"
+#include "Actor.h"
 
 #include <stdlib.h>
-#include "FSparserXML.h"
+#include "parserXML.h"
 
 enum TypeError {
 	TE_standard,

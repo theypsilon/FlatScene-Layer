@@ -1,4 +1,4 @@
-#include "FSFloatPoint.h"
+#include "FloatPoint.h"
 #include <math.h>
 
 //constructor

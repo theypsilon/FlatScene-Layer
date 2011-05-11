@@ -15,7 +15,7 @@
 #include "SDL_ttf.h"
 #include "SDL_opengl.h"
  
-#include "FSdefinitions.h"
+#include "definitions.h"
 #include <list>
 #include <vector>
 

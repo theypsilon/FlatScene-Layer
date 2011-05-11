@@ -1,7 +1,7 @@
-#include "FSTime.h"
-#include "FSControlOutputText.h"
-#include "FSScreen.h"
-#include "FSLibrary.h"
+#include "Time.h"
+#include "ControlOutputText.h"
+#include "Screen.h"
+#include "Library.h"
 
 
 CTime::CTime() : actTime(NULL), admin(NULL), all(false), allMsInterval(16) {

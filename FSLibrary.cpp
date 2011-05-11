@@ -9,7 +9,7 @@
 #endif
 #endif
 
-#include "FSLibrary.h"
+#include "Library.h"
 
 #define EXITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); setActualEngine(A); A->onExit(); setActualEngine(eaux); }
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); setActualEngine(A); A->onInit(); setActualEngine(eaux); }
@@ -533,14 +533,14 @@ string CLibrary::toStringErrorGL(GLenum e) {
 
 string CLibrary::readLastError() {
 	if (errors.empty())
-		return NOERROR;
+		return SINERROR;
 	else
 		return errors.back();
 }
 
 string CLibrary::popError() {
 	if (errors.empty())
-		return NOERROR;
+		return SINERROR;
 	else {
 		string ret = errors.back();
 		errors.pop_back();

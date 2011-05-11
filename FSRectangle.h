@@ -2,7 +2,7 @@
 #define __RECTANGLE_H__
 
 #include "SDL.h"
-#include "FSPoint.h"
+#include "Point.h"
 
 //CRectangle--abstract an SDL_Rect
 class CRectangle  

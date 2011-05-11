@@ -1,5 +1,6 @@
-#include "FSControlMultiverse.h"
-#include "FSLibrary.h"
+#include "ControlMultiverse.h"
+#include "Library.h"
+#include "Map.h"
 
 CControlMultiverse* CControlMultiverse::singleton=NULL;
 

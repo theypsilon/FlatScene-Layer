@@ -3,7 +3,7 @@
 
 #include <map>
 #include "SDL.h"
-#include "FSdefinitions.h"
+#include "definitions.h"
 
 class CEngine;
 

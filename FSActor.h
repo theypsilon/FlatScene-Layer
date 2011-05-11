@@ -1,9 +1,11 @@
 #ifndef __ACTOR_H__
 #define __ACTOR_H__
 
-#include "FSMessageHandler.h"
-#include "FSCoordinate.h"
-#include "FSSprite.h"
+#include "MessageHandler.h"
+#include "Coordinate.h"
+#include "Sprite.h"
+#include "Action.h"
+#include "OrderGraph.h"
 #include <string>
 #include <map>
 #include <vector>
