@@ -32,7 +32,10 @@ void CControlImages::clear() {
 		iter = set.begin ( ) ;
 		pspt = iter->second ;
 		set.erase ( iter ) ;
-		CScreen::spritesetToDelete.push_back(pspt); // delete sptset;
+		if (SDL_GetVideoSurface())
+			CScreen::spritesetToDelete.push_back(pspt); // delete sptset;
+		else
+			delete pspt;
 	}
 	count.clear();
 	while (!lastIndexAdded.empty()) {
@@ -68,7 +71,10 @@ int CControlImages::remove(Uint32 n) {
 		int c=--count[sptset];
 		if (c < 1)  {
 			if (c==0) {
-				CScreen::spritesetToDelete.push_back(sptset); // delete sptset;
+				if (SDL_GetVideoSurface())
+					CScreen::spritesetToDelete.push_back(sptset); // delete sptset;
+				else
+					delete sptset;
 				set.erase(set.find(n));
 				count.erase(count.find(sptset));
 				lastIndexAdded.push(n);

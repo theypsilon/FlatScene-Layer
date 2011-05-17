@@ -181,18 +181,23 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		s_aux=namefile+tipefile;
 
 		chipset=IMG_Load(resource(s_aux.c_str()).c_str());
-		if (!chipset) { CLibrary::Error(s_aux,TE_fileExists); }
+		if (!chipset) { CLibrary::Error(resource(s_aux.c_str()),TE_fileExists); }
 
 		ancho = chipset->w;
 		alto = chipset->h;
 
-		SDL_Surface* sdl_surf=SDL_DisplayFormat(chipset);
-		if (sdl_surf) {
-			SDL_FreeSurface(chipset);
-			chipset = sdl_surf;
-		} else {
-			return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
-		}
+		if (SDL_GetVideoSurface() != NULL) {
+
+			SDL_Surface* sdl_surf=SDL_DisplayFormat(chipset);
+			if (sdl_surf) {
+				SDL_FreeSurface(chipset);
+				chipset = sdl_surf;
+			} else {
+				return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
+			}
+
+		} else if (mode != ONLY_SDL_SURFACE) 
+			return CLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
 
 		CSprite* pspt=new CSprite(CImage::toSCanvas(chipset,mode));
 
@@ -263,13 +268,20 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	
 	// Empezamos a preparar el formato de la imagen.
 
-	SDL_Surface* sdl_surf=SDL_DisplayFormatAlpha(chipset);
-	if (sdl_surf) {
-		SDL_FreeSurface(chipset);
-		chipset=sdl_surf;
-	} else {
-		return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
-	}
+	SDL_Surface* sdl_surf = NULL;
+
+	if (SDL_GetVideoSurface() != NULL) {
+
+		sdl_surf=SDL_DisplayFormatAlpha(chipset);
+		if (sdl_surf) {
+			SDL_FreeSurface(chipset);
+			chipset=sdl_surf;
+		} else {
+			return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
+		}
+
+	} else if (mode != ONLY_SDL_SURFACE) 
+		return CLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
 	
 	s_aux.clear();
 
@@ -374,7 +386,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY, chipset->format->colorkey);	// Le asignamos los formatos de la surface del spriteset.
 		SDL_BlitSurface(chipset,&rect,sdl_surf,0);
 
-		if (sp_scale > 0 && sp_scale != 1.0) {
+		if (sp_scale > 0 && sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
 			temp = CImage::scaleSurface(sdl_surf,sp_scale);
 			SDL_FreeSurface(sdl_surf);
 			sdl_surf=temp;

@@ -49,7 +49,7 @@ CSprite* CActorMouse::getSprite() {
 }
 
 CActor* CActorMouse::clone() {
-	CActor* act;
+	CActor* act = NULL;
 
 	// TODO
 
