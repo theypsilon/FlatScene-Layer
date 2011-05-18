@@ -102,6 +102,7 @@ int CSpriteset::size ( )
 }
 
 void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
+
 	int num_img=0;
 	int ancho=0;
 	int alto=0;
@@ -149,7 +150,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 		if (namefile.empty()) {
 			namefile = *cPrev;
-			tipefile = ".png";
+			tipefile = ".grd";
 		}
 
 	} else {
@@ -173,7 +174,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	if (!xmldoc.LoadFile()) {	 	// Cargamos el .grd
 		// Si no carga, asumimos que no existe el .grd y el Spriteset será un único Sprite sin información adicional
 
-		if (cPrev) // en ese caso no tiene sentido que haya varios ciclos
+		if (cPrev || tipefile == ".grd") // en ese caso no tiene sentido que haya varios ciclos
 			 return CLibrary::Error(s_aux,TE_fileExists);
 
 		num_img = 1;
@@ -230,6 +231,9 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		return CLibrary::Error("Estructura defectuosa para el archivo: "+s_aux+"\nNo se ha especificado el número de sprites.");	
 	}
 
+	if (input.ToElement()->Attribute("type") && strcmp(input.ToElement()->Attribute("type"),"split")==0)
+		return loadChipsetSplit(s_aux,mode);
+
 	if (!(input.ToElement()->Attribute("cellwidth") && input.ToElement()->Attribute("cellheight"))) { 
 		return CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nNo se ha especificado dimensiones para las celdas.").c_str()); 
 	}
@@ -248,12 +252,34 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	// Primer lote de la estructura de datos procesado
 	// Ahora se empieza a carga la imagen con los datos obtenidos
 
-	s_aux=namefile + tipefile;
+	if (tipefile == ".png" || tipefile == ".bmp" || tipefile == ".jpg2") {
+		s_aux=namefile + tipefile;
 
-	chipset=IMG_Load(resource(s_aux.c_str()).c_str());
-	if (!chipset) { 
-		return CLibrary::Error(s_aux,TE_fileExists); 
+		chipset=IMG_Load(resource(s_aux.c_str()).c_str());
+		if (!chipset) { 
+			return CLibrary::Error(s_aux,TE_fileExists); 
+		}
+	} else if (tipefile == ".grd") {
+
+		s_aux=namefile + ".png";
+
+		chipset=IMG_Load(resource(s_aux.c_str()).c_str());
+		if (!chipset) { 
+			s_aux=namefile + ".jpg";
+			chipset=IMG_Load(resource(s_aux.c_str()).c_str());
+			if (!chipset) { 
+				s_aux=namefile + ".bmp";
+				chipset=IMG_Load(resource(s_aux.c_str()).c_str());
+				if (!chipset) { 
+					return CLibrary::Error(s_aux,TE_fileExists); 
+				}
+			}
+		}
+	} else {
+		return CLibrary::Error(s_aux + "No es un tipo de recurso grafico apropiado.",TE_standard);
 	}
+
+
 
 	Uint32 columnas = chipset->w / ancho;		// Calculamos el número de columnas del spriteset.
 
@@ -490,6 +516,229 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	}
 	SDL_FreeSurface(chipset);
 	chipset=NULL;
+
+}
+
+void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
+
+	int num_img=0;
+	int ancho=0;
+	int alto=0;
+
+	int sp_scale = 1;
+
+	string folder = grd;
+
+	for (int i=folder.size()-1;i>=0;i--) {
+		char letra = folder.at(i);
+
+		folder = folder.substr(0,folder.size()-1);
+
+		if (letra=='/' || letra=='\\')
+			break;			
+	}
+
+	//if (folder.empty())
+	//	folder = ".";
+
+	TiXmlDocument grddoc(resource(grd.c_str()).c_str());
+
+	if (!grddoc.LoadFile())
+		CLibrary::Error(resource(grd.c_str()),TE_fileExists);
+
+	TiXmlElement* head = grddoc.FirstChildElement("Spriteset");
+
+	if (!head || !head->Attribute("type") || strcmp(head->Attribute("type"),"split")!=0)
+		return CLibrary::Error("Estructura defectuosa para el archivo: "+grd+". Debería tratarse de un 'grd' de tipo 'split' formal.");
+
+	head->QueryIntAttribute("sprites",&num_img);
+
+	if (head->Attribute("sp-scale"))
+		head->QueryIntAttribute("sp-scale",&sp_scale); // Hay escalado predefinido de SDL_Surface
+
+
+	CPoint globalCP;	// El punto central global es opcional, y si no se encuentra, se le asigna -1 a X.
+	globalCP.setX(-1);
+	map<int,RectsInfo> globalAreas;
+
+	TiXmlHandle input = grddoc.FirstChild();
+
+	TiXmlElement* elmnt = input.FirstChildElement("globalcpoint").ToElement();
+
+	if (elmnt) {	// Si hay punto central global...
+		if (!(elmnt->Attribute("x") && elmnt->Attribute("y") && 
+			atoi(elmnt->Attribute("x"))>=0 && atoi(elmnt->Attribute("x"))<=ancho && 
+			atoi(elmnt->Attribute("y"))>=0 && atoi(elmnt->Attribute("y"))<=alto)) 
+				CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores de punto centro global erróneos.").c_str());
+		globalCP.set(atoi(elmnt->Attribute("x"))*sp_scale,atoi(elmnt->Attribute("y"))*sp_scale);	// Lo asignamos.
+	}
+
+	elmnt = input.FirstChildElement("globalareas").FirstChildElement("area").ToElement();
+	while (elmnt) {	// Mientras haya areas globales...
+		if (!elmnt->Attribute("id") || atoi(elmnt->Attribute("id"))<0)
+			CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores de areas globales erróneos.").c_str());
+		int idArea = atoi(elmnt->Attribute("id")); // Determinamos que número de area es (las areas van ordenadas segun el conjunto de los numeros naturales, de forma continua y orden ascendente).
+
+		if (elmnt->Attribute("relative") && strcmp(elmnt->Attribute("relative"),"true")==0)	// Miramos si las coordenadas de esa area estan descritas en terminos relativos (segun el punto de centro) o absolutos.
+			globalAreas[idArea].relative=true;	// Y la añadimos a la posicion del mapa correspondiente
+		else
+			globalAreas[idArea].relative=false;
+
+		for (TiXmlElement* rectNode=elmnt->FirstChildElement("rectangle");rectNode;rectNode=rectNode->NextSiblingElement()) {		// Por cada rectangulo de esa area...
+			if (!(rectNode->Attribute("x1") && rectNode->Attribute("x2") && rectNode->Attribute("y1") && rectNode->Attribute("y2"))) 
+				CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo un área global erróneos.").c_str());
+
+			SDL_Rect_Signed rc;
+			rc.x = atoi(rectNode->Attribute("x1")) *sp_scale;
+			rc.w = atoi(rectNode->Attribute("x2")) *sp_scale;
+			rc.y = atoi(rectNode->Attribute("y1")) *sp_scale;
+			rc.h = atoi(rectNode->Attribute("y2")) *sp_scale;
+
+			globalAreas[idArea].v.push_back(rc);	// Y la añadimos al vector pertinente del mapa, para luego reescatarla directamente del mapa.
+		}
+
+		elmnt = elmnt->NextSiblingElement();
+
+	}
+
+	SDL_Rect rect; // Este rectangulo llevara la cuenta de las coordenadas por la que nos encontramos dentro del spriteset (chipset).
+	rect.x=0;
+	rect.y=0;
+
+	SCanvas m_pImage;
+	CSprite* m_pSprite;
+
+	struct { int w,h,nump; const char *name; } iinfo;
+
+	elmnt=input.FirstChildElement("img").ToElement();
+
+	while (elmnt != NULL) { // Mientras haya un nodo imagen siguiente
+
+		if (elmnt->Attribute("name"))
+			iinfo.name = elmnt->Attribute("name");
+		else
+			iinfo.name = "noname";
+
+		if (elmnt->Attribute("ref")) {
+
+			SCanvas m_pImage;
+
+			SDL_Surface* temp = NULL, *sdl_surf = IMG_Load(resource((folder+elmnt->Attribute("ref")).c_str()).c_str());
+
+			if (sdl_surf) {
+
+				if (SDL_GetVideoSurface() != NULL) {
+
+					temp=SDL_DisplayFormatAlpha(sdl_surf);
+					if (temp) {
+						SDL_FreeSurface(sdl_surf);
+						sdl_surf = temp;
+					} else {
+						return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
+					}
+
+				} else if (mode != ONLY_SDL_SURFACE) 
+					return CLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
+
+				if (sp_scale > 0 && sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
+					temp = CImage::scaleSurface(sdl_surf,sp_scale);
+					SDL_FreeSurface(sdl_surf);
+					sdl_surf=temp;
+					SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,sdl_surf->format->colorkey);		// Reasignamos los formatos.
+				}
+
+				m_pImage = CImage::toSCanvas(sdl_surf,mode);
+
+				TiXmlElement* cpoint = NULL;
+
+				if (globalCP.X() < 0)
+					cpoint = elmnt->FirstChildElement("cpoint");
+
+				if (cpoint) {
+					if (!(cpoint->Attribute("x") && cpoint->Attribute("y") && 
+						atoi(cpoint->Attribute("x"))>=0 && atoi(cpoint->Attribute("x"))<=m_pImage.w2 && 
+						atoi(cpoint->Attribute("y"))>=0 && atoi(cpoint->Attribute("y"))<=m_pImage.h2)) 
+							CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en el punto centro de la imagen "+iinfo.name+" erróneos.").c_str());
+					m_pSprite=new CSprite(m_pImage,new CPoint(atoi(cpoint->Attribute("x"))*sp_scale,atoi(cpoint->Attribute("y"))*sp_scale));
+				} else if (globalCP.X()>=0) { // Si existe un global cpoint...
+					m_pSprite=new CSprite(m_pImage,new CPoint(globalCP));
+				} else {	
+					m_pSprite=new CSprite(m_pImage);	// Acabamos llamando al constructor del sprite, con o sin cpoint.
+				}
+
+			}
+
+		}
+
+
+		TiXmlElement* area = elmnt->FirstChildElement("area"); // Si el spriteset no es simple, buscamos areas en la imagen.
+
+		for (int numArea=0,countGlobalAreas=0;(countGlobalAreas < globalAreas.size()) || (area && area->Attribute("id"));numArea++) {	// Si hay...
+			RectArea* rArea = new RectArea; // Preparamos la nueva area.
+		#ifdef LOG_SPRITESET_INFO
+			int idebug=0;
+		#endif
+			if (globalAreas.find(numArea)==globalAreas.end()) { // Si esta area no se corresponde con ninguna de las areas globales...
+				if (!area)	// Si no existe area, es que las areas globales estan mal definidas en el fichero .grd
+					CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nSe requiere un orden ascendente coherente entre areas (sin saltos) teniendo en cuenta las areas globales.").c_str());
+				bool relative = area->Attribute("relative") && strcmp(area->Attribute("relative"),"true")==0;	// Rescatamos si las coordenadas son relativas.
+				for (TiXmlElement* rectNode=area->FirstChildElement("rectangle");rectNode;rectNode=rectNode->NextSiblingElement()) { // Por cada rectangulo perteneciente al area.
+					if (!(rectNode->Attribute("x1") && rectNode->Attribute("x2") && rectNode->Attribute("y1") && rectNode->Attribute("y2"))) 
+						CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo de la imagen "+iinfo.name+" erróneos.").c_str());
+
+					SDL_Rect_Signed rc;
+					rc.x = atoi(rectNode->Attribute("x1")); // Anotamos las coordenadas.
+					rc.w = atoi(rectNode->Attribute("x2"));
+					rc.y = atoi(rectNode->Attribute("y1"));
+					rc.h = atoi(rectNode->Attribute("y2"));
+					if (!relative) {	// Si son relativas, tenemos en cuentra el punto de centro.
+						rc.x -= m_pSprite->getCenter()->getX();
+						rc.w -= m_pSprite->getCenter()->getX();
+						rc.y -= m_pSprite->getCenter()->getY();
+						rc.h -= m_pSprite->getCenter()->getY();
+					}
+
+					if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) || */(rc.w<rc.x) || (rc.h<rc.y))
+						CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo de la imagen "+iinfo.name+" conflictivos.").c_str());
+
+					rArea->push_back(new CRectangle(rc.x *sp_scale,rc.y *sp_scale,rc.w *sp_scale,rc.h *sp_scale));	// Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
+				#ifdef LOG_SPRITESET_INFO
+					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x*sp_scale,rc.w*sp_scale,rc.y*sp_scale,rc.h*sp_scale);
+					idebug++;
+				#endif
+				}
+				area=area->NextSiblingElement();
+			} else {		//Si es un area global.
+				for (vector<SDL_Rect_Signed>::iterator it=globalAreas[numArea].v.begin();it!=globalAreas[numArea].v.end();++it) {
+					SDL_Rect_Signed rc = *it;	// Reescatamos la informacion de las coordenadas anotada anteriormente y guardado en el vector perteneciente a el pertinente puesto del mapa.
+					if (!globalAreas[numArea].relative) {	// Si son relativas, tenemos en cuenta el punto de centro.
+						rc.x -= m_pSprite->getCenter()->getX();
+						rc.w -= m_pSprite->getCenter()->getX();
+						rc.y -= m_pSprite->getCenter()->getY();
+						rc.h -= m_pSprite->getCenter()->getY();
+					}
+					if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) ||*/ (rc.w<rc.x) || (rc.h<rc.y))
+						CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo global aplicado la imagen "+iinfo.name+" conflictivos.").c_str());
+
+					rArea->push_back(new CRectangle(rc.x*sp_scale,rc.y*sp_scale,rc.w*sp_scale,rc.h*sp_scale)); // Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
+				#ifdef LOG_SPRITESET_INFO
+					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x*sp_scale,rc.w*sp_scale,rc.y*sp_scale,rc.h*sp_scale);
+					idebug++;
+				#endif
+				}
+				countGlobalAreas++;
+			}
+			m_pSprite->addArea(rArea);	// Finalmente añadimos el area a este sprite.
+		}
+
+
+		m_pSprite->setName(iinfo.name);	// Asignamos el nombre al sprite reciencreado.
+
+		add(m_pSprite);	//Añadimos el sprite a este objeto cspriteset.
+
+		elmnt = elmnt->NextSiblingElement();	// Si no es simple, buscamos la siguiente etiqueta imagen.
+	}
+
 
 }
 /*

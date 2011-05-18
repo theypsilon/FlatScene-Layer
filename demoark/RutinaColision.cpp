@@ -1,5 +1,6 @@
 #include "RutinaColision.h"
 #include "Map.h"
+#include "FSLibrary.h"
 
 CRutinaColision* CRutinaColision::collisionFactory(int i) {
 	CRutinaColision* ret = NULL;
@@ -12,18 +13,21 @@ CRutinaColision* CRutinaColision::collisionFactory(int i) {
 bool CBasicCollision0::run(int x, int y, int z, CActorScrollMap* mobil) {
 	RectArea* rA = mobil->getSprite()->getArea(0);
 	CMap* map = (CMap*)mobil->getUniverse();
+
+	//Write.erase( Write.line(0,mobil->m_Coordxy.X(),mobil->m_Coordxy.Y(),"color : #%06X",map->getPixel(x,y,z)), true);
+
 	if (rA) {
 		RectArea::iterator beginMobil = rA->begin();
 		RectArea::iterator finMobil = rA->end();
 		for (RectArea::iterator it = beginMobil;it!=finMobil;++it) {
 			CRectangle* rect = *it;
 			for (int initialx=x+rect->X(),maxx=x+rect->W();initialx <= maxx;initialx++) {
-				if (map->getPixel(initialx,y,z)==2575) {
+				if (map->getPixel(initialx,y,z)==0xA800F8) {
 					return true;
 				}
 			}
 			for (int initialy=y+rect->Y(),maxy=y+rect->H();initialy <= maxy;initialy++) {
-				if (map->getPixel(x,initialy,z)==2575) {
+				if (map->getPixel(x,initialy,z)==0xA800F8) {
 					return true;
 				}
 			}

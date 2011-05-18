@@ -21,6 +21,8 @@ private :
 	//Inicializa Spriteset con los contenidos del fichero de tipo gráfico, cuyo nombre es obtenido por el constructor.
 	void loadChipset(string& c,Uint8 mode=ONLY_TEXTURE,string* cPrev=NULL);
 
+	void loadChipsetSplit(string grd,Uint8 mode=ONLY_TEXTURE);
+
 	string name;
 	//Contenedor de Sprites.
 	SpriteCollection m_vecSprites ;

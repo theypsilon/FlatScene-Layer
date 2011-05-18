@@ -430,8 +430,7 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 		pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
 		pSurface.sdl_surf = NULL;
 		return pSurface;
-	} 
-	
+	} 	
 	
 	pSurface.w2 = surface->w;
 	pSurface.h2 = surface->h;
@@ -522,14 +521,7 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 			image=NULL;
 		}
 
-	//if (mode & (WITH_SDL_SURFACE | ONLY_SDL_SURFACE))	{
-	}	else	{
-		image=SDL_CreateRGBSurface(SDL_SWSURFACE,surface->w,surface->h,12,0,0,0,0);
-		SDL_Surface* temp = surface;
-		surface=SDL_ConvertSurface(surface,image->format,SDL_SWSURFACE);
-		SDL_FreeSurface ( image );
-		SDL_FreeSurface ( temp );
-	}
+	}	
 
 	if (mode & ONLY_SDL_SURFACE) {
 		pSurface.h=0;
