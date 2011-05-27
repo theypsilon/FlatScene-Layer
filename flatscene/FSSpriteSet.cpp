@@ -4,6 +4,8 @@
 #include <string>
 #include <algorithm>
 
+#include "debugfuncs.h"
+
 Uint16 CSpriteset::globalAuxiliar=0;
 
 CSpriteset::CSpriteset()
@@ -279,7 +281,18 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		return CLibrary::Error(s_aux + "No es un tipo de recurso grafico apropiado.",TE_standard);
 	}
 
+	SDL_Surface* sdl_surf = NULL;
+	
+	sdl_surf = SDL_DisplayFormatAlpha(chipset);
+	SDL_FreeSurface(chipset);
+	chipset = sdl_surf;
+	sdl_surf = NULL;
 
+	
+
+	/*SDL_PixelFormat* f = chipset->format;
+	printf("bpp:%d Amask:%X alpha:%d colorkey:%d Rmask:%X Gmask:%X Bmask:%X\n",f->BitsPerPixel,f->Amask,f->alpha,f->colorkey,f->Rmask,f->Gmask,f->Bmask);
+	*/
 
 	Uint32 columnas = chipset->w / ancho;		// Calculamos el número de columnas del spriteset.
 
@@ -294,7 +307,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	
 	// Empezamos a preparar el formato de la imagen.
 
-	SDL_Surface* sdl_surf = NULL;
+	
 
 	if (SDL_GetVideoSurface() != NULL) {
 
@@ -407,11 +420,19 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 		SDL_Surface* temp;
 
-		sdl_surf = SDL_CreateRGBSurface(SDL_SRCALPHA,iinfo.w,iinfo.h,chipset->format->BitsPerPixel,0,0,0,0);	// Creamos una surface que contendra la informacion de la celda actual.
+		sdl_surf = SDL_CreateRGBSurface(chipset->flags | SDL_SRCALPHA,iinfo.w,iinfo.h,chipset->format->BitsPerPixel,chipset->format->Rmask,chipset->format->Gmask,chipset->format->Bmask,chipset->format->Amask);	// Creamos una surface que contendra la informacion de la celda actual.
+		//sdl_surf = SDL_CreateRGBSurface(chipset->flags | SDL_SRCALPHA,iinfo.w,iinfo.h,chipset->format->BitsPerPixel,0xFF,0xFF00,0xFF0000,0xFF000000);	// Creamos una surface que contendra la informacion de la celda actual.
+		//sdl_surf = SDL_CreateRGBSurface(chipset->flags | SDL_SRCALPHA,iinfo.w,iinfo.h,chipset->format->BitsPerPixel,0,0,0,0);	// Creamos una surface que contendra la informacion de la celda actual.
 
 		SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY, chipset->format->colorkey);	// Le asignamos los formatos de la surface del spriteset.
-		SDL_BlitSurface(chipset,&rect,sdl_surf,0);
 
+		//SDL_BlitSurface(chipset,&rect,sdl_surf,0);
+
+		blitcopy(chipset,&rect,sdl_surf,NULL);
+
+		//countalpha(sdl_surf);
+
+		
 		if (sp_scale > 0 && sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
 			temp = CImage::scaleSurface(sdl_surf,sp_scale);
 			SDL_FreeSurface(sdl_surf);
@@ -419,7 +440,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 			SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,chipset->format->colorkey);		// Reasignamos los formatos.
 		}
 
-		m_pImage=CImage::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas
+		m_pImage=CImage::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas(
 
 		//Imagen creada, ahora el resto de su estructura de datos.
 
@@ -646,6 +667,8 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 					sdl_surf=temp;
 					SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,sdl_surf->format->colorkey);		// Reasignamos los formatos.
 				}
+
+
 
 				m_pImage = CImage::toSCanvas(sdl_surf,mode);
 

@@ -1,6 +1,8 @@
 #include "FSImage.h"
 #include "FSLibrary.h"
 
+#include "debugfuncs.h"
+
 CImage::CImage ( SCanvas pSurface ) 
 {
 	m_pSurface = pSurface;
@@ -445,7 +447,7 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 	  
 		#if SDL_BYTEORDER == SDL_LIL_ENDIAN
 			  image = SDL_CreateRGBSurface(
-				  SDL_SWSURFACE, 
+				  SDL_SWSURFACE |SDL_SRCALPHA, 
 				  pSurface.w, 
 				  pSurface.h, 
 				  surface->format->BitsPerPixel,
@@ -455,9 +457,9 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 				  0xff000000);
 		#else
 			  image = SDL_CreateRGBSurface(
-				  SDL_SWSURFACE,  
-				  pSurface->w, 
-				  pSurface->h, 
+				  SDL_SWSURFACE |SDL_SRCALPHA,  
+				  pSurface.w, 
+				  pSurface.h, 
 				  surface->format->BitsPerPixel,
 				  0xff000000, 
 				  0x00ff0000, 
@@ -476,6 +478,8 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 		  SDL_SetAlpha(surface, 0, 0);
 		}
 
+		
+
 		area.x = 0;
 		area.y = 0;
 		area.w = surface->w;
@@ -487,6 +491,99 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 		if ( (saved_flags & SDL_SRCALPHA)== SDL_SRCALPHA )  {
 			SDL_SetAlpha(surface, saved_flags, saved_alpha);
 		}
+
+		//
+
+
+		/*
+		SDL_Surface* lpTexture = IMG_Load(szFilename); 	
+		if (!lpTexture)	{		// some error		
+			return;	
+		}		
+		
+		m_iTextureWidth	= lpTexture->w;	
+		m_iTextureHeight = lpTexture->h;	
+		glGenTextures(1, &m_iglTexture);	
+		rval = glGetError();	
+		if (rval != GL_NO_ERROR)	
+		{	    
+			if (lpTexture)	    
+			{		    
+				SDL_FreeSurface(lpTexture);		    
+				lpTexture = NULL;		
+			}			
+			// some error		
+			return;	
+		}		
+		glBindTexture(GL_TEXTURE_2D, m_iglTexture);	
+		rval = glGetError();	
+		if (rval != GL_NO_ERROR)	
+		{	    
+			if (lpTexture)	    
+			{		    
+				SDL_FreeSurface(lpTexture);		    
+				lpTexture = NULL;		
+			}			
+			// some error		
+			return;	
+		}				
+		int byte = 0;	
+		int w = lpTexture->w, h = lpTexture->h;	
+		int iTotalBytes = w * h * 4;	
+		unsigned char* lpNewTexture = new unsigned char[iTotalBytes];	
+		if (!lpNewTexture)	{	    
+			if (lpTexture)	    {		    
+				SDL_FreeSurface(lpTexture);		    
+				lpTexture = NULL;		
+			}			// some error		
+			return;	
+		}		
+		for (int y = 0; y < h; y++)	{		
+			for (int x = 0; x < w; x++)		{			
+				Uint8 r,g,b,a;			
+				Uint32 color = GetPixel(lpTexture, x, y);			
+				if(!bUseColorKey)			{				
+					SDL_GetRGB(color, lpTexture->format, &r, &g, &b);				
+					a = 0xff;			
+				}			else			{				
+					SDL_GetRGBA(color, lpTexture->format, &r, &g, &b, &a);								
+					if ((r == iColorKeyRed) && (g == iColorKeyGreen) && (b == iColorKeyBlue))				{					
+						a = 0x00;				
+					}				else				{					
+						a = 0xff;				
+					}			
+				}			
+				lpNewTexture[byte++] = r;			
+				lpNewTexture[byte++] = g;			
+				lpNewTexture[byte++] = b;			
+				lpNewTexture[byte++] = a;		
+			}	
+		}*/	
+
+		/*
+		Uint8* line = new Uint8[image->pitch];
+		Uint8* pixels = static_cast<Uint8*>(image->pixels);
+		Uint16 pitch = image->pitch;
+		int ybegin = 0;
+		int yend = image->h - 1;
+
+		if(SDL_MUSTLOCK(image))
+			SDL_LockSurface(image);
+		while(ybegin < yend)
+		{
+			memcpy(line, pixels + pitch * ybegin, pitch);
+			memcpy(pixels + pitch * ybegin, pixels + pitch * yend, pitch);
+			memcpy(pixels + pitch * yend, line, pitch);
+			ybegin++;
+			yend--;
+		}
+
+		if (line)
+			delete[] line;
+
+		*/
+		if(SDL_MUSTLOCK(image))
+			SDL_UnlockSurface(image);
 
 		// Have OpenGL generate a texture object handle for us
 		glGenTextures(1, &pSurface.tex );
@@ -520,6 +617,8 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 			SDL_FreeSurface( image );
 			image=NULL;
 		}
+
+
 
 	}	
 

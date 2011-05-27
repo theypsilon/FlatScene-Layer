@@ -96,6 +96,9 @@
     <ClCompile Include="FSControlMultiverse.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
+    <ClCompile Include="debugfuncs.cpp">
+      <Filter>Archivos de código fuente\Library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSActor.h">
@@ -162,6 +165,9 @@
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
     <ClInclude Include="FSUniverse.h">
+      <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="debugfuncs.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
   </ItemGroup>

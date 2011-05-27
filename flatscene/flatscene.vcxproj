@@ -83,6 +83,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="debugfuncs.cpp" />
     <ClCompile Include="FSActor.cpp" />
     <ClCompile Include="FSCamera.cpp" />
     <ClCompile Include="FSColor.cpp" />
@@ -109,6 +110,7 @@
     <ClCompile Include="tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="debugfuncs.h" />
     <ClInclude Include="FSActor.h" />
     <ClInclude Include="FSCamera.h" />
     <ClInclude Include="FSColor.h" />

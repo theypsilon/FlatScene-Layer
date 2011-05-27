@@ -22,12 +22,12 @@ bool CBasicCollision0::run(int x, int y, int z, CActorScrollMap* mobil) {
 		for (RectArea::iterator it = beginMobil;it!=finMobil;++it) {
 			CRectangle* rect = *it;
 			for (int initialx=x+rect->X(),maxx=x+rect->W();initialx <= maxx;initialx++) {
-				if (map->getPixel(initialx,y,z)==0xA800F8) {
+				if (map->getPixel(initialx,y,z)==0xFFA800F8) {
 					return true;
 				}
 			}
 			for (int initialy=y+rect->Y(),maxy=y+rect->H();initialy <= maxy;initialy++) {
-				if (map->getPixel(x,initialy,z)==0xA800F8) {
+				if (map->getPixel(x,initialy,z)==0xFFA800F8) {
 					return true;
 				}
 			}

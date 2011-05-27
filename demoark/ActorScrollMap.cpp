@@ -188,15 +188,15 @@ bool CActorScrollMap::collisionMap(int mov_x,int mov_y) {
 		if (MAx >= 0 && MAx < inUniverse->getW() && MAy >= 0 && MAy < inUniverse->getH()) {
 			if ((mov_x + mov_y) == mov_x) {
 				Uint32 colorSwitch=inUniverse->getPixel(invariantx,invarianty,invariantz);
-				if (colorSwitch==0xF834F8) {
+				if (colorSwitch==0xFFF834F8) {
 					getParent()->SendMessage((CTestAGameInterface::MSGID_ChangeMap),(MSGPARM)this,(MSGPARM)mov_y);
-				} else if (colorSwitch==0x202020) {
+				} else if (colorSwitch==0xFF202020) {
 					if (!upfloor) {
 						upfloor=true;
 						downfloor=false;
 						invariantz = ++m_Scrollxy.Z();
 					}
-				} else if (colorSwitch==0xF800F8) {
+				} else if (colorSwitch==0xFFF800F8) {
 					if (!downfloor) {
 						downfloor=true;
 						upfloor=false;
