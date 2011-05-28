@@ -1,7 +1,7 @@
 <Animationalias>
 	<alias id="normal_walk">
-		<animation owner="PJ0" name="Character"/>
-		<animation owner="E0" name="CharacterAlter"/>
+		<animation owner="PJ0" name="resources/Character"/>
+		<animation owner="E0" name="resources/CharacterAlter"/>
 	</alias>
 		
 </Animationalias>

@@ -170,7 +170,7 @@ int CControlOutputText::loadFont(const char* fuente) {
 			}
 		}
 		font_ttf = Fonts[ret] = new SFont;
-		font_ttf->fuente=TTF_OpenFont(resource((s+".ttf").c_str()).c_str(),fontSize);
+		font_ttf->fuente=TTF_OpenFont((s+".ttf").c_str(),fontSize);
 		if (font_ttf->fuente==NULL) {
 			CLibrary::Error("No se ha cargado la fuente: "+s+".ttf  ",TE_fileExists);
 			delete font_ttf;
@@ -448,7 +448,7 @@ int CControlOutputText::inBox(const char* file, int index) {
 		string s(file);
 		s += ".xml";
 
-		TiXmlDocument xmldoc(resource(s.c_str()).c_str());
+		TiXmlDocument xmldoc(s.c_str());
 		if (!xmldoc.LoadFile()) {	 CLibrary::Error(file,TE_fileExists); }	// Cargamos la biblioteca de textos.
 
 		TiXmlElement* parent = xmldoc.FirstChildElement("TextList");

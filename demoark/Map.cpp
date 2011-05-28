@@ -32,7 +32,7 @@ void CMap::load() {
 	// Data from XML.
 
 
-	TiXmlDocument xmldoc(resource((name+".xml").c_str()).c_str());
+	TiXmlDocument xmldoc(("resources/"+name+".xml").c_str());
 
 	if (!xmldoc.LoadFile()) {
 		CLibrary::Error("No se puede abrir el XML del mapa");
@@ -162,7 +162,7 @@ void CMap::load() {
 
 	
 	FILE* f_map;
-	if ((f_map=fopen(resource((name+".dat").c_str()).c_str(),"rb"))==NULL) {
+	if ((f_map=fopen(("resources/"+name+".dat").c_str(),"rb"))==NULL) {
 		 CLibrary::Error(string("El mapa '\n")+name+"' no se encuentra.");
 		 return;
 	}

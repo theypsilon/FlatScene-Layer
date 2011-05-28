@@ -3,10 +3,10 @@
         <Midi name="soerat" />
     </Music>
     <TileGraphs>
-        <Spriteset name="tiles1" />
+        <Spriteset name="resources/tiles1" />
     </TileGraphs>
     <TileCollisions>
-        <Spriteset name="tiles1d" />
+        <Spriteset name="resources/tiles1d" />
     </TileCollisions>
     <LayerList>
         <Layer type="lower" floor="0" />

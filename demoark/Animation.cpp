@@ -144,8 +144,8 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 }
 
 void CAnimation::aliasFileAnimation(std::string &file,const char* owner) {
-	TiXmlDocument xmldoc(resource("animationalias.xml").c_str());
-	if (!xmldoc.LoadFile()) {	 CLibrary::Error(resource("animationalias.xml").c_str(),TE_fileExists); }
+	TiXmlDocument xmldoc("resources/animationalias.xml");
+	if (!xmldoc.LoadFile()) {	 CLibrary::Error("animationalias.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChild());
 

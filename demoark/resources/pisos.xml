@@ -1,12 +1,12 @@
 <Map width="12" height="10" layers="3" tileWidth="32" tileHeight="32" name="pisos">
     <Music>
-        <Midi name="soerat" />
+        <Midi name="resources/soerat" />
     </Music>
     <TileGraphs>
-        <Spriteset name="tilp" />
+        <Spriteset name="resources/tilp" />
     </TileGraphs>
     <TileCollisions>
-        <Spriteset name="durp" />
+        <Spriteset name="resources/durp" />
     </TileCollisions>
     <LayerList>
         <Layer type="lower" floor="0" />

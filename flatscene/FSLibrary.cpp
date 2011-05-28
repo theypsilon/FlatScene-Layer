@@ -82,7 +82,7 @@ CMessageHandler(NULL)
 		int bpp = BITMODE;
 
 
-		TiXmlDocument xmldoc(resource("config.xml").c_str());
+		TiXmlDocument xmldoc("config.xml");
 		if (xmldoc.LoadFile())	{
 
 			TiXmlHandle input(xmldoc.FirstChildElement("System")); TiXmlElement* node;
@@ -588,12 +588,4 @@ bool CLibrary::orderEngine(CEngine* x, CEngine* y) {
 
 	return ((x->priority)<(y->priority));
 
-}
-
-
-
-string resource(const char* c) {
-	string s = c;
-	s = "resources/"+s;
-	return (s);
 }

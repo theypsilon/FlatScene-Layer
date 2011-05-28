@@ -29,7 +29,7 @@ int CMenuAGameInterface::onInit() {
 	printf("\nMenuA comienza.\n\n");
 #endif
 
-	file=CImg.add("Menu");
+	file=CImg.add("resources/Menu");
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,60);
 

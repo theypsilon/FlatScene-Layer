@@ -27,9 +27,9 @@ CActorScrollMap::~CActorScrollMap() {
 }
 void CActorScrollMap::init(list<string>& activationIds)	{ 
 	// Nodos de Acciones:
-	TiXmlDocument xmldoc(resource("actiontree.xml").c_str());
+	TiXmlDocument xmldoc("resources/actiontree.xml");
 
-	if (!xmldoc.LoadFile()) CLibrary::Error(resource("actiontree.xml").c_str(),TE_fileExists);	// Cargamos el archivo con la información referente a los nodos de acción.
+	if (!xmldoc.LoadFile()) CLibrary::Error("actiontree.xml",TE_fileExists);	// Cargamos el archivo con la información referente a los nodos de acción.
 
 	TiXmlHandle input = TiXmlHandle(xmldoc.FirstChild());
 

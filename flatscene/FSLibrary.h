@@ -123,6 +123,4 @@ public:
 
 #define SINERROR "|-| No error"
 
-string resource(const char* c);
-
 #endif //#ifndef __APPLICATION_H__

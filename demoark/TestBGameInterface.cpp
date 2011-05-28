@@ -74,7 +74,7 @@ int CTestBGameInterface::onExit()
 {
 	delete anim;
 
-	CImg.remove(CImg.search("Character"));
+	CImg.remove(CImg.search("resources/Character"));
 
 #ifdef LOG_SISTEMA
 	printf("\nTestB termina.\n\n");

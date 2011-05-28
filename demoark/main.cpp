@@ -50,7 +50,7 @@ int main(int argc,char* argv[])
 	printf("Se bienvenido, Persona.\n\n");
 #endif
 
-	Write.loadFont("tahoma");
+	Write.loadFont("resources/tahoma");
 
 	CLibrary::processEngines();
 
@@ -68,7 +68,7 @@ void funcEstres(int p) {
 
 	for (int i = 0; i < p ; i++) {
 
-		CImg.remove(CImg.add("Character"));
+		CImg.remove(CImg.add("resources/Character"));
 
 		if (i> 300)
 			CScreen::render();
@@ -78,11 +78,11 @@ void funcEstres(int p) {
 
 	for (int i = 0; i < p ; i++) {
 
-		Write.unloadFont(Write.loadFont("tahoma"));
+		Write.unloadFont(Write.loadFont("resources/tahoma"));
 
 	}
 
-	int f = Write.unloadFont(Write.loadFont("tahoma"));
+	int f = Write.unloadFont(Write.loadFont("resources/tahoma"));
 
 	for (int i = 0; i < p ; i++) {
 
@@ -90,7 +90,7 @@ void funcEstres(int p) {
 
 	}
 
-	int s = CImg.add("Character");
+	int s = CImg.add("resources/Character");
 
 	CScreen::locateRenderScene();
 

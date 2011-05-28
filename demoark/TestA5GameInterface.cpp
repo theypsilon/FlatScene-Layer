@@ -70,7 +70,7 @@ int  CTestA5GameInterface::onInit() {
 	activationIds.push_back("npc_normal_quiet");
 	activationIds.push_back("npc_normal_walk");
 
-	TiXmlDocument xmldoc(resource("config.xml").c_str());	// Cargamos el archivo de configuración.
+	TiXmlDocument xmldoc("config.xml");	// Cargamos el archivo de configuración.
 	if (!xmldoc.LoadFile()) {	 CLibrary::Error("config.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChildElement("System"));
@@ -122,7 +122,7 @@ int  CTestA5GameInterface::onInit() {
 
 	cams.push_back(new CScrollCamera((CActor*)player[0],new CRectangle(0,0,RESOLUCION_X,RESOLUCION_Y),NULL,0.35));
 
-	Write.color(Write.inBox("texts0",0),1.0,1.0,1.0,0.7,TCTB_BOX,true);
+	Write.color(Write.inBox("resources/texts0",0),1.0,1.0,1.0,0.7,TCTB_BOX,true);
 
 	Write.line(0,260,10,"ESC para Menu.");
 
