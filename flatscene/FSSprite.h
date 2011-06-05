@@ -8,6 +8,13 @@ using namespace std;
 
 typedef vector<CRectangle*> RectArea;
 
+enum SpriteOpaque {
+	SPRITE_OPAQUE_NOT_CHEQUED,
+	SPRITE_OPAQUE,
+	SPRITE_TRANSPARENT,
+	SPRITE_OPAQUE_TRANSFORMED
+};
+
 //CSprite--abstracts Image+Control Point.
 class CSprite : public CImage
 {
@@ -28,6 +35,8 @@ private:
 
 	friend class CSpriteset;
 	friend class CScreen;
+
+	SpriteOpaque opaque;
 
 public:
 	//asigna nombre
@@ -55,6 +64,7 @@ public:
 
 	int size();
 
+	SpriteOpaque isOpaque();
 
 	//renderiza el gráfico.
 	void put ( CPoint& ptDst , Uint8 flags=0) ;

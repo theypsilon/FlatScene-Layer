@@ -271,6 +271,11 @@ int CLibrary::processEngines() {
 		for (list<CEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) 
 			(*it)->done = false;
 
+		if (getLibrary()->engineIn.empty()) {
+			CLibrary::Error("There are no engines in queue!");
+			return FRACASO;
+		}
+
 		setActualEngine(getLibrary()->engineIn.front());
 		getLibrary()->engineIn.front()->done=true;
 	}
