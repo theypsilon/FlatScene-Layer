@@ -262,11 +262,6 @@ int CCamera::locateRenderScene( CRectangle* areaSc, float zoom ) {
 
 int CCamera::locateRenderScene( float posx, float posy, float width, float height, float zoom ) {
 
-	if (rendering) {
-		CLibrary::Error("Rendering already began.");
-		return FRACASO;
-	} 
-
 	if (width == 0 || height == 0) {
 		posx = area->getX();
 		posy = area->getY();
@@ -274,32 +269,42 @@ int CCamera::locateRenderScene( float posx, float posy, float width, float heigh
 		height = area->getH();
 	}
 
-	//PUSH
+	if (rendering) {
 
-	SToRender* r_init = new SToRender;
+		CScreen::pushMatrix();
 
-	r_init->type = TR_PUSHMATRIX;
-	r_init->pointer = NULL;
+		CScreen::locateRenderScene(posx,posy,width,height,zoom);
 
-	initRenderList.push_back(r_init);
+	} else {
 
-	//LOCATE
+		//PUSH
 
-	SRenderLocation* c_init = new SRenderLocation();
+		SToRender* r_init = new SToRender;
 
-	c_init->posx = posx;
-	c_init->posy = posy;
-	c_init->width = width;
-	c_init->height = height;
-	c_init->zoom = zoom;
+		r_init->type = TR_PUSHMATRIX;
+		r_init->pointer = NULL;
 
-	r_init = new SToRender();
+		initRenderList.push_back(r_init);
 
-	r_init->type = TR_LOCATION;
-	r_init->pointer = (void*) c_init;
+		//LOCATE
 
-	initRenderList.push_back(r_init);
+		SRenderLocation* c_init = new SRenderLocation();
 
+		c_init->posx = posx;
+		c_init->posy = posy;
+		c_init->width = width;
+		c_init->height = height;
+		c_init->zoom = zoom;
+
+		r_init = new SToRender();
+
+		r_init->type = TR_LOCATION;
+		r_init->pointer = (void*) c_init;
+
+		initRenderList.push_back(r_init);
+
+	}
+	
 	//POP
 
 	SToRender* r_fin = new SToRender;
@@ -309,40 +314,46 @@ int CCamera::locateRenderScene( float posx, float posy, float width, float heigh
 
 	endRenderList.push_front(r_fin);
 
+
 	return EXITO;
 }
 
 int CCamera::rotate(float angle, float x, float y, float z) {
 
 	if (rendering) {
-		CLibrary::Error("Rendering already began.");
-		return FRACASO;
-	} 
 
-	//PUSH
+		CScreen::pushMatrix();
 
-	SToRender* r_init = new SToRender;
+		CScreen::rotate(angle,x,y,z);
 
-	r_init->type = TR_PUSHMATRIX;
-	r_init->pointer = NULL;
+	} else {
 
-	initRenderList.push_back(r_init);
+		//PUSH
 
-	//SCALE
+		SToRender* r_init = new SToRender;
 
-	SRenderRotation* c_init = new SRenderRotation();
+		r_init->type = TR_PUSHMATRIX;
+		r_init->pointer = NULL;
 
-	c_init->x = x;
-	c_init->y = y;
-	c_init->z = z;
-	c_init->angle = angle;
+		initRenderList.push_back(r_init);
 
-	r_init = new SToRender();
+		//SCALE
 
-	r_init->type = TR_ROTATION;
-	r_init->pointer = (void*) c_init;
+		SRenderRotation* c_init = new SRenderRotation();
 
-	initRenderList.push_back(r_init);
+		c_init->x = x;
+		c_init->y = y;
+		c_init->z = z;
+		c_init->angle = angle;
+
+		r_init = new SToRender();
+
+		r_init->type = TR_ROTATION;
+		r_init->pointer = (void*) c_init;
+
+		initRenderList.push_back(r_init);
+
+	}
 
 	//POP
 
@@ -358,33 +369,38 @@ int CCamera::rotate(float angle, float x, float y, float z) {
 int CCamera::translate(float x, float y, float z) {
 
 	if (rendering) {
-		CLibrary::Error("Rendering already began.");
-		return FRACASO;
-	} 
 
-	//PUSH
+		CScreen::pushMatrix();
 
-	SToRender* r_init = new SToRender;
+		CScreen::translate(x,y,z);
 
-	r_init->type = TR_PUSHMATRIX;
-	r_init->pointer = NULL;
+	} else {
 
-	initRenderList.push_back(r_init);
+		//PUSH
 
-	//SCALE
+		SToRender* r_init = new SToRender;
 
-	SRenderTranscalation* c_init = new SRenderTranscalation();
+		r_init->type = TR_PUSHMATRIX;
+		r_init->pointer = NULL;
 
-	c_init->x = x;
-	c_init->y = y;
-	c_init->z = z;
+		initRenderList.push_back(r_init);
 
-	r_init = new SToRender();
+		//SCALE
 
-	r_init->type = TR_TRANSLATION;
-	r_init->pointer = (void*) c_init;
+		SRenderTranscalation* c_init = new SRenderTranscalation();
 
-	initRenderList.push_back(r_init);
+		c_init->x = x;
+		c_init->y = y;
+		c_init->z = z;
+
+		r_init = new SToRender();
+
+		r_init->type = TR_TRANSLATION;
+		r_init->pointer = (void*) c_init;
+
+		initRenderList.push_back(r_init);
+
+	}
 
 	//POP
 
@@ -400,33 +416,38 @@ int CCamera::translate(float x, float y, float z) {
 int CCamera::scale(float x, float y, float z) {
 
 	if (rendering) {
-		CLibrary::Error("Rendering already began.");
-		return FRACASO;
-	} 
 
-	//PUSH
+		CScreen::pushMatrix();
 
-	SToRender* r_init = new SToRender;
+		CScreen::scale(x,y,z);
 
-	r_init->type = TR_PUSHMATRIX;
-	r_init->pointer = NULL;
+	} else {
 
-	initRenderList.push_back(r_init);
+		//PUSH
 
-	//SCALE
+		SToRender* r_init = new SToRender;
 
-	SRenderTranscalation* c_init = new SRenderTranscalation();
+		r_init->type = TR_PUSHMATRIX;
+		r_init->pointer = NULL;
 
-	c_init->x = x;
-	c_init->y = y;
-	c_init->z = z;
+		initRenderList.push_back(r_init);
 
-	r_init = new SToRender();
+		//SCALE
 
-	r_init->type = TR_SCALATION;
-	r_init->pointer = (void*) c_init;
+		SRenderTranscalation* c_init = new SRenderTranscalation();
 
-	initRenderList.push_back(r_init);
+		c_init->x = x;
+		c_init->y = y;
+		c_init->z = z;
+
+		r_init = new SToRender();
+
+		r_init->type = TR_SCALATION;
+		r_init->pointer = (void*) c_init;
+
+		initRenderList.push_back(r_init);
+
+	}
 
 	//POP
 
