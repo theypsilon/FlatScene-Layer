@@ -38,8 +38,14 @@ const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*))
 
 	if (this->eventHandlerRegister.find(type) == this->eventHandlerRegister.end())
 		ret = NULL;
-	else
+	else {
 		ret = this->eventHandlerRegister[type];
+
+		if (eventHandler == NULL) {
+			this->eventHandlerRegister.erase(eventHandlerRegister.find(type))
+			return ret;
+		}
+	}
 
 	this->eventHandlerRegister[type] = (const void*) eventHandler;
 
