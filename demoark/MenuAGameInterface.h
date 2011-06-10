@@ -40,7 +40,7 @@ public:
 
 	CEngine* setPrevious(CEngine*);
 	
-	static void onKeyMenu(SDL_Event*);
+	void onKeyMenu(SDL_Event*);
 
 	virtual void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
 	virtual void onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode);

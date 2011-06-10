@@ -28,7 +28,7 @@ public:
 	CEngine* setPrevious(CEngine*);
 
 	
-	static void onKeyFreeze(SDL_Event*);
+	void onKeyFreeze(SDL_Event*);
 
 	virtual void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
 	virtual void onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode);

@@ -94,7 +94,8 @@ public:
 
 	//TODO provisional
 
-	static void onKeyTestA(SDL_Event*);
+	void onKeyTestA(SDL_Event*);
+
 };
 
 #endif //#ifndef __TESTEVENTHANDLER_H__

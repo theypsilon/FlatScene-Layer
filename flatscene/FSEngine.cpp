@@ -32,6 +32,32 @@ int CEngine::onInit() {
 	return EXITO;
 }
 
+/*
+template <typename T> void CEngine::setEventHandler2(Uint8 type,void (T::*eventHandler)(SDL_Event*)) {
+
+		boost::function<void (SDL_Event*)>* f = new boost::function<void (SDL_Event*)>;
+
+		(*f) = std::bind1st( mem_fun(eventHandler) , (T*)this);
+
+
+		boost::function<void (SDL_Event*)>* ret;
+
+		if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
+			ret = NULL;
+		else {
+			ret = this->eventHandlerRegister2[type];
+
+			if (eventHandler == NULL) {
+				this->eventHandlerRegister2.erase(eventHandlerRegister2.find(type));
+				return;
+			}
+		}
+
+		this->eventHandlerRegister2[type] = f;
+
+		return;
+}
+
 const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
 
 	const void* ret;
@@ -42,7 +68,7 @@ const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*))
 		ret = this->eventHandlerRegister[type];
 
 		if (eventHandler == NULL) {
-			this->eventHandlerRegister.erase(eventHandlerRegister.find(type))
+			this->eventHandlerRegister.erase(eventHandlerRegister.find(type));
 			return ret;
 		}
 	}
@@ -50,7 +76,7 @@ const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*))
 	this->eventHandlerRegister[type] = (const void*) eventHandler;
 
 	return ret;
-}
+}*/
 
 //bucle principal
 int CEngine::loop() {
@@ -85,8 +111,8 @@ int CEngine::loop() {
 			}
 
 			//si hay manejador de eventos registrado para este evento, lo ejecuta
-			if (eventHandlerRegister.find(event.type)!=eventHandlerRegister.end()) 
-				((void (*)(SDL_Event*)) eventHandlerRegister[event.type])(&event);
+			if (eventHandlerRegister2.find(event.type)!=eventHandlerRegister2.end()) 
+				eventHandlerRegister2[event.type](&event);
 				
 		} else {
 				

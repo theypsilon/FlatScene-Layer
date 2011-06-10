@@ -185,8 +185,8 @@ void CTestA4GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_ESCAPE) {
 
 		CMenuAGameInterface* men = new CMenuAGameInterface(CLibrary::getLibrary());
-		men->setEventHandler(SDL_KEYDOWN,CMenuAGameInterface::onKeyMenu);
-		men->setEventHandler(SDL_KEYUP,CMenuAGameInterface::onKeyMenu);
+		men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
+		men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
 		men->setPrevious(this);
 
@@ -194,8 +194,8 @@ void CTestA4GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	} else if (sym==SDLK_SPACE) {
 
 		CFreezeGameInterface* fgi = new CFreezeGameInterface(CLibrary::getLibrary());
-		fgi->setEventHandler(SDL_KEYDOWN,CFreezeGameInterface::onKeyFreeze);
-		fgi->setEventHandler(SDL_KEYUP,CFreezeGameInterface::onKeyFreeze);
+		fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
+		fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
 		fgi->setPrevious(this);
 

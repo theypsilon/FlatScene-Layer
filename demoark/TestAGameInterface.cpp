@@ -276,8 +276,9 @@ void CTestAGameInterface::updatePlayerKeyAlias(int n,CPlayer* pyer, int key) {
 
 void CTestAGameInterface::onKeyTestA(SDL_Event* event) {
 	if (event->type == SDL_KEYDOWN)
-		((CTestAGameInterface*)CLibrary::getActualEngine())->onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+		onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
 	else
-		((CTestAGameInterface*)CLibrary::getActualEngine())->onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+		onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
 }
+
 #endif

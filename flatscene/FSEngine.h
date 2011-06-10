@@ -4,7 +4,7 @@
 #include "FSMessageHandler.h"
 #include "FSTime.h"
 #include <map>
-
+#include <boost/function.hpp>
 
 class CLibrary;
 
@@ -14,7 +14,7 @@ private:
 
 	bool initialized;
 
-	map<Uint8,const void*> eventHandlerRegister;
+	map<Uint8,boost::function<void (SDL_Event*)>> eventHandlerRegister2;
 
 	friend class CLibrary;
 
@@ -48,7 +48,31 @@ public:
 
 	virtual int drawFrame();
 
-	const void* setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*));
+	//const void* setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*));
+
+	template <class T> void setEventHandler(Uint8 type,void (T::*eventHandler)(SDL_Event*)) {
+		boost::function<void (SDL_Event*)> f;
+
+		f = std::bind1st( mem_fun(eventHandler) , (T*)this);
+
+
+		boost::function<void (SDL_Event*)> ret;
+
+		if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
+			;//ret = NULL;
+		else {
+			ret = this->eventHandlerRegister2[type];
+
+			if (eventHandler == NULL) {
+				this->eventHandlerRegister2.erase(eventHandlerRegister2.find(type));
+				return;
+			}
+		}
+
+		this->eventHandlerRegister2[type] = f;
+
+		return;
+	};/**/
 
 };
 

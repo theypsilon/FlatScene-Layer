@@ -115,9 +115,9 @@ CEngine* CMenuAGameInterface::setPrevious(CEngine* newE) {
 
 void CMenuAGameInterface::onKeyMenu(SDL_Event* event) {
 	if (event->type == SDL_KEYDOWN)
-		((CMenuAGameInterface*)CLibrary::getActualEngine())->onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+		onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
 	else
-		((CMenuAGameInterface*)CLibrary::getActualEngine())->onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+		onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
 }
 
 

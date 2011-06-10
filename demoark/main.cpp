@@ -12,6 +12,8 @@
 
 void funcEstres(int p);
 
+
+
 int main(int argc,char* argv[])
 {
 	//run the application
@@ -27,6 +29,8 @@ int main(int argc,char* argv[])
 	engine[0]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
 	engine[0]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
 	CLibrary::addEngine(engine[0],10);
+
+	//exit(0);
 
 	engine[1] = new CTestA3GameInterface(CLibrary::getLibrary());
 
@@ -59,6 +63,8 @@ int main(int argc,char* argv[])
 	
 	return(0);
 }
+
+
 
 void funcEstres(int p) {
 

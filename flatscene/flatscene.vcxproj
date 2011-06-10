@@ -41,10 +41,14 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>lib\</OutDir>
     <TargetName>$(ProjectName)debug</TargetName>
+    <IncludePath>C:\Programacion\cLibs\boost_1_46_1;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Programacion\cLibs\boost_1_46_1\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>lib\</OutDir>
+    <IncludePath>C:\Programacion\cLibs\boost_1_46_1;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Programacion\cLibs\boost_1_46_1\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

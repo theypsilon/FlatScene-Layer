@@ -59,9 +59,9 @@ CEngine* CFreezeGameInterface::setPrevious(CEngine* ePrev) {
 
 void CFreezeGameInterface::onKeyFreeze(SDL_Event* event) {
 	if (event->type == SDL_KEYDOWN)
-		((CFreezeGameInterface*)CLibrary::getActualEngine())->onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+		onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
 	else
-		((CFreezeGameInterface*)CLibrary::getActualEngine())->onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+		onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
 }
 
 void CFreezeGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
