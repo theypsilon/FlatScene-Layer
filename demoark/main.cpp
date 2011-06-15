@@ -19,6 +19,7 @@ int main(int argc,char* argv[])
 	//run the application
 	CLibrary::startLibrary(false);
 
+
 	///*
 	CScreen::start(640,480,32,1.0,1.0,false);
 
@@ -29,8 +30,6 @@ int main(int argc,char* argv[])
 	engine[0]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
 	engine[0]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
 	CLibrary::addEngine(engine[0],10);
-
-	//exit(0);
 
 	engine[1] = new CTestA3GameInterface(CLibrary::getLibrary());
 

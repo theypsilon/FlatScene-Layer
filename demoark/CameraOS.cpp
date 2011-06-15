@@ -88,7 +88,7 @@ int CCameraOS::refresh() {
 
 	if (target) {
 
-		CPoint p = target->m_Coordxy;
+		CPoint p = target->renderPoint;
 
 		target->getSprite()->put(p);
 

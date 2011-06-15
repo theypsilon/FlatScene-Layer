@@ -167,8 +167,8 @@ int CScrollCamera::refresh() {
 		}
 	}
 
-	scrolltarget->m_Coordxy.X() = scrolltarget->m_Scrollxy.X() -(CX() - (area->getW()/2));  
-    scrolltarget->m_Coordxy.Y() = scrolltarget->m_Scrollxy.Y() -(CY() - (area->getH()/2));
+	scrolltarget->renderPoint.X() = scrolltarget->m_Scrollxy.X() -(CX() - (area->getW()/2));  
+    scrolltarget->renderPoint.Y() = scrolltarget->m_Scrollxy.Y() -(CY() - (area->getH()/2));
 
 #ifdef MENSAJES_COORDENADAS
 	Write.erase(Write.line(0,area->getX()*2+area->getW()*2-300,area->getY()*2+area->getH()*2-60,"Scroll X: %d    Scroll Y: %d", scrolltarget->m_Scrollxy.X(),scrolltarget->m_Scrollxy.Y()),true);

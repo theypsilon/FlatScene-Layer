@@ -36,7 +36,7 @@ int CTestOSDesktopInterface::onInit() {
 	raton->file = CImg.add("Raton");
 	raton->graph = 0;
 
-	fondo->m_Coordxy.set(-400,0);
+	fondo->renderPoint.set(-400,0);
 
 	return CEngine::onInit();
 }
@@ -113,7 +113,7 @@ int CTestOSDesktopInterface::drawFrame() {
 
 int CTestOSDesktopInterface::onIdle() {
 
-	printf("x : %d        y : %d\r",raton->m_Coordxy.X(),raton->m_Coordxy.Y());
+	printf("x : %d        y : %d\r",raton->renderPoint.X(),raton->renderPoint.Y());
 
 	if (right)  {
 		float yrotrad;
@@ -210,8 +210,8 @@ void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
 	CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) CLibrary::getActualEngine();
 
-	int x = os->raton->m_Coordxy.X() = event->motion.x;
-	int y = os->raton->m_Coordxy.Y() = event->motion.y;
+	int x = os->raton->renderPoint.X() = event->motion.x;
+	int y = os->raton->renderPoint.Y() = event->motion.y;
 
 	if (os->lastx != 0.0) {
 

@@ -12,9 +12,10 @@ class CEngine : public CMessageHandler
 {
 private:
 
+
 	bool initialized;
 
-	map<Uint8,boost::function<void (SDL_Event*)>> eventHandlerRegister2;
+	map<Uint8,boost::function<void (SDL_Event*)> > eventHandlerRegister2;
 
 	friend class CLibrary;
 
@@ -48,14 +49,14 @@ public:
 
 	virtual int drawFrame();
 
-	//const void* setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*));
+	void setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*));
 
 	template <class T> void setEventHandler(Uint8 type,void (T::*eventHandler)(SDL_Event*)) {
+
 		boost::function<void (SDL_Event*)> f;
 
 		f = std::bind1st( mem_fun(eventHandler) , (T*)this);
-
-
+		
 		boost::function<void (SDL_Event*)> ret;
 
 		if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
@@ -70,10 +71,17 @@ public:
 		}
 
 		this->eventHandlerRegister2[type] = f;
-
-		return;
 	};/**/
 
+	void foo() { printf("probando\n"); };
+	template <class T> void nocompila(void (T::*puntero)(void));/*
+
+		boost::function<void ()> f;
+	
+		f = std::bind1st( mem_fun(puntero), (T*) this);
+
+		f();
+	}*/
 };
 
 #endif //#ifndef __EVENTHANDLER_H__

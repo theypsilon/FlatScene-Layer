@@ -38,7 +38,7 @@ public:
 	virtual string getCreature();
 	CUniverse* getUniverse();
 	virtual int setUniverse(CUniverse* m);
-	CPoint m_Coordxy;
+	CPoint renderPoint;
 
 	virtual CActor* clone();
 

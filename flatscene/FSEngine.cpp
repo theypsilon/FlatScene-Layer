@@ -32,31 +32,55 @@ int CEngine::onInit() {
 	return EXITO;
 }
 
-/*
-template <typename T> void CEngine::setEventHandler2(Uint8 type,void (T::*eventHandler)(SDL_Event*)) {
+void CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
 
-		boost::function<void (SDL_Event*)>* f = new boost::function<void (SDL_Event*)>;
+	if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
+		;//ret = NULL;
+	else {
+		//ret = this->eventHandlerRegister2[type];
 
-		(*f) = std::bind1st( mem_fun(eventHandler) , (T*)this);
-
-
-		boost::function<void (SDL_Event*)>* ret;
-
-		if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
-			ret = NULL;
-		else {
-			ret = this->eventHandlerRegister2[type];
-
-			if (eventHandler == NULL) {
-				this->eventHandlerRegister2.erase(eventHandlerRegister2.find(type));
-				return;
-			}
+		if (eventHandler == NULL) {
+			this->eventHandlerRegister2.erase(eventHandlerRegister2.find(type));
+			//return ret;
 		}
+	}
 
-		this->eventHandlerRegister2[type] = f;
+	this->eventHandlerRegister2[type] = eventHandler;
 
-		return;
 }
+
+template <class T> void CEngine::nocompila(void (T::*puntero)(void)) {
+
+	boost::function<void ()> f;
+	
+	f = std::bind1st( mem_fun(puntero), (T*) this);
+
+	f();
+}
+/*
+template <class T>
+void CEngine::setEventHandler(Uint8 type,void (T::*eventHandler)(SDL_Event*)) {
+	boost::function<void (SDL_Event*)> f;
+
+	f = std::bind1st( mem_fun(eventHandler) , (T*)this);
+		
+	boost::function<void (SDL_Event*)> ret;
+
+	printf("culo de mono\n");
+
+	if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
+		;//ret = NULL;
+	else {
+		ret = this->eventHandlerRegister2[type];
+
+		if (eventHandler == NULL) {
+			this->eventHandlerRegister2.erase(eventHandlerRegister2.find(type));
+			return;
+		}
+	}
+
+	this->eventHandlerRegister2[type] = f;
+}/*
 
 const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
 
@@ -77,6 +101,8 @@ const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*))
 
 	return ret;
 }*/
+
+
 
 //bucle principal
 int CEngine::loop() {

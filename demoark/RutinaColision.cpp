@@ -14,7 +14,7 @@ bool CBasicCollision0::run(int x, int y, int z, CActorScrollMap* mobil) {
 	RectArea* rA = mobil->getSprite()->getArea(0);
 	CMap* map = (CMap*)mobil->getUniverse();
 
-	//Write.erase( Write.line(0,mobil->m_Coordxy.X(),mobil->m_Coordxy.Y(),"color : #%06X",map->getPixel(x,y,z)), true);
+	//Write.erase( Write.line(0,mobil->renderPoint.X(),mobil->renderPoint.Y(),"color : #%06X",map->getPixel(x,y,z)), true);
 
 	if (rA) {
 		RectArea::iterator beginMobil = rA->begin();
