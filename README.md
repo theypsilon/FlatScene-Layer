@@ -1,0 +1,1 @@
+**FlatScene** is a high abstraction layer designed to create 2D interactive applications in a rapid and easy way. This library uses OpenGL to render 2D graphics supporting hardware acceleration, and SDL to manipulate I/O events. 
