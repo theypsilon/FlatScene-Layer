@@ -70,8 +70,8 @@ int  CTestA5GameInterface::onInit() {
 	activationIds.push_back("npc_normal_quiet");
 	activationIds.push_back("npc_normal_walk");
 
-	TiXmlDocument xmldoc("config.xml");	// Cargamos el archivo de configuración.
-	if (!xmldoc.LoadFile()) {	 CLibrary::Error("config.xml",TE_fileExists); }
+	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuración.
+	if (!xmldoc.LoadFile()) {	 CLibrary::Error("resources/config.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChildElement("System"));
 	int cantNPC=0;

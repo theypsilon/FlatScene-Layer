@@ -30,8 +30,8 @@ void CPlayer::init(list<string>& activationIds, int v) {
 #endif
 	//Configuración de teclas del jugador.
 
-	TiXmlDocument xmldoc("config.xml");	// Cargamos el archivo de configuración.
-	if (!xmldoc.LoadFile()) {	 CLibrary::Error("config.xml",TE_fileExists); }
+	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuración.
+	if (!xmldoc.LoadFile()) {	 CLibrary::Error("resources/config.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChildElement("Keys"));
 
