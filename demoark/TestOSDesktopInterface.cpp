@@ -115,7 +115,7 @@ int CTestOSDesktopInterface::onIdle() {
 
 	printf("x : %d        y : %d\r",raton->renderPoint.X(),raton->renderPoint.Y());
 
-	if (right)  {
+/*	if (right)  {
 		float yrotrad;
 		yrotrad = (yrot / 180 * 3.141592654f);
 		xpos += float(cos(yrotrad)) * 2.0;
@@ -151,7 +151,7 @@ int CTestOSDesktopInterface::onIdle() {
 		zpos -= float(cos(yrotrad))  * 2.0;
 		ypos -= float(sin(xrotrad)) * 2.0;
 
-	}
+	}*/
 
 	return EXITO;
 

@@ -6,9 +6,9 @@ Actually, the library is ready for use in **C++**. It benefits from the *portabi
 
 #DemoArk
 
-This is a **TestApp** created to show the functionability of **FlatScene**.
+This is a **test application** created to show the functionability of **FlatScene**.
 
-In this demo, the input keys are :
+In this demo, input keys are :
 
 * **ESC** : Simple option *menu*. You got here an option for leaving the demo.
 
@@ -20,6 +20,6 @@ In this demo, the input keys are :
 
 * **Arrow keys** : *Walking*.
 
-* In first test, press **u** to stress *change map* test.
+* Into first test, press **u** to stress *change map* test.
 
-* In double cam test, press **a** to kill the grey enemies.
+* Into double cam test, press **a** to kill the grey enemies.
