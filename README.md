@@ -6,7 +6,7 @@ Actually, the library is ready for use in **C++**. It benefits from the *portabi
 
 #DemoArk
 
-This is a **test application** created to show the functionability of **FlatScene**.
+This is a **test application** created to show the features of **FlatScene**.
 
 In this demo, input keys are :
 
