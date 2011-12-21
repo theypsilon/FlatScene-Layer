@@ -12,7 +12,7 @@ private:
 	int score1,score2;
 public:
 
-	CTestA3GameInterface(CMessageHandler* pmhParent=NULL);
+	CTestA3GameInterface(CMessageHandler * pmhParent=NULL);
 
 	virtual ~CTestA3GameInterface();
 

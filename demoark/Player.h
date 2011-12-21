@@ -18,7 +18,7 @@ public:
 	void configKey(SDLKey sym,const char* keycode);
 	int KeyAliasFor(SDLKey sym);
 
-	CPlayer(CMessageHandler* pmhParent=NULL);
+	CPlayer(CMessageHandler * pmhParent=NULL);
 	~CPlayer();
 
 	void blockFutureActionCandidates();

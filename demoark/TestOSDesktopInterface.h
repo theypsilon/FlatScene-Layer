@@ -25,7 +25,7 @@ private:
 
 public:
 
-	CTestOSDesktopInterface(CMessageHandler* pmhParent=NULL);
+	CTestOSDesktopInterface(CMessageHandler * pmhParent=NULL);
 	~CTestOSDesktopInterface();
 
 	int onInit();

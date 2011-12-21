@@ -57,7 +57,7 @@ public:
 
 public:
 	//constructor
-	CTestAGameInterface(CMessageHandler* pmhParent=NULL);
+	CTestAGameInterface(CMessageHandler * pmhParent=NULL);
 	//destructor
 	virtual ~CTestAGameInterface();
 	//initialization

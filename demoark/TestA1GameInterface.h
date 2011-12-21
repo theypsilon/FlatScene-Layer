@@ -9,7 +9,7 @@ using namespace std;
 class CTestA1GameInterface : public CTestAGameInterface {
 public:
 
-	CTestA1GameInterface(CMessageHandler* pmhParent=NULL);
+	CTestA1GameInterface(CMessageHandler * pmhParent=NULL);
 
 	virtual ~CTestA1GameInterface();
 

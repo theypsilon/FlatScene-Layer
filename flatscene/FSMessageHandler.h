@@ -40,7 +40,7 @@ typedef std::list<CMessage*> MessageCollection;
 
 class CMessageHandler  {
 private:
-	CMessageHandler* m_pmhParent;
+	CMessageHandler * m_pmhParent;
 
 	static Uint32 s_NextMSGID;
 
@@ -58,11 +58,11 @@ protected:
 	virtual void OnaddChild(CMessageHandler* pmhChild);
 	virtual void onRemoveChild(CMessageHandler* pmhChild);
 public:
-	CMessageHandler(CMessageHandler* pmhParent);
+	CMessageHandler(CMessageHandler * pmhParent);
 	virtual ~CMessageHandler();
 	
-	CMessageHandler* getParent();
-	void setParent(CMessageHandler* pmhNewParent);	
+	CMessageHandler * getParent();
+	void setParent(CMessageHandler * pmhNewParent);	
 	bool HasParent();
 	
 #ifdef MENSAJES_MSGIDS

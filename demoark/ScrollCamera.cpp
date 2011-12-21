@@ -2,7 +2,7 @@
 #include "FSLibrary.h"
 #include "FSScreen.h"
 
-CScrollCamera::CScrollCamera(CActor* target, CRectangle* area,CMessageHandler* pmhParent) :
+CScrollCamera::CScrollCamera(CActor* target, CRectangle* area,CMessageHandler * pmhParent) :
 CCamera(target,area,pmhParent), centro(new CPoint(area->getW()/2,area->getH()/2)) {
 	intraMargenX=intraMargenY=0;
 	loadUniverse();
@@ -92,7 +92,7 @@ int CScrollCamera::loadUniverse() {
 
 	int capas=map->getLayer();
 	for (int i=0,j=0;i<=PisoCapa[capas-1] && i<capas && j<capas;i++) {
-		Pisos.push_back(new CFloor(area,map,i,(CMessageHandler*)this));
+		Pisos.push_back(new CFloor(area,map,i,this));
 		for (;j<capas && i==PisoCapa[j];j++) {
 			CLayerBG* LayerAux;
 			if (TipoCapa[j]==0)

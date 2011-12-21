@@ -8,7 +8,7 @@
 
 Uint32 CActorScrollMap::MSGID_Damage=CMessageHandler::getNextMSGID();
 
-CActorScrollMap::CActorScrollMap(const char* creature,CMessageHandler* pmhParent) : 
+CActorScrollMap::CActorScrollMap(const char* creature,CMessageHandler * pmhParent) : 
 CActor(creature,pmhParent), dirx(0), diry(1), garbage(NULL),
 actActual(NULL), actUltimo(NULL), actNeutro(NULL), actUltimoMovimiento(NULL), 
 upfloor(false), downfloor(false), rutinaColision(CRutinaColision::collisionFactory()),

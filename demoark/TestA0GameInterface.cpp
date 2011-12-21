@@ -13,7 +13,7 @@
 #include "MenuAGameInterface.h"
 
 //constructor
-CTestA0GameInterface::CTestA0GameInterface(CMessageHandler* pmhParent) : CTestAGameInterface(pmhParent)
+CTestA0GameInterface::CTestA0GameInterface(CMessageHandler * pmhParent) : CTestAGameInterface(pmhParent)
 {
 	pulsado = false;
 }
@@ -56,12 +56,12 @@ int  CTestA0GameInterface::onInit() {
 	activationIds.push_back("pj_normal_alsa");
 
 
-	player.push_back(new CPlayer((CMessageHandler*)this));	
+	player.push_back(new CPlayer(this));	
 	player[0]->eventChange=false;
 	
 	player[0]->init(activationIds,0);
 
-	player.push_back(new CPlayer((CMessageHandler*)this));	
+	player.push_back(new CPlayer(this));	
 	player[1]->eventChange=false;
 	
 	player[1]->init(activationIds,1);

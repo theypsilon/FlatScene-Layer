@@ -38,7 +38,7 @@ protected:
 	static void procRendPop(void* pointer);
 public:
 	
-	CCamera(CActor* target,CRectangle* area,CMessageHandler* pmhParent=NULL);
+	CCamera(CActor* target,CRectangle* area,CMessageHandler * pmhParent=NULL);
 	virtual ~CCamera();
 	virtual int loadUniverse();
 	virtual CUniverse* getUniverse();

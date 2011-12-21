@@ -8,7 +8,7 @@
 #include "MenuAGameInterface.h"
 
 //constructor
-CTestA1GameInterface::CTestA1GameInterface(CMessageHandler* pmhParent) : CTestAGameInterface(pmhParent)
+CTestA1GameInterface::CTestA1GameInterface(CMessageHandler * pmhParent) : CTestAGameInterface(pmhParent)
 {
 
 }
@@ -67,13 +67,13 @@ int CTestA1GameInterface::onInit() {
 	activationIds.push_back("pj_normal_asa");
 	activationIds.push_back("pj_normal_alsa");
 
-	player.push_back(new CPlayer((CMessageHandler*)this));	
+	player.push_back(new CPlayer(this));	
 	player[0]->eventChange=false;
 
 	
 	player[0]->init(activationIds,0);
 	
-	player.push_back(new CPlayer((CMessageHandler*)this)); 
+	player.push_back(new CPlayer(this)); 
 	player[1]->eventChange=false;
 	player[1]->init(activationIds,1);
 	player[1]->m_Scrollxy.set(270,100,0);

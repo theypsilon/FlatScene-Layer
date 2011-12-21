@@ -21,8 +21,8 @@ private:
 	FloorCollection Pisos;
 	float zoom;
 public:
-	CScrollCamera(CActor* target,CRectangle* area, CPoint* centro,float margenDesp=0.0,CMessageHandler* pmhParent=NULL);
-	CScrollCamera(CActor* target,CRectangle* area,CMessageHandler* pmhParent=NULL);
+	CScrollCamera(CActor* target,CRectangle* area, CPoint* centro,float margenDesp=0.0,CMessageHandler * pmhParent=NULL);
+	CScrollCamera(CActor* target,CRectangle* area,CMessageHandler * pmhParent=NULL);
 	virtual ~CScrollCamera();
 	virtual int loadUniverse();
 	virtual int unloadUniverse();

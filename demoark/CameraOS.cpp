@@ -3,7 +3,7 @@
 
 // Library.h es necesario para el manejo de errores.
 
-CCameraOS::CCameraOS(CActor* target, CRectangle* area,CMessageHandler* pmhParent) :
+CCameraOS::CCameraOS(CActor* target, CRectangle* area,CMessageHandler * pmhParent) :
 // Se ha de llamar a la clase Base para una correcta inicialización
 CCamera(target,area,pmhParent) {
 	

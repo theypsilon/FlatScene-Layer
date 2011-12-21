@@ -36,7 +36,7 @@ public:
 
 	ActorScrollCollection* placeInMA;
 
-	CActorScrollMap(const char* creature,CMessageHandler* pmhParent=NULL);
+	CActorScrollMap(const char* creature,CMessageHandler * pmhParent=NULL);
 	virtual ~CActorScrollMap();
 
 	virtual void draw(CPoint& offset);

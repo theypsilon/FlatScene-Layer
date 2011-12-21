@@ -14,7 +14,7 @@ private:
 
 public:
 
-	CTestA0GameInterface(CMessageHandler* pmhParent=NULL);
+	CTestA0GameInterface(CMessageHandler * pmhParent=NULL);
 
 	virtual ~CTestA0GameInterface();
 

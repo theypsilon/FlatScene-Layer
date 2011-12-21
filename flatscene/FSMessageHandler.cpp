@@ -12,7 +12,7 @@ int CMessageHandler::textM0=-1;
 #endif
 
 
-CMessageHandler::CMessageHandler(CMessageHandler* pmhParent):
+CMessageHandler::CMessageHandler(CMessageHandler * pmhParent):
 m_pmhParent(NULL) {
 
 	setParent(pmhParent);
@@ -25,7 +25,7 @@ CMessageHandler::~CMessageHandler() {
 }
 
 
-void CMessageHandler::setParent(CMessageHandler* pmhNewParent) {
+void CMessageHandler::setParent(CMessageHandler * pmhNewParent) {
 
 	if(HasParent())
 		SendMessage(MSGID_RemoveChild,(MSGPARM)getParent(),(MSGPARM)this);
@@ -38,7 +38,7 @@ void CMessageHandler::setParent(CMessageHandler* pmhNewParent) {
 
 }
 
-CMessageHandler* CMessageHandler::getParent() {
+CMessageHandler * CMessageHandler::getParent() {
 
 	return(m_pmhParent);
 

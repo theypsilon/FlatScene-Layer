@@ -8,7 +8,7 @@
 #include "EnemyNPC.h"
 
 //constructor
-CTestA3GameInterface::CTestA3GameInterface(CMessageHandler* pmhParent) : CTestAGameInterface(pmhParent)
+CTestA3GameInterface::CTestA3GameInterface(CMessageHandler * pmhParent) : CTestAGameInterface(pmhParent)
 {
 	score1=score2=0;
 }
@@ -51,12 +51,12 @@ int CTestA3GameInterface::onInit() {
 	activationIds.push_back("pj_normal_alsa");
 
 
-	player.push_back(new CPlayer((CMessageHandler*)this));	
+	player.push_back(new CPlayer(this));	
 	player[0]->eventChange=false;
 	
 	player[0]->init(activationIds,0);
 
-	player.push_back(new CPlayer((CMessageHandler*)this));	
+	player.push_back(new CPlayer(this));	
 	player[1]->eventChange=false;
 	
 	player[1]->init(activationIds,1);

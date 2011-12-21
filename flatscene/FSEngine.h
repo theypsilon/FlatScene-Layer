@@ -40,7 +40,7 @@ public:
 	bool done;
 
 	
-	CEngine(CMessageHandler* pmhParent=NULL);
+	CEngine(CMessageHandler * pmhParent=NULL);
 	
 	virtual ~CEngine();
 

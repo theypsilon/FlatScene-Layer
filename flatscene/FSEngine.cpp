@@ -9,7 +9,7 @@
 
 
 
-CEngine::CEngine(CMessageHandler* pmhParent) : CMessageHandler(pmhParent)
+CEngine::CEngine(CMessageHandler * pmhParent) : CMessageHandler(pmhParent)
 {
 	initialized = false;
 	priority = 100;

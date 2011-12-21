@@ -17,7 +17,7 @@ Uint32 CTestAGameInterface::MSGID_DeleteMap=CMessageHandler::getNextMSGID(false)
 Uint32 CTestAGameInterface::MSGID_KillEnemy=CMessageHandler::getNextMSGID(false);
 
 //constructor
-CTestAGameInterface::CTestAGameInterface(CMessageHandler* pmhParent) : CEngine(pmhParent)	{
+CTestAGameInterface::CTestAGameInterface(CMessageHandler * pmhParent) : CEngine(pmhParent)	{
 }
 //destructor
 CTestAGameInterface::~CTestAGameInterface()	{

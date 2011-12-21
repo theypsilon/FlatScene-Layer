@@ -6,7 +6,7 @@
 
 class CEnemyPunto : public CEnemy {
 public:
-	CEnemyPunto(CMessageHandler* pmhParent=NULL);
+	CEnemyPunto(CMessageHandler * pmhParent=NULL);
 	virtual ~CEnemyPunto();
 
 	void init(list<string>& activationIds,int x, int y,int z);

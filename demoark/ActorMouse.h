@@ -15,7 +15,7 @@ public:
 	// TODO : variables y funciones públicas adicionales
 
 	// Constructor con clase menajera como parámetro de entrada 
-	CActorMouse(CMessageHandler* pmhParent=NULL);
+	CActorMouse(CMessageHandler * pmhParent=NULL);
 
 	// Destructor, ahí deberemos liberar los recursos
 	~CActorMouse();

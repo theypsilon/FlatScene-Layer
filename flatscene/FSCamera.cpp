@@ -3,7 +3,7 @@
 
 map<TypeResource,void (*)(void*)> CCamera::procRenders;
 
-CCamera::CCamera(CActor* target, CRectangle* area,CMessageHandler* pmhParent) :
+CCamera::CCamera(CActor* target, CRectangle* area,CMessageHandler * pmhParent) :
 CMessageHandler(pmhParent), uni(NULL), target(target), area(area) , rendering(false),
 x(-1000),y(-1000) {
 

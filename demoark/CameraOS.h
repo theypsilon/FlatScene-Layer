@@ -16,7 +16,7 @@ public:
 
 	// Constructor, se recomienda que se establezcan los siguientes parámetros.
 	// Pueden ser necesarios para inicializar la clase base.
-	CCameraOS(CActor* target,CRectangle* area,CMessageHandler* pmhParent=NULL);
+	CCameraOS(CActor* target,CRectangle* area,CMessageHandler * pmhParent=NULL);
 
 	// Destructor, ahí deberemos liberar los recursos
 	virtual ~CCameraOS();

@@ -5,7 +5,7 @@
 #include "FSScreen.h"
 
 //constructor
-CMenuAGameInterface::CMenuAGameInterface(CMessageHandler* pmhParent) : CEngine(pmhParent)
+CMenuAGameInterface::CMenuAGameInterface(CMessageHandler * pmhParent) : CEngine(pmhParent)
 {
 	pushed=false;
 	file=0;

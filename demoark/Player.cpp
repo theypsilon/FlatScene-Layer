@@ -2,7 +2,7 @@
 #include "TestAGameInterface.h"
 #include "FSLibrary.h"
 
-CPlayer::CPlayer(CMessageHandler* pmhParent) : CActorScrollMap("PJ0",pmhParent) {
+CPlayer::CPlayer(CMessageHandler * pmhParent) : CActorScrollMap("PJ0",pmhParent) {
 #ifdef MENSAJES_ACCIONES
 	textA0=-1;
 	textA1=-1;

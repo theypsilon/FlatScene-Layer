@@ -9,7 +9,7 @@
 Uint32 CFreezeGameInterface::MSGID_PreviousEngine=CMessageHandler::getNextMSGID();
 
 //constructor
-CFreezeGameInterface::CFreezeGameInterface(CMessageHandler* pmhParent) : CEngine(pmhParent), previous(NULL) {
+CFreezeGameInterface::CFreezeGameInterface(CMessageHandler * pmhParent) : CEngine(pmhParent), previous(NULL) {
 	pushed=false;
 }
 

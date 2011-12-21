@@ -7,7 +7,7 @@
 #include "FSScreen.h"
 
 //constructor
-CTestBGameInterface::CTestBGameInterface(CMessageHandler* pmhParent) : CEngine(pmhParent), actZone(0)
+CTestBGameInterface::CTestBGameInterface(CMessageHandler * pmhParent) : CEngine(pmhParent), actZone(0)
 {
 	pushed=false;
 }

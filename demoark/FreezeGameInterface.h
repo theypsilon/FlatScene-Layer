@@ -14,7 +14,7 @@ private:
 	CEngine* previous;
 public:
 
-	CFreezeGameInterface(CMessageHandler* pmhParent=NULL);
+	CFreezeGameInterface(CMessageHandler * pmhParent=NULL);
 
 	virtual ~CFreezeGameInterface();
 

@@ -10,7 +10,7 @@ using namespace std;
 class CTestA5GameInterface : public CTestAGameInterface {
 public:
 
-	CTestA5GameInterface(CMessageHandler* pmhParent=NULL);
+	CTestA5GameInterface(CMessageHandler * pmhParent=NULL);
 
 	virtual ~CTestA5GameInterface();
 

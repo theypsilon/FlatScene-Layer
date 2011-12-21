@@ -1,6 +1,6 @@
 #include "TestOSDesktopInterface.h"
 
-CTestOSDesktopInterface::CTestOSDesktopInterface(CMessageHandler* pmhParent) {
+CTestOSDesktopInterface::CTestOSDesktopInterface(CMessageHandler * pmhParent) {
 	raton = fondo = NULL;
 	camaraf = camarar = NULL;
 

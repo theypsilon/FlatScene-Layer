@@ -1,7 +1,7 @@
 #include "EnemyPunto.h"
 #include "FSLibrary.h"
 
-CEnemyPunto::CEnemyPunto(CMessageHandler* pmhParent) : CEnemy("EPUNTO",pmhParent) {
+CEnemyPunto::CEnemyPunto(CMessageHandler * pmhParent) : CEnemy("EPUNTO",pmhParent) {
 	m_Scrollxy.set(100,100,0);
 }
 

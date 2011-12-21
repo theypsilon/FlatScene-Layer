@@ -27,7 +27,7 @@ public:
 	int graph;
 	Uint8 flags;
 
-	CActor(const char* creature,CMessageHandler* pmhParent=NULL);
+	CActor(const char* creature,CMessageHandler * pmhParent=NULL);
 	virtual ~CActor();
 
 	int setSprite(int file,int graph);

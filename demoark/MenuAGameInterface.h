@@ -28,7 +28,7 @@ private:
 	CEngine* previous;
 public:
 	//constructor
-	CMenuAGameInterface(CMessageHandler* pmhParent=NULL);
+	CMenuAGameInterface(CMessageHandler * pmhParent=NULL);
 	//destructor
 	virtual ~CMenuAGameInterface();
 	//initialization

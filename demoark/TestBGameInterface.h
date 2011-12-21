@@ -22,7 +22,7 @@ private:
 	int actZone;
 public:
 	//constructor
-	CTestBGameInterface(CMessageHandler* pmhParent=NULL);
+	CTestBGameInterface(CMessageHandler * pmhParent=NULL);
 	//destructor
 	virtual ~CTestBGameInterface();
 	//initialization

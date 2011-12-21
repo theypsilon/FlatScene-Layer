@@ -7,7 +7,7 @@
 //CLayerBG
 //
 
-CLayerBG::CLayerBG(CMap* mapa,CRectangle* area,CMessageHandler* pmhParent) : CMessageHandler(pmhParent) , area(area) ,  mapa(mapa)  {
+CLayerBG::CLayerBG(CMap* mapa,CRectangle* area,CMessageHandler * pmhParent) : CMessageHandler(pmhParent) , area(area) ,  mapa(mapa)  {
 }
 
 CLayerBG::~CLayerBG(){
@@ -45,7 +45,7 @@ int CLayerBG::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
 //CLayerDinamic
 //
 
-CLayerDinamic::CLayerDinamic(CMap* mapa,CRectangle* area,Uint8 num_tiles,CMessageHandler* pmhParent) : CLayerBG(mapa,area,pmhParent) {
+CLayerDinamic::CLayerDinamic(CMap* mapa,CRectangle* area,Uint8 num_tiles,CMessageHandler * pmhParent) : CLayerBG(mapa,area,pmhParent) {
 	this->num_tiles=num_tiles;
 	init();
 }
@@ -81,7 +81,7 @@ CColor* CLayerDinamic::getPixel(Uint8 i,Uint8 w,Uint8 h) {
 //CLayerUniform
 //
 
-CLayerUniform::CLayerUniform(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler* pmhParent) : CLayerBG(mapa,area,pmhParent), tile(tile) {
+CLayerUniform::CLayerUniform(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler * pmhParent) : CLayerBG(mapa,area,pmhParent), tile(tile) {
 	init();
 }
 
@@ -138,11 +138,11 @@ CColor* CLayerUniform::getPixel(Uint8 i, Uint8 j, Uint8 w, Uint8 h) {
 //CLayerInf
 //
 
-CLayerInf::CLayerInf(CMap* mapa,CRectangle* area,TileBG** tile,bool pisable,CMessageHandler* pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(pisable) {
+CLayerInf::CLayerInf(CMap* mapa,CRectangle* area,TileBG** tile,bool pisable,CMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(pisable) {
 	init();
 }
 
-CLayerInf::CLayerInf(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler* pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(true){
+CLayerInf::CLayerInf(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(true){
 	init();
 }
 
@@ -155,7 +155,7 @@ bool CLayerInf::isPisable() { return pisable; }
 //CLayerSup
 //
 
-CLayerSup::CLayerSup(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler* pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
+CLayerSup::CLayerSup(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
 	init();
 }
 CLayerSup::~CLayerSup() {
@@ -165,14 +165,14 @@ CLayerSup::~CLayerSup() {
 //
 //CLayerFondo
 //
-CLayerFondo::CLayerFondo(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler* pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
+CLayerFondo::CLayerFondo(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
 	init();
 }
 CLayerFondo::~CLayerFondo() {
 	//CLayerUniform::~CLayerUniform();
 }
 
-CFloor::CFloor(CRectangle *area,CMap* mapa,int id, CMessageHandler* pmhParent) : 
+CFloor::CFloor(CRectangle *area,CMap* mapa,int id, CMessageHandler * pmhParent) : 
 CMessageHandler(pmhParent), area(area) , mapa(mapa), id(id) {
 
 }

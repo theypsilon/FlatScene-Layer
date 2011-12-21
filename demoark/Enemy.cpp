@@ -2,7 +2,7 @@
 #include "FSLibrary.h"
 #include "TestAGameInterface.h"
 
-CEnemy::CEnemy(const char* creature,CMessageHandler* pmhParent) : CActorScrollMap(creature,pmhParent) {
+CEnemy::CEnemy(const char* creature,CMessageHandler * pmhParent) : CActorScrollMap(creature,pmhParent) {
 	m_Scrollxy.set(100,100,0);
 }
 
@@ -137,7 +137,7 @@ CActor* CEnemy::clone() {
 #include "EnemyNPC.h"
 #include "EnemyPunto.h"
 
-CEnemy* CEnemy::Factory(const char* creature,CMessageHandler* pmhParent) {
+CEnemy* CEnemy::Factory(const char* creature,CMessageHandler * pmhParent) {
 	if (strcmp(creature,"E0")==0) {
 		return new CEnemyNPC(pmhParent);
 	} else if (strcmp(creature,"EPUNTO")==0) {
