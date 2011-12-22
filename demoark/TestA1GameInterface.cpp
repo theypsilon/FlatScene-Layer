@@ -78,9 +78,9 @@ int CTestA1GameInterface::onInit() {
 	player[1]->init(activationIds,1);
 	player[1]->m_Scrollxy.set(270,100,0);
 
-	CMultiverse.add(new CMap("mapa1"))->incActor((FSActor*)player[0]);
-	//CMultiverse.get(0)->incActor((CActor*)player[1]);
-	CMultiverse.add(new CMap("mapa1"))->incActor((FSActor*)player[1]);
+	FSMultiverse.add(new CMap("mapa1"))->incActor((FSActor*)player[0]);
+	//FSMultiverse.get(0)->incActor((CActor*)player[1]);
+	FSMultiverse.add(new CMap("mapa1"))->incActor((FSActor*)player[1]);
 
 	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(0,0,RESOLUCION_X/2,RESOLUCION_Y/2),NULL,0.75));
 	cams.push_back(new CScrollCamera((FSActor*)player[1],new FSRectangle(0,RESOLUCION_Y/2,RESOLUCION_X/2,RESOLUCION_Y/2),NULL,0.35));

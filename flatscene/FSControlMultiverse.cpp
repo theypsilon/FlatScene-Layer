@@ -7,7 +7,7 @@ FSControlMultiverse::FSControlMultiverse() : admin(NULL), working(false) {
 	singleton = NULL;
 
 	if (singleton) {
-		FSLibrary::Error("CMultiverse ya estaba creado.",TE_controlViolation);
+		FSLibrary::Error("FSMultiverse ya estaba creado.",TE_controlViolation);
 		return;
 	}
 
@@ -198,4 +198,4 @@ UniverseCollection::iterator FSControlMultiverse::end() {
 	}
 }
 
-FSControlMultiverse CMultiverse;
+FSControlMultiverse FSMultiverse;

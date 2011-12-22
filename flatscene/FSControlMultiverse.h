@@ -37,6 +37,6 @@ public:
 	UniverseCollection::iterator end();
 };
 
-extern FSControlMultiverse CMultiverse;
+extern FSControlMultiverse FSMultiverse;
 
 #endif
