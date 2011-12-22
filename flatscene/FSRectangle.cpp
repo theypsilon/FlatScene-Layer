@@ -1,106 +1,106 @@
 // Rect.cpp: implementation of the CRectangle class.
 #include "FSRectangle.h"
 
-CRectangle::CRectangle ( Sint16 x , Sint16 y , Sint16 w , Sint16 h ) 
+FSRectangle::FSRectangle ( Sint16 x , Sint16 y , Sint16 w , Sint16 h ) 
 {
 	set ( x , y , w , h ) ;
 }
 
-CRectangle::CRectangle ( SDL_Rect rc ) 
+FSRectangle::FSRectangle ( SDL_Rect rc ) 
 {
 	set ( rc.x , rc.y , rc.w , rc.h ) ;
 }
 
-CRectangle::CRectangle ( SDL_Rect* prc ) 
+FSRectangle::FSRectangle ( SDL_Rect* prc ) 
 {
 	set ( prc->x , prc->y , prc->w , prc->h ) ;
 }
 
-CRectangle::CRectangle ( CRectangle& rc ) 
+FSRectangle::FSRectangle ( FSRectangle& rc ) 
 {
 	( *this ) = rc ;
 }
 
-CRectangle::~CRectangle ( ) 
+FSRectangle::~FSRectangle ( ) 
 {
 }
 
-Sint16& CRectangle::X ( ) 
+Sint16& FSRectangle::X ( ) 
 {
 	return ( x ) ;
 }
 
-Sint16& CRectangle::Y ( ) 
+Sint16& FSRectangle::Y ( ) 
 {
 	return ( y ) ;
 }
 
-Sint16& CRectangle::W ( ) 
+Sint16& FSRectangle::W ( ) 
 {
 	return ( w ) ;
 }
 
-Sint16& CRectangle::H ( ) 
+Sint16& FSRectangle::H ( ) 
 {
 	return ( h ) ;
 }
 
 //getters
-Sint16 CRectangle::getX() const
+Sint16 FSRectangle::getX() const
 {
 	return(x);
 }
 
-Sint16 CRectangle::getY() const
+Sint16 FSRectangle::getY() const
 {
 	return(y);
 }
 
-Sint16 CRectangle::getW() const
+Sint16 FSRectangle::getW() const
 {
 	return(w);
 }
 
-Sint16 CRectangle::getH() const
+Sint16 FSRectangle::getH() const
 {
 	return(h);
 }
 
 //setters
-void CRectangle::setX(Sint16 x)
+void FSRectangle::setX(Sint16 x)
 {
 	this->x=x;
 }
 
-void CRectangle::setY(Sint16 y)
+void FSRectangle::setY(Sint16 y)
 {
 	this->y=y;
 }
 
-void CRectangle::setW(Sint16 w)
+void FSRectangle::setW(Sint16 w)
 {
 	this->w=w;
 }
 
-void CRectangle::setH(Sint16 h)
+void FSRectangle::setH(Sint16 h)
 {
 	this->h=h;
 }
 
-CRectangle::operator SDL_Rect ( ) 
+FSRectangle::operator SDL_Rect ( ) 
 {
 	SDL_Rect m_rect = { x,y,w,h };
 	return ( m_rect ) ;
 }
 
-CRectangle::operator CPoint ( ) 
+FSRectangle::operator FSPoint ( ) 
 {
-	CPoint pt ;
+	FSPoint pt ;
 	pt.set ( X ( ) , Y ( ) ) ;
 	return ( pt ) ;
 }
 
-CRectangle& CRectangle::set ( Sint16 x , Sint16 y , Sint16 w , Sint16 h ) 
+FSRectangle& FSRectangle::set ( Sint16 x , Sint16 y , Sint16 w , Sint16 h ) 
 {
 	X ( ) = x ;
 	Y ( ) = y ;
@@ -109,50 +109,50 @@ CRectangle& CRectangle::set ( Sint16 x , Sint16 y , Sint16 w , Sint16 h )
 	return ( *this ) ;
 }
 
-CRectangle& CRectangle::copy ( CRectangle& rc ) 
+FSRectangle& FSRectangle::copy ( FSRectangle& rc ) 
 {
 	( *this ) = rc ;
 	return ( *this ) ;
 }
 
-CRectangle& CRectangle::setEmpty ( ) 
+FSRectangle& FSRectangle::setEmpty ( ) 
 {
 	set ( 0 , 0 , 0 , 0 ) ;
 	return ( *this ) ;
 }
 
-bool CRectangle::IsEmpty ( ) 
+bool FSRectangle::IsEmpty ( ) 
 {
 	return ( W ( ) == 0 && H ( ) == 0 ) ;
 }
 
-CRectangle& CRectangle::Offset ( Sint16 dx , Sint16 dy ) 
+FSRectangle& FSRectangle::Offset ( Sint16 dx , Sint16 dy ) 
 {
 	X ( ) += dx ;
 	Y ( ) += dy ;
 	return ( *this ) ;
 }
 
-CRectangle& CRectangle::Offset ( CPoint& pt ) 
+FSRectangle& FSRectangle::Offset ( FSPoint& pt ) 
 {
 	Offset ( pt.X ( ) , pt.Y ( ) ) ;
 	return ( *this ) ;
 }
 
-CRectangle& CRectangle::move ( Sint16 x , Sint16 y ) 
+FSRectangle& FSRectangle::move ( Sint16 x , Sint16 y ) 
 {
 	X ( ) = x ;
 	Y ( ) = y ;
 	return ( *this ) ;
 }
 
-CRectangle& CRectangle::move ( CPoint& pt ) 
+FSRectangle& FSRectangle::move ( FSPoint& pt ) 
 {
 	move ( pt.X ( ) , pt.Y ( ) ) ;
 	return ( *this ) ;
 }
 
-bool CRectangle::Intersect ( CRectangle& rc ) 
+bool FSRectangle::Intersect ( FSRectangle& rc ) 
 {
 	if ((X() >= rc.X() && X() <= rc.W() && Y() >= rc.Y() && Y() <= rc.H()) ||
 		(W() >= rc.X() && W() <= rc.W() && Y() >= rc.Y() && Y() <= rc.H()) ||
@@ -168,19 +168,19 @@ CRectangle& CRectangle::Union ( CRectangle& rc )
 	return ( *this ) ;
 }*/
 
-bool CRectangle::Contains ( Sint16 x , Sint16 y ) 
+bool FSRectangle::Contains ( Sint16 x , Sint16 y ) 
 {
 	x -= X ( ) ;
 	y -= Y ( ) ;
 	return ( x >= 0 && y >= 0 && x < W ( ) && y < H ( ) ) ;
 }
 
-bool CRectangle::Contains ( CPoint& pt ) 
+bool FSRectangle::Contains ( FSPoint& pt ) 
 {
 	return ( Contains ( pt.X ( ) , pt.Y ( ) ) ) ;
 }
 
-CRectangle& CRectangle::operator = ( CRectangle& rc ) 
+FSRectangle& FSRectangle::operator = ( FSRectangle& rc ) 
 {
 	X ( ) = rc.X ( ) ;
 	Y ( ) = rc.Y ( ) ;
@@ -189,14 +189,14 @@ CRectangle& CRectangle::operator = ( CRectangle& rc )
 	return ( *this ) ;
 }
 
-CRectangle& CRectangle::operator += ( CPoint& pt ) 
+FSRectangle& FSRectangle::operator += ( FSPoint& pt ) 
 {
 	X ( ) += pt.X ( ) ;
 	Y ( ) += pt.Y ( ) ;
 	return ( *this ) ;
 }
 
-CRectangle& CRectangle::operator -= ( CPoint& pt ) 
+FSRectangle& FSRectangle::operator -= ( FSPoint& pt ) 
 {
 	X ( ) -= pt.X ( ) ;
 	Y ( ) -= pt.Y ( ) ;
@@ -229,12 +229,12 @@ CRectangle CRectangle::operator - ( CPoint& pt )
 	return ( result ) ;
 }
 */
-CRectangle CRectangle::operator + ( CRectangle& rc ) 
+FSRectangle FSRectangle::operator + ( FSRectangle& rc ) 
 {
 	int left1 , top1 , right1, bottom1 ;
 	int left2 , top2 , right2, bottom2 ;
 
-	CRectangle result ;
+	FSRectangle result ;
 	result.setEmpty ( ) ;
 
 	left1 = X ( ) ;
@@ -266,12 +266,12 @@ CRectangle CRectangle::operator + ( CRectangle& rc )
 	return ( result ) ;
 }
 
-CRectangle CRectangle::operator - ( CRectangle& rc ) 
+FSRectangle FSRectangle::operator - ( FSRectangle& rc ) 
 {
 	int left1 , top1 , right1, bottom1 ;
 	int left2 , top2 , right2, bottom2 ;
 
-	CRectangle result ;
+	FSRectangle result ;
 	result.setEmpty ( ) ;
 
 	left1 = X ( ) ;
@@ -303,31 +303,31 @@ CRectangle CRectangle::operator - ( CRectangle& rc )
 	return ( result ) ;
 }
 
-bool CRectangle::operator == ( CRectangle& rc ) 
+bool FSRectangle::operator == ( FSRectangle& rc ) 
 {
 	return ( X ( ) == rc.X ( ) && Y ( ) == rc.Y ( ) && W ( ) == rc.W ( ) && H ( ) == rc.H ( ) ) ;
 }
 
-bool CRectangle::operator != ( CRectangle& rc ) 
+bool FSRectangle::operator != ( FSRectangle& rc ) 
 {
 	return ( !( ( *this ) == rc ) );
 }
 
-CRectangle operator + ( CPoint& pt , CRectangle& rc ) 
+FSRectangle operator + ( FSPoint& pt , FSRectangle& rc ) 
 {
-	CRectangle result = rc ;
+	FSRectangle result = rc ;
 	result += pt ;
 	return ( result ) ;
 }
 
-CRectangle operator - ( CPoint& pt , CRectangle& rc ) 
+FSRectangle operator - ( FSPoint& pt , FSRectangle& rc ) 
 {
-	CRectangle result = rc ;
+	FSRectangle result = rc ;
 	result -= pt ;
 	return ( result ) ;
 }
 
-CPoint CRectangle::Clip ( CPoint pt ) 
+FSPoint FSRectangle::Clip ( FSPoint pt ) 
 {
 	if ( pt.X ( ) < X ( ) ) pt.X ( ) = X ( ) ;
 	if ( pt.Y ( ) < Y ( ) ) pt.Y ( ) = Y ( ) ;
@@ -336,7 +336,7 @@ CPoint CRectangle::Clip ( CPoint pt )
 	return ( pt ) ;
 }
 
-CPoint CRectangle::Wrap ( CPoint pt ) 
+FSPoint FSRectangle::Wrap ( FSPoint pt ) 
 {
 	if ( IsEmpty ( ) )  
 		pt.set(0,0); 

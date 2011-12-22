@@ -5,20 +5,20 @@
 #include "FSPoint.h"
 
 //CRectangle--abstract an SDL_Rect
-class CRectangle  
+class FSRectangle  
 {
 private:
 	Sint16 x,y,w,h;
 public:
 	//constructors--direct member assignment
-	CRectangle ( Sint16 x = 0 , Sint16 y = 0 , Sint16 w = 0 , Sint16 h = 0 ) ;
+	FSRectangle ( Sint16 x = 0 , Sint16 y = 0 , Sint16 w = 0 , Sint16 h = 0 ) ;
 	//copy from SDL_Rect
-	CRectangle ( SDL_Rect rc ) ;
+	FSRectangle ( SDL_Rect rc ) ;
 	//copy from SDL_Rect*
-	CRectangle ( SDL_Rect* prc ) ;
+	FSRectangle ( SDL_Rect* prc ) ;
 	//copy from another CRectangle
-	CRectangle ( CRectangle& rc ) ;
-	virtual ~CRectangle ( ) ;
+	FSRectangle ( FSRectangle& rc ) ;
+	virtual ~FSRectangle ( ) ;
 
 	//accessors for x, y, h, and w
 	Sint16& X ( ) ;
@@ -43,59 +43,59 @@ public:
 	operator SDL_Rect ( ) ;
 
 	//convert to CPoint
-	operator CPoint ( ) ;
+	operator FSPoint ( ) ;
 
 	//set values for members
-	CRectangle& set ( Sint16 x , Sint16 y , Sint16 w , Sint16 h ) ;
+	FSRectangle& set ( Sint16 x , Sint16 y , Sint16 w , Sint16 h ) ;
 	//copy member values from another CRectangle
-	CRectangle& copy ( CRectangle& rc ) ;
+	FSRectangle& copy ( FSRectangle& rc ) ;
 
 	//set to an empty rectangle
-	CRectangle& setEmpty ( ) ;
+	FSRectangle& setEmpty ( ) ;
 	//check for emptiness
 	bool IsEmpty ( ) ;
 
 	//offset rectangle by coordinates or point
-	CRectangle& Offset ( Sint16 dx , Sint16 dy ) ;
-	CRectangle& Offset ( CPoint& pt ) ;
+	FSRectangle& Offset ( Sint16 dx , Sint16 dy ) ;
+	FSRectangle& Offset ( FSPoint& pt ) ;
 
 	//move to a position, either coordinates or point
-	CRectangle& move ( Sint16 x , Sint16 y ) ;
-	CRectangle& move ( CPoint& pt ) ;
+	FSRectangle& move ( Sint16 x , Sint16 y ) ;
+	FSRectangle& move ( FSPoint& pt ) ;
 
 	//intersect with another rectangle
-	bool Intersect ( CRectangle& rc ) ;
+	bool Intersect ( FSRectangle& rc ) ;
 	//create union with another rectangle
 	//CRectangle& Union ( CRectangle& rc ) ;
 
 	//check if a point is within the rectangle
 	bool Contains ( Sint16 x , Sint16 y ) ;
-	bool Contains ( CPoint& pt ) ;
+	bool Contains ( FSPoint& pt ) ;
 
 	//assignment operators
-	CRectangle& operator = ( CRectangle& rc ) ;
-	CRectangle& operator += ( CPoint& pt ) ;
-	CRectangle& operator -= ( CPoint& pt ) ;
+	FSRectangle& operator = ( FSRectangle& rc ) ;
+	FSRectangle& operator += ( FSPoint& pt ) ;
+	FSRectangle& operator -= ( FSPoint& pt ) ;
 	/*CRectangle& operator += ( CRectangle& rc ) ;
 	CRectangle& operator -= ( CRectangle& rc ) ;
 
 	//arithmetic operators
 	CRectangle operator + ( CPoint& pt ) ;
 	CRectangle operator - ( CPoint& pt ) ;*/
-	CRectangle operator + ( CRectangle& rc ) ;
-	CRectangle operator - ( CRectangle& rc ) ;
+	FSRectangle operator + ( FSRectangle& rc ) ;
+	FSRectangle operator - ( FSRectangle& rc ) ;
 
 	//comparisons
-	bool operator == ( CRectangle& rc ) ;
-	bool operator != ( CRectangle& rc ) ;
+	bool operator == ( FSRectangle& rc ) ;
+	bool operator != ( FSRectangle& rc ) ;
 
 	//clip or wrap points
-	CPoint Clip ( CPoint pt ) ;
-	CPoint Wrap ( CPoint pt ) ;
+	FSPoint Clip ( FSPoint pt ) ;
+	FSPoint Wrap ( FSPoint pt ) ;
 };
 
 //add/subtract point and rectangle
-CRectangle operator + ( CPoint& pt , CRectangle& rc ) ;
-CRectangle operator - ( CPoint& pt , CRectangle& rc ) ;
+FSRectangle operator + ( FSPoint& pt , FSRectangle& rc ) ;
+FSRectangle operator - ( FSPoint& pt , FSRectangle& rc ) ;
 
 #endif

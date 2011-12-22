@@ -6,10 +6,10 @@
 #include "FSLibrary.h"
 
 
-Uint32 CFreezeGameInterface::MSGID_PreviousEngine=CMessageHandler::getNextMSGID();
+Uint32 CFreezeGameInterface::MSGID_PreviousEngine=FSMessageHandler::getNextMSGID();
 
 //constructor
-CFreezeGameInterface::CFreezeGameInterface(CMessageHandler * pmhParent) : CEngine(pmhParent), previous(NULL) {
+CFreezeGameInterface::CFreezeGameInterface(FSMessageHandler * pmhParent) : FSEngine(pmhParent), previous(NULL) {
 	pushed=false;
 }
 
@@ -25,7 +25,7 @@ int CFreezeGameInterface::onInit() {
 	printf("\nFreeze comienza.\n\n");
 #endif
 
-	return CEngine::onInit();
+	return FSEngine::onInit();
 }
 
 //idle. Main loop.
@@ -45,13 +45,13 @@ int CFreezeGameInterface::onExit() {
 	printf("\nFreeze termina.\n\n");
 #endif
 
-	return CEngine::onExit();
+	return FSEngine::onExit();
 
 }
 
-CEngine* CFreezeGameInterface::setPrevious(CEngine* ePrev) {
+FSEngine* CFreezeGameInterface::setPrevious(FSEngine* ePrev) {
 
-	CEngine* ret = previous;
+	FSEngine* ret = previous;
 	previous = ePrev;
 	return ret;
 
@@ -72,21 +72,21 @@ void CFreezeGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 int CFreezeGameInterface::onMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2, MSGPARM Parm3, MSGPARM Parm4) {
 	if (MsgID == CFreezeGameInterface::MSGID_PreviousEngine) {
-		previous = (CEngine*) Parm1;
+		previous = (FSEngine*) Parm1;
 		return EXITO;
 	} else
-		return CEngine::onMessage(MsgID,Parm1,Parm2);
+		return FSEngine::onMessage(MsgID,Parm1,Parm2);
 }
 
 void CFreezeGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_SPACE && pushed) {
-		getParent()->SendMessage(CLibrary::MSGID_RunEngine,(void*)previous);
-		getParent()->SendMessage(CLibrary::MSGID_KillEngine,(void*)this);
+		getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
+		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
 	} else if (sym==SDLK_F1 && pushed) {
 		previous->done = true;
 
-		getParent()->SendMessage(CLibrary::MSGID_KillEngine,(void*)this);
-		getParent()->SendMessage(CLibrary::MSGID_ChangeEngine);
+		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
+		getParent()->SendMessage(FSLibrary::MSGID_ChangeEngine);
 
 	}
 }

@@ -5,7 +5,7 @@
 #include "FSparserXML.h"
 #include <vector>
 
-typedef vector<CSprite*> SpriteCollection;
+typedef vector<FSSprite*> SpriteCollection;
 
 typedef struct { 
 	string name; 
@@ -14,7 +14,7 @@ typedef struct {
 	int number;
 } SpritesetInfo ;
 
-class CSpriteset {
+class FSSpriteset {
 private :
 
 	static Uint16 globalAuxiliar;
@@ -29,28 +29,28 @@ private :
 
 	Uint8 mode;
 
-	friend class CControlImages;
+	friend class FSControlImages;
 	//construct empty sprite set
-	CSpriteset();
+	FSSpriteset();
 	//constructor que inicializa la colección con un fichero externo.
-	CSpriteset(string c,Uint8 mode=ONLY_TEXTURE);
+	FSSpriteset(string c,Uint8 mode=ONLY_TEXTURE);
 
-	virtual ~CSpriteset();
+	virtual ~FSSpriteset();
 
-	void add ( CSprite* pspt ) ;
+	void add ( FSSprite* pspt ) ;
 	bool setName(string& name);
-	void remove ( CSprite* pspt ) ;
+	void remove ( FSSprite* pspt ) ;
 	SpriteCollection& getSpriteList ( ) ;
 
-	friend class CScreen;
+	friend class FSScreen;
 
 public:
 
-	bool has ( CSprite* pspt ) ;
+	bool has ( FSSprite* pspt ) ;
 
-	int search ( CSprite* pspt ) ;
+	int search ( FSSprite* pspt ) ;
 
-	CSprite* get ( int n ) ;
+	FSSprite* get ( int n ) ;
 
 	int size () ;
 

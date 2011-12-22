@@ -8,34 +8,34 @@
 
 using namespace std;
 
-typedef map<int,CSpriteset*> SpritesetCollection;
-typedef map<CSpriteset*,int> SpritesetCount;
+typedef map<int,FSSpriteset*> SpritesetCollection;
+typedef map<FSSpriteset*,int> SpritesetCount;
 
-class CControlImages {
+class FSControlImages {
 private:
 	SpritesetCollection set;
 	SpritesetCount count;
 
 	stack<int> lastIndexAdded;
 
-	static CControlImages* singleton;
+	static FSControlImages* singleton;
 
-	friend class CScreen;
+	friend class FSScreen;
 public:
-	CControlImages();
-	~CControlImages();
+	FSControlImages();
+	~FSControlImages();
 
 	int add(const char* name,Uint8 mode=ONLY_TEXTURE);
 	int remove(Uint32 n);
-	CSpriteset* get(Uint32 n);
+	FSSpriteset* get(Uint32 n);
 	int size();
 	int search(const char* name);
-	int search(CSpriteset* object);
+	int search(FSSpriteset* object);
 	void clear();
 	int getCount(Uint32 n);
 };
 
-extern CControlImages CImg;
+extern FSControlImages CImg;
 
 
 #endif

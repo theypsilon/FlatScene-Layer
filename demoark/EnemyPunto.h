@@ -6,12 +6,12 @@
 
 class CEnemyPunto : public CEnemy {
 public:
-	CEnemyPunto(CMessageHandler * pmhParent=NULL);
+	CEnemyPunto(FSMessageHandler * pmhParent=NULL);
 	virtual ~CEnemyPunto();
 
 	void init(list<string>& activationIds,int x, int y,int z);
 
-	CActor* clone();
+	FSActor* clone();
 };
 
 #endif

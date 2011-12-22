@@ -15,7 +15,7 @@ class CActorScrollMap;
 typedef list<CActorScrollMap*> ActorScrollCollection;
 
 
-class CActorScrollMap : public CActor
+class CActorScrollMap : public FSActor
 {
 private:
 	bool controlled;
@@ -36,10 +36,10 @@ public:
 
 	ActorScrollCollection* placeInMA;
 
-	CActorScrollMap(const char* creature,CMessageHandler * pmhParent=NULL);
+	CActorScrollMap(const char* creature,FSMessageHandler * pmhParent=NULL);
 	virtual ~CActorScrollMap();
 
-	virtual void draw(CPoint& offset);
+	virtual void draw(FSPoint& offset);
 
 
 	void setAction(CAction* n);
@@ -63,9 +63,9 @@ public:
 
 	bool collisionUniverse(int x, int y);
 
-	CCoordinate m_Scrollxy;
+	FSCoordinate m_Scrollxy;
 
-	virtual CActor* clone();
+	virtual FSActor* clone();
 
 	static bool orderReferenceActors(CActorScrollMap* x, CActorScrollMap* y);
 

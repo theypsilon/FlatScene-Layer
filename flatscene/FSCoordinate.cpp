@@ -2,13 +2,13 @@
 #include <math.h>
 
 //constructor
-CCoordinate::CCoordinate ( int x , int y , int z ) : CPoint(x,y)
+FSCoordinate::FSCoordinate ( int x , int y , int z ) : FSPoint(x,y)
 {
 	//set the x and y of the Coordinate
 	setZ( z );
 }
 
-CCoordinate::CCoordinate ( CCoordinate& coord ) 
+FSCoordinate::FSCoordinate ( FSCoordinate& coord ) 
 {
 	//set x and y of the Coordinate
 	setX ( coord.getX ( ) ) ;
@@ -18,26 +18,26 @@ CCoordinate::CCoordinate ( CCoordinate& coord )
 
 
 //destructor
-CCoordinate::~CCoordinate ( ) 
+FSCoordinate::~FSCoordinate ( ) 
 {
 	//do nothing
 }
 
-int& CCoordinate::Z ( )
+int& FSCoordinate::Z ( )
 {
 	return ( m_z );
 }
 
-int CCoordinate::getZ() const {
+int FSCoordinate::getZ() const {
 	return (m_z);
 }
 
-void CCoordinate::setZ( int z) {
+void FSCoordinate::setZ( int z) {
 	m_z= z;
 }
 
 //setter
-CCoordinate& CCoordinate::set ( int x , int y , int z ) 
+FSCoordinate& FSCoordinate::set ( int x , int y , int z ) 
 {
 	//set x and y
 	X ( ) = x ;
@@ -47,7 +47,7 @@ CCoordinate& CCoordinate::set ( int x , int y , int z )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::copy ( CCoordinate& coord ) 
+FSCoordinate& FSCoordinate::copy ( FSCoordinate& coord ) 
 {
 	//copy x and y
 	X ( ) = coord.X ( ) ;
@@ -58,7 +58,7 @@ CCoordinate& CCoordinate::copy ( CCoordinate& coord )
 }
 
 //move
-CCoordinate& CCoordinate::move ( int dx , int dy , int dz ) 
+FSCoordinate& FSCoordinate::move ( int dx , int dy , int dz ) 
 {
 	//move x and y
 	X ( ) += dx ;
@@ -68,7 +68,7 @@ CCoordinate& CCoordinate::move ( int dx , int dy , int dz )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::add ( CCoordinate& coord ) 
+FSCoordinate& FSCoordinate::add ( FSCoordinate& coord ) 
 {
 	//add Coordinate to this Coordinate
 	( *this ) += coord ;
@@ -76,7 +76,7 @@ CCoordinate& CCoordinate::add ( CCoordinate& coord )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::subtract ( CCoordinate& coord ) 
+FSCoordinate& FSCoordinate::subtract ( FSCoordinate& coord ) 
 {
 	//subtract Coordinate from this Coordinate
 	( *this ) -= coord ;
@@ -85,7 +85,7 @@ CCoordinate& CCoordinate::subtract ( CCoordinate& coord )
 }
 
 //scale
-CCoordinate& CCoordinate::scale ( int scalar ) 
+FSCoordinate& FSCoordinate::scale ( int scalar ) 
 {
 	//multiply this Coordinate by a scalar
 	( *this ) *= scalar ;
@@ -94,7 +94,7 @@ CCoordinate& CCoordinate::scale ( int scalar )
 }
 
 //distance
-int CCoordinate::distance ( CCoordinate& coord ) 
+int FSCoordinate::distance ( FSCoordinate& coord ) 
 {
 	//calculate distance
 	int distance = X ( ) * X ( ) + Y ( ) * Y ( ) + Z ( ) * Z ( ) ;
@@ -105,7 +105,7 @@ int CCoordinate::distance ( CCoordinate& coord )
 
 //operators
 //assignment
-CCoordinate& CCoordinate::operator = ( CCoordinate& coord ) 
+FSCoordinate& FSCoordinate::operator = ( FSCoordinate& coord ) 
 {
 	//copy x and y
 	X ( ) = coord.X ( ) ;
@@ -115,7 +115,7 @@ CCoordinate& CCoordinate::operator = ( CCoordinate& coord )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::operator += ( CCoordinate& coord ) 
+FSCoordinate& FSCoordinate::operator += ( FSCoordinate& coord ) 
 {
 	//add to x and y
 	X ( ) += coord.X ( ) ;
@@ -125,7 +125,7 @@ CCoordinate& CCoordinate::operator += ( CCoordinate& coord )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::operator -= ( CCoordinate& coord ) 
+FSCoordinate& FSCoordinate::operator -= ( FSCoordinate& coord ) 
 {
 	//subtract x and y
 	X ( ) -= coord.X ( ) ;
@@ -135,7 +135,7 @@ CCoordinate& CCoordinate::operator -= ( CCoordinate& coord )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::operator += ( CPoint& pt ) 
+FSCoordinate& FSCoordinate::operator += ( FSPoint& pt ) 
 {
 	//add to x and y
 	X ( ) += pt.X ( ) ;
@@ -144,7 +144,7 @@ CCoordinate& CCoordinate::operator += ( CPoint& pt )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::operator -= ( CPoint& pt ) 
+FSCoordinate& FSCoordinate::operator -= ( FSPoint& pt ) 
 {
 	//subtract x and y
 	X ( ) -= pt.X ( ) ;
@@ -153,7 +153,7 @@ CCoordinate& CCoordinate::operator -= ( CPoint& pt )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::operator *= ( int scalar ) 
+FSCoordinate& FSCoordinate::operator *= ( int scalar ) 
 {
 	//multiply by scalar
 	X ( ) *= scalar ;
@@ -163,7 +163,7 @@ CCoordinate& CCoordinate::operator *= ( int scalar )
 	return ( *this ) ;
 }
 
-CCoordinate& CCoordinate::operator /= ( int scalar ) 
+FSCoordinate& FSCoordinate::operator /= ( int scalar ) 
 {
 	//divide by scalar
 	X ( ) /= scalar ;
@@ -174,67 +174,67 @@ CCoordinate& CCoordinate::operator /= ( int scalar )
 }
 
 //unary
-CCoordinate CCoordinate::operator - ( ) 
+FSCoordinate FSCoordinate::operator - ( ) 
 {
 	//unary negativeness--multiply by -1
-	CCoordinate coord = ( *this ) ;
+	FSCoordinate coord = ( *this ) ;
 	coord *= -1 ;
 	return ( coord ) ;
 }
 
-CCoordinate CCoordinate::operator + ( ) 
+FSCoordinate FSCoordinate::operator + ( ) 
 {
 	//unary positiveness
 	return ( *this ) ;
 }
 
-CCoordinate CCoordinate::operator + ( CCoordinate& coord ) 
+FSCoordinate FSCoordinate::operator + ( FSCoordinate& coord ) 
 {
 	//add Coordinates togetHer
-	CCoordinate result ;
+	FSCoordinate result ;
 	result = ( *this ) ;
 	result += coord ;
 	//return new Coordinate
 	return ( result ) ;
 }
 
-CCoordinate CCoordinate::operator - ( CCoordinate& coord ) 
+FSCoordinate FSCoordinate::operator - ( FSCoordinate& coord ) 
 {
 	//subtract Coordinates
-	CCoordinate result ;
+	FSCoordinate result ;
 	result = ( *this ) ;
 	result -= coord ;
 	//return new Coordinate
 	return ( result ) ;
 }
 
-CCoordinate CCoordinate::operator + ( CPoint& pt )  {
-	CCoordinate result;
+FSCoordinate FSCoordinate::operator + ( FSPoint& pt )  {
+	FSCoordinate result;
 	result = (*this);
 	result += pt;
 	return result;
 }
-CCoordinate CCoordinate::operator - ( CPoint& pt )  {
-	CCoordinate result;
+FSCoordinate FSCoordinate::operator - ( FSPoint& pt )  {
+	FSCoordinate result;
 	result = (*this);
 	result -= pt;
 	return result;
 }
 
-CCoordinate CCoordinate::operator * ( int scalar ) 
+FSCoordinate FSCoordinate::operator * ( int scalar ) 
 {
 	//multiply Coordinate by scalar
-	CCoordinate result ;
+	FSCoordinate result ;
 	result = ( *this ) ;
 	result *= scalar ;
 	//return new Coordinate
 	return ( result ) ;
 }
 
-CCoordinate CCoordinate::operator / ( int scalar ) 
+FSCoordinate FSCoordinate::operator / ( int scalar ) 
 {
 	//divide by scalar
-	CCoordinate result ;
+	FSCoordinate result ;
 	result = ( *this ) ;
 	result /= scalar ;
 	//return new Coordinate
@@ -242,22 +242,22 @@ CCoordinate CCoordinate::operator / ( int scalar )
 }
 
 //comparison
-bool CCoordinate::operator == ( CCoordinate& coord ) 
+bool FSCoordinate::operator == ( FSCoordinate& coord ) 
 {
 	//check for equality
 	return ( X ( ) == coord.X ( ) && Y ( ) == coord.Y ( )  && Z()==coord.Z()) ;
 }
 
-bool CCoordinate::operator != ( CCoordinate& coord ) 
+bool FSCoordinate::operator != ( FSCoordinate& coord ) 
 {
 	//check for inequality
 	return ( !( ( *this ) == coord ) ) ;
 }
 
-CCoordinate operator * ( int scalar , CCoordinate& coord ) 
+FSCoordinate operator * ( int scalar , FSCoordinate& coord ) 
 {
 	//scalar*coord rather than coord*scalar, still the same idea...
-	CCoordinate result (coord);
+	FSCoordinate result (coord);
 	result *= scalar ;
 	return ( result ) ;
 }

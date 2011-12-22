@@ -2,13 +2,13 @@
 #include <math.h>
 
 //constructor
-CFloatPoint::CFloatPoint ( float x , float y ) 
+FSFloatPoint::FSFloatPoint ( float x , float y ) 
 {
 	//set the x and y of the Point
 	set ( x , y ) ;
 }
 
-CFloatPoint::CFloatPoint ( CFloatPoint& pt ) 
+FSFloatPoint::FSFloatPoint ( FSFloatPoint& pt ) 
 {
 	//set x and y of the Point
 	setX ( pt.getX ( ) ) ;
@@ -17,50 +17,50 @@ CFloatPoint::CFloatPoint ( CFloatPoint& pt )
 
 
 //destructor
-CFloatPoint::~CFloatPoint ( ) 
+FSFloatPoint::~FSFloatPoint ( ) 
 {
 	//do nothing
 }
 
 //properties
-float& CFloatPoint::X ( ) 
+float& FSFloatPoint::X ( ) 
 {
 	//return x componEnt
 	return ( m_x ) ;
 }
 
-float& CFloatPoint::Y ( ) 
+float& FSFloatPoint::Y ( ) 
 {
 	//return y componEnt
 	return ( m_y ) ;
 }
 
-float CFloatPoint::getX ( ) const
+float FSFloatPoint::getX ( ) const
 {
 	//return x componEnt
 	return ( m_x ) ;
 }
 
-float CFloatPoint::getY ( ) const
+float FSFloatPoint::getY ( ) const
 {
 	//return y componEnt
 	return ( m_y ) ;
 }
 
-void CFloatPoint::setX ( float x ) 
+void FSFloatPoint::setX ( float x ) 
 {
 	//assign new value to x componEnt
 	m_x = x ;
 }
 
-void CFloatPoint::setY ( float y ) 
+void FSFloatPoint::setY ( float y ) 
 {
 	//assign new value to y componEnt
 	m_y = y ;
 }
 
 //setter
-CFloatPoint& CFloatPoint::set ( float x , float y ) 
+FSFloatPoint& FSFloatPoint::set ( float x , float y ) 
 {
 	//set x and y
 	X ( ) = x ;
@@ -69,7 +69,7 @@ CFloatPoint& CFloatPoint::set ( float x , float y )
 	return ( *this ) ;
 }
 
-CFloatPoint& CFloatPoint::copy ( CFloatPoint& pt ) 
+FSFloatPoint& FSFloatPoint::copy ( FSFloatPoint& pt ) 
 {
 	//copy x and y
 	X ( ) = pt.X ( ) ;
@@ -79,7 +79,7 @@ CFloatPoint& CFloatPoint::copy ( CFloatPoint& pt )
 }
 
 //move
-CFloatPoint& CFloatPoint::move ( float dx , float dy ) 
+FSFloatPoint& FSFloatPoint::move ( float dx , float dy ) 
 {
 	//move x and y
 	X ( ) += dx ;
@@ -88,7 +88,7 @@ CFloatPoint& CFloatPoint::move ( float dx , float dy )
 	return ( *this ) ;
 }
 
-CFloatPoint& CFloatPoint::add ( CFloatPoint& pt ) 
+FSFloatPoint& FSFloatPoint::add ( FSFloatPoint& pt ) 
 {
 	//add Point to this Point
 	( *this ) += pt ;
@@ -96,7 +96,7 @@ CFloatPoint& CFloatPoint::add ( CFloatPoint& pt )
 	return ( *this ) ;
 }
 
-CFloatPoint& CFloatPoint::subtract ( CFloatPoint& pt ) 
+FSFloatPoint& FSFloatPoint::subtract ( FSFloatPoint& pt ) 
 {
 	//subtract Point from this Point
 	( *this ) -= pt ;
@@ -105,7 +105,7 @@ CFloatPoint& CFloatPoint::subtract ( CFloatPoint& pt )
 }
 
 //scale
-CFloatPoint& CFloatPoint::scale ( float scalar ) 
+FSFloatPoint& FSFloatPoint::scale ( float scalar ) 
 {
 	//multiply this Point by a scalar
 	( *this ) *= scalar ;
@@ -114,7 +114,7 @@ CFloatPoint& CFloatPoint::scale ( float scalar )
 }
 
 //distance
-float CFloatPoint::distance ( CFloatPoint& pt ) 
+float FSFloatPoint::distance ( FSFloatPoint& pt ) 
 {
 	//calculate distance
 	float distance = X ( ) * X ( ) + Y ( ) * Y ( ) ;
@@ -125,7 +125,7 @@ float CFloatPoint::distance ( CFloatPoint& pt )
 
 //operators
 //assignment
-CFloatPoint& CFloatPoint::operator = ( CFloatPoint& pt ) 
+FSFloatPoint& FSFloatPoint::operator = ( FSFloatPoint& pt ) 
 {
 	//copy x and y
 	X ( ) = pt.X ( ) ;
@@ -134,7 +134,7 @@ CFloatPoint& CFloatPoint::operator = ( CFloatPoint& pt )
 	return ( *this ) ;
 }
 
-CFloatPoint& CFloatPoint::operator += ( CFloatPoint& pt ) 
+FSFloatPoint& FSFloatPoint::operator += ( FSFloatPoint& pt ) 
 {
 	//add to x and y
 	X ( ) += pt.X ( ) ;
@@ -143,7 +143,7 @@ CFloatPoint& CFloatPoint::operator += ( CFloatPoint& pt )
 	return ( *this ) ;
 }
 
-CFloatPoint& CFloatPoint::operator -= ( CFloatPoint& pt ) 
+FSFloatPoint& FSFloatPoint::operator -= ( FSFloatPoint& pt ) 
 {
 	//subtract x and y
 	X ( ) -= pt.X ( ) ;
@@ -152,7 +152,7 @@ CFloatPoint& CFloatPoint::operator -= ( CFloatPoint& pt )
 	return ( *this ) ;
 }
 
-CFloatPoint& CFloatPoint::operator *= ( float scalar ) 
+FSFloatPoint& FSFloatPoint::operator *= ( float scalar ) 
 {
 	//multiply by scalar
 	X ( ) *= scalar ;
@@ -161,7 +161,7 @@ CFloatPoint& CFloatPoint::operator *= ( float scalar )
 	return ( *this ) ;
 }
 
-CFloatPoint& CFloatPoint::operator /= ( float scalar ) 
+FSFloatPoint& FSFloatPoint::operator /= ( float scalar ) 
 {
 	//divide by scalar
 	X ( ) /= scalar ;
@@ -170,54 +170,54 @@ CFloatPoint& CFloatPoint::operator /= ( float scalar )
 }
 
 //unary
-CFloatPoint CFloatPoint::operator - ( ) 
+FSFloatPoint FSFloatPoint::operator - ( ) 
 {
 	//unary negativeness--multiply by -1
-	CFloatPoint pt = ( *this ) ;
+	FSFloatPoint pt = ( *this ) ;
 	pt *= -1 ;
 	return ( pt ) ;
 }
 
-CFloatPoint CFloatPoint::operator + ( ) 
+FSFloatPoint FSFloatPoint::operator + ( ) 
 {
 	//unary positiveness
 	return ( *this ) ;
 }
 
-CFloatPoint CFloatPoint::operator + ( CFloatPoint& pt ) 
+FSFloatPoint FSFloatPoint::operator + ( FSFloatPoint& pt ) 
 {
 	//add Points togetHer
-	CFloatPoint result ;
+	FSFloatPoint result ;
 	result = ( *this ) ;
 	result += pt ;
 	//return new Point
 	return ( result ) ;
 }
 
-CFloatPoint CFloatPoint::operator - ( CFloatPoint& pt ) 
+FSFloatPoint FSFloatPoint::operator - ( FSFloatPoint& pt ) 
 {
 	//subtract Points
-	CFloatPoint result ;
+	FSFloatPoint result ;
 	result = ( *this ) ;
 	result -= pt ;
 	//return new Point
 	return ( result ) ;
 }
 
-CFloatPoint CFloatPoint::operator * ( float scalar ) 
+FSFloatPoint FSFloatPoint::operator * ( float scalar ) 
 {
 	//multiply Point by scalar
-	CFloatPoint result ;
+	FSFloatPoint result ;
 	result = ( *this ) ;
 	result *= scalar ;
 	//return new Point
 	return ( result ) ;
 }
 
-CFloatPoint CFloatPoint::operator / ( float scalar ) 
+FSFloatPoint FSFloatPoint::operator / ( float scalar ) 
 {
 	//divide by scalar
-	CFloatPoint result ;
+	FSFloatPoint result ;
 	result = ( *this ) ;
 	result /= scalar ;
 	//return new Point
@@ -225,22 +225,22 @@ CFloatPoint CFloatPoint::operator / ( float scalar )
 }
 
 //comparison
-bool CFloatPoint::operator == ( CFloatPoint& pt ) 
+bool FSFloatPoint::operator == ( FSFloatPoint& pt ) 
 {
 	//check for equality
 	return ( X ( ) == pt.X ( ) && Y ( ) == pt.Y ( ) ) ;
 }
 
-bool CFloatPoint::operator != ( CFloatPoint& pt ) 
+bool FSFloatPoint::operator != ( FSFloatPoint& pt ) 
 {
 	//check for inequality
 	return ( !( ( *this ) == pt ) ) ;
 }
 
-CFloatPoint operator * ( float scalar , CFloatPoint& pt ) 
+FSFloatPoint operator * ( float scalar , FSFloatPoint& pt ) 
 {
 	//scalar*pt rather than pt*scalar, still the same idea...
-	CFloatPoint result (pt);
+	FSFloatPoint result (pt);
 	pt *= scalar ;
 	return ( result ) ;
 }

@@ -12,7 +12,7 @@ using namespace std;
 	==CTestBGameInterface==
 	CEngine componEnt test.
 */
-class CTestBGameInterface : public CEngine  
+class CTestBGameInterface : public FSEngine  
 {
 private:
 	bool pushed;
@@ -22,7 +22,7 @@ private:
 	int actZone;
 public:
 	//constructor
-	CTestBGameInterface(CMessageHandler * pmhParent=NULL);
+	CTestBGameInterface(FSMessageHandler * pmhParent=NULL);
 	//destructor
 	virtual ~CTestBGameInterface();
 	//initialization

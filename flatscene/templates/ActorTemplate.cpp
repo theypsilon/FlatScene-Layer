@@ -1,8 +1,8 @@
 #include "ActorTemplate.h"
 
-CActorTemplate::CActorTemplate(CMessageHandler* pmhParent) : 
+CActorTemplate::CActorTemplate(FSMessageHandler* pmhParent) : 
 // Se ha de llamar a la clase Base para una correcta inicialización
-CActor("valor creature",pmhParent) {
+FSActor("valor creature",pmhParent) {
 
 	// TODO
 	
@@ -29,7 +29,7 @@ string CActorTemplate::getCreature() {
 	// CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }
 
-int CActorTemplate::setUniverse(CUniverse* m) {
+int CActorTemplate::setUniverse(FSUniverse* m) {
 
 	// TODO
 
@@ -38,17 +38,17 @@ int CActorTemplate::setUniverse(CUniverse* m) {
 	// CActor::setUniverse(m) realiza la asignación : inUniverse=m;
 }
 
-CSprite* CActorTemplate::getSprite() {
+FSSprite* CActorTemplate::getSprite() {
 
-	CSprite* spt;
+	FSSprite* spt;
 
 	// TODO
 
 	return spt;
 }
 
-CActor* CActorTemplate::clone() {
-	CActor* act;
+FSActor* CActorTemplate::clone() {
+	FSActor* act;
 
 	// TODO
 

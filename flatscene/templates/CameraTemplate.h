@@ -3,7 +3,7 @@
 
 #include "Camera.h"
 
-class CCameraTemplate : public CCamera {
+class CCameraTemplate : public FSCamera {
 private:
 
 	// TODO : funciones y variables privadas
@@ -14,7 +14,7 @@ public:
 
 	// Constructor, se recomienda que se establezcan los siguientes parámetros.
 	// Pueden ser necesarios para inicializar la clase base.
-	CCameraTemplate(CActor* target,CRectangle* area,CMessageHandler* pmhParent=NULL);
+	CCameraTemplate(FSActor* target,FSRectangle* area,FSMessageHandler* pmhParent=NULL);
 
 	// Destructor, ahí deberemos liberar los recursos
 	virtual ~CCameraTemplate();
@@ -31,7 +31,7 @@ public:
 
 	// Opcional. Fija el objetivo de la cámara. La implementación por defecto está comentada
 	// junto al resto de la implementación de la clase.
-	int setTarget(CActor* newTarget);
+	int setTarget(FSActor* newTarget);
 
 	// Método que se llama desde el método de la clase base "render". Se debe encargar de actualizar los elementos gráficos.
 	int refresh();

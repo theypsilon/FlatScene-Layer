@@ -12,7 +12,7 @@ using namespace std;
 	==CMenuAGameInterface==
 	CEngine componEnt test.
 */
-class CMenuAGameInterface : public CEngine  
+class CMenuAGameInterface : public FSEngine  
 {
 private:
 	bool pushed;
@@ -23,12 +23,12 @@ private:
 	vector<int> IdTexts;
 	list<string> texts;
 
-	CPoint dest;
+	FSPoint dest;
 
-	CEngine* previous;
+	FSEngine* previous;
 public:
 	//constructor
-	CMenuAGameInterface(CMessageHandler * pmhParent=NULL);
+	CMenuAGameInterface(FSMessageHandler * pmhParent=NULL);
 	//destructor
 	virtual ~CMenuAGameInterface();
 	//initialization
@@ -38,7 +38,7 @@ public:
 	//cleanup
 	virtual int onExit();
 
-	CEngine* setPrevious(CEngine*);
+	FSEngine* setPrevious(FSEngine*);
 	
 	void onKeyMenu(SDL_Event*);
 

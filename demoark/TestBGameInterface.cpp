@@ -7,7 +7,7 @@
 #include "FSScreen.h"
 
 //constructor
-CTestBGameInterface::CTestBGameInterface(CMessageHandler * pmhParent) : CEngine(pmhParent), actZone(0)
+CTestBGameInterface::CTestBGameInterface(FSMessageHandler * pmhParent) : FSEngine(pmhParent), actZone(0)
 {
 	pushed=false;
 }
@@ -23,10 +23,10 @@ int CTestBGameInterface::onInit() {
 #ifdef LOG_SISTEMA
 	printf("\nTestB comienza.\n\n");
 #endif
-	if (CEngine::onInit() == FRACASO)
+	if (FSEngine::onInit() == FRACASO)
 		return FRACASO;
 
-	CScreen::clear();
+	FSScreen::clear();
 
 /*	int num=1;
 	int* sequence = alloc(int,num);
@@ -45,23 +45,23 @@ int CTestBGameInterface::onInit() {
 //idle. Main loop.
 int CTestBGameInterface::onIdle()
 {
-	CScreen::clear();
+	FSScreen::clear();
 
-	CSprite* spt = anim->paso_a_paso_spt();
+	FSSprite* spt = anim->paso_a_paso_spt();
 	
-	CPoint paux(100,100);
+	FSPoint paux(100,100);
 	
 	spt->put(paux);
 
 	if (spt->size() > actZone) {
 
-		CScreen::pushMatrix();
+		FSScreen::pushMatrix();
 
-		CPoint ptDst(*spt->getCenter());
+		FSPoint ptDst(*spt->getCenter());
 		ptDst.X()+=100;
 		ptDst.Y()+=100;
 
-		CScreen::translate((float)ptDst.X(),(float)ptDst.Y(),0);  
+		FSScreen::translate((float)ptDst.X(),(float)ptDst.Y(),0);  
 
 	}
 
@@ -80,7 +80,7 @@ int CTestBGameInterface::onExit()
 	printf("\nTestB termina.\n\n");
 #endif
 
-	return CEngine::onExit();
+	return FSEngine::onExit();
 }
 
 void CTestBGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
@@ -91,7 +91,7 @@ void CTestBGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CTestBGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_TAB && pushed) {
-		getParent()->SendMessage(CLibrary::MSGID_ChangeEngine,(void*)false);
+		getParent()->SendMessage(FSLibrary::MSGID_ChangeEngine,(void*)false);
 		pushed=false;
 	}
 }

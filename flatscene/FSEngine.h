@@ -6,9 +6,9 @@
 #include <map>
 #include <boost/function.hpp>
 
-class CLibrary;
+class FSLibrary;
 
-class CEngine : public CMessageHandler
+class FSEngine : public FSMessageHandler
 {
 private:
 
@@ -17,7 +17,7 @@ private:
 
 	map<Uint8,boost::function<void (SDL_Event*)> > eventHandlerRegister2;
 
-	friend class CLibrary;
+	friend class FSLibrary;
 
 protected:
 
@@ -40,9 +40,9 @@ public:
 	bool done;
 
 	
-	CEngine(CMessageHandler * pmhParent=NULL);
+	FSEngine(FSMessageHandler * pmhParent=NULL);
 	
-	virtual ~CEngine();
+	virtual ~FSEngine();
 
 
 	bool isInitialized();

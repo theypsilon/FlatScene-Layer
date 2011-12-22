@@ -10,37 +10,37 @@
 #include <deque>
 using namespace std;
 
-class CActor;
+class FSActor;
 class CRutinaColision;
-class CUniverse;
+class FSUniverse;
 
-typedef std::list<CActor*> ActorCollection;
+typedef std::list<FSActor*> ActorCollection;
 
-class CActor : public CMessageHandler
+class FSActor : public FSMessageHandler
 {
 private:
 	string creature;
-	CUniverse* inUniverse;
+	FSUniverse* inUniverse;
 public:
 
 	int file;
 	int graph;
 	Uint8 flags;
 
-	CActor(const char* creature,CMessageHandler * pmhParent=NULL);
-	virtual ~CActor();
+	FSActor(const char* creature,FSMessageHandler * pmhParent=NULL);
+	virtual ~FSActor();
 
 	int setSprite(int file,int graph);
-	virtual CSprite* getSprite();
+	virtual FSSprite* getSprite();
 
 	virtual int move();
 
 	virtual string getCreature();
-	CUniverse* getUniverse();
-	virtual int setUniverse(CUniverse* m);
-	CPoint renderPoint;
+	FSUniverse* getUniverse();
+	virtual int setUniverse(FSUniverse* m);
+	FSPoint renderPoint;
 
-	virtual CActor* clone();
+	virtual FSActor* clone();
 
 };
 

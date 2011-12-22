@@ -14,19 +14,19 @@
 
 using namespace std;
 
-class CScrollCamera : public CCamera {
+class CScrollCamera : public FSCamera {
 private:
-	CPoint* centro;
+	FSPoint* centro;
 	int intraMargenX, intraMargenY;
 	FloorCollection Pisos;
 	float zoom;
 public:
-	CScrollCamera(CActor* target,CRectangle* area, CPoint* centro,float margenDesp=0.0,CMessageHandler * pmhParent=NULL);
-	CScrollCamera(CActor* target,CRectangle* area,CMessageHandler * pmhParent=NULL);
+	CScrollCamera(FSActor* target,FSRectangle* area, FSPoint* centro,float margenDesp=0.0,FSMessageHandler * pmhParent=NULL);
+	CScrollCamera(FSActor* target,FSRectangle* area,FSMessageHandler * pmhParent=NULL);
 	virtual ~CScrollCamera();
 	virtual int loadUniverse();
 	virtual int unloadUniverse();
-	virtual bool focusActor(CActor* actAct);
+	virtual bool focusActor(FSActor* actAct);
 	virtual int refresh();
 	virtual void setZoom(float newZoom);
 

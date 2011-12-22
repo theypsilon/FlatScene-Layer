@@ -3,12 +3,12 @@
 
 #include "Engine.h"
 
-class CEngineTemplate : public CEngine
+class CEngineTemplate : public FSEngine
 {
 public:
 
 	// Constructor del Motor.
-	CEngineTemplate(CMessageHandler* pmhParent=NULL);
+	CEngineTemplate(FSMessageHandler* pmhParent=NULL);
 	
 	// Destructor, ahí deberemos liberar todos los recursos.
 	virtual ~CEngineTemplate();

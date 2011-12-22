@@ -8,7 +8,7 @@
 #include "MenuAGameInterface.h"
 
 //constructor
-CTestA1GameInterface::CTestA1GameInterface(CMessageHandler * pmhParent) : CTestAGameInterface(pmhParent)
+CTestA1GameInterface::CTestA1GameInterface(FSMessageHandler * pmhParent) : CTestAGameInterface(pmhParent)
 {
 
 }
@@ -22,7 +22,7 @@ CTestA1GameInterface::~CTestA1GameInterface()
 
 int CTestA1GameInterface::drawFrame() {
 
-	CScreen::projectionMode(TRP_ORTHO);
+	FSScreen::projectionMode(TRP_ORTHO);
 
 	for (int i=0;i<cams.size();i++) {
 
@@ -40,10 +40,10 @@ int CTestA1GameInterface::drawFrame() {
 //initialization
 int CTestA1GameInterface::onInit() {
 	//initialize parent class
-	if (CEngine::onInit() == FRACASO)
+	if (FSEngine::onInit() == FRACASO)
 		return FRACASO;
 
-	CScreen::clear();
+	FSScreen::clear();
 
 #ifdef LOG_SISTEMA
 	printf("\nTestA1 comienza.\n\n");
@@ -78,14 +78,14 @@ int CTestA1GameInterface::onInit() {
 	player[1]->init(activationIds,1);
 	player[1]->m_Scrollxy.set(270,100,0);
 
-	CMultiverse.add(new CMap("mapa1"))->incActor((CActor*)player[0]);
+	CMultiverse.add(new CMap("mapa1"))->incActor((FSActor*)player[0]);
 	//CMultiverse.get(0)->incActor((CActor*)player[1]);
-	CMultiverse.add(new CMap("mapa1"))->incActor((CActor*)player[1]);
+	CMultiverse.add(new CMap("mapa1"))->incActor((FSActor*)player[1]);
 
-	cams.push_back(new CScrollCamera((CActor*)player[0],new CRectangle(0,0,RESOLUCION_X/2,RESOLUCION_Y/2),NULL,0.75));
-	cams.push_back(new CScrollCamera((CActor*)player[1],new CRectangle(0,RESOLUCION_Y/2,RESOLUCION_X/2,RESOLUCION_Y/2),NULL,0.35));
-	cams.push_back(new CScrollCamera((CActor*)player[1],new CRectangle(RESOLUCION_X/2,0,RESOLUCION_X/2,RESOLUCION_Y/2),new CPoint(80,100)));
-	cams.push_back(new CScrollCamera((CActor*)player[0],new CRectangle(RESOLUCION_X/2,RESOLUCION_Y/2,RESOLUCION_X/2,RESOLUCION_Y/2)));
+	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(0,0,RESOLUCION_X/2,RESOLUCION_Y/2),NULL,0.75));
+	cams.push_back(new CScrollCamera((FSActor*)player[1],new FSRectangle(0,RESOLUCION_Y/2,RESOLUCION_X/2,RESOLUCION_Y/2),NULL,0.35));
+	cams.push_back(new CScrollCamera((FSActor*)player[1],new FSRectangle(RESOLUCION_X/2,0,RESOLUCION_X/2,RESOLUCION_Y/2),new FSPoint(80,100)));
+	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(RESOLUCION_X/2,RESOLUCION_Y/2,RESOLUCION_X/2,RESOLUCION_Y/2)));
 
 
 	Write.line(0,460,10,"Teclas:");
@@ -100,7 +100,7 @@ int CTestA1GameInterface::onInit() {
 
 int CTestA1GameInterface::onExit() {
 	
-	CCamera* c ;
+	FSCamera* c ;
 	for ( CameraCollection::iterator it ; !cams.empty ( ); )
 	{
 		it = cams.begin ( ) ;
@@ -122,30 +122,30 @@ int CTestA1GameInterface::onExit() {
 void CTestA1GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_ESCAPE) {
 
-		CMenuAGameInterface* men = new CMenuAGameInterface(CLibrary::getLibrary());
+		CMenuAGameInterface* men = new CMenuAGameInterface(FSLibrary::getLibrary());
 		men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
 		men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
 		men->setPrevious(this);
 
-		CLibrary::getLibrary()->SendMessage(CLibrary::MSGID_RunEngine, (MSGPARM)men);
+		FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_RunEngine, (MSGPARM)men);
 	} else if (sym==SDLK_SPACE) {
-		CFreezeGameInterface* fgi = new CFreezeGameInterface(CLibrary::getLibrary());
+		CFreezeGameInterface* fgi = new CFreezeGameInterface(FSLibrary::getLibrary());
 		fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
 		fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
 		fgi->setPrevious(this);
 
-		CLibrary::getLibrary()->SendMessage(CLibrary::MSGID_RunEngine, (MSGPARM)fgi);
+		FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_RunEngine, (MSGPARM)fgi);
 	} else if (sym==SDLK_DELETE) {
-		getParent()->SendMessage(CLibrary::MSGID_Restart);
+		getParent()->SendMessage(FSLibrary::MSGID_Restart);
 	} else if (sym==SDLK_F1) {
-		getParent()->SendMessage(CLibrary::MSGID_ChangeEngine);
+		getParent()->SendMessage(FSLibrary::MSGID_ChangeEngine);
 	} else if (sym==SDLK_F2) {
-		getParent()->SendMessage(CLibrary::MSGID_ReloadEngine,(MSGPARM)this);
+		getParent()->SendMessage(FSLibrary::MSGID_ReloadEngine,(MSGPARM)this);
 	} else if (sym==SDLK_F3) {
 		deselect();
-		CScreen::ToggleFullscreen();
+		FSScreen::ToggleFullscreen();
 		loop();
 	}
 	CTestAGameInterface::onKeyDown(sym,mod,unicode);

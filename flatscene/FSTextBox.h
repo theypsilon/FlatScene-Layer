@@ -12,13 +12,13 @@
 typedef struct { 
 	string cadena;
 	TTF_Font* fuente;
-	map<Uint16,CImage*> render;
+	map<Uint16,FSImage*> render;
 	int size;
 }SFont;
 
 typedef struct { 
 	Uint16 glyph;
-	CFloatPoint* p;
+	FSFloatPoint* p;
 }SChar;
 
 struct SLineText{ 
@@ -40,30 +40,30 @@ enum TypeColorTBox {
 
 struct SEffectText;
 
-class CTextBox {
+class FSTextBox {
 private:
 	SFont* fuente;
 	string file;
 	int next;
 
 	list<SChar> charInDisplay;
-	CPoint upleft;
+	FSPoint upleft;
 
 	SEffectText* fx;
 
 	int timer;
 	SDL_Color col;
 
-	CImage* box;
+	FSImage* box;
 	Uint8 xBox;
 	Uint8 yBox;
 
 	int step;
 	int maxStep;
 
-	CTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next);
+	FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next);
 
-	virtual ~CTextBox();
+	virtual ~FSTextBox();
 
 	friend struct SText;
 
@@ -75,8 +75,8 @@ private:
 
 	virtual int finish();
 
-	friend class CControlOutputText;
-	friend class CScreen;
+	friend class FSControlOutputText;
+	friend class FSScreen;
 };
 
 #endif

@@ -2,30 +2,30 @@
 #include "FSLibrary.h"
 
 //inicialización de miembros estáticos
-Uint32 CMessageHandler::s_NextMSGID=1;
+Uint32 FSMessageHandler::s_NextMSGID=1;
 
 //asignación de identificador a mensajes.
-Uint32 CMessageHandler::MSGID_addChild=CMessageHandler::getNextMSGID();
-Uint32 CMessageHandler::MSGID_RemoveChild=CMessageHandler::getNextMSGID();
+Uint32 FSMessageHandler::MSGID_addChild=FSMessageHandler::getNextMSGID();
+Uint32 FSMessageHandler::MSGID_RemoveChild=FSMessageHandler::getNextMSGID();
 #ifdef MENSAJES_MSGIDS
-int CMessageHandler::textM0=-1;
+int FSMessageHandler::textM0=-1;
 #endif
 
 
-CMessageHandler::CMessageHandler(CMessageHandler * pmhParent):
+FSMessageHandler::FSMessageHandler(FSMessageHandler * pmhParent):
 m_pmhParent(NULL) {
 
 	setParent(pmhParent);
 }
 
 
-CMessageHandler::~CMessageHandler() {
+FSMessageHandler::~FSMessageHandler() {
 
 	setParent(NULL);
 }
 
 
-void CMessageHandler::setParent(CMessageHandler * pmhNewParent) {
+void FSMessageHandler::setParent(FSMessageHandler * pmhNewParent) {
 
 	if(HasParent())
 		SendMessage(MSGID_RemoveChild,(MSGPARM)getParent(),(MSGPARM)this);
@@ -38,21 +38,21 @@ void CMessageHandler::setParent(CMessageHandler * pmhNewParent) {
 
 }
 
-CMessageHandler * CMessageHandler::getParent() {
+FSMessageHandler * FSMessageHandler::getParent() {
 
 	return(m_pmhParent);
 
 }
 
 
-bool CMessageHandler::HasParent() {
+bool FSMessageHandler::HasParent() {
 
 	return(getParent()!=NULL);
 
 }
 
 
-int CMessageHandler::SendMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
+int FSMessageHandler::SendMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 
 #ifdef MENSAJES_MSGIDS
 	int parametros=0;
@@ -75,16 +75,16 @@ int CMessageHandler::SendMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 			else 
 				return FRACASO;
 	else
-		bufferMessages.push_back(new CMessage(MsgID,Parm1,Parm2));
+		bufferMessages.push_back(new FSMessage(MsgID,Parm1,Parm2));
 
 	return EXITO;
 	
 }
 
-int CMessageHandler::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
+int FSMessageHandler::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 	if(MsgID==MSGID_addChild) {
-		if(this==(CMessageHandler*)Parm1) {
-			OnaddChild((CMessageHandler*)Parm2);
+		if(this==(FSMessageHandler*)Parm1) {
+			OnaddChild((FSMessageHandler*)Parm2);
 			return EXITO;
 		} else {
 
@@ -92,8 +92,8 @@ int CMessageHandler::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 		}
 
 	} else if(MsgID==MSGID_RemoveChild) {
-		if(this==(CMessageHandler*)Parm1) {
-			onRemoveChild((CMessageHandler*)Parm2);
+		if(this==(FSMessageHandler*)Parm1) {
+			onRemoveChild((FSMessageHandler*)Parm2);
 			return EXITO;
 		} else {
 
@@ -101,15 +101,15 @@ int CMessageHandler::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 		}
 		
 	}	else  {
-		CLibrary::Error("Mensaje de tipo no registrado",TE_standard);
+		FSLibrary::Error("Mensaje de tipo no registrado",TE_standard);
 		return FRACASO;
 	}
 	
 }
 
-void CMessageHandler::readMessages() {
+void FSMessageHandler::readMessages() {
 	MessageCollection::iterator it ;
-	CMessage* m;
+	FSMessage* m;
 	while ( !bufferMessages.empty ( ) )
 	{
 		it = bufferMessages.begin ( ) ;
@@ -120,9 +120,9 @@ void CMessageHandler::readMessages() {
 	}
 }
 
-void CMessageHandler::clearAllMessages() {
+void FSMessageHandler::clearAllMessages() {
 	MessageCollection::iterator it ;
-	CMessage* m;
+	FSMessage* m;
 	while ( !bufferMessages.empty ( ) )
 	{
 		it = bufferMessages.begin ( ) ;
@@ -132,10 +132,10 @@ void CMessageHandler::clearAllMessages() {
 	}
 }
 
-void CMessageHandler::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
+void FSMessageHandler::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 }
 
-Uint32 CMessageHandler::getNextMSGID(bool instant) {
+Uint32 FSMessageHandler::getNextMSGID(bool instant) {
 
 	// Si instant, el MSGID debe ser par, si no instant, inpar.
 
@@ -153,32 +153,32 @@ Uint32 CMessageHandler::getNextMSGID(bool instant) {
 	return(s_NextMSGID);
 }
 
-void CMessageHandler::OnaddChild(CMessageHandler* pmhChild) {
+void FSMessageHandler::OnaddChild(FSMessageHandler* pmhChild) {
 
 }
 
-void CMessageHandler::onRemoveChild(CMessageHandler* pmhChild) {
+void FSMessageHandler::onRemoveChild(FSMessageHandler* pmhChild) {
 	
 }
 
-CMessage::CMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) 
+FSMessage::FSMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) 
 :	MsgID(MsgID) , Parm1(Parm1), Parm2(Parm2) {
 }
 
-CMessage::~CMessage() {
+FSMessage::~FSMessage() {
 }
 
-Uint32 CMessage::getMsgID() {
+Uint32 FSMessage::getMsgID() {
 	return MsgID;
 }
 
-MSGPARM CMessage::getParm(int n) {
+MSGPARM FSMessage::getParm(int n) {
 	if (n==1) {
 		return Parm1;
 	} else if (n==2) {
 		return Parm2;
 	} else {
-		CLibrary::Error("Parámetro requerido imposible.");
+		FSLibrary::Error("Parámetro requerido imposible.");
 		return (void*)FRACASO;
 	}
 }

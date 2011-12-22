@@ -2,18 +2,18 @@
 #include "FSLibrary.h"
 #include "FSScreen.h"
 
-CScrollCamera::CScrollCamera(CActor* target, CRectangle* area,CMessageHandler * pmhParent) :
-CCamera(target,area,pmhParent), centro(new CPoint(area->getW()/2,area->getH()/2)) {
+CScrollCamera::CScrollCamera(FSActor* target, FSRectangle* area,FSMessageHandler * pmhParent) :
+FSCamera(target,area,pmhParent), centro(new FSPoint(area->getW()/2,area->getH()/2)) {
 	intraMargenX=intraMargenY=0;
 	loadUniverse();
 }
 
-CScrollCamera::CScrollCamera(CActor* target, CRectangle* area, CPoint* centro, float margenDesp,CMessageHandler *pmhParent) :
-CCamera(target,area,pmhParent) {
+CScrollCamera::CScrollCamera(FSActor* target, FSRectangle* area, FSPoint* centro, float margenDesp,FSMessageHandler *pmhParent) :
+FSCamera(target,area,pmhParent) {
 	zoom=1.0;
 
 	if (centro==NULL) {
-		centro=this->centro=new CPoint(area->getW()/2,area->getH()/2);
+		centro=this->centro=new FSPoint(area->getW()/2,area->getH()/2);
 	} else {
 		this->centro=centro;
 		centro->X()=centro->X()%area->getW();
@@ -51,7 +51,7 @@ CScrollCamera::~CScrollCamera() {
 	}
 }
 
-bool CScrollCamera::focusActor(CActor *actAct) {
+bool CScrollCamera::focusActor(FSActor *actAct) {
 	bool focused=false;
 
 	CActorScrollMap* actScroll = dynamic_cast<CActorScrollMap*>(actAct);
@@ -78,7 +78,7 @@ int CScrollCamera::loadUniverse() {
 		CY()=-1000;
 	}
 
-	if (map==NULL) CLibrary::Error("map nulo.");
+	if (map==NULL) FSLibrary::Error("map nulo.");
 
 	if (!map->isLoaded())
 		map->load();
@@ -96,11 +96,11 @@ int CScrollCamera::loadUniverse() {
 		for (;j<capas && i==PisoCapa[j];j++) {
 			CLayerBG* LayerAux;
 			if (TipoCapa[j]==0)
-				LayerAux=(CLayerBG*)new CLayerFondo(map,area,Tiles[j],(CMessageHandler*)Pisos[i]);
+				LayerAux=(CLayerBG*)new CLayerFondo(map,area,Tiles[j],(FSMessageHandler*)Pisos[i]);
 			else if (TipoCapa[j]==1)
-				LayerAux=(CLayerBG*)new CLayerInf(map,area,Tiles[j],(CMessageHandler*)Pisos[i]);
+				LayerAux=(CLayerBG*)new CLayerInf(map,area,Tiles[j],(FSMessageHandler*)Pisos[i]);
 			else
-				LayerAux=(CLayerBG*)new CLayerSup(map,area,Tiles[j],(CMessageHandler*)Pisos[i]);
+				LayerAux=(CLayerBG*)new CLayerSup(map,area,Tiles[j],(FSMessageHandler*)Pisos[i]);
 			Pisos[i]->Layer.push_back(LayerAux);
 		}
 	}
@@ -126,7 +126,7 @@ int CScrollCamera::unloadUniverse() {
 		return EXITO;
 	}
 
-	return CCamera::unloadUniverse();
+	return FSCamera::unloadUniverse();
 }
 
 int CScrollCamera::refresh() {
@@ -179,8 +179,8 @@ int CScrollCamera::refresh() {
 
 #ifdef __TESTZOOM__
 	if (zoom < 1.0) {
-		CScreen::translate(-centro->getX()*zoom+centro->getX(),-centro->getY()*zoom+centro->getY(),0.0);
-		CScreen::rotate((1.0-zoom)*8,0.0,0.0,1.0);
+		FSScreen::translate(-centro->getX()*zoom+centro->getX(),-centro->getY()*zoom+centro->getY(),0.0);
+		FSScreen::rotate((1.0-zoom)*8,0.0,0.0,1.0);
 	}
 	static float factorzoom=0.001;
 	if (zoom>1.5) {
@@ -195,7 +195,7 @@ int CScrollCamera::refresh() {
 	}
 #endif
 
-	CScreen::scale(2.0,2.0,1.0);
+	FSScreen::scale(2.0,2.0,1.0);
 
 	//CScreen::translate(320.0/2,240.0/2,-120.0);
 
@@ -221,6 +221,6 @@ void CScrollCamera::setZoom(float newZoom) {
 #ifdef MENSAJES_MSGIDS
 int CScrollCamera::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
 	printf("ScrollCamera %d.%d :: ",area->getX(),area->getY());
-	return CMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
+	return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
 }
 #endif

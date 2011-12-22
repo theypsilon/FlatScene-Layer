@@ -2,7 +2,7 @@
 #include "TestAGameInterface.h"
 #include "FSLibrary.h"
 
-CPlayer::CPlayer(CMessageHandler * pmhParent) : CActorScrollMap("PJ0",pmhParent) {
+CPlayer::CPlayer(FSMessageHandler * pmhParent) : CActorScrollMap("PJ0",pmhParent) {
 #ifdef MENSAJES_ACCIONES
 	textA0=-1;
 	textA1=-1;
@@ -31,7 +31,7 @@ void CPlayer::init(list<string>& activationIds, int v) {
 	//Configuración de teclas del jugador.
 
 	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuración.
-	if (!xmldoc.LoadFile()) {	 CLibrary::Error("resources/config.xml",TE_fileExists); }
+	if (!xmldoc.LoadFile()) {	 FSLibrary::Error("resources/config.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChildElement("Keys"));
 
@@ -58,7 +58,7 @@ void CPlayer::init(list<string>& activationIds, int v) {
 		player = player->NextSiblingElement();
 	}
 
-	if (!player) CLibrary::Error("Estructura inválida de config.xml");
+	if (!player) FSLibrary::Error("Estructura inválida de config.xml");
 
 	// Ahora utilizamos player para navegar por sus botones.
 	player = player->FirstChildElement("buttom");
@@ -101,7 +101,7 @@ void CPlayer::configKey(SDLKey sym,const char* keycode) {
 	} else if (pk_keycode=="PKEY_B8") {
 		key=PKEY_B8;
 	} else{
-		CLibrary::Error(("Configuración de teclas inválidas en config.xml \n"+string(pk_keycode)).c_str());
+		FSLibrary::Error(("Configuración de teclas inválidas en config.xml \n"+string(pk_keycode)).c_str());
 	}
 
 	KeyAlias[key]=sym;
@@ -130,7 +130,7 @@ void CPlayer::blockFutureActionCandidates() {
 		if (actMov)	{			
 			vector<CAction*>* actionBrothers = actMov->getBrothers();
 			if (!actionBrothers || (actionBrothers->size() < 5))
-				CLibrary::Error("Clase ActionMove falla.");
+				FSLibrary::Error("Clase ActionMove falla.");
 			setAction(actionBrothers->at(4));
 		}
 	}
@@ -190,12 +190,12 @@ int CPlayer::move() {
 #ifdef MENSAJES_MSGIDS
 int CPlayer::SendMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 	printf("Player 0 :: ");
-	return CMessageHandler::SendMessage(MsgID,Parm1,Parm2);
+	return FSMessageHandler::SendMessage(MsgID,Parm1,Parm2);
 }
 #endif
 
 int CPlayer::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 
-	return(CMessageHandler::onMessage(MsgID,Parm1,Parm2));
+	return(FSMessageHandler::onMessage(MsgID,Parm1,Parm2));
 
 }

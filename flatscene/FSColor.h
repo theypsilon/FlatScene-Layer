@@ -3,15 +3,15 @@
 
 #include "SDL.h"
 
-class CColor  
+class FSColor  
 {
 private:
 	SDL_Color m_Color;
 public:
 
-	CColor(Uint8 r=0,Uint8 g=0,Uint8 b=0);
-	CColor(const CColor& Color);
-	virtual ~CColor();
+	FSColor(Uint8 r=0,Uint8 g=0,Uint8 b=0);
+	FSColor(const FSColor& Color);
+	virtual ~FSColor();
 
 	Uint8 getR() const;
 	Uint8 getG() const;
@@ -28,56 +28,56 @@ public:
 	operator SDL_Color();
 	operator SDL_Color*();
 
-	CColor& operator=(CColor& Color);
-	CColor& operator+=(CColor& Color);
-	CColor& operator-=(CColor& Color);
-	CColor& operator*=(CColor& Color);
-	CColor& operator*=(int Multiplier);
-	CColor& operator/=(int Divisor);
-	CColor& operator|=(CColor& Color);
-	CColor& operator&=(CColor& Color);
-	CColor& operator^=(CColor& Color);
+	FSColor& operator=(FSColor& Color);
+	FSColor& operator+=(FSColor& Color);
+	FSColor& operator-=(FSColor& Color);
+	FSColor& operator*=(FSColor& Color);
+	FSColor& operator*=(int Multiplier);
+	FSColor& operator/=(int Divisor);
+	FSColor& operator|=(FSColor& Color);
+	FSColor& operator&=(FSColor& Color);
+	FSColor& operator^=(FSColor& Color);
 
-	static CColor Red(Uint8 shade=255);
-	static CColor Green(Uint8 shade=255);
-	static CColor Blue(Uint8 shade=255);
+	static FSColor Red(Uint8 shade=255);
+	static FSColor Green(Uint8 shade=255);
+	static FSColor Blue(Uint8 shade=255);
 
-	static CColor Yellow(Uint8 shade=255);
-	static CColor Cyan(Uint8 shade=255);
-	static CColor Magenta(Uint8 shade=255);
+	static FSColor Yellow(Uint8 shade=255);
+	static FSColor Cyan(Uint8 shade=255);
+	static FSColor Magenta(Uint8 shade=255);
 
-	static CColor DarkRed(Uint8 shade=128);
-	static CColor DarkGreen(Uint8 shade=128);
-	static CColor DarkBlue(Uint8 shade=128);
-	static CColor DarkYellow(Uint8 shade=128);
-	static CColor DarkCyan(Uint8 shade=128);
-	static CColor DarkMagenta(Uint8 shade=128);
+	static FSColor DarkRed(Uint8 shade=128);
+	static FSColor DarkGreen(Uint8 shade=128);
+	static FSColor DarkBlue(Uint8 shade=128);
+	static FSColor DarkYellow(Uint8 shade=128);
+	static FSColor DarkCyan(Uint8 shade=128);
+	static FSColor DarkMagenta(Uint8 shade=128);
 
-	static CColor LightRed(Uint8 gray=128,Uint8 shade=255);
-	static CColor LightGreen(Uint8 gray=128,Uint8 shade=255);
-	static CColor LightBlue(Uint8 gray=128,Uint8 shade=255);
-	static CColor LightYellow(Uint8 gray=128,Uint8 shade=255);
-	static CColor LightCyan(Uint8 gray=128,Uint8 shade=255);
-	static CColor LightMagenta(Uint8 gray=128,Uint8 shade=255);
+	static FSColor LightRed(Uint8 gray=128,Uint8 shade=255);
+	static FSColor LightGreen(Uint8 gray=128,Uint8 shade=255);
+	static FSColor LightBlue(Uint8 gray=128,Uint8 shade=255);
+	static FSColor LightYellow(Uint8 gray=128,Uint8 shade=255);
+	static FSColor LightCyan(Uint8 gray=128,Uint8 shade=255);
+	static FSColor LightMagenta(Uint8 gray=128,Uint8 shade=255);
 
-	static CColor White(Uint8 shade=255);
-	static CColor LightGray(Uint8 shade=192);
-	static CColor DarkGray(Uint8 shade=128);
-	static CColor Black(Uint8 shade=0);
+	static FSColor White(Uint8 shade=255);
+	static FSColor LightGray(Uint8 shade=192);
+	static FSColor DarkGray(Uint8 shade=128);
+	static FSColor Black(Uint8 shade=0);
 };
 
-CColor operator+(CColor& Color1,CColor& Color2);
-CColor operator-(CColor& Color1,CColor& Color2);
-CColor operator*(CColor& Color1,CColor& Color2);
-CColor operator*(CColor& Color,int Multiplier);
-CColor operator/(CColor& Color,int Divisor);
+FSColor operator+(FSColor& Color1,FSColor& Color2);
+FSColor operator-(FSColor& Color1,FSColor& Color2);
+FSColor operator*(FSColor& Color1,FSColor& Color2);
+FSColor operator*(FSColor& Color,int Multiplier);
+FSColor operator/(FSColor& Color,int Divisor);
 
-CColor operator|(CColor& Color1,CColor& Color2);
-CColor operator&(CColor& Color1,CColor& Color2);
-CColor operator^(CColor& Color1,CColor& Color2);
-CColor operator~(CColor& Color);
+FSColor operator|(FSColor& Color1,FSColor& Color2);
+FSColor operator&(FSColor& Color1,FSColor& Color2);
+FSColor operator^(FSColor& Color1,FSColor& Color2);
+FSColor operator~(FSColor& Color);
 
-bool operator==(CColor& Color1,CColor& Color2);
-bool operator!=(CColor& Color1,CColor& Color2);
+bool operator==(FSColor& Color1,FSColor& Color2);
+bool operator!=(FSColor& Color1,FSColor& Color2);
 
 #endif //#ifndef __COLOR_H__

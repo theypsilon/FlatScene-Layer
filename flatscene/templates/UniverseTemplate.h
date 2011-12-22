@@ -3,7 +3,7 @@
 
 #include "Universe.h"
 
-class CUniverseTemplate : public CUniverse {
+class CUniverseTemplate : public FSUniverse {
 private:
 
 	// TODO : funciones y variables privadas
@@ -30,10 +30,10 @@ public:
 	int changeUniverse(string name, Uint8 slot);
 
 	// Opcional. Método para notificación de la entrada de un CActor.
-	int incActor(CActor* act);
+	int incActor(FSActor* act);
 
 	// Opcional. Método para notificación de la salida de un CActor.
-	int decActor(CActor* act);
+	int decActor(FSActor* act);
 
 	// Opcional. Método para notificación de la entrada de una CCamera.
 	void incCameras();

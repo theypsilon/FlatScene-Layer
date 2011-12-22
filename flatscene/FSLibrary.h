@@ -32,19 +32,19 @@ enum TypeError {
 };
 
 
-class CLibrary : public CMessageHandler  
+class FSLibrary : public FSMessageHandler  
 {
 private:
 	
-	static CLibrary* s_pTheLibrary;
+	static FSLibrary* s_pTheLibrary;
 
-	CEngine* actualEngine;
+	FSEngine* actualEngine;
 
 	// Lista de motores añadidas por el usuario
-	list<CEngine*> engineIn;
+	list<FSEngine*> engineIn;
 
 	// Lista de motores ejecutados por orden del usuario sin ser añadidos (mediante mensajeria).
-	list<CEngine*> engineOut;
+	list<FSEngine*> engineOut;
 
 #ifdef IN_FILE_ERROR
 	bool errorsInSession;
@@ -60,16 +60,16 @@ private:
 #endif
 
 	
-	static void setLibrary(CLibrary* pTheLib);
+	static void setLibrary(FSLibrary* pTheLib);
 
-	static void setActualEngine(CEngine* newEngineActive);
+	static void setActualEngine(FSEngine* newEngineActive);
 
-	friend class CEngine;
+	friend class FSEngine;
 
 	
-	CLibrary(bool xmlconfig =false);
+	FSLibrary(bool xmlconfig =false);
 
-	CLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
+	FSLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
 	
 	static void onExit();
@@ -79,7 +79,7 @@ private:
 
 	static string toStringErrorGL(GLenum e);
 	
-	virtual ~CLibrary();
+	virtual ~FSLibrary();
 
 public:
 
@@ -90,11 +90,11 @@ public:
 	static int processEngines();
 
 	
-	inline static CLibrary* getLibrary();	
+	inline static FSLibrary* getLibrary();	
 
-	inline static CEngine* getActualEngine();
+	inline static FSEngine* getActualEngine();
 
-	static int addEngine(CEngine* engine,int priority);
+	static int addEngine(FSEngine* engine,int priority);
 
 	static Uint32 MSGID_Exit;
 	static Uint32 MSGID_Restart;
@@ -117,7 +117,7 @@ public:
 
 #endif
 
-	bool static orderEngine(CEngine*,CEngine*);
+	bool static orderEngine(FSEngine*,FSEngine*);
 
 };
 

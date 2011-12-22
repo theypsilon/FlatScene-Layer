@@ -22,20 +22,20 @@ struct SToRender {
 
 struct SRenderCanvas {
 	SCanvas canvas;
-	CPoint ptDst;
+	FSPoint ptDst;
 	Uint8 flags;
 
-	SRenderCanvas(SCanvas canvas, CPoint ptDst, Uint8 flags) 
+	SRenderCanvas(SCanvas canvas, FSPoint ptDst, Uint8 flags) 
 	: canvas(canvas), ptDst(ptDst), flags(flags) {
 	}
 };
 
 struct SRenderFloatCanvas {
 	SCanvas canvas;
-	CFloatPoint ptDst;
+	FSFloatPoint ptDst;
 	Uint8 flags;
 
-	SRenderFloatCanvas(SCanvas canvas,CFloatPoint ptDst, Uint8 flags) 
+	SRenderFloatCanvas(SCanvas canvas,FSFloatPoint ptDst, Uint8 flags) 
 	: canvas(canvas), ptDst(ptDst), flags(flags) {
 	}
 };
@@ -71,7 +71,7 @@ struct SRenderColor { // ROTATION
 
 
 //main canvas, abstract primary display surface
-class CScreen
+class FSScreen
 {
 private:
 	static SDL_Surface* m_SDL_Surface;
@@ -87,9 +87,9 @@ private:
 
 	static list<SToRender*> graphicMaterial;
 
-	static list<CSprite*> spriteToDelete;
-	static list<CSpriteset*> spritesetToDelete;
-	static list<CImage*> imageToDelete;
+	static list<FSSprite*> spriteToDelete;
+	static list<FSSpriteset*> spritesetToDelete;
+	static list<FSImage*> imageToDelete;
 
 	static void deleteResources();
 
@@ -117,16 +117,16 @@ private:
 	static int beginRenderMode(Uint32 flags);
 	static int endRenderMode(Uint32 flags);
 
-	friend class CLibrary;
-	friend class CCamera;
+	friend class FSLibrary;
+	friend class FSCamera;
 
-	friend class CSpriteset;
-	friend class CSprite;
-	friend class CImage;
+	friend class FSSpriteset;
+	friend class FSSprite;
+	friend class FSImage;
 
-	friend class CControlImages;
-	friend class CControlOutputText;
-	friend class CTextBox;
+	friend class FSControlImages;
+	friend class FSControlOutputText;
+	friend class FSTextBox;
 
 public:
 	//constructor
@@ -141,7 +141,7 @@ public:
 	static int translate(float x, float y, float z);
 	static int scale(float x, float y, float z);
 	static int color(float red, float green, float blue, float alpha);
-	static int color(CColor* col,float alpha=1.0);
+	static int color(FSColor* col,float alpha=1.0);
 	static int projectionMode(TypeRendeProjection trp, float zMax=400.0);
 
 	static int pushMatrix();

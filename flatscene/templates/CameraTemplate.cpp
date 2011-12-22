@@ -3,7 +3,7 @@
 
 // Library.h es necesario para el manejo de errores.
 
-CCameraTemplate::CCameraTemplate(CActor* target, CRectangle* area,CMessageHandler* pmhParent) :
+CCameraTemplate::CCameraTemplate(FSActor* target, FSRectangle* area,FSMessageHandler* pmhParent) :
 // Se ha de llamar a la clase Base para una correcta inicialización
 CCamera(target,area,pmhParent) {
 	
@@ -56,7 +56,7 @@ int CCameraTemplate::resyncUniverse() {
 	return EXITO;
 }
 
-int CCameraTemplate::setTarget(CActor* newTarget) {
+int CCameraTemplate::setTarget(FSActor* newTarget) {
 
 	/*		IMPLEMENTACIÓN POR DEFECTO */
 	

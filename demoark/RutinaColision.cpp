@@ -20,7 +20,7 @@ bool CBasicCollision0::run(int x, int y, int z, CActorScrollMap* mobil) {
 		RectArea::iterator beginMobil = rA->begin();
 		RectArea::iterator finMobil = rA->end();
 		for (RectArea::iterator it = beginMobil;it!=finMobil;++it) {
-			CRectangle* rect = *it;
+			FSRectangle* rect = *it;
 			for (int initialx=x+rect->X(),maxx=x+rect->W();initialx <= maxx;initialx++) {
 				if (map->getPixel(initialx,y,z)==0xFFA800F8) {
 					return true;
@@ -36,8 +36,8 @@ bool CBasicCollision0::run(int x, int y, int z, CActorScrollMap* mobil) {
 		int Mx = x / map->getTileW();
 		int My = y / map->getTileH();
 		if (Mx > 0 && Mx < (map->getW()-1) && My > 0 && My< (map->getH()-1)) {
-			CRectangle r1;
-			CRectangle r2;
+			FSRectangle r1;
+			FSRectangle r2;
 			for (int i=-1;i<2;i++) {
 				for (int j=-1;j<2;j++) {
 					for (ActorScrollCollection::iterator itA = map->MA[z][Mx+i][My+j]->begin(),finA = map->MA[z][Mx+i][My+j]->end();itA!=finA;++itA) {

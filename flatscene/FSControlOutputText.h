@@ -12,7 +12,7 @@
 #include "FSdefinitions.h"
 #include "FSTextBox.h"
 
-class CEngine;
+class FSEngine;
 
 struct SEffectText {
 	GLfloat red,green,blue,alpha;
@@ -31,7 +31,7 @@ private:
 public:
 	union {
 		SLineText* Line;
-		CTextBox* Box;
+		FSTextBox* Box;
 	};
 
 	SEffectText* fx;
@@ -39,7 +39,7 @@ public:
 	SText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) {
 			
 		fx = NULL;
-		Box = new CTextBox(file,text,x,y,Lim,ttf_fnt,next);
+		Box = new FSTextBox(file,text,x,y,Lim,ttf_fnt,next);
 		type = TT_BOX;
 	}
 
@@ -82,12 +82,12 @@ typedef struct {
 }SData;
  
 
-class CControlOutputText {
+class FSControlOutputText {
 private:
-	map<CEngine*,SData*> session;
+	map<FSEngine*,SData*> session;
 
 	SData* data;
-	CEngine* admin;
+	FSEngine* admin;
 
 
 	map<int,SFont*> Fonts;
@@ -101,15 +101,15 @@ private:
 	float height;
 	float zoom;
 
-	static CControlOutputText* singleton;
+	static FSControlOutputText* singleton;
 
-	friend class CScreen;
+	friend class FSScreen;
 
-	CEngine* setAdmin(CEngine* newAdmin);
+	FSEngine* setAdmin(FSEngine* newAdmin);
 
 public:
-	CControlOutputText();
-	~CControlOutputText();
+	FSControlOutputText();
+	~FSControlOutputText();
 
 	int setfontSize(int newSize);
 
@@ -135,7 +135,7 @@ public:
 	int locateRenderScene ( float posx=0.0, float posy=0.0, float width=0.0, float height=0.0, float zoom = 1.0) ;
 
 	int color(int text,float red, float green, float blue, float alpha, TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
-	int color(int text,CColor* col, float alpha,TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
+	int color(int text,FSColor* col, float alpha,TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
 
 
 	int render();
@@ -143,6 +143,6 @@ public:
 	void clear();
 };
 
-extern CControlOutputText Write;
+extern FSControlOutputText Write;
 
 #endif

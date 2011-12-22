@@ -73,7 +73,7 @@ CAction* CActionMove::ActionMoveFactory(CActorScrollMap* executor,TiXmlElement* 
 	}
 
 	if (ret==NULL) {
-		CLibrary::Error(string("No existe una acción de movimiento de ese tipo ")+i);
+		FSLibrary::Error(string("No existe una acción de movimiento de ese tipo ")+i);
 	}
 		
 	return ret;

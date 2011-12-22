@@ -9,7 +9,7 @@
 
 
 
-CEngine::CEngine(CMessageHandler * pmhParent) : CMessageHandler(pmhParent)
+FSEngine::FSEngine(FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent)
 {
 	initialized = false;
 	priority = 100;
@@ -17,22 +17,22 @@ CEngine::CEngine(CMessageHandler * pmhParent) : CMessageHandler(pmhParent)
 }
 
 
-CEngine::~CEngine()
+FSEngine::~FSEngine()
 {
 		readMessages();
 }
-bool CEngine::isInitialized() {
+bool FSEngine::isInitialized() {
 	return initialized;
 }
 
-int CEngine::onInit() {
+int FSEngine::onInit() {
 
 	initialized = true;
 
 	return EXITO;
 }
 
-void CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
+void FSEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
 
 	if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
 		;//ret = NULL;
@@ -49,7 +49,7 @@ void CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
 
 }
 
-template <class T> void CEngine::nocompila(void (T::*puntero)(void)) {
+template <class T> void FSEngine::nocompila(void (T::*puntero)(void)) {
 
 	boost::function<void ()> f;
 	
@@ -105,34 +105,34 @@ const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*))
 
 
 //bucle principal
-int CEngine::loop() {
+int FSEngine::loop() {
 
-	if (!CLibrary::getLibrary()) {
-		CLibrary::Error("Library not inicialized");
+	if (!FSLibrary::getLibrary()) {
+		FSLibrary::Error("Library not inicialized");
 		return FRACASO;
 	}
 
 	if (!isInitialized()) {
-		CLibrary::Error("Engine not inicialized");
+		FSLibrary::Error("Engine not inicialized");
 		return FRACASO;
 	}
 
-	CLibrary::setActualEngine(this);
+	FSLibrary::setActualEngine(this);
 	
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event)==1);
 		
-	while (CLibrary::getActualEngine() == this) {
+	while (FSLibrary::getActualEngine() == this) {
 			
 		if(
 #ifdef DEBUGTEST
-			!CLibrary::inDebug() && 
+			!FSLibrary::inDebug() && 
 #endif
 			SDL_PollEvent(&event)==1) {
 				
 			if(event.type==SDL_QUIT) {
-				CLibrary::getLibrary()->SendMessage(CLibrary::MSGID_Exit);
+				FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_Exit);
 				break;
 			}
 
@@ -154,16 +154,16 @@ int CEngine::loop() {
 
 }
 
-void CEngine::deselect() {
+void FSEngine::deselect() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)==1) { }
-	CLibrary::setActualEngine(NULL);
+	FSLibrary::setActualEngine(NULL);
 }
 
-int CEngine::drawFrame() {
+int FSEngine::drawFrame() {
 
 	if (!isInitialized()) {
-		CLibrary::Error("Motor not inicialized");
+		FSLibrary::Error("Motor not inicialized");
 		return FRACASO;
 	}
 
@@ -171,13 +171,13 @@ int CEngine::drawFrame() {
 }
 
 
-int CEngine::onIdle()
+int FSEngine::onIdle()
 {
 	return EXITO;
 }
 
 
-int CEngine::onExit()
+int FSEngine::onExit()
 {
 	int ret = EXITO;
 

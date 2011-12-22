@@ -37,7 +37,7 @@ int CUniverseTemplate::changeUniverse(string name,Uint8 slot) {
 
 }
 
-int CUniverseTemplate::incActor(CActor* act) {
+int CUniverseTemplate::incActor(FSActor* act) {
 
 	/*		IMPLEMENTACIÓN POR DEFECTO		*/
 
@@ -60,7 +60,7 @@ int CUniverseTemplate::incActor(CActor* act) {
 	return EXITO;
 }
 
-int CUniverseTemplate::decActor(CActor* act) {
+int CUniverseTemplate::decActor(FSActor* act) {
 
 	/*		IMPLEMENTACIÓN POR DEFECTO		*/
 

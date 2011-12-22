@@ -31,21 +31,21 @@ typedef struct
     int posx, posy;
 } Textura;
 
-typedef vector<CCamera*> CameraCollection;
+typedef vector<FSCamera*> CameraCollection;
 
 /*
 	==CTestAGameInterface==
 	CEngine componEnt test.
 */
-class CTestAGameInterface : public CEngine  
+class CTestAGameInterface : public FSEngine  
 {
 public:
 	//sprite set
-	CSpriteset* m_pSpriteset;
+	FSSpriteset* m_pSpriteset;
 	//current position
-	CPoint m_ptCurrent;
+	FSPoint m_ptCurrent;
 	//new position
-	CPoint m_ptNext;
+	FSPoint m_ptNext;
 #ifdef EVENTOS_RAPIDO
 	KeySDLAlias PlayerKeyAlias[NUM_SDLKEY];
 #endif
@@ -57,7 +57,7 @@ public:
 
 public:
 	//constructor
-	CTestAGameInterface(CMessageHandler * pmhParent=NULL);
+	CTestAGameInterface(FSMessageHandler * pmhParent=NULL);
 	//destructor
 	virtual ~CTestAGameInterface();
 	//initialization

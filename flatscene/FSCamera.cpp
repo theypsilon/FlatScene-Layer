@@ -1,10 +1,10 @@
 #include "FSCamera.h"
 #include "FSLibrary.h"
 
-map<TypeResource,void (*)(void*)> CCamera::procRenders;
+map<TypeResource,void (*)(void*)> FSCamera::procRenders;
 
-CCamera::CCamera(CActor* target, CRectangle* area,CMessageHandler * pmhParent) :
-CMessageHandler(pmhParent), uni(NULL), target(target), area(area) , rendering(false),
+FSCamera::FSCamera(FSActor* target, FSRectangle* area,FSMessageHandler * pmhParent) :
+FSMessageHandler(pmhParent), uni(NULL), target(target), area(area) , rendering(false),
 x(-1000),y(-1000) {
 
 	if (procRenders.size() == 0) 
@@ -12,13 +12,13 @@ x(-1000),y(-1000) {
 
 }
 
-CCamera::~CCamera() {
+FSCamera::~FSCamera() {
 
 	for (list<SToRender*>::iterator iri = initRenderList.begin(), ire = initRenderList.end();iri!=ire;++iri) {
 
 		SToRender* irp = *iri;
 
-		CScreen::procRenders[irp->type](irp->pointer);
+		FSScreen::procRenders[irp->type](irp->pointer);
 
 		delete *iri;
 
@@ -31,7 +31,7 @@ CCamera::~CCamera() {
 
 		SToRender* erp = *eri;
 
-		CScreen::procRenders[erp->type](erp->pointer);
+		FSScreen::procRenders[erp->type](erp->pointer);
 
 		delete *eri;
 
@@ -42,14 +42,14 @@ CCamera::~CCamera() {
 	delete area;
 }
 
-CUniverse* CCamera::getUniverse() {
+FSUniverse* FSCamera::getUniverse() {
 	return uni;
 }
 
-int CCamera::loadUniverse() {
+int FSCamera::loadUniverse() {
 
 	if (uni != NULL) {
-		CLibrary::Error("Universe already loaded");
+		FSLibrary::Error("Universe already loaded");
 		return FRACASO;
 	}
 
@@ -57,9 +57,9 @@ int CCamera::loadUniverse() {
 	return EXITO;
 }
 
-int CCamera::unloadUniverse() {
+int FSCamera::unloadUniverse() {
 	if (uni == NULL) {
-		CLibrary::Error("No Universe in focus");
+		FSLibrary::Error("No Universe in focus");
 		return FRACASO;
 	}
 
@@ -71,7 +71,7 @@ int CCamera::unloadUniverse() {
 
 }
 
-int CCamera::resyncUniverse() {
+int FSCamera::resyncUniverse() {
 
 	if (unloadUniverse() == EXITO)
 		return loadUniverse();
@@ -79,24 +79,24 @@ int CCamera::resyncUniverse() {
 		return FRACASO;
 }
 
-bool CCamera::isOpened() {
+bool FSCamera::isOpened() {
 	return (uni!=NULL);
 }
 
 
-int& CCamera::CX() {
+int& FSCamera::CX() {
 	return x;
 }
-int& CCamera::CY() {
+int& FSCamera::CY() {
 	return y;
 }
-CActor* CCamera::Target() {
+FSActor* FSCamera::Target() {
 	return target;
 }
 
-int CCamera::setTarget(CActor* newTarget) {
+int FSCamera::setTarget(FSActor* newTarget) {
 	if (newTarget == this->target) {
-		CLibrary::Error("Actor objetivo ya establecido");
+		FSLibrary::Error("Actor objetivo ya establecido");
 		return FRACASO;
 	}
 
@@ -113,11 +113,11 @@ int CCamera::setTarget(CActor* newTarget) {
 }
 
 
-CRectangle* CCamera::getArea() {
+FSRectangle* FSCamera::getArea() {
 	return area;
 }
 
-int CCamera::render() {
+int FSCamera::render() {
 
 	rendering = true;
 
@@ -154,11 +154,11 @@ int CCamera::render() {
 
 
 
-int CCamera::refresh() {
+int FSCamera::refresh() {
 	return EXITO;
 }
 
-void CCamera::initProcRenders() {
+void FSCamera::initProcRenders() {
 
 	procRenders[TR_ROTATION] = procRendRotation;
 	procRenders[TR_TRANSLATION] = procRendTranslation;
@@ -170,15 +170,15 @@ void CCamera::initProcRenders() {
 
 }
 
-void CCamera::procRendPush(void* pointer) {
-	CScreen::pushMatrix();
+void FSCamera::procRendPush(void* pointer) {
+	FSScreen::pushMatrix();
 }
 
-void CCamera::procRendPop(void* pointer) {
-	CScreen::popMatrix();
+void FSCamera::procRendPop(void* pointer) {
+	FSScreen::popMatrix();
 }
 
-void CCamera::procRendLocation(void* pointer) {
+void FSCamera::procRendLocation(void* pointer) {
 
 	SRenderLocation* n = (SRenderLocation*) pointer;
 
@@ -190,12 +190,12 @@ void CCamera::procRendLocation(void* pointer) {
 
 	delete n;
 
-	CScreen::locateRenderScene(posx,posy,width,height,zoom);
+	FSScreen::locateRenderScene(posx,posy,width,height,zoom);
 
 }
 
 
-void CCamera::procRendRotation(void* pointer) {
+void FSCamera::procRendRotation(void* pointer) {
 
 	SRenderRotation* n = (SRenderRotation*) pointer;
 
@@ -206,11 +206,11 @@ void CCamera::procRendRotation(void* pointer) {
 
 	delete n;
 
-	CScreen::rotate(angle,x,y,z);
+	FSScreen::rotate(angle,x,y,z);
 
 }
 
-void CCamera::procRendTranslation(void* pointer) {
+void FSCamera::procRendTranslation(void* pointer) {
 
 
 	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
@@ -222,11 +222,11 @@ void CCamera::procRendTranslation(void* pointer) {
 
 	delete n;
 
-	CScreen::translate(x,y,z);
+	FSScreen::translate(x,y,z);
 
 }
 
-void CCamera::procRendScalation(void* pointer) {
+void FSCamera::procRendScalation(void* pointer) {
 
 	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
 
@@ -236,12 +236,12 @@ void CCamera::procRendScalation(void* pointer) {
 
 	delete n;
 
-	CScreen::scale(x,y,z);
+	FSScreen::scale(x,y,z);
 
 
 }
 
-void CCamera::procRendColor(void* pointer) {
+void FSCamera::procRendColor(void* pointer) {
 
 	SRenderColor* n = (SRenderColor*) pointer;
 
@@ -252,15 +252,15 @@ void CCamera::procRendColor(void* pointer) {
 
 	delete n;
 
-	CScreen::color(red,green,blue,alpha);
+	FSScreen::color(red,green,blue,alpha);
 
 }
 
-int CCamera::locateRenderScene( CRectangle* areaSc, float zoom ) {
+int FSCamera::locateRenderScene( FSRectangle* areaSc, float zoom ) {
 	return locateRenderScene(areaSc->getX(),areaSc->getY(),areaSc->getW(),areaSc->getH(),zoom);
 }
 
-int CCamera::locateRenderScene( float posx, float posy, float width, float height, float zoom ) {
+int FSCamera::locateRenderScene( float posx, float posy, float width, float height, float zoom ) {
 
 	if (width == 0 || height == 0) {
 		posx = area->getX();
@@ -271,9 +271,9 @@ int CCamera::locateRenderScene( float posx, float posy, float width, float heigh
 
 	if (rendering) {
 
-		CScreen::pushMatrix();
+		FSScreen::pushMatrix();
 
-		CScreen::locateRenderScene(posx,posy,width,height,zoom);
+		FSScreen::locateRenderScene(posx,posy,width,height,zoom);
 
 	} else {
 
@@ -318,13 +318,13 @@ int CCamera::locateRenderScene( float posx, float posy, float width, float heigh
 	return EXITO;
 }
 
-int CCamera::rotate(float angle, float x, float y, float z) {
+int FSCamera::rotate(float angle, float x, float y, float z) {
 
 	if (rendering) {
 
-		CScreen::pushMatrix();
+		FSScreen::pushMatrix();
 
-		CScreen::rotate(angle,x,y,z);
+		FSScreen::rotate(angle,x,y,z);
 
 	} else {
 
@@ -366,13 +366,13 @@ int CCamera::rotate(float angle, float x, float y, float z) {
 
 	return EXITO;
 }
-int CCamera::translate(float x, float y, float z) {
+int FSCamera::translate(float x, float y, float z) {
 
 	if (rendering) {
 
-		CScreen::pushMatrix();
+		FSScreen::pushMatrix();
 
-		CScreen::translate(x,y,z);
+		FSScreen::translate(x,y,z);
 
 	} else {
 
@@ -413,13 +413,13 @@ int CCamera::translate(float x, float y, float z) {
 
 	return EXITO;
 }
-int CCamera::scale(float x, float y, float z) {
+int FSCamera::scale(float x, float y, float z) {
 
 	if (rendering) {
 
-		CScreen::pushMatrix();
+		FSScreen::pushMatrix();
 
-		CScreen::scale(x,y,z);
+		FSScreen::scale(x,y,z);
 
 	} else {
 
@@ -461,7 +461,7 @@ int CCamera::scale(float x, float y, float z) {
 	return EXITO;
 }
 
-int CCamera::color(float red, float green, float blue, float alpha) {
+int FSCamera::color(float red, float green, float blue, float alpha) {
 
 	if (red > 1.0) red = 1.0;
 	if (green > 1.0) green = 1.0;
@@ -469,7 +469,7 @@ int CCamera::color(float red, float green, float blue, float alpha) {
 	if (alpha > 1.0) alpha = 1.0;
 
 	if (rendering) {
-		CScreen::color(red,green,blue,alpha);
+		FSScreen::color(red,green,blue,alpha);
 	} else {
 		SRenderColor * c_init = new SRenderColor();
 
@@ -488,10 +488,10 @@ int CCamera::color(float red, float green, float blue, float alpha) {
 
 	SRenderColor * c_fin = new SRenderColor();
 
-	c_fin->red = CScreen::red;//2.0 - red;
-	c_fin->green = CScreen::green;//2.0 - green;
-	c_fin->blue = CScreen::blue;//2.0 - blue;
-	c_fin->alpha =  CScreen::alpha;//2.0 - alpha;
+	c_fin->red = FSScreen::red;//2.0 - red;
+	c_fin->green = FSScreen::green;//2.0 - green;
+	c_fin->blue = FSScreen::blue;//2.0 - blue;
+	c_fin->alpha =  FSScreen::alpha;//2.0 - alpha;
 
 	SToRender* r_fin = new SToRender();
 
@@ -503,15 +503,15 @@ int CCamera::color(float red, float green, float blue, float alpha) {
 	return EXITO;
 }
 
-int CCamera::color(CColor* col, float alpha) {
+int FSCamera::color(FSColor* col, float alpha) {
 
 	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
 }
 
 
-int CCamera::reubicate(CRectangle* nArea) {
+int FSCamera::reubicate(FSRectangle* nArea) {
 	if (area == nArea) {
-		CLibrary::Error("Area ya establecida");
+		FSLibrary::Error("Area ya establecida");
 		return FRACASO;
 	}
 
@@ -523,8 +523,8 @@ int CCamera::reubicate(CRectangle* nArea) {
 }
 
 #ifdef MENSAJES_MSGIDS
-int CCamera::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
+int FSCamera::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
 	printf("Camera %d.%d :: ",area->getX(),area->getY());
-	return CMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
+	return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
 }
 #endif

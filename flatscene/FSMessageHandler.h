@@ -21,32 +21,32 @@
 
 typedef void* MSGPARM;
 
-class CMessage {
+class FSMessage {
 private:
 	Uint32 MsgID;
 	MSGPARM Parm1;
 	MSGPARM Parm2;
 
-	CMessage(Uint32 MsgID=0,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL);
-	virtual ~CMessage();
+	FSMessage(Uint32 MsgID=0,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL);
+	virtual ~FSMessage();
 	virtual Uint32 getMsgID();
 	virtual MSGPARM getParm(int n);
 
-	friend class CMessageHandler;
-	friend class CLibrary;
+	friend class FSMessageHandler;
+	friend class FSLibrary;
 };
 
-typedef std::list<CMessage*> MessageCollection;
+typedef std::list<FSMessage*> MessageCollection;
 
-class CMessageHandler  {
+class FSMessageHandler  {
 private:
-	CMessageHandler * m_pmhParent;
+	FSMessageHandler * m_pmhParent;
 
 	static Uint32 s_NextMSGID;
 
 	MessageCollection bufferMessages;
 
-	friend class CLibrary;
+	friend class FSLibrary;
 
 #ifdef MENSAJES_MSGIDS
 	static int textM0;
@@ -55,14 +55,14 @@ protected:
 	virtual void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 	virtual int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 
-	virtual void OnaddChild(CMessageHandler* pmhChild);
-	virtual void onRemoveChild(CMessageHandler* pmhChild);
+	virtual void OnaddChild(FSMessageHandler* pmhChild);
+	virtual void onRemoveChild(FSMessageHandler* pmhChild);
 public:
-	CMessageHandler(CMessageHandler * pmhParent);
-	virtual ~CMessageHandler();
+	FSMessageHandler(FSMessageHandler * pmhParent);
+	virtual ~FSMessageHandler();
 	
-	CMessageHandler * getParent();
-	void setParent(CMessageHandler * pmhNewParent);	
+	FSMessageHandler * getParent();
+	void setParent(FSMessageHandler * pmhNewParent);	
 	bool HasParent();
 	
 #ifdef MENSAJES_MSGIDS

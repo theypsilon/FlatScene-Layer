@@ -2,7 +2,7 @@
 #include "FSLibrary.h"
 #include "TestAGameInterface.h"
 
-CEnemy::CEnemy(const char* creature,CMessageHandler * pmhParent) : CActorScrollMap(creature,pmhParent) {
+CEnemy::CEnemy(const char* creature,FSMessageHandler * pmhParent) : CActorScrollMap(creature,pmhParent) {
 	m_Scrollxy.set(100,100,0);
 }
 
@@ -75,10 +75,10 @@ int CEnemy::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 		getParent()->SendMessage(CTestAGameInterface::MSGID_KillEnemy,(MSGPARM)this,(MSGPARM)parm);
 		return EXITO;
 	} else
-		return CMessageHandler::onMessage(MsgID,Parm1,Parm2);
+		return FSMessageHandler::onMessage(MsgID,Parm1,Parm2);
 }
 
-CActor* CEnemy::clone() {
+FSActor* CEnemy::clone() {
 	CEnemy* cloneEnemy = Factory(getCreature().c_str(),getParent());
 
 	list<CAction*>& nodes = this->garbage->getListActions();
@@ -91,7 +91,7 @@ CActor* CEnemy::clone() {
 	for (list<CAction*>::iterator it=nodes.begin();it!=nodes.end();++it) {
 		CAction* cloneAction = (*it)->clone(cloneEnemy);
 		if (nodesNew.find(*it)!=nodesNew.end())
-			CLibrary::Error("Conflicto clonando el CEnemy.");
+			FSLibrary::Error("Conflicto clonando el CEnemy.");
 		nodesNew[*it]=cloneAction;
 		cloneEnemy->garbage->add(cloneAction);
 	}
@@ -102,7 +102,7 @@ CActor* CEnemy::clone() {
 		vector<CAction*>* newBrothers = new vector<CAction*>;
 		for (int i = 0 ; i < size;i++) {
 			if (nodesNew.find((*brothers)[i])==nodesNew.end())
-				CLibrary::Error("Conflicto clonando el CEnemy.");
+				FSLibrary::Error("Conflicto clonando el CEnemy.");
 			newBrothers->push_back(nodesNew[(*brothers)[i]]);
 			nodesNew[(*brothers)[i]]->setBrothers(newBrothers);
 		}
@@ -118,7 +118,7 @@ CActor* CEnemy::clone() {
 				it->second->setKeyup(i,nodesNew[it->second->getKeyup(i)]);
 			}
 		} else if (it->first!=it->second) {
-			CLibrary::Error("Conflicto clonando el CEnemy.");
+			FSLibrary::Error("Conflicto clonando el CEnemy.");
 		}
 	}
 
@@ -137,12 +137,12 @@ CActor* CEnemy::clone() {
 #include "EnemyNPC.h"
 #include "EnemyPunto.h"
 
-CEnemy* CEnemy::Factory(const char* creature,CMessageHandler * pmhParent) {
+CEnemy* CEnemy::Factory(const char* creature,FSMessageHandler * pmhParent) {
 	if (strcmp(creature,"E0")==0) {
 		return new CEnemyNPC(pmhParent);
 	} else if (strcmp(creature,"EPUNTO")==0) {
 		return new CEnemyPunto(pmhParent);
 	}
-	CLibrary::Error("Factoria CEnemy fallo");
+	FSLibrary::Error("Factoria CEnemy fallo");
 	return NULL;
 }

@@ -5,16 +5,16 @@
 #include "FSPoint.h"
 
 //point class
-class CCoordinate : public CPoint{
+class FSCoordinate : public FSPoint{
 private:
 	int m_z ;
 public:
 	//constructor
-	CCoordinate ( int x = 0 , int y  = 0 , int z = 0) ;
-	CCoordinate ( CCoordinate& coord ) ;
+	FSCoordinate ( int x = 0 , int y  = 0 , int z = 0) ;
+	FSCoordinate ( FSCoordinate& coord ) ;
 
 	//destructor
-	virtual ~CCoordinate ( ) ;
+	virtual ~FSCoordinate ( ) ;
 
 	int& Z ( ) ;
 
@@ -24,48 +24,48 @@ public:
 
 
 	//setter
-	CCoordinate& set ( int x , int y , int z ) ;
-	CCoordinate& copy ( CCoordinate& coord ) ;
+	FSCoordinate& set ( int x , int y , int z ) ;
+	FSCoordinate& copy ( FSCoordinate& coord ) ;
 
 	//move
-	CCoordinate& move ( int dx , int dy , int dz ) ;
-	CCoordinate& add ( CCoordinate& coord ) ;
-	CCoordinate& subtract ( CCoordinate& coord ) ;
+	FSCoordinate& move ( int dx , int dy , int dz ) ;
+	FSCoordinate& add ( FSCoordinate& coord ) ;
+	FSCoordinate& subtract ( FSCoordinate& coord ) ;
 	
 	//scale
-	CCoordinate& scale ( int scalar ) ;
+	FSCoordinate& scale ( int scalar ) ;
 
 	//distance
-	int distance ( CCoordinate& coord ) ;
+	int distance ( FSCoordinate& coord ) ;
 
 	//operators
 	//assignment
-	CCoordinate& operator = ( CCoordinate& coord ) ;
-	CCoordinate& operator += ( CCoordinate& coord ) ;
-	CCoordinate& operator -= ( CCoordinate& coord ) ;
-	CCoordinate& operator += ( CPoint& pt ) ;
-	CCoordinate& operator -= ( CPoint& pt ) ;
-	CCoordinate& operator *= ( int scalar ) ;
-	CCoordinate& operator /= ( int scalar ) ;
+	FSCoordinate& operator = ( FSCoordinate& coord ) ;
+	FSCoordinate& operator += ( FSCoordinate& coord ) ;
+	FSCoordinate& operator -= ( FSCoordinate& coord ) ;
+	FSCoordinate& operator += ( FSPoint& pt ) ;
+	FSCoordinate& operator -= ( FSPoint& pt ) ;
+	FSCoordinate& operator *= ( int scalar ) ;
+	FSCoordinate& operator /= ( int scalar ) ;
 
 	//unary
-	CCoordinate operator - ( ) ;
-	CCoordinate operator + ( ) ;
+	FSCoordinate operator - ( ) ;
+	FSCoordinate operator + ( ) ;
 
-	CCoordinate operator + ( CCoordinate& coord ) ;
-	CCoordinate operator - ( CCoordinate& coord ) ;
-	CCoordinate operator + ( CPoint& pt ) ;
-	CCoordinate operator - ( CPoint& pt ) ;
-	CCoordinate operator * ( int scalar ) ;
-	CCoordinate operator / ( int scalar ) ;
+	FSCoordinate operator + ( FSCoordinate& coord ) ;
+	FSCoordinate operator - ( FSCoordinate& coord ) ;
+	FSCoordinate operator + ( FSPoint& pt ) ;
+	FSCoordinate operator - ( FSPoint& pt ) ;
+	FSCoordinate operator * ( int scalar ) ;
+	FSCoordinate operator / ( int scalar ) ;
 
 	//comparison
-	bool operator == ( CCoordinate& coord ) ;
-	bool operator != ( CCoordinate& coord ) ;
+	bool operator == ( FSCoordinate& coord ) ;
+	bool operator != ( FSCoordinate& coord ) ;
 
 };
 
-CCoordinate operator * ( int scalar , CCoordinate& coord ) ;
+FSCoordinate operator * ( int scalar , FSCoordinate& coord ) ;
 
 //sentinel
 #endif

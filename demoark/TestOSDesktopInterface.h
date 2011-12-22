@@ -6,12 +6,12 @@
 #include "ActorMouse.h"
 #include "CameraOS.h"
 
-class CTestOSDesktopInterface : public CEngine  
+class CTestOSDesktopInterface : public FSEngine  
 {
 private:
 
-	CActor* raton, *fondo;
-	CCamera* camaraf, *camarar;
+	FSActor* raton, *fondo;
+	FSCamera* camaraf, *camarar;
 
 	float xpos,ypos,zpos, lastx, lasty;
 
@@ -25,7 +25,7 @@ private:
 
 public:
 
-	CTestOSDesktopInterface(CMessageHandler * pmhParent=NULL);
+	CTestOSDesktopInterface(FSMessageHandler * pmhParent=NULL);
 	~CTestOSDesktopInterface();
 
 	int onInit();

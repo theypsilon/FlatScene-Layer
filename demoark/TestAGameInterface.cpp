@@ -12,12 +12,12 @@
 
 #include "FSControlOutputText.h"
 
-Uint32 CTestAGameInterface::MSGID_ChangeMap=CMessageHandler::getNextMSGID(false);
-Uint32 CTestAGameInterface::MSGID_DeleteMap=CMessageHandler::getNextMSGID(false);
-Uint32 CTestAGameInterface::MSGID_KillEnemy=CMessageHandler::getNextMSGID(false);
+Uint32 CTestAGameInterface::MSGID_ChangeMap=FSMessageHandler::getNextMSGID(false);
+Uint32 CTestAGameInterface::MSGID_DeleteMap=FSMessageHandler::getNextMSGID(false);
+Uint32 CTestAGameInterface::MSGID_KillEnemy=FSMessageHandler::getNextMSGID(false);
 
 //constructor
-CTestAGameInterface::CTestAGameInterface(CMessageHandler * pmhParent) : CEngine(pmhParent)	{
+CTestAGameInterface::CTestAGameInterface(FSMessageHandler * pmhParent) : FSEngine(pmhParent)	{
 }
 //destructor
 CTestAGameInterface::~CTestAGameInterface()	{
@@ -25,7 +25,7 @@ CTestAGameInterface::~CTestAGameInterface()	{
 
 int CTestAGameInterface::drawFrame() {
 
-	CScreen::projectionMode(TRP_PERSPECTIVE,1600);
+	FSScreen::projectionMode(TRP_PERSPECTIVE,1600);
 
 	for (int i=0;i<cams.size();i++) {
 
@@ -48,7 +48,7 @@ int CTestAGameInterface::onIdle()	{
 	//if (~Chrono.getTick() & 0x01) {
 
 	for (UniverseCollection::iterator it=CMultiverse.begin();it!=CMultiverse.end();++it) {
-		CUniverse* mapAct = (*it);
+		FSUniverse* mapAct = (*it);
 
 		for (ActorCollection::iterator jt=mapAct->actorBegin();jt!=mapAct->actorEnd();++jt) {
 			CActorScrollMap* act = (CActorScrollMap*)*jt;
@@ -69,7 +69,7 @@ int CTestAGameInterface::onIdle()	{
 }
 
 void CTestAGameInterface::deselect() {
-	CEngine::deselect();
+	FSEngine::deselect();
 
 	for (vector<CPlayer*>::iterator it=player.begin();it!=player.end();++it)
 	{
@@ -112,13 +112,13 @@ int CTestAGameInterface::loop() {
 		}
 	}
 
-	return CEngine::loop();
+	return FSEngine::loop();
 }
 
 #ifdef MENSAJES_MSGIDS
 int CTestAGameInterface::SendMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 	printf("Controlador de Juego :: ");
-	return CMessageHandler::SendMessage(MsgID,Parm1,Parm2);
+	return FSMessageHandler::SendMessage(MsgID,Parm1,Parm2);
 }
 #endif
 
@@ -151,10 +151,10 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 					if (!mapaDestino->isLoaded())
 						mapaDestino->load();
 
-					mapaDestino->incActor((CActor*)p);
+					mapaDestino->incActor((FSActor*)p);
 
 					for (int i=0;i<cams.size();i++) {
-						if (cams[i]->Target()==((CActor*)p)) {
+						if (cams[i]->Target()==((FSActor*)p)) {
 							cams[i]->resyncUniverse(); // Si el mapa pasa a no ser enfocado por ninguna cámara, se descarga (unload).
 						} /*else if (strcmp((cams[i]->getUniverse()->getName()).c_str(),nameMapaOrigen.c_str())==0 
 						|| strcmp((cams[i]->getUniverse()->getName()).c_str(),g.destino.c_str())==0)
@@ -172,14 +172,14 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 		}
 
 	} else if (MsgID==MSGID_DeleteMap)	{
-		CMultiverse.erase((CUniverse*)Parm1);
+		CMultiverse.erase((FSUniverse*)Parm1);
 	} else if (MsgID==MSGID_KillEnemy) {
 		void** parm = (void**) Parm2;
 
-		CActor* victim = (CActor*) Parm1;
-		CUniverse* map = (CUniverse*) parm[0];
+		FSActor* victim = (FSActor*) Parm1;
+		FSUniverse* map = (FSUniverse*) parm[0];
 		if (map && victim) {
-			CActor* murder = (CActor*) parm[1];
+			FSActor* murder = (FSActor*) parm[1];
 			if (murder) {
 				;
 			}

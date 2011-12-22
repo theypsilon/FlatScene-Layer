@@ -7,9 +7,9 @@
 #include <list>
 #include <string>
 
-class CControlMultiverse;
+class FSControlMultiverse;
 
-class CUniverse : public CMessageHandler {
+class FSUniverse : public FSMessageHandler {
 private:
 	Uint8 numCameras;
 
@@ -18,10 +18,10 @@ protected:
 	string name;
 	Uint8 slot;
 
-	virtual ~CUniverse();
-	CUniverse(string name);
+	virtual ~FSUniverse();
+	FSUniverse(string name);
 
-	friend class CControlMultiverse;
+	friend class FSControlMultiverse;
 
 	ActorCollection actor; 
 public:
@@ -31,8 +31,8 @@ public:
 	virtual string& getName();
 	virtual int changeUniverse(string name, Uint8 slot);
 
-	virtual int incActor(CActor* act);
-	virtual int decActor(CActor* act);
+	virtual int incActor(FSActor* act);
+	virtual int decActor(FSActor* act);
 	virtual ActorCollection::iterator actorBegin();
 	virtual ActorCollection::iterator actorEnd();
 	virtual void incCameras();
@@ -40,8 +40,8 @@ public:
 	virtual Uint32 numActors();
 	virtual Uint8 camaras();
 
-	virtual bool operator == (CUniverse& uni);
-	virtual bool equal (CUniverse* uni);
+	virtual bool operator == (FSUniverse& uni);
+	virtual bool equal (FSUniverse* uni);
 };
 
 #endif

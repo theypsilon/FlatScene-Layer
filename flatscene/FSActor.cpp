@@ -2,44 +2,44 @@
 #include "FSLibrary.h"
 #include "FSUniverse.h"
 
-CActor::CActor(const char* creature,CMessageHandler * pmhParent) : 
+FSActor::FSActor(const char* creature,FSMessageHandler * pmhParent) : 
 file(0), graph(0), flags(0), inUniverse(NULL), creature(creature), 
-	CMessageHandler(pmhParent) {
+	FSMessageHandler(pmhParent) {
 	
 }
-CActor::~CActor() {
+FSActor::~FSActor() {
 
 }
 
-int CActor::move() {
+int FSActor::move() {
 	return EXITO;
 }
 
-CUniverse* CActor::getUniverse() {
+FSUniverse* FSActor::getUniverse() {
 	return inUniverse;
 }
-string CActor::getCreature() {
+string FSActor::getCreature() {
 	return creature;
 }
 
-int CActor::setUniverse(CUniverse* m) {
+int FSActor::setUniverse(FSUniverse* m) {
 	inUniverse=m;
 
 	return EXITO;
 }
 
-int CActor::setSprite(int file,int graph) {
+int FSActor::setSprite(int file,int graph) {
 	this->file = file;
 	this->graph = graph;
 
 	return EXITO;
 }
 
-CSprite* CActor::getSprite() {
+FSSprite* FSActor::getSprite() {
 	return CImg.get(file)->get(graph);
 }
 
-CActor* CActor::clone() {
-	CLibrary::Error("CActor no implementa un metodo de clonación por defecto.");
+FSActor* FSActor::clone() {
+	FSLibrary::Error("CActor no implementa un metodo de clonación por defecto.");
 	return NULL;
 }

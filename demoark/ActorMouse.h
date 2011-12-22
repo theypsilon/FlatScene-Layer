@@ -4,7 +4,7 @@
 #include "FSActor.h"
 
 
-class CActorMouse : public CActor
+class CActorMouse : public FSActor
 {
 private:
 
@@ -15,7 +15,7 @@ public:
 	// TODO : variables y funciones públicas adicionales
 
 	// Constructor con clase menajera como parámetro de entrada 
-	CActorMouse(CMessageHandler * pmhParent=NULL);
+	CActorMouse(FSMessageHandler * pmhParent=NULL);
 
 	// Destructor, ahí deberemos liberar los recursos
 	~CActorMouse();
@@ -27,7 +27,7 @@ public:
 	//	}
 	//
 	// Sólo definir si se desea hacer una operación diferente
-	CSprite* getSprite();
+	FSSprite* getSprite();
 
 	// Método pensado para ser invocado en CEngine::onIdle.
 	// Deberá actualizar el estado del CActor cuando sea necesario.
@@ -39,11 +39,11 @@ public:
 	string getCreature();
 	
 	// Opcional. Su implementación por defecto es una simple asignación a la variable miembro CUniverse* inUniverse.
-	int setUniverse(CUniverse* m);
+	int setUniverse(FSUniverse* m);
 
 	// Opcional. Por si se quiere implementar una función que facilite la inicialización de muchos actores dle mismo tipo.
 	// Si no se le da una implementación y el método es invocado, devuelve NULL y registra un error.
-	virtual CActor* clone();
+	virtual FSActor* clone();
 
 };
 

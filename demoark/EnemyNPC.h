@@ -5,10 +5,10 @@
 
 class CEnemyNPC : public CEnemy {
 public:
-	CEnemyNPC(CMessageHandler * pmhParent=NULL);
+	CEnemyNPC(FSMessageHandler * pmhParent=NULL);
 	virtual ~CEnemyNPC();
 
-	virtual void draw(CPoint& offset);
+	virtual void draw(FSPoint& offset);
 };
 
 #endif

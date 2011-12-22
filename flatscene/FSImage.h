@@ -41,22 +41,22 @@ enum TypeResource {
 	TR_COLOR
 };
 
-class CImage  
+class FSImage  
 {
 private:
 	SCanvas m_pSurface ;
 
-	CImage ( SCanvas pSurface ) ;
-	virtual ~CImage ( ) ;
+	FSImage ( SCanvas pSurface ) ;
+	virtual ~FSImage ( ) ;
 
 	void clearSurface () ;
 
-	friend class CTextBox;
-	friend class CSprite;
-	friend class CSpriteset;
-	friend class CControlOutputText;
-	friend class CControlImages;
-	friend class CScreen;
+	friend class FSTextBox;
+	friend class FSSprite;
+	friend class FSSpriteset;
+	friend class FSControlOutputText;
+	friend class FSControlImages;
+	friend class FSScreen;
 
 	static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
 	static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
@@ -88,14 +88,14 @@ public:
 	int getHeight ( ) ;
 
 	//render image
-	void put ( CPoint& ptDst , Uint8 flags=0) ;
-	void put ( CFloatPoint& ptDst , Uint8 flags=0) ;
+	void put ( FSPoint& ptDst , Uint8 flags=0) ;
+	void put ( FSFloatPoint& ptDst , Uint8 flags=0) ;
 
 	int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
 	int translate(float x, float y, float z);
 	int scale(float x, float y, float z);
 	int color(float red, float green, float blue, float alpha);
-	int color(CColor* col,float alpha=1.0);
+	int color(FSColor* col,float alpha=1.0);
 };
 
 #endif

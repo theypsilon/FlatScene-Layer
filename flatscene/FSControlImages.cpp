@@ -1,18 +1,18 @@
 #include "FSControlImages.h"
 #include "FSLibrary.h"
 
-CControlImages* CControlImages::singleton=NULL;
+FSControlImages* FSControlImages::singleton=NULL;
 
-map<TypeResource,void (*)(void*)> CImage::procRenders;
+map<TypeResource,void (*)(void*)> FSImage::procRenders;
 
-CControlImages::CControlImages() {
+FSControlImages::FSControlImages() {
 
-	CImage::initProcRenders();
+	FSImage::initProcRenders();
 
 	singleton = NULL;
 
 	if (singleton) {
-		CLibrary::Error("CControlImages (CImg) ya estaba creado.",TE_controlViolation);
+		FSLibrary::Error("CControlImages (CImg) ya estaba creado.",TE_controlViolation);
 		return;
 	}
 
@@ -20,20 +20,20 @@ CControlImages::CControlImages() {
 
 }
 
-CControlImages::~CControlImages() {
+FSControlImages::~FSControlImages() {
 	clear();
 }
 
-void CControlImages::clear() {
+void FSControlImages::clear() {
 	SpritesetCollection::iterator iter ;
-	CSpriteset* pspt ;
+	FSSpriteset* pspt ;
 	while ( !set.empty ( ) )
 	{
 		iter = set.begin ( ) ;
 		pspt = iter->second ;
 		set.erase ( iter ) ;
 		if (SDL_GetVideoSurface())
-			CScreen::spritesetToDelete.push_back(pspt); // delete sptset;
+			FSScreen::spritesetToDelete.push_back(pspt); // delete sptset;
 		else
 			delete pspt;
 	}
@@ -43,8 +43,8 @@ void CControlImages::clear() {
 	}
 }
 
-int CControlImages::add(const char* name,Uint8 mode) {
-	CSpriteset* sptset;
+int FSControlImages::add(const char* name,Uint8 mode) {
+	FSSpriteset* sptset;
 
 	int ret=search(name);
 	if (ret <0) {
@@ -56,7 +56,7 @@ int CControlImages::add(const char* name,Uint8 mode) {
 				if (set.find(i)==set.end())
 					ret = i;
 
-		sptset=new CSpriteset(name,mode);
+		sptset=new FSSpriteset(name,mode);
 		set[ret]=sptset;
 	} else {
 		sptset=set[ret];
@@ -65,21 +65,21 @@ int CControlImages::add(const char* name,Uint8 mode) {
 	return ret;
 }
 
-int CControlImages::remove(Uint32 n) {
+int FSControlImages::remove(Uint32 n) {
 	if (set.find(n)!=set.end()) {
-		CSpriteset* sptset = set[n];
+		FSSpriteset* sptset = set[n];
 		int c=--count[sptset];
 		if (c < 1)  {
 			if (c==0) {
 				if (SDL_GetVideoSurface())
-					CScreen::spritesetToDelete.push_back(sptset); // delete sptset;
+					FSScreen::spritesetToDelete.push_back(sptset); // delete sptset;
 				else
 					delete sptset;
 				set.erase(set.find(n));
 				count.erase(count.find(sptset));
 				lastIndexAdded.push(n);
 			} else {
-				CLibrary::Error("Cantidad de Spriteset violada.",TE_controlViolation);
+				FSLibrary::Error("Cantidad de Spriteset violada.",TE_controlViolation);
 				return FRACASO;
 			}
 		}
@@ -87,12 +87,12 @@ int CControlImages::remove(Uint32 n) {
 		return EXITO;
 	}
 
-	CLibrary::Error("No existe el Spriteset que se pretende eliminar.",TE_controlViolation);
+	FSLibrary::Error("No existe el Spriteset que se pretende eliminar.",TE_controlViolation);
 	return FRACASO;
 
 }
 
-int CControlImages::search(const char* name) {
+int FSControlImages::search(const char* name) {
 	for (SpritesetCollection::iterator it = set.begin();it!=set.end();++it) {
 		if (strcmp(it->second->getName().c_str(),name)==0) {
 			return it->first;
@@ -101,7 +101,7 @@ int CControlImages::search(const char* name) {
 	return FRACASO;
 }
 
-int CControlImages::search(CSpriteset* object) {
+int FSControlImages::search(FSSpriteset* object) {
 	for (SpritesetCollection::iterator it = set.begin();it!=set.end();++it) {
 		if (it->second==object) {
 			return it->first;
@@ -110,22 +110,22 @@ int CControlImages::search(CSpriteset* object) {
 	return FRACASO;
 }
 
-CSpriteset* CControlImages::get(Uint32 n) {
+FSSpriteset* FSControlImages::get(Uint32 n) {
 	if (set.find(n)!=set.end())
 		return set[n];
 	else
 		return NULL;
 }
 
-int CControlImages::size() {
+int FSControlImages::size() {
 	return (set.size());
 }
 
-int CControlImages::getCount(Uint32 n) {
+int FSControlImages::getCount(Uint32 n) {
 	Uint32 ret = 0;
 	if (count.find(get(n))!=count.end())
 		ret = count[get(n)];
 	return ret;
 }
 
-CControlImages CImg;
+FSControlImages CImg;

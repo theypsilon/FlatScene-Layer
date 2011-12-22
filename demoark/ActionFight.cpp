@@ -32,7 +32,7 @@ CAction* CActionFight::ActionFightFactory(CActorScrollMap* executor,TiXmlElement
 	}
 
 	if (ret == NULL) {
-		CLibrary::Error(string("No existe una acción con esa id ")+i);
+		FSLibrary::Error(string("No existe una acción con esa id ")+i);
 		ret = new CActionSimpleDemo0(executor,n,i);
 	}
 	return ret;

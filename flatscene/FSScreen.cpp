@@ -3,46 +3,46 @@
 #include "FSEngine.h"
 #include "FSControlOutputText.h"
 
-SDL_Surface* CScreen::m_SDL_Surface=NULL;
+SDL_Surface* FSScreen::m_SDL_Surface=NULL;
 
-bool CScreen::m_FullScreen=false;
-bool CScreen::m_Doublebuff=true;
-bool CScreen::rendering=false;
-float CScreen::m_maxZ=400.0;
+bool FSScreen::m_FullScreen=false;
+bool FSScreen::m_Doublebuff=true;
+bool FSScreen::rendering=false;
+float FSScreen::m_maxZ=400.0;
 
-TypeRendeProjection CScreen::trp=TRP_PERSPECTIVE;
+TypeRendeProjection FSScreen::trp=TRP_PERSPECTIVE;
 
-int CScreen::m_Bpp=0;
-int CScreen::m_Width=0;
-int CScreen::m_Height=0;
+int FSScreen::m_Bpp=0;
+int FSScreen::m_Width=0;
+int FSScreen::m_Height=0;
 
-float CScreen::alpha =1.0;
-float CScreen::red =1.0;
-float CScreen::green =1.0;
-float CScreen::blue =1.0;
+float FSScreen::alpha =1.0;
+float FSScreen::red =1.0;
+float FSScreen::green =1.0;
+float FSScreen::blue =1.0;
 
-list<SToRender*> CScreen::graphicMaterial;
+list<SToRender*> FSScreen::graphicMaterial;
 
-list<CSprite*> CScreen::spriteToDelete;
-list<CSpriteset*> CScreen::spritesetToDelete;
-list<CImage*> CScreen::imageToDelete;
+list<FSSprite*> FSScreen::spriteToDelete;
+list<FSSpriteset*> FSScreen::spritesetToDelete;
+list<FSImage*> FSScreen::imageToDelete;
 
-map<TypeResource,void (*)(void*)> CScreen::procRenders;
+map<TypeResource,void (*)(void*)> FSScreen::procRenders;
 
-int CScreen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
+int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
 { 
-	if (CLibrary::getLibrary() == NULL) {
-		CLibrary::Error("Library not inicialized");
+	if (FSLibrary::getLibrary() == NULL) {
+		FSLibrary::Error("Library not inicialized");
 		return FRACASO;
 	}
 		
 	if (m_SDL_Surface) {
-		CLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
+		FSLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
 		return FRACASO;
 	}
 
 	if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-		CLibrary::Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+		FSLibrary::Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
 #ifdef LOG_SISTEMA
@@ -70,7 +70,7 @@ int CScreen::start(int width, int height, int bpp, bool fullscreen, bool doubleb
 		flags |= SDL_FULLSCREEN;
 
 	if ((m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-		CLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+		FSLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
 
@@ -97,20 +97,20 @@ int CScreen::start(int width, int height, int bpp, bool fullscreen, bool doubleb
 
 }
 
-int CScreen::start(int width, int height, int bpp, float scalex, float scaley, bool fullscreen, bool doublebuff)
+int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, bool fullscreen, bool doublebuff)
 { 
-	if (CLibrary::getLibrary() == NULL) {
-		CLibrary::Error("Library not inicialized");
+	if (FSLibrary::getLibrary() == NULL) {
+		FSLibrary::Error("Library not inicialized");
 		return FRACASO;
 	}
 		
 	if (m_SDL_Surface) {
-		CLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
+		FSLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
 		return FRACASO;
 	}
 
 	if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-		CLibrary::Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+		FSLibrary::Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
 #ifdef LOG_SISTEMA
@@ -138,7 +138,7 @@ int CScreen::start(int width, int height, int bpp, float scalex, float scaley, b
 		flags |= SDL_FULLSCREEN;
 
 	if ((m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-		CLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+		FSLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
 
@@ -164,7 +164,7 @@ int CScreen::start(int width, int height, int bpp, float scalex, float scaley, b
 
 }
 
-void CScreen::initProcRenders() {
+void FSScreen::initProcRenders() {
 
 	procRenders[TR_CANVAS] = procRendCanvas;
 	procRenders[TR_FLOATCANVAS] = procRendFloatCanvas;
@@ -177,10 +177,10 @@ void CScreen::initProcRenders() {
 	procRenders[TR_COLOR] = procRendColor;
 }
 
-int CScreen::render ( ) 
+int FSScreen::render ( ) 
 {
 	if (!m_SDL_Surface) {
-		CLibrary::Error("Video context not inicialized");
+		FSLibrary::Error("Video context not inicialized");
 		return false;
 	}
 
@@ -217,10 +217,10 @@ int CScreen::render ( )
 	return EXITO;
 }
 
-int CScreen::clear ( ) 
+int FSScreen::clear ( ) 
 {
 	if (!m_SDL_Surface) {
-		CLibrary::Error("Video context not inicialized");
+		FSLibrary::Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -254,23 +254,23 @@ int CScreen::clear ( )
 
 }
 
-float CScreen::getA() {
+float FSScreen::getA() {
 	return alpha;
 }
 
-float CScreen::getR() {
+float FSScreen::getR() {
 	return red;
 }
 
-float CScreen::getG() {
+float FSScreen::getG() {
 	return green;
 }
 
-float CScreen::getB() {
+float FSScreen::getB() {
 	return blue;
 }
 
-int CScreen::locateRenderScene(float posx, float posy, float width, float height,float zoom) {
+int FSScreen::locateRenderScene(float posx, float posy, float width, float height,float zoom) {
 
 #ifdef MAINRENDERLOOP
 
@@ -325,7 +325,7 @@ int CScreen::locateRenderScene(float posx, float posy, float width, float height
 
 }
 
-int CScreen::rotate(float angle, float x, float y, float z) {
+int FSScreen::rotate(float angle, float x, float y, float z) {
 
 
 #ifdef MAINRENDERLOOP
@@ -352,7 +352,7 @@ int CScreen::rotate(float angle, float x, float y, float z) {
 	return EXITO;
 }
 
-int CScreen::translate(float x, float y, float z) {
+int FSScreen::translate(float x, float y, float z) {
 
 #ifdef MAINRENDERLOOP
 
@@ -377,7 +377,7 @@ int CScreen::translate(float x, float y, float z) {
 	return EXITO;
 }
 
-int CScreen::scale(float x, float y, float z) {
+int FSScreen::scale(float x, float y, float z) {
 
 #ifdef MAINRENDERLOOP
 
@@ -402,16 +402,16 @@ int CScreen::scale(float x, float y, float z) {
 	return EXITO;
 }
 
-int CScreen::color(float red, float green, float blue, float alpha) {
+int FSScreen::color(float red, float green, float blue, float alpha) {
 
 #ifdef MAINRENDERLOOP
 
 	SRenderColor* n = new SRenderColor;
 
-	CScreen::red = n->red = red;
-	CScreen::green = n->green = green;
-	CScreen::blue = n->blue = blue;
-	CScreen::alpha = n->alpha = alpha;
+	FSScreen::red = n->red = red;
+	FSScreen::green = n->green = green;
+	FSScreen::blue = n->blue = blue;
+	FSScreen::alpha = n->alpha = alpha;
 
 	SToRender* em = new SToRender;
 
@@ -429,27 +429,27 @@ int CScreen::color(float red, float green, float blue, float alpha) {
 	return EXITO;
 }
 
-int CScreen::color(CColor* col, float alpha) {
+int FSScreen::color(FSColor* col, float alpha) {
 
 	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
 
 }
 
-int CScreen::projectionMode(TypeRendeProjection trp, float zMax) {
+int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 
 	if (rendering) {
-		CLibrary::Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
+		FSLibrary::Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
 		return FRACASO;
 	}
 
 	m_maxZ = zMax;
-	CScreen::trp = trp;
+	FSScreen::trp = trp;
 
 	return EXITO;
 
 }
 
-int CScreen::pushMatrix() {
+int FSScreen::pushMatrix() {
 
 #ifdef MAINRENDERLOOP
 
@@ -470,7 +470,7 @@ int CScreen::pushMatrix() {
 
 }
 
-int CScreen::popMatrix() {
+int FSScreen::popMatrix() {
 
 #ifdef MAINRENDERLOOP
 
@@ -493,13 +493,13 @@ int CScreen::popMatrix() {
 
 
 
-void CScreen::procRendCanvas(void* pointer) {
+void FSScreen::procRendCanvas(void* pointer) {
 
 	SRenderCanvas* n = (SRenderCanvas*) pointer;
 
 	SCanvas m_pSurface = n->canvas;
 	Uint8 flags = n->flags;
-	CPoint ptDst = n->ptDst;
+	FSPoint ptDst = n->ptDst;
 
 	delete n;
 
@@ -557,13 +557,13 @@ void CScreen::procRendCanvas(void* pointer) {
 
 }
 
-void CScreen::procRendFloatCanvas(void* pointer) {
+void FSScreen::procRendFloatCanvas(void* pointer) {
 
 	SRenderFloatCanvas* n = (SRenderFloatCanvas*) pointer;
 
 	SCanvas m_pSurface = (n->canvas);
 	Uint8 flags = n->flags;
-	CFloatPoint ptDst = n->ptDst;
+	FSFloatPoint ptDst = n->ptDst;
 
 	delete n;
 
@@ -621,7 +621,7 @@ void CScreen::procRendFloatCanvas(void* pointer) {
 
 
 }
-void CScreen::procRendRotation(void* pointer) {
+void FSScreen::procRendRotation(void* pointer) {
 
 	SRenderRotation* n = (SRenderRotation*) pointer;
 
@@ -636,7 +636,7 @@ void CScreen::procRendRotation(void* pointer) {
 
 }
 
-void CScreen::procRendTranslation(void* pointer) {
+void FSScreen::procRendTranslation(void* pointer) {
 
 
 	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
@@ -652,7 +652,7 @@ void CScreen::procRendTranslation(void* pointer) {
 
 }
 
-void CScreen::procRendLocation(void* pointer) {
+void FSScreen::procRendLocation(void* pointer) {
 
 	SRenderLocation* n = (SRenderLocation*)pointer;
 
@@ -703,7 +703,7 @@ void CScreen::procRendLocation(void* pointer) {
 
 }
 
-void CScreen::procRendPush(void* pointer) {
+void FSScreen::procRendPush(void* pointer) {
 
 	glMatrixMode(GL_MODELVIEW);
 
@@ -711,13 +711,13 @@ void CScreen::procRendPush(void* pointer) {
 
 }
 
-void CScreen::procRendPop(void* pointer) {
+void FSScreen::procRendPop(void* pointer) {
 
 	glPopMatrix();
 
 }
 
-void CScreen::procRendScalation(void* pointer) {
+void FSScreen::procRendScalation(void* pointer) {
 
 	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
 
@@ -731,7 +731,7 @@ void CScreen::procRendScalation(void* pointer) {
 
 }
 
-void CScreen::procRendColor(void* pointer) {
+void FSScreen::procRendColor(void* pointer) {
 
 	SRenderColor* n = (SRenderColor*) pointer;
 
@@ -746,9 +746,9 @@ void CScreen::procRendColor(void* pointer) {
 
 }
 
-int CScreen::beginRenderMode(Uint32 flags) {
+int FSScreen::beginRenderMode(Uint32 flags) {
 	if (!m_SDL_Surface) {
-		CLibrary::Error("Video context not inicialized");
+		FSLibrary::Error("Video context not inicialized");
 		return FRACASO;
 	}
 	
@@ -762,9 +762,9 @@ int CScreen::beginRenderMode(Uint32 flags) {
 	return EXITO;
 }
 
-int CScreen::endRenderMode(Uint32 flags) {
+int FSScreen::endRenderMode(Uint32 flags) {
 	if (!m_SDL_Surface) {
-		CLibrary::Error("Video context not inicialized");
+		FSLibrary::Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -778,10 +778,10 @@ int CScreen::endRenderMode(Uint32 flags) {
 }
 
 
-int CScreen::quit()
+int FSScreen::quit()
 {
 	if (!m_SDL_Surface) {
-		CLibrary::Error("Video context not inicialized");
+		FSLibrary::Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -792,13 +792,13 @@ int CScreen::quit()
 	return EXITO;
 }
 
-Uint8 CScreen::getBpp() {
+Uint8 FSScreen::getBpp() {
 	return m_Bpp;
 }
 
-int CScreen::changeScreen(int width, int height, int bpp, float scalex, float scaley, bool fullscreen) {
+int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float scaley, bool fullscreen) {
 	if (!m_SDL_Surface) {
-		CLibrary::Error("Video context not inicialized");
+		FSLibrary::Error("Video context not inicialized");
 		return FRACASO;
 	}
 	
@@ -820,10 +820,10 @@ int CScreen::changeScreen(int width, int height, int bpp, float scalex, float sc
 	
 }
 
-int CScreen::ToggleFullscreen() {
+int FSScreen::ToggleFullscreen() {
 
 	if (!m_SDL_Surface) {
-		CLibrary::Error("Video context not inicialized");
+		FSLibrary::Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -846,10 +846,10 @@ int CScreen::ToggleFullscreen() {
 
 }
 
-int CScreen::setDoublebuffer(bool doublebuff) {
+int FSScreen::setDoublebuffer(bool doublebuff) {
 
 	if (!m_SDL_Surface) {
-		CLibrary::Error("Video context not inicialized");
+		FSLibrary::Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -871,25 +871,25 @@ int CScreen::setDoublebuffer(bool doublebuff) {
 	return EXITO;
 }
 
-void CScreen::deleteResources() {
+void FSScreen::deleteResources() {
 	
-	for (list<CSpriteset*>::iterator it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
+	for (list<FSSpriteset*>::iterator it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
 		delete (*it);
 
 	spritesetToDelete.clear();
 	
-	for (list<CSprite*>::iterator it = spriteToDelete.begin(), jt = spriteToDelete.end() ; it!=jt;++it)
+	for (list<FSSprite*>::iterator it = spriteToDelete.begin(), jt = spriteToDelete.end() ; it!=jt;++it)
 		delete (*it);
 
 	spriteToDelete.clear();
 
-	for (list<CImage*>::iterator it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
+	for (list<FSImage*>::iterator it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
 		delete (*it);
 
 	imageToDelete.clear();
 }
 
-void CScreen::saveResources(GraphicResources &info) {
+void FSScreen::saveResources(GraphicResources &info) {
 	
 	for (SpritesetCollection::iterator it=CImg.set.begin(),kt=CImg.set.end();it!=kt;++it)	{
 		SpritesetInfo aux;
@@ -903,14 +903,14 @@ void CScreen::saveResources(GraphicResources &info) {
 	CImg.clear();
 
 	for (map<int,SFont*>::iterator it=Write.Fonts.begin();it!=Write.Fonts.end();++it) {
-		map<Uint16,CImage*>& chars = it->second->render;
-		for (map<Uint16,CImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
+		map<Uint16,FSImage*>& chars = it->second->render;
+		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
 			imageToDelete.push_back(jt->second); // delete
 			jt->second = NULL;
 		}
 	}
 
-	for (map<CEngine*,SData*>::iterator it=Write.session.begin();it!=Write.session.end();++it) {
+	for (map<FSEngine*,SData*>::iterator it=Write.session.begin();it!=Write.session.end();++it) {
 		map<int,SText*>& auxBoxs = it->second->Texts;
 		for (map<int,SText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
 			if (jt->second->Type() == TT_BOX && jt->second->Box)
@@ -922,20 +922,20 @@ void CScreen::saveResources(GraphicResources &info) {
 
 }
 
-void CScreen::reloadResources(GraphicResources &info) {
+void FSScreen::reloadResources(GraphicResources &info) {
 	
 	for (map<int,SFont*>::iterator it=Write.Fonts.begin();it!=Write.Fonts.end();++it) {
-		map<Uint16,CImage*>& chars = it->second->render;
-		for (map<Uint16,CImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
+		map<Uint16,FSImage*>& chars = it->second->render;
+		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
 			if (!jt->second) {
-				jt->second = new CSprite(CImage::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,Write.data->fgcolor)));
+				jt->second = new FSSprite(FSImage::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,Write.data->fgcolor)));
 			} else {
-				return CLibrary::Error("No se puede recargar el recurso glyph porque no había sido descargado anteriormente.");
+				return FSLibrary::Error("No se puede recargar el recurso glyph porque no había sido descargado anteriormente.");
 			}
 		}
 	}
 
-	for (map<CEngine*,SData*>::iterator it=Write.session.begin();it!=Write.session.end();++it) {
+	for (map<FSEngine*,SData*>::iterator it=Write.session.begin();it!=Write.session.end();++it) {
 		map<int,SText*>& auxBoxs = it->second->Texts;
 		for (map<int,SText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
 			if (jt->second->Type() == TT_BOX && jt->second->Box)

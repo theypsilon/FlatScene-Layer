@@ -1,6 +1,6 @@
 #include "FSColor.h"
 //standard constructor
-CColor::CColor(Uint8 r,Uint8 g,Uint8 b)
+FSColor::FSColor(Uint8 r,Uint8 g,Uint8 b)
 {
 	//set red
 	setR(r);
@@ -13,7 +13,7 @@ CColor::CColor(Uint8 r,Uint8 g,Uint8 b)
 }
 
 //copy constructor
-CColor::CColor(const CColor& Color)
+FSColor::FSColor(const FSColor& Color)
 {
 	//set red
 	setR(Color.getR());
@@ -26,82 +26,82 @@ CColor::CColor(const CColor& Color)
 }
 
 //destructor
-CColor::~CColor()
+FSColor::~FSColor()
 {
 }
 
 //get rgb
-Uint8 CColor::getR() const
+Uint8 FSColor::getR() const
 {
 	//return red
 	return(m_Color.r);
 }
 
-Uint8 CColor::getG() const
+Uint8 FSColor::getG() const
 {
 	//return green
 	return(m_Color.g);
 }
 
-Uint8 CColor::getB() const
+Uint8 FSColor::getB() const
 {
 	//return blue
 	return(m_Color.b);
 }
 
 //set rgb
-void CColor::setR(Uint8 r)
+void FSColor::setR(Uint8 r)
 {
 	//set red
 	m_Color.r=r;
 }
 
-void CColor::setG(Uint8 g)
+void FSColor::setG(Uint8 g)
 {
 	//set green
 	m_Color.g=g;
 }
 
-void CColor::setB(Uint8 b)
+void FSColor::setB(Uint8 b)
 {
 	//set blue
 	m_Color.b=b;
 }
 
 //rgb accessors
-Uint8& CColor::R()
+Uint8& FSColor::R()
 {
 	//return red
 	return(m_Color.r);
 }
 
-Uint8& CColor::G()
+Uint8& FSColor::G()
 {
 	//return green
 	return(m_Color.g);
 }
 
-Uint8& CColor::B()
+Uint8& FSColor::B()
 {
 	//return blue
 	return(m_Color.b);
 }
 
 //conversion operators
-CColor::operator SDL_Color()
+FSColor::operator SDL_Color()
 {
 	//return color
 	return(m_Color);
 }
 
-CColor::operator SDL_Color*()
+FSColor::operator SDL_Color*()
 {
 	//return pointer to color
 	return(&m_Color);
 }
 
 //assignment operators
-CColor& CColor::operator=(CColor& Color)
+FSColor& FSColor::operator=(FSColor& Color)
 {
 	//set red
 	setR(Color.getR());
@@ -113,7 +113,7 @@ CColor& CColor::operator=(CColor& Color)
 	return(*this);
 }
 
-CColor& CColor::operator+=(CColor& Color)
+FSColor& FSColor::operator+=(FSColor& Color)
 {
 	//temp var
 	int temp;
@@ -136,7 +136,7 @@ CColor& CColor::operator+=(CColor& Color)
 	return(*this);
 }
 
-CColor& CColor::operator-=(CColor& Color)
+FSColor& FSColor::operator-=(FSColor& Color)
 {
 	//temp var
 	int temp;
@@ -159,7 +159,7 @@ CColor& CColor::operator-=(CColor& Color)
 	return(*this);
 }
 
-CColor& CColor::operator*=(CColor& Color)
+FSColor& FSColor::operator*=(FSColor& Color)
 {
 	//temp var
 	int temp;
@@ -179,13 +179,13 @@ CColor& CColor::operator*=(CColor& Color)
 	return(*this);
 }
 
-CColor& CColor::operator*=(int Multiplier)
+FSColor& FSColor::operator*=(int Multiplier)
 {
 	//if multiplier is non-positive
 	if(Multiplier<=0)
 	{
 		//make color black
-		CColor c(0,0,0);
+		FSColor c(0,0,0);
 		(*this)=c;
 	}
 	else
@@ -207,13 +207,13 @@ CColor& CColor::operator*=(int Multiplier)
 	return(*this);
 }
 
-CColor& CColor::operator/=(int Divisor)
+FSColor& FSColor::operator/=(int Divisor)
 {
 	//if divisor is non-positive
 	if(Divisor<=0)
 	{
 		//make color black
-		CColor c(0,0,0);
+		FSColor c(0,0,0);
 		(*this)=c;
 	}
 	else
@@ -235,7 +235,7 @@ CColor& CColor::operator/=(int Divisor)
 	return(*this);
 }
 
-CColor& CColor::operator|=(CColor& Color)
+FSColor& FSColor::operator|=(FSColor& Color)
 {
 	//do red
 	setR(getR()|Color.getR());
@@ -247,7 +247,7 @@ CColor& CColor::operator|=(CColor& Color)
 	return(*this);
 }
 
-CColor& CColor::operator&=(CColor& Color)
+FSColor& FSColor::operator&=(FSColor& Color)
 {
 	//do red
 	setR(getR()&Color.getR());
@@ -259,7 +259,7 @@ CColor& CColor::operator&=(CColor& Color)
 	return(*this);
 }
 
-CColor& CColor::operator^=(CColor& Color)
+FSColor& FSColor::operator^=(FSColor& Color)
 {
 	//do red
 	setR(getR()^Color.getR());
@@ -272,168 +272,168 @@ CColor& CColor::operator^=(CColor& Color)
 }
 
 //primary colors
-CColor CColor::Red(Uint8 shade)
+FSColor FSColor::Red(Uint8 shade)
 {
 	//make color
-	return(CColor(shade,0,0));
+	return(FSColor(shade,0,0));
 }
 
-CColor CColor::Green(Uint8 shade)
+FSColor FSColor::Green(Uint8 shade)
 {
 	//make color
-	return(CColor(0,shade,0));
+	return(FSColor(0,shade,0));
 }
 
-CColor CColor::Blue(Uint8 shade)
+FSColor FSColor::Blue(Uint8 shade)
 {
 	//make color
-	return(CColor(0,0,shade));
+	return(FSColor(0,0,shade));
 }
 
 //secondary colors
-CColor CColor::Yellow(Uint8 shade)
+FSColor FSColor::Yellow(Uint8 shade)
 {
 	//make color
-	CColor r = Red(shade);
-	CColor g = Green(shade);
+	FSColor r = Red(shade);
+	FSColor g = Green(shade);
 	return(r|g);
 }
 
-CColor CColor::Cyan(Uint8 shade)
+FSColor FSColor::Cyan(Uint8 shade)
 {
 	//make color
-	CColor b = Blue(shade);
-	CColor g = Green(shade);
+	FSColor b = Blue(shade);
+	FSColor g = Green(shade);
 	return(g|b);
 }
 
-CColor CColor::Magenta(Uint8 shade)
+FSColor FSColor::Magenta(Uint8 shade)
 {
-	CColor r = Red(shade);
-	CColor b = Blue(shade);
+	FSColor r = Red(shade);
+	FSColor b = Blue(shade);
 	return(r|b);
 }
 
 //dark colors
-CColor CColor::DarkRed(Uint8 shade)
+FSColor FSColor::DarkRed(Uint8 shade)
 {
 	//make color
 	return(Red(shade));
 }
 
-CColor CColor::DarkGreen(Uint8 shade)
+FSColor FSColor::DarkGreen(Uint8 shade)
 {
 	//make color
 	return(Green(shade));
 }
 
-CColor CColor::DarkBlue(Uint8 shade)
+FSColor FSColor::DarkBlue(Uint8 shade)
 {
 	//make color
 	return(Blue(shade));
 }
 
-CColor CColor::DarkYellow(Uint8 shade)
+FSColor FSColor::DarkYellow(Uint8 shade)
 {
 	//make color
 	return(Yellow(shade));
 }
 
-CColor CColor::DarkCyan(Uint8 shade)
+FSColor FSColor::DarkCyan(Uint8 shade)
 {
 	//make color
 	return(Cyan(shade));
 }
 
-CColor CColor::DarkMagenta(Uint8 shade)
+FSColor FSColor::DarkMagenta(Uint8 shade)
 {
 	//make color
 	return(Magenta(shade));
 }
 
 //light colors
-CColor CColor::LightRed(Uint8 gray,Uint8 shade)
+FSColor FSColor::LightRed(Uint8 gray,Uint8 shade)
 {
 	//make color
-	CColor r = Red(shade);
-	CColor w = White(gray);
+	FSColor r = Red(shade);
+	FSColor w = White(gray);
 	return(r|w);
 }
 
-CColor CColor::LightGreen(Uint8 gray,Uint8 shade)
+FSColor FSColor::LightGreen(Uint8 gray,Uint8 shade)
 {
 	//make color
-	CColor w = White(gray);
-	CColor g = Green(shade);
+	FSColor w = White(gray);
+	FSColor g = Green(shade);
 	return(w|g);
 }
 
-CColor CColor::LightBlue(Uint8 gray,Uint8 shade)
+FSColor FSColor::LightBlue(Uint8 gray,Uint8 shade)
 {
 	//make color
-	CColor w = White(gray);
-	CColor b = Blue(shade);
+	FSColor w = White(gray);
+	FSColor b = Blue(shade);
 	return(b|w);
 }
 
-CColor CColor::LightYellow(Uint8 gray,Uint8 shade)
+FSColor FSColor::LightYellow(Uint8 gray,Uint8 shade)
 {
 	//make color
-	CColor w = White(gray);
-	CColor y = Yellow(shade);
+	FSColor w = White(gray);
+	FSColor y = Yellow(shade);
 	return(w|y);
 }
 
-CColor CColor::LightCyan(Uint8 gray,Uint8 shade)
+FSColor FSColor::LightCyan(Uint8 gray,Uint8 shade)
 {
 	//make color
-	CColor w = White(gray);
-	CColor c = Cyan(shade);
+	FSColor w = White(gray);
+	FSColor c = Cyan(shade);
 	return(c|w);
 }
 
-CColor CColor::LightMagenta(Uint8 gray,Uint8 shade)
+FSColor FSColor::LightMagenta(Uint8 gray,Uint8 shade)
 {
 	//make color
-	CColor w = White(gray);
-	CColor m = Magenta(shade);
+	FSColor w = White(gray);
+	FSColor m = Magenta(shade);
 	return(m|w);
 }
 
 //grayscale
-CColor CColor::White(Uint8 shade)
+FSColor FSColor::White(Uint8 shade)
 {
 	//make color
-	CColor r = Red(shade);
-	CColor g = Green(shade);
-	CColor b = Blue(shade);
-	CColor m = r|b;
+	FSColor r = Red(shade);
+	FSColor g = Green(shade);
+	FSColor b = Blue(shade);
+	FSColor m = r|b;
 	return(m|g);
 }
 
-CColor CColor::LightGray(Uint8 shade)
+FSColor FSColor::LightGray(Uint8 shade)
 {
 	//make color
 	return(White(shade));
 }
 
-CColor CColor::DarkGray(Uint8 shade)
+FSColor FSColor::DarkGray(Uint8 shade)
 {
 	//make color
 	return(White(shade));
 }
 
-CColor CColor::Black(Uint8 shade)
+FSColor FSColor::Black(Uint8 shade)
 {
 	//make color
 	return(White(shade));
 }
 
 //arithmetic operators
-CColor operator+(CColor& Color1,CColor& Color2)
+FSColor operator+(FSColor& Color1,FSColor& Color2)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign color1
 	Color3=Color1;
 	//do operator with color2
@@ -442,10 +442,10 @@ CColor operator+(CColor& Color1,CColor& Color2)
 	return(Color3);
 }
 
-CColor operator-(CColor& Color1,CColor& Color2)
+FSColor operator-(FSColor& Color1,FSColor& Color2)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign color1
 	Color3=Color1;
 	//do operator with color2
@@ -454,10 +454,10 @@ CColor operator-(CColor& Color1,CColor& Color2)
 	return(Color3);
 }
 
-CColor operator*(CColor& Color1,CColor& Color2)
+FSColor operator*(FSColor& Color1,FSColor& Color2)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign color1
 	Color3=Color1;
 	//do operator with color2
@@ -466,10 +466,10 @@ CColor operator*(CColor& Color1,CColor& Color2)
 	return(Color3);
 }
 
-CColor operator*(CColor& Color,int Multiplier)
+FSColor operator*(FSColor& Color,int Multiplier)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign color1
 	Color3=Color;
 	//do operator with color2
@@ -478,10 +478,10 @@ CColor operator*(CColor& Color,int Multiplier)
 	return(Color3);
 }
 
-CColor operator/(CColor& Color,int Divisor)
+FSColor operator/(FSColor& Color,int Divisor)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign color1
 	Color3=Color;
 	//do operator with color2
@@ -491,10 +491,10 @@ CColor operator/(CColor& Color,int Divisor)
 }
 
 //bitwise operators
-CColor operator|(CColor& Color1,CColor& Color2)
+FSColor operator|(FSColor& Color1,FSColor& Color2)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign color1
 	Color3=Color1;
 	//do operator with color2
@@ -503,10 +503,10 @@ CColor operator|(CColor& Color1,CColor& Color2)
 	return(Color3);
 }
 
-CColor operator&(CColor& Color1,CColor& Color2)
+FSColor operator&(FSColor& Color1,FSColor& Color2)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign color1
 	Color3=Color1;
 	//do operator with color2
@@ -515,10 +515,10 @@ CColor operator&(CColor& Color1,CColor& Color2)
 	return(Color3);
 }
 
-CColor operator^(CColor& Color1,CColor& Color2)
+FSColor operator^(FSColor& Color1,FSColor& Color2)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign color1
 	Color3=Color1;
 	//do operator with color2
@@ -527,27 +527,27 @@ CColor operator^(CColor& Color1,CColor& Color2)
 	return(Color3);
 }
 
-CColor operator~(CColor& Color)
+FSColor operator~(FSColor& Color)
 {
 	//temp color
-	CColor Color3;
+	FSColor Color3;
 	//assign
 	Color3=Color;
 	//do operator
-	CColor Color2(255,255,255);
+	FSColor Color2(255,255,255);
 	Color3^=Color2;
 	//return color
 	return(Color3);
 }
 
 //comparison operators
-bool operator==(CColor& Color1,CColor& Color2)
+bool operator==(FSColor& Color1,FSColor& Color2)
 {
 	//do comparison
 	return(Color1.getR()==Color2.getR()&&Color1.getG()==Color2.getG()&&Color1.getB()==Color2.getB());
 }
 
-bool operator!=(CColor& Color1,CColor& Color2)
+bool operator!=(FSColor& Color1,FSColor& Color2)
 {
 	//do comparison
 	return(!(Color1==Color2));

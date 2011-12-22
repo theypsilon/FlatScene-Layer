@@ -7,7 +7,7 @@
 //CLayerBG
 //
 
-CLayerBG::CLayerBG(CMap* mapa,CRectangle* area,CMessageHandler * pmhParent) : CMessageHandler(pmhParent) , area(area) ,  mapa(mapa)  {
+CLayerBG::CLayerBG(CMap* mapa,FSRectangle* area,FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent) , area(area) ,  mapa(mapa)  {
 }
 
 CLayerBG::~CLayerBG(){
@@ -37,7 +37,7 @@ void CLayerBG::refresh(int cx, int cy) {}
 #ifdef MENSAJES_MSGIDS
 int CLayerBG::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
 	printf("Layer :: ");
-	return CMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
+	return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
 }
 #endif
 
@@ -45,7 +45,7 @@ int CLayerBG::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
 //CLayerDinamic
 //
 
-CLayerDinamic::CLayerDinamic(CMap* mapa,CRectangle* area,Uint8 num_tiles,CMessageHandler * pmhParent) : CLayerBG(mapa,area,pmhParent) {
+CLayerDinamic::CLayerDinamic(CMap* mapa,FSRectangle* area,Uint8 num_tiles,FSMessageHandler * pmhParent) : CLayerBG(mapa,area,pmhParent) {
 	this->num_tiles=num_tiles;
 	init();
 }
@@ -73,15 +73,15 @@ void CLayerDinamic::refresh() {
 		TileBG[i]->refresh(background);*/
 }
 
-CColor* CLayerDinamic::getPixel(Uint8 i,Uint8 w,Uint8 h) {
-	return new CColor();
+FSColor* CLayerDinamic::getPixel(Uint8 i,Uint8 w,Uint8 h) {
+	return new FSColor();
 }
 
 //
 //CLayerUniform
 //
 
-CLayerUniform::CLayerUniform(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler * pmhParent) : CLayerBG(mapa,area,pmhParent), tile(tile) {
+CLayerUniform::CLayerUniform(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent) : CLayerBG(mapa,area,pmhParent), tile(tile) {
 	init();
 }
 
@@ -98,7 +98,7 @@ void CLayerUniform::init(float zoom) {
 }
 
 void CLayerUniform::refresh(int cx, int cy) {
-	CPoint p;
+	FSPoint p;
 
 	for (int i=0;i<tam_w;i++) {
 		for (int j=0;j<tam_h;j++) {
@@ -130,19 +130,19 @@ Uint8 CLayerUniform::getTile_H() { return tile_h; }
 
 Uint8 CLayerUniform::getTile_W() { return tile_w; }
 
-CColor* CLayerUniform::getPixel(Uint8 i, Uint8 j, Uint8 w, Uint8 h) {
-	return new CColor();
+FSColor* CLayerUniform::getPixel(Uint8 i, Uint8 j, Uint8 w, Uint8 h) {
+	return new FSColor();
 }
 
 //
 //CLayerInf
 //
 
-CLayerInf::CLayerInf(CMap* mapa,CRectangle* area,TileBG** tile,bool pisable,CMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(pisable) {
+CLayerInf::CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,bool pisable,FSMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(pisable) {
 	init();
 }
 
-CLayerInf::CLayerInf(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(true){
+CLayerInf::CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(true){
 	init();
 }
 
@@ -155,7 +155,7 @@ bool CLayerInf::isPisable() { return pisable; }
 //CLayerSup
 //
 
-CLayerSup::CLayerSup(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
+CLayerSup::CLayerSup(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
 	init();
 }
 CLayerSup::~CLayerSup() {
@@ -165,15 +165,15 @@ CLayerSup::~CLayerSup() {
 //
 //CLayerFondo
 //
-CLayerFondo::CLayerFondo(CMap* mapa,CRectangle* area,TileBG** tile,CMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
+CLayerFondo::CLayerFondo(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
 	init();
 }
 CLayerFondo::~CLayerFondo() {
 	//CLayerUniform::~CLayerUniform();
 }
 
-CFloor::CFloor(CRectangle *area,CMap* mapa,int id, CMessageHandler * pmhParent) : 
-CMessageHandler(pmhParent), area(area) , mapa(mapa), id(id) {
+CFloor::CFloor(FSRectangle *area,CMap* mapa,int id, FSMessageHandler * pmhParent) : 
+FSMessageHandler(pmhParent), area(area) , mapa(mapa), id(id) {
 
 }
 
@@ -207,22 +207,22 @@ void CFloor::refresh(int cx, int cy) {
 
 	//CScreen::rotate(40,1.0,1.0,0.0);
 
-	CScreen::pushMatrix();
+	FSScreen::pushMatrix();
 
-	CScreen::translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
+	FSScreen::translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
 
 	for (;capa<Layer.size() && !capaSuperior(Layer[capa]);capa++) {
 		Layer[capa]->refresh(cxl,cyl);
 	}
 
-	CScreen::popMatrix();
+	FSScreen::popMatrix();
 
 	float aux_w=floor(((float)area->getW())/((float)mapa->getTileW())+0.9);
 	float aux_h=floor(((float)area->getH())/((float)mapa->getTileH())+0.9);
 	int tam_w=  ((int)aux_w)+1;
 	int tam_h= ((int)aux_h)+1;
 
-	CPoint offset(cx,cy);
+	FSPoint offset(cx,cy);
 
 	ActorScrollCollection*** p_MA = mapa->MA[id];
 
@@ -249,15 +249,15 @@ void CFloor::refresh(int cx, int cy) {
 #endif
 	}
 
-	CScreen::pushMatrix();
+	FSScreen::pushMatrix();
 
-	CScreen::translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
+	FSScreen::translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
 
 	for (;capa<Layer.size();capa++) {
 		Layer[capa]->refresh(cxl,cyl);
 	}
 
-	CScreen::popMatrix();
+	FSScreen::popMatrix();
 
 	
 }
@@ -269,6 +269,6 @@ LayerBGCollection& CFloor::getLayers() {
 #ifdef MENSAJES_MSGIDS
 int CFloor::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
 	printf("Piso :: ");
-	return CMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
+	return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
 }
 #endif

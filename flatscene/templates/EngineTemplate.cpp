@@ -1,6 +1,6 @@
 #include "EngineTemplate.h"
 
-CEngineTemplate::CEngineTemplate(CMessageHandler* pmhParent) : CEngine(pmhParent)	{
+CEngineTemplate::CEngineTemplate(FSMessageHandler* pmhParent) : FSEngine(pmhParent)	{
 
 	// TODO
 }
@@ -55,7 +55,7 @@ int CEngineTemplate::onExit() {
 }
 
 void CEngineTemplate::deselect() {
-	CEngine::deselect();
+	FSEngine::deselect();
 
 	// TODO : Siempre se debe llamar previamente al método de la clase base.
 
@@ -65,7 +65,7 @@ int CEngineTemplate::loop() {
 
 	// TODO : Siempre se debe llamar posteriormente al método de la clase base.
 
-	return CEngine::loop();
+	return FSEngine::loop();
 }
 
 	 

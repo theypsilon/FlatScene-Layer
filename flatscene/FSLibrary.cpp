@@ -15,20 +15,20 @@
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); setActualEngine(A); A->onInit(); setActualEngine(eaux); }
 #define KILLENGINE(A); EXITENGINE(A); if (A) { delete A; A=NULL; }
 
-Uint32 CLibrary::MSGID_Exit=CMessageHandler::getNextMSGID();
-Uint32 CLibrary::MSGID_Restart=CMessageHandler::getNextMSGID();
-Uint32 CLibrary::MSGID_RunEngine=CMessageHandler::getNextMSGID();
-Uint32 CLibrary::MSGID_ReloadEngine=CMessageHandler::getNextMSGID();
-Uint32 CLibrary::MSGID_ChangeEngine=CMessageHandler::getNextMSGID();
-Uint32 CLibrary::MSGID_KillEngine=CMessageHandler::getNextMSGID();
+Uint32 FSLibrary::MSGID_Exit=FSMessageHandler::getNextMSGID();
+Uint32 FSLibrary::MSGID_Restart=FSMessageHandler::getNextMSGID();
+Uint32 FSLibrary::MSGID_RunEngine=FSMessageHandler::getNextMSGID();
+Uint32 FSLibrary::MSGID_ReloadEngine=FSMessageHandler::getNextMSGID();
+Uint32 FSLibrary::MSGID_ChangeEngine=FSMessageHandler::getNextMSGID();
+Uint32 FSLibrary::MSGID_KillEngine=FSMessageHandler::getNextMSGID();
 
 
-CLibrary* CLibrary::s_pTheLibrary=NULL;
+FSLibrary* FSLibrary::s_pTheLibrary=NULL;
 
-list<string> CLibrary::errors;
+list<string> FSLibrary::errors;
 
 
-void CLibrary::setLibrary(CLibrary* pTheLib)
+void FSLibrary::setLibrary(FSLibrary* pTheLib)
 {
 	
 	if(s_pTheLibrary!=NULL)
@@ -42,20 +42,20 @@ void CLibrary::setLibrary(CLibrary* pTheLib)
 	s_pTheLibrary=pTheLib;
 
 #ifdef DEBUGTEST
-	CLibrary::debugticks=Chrono.getTick();
+	FSLibrary::debugticks=Chrono.getTick();
 #endif
 }
 
-void CLibrary::setActualEngine(CEngine *newEngineActive) {
+void FSLibrary::setActualEngine(FSEngine *newEngineActive) {
 	getLibrary()->actualEngine = newEngineActive;
 }
 
 
-CLibrary::CLibrary(bool xmlconfig):
-CMessageHandler(NULL)
+FSLibrary::FSLibrary(bool xmlconfig):
+FSMessageHandler(NULL)
 {
 #ifdef IN_FILE_ERROR
-	CLibrary::errorsInSession = false;
+	FSLibrary::errorsInSession = false;
 #endif
 	
 	setLibrary(this);
@@ -109,17 +109,17 @@ CMessageHandler(NULL)
 
 		srand(rand());
 
-		CScreen::start(res_x,res_y,bpp,fullscreen,doublebuff);
+		FSScreen::start(res_x,res_y,bpp,fullscreen,doublebuff);
 	}
 
 }
 
 
-CLibrary::CLibrary ( int width , int height , int bpp , bool fullscreen, bool doublebuff ) :
-CMessageHandler(NULL)
+FSLibrary::FSLibrary ( int width , int height , int bpp , bool fullscreen, bool doublebuff ) :
+FSMessageHandler(NULL)
 {
 #ifdef IN_FILE_ERROR
-	CLibrary::errorsInSession = false;
+	FSLibrary::errorsInSession = false;
 #endif
 	
 	setLibrary(this);
@@ -140,11 +140,11 @@ CMessageHandler(NULL)
 
 	srand(rand());
 
-	CScreen::start(width,height,bpp,fullscreen,doublebuff);
+	FSScreen::start(width,height,bpp,fullscreen,doublebuff);
 
 }
 
-int CLibrary::startLibrary(bool xmlconfig)
+int FSLibrary::startLibrary(bool xmlconfig)
 {
 	if (s_pTheLibrary!=NULL)	{
 		Error("La biblioteca ya ha sido inicializada.");
@@ -153,17 +153,17 @@ int CLibrary::startLibrary(bool xmlconfig)
 
 	int num_e = errors.size();
 
-	new CLibrary(xmlconfig);
+	new FSLibrary(xmlconfig);
 
 	if (errors.size()!= num_e)
 		return FRACASO;
 
-	CScreen::initProcRenders();
+	FSScreen::initProcRenders();
 
 	return EXITO;
 }
 
-int CLibrary::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff )
+int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff )
 {
 	if (s_pTheLibrary!=NULL)	{
 		Error("La biblioteca ya ha sido inicializada.");
@@ -172,28 +172,28 @@ int CLibrary::startLibrary( int width , int height , int bpp , bool fullscreen, 
 
 	int num_e = errors.size();
 
-	new CLibrary(width,height,bpp,fullscreen,doublebuff);
+	new FSLibrary(width,height,bpp,fullscreen,doublebuff);
 
 	if (errors.size()!= num_e)
 		return FRACASO;
 
-	CScreen::initProcRenders();
+	FSScreen::initProcRenders();
 
 	return EXITO;
 }
 
 
-CLibrary::~CLibrary()
+FSLibrary::~FSLibrary()
 {
 }
 
 
-void CLibrary::onExit()
+void FSLibrary::onExit()
 {
 
 	while( !getLibrary()->engineIn.empty() ) {
 
-		CEngine * engine = *getLibrary()->engineIn.begin();
+		FSEngine * engine = *getLibrary()->engineIn.begin();
 
 		getLibrary()->engineOut.remove(engine);
 
@@ -208,7 +208,7 @@ void CLibrary::onExit()
 
 	while( !getLibrary()->engineOut.empty() ) {
 
-		CEngine * engine = *getLibrary()->engineOut.begin();
+		FSEngine * engine = *getLibrary()->engineOut.begin();
 
 		setActualEngine(engine);
 		if (engine->isInitialized())
@@ -224,7 +224,7 @@ void CLibrary::onExit()
 	Write.clear();
 
 	
-	CScreen::quit();
+	FSScreen::quit();
 
 #ifdef IN_FILE_ERROR
 	if (errorsInSession) {
@@ -239,7 +239,7 @@ void CLibrary::onExit()
 }
 
 
-int CLibrary::processEngines() {
+int FSLibrary::processEngines() {
 	
 	if(!s_pTheLibrary)
 	{		
@@ -252,9 +252,9 @@ int CLibrary::processEngines() {
 
 	// Selección del CEngine a ejecutar entre el Conjunto de CEngine.
 
-	getLibrary()->engineIn.sort(CLibrary::orderEngine);
+	getLibrary()->engineIn.sort(FSLibrary::orderEngine);
 
-	for (list<CEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();
+	for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();
 		it != jt && getActualEngine()==NULL; 
 		++it) {
 
@@ -268,11 +268,11 @@ int CLibrary::processEngines() {
 
 	if (getActualEngine() == NULL) {
 
-		for (list<CEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) 
+		for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) 
 			(*it)->done = false;
 
 		if (getLibrary()->engineIn.empty()) {
-			CLibrary::Error("There are no engines in queue!");
+			FSLibrary::Error("There are no engines in queue!");
 			return FRACASO;
 		}
 
@@ -298,13 +298,13 @@ int CLibrary::processEngines() {
 	return EXITO;
 }
 
-CEngine* CLibrary::getActualEngine() {
+FSEngine* FSLibrary::getActualEngine() {
 
 	return (getLibrary()?getLibrary()->actualEngine:NULL);
 
 }
 
-int CLibrary::addEngine(CEngine* engine,int priority) {
+int FSLibrary::addEngine(FSEngine* engine,int priority) {
 
 	if (s_pTheLibrary==NULL || engine == NULL)
 		return FRACASO;
@@ -315,21 +315,21 @@ int CLibrary::addEngine(CEngine* engine,int priority) {
 	return EXITO;
 }
 
-int CLibrary::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
+int FSLibrary::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 
 	if ( MsgID >= MSGID_Exit && MsgID <= MSGID_KillEngine ) {
 
 		if (actualEngine)
 			actualEngine->deselect();
 
-		bufferMessages.push_back(new CMessage(MsgID,Parm1,Parm2));
+		bufferMessages.push_back(new FSMessage(MsgID,Parm1,Parm2));
 
 		return EXITO;
 
-	}	else return(CMessageHandler::onMessage(MsgID,Parm1,Parm2));
+	}	else return(FSMessageHandler::onMessage(MsgID,Parm1,Parm2));
 }
 
-void CLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
+void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 	if (MsgID==MSGID_Exit) {
 
@@ -337,15 +337,15 @@ void CLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 	} else if (MsgID==MSGID_Restart) {
 
-		for (list<CEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) {
-			CEngine* engine = *it;
+		for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) {
+			FSEngine* engine = *it;
 			setActualEngine(engine);
 			engine->done = false;
 			if (engine->isInitialized())
 				engine->onExit();
 		}
 
-		getLibrary()->engineIn.sort(CLibrary::orderEngine);
+		getLibrary()->engineIn.sort(FSLibrary::orderEngine);
 
 		setActualEngine(engineIn.front());
 		engineIn.front()->done = true;
@@ -365,16 +365,16 @@ void CLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 	} else if (MsgID==MSGID_RunEngine) {
 
-		CEngine* engine = (CEngine*)Parm1;
+		FSEngine* engine = (FSEngine*)Parm1;
 
-		if (dynamic_cast<CEngine*>(engine)) {
+		if (dynamic_cast<FSEngine*>(engine)) {
 
 			bool find = false;
 
-			for (list<CEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();it!=jt;++it)
+			for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();it!=jt;++it)
 				find = find || engine == *it;
 
-			for (list<CEngine*>::iterator it = getLibrary()->engineOut.begin(), jt = getLibrary()->engineOut.end();it!=jt;++it)
+			for (list<FSEngine*>::iterator it = getLibrary()->engineOut.begin(), jt = getLibrary()->engineOut.end();it!=jt;++it)
 				find = find || engine == *it;
 
 			if (!engine) {
@@ -387,9 +387,9 @@ void CLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 	} else if (MsgID==MSGID_ReloadEngine) {
 
-		CEngine* engine = (CEngine*) Parm1;
+		FSEngine* engine = (FSEngine*) Parm1;
 
-		if (dynamic_cast<CEngine*>(engine)) {
+		if (dynamic_cast<FSEngine*>(engine)) {
 
 			setActualEngine(engine);
 
@@ -404,9 +404,9 @@ void CLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 		setActualEngine(NULL);
 
-		getLibrary()->engineIn.sort(CLibrary::orderEngine);
+		getLibrary()->engineIn.sort(FSLibrary::orderEngine);
 
-		for (list<CEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();
+		for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();
 			it != jt && getActualEngine()==NULL; 
 			++it) {
 
@@ -418,7 +418,7 @@ void CLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 		}
 
 		if (getActualEngine() == NULL) {
-			for (list<CEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) 
+			for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) 
 				(*it)->done = false;
 
 			setActualEngine(getLibrary()->engineIn.front());
@@ -427,15 +427,15 @@ void CLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 	} else if (MsgID==MSGID_KillEngine) {
 
-		CEngine* engine = (CEngine*)Parm1;
+		FSEngine* engine = (FSEngine*)Parm1;
 
-		if (dynamic_cast<CEngine*>(engine)) {
+		if (dynamic_cast<FSEngine*>(engine)) {
 
-			CEngine* act = getActualEngine(); // Lo salvamos para recuperarlo al final. 
+			FSEngine* act = getActualEngine(); // Lo salvamos para recuperarlo al final. 
 
 			setActualEngine(engine); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Imágenes.
 
-			for (list<CEngine*>::iterator it = engineIn.begin(), jt = engineIn.end(); it!=jt; ++it) 
+			for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end(); it!=jt; ++it) 
 				if (engine == *it) {
 					engineIn.erase(it);
 					break;
@@ -458,11 +458,11 @@ void CLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 	}
 }
 
-void CLibrary::Error (const char* c,TypeError e) {
+void FSLibrary::Error (const char* c,TypeError e) {
 	Error(std::string(c),e);
 }
 
-void CLibrary::Error (std::string s,TypeError e) {
+void FSLibrary::Error (std::string s,TypeError e) {
 
 	if (s == "") 
 		s = "empty";
@@ -516,11 +516,11 @@ void CLibrary::Error (std::string s,TypeError e) {
 	} 
 #endif
 }
-void CLibrary::Error (char* c,TypeError e) {
+void FSLibrary::Error (char* c,TypeError e) {
 	Error(std::string(c),e);
 }
 
-string CLibrary::toStringErrorGL(GLenum e) {
+string FSLibrary::toStringErrorGL(GLenum e) {
 	string s ="";
 
 	switch (e) {
@@ -536,14 +536,14 @@ string CLibrary::toStringErrorGL(GLenum e) {
 	return s;
 }
 
-string CLibrary::readLastError() {
+string FSLibrary::readLastError() {
 	if (errors.empty())
 		return SINERROR;
 	else
 		return errors.back();
 }
 
-string CLibrary::popError() {
+string FSLibrary::popError() {
 	if (errors.empty())
 		return SINERROR;
 	else {
@@ -554,7 +554,7 @@ string CLibrary::popError() {
 }
 
 //get singleton
-CLibrary* CLibrary::getLibrary()
+FSLibrary* FSLibrary::getLibrary()
 {
 	//return static pointer to application
 	return(s_pTheLibrary);
@@ -562,34 +562,34 @@ CLibrary* CLibrary::getLibrary()
 
 #ifdef DEBUGTEST
 
-bool CLibrary::debugging=false;
+bool FSLibrary::debugging=false;
 
-int CLibrary::debugticks=0;
+int FSLibrary::debugticks=0;
 
-void CLibrary::debug(bool startdebug,const char* warning) {
+void FSLibrary::debug(bool startdebug,const char* warning) {
 	if (startdebug) {
-		if (!CLibrary::debugging) {
+		if (!FSLibrary::debugging) {
 			debugticks=Chrono.getTick();
 			fprintf(stderr,"\n** (+) La aplicacion ha entrado en estado de debug **\n");
 		}
 		if (warning)
 			fprintf(stderr,"DEBUG: %s\n",warning);
-		CLibrary::debugging = true;	// Siempre debe haber aquí un Breakpoint para el Visual Studio.
+		FSLibrary::debugging = true;	// Siempre debe haber aquí un Breakpoint para el Visual Studio.
 	}
 }
 
-bool CLibrary::inDebug() {
-	if (CLibrary::debugging)
+bool FSLibrary::inDebug() {
+	if (FSLibrary::debugging)
 		if (Chrono.getTick() > debugticks + DEBUGTESTTICKS) {
 			fprintf(stderr,"\n** (-) La aplicacion ha salido del estado de debug **\n");
-			CLibrary::debugging=false;
+			FSLibrary::debugging=false;
 		}
-	return CLibrary::debugging;
+	return FSLibrary::debugging;
 }
 
 #endif
 
-bool CLibrary::orderEngine(CEngine* x, CEngine* y) {
+bool FSLibrary::orderEngine(FSEngine* x, FSEngine* y) {
 
 	return ((x->priority)<(y->priority));
 

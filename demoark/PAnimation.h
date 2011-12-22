@@ -10,7 +10,7 @@ using namespace std;
 class PControlAnimation;
 class PImage;
 
-class PAnimation : public CMessageHandler {
+class PAnimation : public FSMessageHandler {
 private:
 	PControlAnimation* control;
 	PImage* img;
@@ -19,7 +19,7 @@ public:
 	PAnimation(int num,int* sequence, int sptset);
 	~PAnimation();
 	void paso_a_paso();
-	CSprite* paso_a_paso_spt();
+	FSSprite* paso_a_paso_spt();
 	Uint32 retardo();
 };
 
@@ -45,7 +45,7 @@ public:
 	PImage(int sptSet);
 	~PImage();
 	void dibujar(int spt);
-	CSprite* dame(int spt);
+	FSSprite* dame(int spt);
 };
 
 #endif

@@ -53,8 +53,8 @@ void CActionSimpleDemo0::execute() {
 		RectArea::iterator beginMobil = rA->begin();
 		RectArea::iterator finMobil = rA->end();
 
-		CRectangle r1;
-		CRectangle r2;
+		FSRectangle r1;
+		FSRectangle r2;
 
 		for (RectArea::iterator itR1 = beginMobil; itR1 != finMobil; ++itR1) {
 			r1 = **itR1;

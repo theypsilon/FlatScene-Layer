@@ -6,17 +6,17 @@
 
 #include "debugfuncs.h"
 
-Uint16 CSpriteset::globalAuxiliar=0;
+Uint16 FSSpriteset::globalAuxiliar=0;
 
-CSpriteset::CSpriteset()
+FSSpriteset::FSSpriteset()
 {
 	getSpriteList ( ).clear ( ) ;
 	name="";
 	this->mode = ONLY_TEXTURE;
-	CLibrary::Error("Por ahora no permito crear Spritesets de la nada.");
+	FSLibrary::Error("Por ahora no permito crear Spritesets de la nada.");
 }
 
-CSpriteset::CSpriteset(string c, Uint8 mode)
+FSSpriteset::FSSpriteset(string c, Uint8 mode)
 {
 	globalAuxiliar=0;	// Lo ponemos a cero, pues vamos a empezar un ciclo.
 	getSpriteList ( ).clear ( ) ;
@@ -25,11 +25,11 @@ CSpriteset::CSpriteset(string c, Uint8 mode)
 	name=c;
 }
 
-CSpriteset::~CSpriteset()
+FSSpriteset::~FSSpriteset()
 {
 
 	SpriteCollection::iterator iter ;
-	CSprite* pspt ;
+	FSSprite* pspt ;
 	while ( !getSpriteList ( ).empty ( ) )
 	{
 		iter = getSpriteList().begin ( ) ;
@@ -43,15 +43,15 @@ CSpriteset::~CSpriteset()
 	#endif
 }
 
-Uint8 CSpriteset::getMode() {
+Uint8 FSSpriteset::getMode() {
 	return mode;
 }
 
-string CSpriteset::getName() {
+string FSSpriteset::getName() {
 	return name;
 }
 
-bool CSpriteset::setName(string& name) {
+bool FSSpriteset::setName(string& name) {
 	if (this->name=="") {
 		this->name=name;
 		return true;
@@ -59,32 +59,32 @@ bool CSpriteset::setName(string& name) {
 	return false;
 }
 
-void CSpriteset::add ( CSprite* pspt ) 
+void FSSpriteset::add ( FSSprite* pspt ) 
 {
 	getSpriteList ( ).push_back ( pspt ) ;
 }
 
-bool CSpriteset::has ( CSprite* pspt ) 
+bool FSSpriteset::has ( FSSprite* pspt ) 
 {
 	SpriteCollection::iterator iter = find ( getSpriteList ( ).begin ( ) , getSpriteList ( ).end ( ) , pspt ) ;
 	return ( iter != getSpriteList ( ).end ( ) ) ;
 }
 
-int CSpriteset::search( CSprite* pspt ) 
+int FSSpriteset::search( FSSprite* pspt ) 
 {
 	SpriteCollection::iterator iter = find ( getSpriteList ( ).begin ( ) , getSpriteList ( ).end ( ) , pspt ) ;
 	if ( iter == getSpriteList ( ).end ( ) ) return ( -1 ) ;
 	return ( iter - getSpriteList ( ).begin ( ) ) ;
 }
 
-void CSpriteset::remove ( CSprite* pspt ) 
+void FSSpriteset::remove ( FSSprite* pspt ) 
 {
 	SpriteCollection::iterator iter = find ( getSpriteList ( ).begin ( ) , getSpriteList ( ).end ( ) , pspt ) ;
 	if ( iter == getSpriteList ( ).end ( ) ) return ;
 	getSpriteList ( ).erase ( iter ) ;
 }
 
-CSprite* CSpriteset::get ( int n ) 
+FSSprite* FSSpriteset::get ( int n ) 
 {
 	if ( n < getSpriteList ().size()) {
 		return ( getSpriteList ( ) [n] ) ;
@@ -93,17 +93,17 @@ CSprite* CSpriteset::get ( int n )
 	}
 }
 
-SpriteCollection& CSpriteset::getSpriteList ( ) 
+SpriteCollection& FSSpriteset::getSpriteList ( ) 
 {
 	return ( m_vecSprites ) ;
 }
 
-int CSpriteset::size ( ) 
+int FSSpriteset::size ( ) 
 {
 	return ( getSpriteList ( ).size ( ) ) ;
 }
 
-void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
+void FSSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 	int num_img=0;
 	int ancho=0;
@@ -177,14 +177,14 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		// Si no carga, asumimos que no existe el .grd y el Spriteset será un único Sprite sin información adicional
 
 		if (cPrev || tipefile == ".grd") // en ese caso no tiene sentido que haya varios ciclos
-			 return CLibrary::Error(s_aux,TE_fileExists);
+			 return FSLibrary::Error(s_aux,TE_fileExists);
 
 		num_img = 1;
 
 		s_aux=namefile+tipefile;
 
 		chipset=IMG_Load(s_aux.c_str());
-		if (!chipset) { CLibrary::Error(s_aux.c_str(),TE_fileExists); }
+		if (!chipset) { FSLibrary::Error(s_aux.c_str(),TE_fileExists); }
 
 		ancho = chipset->w;
 		alto = chipset->h;
@@ -196,13 +196,13 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 				SDL_FreeSurface(chipset);
 				chipset = sdl_surf;
 			} else {
-				return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
+				return FSLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
 			}
 
 		} else if (mode != ONLY_SDL_SURFACE) 
-			return CLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
+			return FSLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
 
-		CSprite* pspt=new CSprite(CImage::toSCanvas(chipset,mode));
+		FSSprite* pspt=new FSSprite(FSImage::toSCanvas(chipset,mode));
 
 		pspt->setName(s_aux.c_str());
 
@@ -216,12 +216,12 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		c = *cPrev;	// Si este archivo ha sido enlazado desde otro .grd, sustituimos el nombre por si la recursión continua.
 
 	if (globalAuxiliar > 100)
-		return CLibrary::Error(("Estructura defectuosa del archivo: "+c+". \nDependencias cíclicas.").c_str());	// Si la recursión es demasiado grande, ERROR.
+		return FSLibrary::Error(("Estructura defectuosa del archivo: "+c+". \nDependencias cíclicas.").c_str());	// Si la recursión es demasiado grande, ERROR.
 
 	TiXmlHandle input(xmldoc.FirstChild());
 
 	if (!input.ToElement()) { 
-		return CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux).c_str()); 
+		return FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux).c_str()); 
 	}
 
 	if (input.ToElement()->Attribute("defined-in")) {
@@ -230,14 +230,14 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	}
 
 	if (!input.ToElement()->Attribute("sprites")) {	
-		return CLibrary::Error("Estructura defectuosa para el archivo: "+s_aux+"\nNo se ha especificado el número de sprites.");	
+		return FSLibrary::Error("Estructura defectuosa para el archivo: "+s_aux+"\nNo se ha especificado el número de sprites.");	
 	}
 
 	if (input.ToElement()->Attribute("type") && strcmp(input.ToElement()->Attribute("type"),"split")==0)
 		return loadChipsetSplit(s_aux,mode);
 
 	if (!(input.ToElement()->Attribute("cellwidth") && input.ToElement()->Attribute("cellheight"))) { 
-		return CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nNo se ha especificado dimensiones para las celdas.").c_str()); 
+		return FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nNo se ha especificado dimensiones para las celdas.").c_str()); 
 	}
 
 	input.Element()->QueryIntAttribute("sprites",&num_img);	// Tenemos el número de imágenes.
@@ -259,7 +259,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 		chipset=IMG_Load(s_aux.c_str());
 		if (!chipset) { 
-			return CLibrary::Error(s_aux,TE_fileExists); 
+			return FSLibrary::Error(s_aux,TE_fileExists); 
 		}
 	} else if (tipefile == ".grd") {
 
@@ -273,12 +273,12 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 				s_aux=namefile + ".bmp";
 				chipset=IMG_Load(s_aux.c_str());
 				if (!chipset) { 
-					return CLibrary::Error(s_aux,TE_fileExists); 
+					return FSLibrary::Error(s_aux,TE_fileExists); 
 				}
 			}
 		}
 	} else {
-		return CLibrary::Error(s_aux + "No es un tipo de recurso grafico apropiado.",TE_standard);
+		return FSLibrary::Error(s_aux + "No es un tipo de recurso grafico apropiado.",TE_standard);
 	}
 
 	SDL_Surface* sdl_surf = NULL;
@@ -290,11 +290,11 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	Uint32 columnas = chipset->w / ancho;		// Calculamos el número de columnas del spriteset.
 
 	if (	(((float)columnas) - (((float)chipset->w)/((float)ancho))) != 0.00 || (		((float)(chipset->h / alto))	-  (((float)chipset->h)/((float)alto))		)!=0.00	)	{ 
-		return CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nEl tamaño de la imagen debe ser múltiplo exacto de las celdas.").c_str()); 
+		return FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nEl tamaño de la imagen debe ser múltiplo exacto de las celdas.").c_str()); 
 	}
 
 	if (columnas <= 0 || columnas > chipset->w) { 
-		return CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nCantidad de columnas imposible.").c_str()); 
+		return FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nCantidad de columnas imposible.").c_str()); 
 	}
 
 	
@@ -309,11 +309,11 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 			SDL_FreeSurface(chipset);
 			chipset=sdl_surf;
 		} else {
-			return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
+			return FSLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
 		}
 
 	} else if (mode != ONLY_SDL_SURFACE) 
-		return CLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
+		return FSLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
 	
 	s_aux.clear();
 
@@ -322,13 +322,13 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	rect.y=0;
 
 	SCanvas m_pImage;
-	CSprite* m_pSprite;
+	FSSprite* m_pSprite;
 
 	struct { int w,h,nump; const char *name; } iinfo;
 
 	TiXmlElement* img=NULL;
 
-	CPoint globalCP;	// El punto central global es opcional, y si no se encuentra, se le asigna -1 a X.
+	FSPoint globalCP;	// El punto central global es opcional, y si no se encuentra, se le asigna -1 a X.
 	globalCP.setX(-1);
 	map<int,RectsInfo> globalAreas;
 
@@ -342,14 +342,14 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 			if (!(img->Attribute("x") && img->Attribute("y") && 
 				atoi(img->Attribute("x"))>=0 && atoi(img->Attribute("x"))<=ancho && 
 				atoi(img->Attribute("y"))>=0 && atoi(img->Attribute("y"))<=alto)) 
-					CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores de punto centro global erróneos.").c_str());
+					FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores de punto centro global erróneos.").c_str());
 			globalCP.set(atoi(img->Attribute("x"))*sp_scale,atoi(img->Attribute("y"))*sp_scale);	// Lo asignamos.
 		}
 
 		img = input.FirstChildElement("globalareas").FirstChildElement("area").ToElement();
 		while (img) {	// Mientras haya areas globales...
 			if (!img->Attribute("id") || atoi(img->Attribute("id"))<0)
-				CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores de areas globales erróneos.").c_str());
+				FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores de areas globales erróneos.").c_str());
 			int idArea = atoi(img->Attribute("id")); // Determinamos que número de area es (las areas van ordenadas segun el conjunto de los numeros naturales, de forma continua y orden ascendente).
 
 			if (img->Attribute("relative") && strcmp(img->Attribute("relative"),"true")==0)	// Miramos si las coordenadas de esa area estan descritas en terminos relativos (segun el punto de centro) o absolutos.
@@ -359,7 +359,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 			for (TiXmlElement* rectNode=img->FirstChildElement("rectangle");rectNode;rectNode=rectNode->NextSiblingElement("rectangle")) {		// Por cada rectangulo de esa area...
 				if (!(rectNode->Attribute("x1") && rectNode->Attribute("x2") && rectNode->Attribute("y1") && rectNode->Attribute("y2"))) 
-					CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo un área global erróneos.").c_str());
+					FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo un área global erróneos.").c_str());
 
 				SDL_Rect_Signed rc;
 				rc.x = atoi(rectNode->Attribute("x1")) *sp_scale;
@@ -393,12 +393,12 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		#endif
 		if (!simple && img->Attribute("width")) {	// Asignamos al rectangulo de coordenas la anchura. Si no tiene especifica, no por defecto es el ancho de celda.
 			iinfo.w = atoi(img->Attribute("width"));
-			if (iinfo.w > ancho || iinfo.w <= 0)		{	CLibrary::Error("Estructura defectuosa del archivo: "+s_aux+"\nValores en la imagen "+iinfo.name+" erróneos.");	}
+			if (iinfo.w > ancho || iinfo.w <= 0)		{	FSLibrary::Error("Estructura defectuosa del archivo: "+s_aux+"\nValores en la imagen "+iinfo.name+" erróneos.");	}
 		}	else
 			iinfo.w = ancho;
 		if (!simple && img->Attribute("height")) { // Asignamos al rectangulo de coordenas la altura. Si no tiene especifica, no por defecto es el alto de celda.
 			iinfo.h =	atoi(img->Attribute("height"));
-			if (iinfo.h > alto || iinfo.h <= 0)	{	CLibrary::Error("Estructura defectuosa del archivo: "+s_aux+"\nValores en la imagen "+iinfo.name+" erróneos.");	}
+			if (iinfo.h > alto || iinfo.h <= 0)	{	FSLibrary::Error("Estructura defectuosa del archivo: "+s_aux+"\nValores en la imagen "+iinfo.name+" erróneos.");	}
 		}	else
 			iinfo.h = alto;
 
@@ -427,13 +427,13 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 		
 		if (sp_scale > 0 && sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
-			temp = CImage::scaleSurface(sdl_surf,sp_scale);
+			temp = FSImage::scaleSurface(sdl_surf,sp_scale);
 			SDL_FreeSurface(sdl_surf);
 			sdl_surf=temp;
 			SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,chipset->format->colorkey);		// Reasignamos los formatos.
 		}
 
-		m_pImage=CImage::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas(
+		m_pImage=FSImage::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas(
 
 		//Imagen creada, ahora el resto de su estructura de datos.
 
@@ -448,12 +448,12 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 			if (!(cpoint->Attribute("x") && cpoint->Attribute("y") && 
 				atoi(cpoint->Attribute("x"))>=0 && atoi(cpoint->Attribute("x"))<=iinfo.w && 
 				atoi(cpoint->Attribute("y"))>=0 && atoi(cpoint->Attribute("y"))<=iinfo.h)) 
-					CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en el punto centro de la imagen "+iinfo.name+" erróneos.").c_str());
-			m_pSprite=new CSprite(m_pImage,new CPoint(atoi(cpoint->Attribute("x"))*sp_scale,atoi(cpoint->Attribute("y"))*sp_scale));
+					FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en el punto centro de la imagen "+iinfo.name+" erróneos.").c_str());
+			m_pSprite=new FSSprite(m_pImage,new FSPoint(atoi(cpoint->Attribute("x"))*sp_scale,atoi(cpoint->Attribute("y"))*sp_scale));
 		} else if (globalCP.X()>=0) { // Si existe un global cpoint...
-			m_pSprite=new CSprite(m_pImage,new CPoint(globalCP));
+			m_pSprite=new FSSprite(m_pImage,new FSPoint(globalCP));
 		} else {	
-			m_pSprite=new CSprite(m_pImage);	// Acabamos llamando al constructor del sprite, con o sin cpoint.
+			m_pSprite=new FSSprite(m_pImage);	// Acabamos llamando al constructor del sprite, con o sin cpoint.
 		}
 
 		TiXmlElement* area = NULL;
@@ -467,11 +467,11 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		#endif
 			if (globalAreas.find(numArea)==globalAreas.end()) { // Si esta area no se corresponde con ninguna de las areas globales...
 				if (!area)	// Si no existe area, es que las areas globales estan mal definidas en el fichero .grd
-					CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nSe requiere un orden ascendente coherente entre areas (sin saltos) teniendo en cuenta las areas globales.").c_str());
+					FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nSe requiere un orden ascendente coherente entre areas (sin saltos) teniendo en cuenta las areas globales.").c_str());
 				bool relative = area->Attribute("relative") && strcmp(area->Attribute("relative"),"true")==0;	// Rescatamos si las coordenadas son relativas.
 				for (TiXmlElement* rectNode=area->FirstChildElement("rectangle");rectNode;rectNode=rectNode->NextSiblingElement("rectangle")) { // Por cada rectangulo perteneciente al area.
 					if (!(rectNode->Attribute("x1") && rectNode->Attribute("x2") && rectNode->Attribute("y1") && rectNode->Attribute("y2"))) 
-						CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo de la imagen "+iinfo.name+" erróneos.").c_str());
+						FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo de la imagen "+iinfo.name+" erróneos.").c_str());
 
 					SDL_Rect_Signed rc;
 					rc.x = atoi(rectNode->Attribute("x1")); // Anotamos las coordenadas.
@@ -486,9 +486,9 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 					}
 
 					if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) || */(rc.w<rc.x) || (rc.h<rc.y))
-						CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo de la imagen "+iinfo.name+" conflictivos.").c_str());
+						FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo de la imagen "+iinfo.name+" conflictivos.").c_str());
 
-					rArea->push_back(new CRectangle(rc.x *sp_scale,rc.y *sp_scale,rc.w *sp_scale,rc.h *sp_scale));	// Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
+					rArea->push_back(new FSRectangle(rc.x *sp_scale,rc.y *sp_scale,rc.w *sp_scale,rc.h *sp_scale));	// Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
 				#ifdef LOG_SPRITESET_INFO
 					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x*sp_scale,rc.w*sp_scale,rc.y*sp_scale,rc.h*sp_scale);
 					idebug++;
@@ -505,9 +505,9 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 						rc.h -= m_pSprite->getCenter()->getY();
 					}
 					if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) ||*/ (rc.w<rc.x) || (rc.h<rc.y))
-						CLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo global aplicado la imagen "+iinfo.name+" conflictivos.").c_str());
+						FSLibrary::Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rectángulo global aplicado la imagen "+iinfo.name+" conflictivos.").c_str());
 
-					rArea->push_back(new CRectangle(rc.x*sp_scale,rc.y*sp_scale,rc.w*sp_scale,rc.h*sp_scale)); // Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
+					rArea->push_back(new FSRectangle(rc.x*sp_scale,rc.y*sp_scale,rc.w*sp_scale,rc.h*sp_scale)); // Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
 				#ifdef LOG_SPRITESET_INFO
 					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x*sp_scale,rc.w*sp_scale,rc.y*sp_scale,rc.h*sp_scale);
 					idebug++;
@@ -533,7 +533,7 @@ void CSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 }
 
-void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
+void FSSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 
 	int num_img=0;
 	int ancho=0;
@@ -558,12 +558,12 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 	TiXmlDocument grddoc(grd.c_str());
 
 	if (!grddoc.LoadFile())
-		CLibrary::Error(grd.c_str(),TE_fileExists);
+		FSLibrary::Error(grd.c_str(),TE_fileExists);
 
 	TiXmlElement* head = grddoc.FirstChildElement("Spriteset");
 
 	if (!head || !head->Attribute("type") || strcmp(head->Attribute("type"),"split")!=0)
-		return CLibrary::Error("Estructura defectuosa para el archivo: "+grd+". Debería tratarse de un 'grd' de tipo 'split' formal.");
+		return FSLibrary::Error("Estructura defectuosa para el archivo: "+grd+". Debería tratarse de un 'grd' de tipo 'split' formal.");
 
 	head->QueryIntAttribute("sprites",&num_img);
 
@@ -571,7 +571,7 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 		head->QueryIntAttribute("sp-scale",&sp_scale); // Hay escalado predefinido de SDL_Surface
 
 
-	CPoint globalCP;	// El punto central global es opcional, y si no se encuentra, se le asigna -1 a X.
+	FSPoint globalCP;	// El punto central global es opcional, y si no se encuentra, se le asigna -1 a X.
 	globalCP.setX(-1);
 	map<int,RectsInfo> globalAreas;
 
@@ -583,14 +583,14 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 		if (!(elmnt->Attribute("x") && elmnt->Attribute("y") && 
 			atoi(elmnt->Attribute("x"))>=0 && atoi(elmnt->Attribute("x"))<=ancho && 
 			atoi(elmnt->Attribute("y"))>=0 && atoi(elmnt->Attribute("y"))<=alto)) 
-				CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores de punto centro global erróneos.").c_str());
+				FSLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores de punto centro global erróneos.").c_str());
 		globalCP.set(atoi(elmnt->Attribute("x"))*sp_scale,atoi(elmnt->Attribute("y"))*sp_scale);	// Lo asignamos.
 	}
 
 	elmnt = input.FirstChildElement("globalareas").FirstChildElement("area").ToElement();
 	while (elmnt) {	// Mientras haya areas globales...
 		if (!elmnt->Attribute("id") || atoi(elmnt->Attribute("id"))<0)
-			CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores de areas globales erróneos.").c_str());
+			FSLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores de areas globales erróneos.").c_str());
 		int idArea = atoi(elmnt->Attribute("id")); // Determinamos que número de area es (las areas van ordenadas segun el conjunto de los numeros naturales, de forma continua y orden ascendente).
 
 		if (elmnt->Attribute("relative") && strcmp(elmnt->Attribute("relative"),"true")==0)	// Miramos si las coordenadas de esa area estan descritas en terminos relativos (segun el punto de centro) o absolutos.
@@ -600,7 +600,7 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 
 		for (TiXmlElement* rectNode=elmnt->FirstChildElement("rectangle");rectNode;rectNode=rectNode->NextSiblingElement("rectangle")) {		// Por cada rectangulo de esa area...
 			if (!(rectNode->Attribute("x1") && rectNode->Attribute("x2") && rectNode->Attribute("y1") && rectNode->Attribute("y2"))) 
-				CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo un área global erróneos.").c_str());
+				FSLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo un área global erróneos.").c_str());
 
 			SDL_Rect_Signed rc;
 			rc.x = atoi(rectNode->Attribute("x1")) *sp_scale;
@@ -620,7 +620,7 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 	rect.y=0;
 
 	SCanvas m_pImage;
-	CSprite* m_pSprite;
+	FSSprite* m_pSprite;
 
 	struct { int w,h,nump; const char *name; } iinfo;
 
@@ -648,14 +648,14 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 						SDL_FreeSurface(sdl_surf);
 						sdl_surf = temp;
 					} else {
-						return CLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
+						return FSLibrary::Error("SDL_DisplayFormat(chipset) fallo.");
 					}
 
 				} else if (mode != ONLY_SDL_SURFACE) 
-					return CLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
+					return FSLibrary::Error("Librería no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
 
 				if (sp_scale > 0 && sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
-					temp = CImage::scaleSurface(sdl_surf,sp_scale);
+					temp = FSImage::scaleSurface(sdl_surf,sp_scale);
 					SDL_FreeSurface(sdl_surf);
 					sdl_surf=temp;
 					SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,sdl_surf->format->colorkey);		// Reasignamos los formatos.
@@ -663,7 +663,7 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 
 
 
-				m_pImage = CImage::toSCanvas(sdl_surf,mode);
+				m_pImage = FSImage::toSCanvas(sdl_surf,mode);
 
 				TiXmlElement* cpoint = NULL;
 
@@ -674,12 +674,12 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 					if (!(cpoint->Attribute("x") && cpoint->Attribute("y") && 
 						atoi(cpoint->Attribute("x"))>=0 && atoi(cpoint->Attribute("x"))<=m_pImage.w2 && 
 						atoi(cpoint->Attribute("y"))>=0 && atoi(cpoint->Attribute("y"))<=m_pImage.h2)) 
-							CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en el punto centro de la imagen "+iinfo.name+" erróneos.").c_str());
-					m_pSprite=new CSprite(m_pImage,new CPoint(atoi(cpoint->Attribute("x"))*sp_scale,atoi(cpoint->Attribute("y"))*sp_scale));
+							FSLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en el punto centro de la imagen "+iinfo.name+" erróneos.").c_str());
+					m_pSprite=new FSSprite(m_pImage,new FSPoint(atoi(cpoint->Attribute("x"))*sp_scale,atoi(cpoint->Attribute("y"))*sp_scale));
 				} else if (globalCP.X()>=0) { // Si existe un global cpoint...
-					m_pSprite=new CSprite(m_pImage,new CPoint(globalCP));
+					m_pSprite=new FSSprite(m_pImage,new FSPoint(globalCP));
 				} else {	
-					m_pSprite=new CSprite(m_pImage);	// Acabamos llamando al constructor del sprite, con o sin cpoint.
+					m_pSprite=new FSSprite(m_pImage);	// Acabamos llamando al constructor del sprite, con o sin cpoint.
 				}
 
 			}
@@ -696,11 +696,11 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 		#endif
 			if (globalAreas.find(numArea)==globalAreas.end()) { // Si esta area no se corresponde con ninguna de las areas globales...
 				if (!area)	// Si no existe area, es que las areas globales estan mal definidas en el fichero .grd
-					CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nSe requiere un orden ascendente coherente entre areas (sin saltos) teniendo en cuenta las areas globales.").c_str());
+					FSLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nSe requiere un orden ascendente coherente entre areas (sin saltos) teniendo en cuenta las areas globales.").c_str());
 				bool relative = area->Attribute("relative") && strcmp(area->Attribute("relative"),"true")==0;	// Rescatamos si las coordenadas son relativas.
 				for (TiXmlElement* rectNode=area->FirstChildElement("rectangle");rectNode;rectNode=rectNode->NextSiblingElement("rectangle")) { // Por cada rectangulo perteneciente al area.
 					if (!(rectNode->Attribute("x1") && rectNode->Attribute("x2") && rectNode->Attribute("y1") && rectNode->Attribute("y2"))) 
-						CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo de la imagen "+iinfo.name+" erróneos.").c_str());
+						FSLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo de la imagen "+iinfo.name+" erróneos.").c_str());
 
 					SDL_Rect_Signed rc;
 					rc.x = atoi(rectNode->Attribute("x1")); // Anotamos las coordenadas.
@@ -715,9 +715,9 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 					}
 
 					if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) || */(rc.w<rc.x) || (rc.h<rc.y))
-						CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo de la imagen "+iinfo.name+" conflictivos.").c_str());
+						FSLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo de la imagen "+iinfo.name+" conflictivos.").c_str());
 
-					rArea->push_back(new CRectangle(rc.x *sp_scale,rc.y *sp_scale,rc.w *sp_scale,rc.h *sp_scale));	// Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
+					rArea->push_back(new FSRectangle(rc.x *sp_scale,rc.y *sp_scale,rc.w *sp_scale,rc.h *sp_scale));	// Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
 				#ifdef LOG_SPRITESET_INFO
 					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x*sp_scale,rc.w*sp_scale,rc.y*sp_scale,rc.h*sp_scale);
 					idebug++;
@@ -734,9 +734,9 @@ void CSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 						rc.h -= m_pSprite->getCenter()->getY();
 					}
 					if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) ||*/ (rc.w<rc.x) || (rc.h<rc.y))
-						CLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo global aplicado la imagen "+iinfo.name+" conflictivos.").c_str());
+						FSLibrary::Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rectángulo global aplicado la imagen "+iinfo.name+" conflictivos.").c_str());
 
-					rArea->push_back(new CRectangle(rc.x*sp_scale,rc.y*sp_scale,rc.w*sp_scale,rc.h*sp_scale)); // Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
+					rArea->push_back(new FSRectangle(rc.x*sp_scale,rc.y*sp_scale,rc.w*sp_scale,rc.h*sp_scale)); // Finalmente creamos con ellas un rectangulo y lo añadimos al area actual.
 				#ifdef LOG_SPRITESET_INFO
 					printf("\tA%dR%d : x1=%d , x2=%d , y1=%d , y2=%d\n",numArea,idebug,rc.x*sp_scale,rc.w*sp_scale,rc.y*sp_scale,rc.h*sp_scale);
 					idebug++;

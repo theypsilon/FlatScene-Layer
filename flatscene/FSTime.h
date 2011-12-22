@@ -5,7 +5,7 @@
 #include "SDL.h"
 #include "FSdefinitions.h"
 
-class CEngine;
+class FSEngine;
 
 using namespace std;
 
@@ -19,24 +19,24 @@ struct STimeData {
 };
 
 
-class CTime {
+class FSTime {
 private:
-	map<CEngine*,STimeData> fc;
+	map<FSEngine*,STimeData> fc;
 
 #ifdef MENSAJES_FPS
 	int fps;
 	int auxTimer;
-	map<CEngine*,int> adminText;
+	map<FSEngine*,int> adminText;
 #endif
 
 	STimeData* actTime;
-	CEngine* admin;
+	FSEngine* admin;
 
 	bool all;
 	int allMsInterval;
 public:
-	CTime();
-	~CTime();
+	FSTime();
+	~FSTime();
 	int setInterval(int msNew, bool all=false);
 	int setFPS(int fpsNew, bool all=false);
 	int nextFrame();
@@ -45,6 +45,6 @@ public:
 	bool isTimeForAll();
 };
 
-extern CTime Chrono;
+extern FSTime Chrono;
 
 #endif

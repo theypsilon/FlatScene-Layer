@@ -14,7 +14,7 @@ private:
 	CPlayer* principal;
 public:
 
-	CTestA2GameInterface(CMessageHandler * pmhParent=NULL);
+	CTestA2GameInterface(FSMessageHandler * pmhParent=NULL);
 
 	virtual ~CTestA2GameInterface();
 

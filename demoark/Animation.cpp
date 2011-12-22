@@ -39,7 +39,7 @@ void CAnimation::cloneThisInto(CAnimation* clon) {
 					clon->sequence[i][j]=sequence[i][j];
 			}
 		} else 
-			CLibrary::Error("Se pretende clonar una acción que aún no se ha definido.");
+			FSLibrary::Error("Se pretende clonar una acción que aún no se ha definido.");
 
 }
 
@@ -67,7 +67,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 		nodeSequence = nodeSequence->FirstChildElement("sequence");
 
 	if (!nodeSequence)	// Si no, falla.
-		CLibrary::Error("Animación no encontrada en el fichero de acciones.");
+		FSLibrary::Error("Animación no encontrada en el fichero de acciones.");
 
 	list<string> files;
 	list<int*> sequences;
@@ -95,7 +95,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 		}
 
 		if (steps.empty())
-			CLibrary::Error("Secuencia de animación sin al menos 1 paso en el arbol de acciones.");
+			FSLibrary::Error("Secuencia de animación sin al menos 1 paso en el arbol de acciones.");
 
 		int* seq = alloc(int,steps.size());
 
@@ -114,7 +114,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 	}
 
 	if (sequences.empty() || sequences.size()!=limiteSeq.size() || sequences.size()!=flags.size() || sequences.size()!=files.size()) {
-		CLibrary::Error("Conflicto generado en la captura de la animación.");
+		FSLibrary::Error("Conflicto generado en la captura de la animación.");
 	}
 
 	this->num=sequences.size();
@@ -134,7 +134,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 	}
 
 	if (!limiteSeq.empty() || !flags.empty() || !files.empty() || !sequences.empty())
-		CLibrary::Error("El buffer de creación de la animación no ha sido vaciado.");
+		FSLibrary::Error("El buffer de creación de la animación no ha sido vaciado.");
 
 	flags.clear();
 	sequences.clear();
@@ -145,7 +145,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 
 void CAnimation::aliasFileAnimation(std::string &file,const char* owner) {
 	TiXmlDocument xmldoc("resources/animationalias.xml");
-	if (!xmldoc.LoadFile()) {	 CLibrary::Error("animationalias.xml",TE_fileExists); }
+	if (!xmldoc.LoadFile()) {	 FSLibrary::Error("animationalias.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChild());
 
@@ -165,5 +165,5 @@ void CAnimation::aliasFileAnimation(std::string &file,const char* owner) {
 	}
 
 	if (!animAlias)
-		CLibrary::Error("El alias reclamado no se corresponde con ninguna animación registrada.");
+		FSLibrary::Error("El alias reclamado no se corresponde con ninguna animación registrada.");
 }

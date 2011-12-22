@@ -5,7 +5,7 @@
 #include "FSScreen.h"
 
 //constructor
-CMenuAGameInterface::CMenuAGameInterface(CMessageHandler * pmhParent) : CEngine(pmhParent)
+CMenuAGameInterface::CMenuAGameInterface(FSMessageHandler * pmhParent) : FSEngine(pmhParent)
 {
 	pushed=false;
 	file=0;
@@ -22,7 +22,7 @@ CMenuAGameInterface::~CMenuAGameInterface()
 //initialization
 int CMenuAGameInterface::onInit() {
 
-	if (CEngine::onInit() == FRACASO)
+	if (FSEngine::onInit() == FRACASO)
 		return FRACASO;
 
 #ifdef LOG_SISTEMA
@@ -35,7 +35,7 @@ int CMenuAGameInterface::onInit() {
 
 	dest.set(22,25);
 
-	CScreen::locateRenderScene();
+	FSScreen::locateRenderScene();
 
 	texts.push_back("Continuar");
 	texts.push_back("Modo de Pantalla : ");
@@ -50,7 +50,7 @@ int CMenuAGameInterface::onInit() {
 	}
 
 	char c[32];
-	if (!CScreen::isFullscreen())
+	if (!FSScreen::isFullscreen())
 		sprintf(c,"Modo Ventana");
 	else
 		sprintf(c,"Pantalla Completa");
@@ -73,19 +73,19 @@ int CMenuAGameInterface::onInit() {
 //idle. Main loop.
 int CMenuAGameInterface::onIdle()
 {
-	CScreen::clear();
+	FSScreen::clear();
 
-	CScreen::locateRenderScene(0,0,RESOLUCION_X*2,RESOLUCION_Y*2);
+	FSScreen::locateRenderScene(0,0,RESOLUCION_X*2,RESOLUCION_Y*2);
 
-	CPoint m = dest;
+	FSPoint m = dest;
 
-	CScreen::pushMatrix();
+	FSScreen::pushMatrix();
 
-	CScreen::scale(2.0,2.0,1.0);
+	FSScreen::scale(2.0,2.0,1.0);
 
 	CImg.get(file)->get(0)->put(m);
 
-	CScreen::popMatrix();
+	FSScreen::popMatrix();
 
 	Write.render();
 	
@@ -103,12 +103,12 @@ int CMenuAGameInterface::onExit()
 	printf("\nMenuA termina.\n\n");
 #endif
 
-	return CEngine::onExit();
+	return FSEngine::onExit();
 
 }
 
-CEngine* CMenuAGameInterface::setPrevious(CEngine* newE) {
-	CEngine* ret = previous;
+FSEngine* CMenuAGameInterface::setPrevious(FSEngine* newE) {
+	FSEngine* ret = previous;
 	previous = newE;
 	return ret;
 }
@@ -142,17 +142,17 @@ void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_ESCAPE && pushed) {
-		getParent()->SendMessage(CLibrary::MSGID_RunEngine,(void*)previous);
-		getParent()->SendMessage(CLibrary::MSGID_KillEngine,(void*)this);
+		getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
+		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
 	} else if (sym==SDLK_RETURN && pushed) {
 		if (opcion == 0) {
-			getParent()->SendMessage(CLibrary::MSGID_RunEngine,(void*)previous);
-			getParent()->SendMessage(CLibrary::MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
+			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
 		}	else if (opcion == 1) {
-			CScreen::ToggleFullscreen();
+			FSScreen::ToggleFullscreen();
 
 			char c[32];
-			if (!CScreen::isFullscreen())
+			if (!FSScreen::isFullscreen())
 				sprintf(c,"Modo Ventana");
 			else
 				sprintf(c,"Pantalla Completa");
@@ -161,17 +161,17 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 				Write.erase(y);
 				y=Write.line(0,232,70,"%s",c);
 			} catch (...) {
-				CLibrary::Error("MenuA IdTexts vector bad access");
+				FSLibrary::Error("MenuA IdTexts vector bad access");
 			}
 		
 		} else if (opcion == 2) {
 			int aux = Chrono.setInterval(0,true);
 			if (aux == 0)	 {
 				aux=16;
-				CScreen::setDoublebuffer(true);
+				FSScreen::setDoublebuffer(true);
 			} else {
 				aux=0;
-				CScreen::setDoublebuffer(false);
+				FSScreen::setDoublebuffer(false);
 			}
 
 			char c[32];
@@ -191,15 +191,15 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 				Write.erase(y);
 				y=Write.line(0,110,100,"%s",c);
 			} catch (...) {
-				CLibrary::Error("MenuA IdTexts vector bad access");
+				FSLibrary::Error("MenuA IdTexts vector bad access");
 			}
 		} else if (opcion == 3) {
-			getParent()->SendMessage(CLibrary::MSGID_KillEngine,(void*)this);
-			getParent()->SendMessage(CLibrary::MSGID_Restart);
+			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLibrary::MSGID_Restart);
 			
 		} else if (opcion == 4) {
-			getParent()->SendMessage(CLibrary::MSGID_KillEngine,(void*)this);
-			getParent()->SendMessage(CLibrary::MSGID_Exit);
+			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLibrary::MSGID_Exit);
 		}
 		
 		pushed=false;

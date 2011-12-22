@@ -7,7 +7,7 @@
 
 #define MARGEN 20
 
-CTextBox::CTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) : 
+FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) : 
 file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
 timer(Chrono.getTick()), step(0), maxStep(0)	{
 
@@ -51,7 +51,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 		int minx,maxy,advance;
 
 		if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance)== -1)
-			CLibrary::Error("TTF_GlyphMetrics fallo.");
+			FSLibrary::Error("TTF_GlyphMetrics fallo.");
 
 		if (newChar == ' ' ) {
 			const char* caux = allText.c_str();
@@ -60,7 +60,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
 				if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
-					CLibrary::Error("TTF_GlyphMetrics fallo.");
+					FSLibrary::Error("TTF_GlyphMetrics fallo.");
 
 				cuenta += (float)minx;
 
@@ -87,11 +87,11 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 			SChar newT;
 
-			newT.p = new CFloatPoint(currentX+(float)minx,currentY-(float)maxy);
+			newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
 			currentX += (float)advance;
 
 			if (fuente->render.find(newChar)==fuente->render.end()) {
-				fuente->render[newChar] = new CImage(CImage::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
+				fuente->render[newChar] = new FSImage(FSImage::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
 			}
 
 			newT.glyph=newChar;
@@ -111,7 +111,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 }
 
-CTextBox::~CTextBox() {
+FSTextBox::~FSTextBox() {
 	deleteBox();
 
 	if (fx)
@@ -130,7 +130,7 @@ CTextBox::~CTextBox() {
 	Write.unloadFont(Write.searchFont(fuente->fuente));
 }
 
-int CTextBox::update() {
+int FSTextBox::update() {
 
 	if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_BOX )) {
 		box->color(fx->red,fx->green,fx->blue,fx->alpha);
@@ -175,33 +175,33 @@ int CTextBox::update() {
 
 }
 
-void CTextBox::deleteBox() {
+void FSTextBox::deleteBox() {
 	if (box)
-		CScreen::imageToDelete.push_back(box); // delete box;
+		FSScreen::imageToDelete.push_back(box); // delete box;
 	box=NULL;
 }
 
 
 
-void CTextBox::createBox() {
+void FSTextBox::createBox() {
 	if (box) {
-		CLibrary::Error("Ya existe el fondo de la caja que se pretende crear.");
+		FSLibrary::Error("Ya existe el fondo de la caja que se pretende crear.");
 		return;
 	}
 
 	SDL_Surface *surface, *aux_surf;
 
-	aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,CScreen::getBpp(),0,0,255,0);
-	if (!aux_surf)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
+	aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,FSScreen::getBpp(),0,0,255,0);
+	if (!aux_surf)	FSLibrary::Error("No se ha creado bien la superficie para la TextBox.");
 	surface = SDL_DisplayFormat(aux_surf);
-	if (!surface)	CLibrary::Error("No se ha creado bien la superficie para la TextBox.");
+	if (!surface)	FSLibrary::Error("No se ha creado bien la superficie para la TextBox.");
 	SDL_FreeSurface(aux_surf);
 	SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
 
-	box = new CImage(CImage::toSCanvas(surface));
+	box = new FSImage(FSImage::toSCanvas(surface));
 }
 
-int CTextBox::finish() {
+int FSTextBox::finish() {
 	int ret = -1;
 	if (next!=-1) {
 

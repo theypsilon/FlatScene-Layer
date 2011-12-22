@@ -8,7 +8,7 @@
 #include <list>
 #include <string>
 
-class CMap : public CUniverse {
+class CMap : public FSUniverse {
 private:
 
 	Uint32 mapHeight;
@@ -50,8 +50,8 @@ public:
 	virtual void unload();
 	virtual string& getName();
 
-	virtual int incActor(CActor* act);
-	virtual int decActor(CActor* act);
+	virtual int incActor(FSActor* act);
+	virtual int decActor(FSActor* act);
 
 	virtual Uint32 getW();
 	virtual Uint32 getH();

@@ -3,7 +3,7 @@
 #define __POINT_H__
 
 //point class
-class CPoint  
+class FSPoint  
 {
 private:
 	//x and y
@@ -11,11 +11,11 @@ private:
 	int m_y ;
 public:
 	//constructor
-	CPoint ( int x = 0 , int y  = 0 ) ;
-	CPoint ( CPoint& pt ) ;
+	FSPoint ( int x = 0 , int y  = 0 ) ;
+	FSPoint ( FSPoint& pt ) ;
 
 	//destructor
-	virtual ~CPoint ( ) ;
+	virtual ~FSPoint ( ) ;
 
 	//properties
 	int& X ( ) ;
@@ -27,44 +27,44 @@ public:
 	void setY ( int y ) ;
 
 	//setter
-	CPoint& set ( int x , int y ) ;
-	CPoint& copy ( CPoint& pt ) ;
+	FSPoint& set ( int x , int y ) ;
+	FSPoint& copy ( FSPoint& pt ) ;
 
 	//move
-	CPoint& move ( int dx , int dy ) ;
-	virtual CPoint& add ( CPoint& pt ) ;
-	virtual CPoint& subtract ( CPoint& pt ) ;
+	FSPoint& move ( int dx , int dy ) ;
+	virtual FSPoint& add ( FSPoint& pt ) ;
+	virtual FSPoint& subtract ( FSPoint& pt ) ;
 	
 	//scale
-	virtual CPoint& scale ( int scalar ) ;
+	virtual FSPoint& scale ( int scalar ) ;
 
 	//distance
-	virtual int distance ( CPoint& pt ) ;
+	virtual int distance ( FSPoint& pt ) ;
 
 	//operators
 	//assignment
-	CPoint& operator = ( CPoint& pt ) ;
-	CPoint& operator += ( CPoint& pt ) ;
-	CPoint& operator -= ( CPoint& pt ) ;
-	CPoint& operator *= ( int scalar ) ;
-	CPoint& operator /= ( int scalar ) ;
+	FSPoint& operator = ( FSPoint& pt ) ;
+	FSPoint& operator += ( FSPoint& pt ) ;
+	FSPoint& operator -= ( FSPoint& pt ) ;
+	FSPoint& operator *= ( int scalar ) ;
+	FSPoint& operator /= ( int scalar ) ;
 
 	//unary
-	CPoint operator - ( ) ;
-	CPoint operator + ( ) ;
+	FSPoint operator - ( ) ;
+	FSPoint operator + ( ) ;
 
-	CPoint operator + ( CPoint& pt ) ;
-	CPoint operator - ( CPoint& pt ) ;
-	CPoint operator * ( int scalar ) ;
-	CPoint operator / ( int scalar ) ;
+	FSPoint operator + ( FSPoint& pt ) ;
+	FSPoint operator - ( FSPoint& pt ) ;
+	FSPoint operator * ( int scalar ) ;
+	FSPoint operator / ( int scalar ) ;
 
 	//comparison
-	bool operator == ( CPoint& pt ) ;
-	bool operator != ( CPoint& pt ) ;
+	bool operator == ( FSPoint& pt ) ;
+	bool operator != ( FSPoint& pt ) ;
 
 };
 
-CPoint operator * ( int scalar , CPoint& pt ) ;
+FSPoint operator * ( int scalar , FSPoint& pt ) ;
 
 //sentinel
 #endif

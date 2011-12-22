@@ -13,12 +13,12 @@
 
 using namespace std;
 
-class CCamera : public CMessageHandler {
+class FSCamera : public FSMessageHandler {
 protected:
 	int x,y;
-	CActor* target;
-	CUniverse* uni;
-	CRectangle* area;
+	FSActor* target;
+	FSUniverse* uni;
+	FSRectangle* area;
 
 	bool rendering;
 
@@ -38,32 +38,32 @@ protected:
 	static void procRendPop(void* pointer);
 public:
 	
-	CCamera(CActor* target,CRectangle* area,CMessageHandler * pmhParent=NULL);
-	virtual ~CCamera();
+	FSCamera(FSActor* target,FSRectangle* area,FSMessageHandler * pmhParent=NULL);
+	virtual ~FSCamera();
 	virtual int loadUniverse();
-	virtual CUniverse* getUniverse();
+	virtual FSUniverse* getUniverse();
 	virtual int unloadUniverse();
 	virtual int resyncUniverse();
 	virtual bool isOpened();
 
 	int& CX();
 	int& CY();
-	CActor* Target();
-	virtual int setTarget(CActor* newTarget);
-	CRectangle* getArea();
+	FSActor* Target();
+	virtual int setTarget(FSActor* newTarget);
+	FSRectangle* getArea();
 
 	virtual int refresh();
 	int render();
-	virtual int reubicate(CRectangle* nArea);
+	virtual int reubicate(FSRectangle* nArea);
 
 	int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
 	int translate(float x, float y, float z);
 	int scale(float x, float y, float z);
 	int color(float red, float green, float blue, float alpha);
-	int color(CColor* col,float alpha=1.0);
+	int color(FSColor* col,float alpha=1.0);
 	
 	int locateRenderScene ( float posx=0, float posy=0, float width=0, float height=0, float zoom = 1.0);
-	int locateRenderScene ( CRectangle* areaSc, float zoom = 1.0);
+	int locateRenderScene ( FSRectangle* areaSc, float zoom = 1.0);
 
 #ifdef MENSAJES_MSGIDS
 	int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);

@@ -1,16 +1,16 @@
 #include "FSSprite.h"
 #include "FSScreen.h"
 
-CSprite::CSprite ( SCanvas pSurface, CPoint* zerocpSource) : CImage(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED) {
+FSSprite::FSSprite ( SCanvas pSurface, FSPoint* zerocpSource) : FSImage(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED) {
 
 	if (zerocpSource==NULL) 
-		cpoint =new CPoint(0,0);
+		cpoint =new FSPoint(0,0);
 	else
 		cpoint = zerocpSource;
 
 }
 
-CSprite::~CSprite ( ) {
+FSSprite::~FSSprite ( ) {
 
 	vector<RectArea*>::iterator iter ;
 	RectArea* area ;
@@ -18,7 +18,7 @@ CSprite::~CSprite ( ) {
 		iter = areas.begin ( ) ;
 		area = *iter ;
 		RectArea::iterator iter2 ;
-		CRectangle* rect;
+		FSRectangle* rect;
 		while ( !area->empty() ) {
 			iter2 = area->begin();
 			rect = *iter2;
@@ -45,11 +45,11 @@ CSprite::~CSprite ( ) {
 	
 }
 
-CImage* CSprite::getImage ( ) {
-	return ( (CImage*) this ) ;
+FSImage* FSSprite::getImage ( ) {
+	return ( (FSImage*) this ) ;
 }
 
-void CSprite::put (CPoint& ptDst ,Uint8 flags) {
+void FSSprite::put (FSPoint& ptDst ,Uint8 flags) {
 	if (flags & 0x001) {
 		ptDst.Y() -= cpoint->Y();
 		ptDst.X() -= getImage()->getWidth() - cpoint->X();
@@ -57,30 +57,30 @@ void CSprite::put (CPoint& ptDst ,Uint8 flags) {
 		ptDst -= *cpoint;
 	}
 
-	CImage::put(ptDst,flags);
+	FSImage::put(ptDst,flags);
 }
 //TODO
 
-void CSprite::setName (const char *newName) {
+void FSSprite::setName (const char *newName) {
 	name=newName;
 }
 
-string CSprite::getName() {
+string FSSprite::getName() {
 	return name;
 }
 
-int CSprite::addRect(int area,CRectangle* rect) {
+int FSSprite::addRect(int area,FSRectangle* rect) {
 	areas[area]->push_back(rect);
 	return (areas[area]->size()-1);
 }
 
-int CSprite::addArea(RectArea* area) {
+int FSSprite::addArea(RectArea* area) {
 	areas.push_back(area);
 	return (areas.size()-1);
 }
 
 
-RectArea* CSprite::getArea (int n ) 
+RectArea* FSSprite::getArea (int n ) 
 {
 #ifdef VECTOR_COMP
 	if ((n<0) || (n >= areas.size()))
@@ -89,7 +89,7 @@ RectArea* CSprite::getArea (int n )
 	return (areas[n]) ;
 }
 
-CRectangle* CSprite::getRect (int n ,int m) 
+FSRectangle* FSSprite::getRect (int n ,int m) 
 {
 #ifdef VECTOR_COMP
 	if ((n<0) || (n >= areas.size()) || (m<0) || (m >= areas[n]->size()))
@@ -98,19 +98,19 @@ CRectangle* CSprite::getRect (int n ,int m)
 	return ((*areas[n])[m]) ;
 }
 
-CPoint* CSprite::getCenter() {
+FSPoint* FSSprite::getCenter() {
 	return cpoint;
 }
 
-void CSprite::replaceCenter(CPoint *c) {
+void FSSprite::replaceCenter(FSPoint *c) {
 	delete cpoint;
 	cpoint = c;
 }
 
-void CSprite::replaceArea(int n,RectArea* area) {
+void FSSprite::replaceArea(int n,RectArea* area) {
 	if (n < areas.size()) {
 		RectArea::iterator iter2 ;
-		CRectangle* rect;
+		FSRectangle* rect;
 		while ( !areas[n]->empty() ) {
 			iter2 = areas[n]->begin();
 			rect = *iter2;
@@ -122,7 +122,7 @@ void CSprite::replaceArea(int n,RectArea* area) {
 	}
 }
 
-void CSprite::replaceRect(int area,int n,CRectangle* rect) {
+void FSSprite::replaceRect(int area,int n,FSRectangle* rect) {
 	if ((area < areas.size()) && (n < areas[area]->size())) {
 		delete (*areas[area])[n];
 		(*areas[area])[n]=rect;
@@ -130,11 +130,11 @@ void CSprite::replaceRect(int area,int n,CRectangle* rect) {
 }
 
 
-int CSprite::size() {
+int FSSprite::size() {
 	return (areas.size());
 }
 
-SpriteOpaque CSprite::isOpaque() {
+SpriteOpaque FSSprite::isOpaque() {
 	if (opaque != SPRITE_OPAQUE_NOT_CHEQUED)
 		return opaque;
 

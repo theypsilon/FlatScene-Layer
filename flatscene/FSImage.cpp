@@ -3,12 +3,12 @@
 
 #include "debugfuncs.h"
 
-CImage::CImage ( SCanvas pSurface ) 
+FSImage::FSImage ( SCanvas pSurface ) 
 {
 	m_pSurface = pSurface;
 }
 
-CImage::~CImage ( ) 
+FSImage::~FSImage ( ) 
 {
 
 	if (m_pSurface.sdl_surf) {
@@ -21,7 +21,7 @@ CImage::~CImage ( )
 	clearSurface();
 }
 
-void CImage::initProcRenders() {
+void FSImage::initProcRenders() {
 
 	procRenders[TR_ROTATION] = procRendRotation;
 	procRenders[TR_TRANSLATION] = procRendTranslation;
@@ -32,18 +32,18 @@ void CImage::initProcRenders() {
 
 }
 
-void CImage::clearSurface ( ) 
+void FSImage::clearSurface ( ) 
 {
 	m_pSurface.bpp = m_pSurface.h = m_pSurface.h2 = m_pSurface.w = m_pSurface.w2 = m_pSurface.tex = 0;
 	m_pSurface.sdl_surf = NULL;
 
 }
 
-SCanvas* CImage::getCanvas() {
+SCanvas* FSImage::getCanvas() {
 	return &m_pSurface;
 }
 
-Uint32 CImage::getPixel ( int x , int y ) 
+Uint32 FSImage::getPixel ( int x , int y ) 
 {
 	SDL_Surface* surface= m_pSurface.sdl_surf;
 	if (surface && surface->w > x && surface->h > y) {
@@ -58,17 +58,17 @@ Uint32 CImage::getPixel ( int x , int y )
 	}
 }
 
-int CImage::getWidth () 
+int FSImage::getWidth () 
 {
 	return ( m_pSurface.w2 );
 }
 
-int CImage::getHeight () 
+int FSImage::getHeight () 
 {
 	return ( m_pSurface.h2 ) ;	
 }
 
-void CImage::put ( CFloatPoint& ptDst, Uint8 flags) 
+void FSImage::put ( FSFloatPoint& ptDst, Uint8 flags) 
 {	
 
 #ifdef MAINRENDERLOOP
@@ -80,7 +80,7 @@ void CImage::put ( CFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_PUSHMATRIX;
 	em->pointer = NULL;
 
-	CScreen::graphicMaterial.push_back(em);
+	FSScreen::graphicMaterial.push_back(em);
 
 	//TRANSLATE
 
@@ -95,7 +95,7 @@ void CImage::put ( CFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_TRANSLATION;
 	em->pointer = (void*) c_init;
 
-	CScreen::graphicMaterial.push_back(em);
+	FSScreen::graphicMaterial.push_back(em);
 
 	// USER DEFINED EFFECTS IN
 
@@ -117,7 +117,7 @@ void CImage::put ( CFloatPoint& ptDst, Uint8 flags)
 
 	em->type = TR_FLOATCANVAS;
 	em->pointer = (void*) new SRenderFloatCanvas(m_pSurface,ptDst,flags);
-	CScreen::graphicMaterial.push_back(em);
+	FSScreen::graphicMaterial.push_back(em);
 
 	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
 
@@ -152,7 +152,7 @@ void CImage::put ( CFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_POPMATRIX;
 	em->pointer = NULL;
 
-	CScreen::graphicMaterial.push_back(em);
+	FSScreen::graphicMaterial.push_back(em);
 
 #else
 
@@ -219,7 +219,7 @@ void CImage::put ( CFloatPoint& ptDst, Uint8 flags)
 
 }
 
-void CImage::put ( CPoint& ptDst, Uint8 flags) 
+void FSImage::put ( FSPoint& ptDst, Uint8 flags) 
 {	
 
 #ifdef MAINRENDERLOOP
@@ -231,7 +231,7 @@ void CImage::put ( CPoint& ptDst, Uint8 flags)
 	em->type = TR_PUSHMATRIX;
 	em->pointer = NULL;
 
-	CScreen::graphicMaterial.push_back(em);
+	FSScreen::graphicMaterial.push_back(em);
 
 	//TRANSLATE
 
@@ -246,7 +246,7 @@ void CImage::put ( CPoint& ptDst, Uint8 flags)
 	em->type = TR_TRANSLATION;
 	em->pointer = (void*) c_init;
 
-	CScreen::graphicMaterial.push_back(em);
+	FSScreen::graphicMaterial.push_back(em);
 
 	// USER DEFINED EFFECTS IN
 
@@ -268,7 +268,7 @@ void CImage::put ( CPoint& ptDst, Uint8 flags)
 
 	em->type = TR_CANVAS;
 	em->pointer = (void*) new SRenderCanvas(m_pSurface,ptDst,flags);
-	CScreen::graphicMaterial.push_back(em);
+	FSScreen::graphicMaterial.push_back(em);
 
 	
 	// USER DEFINED EFFECTS OUT
@@ -292,7 +292,7 @@ void CImage::put ( CPoint& ptDst, Uint8 flags)
 	em->type = TR_POPMATRIX;
 	em->pointer = NULL;
 
-	CScreen::graphicMaterial.push_back(em);
+	FSScreen::graphicMaterial.push_back(em);
 
 
 #else
@@ -360,7 +360,7 @@ void CImage::put ( CPoint& ptDst, Uint8 flags)
 }
 
 
-SDL_Surface* CImage::scaleSurface( SDL_Surface* s_surf, int factor) {
+SDL_Surface* FSImage::scaleSurface( SDL_Surface* s_surf, int factor) {
 
 	SDL_Surface* ret = NULL;
 
@@ -378,7 +378,7 @@ SDL_Surface* CImage::scaleSurface( SDL_Surface* s_surf, int factor) {
 		ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,0,0,0,0);
 
 	else {
-		CLibrary::Error("depth mode not valid",TE_SDL_NOMSG);
+		FSLibrary::Error("depth mode not valid",TE_SDL_NOMSG);
 		return ret;
 
 	}
@@ -417,10 +417,10 @@ SDL_Surface* CImage::scaleSurface( SDL_Surface* s_surf, int factor) {
 	return ret;
 }
 
-SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
+SCanvas FSImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
 	if (pow2(mode) != mode)
-		CLibrary::Error("CCanvas::LoadIMG -> modo erroneo.");
+		FSLibrary::Error("CCanvas::LoadIMG -> modo erroneo.");
 
 	SCanvas pSurface;
 
@@ -428,7 +428,7 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 	SDL_Rect area;
 
 	if (surface == NULL) {
-		CLibrary::Error("CCanvas::LoadIMG -> image Null.");
+		FSLibrary::Error("CCanvas::LoadIMG -> image Null.");
 		pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
 		pSurface.sdl_surf = NULL;
 		return pSurface;
@@ -467,7 +467,7 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 				  0x000000ff);
 		#endif
 		if (image == NULL) {
-			CLibrary::Error("CCanvas::LoadIMG -> image Null.");
+			FSLibrary::Error("CCanvas::LoadIMG -> image Null.");
 			return pSurface;
 		}
 
@@ -638,7 +638,7 @@ SCanvas CImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 }
 
 
-Uint32 CImage::pow2 (Uint32 n) {
+Uint32 FSImage::pow2 (Uint32 n) {
 	Uint32 c=1;
 	while (c < n) 
 		c<<=1;
@@ -646,7 +646,7 @@ Uint32 CImage::pow2 (Uint32 n) {
 	return c;
 }
 
-int CImage::rotate(float angle, float x, float y, float z) {
+int FSImage::rotate(float angle, float x, float y, float z) {
 
 	//SCALE
 
@@ -666,7 +666,7 @@ int CImage::rotate(float angle, float x, float y, float z) {
 
 	return EXITO;
 }
-int CImage::translate(float x, float y, float z) {
+int FSImage::translate(float x, float y, float z) {
 
 	//SCALE
 
@@ -685,7 +685,7 @@ int CImage::translate(float x, float y, float z) {
 
 	return EXITO;
 }
-int CImage::scale(float x, float y, float z) {
+int FSImage::scale(float x, float y, float z) {
 
 	//SCALE
 
@@ -705,7 +705,7 @@ int CImage::scale(float x, float y, float z) {
 	return EXITO;
 }
 
-int CImage::color(float red, float green, float blue, float alpha) {
+int FSImage::color(float red, float green, float blue, float alpha) {
 
 	if (red > 1.0) red = 1.0;
 	if (green > 1.0) green = 1.0;
@@ -729,10 +729,10 @@ int CImage::color(float red, float green, float blue, float alpha) {
 
 	SRenderColor * c_fin = new SRenderColor();
 
-	c_fin->red = CScreen::red;//2.0 - red;
-	c_fin->green = CScreen::green;//2.0 - green;
-	c_fin->blue = CScreen::blue;//2.0 - blue;
-	c_fin->alpha =  CScreen::alpha;//2.0 - alpha;
+	c_fin->red = FSScreen::red;//2.0 - red;
+	c_fin->green = FSScreen::green;//2.0 - green;
+	c_fin->blue = FSScreen::blue;//2.0 - blue;
+	c_fin->alpha =  FSScreen::alpha;//2.0 - alpha;
 
 	SToRender* r_fin = new SToRender();
 
@@ -744,21 +744,21 @@ int CImage::color(float red, float green, float blue, float alpha) {
 	return EXITO;
 }
 
-int CImage::color(CColor* col, float alpha) {
+int FSImage::color(FSColor* col, float alpha) {
 
 	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
 }
 
 
-void CImage::procRendPush(void* pointer) {
-	CScreen::pushMatrix();
+void FSImage::procRendPush(void* pointer) {
+	FSScreen::pushMatrix();
 }
 
-void CImage::procRendPop(void* pointer) {
-	CScreen::popMatrix();
+void FSImage::procRendPop(void* pointer) {
+	FSScreen::popMatrix();
 }
 
-void CImage::procRendRotation(void* pointer) {
+void FSImage::procRendRotation(void* pointer) {
 
 	SRenderRotation* n = (SRenderRotation*) pointer;
 
@@ -769,11 +769,11 @@ void CImage::procRendRotation(void* pointer) {
 
 	delete n;
 
-	CScreen::rotate(angle,x,y,z);
+	FSScreen::rotate(angle,x,y,z);
 
 }
 
-void CImage::procRendTranslation(void* pointer) {
+void FSImage::procRendTranslation(void* pointer) {
 
 
 	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
@@ -785,11 +785,11 @@ void CImage::procRendTranslation(void* pointer) {
 
 	delete n;
 
-	CScreen::translate(x,y,z);
+	FSScreen::translate(x,y,z);
 
 }
 
-void CImage::procRendScalation(void* pointer) {
+void FSImage::procRendScalation(void* pointer) {
 
 	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
 
@@ -799,12 +799,12 @@ void CImage::procRendScalation(void* pointer) {
 
 	delete n;
 
-	CScreen::scale(x,y,z);
+	FSScreen::scale(x,y,z);
 
 
 }
 
-void CImage::procRendColor(void* pointer) {
+void FSImage::procRendColor(void* pointer) {
 
 	SRenderColor* n = (SRenderColor*) pointer;
 
@@ -815,6 +815,6 @@ void CImage::procRendColor(void* pointer) {
 
 	delete n;
 
-	CScreen::color(red,green,blue,alpha);
+	FSScreen::color(red,green,blue,alpha);
 
 }

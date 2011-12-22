@@ -2,7 +2,7 @@
 #include "FSControlImages.h"
 #include "FSLibrary.h"
 
-PAnimation::PAnimation(int num ,int* sequence, int sptset ) : CMessageHandler(NULL), control(new PControlAnimation(num,sequence)), img(new PImage(sptset)), _retardo(16) {
+PAnimation::PAnimation(int num ,int* sequence, int sptset ) : FSMessageHandler(NULL), control(new PControlAnimation(num,sequence)), img(new PImage(sptset)), _retardo(16) {
 }
 
 PAnimation::~PAnimation() {
@@ -18,7 +18,7 @@ void PAnimation::paso_a_paso() {
 	img->dibujar(control->avanzar());
 }
 
-CSprite* PAnimation::paso_a_paso_spt() {
+FSSprite* PAnimation::paso_a_paso_spt() {
 	return img->dame(control->avanzar());
 }
 
@@ -56,10 +56,10 @@ PImage::~PImage() {
 
 }
 void PImage::dibujar(int spt) {
-	CPoint pt(100,100);
+	FSPoint pt(100,100);
 	CImg.get(sptSet)->get(spt)->put(pt);
 }
 
-CSprite* PImage::dame(int spt) {
+FSSprite* PImage::dame(int spt) {
 	return CImg.get(sptSet)->get(spt);
 }

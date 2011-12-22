@@ -3,9 +3,9 @@
 
 // Library.h es necesario para el manejo de errores.
 
-CCameraOS::CCameraOS(CActor* target, CRectangle* area,CMessageHandler * pmhParent) :
+CCameraOS::CCameraOS(FSActor* target, FSRectangle* area,FSMessageHandler * pmhParent) :
 // Se ha de llamar a la clase Base para una correcta inicialización
-CCamera(target,area,pmhParent) {
+FSCamera(target,area,pmhParent) {
 	
 	// TODO
 
@@ -60,7 +60,7 @@ int CCameraOS::resyncUniverse() {
 	return EXITO;
 }
 
-int CCameraOS::setTarget(CActor* newTarget) {
+int CCameraOS::setTarget(FSActor* newTarget) {
 
 	/*		IMPLEMENTACIÓN POR DEFECTO */
 	
@@ -88,7 +88,7 @@ int CCameraOS::refresh() {
 
 	if (target) {
 
-		CPoint p = target->renderPoint;
+		FSPoint p = target->renderPoint;
 
 		target->getSprite()->put(p);
 

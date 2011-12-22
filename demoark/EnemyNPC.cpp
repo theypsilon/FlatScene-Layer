@@ -1,7 +1,7 @@
 #include "EnemyNPC.h"
 #include "FSScreen.h"
 
-CEnemyNPC::CEnemyNPC(CMessageHandler * pmhParent) : CEnemy("E0",pmhParent) {
+CEnemyNPC::CEnemyNPC(FSMessageHandler * pmhParent) : CEnemy("E0",pmhParent) {
 	m_Scrollxy.set(100,100,0);
 }
 
@@ -16,9 +16,9 @@ CEnemyNPC::~CEnemyNPC() {
 	}
 }
 
-void CEnemyNPC::draw(CPoint& offset) {
+void CEnemyNPC::draw(FSPoint& offset) {
 
-	CColor c = CColor::White();
+	FSColor c = FSColor::White();
 
 	getSprite()->color(&c,0.5);
 

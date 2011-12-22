@@ -6,15 +6,15 @@
  
 using namespace std;
 
-class CFreezeGameInterface : public CEngine  
+class CFreezeGameInterface : public FSEngine  
 {
 private:
 	bool pushed;
 
-	CEngine* previous;
+	FSEngine* previous;
 public:
 
-	CFreezeGameInterface(CMessageHandler * pmhParent=NULL);
+	CFreezeGameInterface(FSMessageHandler * pmhParent=NULL);
 
 	virtual ~CFreezeGameInterface();
 
@@ -25,7 +25,7 @@ public:
 	virtual int onExit();
 
 
-	CEngine* setPrevious(CEngine*);
+	FSEngine* setPrevious(FSEngine*);
 
 	
 	void onKeyFreeze(SDL_Event*);

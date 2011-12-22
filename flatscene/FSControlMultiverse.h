@@ -6,30 +6,30 @@
 #include <map>
 #include <string>
 
-typedef  std::list<CUniverse*> UniverseCollection;
-typedef map<CMessageHandler*,UniverseCollection*> MultiverseByAdmin;
+typedef  std::list<FSUniverse*> UniverseCollection;
+typedef map<FSMessageHandler*,UniverseCollection*> MultiverseByAdmin;
 
-class CControlMultiverse {
+class FSControlMultiverse {
 private:
-	CMessageHandler* admin;	
+	FSMessageHandler* admin;	
 	MultiverseByAdmin session;
 	UniverseCollection* unisCurrent;
 
-	CMessageHandler* setAdmin(CMessageHandler* newAdmin);
+	FSMessageHandler* setAdmin(FSMessageHandler* newAdmin);
 
-	static CControlMultiverse* singleton;
+	static FSControlMultiverse* singleton;
 
 	bool working;
 
-	friend class CUniverse;
+	friend class FSUniverse;
 public:
-	CControlMultiverse();
-	~CControlMultiverse();
+	FSControlMultiverse();
+	~FSControlMultiverse();
 
-	CUniverse* add(CUniverse* uni,Uint8 slot=0);
-	CUniverse* universeNamed(string uniName,Uint8 slot=0);
-	CUniverse* universeNamed(const char* uniName,Uint8 slot=0);
-	void erase(CUniverse* uniKilled);
+	FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
+	FSUniverse* universeNamed(string uniName,Uint8 slot=0);
+	FSUniverse* universeNamed(const char* uniName,Uint8 slot=0);
+	void erase(FSUniverse* uniKilled);
 	void clear();
 	int size();
 
@@ -37,6 +37,6 @@ public:
 	UniverseCollection::iterator end();
 };
 
-extern CControlMultiverse CMultiverse;
+extern FSControlMultiverse CMultiverse;
 
 #endif

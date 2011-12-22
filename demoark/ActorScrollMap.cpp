@@ -6,10 +6,10 @@
 #include "FSUniverse.h"
 #include "tests.h"
 
-Uint32 CActorScrollMap::MSGID_Damage=CMessageHandler::getNextMSGID();
+Uint32 CActorScrollMap::MSGID_Damage=FSMessageHandler::getNextMSGID();
 
-CActorScrollMap::CActorScrollMap(const char* creature,CMessageHandler * pmhParent) : 
-CActor(creature,pmhParent), dirx(0), diry(1), garbage(NULL),
+CActorScrollMap::CActorScrollMap(const char* creature,FSMessageHandler * pmhParent) : 
+FSActor(creature,pmhParent), dirx(0), diry(1), garbage(NULL),
 actActual(NULL), actUltimo(NULL), actNeutro(NULL), actUltimoMovimiento(NULL), 
 upfloor(false), downfloor(false), rutinaColision(CRutinaColision::collisionFactory()),
 placeInMA(NULL) {
@@ -29,7 +29,7 @@ void CActorScrollMap::init(list<string>& activationIds)	{
 	// Nodos de Acciones:
 	TiXmlDocument xmldoc("resources/actiontree.xml");
 
-	if (!xmldoc.LoadFile()) CLibrary::Error("actiontree.xml",TE_fileExists);	// Cargamos el archivo con la información referente a los nodos de acción.
+	if (!xmldoc.LoadFile()) FSLibrary::Error("actiontree.xml",TE_fileExists);	// Cargamos el archivo con la información referente a los nodos de acción.
 
 	TiXmlHandle input = TiXmlHandle(xmldoc.FirstChild());
 
@@ -62,7 +62,7 @@ void CActorScrollMap::init(list<string>& activationIds)	{
 	}
 
 	if (!actionTree.mix())
-		CLibrary::Error("Error en la fase de mezcla del grafo de acciones");
+		FSLibrary::Error("Error en la fase de mezcla del grafo de acciones");
 
 	// actNeutro será la acciónd e partida.
 	actNeutro = actionTree.getNeutro();
@@ -78,9 +78,9 @@ void CActorScrollMap::init(list<string>& activationIds)	{
 
 }
 
-void CActorScrollMap::draw(CPoint& offset) {
+void CActorScrollMap::draw(FSPoint& offset) {
 
-	CPoint paux(m_Scrollxy.X(),m_Scrollxy.Y());
+	FSPoint paux(m_Scrollxy.X(),m_Scrollxy.Y());
 	paux -= offset;
 
 	getSprite()->put(paux,flags);
@@ -92,7 +92,7 @@ int CActorScrollMap::move()  {
 	if (actActual != NULL)
 		return EXITO;
 	else {
-		CLibrary::Error("ActorScrollMap no inicializado");
+		FSLibrary::Error("ActorScrollMap no inicializado");
 		return FRACASO;
 	}
 
@@ -165,7 +165,7 @@ void CActorScrollMap::selectActionCandidate() {
 			if (!firstN) {
 				char c[1024];
 				sprintf(c,"Mezcla de acciones ha dado mal resultado, responsable: %s con prioridad %d.",secondN->getId(),secondN->getPriority());
-				CLibrary::Error(c,TE_standard);
+				FSLibrary::Error(c,TE_standard);
 			}
 		}
 
@@ -233,8 +233,8 @@ bool CActorScrollMap::collisionMap(int mov_x,int mov_y) {
 }
 
 
-CActor* CActorScrollMap::clone() {
-	CLibrary::Error("CActorScrollMap no implementa un metodo de clonación por defecto.");
+FSActor* CActorScrollMap::clone() {
+	FSLibrary::Error("CActorScrollMap no implementa un metodo de clonación por defecto.");
 	return NULL;
 }
 

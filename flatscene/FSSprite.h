@@ -6,7 +6,7 @@
 #include <vector>
 using namespace std;
 
-typedef vector<CRectangle*> RectArea;
+typedef vector<FSRectangle*> RectArea;
 
 enum SpriteOpaque {
 	SPRITE_OPAQUE_NOT_CHEQUED,
@@ -16,25 +16,25 @@ enum SpriteOpaque {
 };
 
 //CSprite--abstracts Image+Control Point.
-class CSprite : public CImage
+class FSSprite : public FSImage
 {
 private:
 	//Nombre
 	string name;
 	//Lista de Control points
-	CPoint* cpoint;
+	FSPoint* cpoint;
 	vector<RectArea*> areas;
 
 	//lo crea de una imagen fuente, añadiéndole el punto de control 0 si existe.
-	CSprite ( SCanvas pSurface, CPoint* zerocpSource = NULL) ;
+	FSSprite ( SCanvas pSurface, FSPoint* zerocpSource = NULL) ;
 	//destruye el sprite.
-	virtual ~CSprite ( ) ;
+	virtual ~FSSprite ( ) ;
 
 	//devuelve puntero a la Imagen
-	inline CImage* getImage ( ) ;
+	inline FSImage* getImage ( ) ;
 
-	friend class CSpriteset;
-	friend class CScreen;
+	friend class FSSpriteset;
+	friend class FSScreen;
 
 	SpriteOpaque opaque;
 
@@ -48,26 +48,26 @@ public:
 	//devuelve el enésimo punto de control dentro del array de puntos de control.
 	RectArea* getArea(int n);
 
-	CRectangle* getRect(int n,int m);
+	FSRectangle* getRect(int n,int m);
 
-	CPoint* getCenter();
+	FSPoint* getCenter();
 
-	void replaceCenter(CPoint* c);
+	void replaceCenter(FSPoint* c);
 	//añade al final de la lista el punto cpSource
 	int addArea(RectArea* area);
 
-	int addRect(int area,CRectangle* rect);
+	int addRect(int area,FSRectangle* rect);
 	//substituye en el punto de control de la posición n, por cpSource
 	void replaceArea(int n,RectArea* area);
 	//devuelve el número de Control Points que posee el Sprite.
-	void replaceRect(int area,int n,CRectangle* rect);
+	void replaceRect(int area,int n,FSRectangle* rect);
 
 	int size();
 
 	SpriteOpaque isOpaque();
 
 	//renderiza el gráfico.
-	void put ( CPoint& ptDst , Uint8 flags=0) ;
+	void put ( FSPoint& ptDst , Uint8 flags=0) ;
 
 };
 
