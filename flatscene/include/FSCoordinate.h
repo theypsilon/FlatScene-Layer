@@ -3,19 +3,22 @@
 
 #include "FSPoint.h"
 
-class FSCoordinate : public FSPoint {
+template <class T>
+class FS3DPoint : public FS2DPoint<T> {
 private:
-	int m_z;
+	T m_z;
 public:
-	FSCoordinate(int x = 0,int y  = 0, int z = 0);
-	FSCoordinate(FSCoordinate& coord);
+	FS3DPoint(T x=0,T y=0,T z=0);
+	FS3DPoint(FS3DPoint<T>& coord);
 
-	int& Z();
-	inline int getZ() const ;
-	void setZ(int z) ;
+	T& Z();
+	inline T getZ() const ;
+	void setZ(T z) ;
 
-	FSCoordinate& set(int x,int y,int z);
-	int FSCoordinate::distance ( FSCoordinate& coord );
+	FS3DPoint<T>& set(T x,T y,T z);
+	T distance ( FS3DPoint<T>& coord );
 };
+
+typedef FS3DPoint<int> FSCoordinate;
 
 #endif

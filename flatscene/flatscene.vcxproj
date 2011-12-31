@@ -97,7 +97,6 @@
     <ClCompile Include="src\FSControlOutputText.cpp" />
     <ClCompile Include="src\FSCoordinate.cpp" />
     <ClCompile Include="src\FSEngine.cpp" />
-    <ClCompile Include="src\FSFloatPoint.cpp" />
     <ClCompile Include="src\FSImage.cpp" />
     <ClCompile Include="src\FSLibrary.cpp" />
     <ClCompile Include="src\FSMessageHandler.cpp" />
@@ -125,7 +124,6 @@
     <ClInclude Include="include\FSCoordinate.h" />
     <ClInclude Include="include\FSdefinitions.h" />
     <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSFloatPoint.h" />
     <ClInclude Include="include\FSImage.h" />
     <ClInclude Include="include\FSLibrary.h" />
     <ClInclude Include="include\FSMessageHandler.h" />

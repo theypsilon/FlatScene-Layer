@@ -1,50 +1,47 @@
 #include "FSCoordinate.h"
 #include <math.h>
 
-//constructor
-FSCoordinate::FSCoordinate ( int x , int y , int z ) : FSPoint(x,y)
-{
-	//set the x and y of the Coordinate
+template <typename T>
+FS3DPoint<T>::FS3DPoint ( T x , T y , T z ) : FSPoint(x,y) {
 	setZ( z );
 }
 
-FSCoordinate::FSCoordinate ( FSCoordinate& coord ) 
-{
-	//set x and y of the Coordinate
+template <typename T>
+FS3DPoint<T>::FS3DPoint ( FS3DPoint<T>& coord ) {
 	setX ( coord.getX ( ) ) ;
 	setY ( coord.getY ( ) ) ;
 	setZ ( coord.getZ ( ) ) ;
 }
 
-int& FSCoordinate::Z ( )
-{
+template <typename T>
+T& FS3DPoint<T>::Z ( ) {
 	return ( m_z );
 }
 
-int FSCoordinate::getZ() const {
+template <typename T>
+T FS3DPoint<T>::getZ() const {
 	return (m_z);
 }
 
-void FSCoordinate::setZ( int z) {
+template <typename T>
+void FS3DPoint<T>::setZ( T z) {
 	m_z= z;
 }
 
-//setter
-FSCoordinate& FSCoordinate::set ( int x , int y , int z ) 
-{
-	//set x and y
+template <typename T>
+FS3DPoint<T>& FS3DPoint<T>::set ( T x , T y , T z ) {
 	X ( ) = x ;
 	Y ( ) = y ;
 	Z ( ) = z ;
-	//return this Coordinate
 	return ( *this ) ;
 }
-//distance
-int FSCoordinate::distance ( FSCoordinate& coord ) 
-{
-	//calculate distance
-	int distance = X ( ) * X ( ) + Y ( ) * Y ( ) + Z ( ) * Z ( ) ;
-	distance = ( int ) sqrt ( (float) distance ) ;
-	//return the distance
-	return ( distance ) ;
+
+template <typename T>
+T FS3DPoint<T>::distance ( FS3DPoint<T>& coord ) {
+	T d_x = pt.X() > X() ? pt.X() - X() : X() - pt.X();
+	T d_y = pt.Y() > Y() ? pt.Y() - Y() : Y() - pt.Y();
+	T d_z = pt.Z() > Z() ? pt.Z() - Z() : Z() - pt.Z();
+
+	T distance = (T) sqrt((long double) (d_x*d_x + d_z*d_z + d_y*d_y))
+	return distance;
 }
