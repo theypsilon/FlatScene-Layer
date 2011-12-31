@@ -3,9 +3,9 @@
 
 template <typename T=int>
 class FS2DPoint {
-private:
-	T m_x ;
-	T m_y ;
+protected:
+	T _x ;
+	T _y ;
 public:
 	FS2DPoint ( T x = 0 , T y  = 0 );
 	FS2DPoint ( FS2DPoint& pt );

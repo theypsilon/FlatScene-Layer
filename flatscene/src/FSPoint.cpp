@@ -14,32 +14,32 @@ FS2DPoint<T>::FS2DPoint(FS2DPoint<T>& pt) {
 
 template <typename T>
 T& FS2DPoint<T>::X() {
-	return m_x;
+	return _x;
 }
 
 template <typename T>
 T& FS2DPoint<T>::Y() {
-	return m_y;
+	return _y;
 }
 
 template <typename T>
 T FS2DPoint<T>::getX() const {
-	return m_x;
+	return _x;
 }
 
 template <typename T>
 T FS2DPoint<T>::getY() const {
-	return m_y;
+	return _y;
 }
 
 template <typename T>
 void FS2DPoint<T>::setX(T x) {
-	m_x = x ;
+	_x = x ;
 }
 
 template <typename T>
 void FS2DPoint<T>::setY(T y) {
-	m_y = y;
+	_y = y;
 }
 
 template <typename T>

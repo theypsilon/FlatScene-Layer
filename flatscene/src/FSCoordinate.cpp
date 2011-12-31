@@ -15,17 +15,17 @@ FS3DPoint<T>::FS3DPoint ( FS3DPoint<T>& coord ) {
 
 template <typename T>
 T& FS3DPoint<T>::Z ( ) {
-	return ( m_z );
+	return ( _z );
 }
 
 template <typename T>
 T FS3DPoint<T>::getZ() const {
-	return (m_z);
+	return (_z);
 }
 
 template <typename T>
 void FS3DPoint<T>::setZ( T z) {
-	m_z= z;
+	_z= z;
 }
 
 template <typename T>

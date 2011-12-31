@@ -5,8 +5,8 @@
 
 template <class T>
 class FS3DPoint : public FS2DPoint<T> {
-private:
-	T m_z;
+protected:
+	T _z;
 public:
 	FS3DPoint(T x=0,T y=0,T z=0);
 	FS3DPoint(FS3DPoint<T>& coord);
