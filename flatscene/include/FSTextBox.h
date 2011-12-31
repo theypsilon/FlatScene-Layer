@@ -2,7 +2,7 @@
 #define __TEXTT_BOX_H__
 
 #include "FSMessageHandler.h"
-#include "FSFloatPoint.h"
+#include "FSPoint.h"
 #include "FSImage.h"
 #include <list>
 #include <stack>
@@ -23,7 +23,7 @@ struct SFont {
 
 struct SChar { 
 	Uint16 glyph;
-	FSFloatPoint* p;
+	FS2DPoint<double>* p;
 };
 
 struct SLineText{ 

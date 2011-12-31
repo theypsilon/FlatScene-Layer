@@ -8,7 +8,6 @@
 #include "FSSprite.h"
 #include "FSColor.h"
 #include "FSPoint.h"
-#include "FSFloatPoint.h"
 #include "FSdefinitions.h"
 #include "FSTextBox.h"
 

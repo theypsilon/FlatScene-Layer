@@ -87,7 +87,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 			SChar newT;
 
-			newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
+			newT.p = new FS2DPoint<double>(currentX+(float)minx,currentY-(float)maxy);
 			currentX += (float)advance;
 
 			if (fuente->render.find(newChar)==fuente->render.end()) {

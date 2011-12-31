@@ -563,7 +563,7 @@ void FSScreen::procRendFloatCanvas(void* pointer) {
 
 	SCanvas m_pSurface = (n->canvas);
 	Uint8 flags = n->flags;
-	FSFloatPoint ptDst = n->ptDst;
+	FS2DPoint<double> ptDst = n->ptDst;
 
 	delete n;
 

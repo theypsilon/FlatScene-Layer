@@ -68,7 +68,7 @@ int FSImage::getHeight ()
 	return ( m_pSurface.h2 ) ;	
 }
 
-void FSImage::put ( FSFloatPoint& ptDst, Uint8 flags) 
+void FSImage::put ( FS2DPoint<double>& ptDst, Uint8 flags) 
 {	
 
 #ifdef MAINRENDERLOOP

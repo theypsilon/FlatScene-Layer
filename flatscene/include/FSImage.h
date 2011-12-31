@@ -11,7 +11,7 @@
 #include "SDL_image.h"
 #include "FSdefinitions.h"
 #include "FSRectangle.h"
-#include "FSFloatPoint.h"
+#include "FSPoint.h"
 #include "FSColor.h"
 #include <string>
 #include <list>
@@ -89,7 +89,7 @@ public:
 
 	//render image
 	void put ( FSPoint& ptDst , Uint8 flags=0) ;
-	void put ( FSFloatPoint& ptDst , Uint8 flags=0) ;
+	void put ( FS2DPoint<double>& ptDst , Uint8 flags=0) ;
 
 	int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
 	int translate(float x, float y, float z);

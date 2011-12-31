@@ -54,7 +54,8 @@ void FSSprite::put (FSPoint& ptDst ,Uint8 flags) {
 		ptDst.Y() -= cpoint->Y();
 		ptDst.X() -= getImage()->getWidth() - cpoint->X();
 	} else {
-		ptDst -= *cpoint;
+		ptDst.X() -= cpoint->X();
+		ptDst.Y() -= cpoint->Y();
 	}
 
 	FSImage::put(ptDst,flags);
