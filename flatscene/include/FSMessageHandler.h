@@ -21,25 +21,25 @@
 
 typedef void* MSGPARM;
 
-class FSMessage {
-private:
-	Uint32 MsgID;
-	MSGPARM Parm1;
-	MSGPARM Parm2;
-
-	FSMessage(Uint32 MsgID=0,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL);
-	virtual ~FSMessage();
-	virtual Uint32 getMsgID();
-	virtual MSGPARM getParm(int n);
-
-	friend class FSMessageHandler;
-	friend class FSLibrary;
-};
-
-typedef std::list<FSMessage*> MessageCollection;
-
 class FSMessageHandler  {
 private:
+	class FSMessage {
+	private:
+		Uint32 MsgID;
+		MSGPARM Parm1;
+		MSGPARM Parm2;
+
+		FSMessage(Uint32 MsgID=0,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL);
+		virtual ~FSMessage();
+		virtual Uint32 getMsgID();
+		virtual MSGPARM getParm(int n);
+
+		friend class FSMessageHandler;
+		friend class FSLibrary;
+	};
+
+	typedef std::list<FSMessage*> MessageCollection;
+
 	FSMessageHandler * m_pmhParent;
 
 	static Uint32 s_NextMSGID;

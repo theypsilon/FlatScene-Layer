@@ -9,17 +9,22 @@
 #include <map>
 #include <string>
 
-typedef struct { 
+enum TypeColorTBox {
+	TCTB_ALL,
+	TCTB_TEXT,
+	TCTB_BOX
+};
+struct SFont { 
 	string cadena;
 	TTF_Font* fuente;
 	map<Uint16,FSImage*> render;
 	int size;
-}SFont;
+};
 
-typedef struct { 
+struct SChar { 
 	Uint16 glyph;
 	FSFloatPoint* p;
-}SChar;
+};
 
 struct SLineText{ 
 public:
@@ -28,15 +33,9 @@ public:
 private:
 	SLineText();
 	~SLineText();
-
 	friend struct SText;
 };
 
-enum TypeColorTBox {
-	TCTB_ALL,
-	TCTB_TEXT,
-	TCTB_BOX
-};
 
 struct SEffectText;
 

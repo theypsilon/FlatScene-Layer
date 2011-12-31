@@ -161,18 +161,18 @@ void FSMessageHandler::onRemoveChild(FSMessageHandler* pmhChild) {
 	
 }
 
-FSMessage::FSMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) 
+FSMessageHandler::FSMessage::FSMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) 
 :	MsgID(MsgID) , Parm1(Parm1), Parm2(Parm2) {
 }
 
-FSMessage::~FSMessage() {
+FSMessageHandler::FSMessage::~FSMessage() {
 }
 
-Uint32 FSMessage::getMsgID() {
+Uint32 FSMessageHandler::FSMessage::getMsgID() {
 	return MsgID;
 }
 
-MSGPARM FSMessage::getParm(int n) {
+MSGPARM FSMessageHandler::FSMessage::getParm(int n) {
 	if (n==1) {
 		return Parm1;
 	} else if (n==2) {

@@ -9,18 +9,17 @@ class FSEngine;
 
 using namespace std;
 
-struct STimeData {
-	int msInterval;
-	int msLast;
-	int frameCount;
-
-	STimeData() : msInterval(16), msLast(0), frameCount(0) {
-	};
-};
-
-
 class FSTime {
 private:
+	struct STimeData {
+		int msInterval;
+		int msLast;
+		int frameCount;
+
+		STimeData() : msInterval(16), msLast(0), frameCount(0) {
+		};
+	};
+
 	map<FSEngine*,STimeData> fc;
 
 #ifdef MENSAJES_FPS

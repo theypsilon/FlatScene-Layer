@@ -14,15 +14,15 @@
 
 class FSEngine;
 
+enum TypeText {
+	TT_LINE,
+	TT_BOX
+};
+
 struct SEffectText {
 	GLfloat red,green,blue,alpha;
 	TypeColorTBox boxflags;
 	bool persistent;
-};
-
-enum TypeText {
-	TT_LINE,
-	TT_BOX
 };
 
 struct SText {
@@ -37,7 +37,7 @@ public:
 	SEffectText* fx;
 
 	SText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) {
-			
+
 		fx = NULL;
 		Box = new FSTextBox(file,text,x,y,Lim,ttf_fnt,next);
 		type = TT_BOX;
@@ -71,7 +71,7 @@ public:
 
 };
 
-typedef struct { 
+typedef struct {
 	map<int,SText*> Texts;
 
 	list<int> lastIndexTextAdded;
@@ -80,10 +80,10 @@ typedef struct {
 
 	SDL_Color fgcolor;
 }SData;
- 
 
 class FSControlOutputText {
 private:
+
 	map<FSEngine*,SData*> session;
 
 	SData* data;
