@@ -14,8 +14,8 @@ if ( NOT SDL_FOUND )
 	message ( FATAL ERROR "SDL not found!" )	
 endif ( NOT SDL_FOUND )
 
-file ( GLOB SRCS flatscene/*.cpp )
-file ( GLOB HDRS flatscene/*.cpp )
+file ( GLOB SRCS flatscene/src/*.cpp flatscene/src/tinyxml/*.cpp )
+file ( GLOB HDRS flatscene/include/*.h flatscene/include/tinyxml/*.h )
 
 add_library ( flatscene ${SRCS} ${HDRS} )
 
@@ -37,7 +37,7 @@ file ( GLOB NHDRS demoark/*.h )
 
 add_executable ( testdemoark ${NSRCS} ${NHDRS} )
 
-include_directories ( ./flatscene/ )
+include_directories ( ./flatscene/include/ )
 
 target_link_libraries ( testdemoark 
 	flatscene
