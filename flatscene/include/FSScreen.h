@@ -32,10 +32,10 @@ struct SRenderCanvas {
 
 struct SRenderFloatCanvas {
 	SCanvas canvas;
-	FS2DPoint<double> ptDst;
+	FSFloatPoint ptDst;
 	Uint8 flags;
 
-	SRenderFloatCanvas(SCanvas canvas,FS2DPoint<double> ptDst, Uint8 flags) 
+	SRenderFloatCanvas(SCanvas canvas,FSFloatPoint ptDst, Uint8 flags) 
 	: canvas(canvas), ptDst(ptDst), flags(flags) {
 	}
 };

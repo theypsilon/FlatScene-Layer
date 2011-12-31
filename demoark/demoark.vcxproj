@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Programacion\cLibs\boost_1_46_1;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Programacion\cLibs\boost_1_46_1\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Programacion\cLibs\boost_1_46_1;C:\Programacion\VS Workspace\flatscene - lib\flatscene\include;C:\Programacion\VS Workspace\flatscene - lib\demoark\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Programacion\cLibs\boost_1_46_1\stage\lib;C:\Programacion\VS Workspace\flatscene - lib\flatscene\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -125,6 +125,47 @@
     <ClInclude Include="include\TestOSDesktopInterface.h" />
     <ClInclude Include="include\tests.h" />
     <ClInclude Include="include\TileBG.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Action.cpp" />
+    <ClCompile Include="src\ActionComboDemo0.cpp" />
+    <ClCompile Include="src\ActionComboDemo1.cpp" />
+    <ClCompile Include="src\ActionFight.cpp" />
+    <ClCompile Include="src\ActionMove.cpp" />
+    <ClCompile Include="src\ActionQuiet0.cpp" />
+    <ClCompile Include="src\ActionQuietAuto0.cpp" />
+    <ClCompile Include="src\ActionSimpleDemo0.cpp" />
+    <ClCompile Include="src\ActionWalk0.cpp" />
+    <ClCompile Include="src\ActionWalkAuto0.cpp" />
+    <ClCompile Include="src\ActionXPunto.cpp" />
+    <ClCompile Include="src\ActorMouse.cpp" />
+    <ClCompile Include="src\ActorScrollMap.cpp" />
+    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\CameraOS.cpp" />
+    <ClCompile Include="src\Enemy.cpp" />
+    <ClCompile Include="src\EnemyNPC.cpp" />
+    <ClCompile Include="src\EnemyPunto.cpp" />
+    <ClCompile Include="src\FreezeGameInterface.cpp" />
+    <ClCompile Include="src\GarbageCollector.cpp" />
+    <ClCompile Include="src\LayerBackground.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\MenuAGameInterface.cpp" />
+    <ClCompile Include="src\Node.cpp" />
+    <ClCompile Include="src\OrderGraph.cpp" />
+    <ClCompile Include="src\PAnimation.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\RutinaColision.cpp" />
+    <ClCompile Include="src\ScrollCamera.cpp" />
+    <ClCompile Include="src\TestA0GameInterface.cpp" />
+    <ClCompile Include="src\TestA1GameInterface.cpp" />
+    <ClCompile Include="src\TestA2GameInterface.cpp" />
+    <ClCompile Include="src\TestA3GameInterface.cpp" />
+    <ClCompile Include="src\TestA4GameInterface.cpp" />
+    <ClCompile Include="src\TestA5GameInterface.cpp" />
+    <ClCompile Include="src\TestAGameInterface.cpp" />
+    <ClCompile Include="src\TestBGameInterface.cpp" />
+    <ClCompile Include="src\TestOSDesktopInterface.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

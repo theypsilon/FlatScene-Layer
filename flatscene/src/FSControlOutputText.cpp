@@ -356,7 +356,7 @@ int FSControlOutputText::line(int fuente, int x,int y, const char* text,...) {
 
 				SChar newT;
 
-				newT.p = new FS2DPoint<double>(currentX+(float)minx,currentY-(float)maxy);
+				newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
 				currentX += (float)advance;
 
 				if (t->Line->fuente->render.find(newChar)==t->Line->fuente->render.end()) {

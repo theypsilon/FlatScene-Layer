@@ -23,7 +23,7 @@ struct SFont {
 
 struct SChar { 
 	Uint16 glyph;
-	FS2DPoint<double>* p;
+	FSFloatPoint* p;
 };
 
 struct SLineText{ 

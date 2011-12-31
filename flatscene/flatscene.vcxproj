@@ -41,7 +41,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>lib\</OutDir>
     <TargetName>$(ProjectName)debug</TargetName>
-    <IncludePath>C:\Programacion\cLibs\boost_1_46_1;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Programacion\cLibs\boost_1_46_1;C:\Programacion\VS Workspace\flatscene - lib\flatscene\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Programacion\cLibs\boost_1_46_1\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,6 +136,8 @@
     <ClInclude Include="include\FSTextBox.h" />
     <ClInclude Include="include\FSTime.h" />
     <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\tinyxml\tinystr.h" />
+    <ClInclude Include="include\tinyxml\tinyxml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

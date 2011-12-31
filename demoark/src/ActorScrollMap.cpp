@@ -81,7 +81,8 @@ void CActorScrollMap::init(list<string>& activationIds)	{
 void CActorScrollMap::draw(FSPoint& offset) {
 
 	FSPoint paux(m_Scrollxy.X(),m_Scrollxy.Y());
-	paux -= offset;
+	paux.X() -= offset.X();
+	paux.Y() -= offset.Y();
 
 	getSprite()->put(paux,flags);
 

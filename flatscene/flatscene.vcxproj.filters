@@ -164,5 +164,11 @@
     <ClInclude Include="include\FSUniverse.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
+    <ClInclude Include="include\tinyxml\tinystr.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tinyxml\tinyxml.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
