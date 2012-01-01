@@ -32,8 +32,8 @@ target_link_libraries ( flatscene
 	${OPENGL_LIBRARY}
 )
 
-file ( GLOB NSRCS demoark/*.cpp )
-file ( GLOB NHDRS demoark/*.h )
+file ( GLOB NSRCS demoark/src/*.cpp )
+file ( GLOB NHDRS demoark/include/*.h )
 
 add_executable ( testdemoark ${NSRCS} ${NHDRS} )
 

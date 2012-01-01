@@ -30,18 +30,18 @@ void FS3DPoint<T>::setZ( T z) {
 
 template <typename T>
 FS3DPoint<T>& FS3DPoint<T>::set ( T x , T y , T z ) {
-	X ( ) = x ;
-	Y ( ) = y ;
-	Z ( ) = z ;
+	this->X ( ) = x ;
+	this->Y ( ) = y ;
+	this->Z ( ) = z ;
 	return ( *this ) ;
 }
 
 template <typename T>
 T FS3DPoint<T>::distance ( FS3DPoint<T>& coord ) {
-	T d_x = pt.X() > X() ? pt.X() - X() : X() - pt.X();
-	T d_y = pt.Y() > Y() ? pt.Y() - Y() : Y() - pt.Y();
-	T d_z = pt.Z() > Z() ? pt.Z() - Z() : Z() - pt.Z();
+	T d_x = coord.X() > this->X() ? coord.X() - this->X() : this->X() - coord.X();
+	T d_y = coord.Y() > this->Y() ? coord.Y() - this->Y() : this->Y() - coord.Y();
+	T d_z = coord.Z() > this->Z() ? coord.Z() - this->Z() : this->Z() - coord.Z();
 
-	T distance = (T) sqrt((long double) (d_x*d_x + d_z*d_z + d_y*d_y))
+	T distance = (T) sqrt((long double) (d_x*d_x + d_z*d_z + d_y*d_y));
 	return distance;
 }
