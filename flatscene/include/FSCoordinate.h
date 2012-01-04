@@ -1,71 +1,52 @@
-//sentinel
 #ifndef  __COORDINATE_H__
 #define __COORDINATE_H__
 
 #include "FSPoint.h"
 
-//point class
-class FSCoordinate : public FSPoint{
-private:
-	int m_z ;
-public:
-	//constructor
-	FSCoordinate ( int x = 0 , int y  = 0 , int z = 0) ;
-	FSCoordinate ( FSCoordinate& coord ) ;
+template <class T>
+struct FS3DPoint : public FS2DPoint<T> {
+    using FS2DPoint<T>::x;
+    using FS2DPoint<T>::y;
 
-	//destructor
-	virtual ~FSCoordinate ( ) ;
+	T z;
 
-	int& Z ( ) ;
+	FS3DPoint(T x=0,T y=0,T z=0)
+    : FS2DPoint<T>::FS2DPoint(x,y), z(z) {}
 
-	inline int getZ ( ) const ;
+	FS3DPoint(FS3DPoint<T>& coord) {
+        x = coord.x;
+        y = coord.y;
+        z = coord.z;
+    }
 
-	void setZ ( int z ) ;
+    inline T getZ() const {
+        return z;
+    }
 
+    inline T& Z() {
+        return z;
+    }
 
-	//setter
-	FSCoordinate& set ( int x , int y , int z ) ;
-	FSCoordinate& copy ( FSCoordinate& coord ) ;
+	void setZ(T z) {
+        this->z = z;
+    }
 
-	//move
-	FSCoordinate& move ( int dx , int dy , int dz ) ;
-	FSCoordinate& add ( FSCoordinate& coord ) ;
-	FSCoordinate& subtract ( FSCoordinate& coord ) ;
-	
-	//scale
-	FSCoordinate& scale ( int scalar ) ;
+	FS3DPoint<T>& set(T x,T y,T z) {
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
 
-	//distance
-	int distance ( FSCoordinate& coord ) ;
+	T distance ( FS3DPoint<T>& coord ) {
+        T d_x = coord.x > x ?   coord.x - x :   x - coord.x;
+        T d_y = coord.y > y ?   coord.y - y :   y - coord.y;
+        T d_z = coord.z > z ?   coord.z - z :   z - coord.z;
 
-	//operators
-	//assignment
-	FSCoordinate& operator = ( FSCoordinate& coord ) ;
-	FSCoordinate& operator += ( FSCoordinate& coord ) ;
-	FSCoordinate& operator -= ( FSCoordinate& coord ) ;
-	FSCoordinate& operator += ( FSPoint& pt ) ;
-	FSCoordinate& operator -= ( FSPoint& pt ) ;
-	FSCoordinate& operator *= ( int scalar ) ;
-	FSCoordinate& operator /= ( int scalar ) ;
-
-	//unary
-	FSCoordinate operator - ( ) ;
-	FSCoordinate operator + ( ) ;
-
-	FSCoordinate operator + ( FSCoordinate& coord ) ;
-	FSCoordinate operator - ( FSCoordinate& coord ) ;
-	FSCoordinate operator + ( FSPoint& pt ) ;
-	FSCoordinate operator - ( FSPoint& pt ) ;
-	FSCoordinate operator * ( int scalar ) ;
-	FSCoordinate operator / ( int scalar ) ;
-
-	//comparison
-	bool operator == ( FSCoordinate& coord ) ;
-	bool operator != ( FSCoordinate& coord ) ;
-
+        T distance = (T) sqrt((long double) (d_x*d_x + d_z*d_z + d_y*d_y));
+        return distance;
+    }
 };
 
-FSCoordinate operator * ( int scalar , FSCoordinate& coord ) ;
+typedef FS3DPoint<int> FSCoordinate;
 
-//sentinel
 #endif

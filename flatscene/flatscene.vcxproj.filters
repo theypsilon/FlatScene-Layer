@@ -51,9 +51,6 @@
     <ClCompile Include="src\FSEngine.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSFloatPoint.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
-    </ClCompile>
     <ClCompile Include="src\FSImage.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
@@ -131,9 +128,6 @@
     <ClInclude Include="include\FSEngine.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSFloatPoint.h">
-      <Filter>Archivos de encabezado\Library</Filter>
-    </ClInclude>
     <ClInclude Include="include\FSImage.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
@@ -169,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="include\FSUniverse.h">
       <Filter>Archivos de encabezado\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tinyxml\tinystr.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tinyxml\tinyxml.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

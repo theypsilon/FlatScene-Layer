@@ -41,7 +41,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>lib\</OutDir>
     <TargetName>$(ProjectName)debug</TargetName>
-    <IncludePath>C:\Programacion\cLibs\boost_1_46_1;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Programacion\cLibs\boost_1_46_1;C:\Programacion\VS Workspace\flatscene - lib\flatscene\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Programacion\cLibs\boost_1_46_1\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -97,7 +97,6 @@
     <ClCompile Include="src\FSControlOutputText.cpp" />
     <ClCompile Include="src\FSCoordinate.cpp" />
     <ClCompile Include="src\FSEngine.cpp" />
-    <ClCompile Include="src\FSFloatPoint.cpp" />
     <ClCompile Include="src\FSImage.cpp" />
     <ClCompile Include="src\FSLibrary.cpp" />
     <ClCompile Include="src\FSMessageHandler.cpp" />
@@ -125,7 +124,6 @@
     <ClInclude Include="include\FSCoordinate.h" />
     <ClInclude Include="include\FSdefinitions.h" />
     <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSFloatPoint.h" />
     <ClInclude Include="include\FSImage.h" />
     <ClInclude Include="include\FSLibrary.h" />
     <ClInclude Include="include\FSMessageHandler.h" />
@@ -138,6 +136,8 @@
     <ClInclude Include="include\FSTextBox.h" />
     <ClInclude Include="include\FSTime.h" />
     <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\tinyxml\tinystr.h" />
+    <ClInclude Include="include\tinyxml\tinyxml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,7 +11,7 @@
 #include "SDL_image.h"
 #include "FSdefinitions.h"
 #include "FSRectangle.h"
-#include "FSFloatPoint.h"
+#include "FSPoint.h"
 #include "FSColor.h"
 #include <string>
 #include <list>

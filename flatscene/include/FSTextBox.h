@@ -2,7 +2,7 @@
 #define __TEXTT_BOX_H__
 
 #include "FSMessageHandler.h"
-#include "FSFloatPoint.h"
+#include "FSPoint.h"
 #include "FSImage.h"
 #include <list>
 #include <stack>

@@ -1,70 +1,62 @@
-//sentinel
 #ifndef __POINT_H__
 #define __POINT_H__
 
-//point class
-class FSPoint  
-{
-private:
-	//x and y
-	int m_x ;
-	int m_y ;
-public:
-	//constructor
-	FSPoint ( int x = 0 , int y  = 0 ) ;
-	FSPoint ( FSPoint& pt ) ;
+#include <math.h>
 
-	//destructor
-	virtual ~FSPoint ( ) ;
-
-	//properties
-	int& X ( ) ;
-	int& Y ( ) ;
-
-	inline int getX ( ) const ;
-	inline int getY ( ) const ;
-	void setX ( int x ) ;
-	void setY ( int y ) ;
-
-	//setter
-	FSPoint& set ( int x , int y ) ;
-	FSPoint& copy ( FSPoint& pt ) ;
-
-	//move
-	FSPoint& move ( int dx , int dy ) ;
-	virtual FSPoint& add ( FSPoint& pt ) ;
-	virtual FSPoint& subtract ( FSPoint& pt ) ;
+template <class T=int>
+struct FS2DPoint {
+	T x ;
+	T y ;
 	
-	//scale
-	virtual FSPoint& scale ( int scalar ) ;
+    FS2DPoint ( T x = 0 , T y  = 0 ) 
+    : x(x), y(y) {}
 
-	//distance
-	virtual int distance ( FSPoint& pt ) ;
+	FS2DPoint ( FS2DPoint<T>& pt ) {
+        x = pt.x;
+        y = pt.y;
+    }
 
-	//operators
-	//assignment
-	FSPoint& operator = ( FSPoint& pt ) ;
-	FSPoint& operator += ( FSPoint& pt ) ;
-	FSPoint& operator -= ( FSPoint& pt ) ;
-	FSPoint& operator *= ( int scalar ) ;
-	FSPoint& operator /= ( int scalar ) ;
+	inline T getX() const {
+        return x;
+    }
 
-	//unary
-	FSPoint operator - ( ) ;
-	FSPoint operator + ( ) ;
+	inline T getY() const {
+        return y;
+    }
 
-	FSPoint operator + ( FSPoint& pt ) ;
-	FSPoint operator - ( FSPoint& pt ) ;
-	FSPoint operator * ( int scalar ) ;
-	FSPoint operator / ( int scalar ) ;
+    inline T& X() {
+        return x;
+    }
 
-	//comparison
-	bool operator == ( FSPoint& pt ) ;
-	bool operator != ( FSPoint& pt ) ;
+    inline T& Y() {
+        return y;
+    }
+
+	void setX(T x) {
+        this->x = x;
+    }
+
+	void setY(T y) {
+        this->y = y;
+    }
+
+	FS2DPoint& set(T x,T y) {
+        this->x = x;
+        this->y = y;
+    }
+
+	virtual T distance(FS2DPoint& pt) {
+        T d_x = pt.x > x ? pt.x - x : x - pt.x;
+        T d_y = pt.y > y ? pt.y - y : y - pt.y;
+
+        T distance = (T) sqrt((long double) (d_x * d_x + d_y * d_y));
+
+        return distance;
+    }
 
 };
 
-FSPoint operator * ( int scalar , FSPoint& pt ) ;
+typedef FS2DPoint<int> FSPoint;
+typedef FS2DPoint<float> FSFloatPoint;
 
-//sentinel
 #endif
