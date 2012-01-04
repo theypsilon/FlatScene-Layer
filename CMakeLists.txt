@@ -38,6 +38,7 @@ file ( GLOB NHDRS demoark/include/*.h )
 add_executable ( testdemoark ${NSRCS} ${NHDRS} )
 
 include_directories ( ./flatscene/include/ )
+include_directories ( ./demoark/include/ )
 
 target_link_libraries ( testdemoark 
 	flatscene

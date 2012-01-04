@@ -1,26 +1,59 @@
 #ifndef __POINT_H__
 #define __POINT_H__
 
+#include <math.h>
+
 template <class T=int>
-class FS2DPoint {
-protected:
-	T _x ;
-	T _y ;
-public:
-	FS2DPoint ( T x = 0 , T y  = 0 );
-	FS2DPoint ( FS2DPoint<T>& pt );
+struct FS2DPoint {
+	T x ;
+	T y ;
+	
+    FS2DPoint ( T x = 0 , T y  = 0 ) 
+    : x(x), y(y) {}
 
-	T& X();
-	T& Y();
+	FS2DPoint ( FS2DPoint<T>& pt ) {
+        x = pt.x;
+        y = pt.y;
+    }
 
-	T getX() const;
-	T getY() const;
-	void setX(T x);
-	void setY(T y);
+	inline T getX() const {
+        return x;
+    }
 
-	FS2DPoint& set(T x,T y);
+	inline T getY() const {
+        return y;
+    }
 
-	virtual T distance(FS2DPoint& pt);
+    inline T& X() {
+        return x;
+    }
+
+    inline T& Y() {
+        return y;
+    }
+
+	void setX(T x) {
+        this->x = x;
+    }
+
+	void setY(T y) {
+        this->y = y;
+    }
+
+	FS2DPoint& set(T x,T y) {
+        this->x = x;
+        this->y = y;
+    }
+
+	virtual T distance(FS2DPoint& pt) {
+        T d_x = pt.x > x ? pt.x - x : x - pt.x;
+        T d_y = pt.y > y ? pt.y - y : y - pt.y;
+
+        T distance = (T) sqrt((long double) (d_x * d_x + d_y * d_y));
+
+        return distance;
+    }
+
 };
 
 typedef FS2DPoint<int> FSPoint;
