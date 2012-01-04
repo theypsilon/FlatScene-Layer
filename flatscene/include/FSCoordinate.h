@@ -14,9 +14,9 @@ struct FS3DPoint : public FS2DPoint<T> {
     : FS2DPoint<T>::FS2DPoint(x,y), z(z) {}
 
 	FS3DPoint(FS3DPoint<T>& coord) {
-        this->x = coord.x;
-        this->y = coord.y;
-        this->z = coord.z;
+        x = coord.x;
+        y = coord.y;
+        z = coord.z;
     }
 
     inline T getZ() const {
