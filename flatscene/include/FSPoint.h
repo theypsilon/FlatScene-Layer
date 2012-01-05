@@ -49,9 +49,7 @@ struct FS2DPoint {
         T d_x = pt.x > x ? pt.x - x : x - pt.x;
         T d_y = pt.y > y ? pt.y - y : y - pt.y;
 
-        T distance = (T) sqrt((long double) (d_x * d_x + d_y * d_y));
-
-        return distance;
+        return (d_x * d_x + d_y * d_y);
     }
 
 };

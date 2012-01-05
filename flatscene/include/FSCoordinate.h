@@ -42,8 +42,7 @@ struct FS3DPoint : public FS2DPoint<T> {
         T d_y = coord.y > y ?   coord.y - y :   y - coord.y;
         T d_z = coord.z > z ?   coord.z - z :   z - coord.z;
 
-        T distance = (T) sqrt((long double) (d_x*d_x + d_z*d_z + d_y*d_y));
-        return distance;
+        return (d_x*d_x + d_z*d_z + d_y*d_y);
     }
 };
 
