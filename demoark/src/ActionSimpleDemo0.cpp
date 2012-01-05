@@ -97,7 +97,7 @@ void CActionSimpleDemo0::execute() {
 							r2.W()+=obs->m_Scrollxy.X();
 							r2.Y()+=obs->m_Scrollxy.Y();
 							r2.H()+=obs->m_Scrollxy.Y();
-							if ((r2.Intersect(r1) || r1.Intersect(r2)) && (typeid(*obs)!=typeid(*executor)))
+							if (r2.intersect(r1) && (typeid(*obs)!=typeid(*executor)))
 								presas.push(obs);
 						}				
 					}	

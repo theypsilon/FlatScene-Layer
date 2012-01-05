@@ -4,98 +4,118 @@
 #include "SDL.h"
 #include "FSPoint.h"
 
-//CRectangle--abstract an SDL_Rect
-class FSRectangle  
-{
-private:
-	Sint16 x,y,w,h;
-public:
-	//constructors--direct member assignment
-	FSRectangle ( Sint16 x = 0 , Sint16 y = 0 , Sint16 w = 0 , Sint16 h = 0 ) ;
-	//copy from SDL_Rect
-	FSRectangle ( SDL_Rect rc ) ;
-	//copy from SDL_Rect*
-	FSRectangle ( SDL_Rect* prc ) ;
-	//copy from another CRectangle
-	FSRectangle ( FSRectangle& rc ) ;
-	virtual ~FSRectangle ( ) ;
+/**
+ * FSRect, Rectangle class with absolute coordinates
+ *
+ * (6,1).__
+ *      |  |
+ *      |  |
+ *      |__.(8,4)
+ *
+ */
+template <class T>
+struct FSRect {
+    T x,y,w,h;
 
-	//accessors for x, y, h, and w
-	Sint16& X ( ) ;
-	Sint16& Y ( ) ;
-	Sint16& W ( ) ;
-	Sint16& H ( ) ;
+    FSRect (T x=0, T y=0, T w=0, T h=0):
+        x(x), y(y), w(w), h(h) {}
 
-	//getters
-	Sint16 getX() const;
-	Sint16 getY() const;
-	Sint16 getW() const;
-	Sint16 getH() const;
+    template <class U>
+    FSRect (const U& rc):
+        x((T)rc.x), y((T)rc.y), w((T)rc.w), h((T)rc.h) {}
 
-	//setters
-	void setX(Sint16 x);
-	void setY(Sint16 y);
-	void setW(Sint16 w);
-	void setH(Sint16 h);
+    template <class U1,class U2>
+    FSRect (const U1& p1,const U2& p2):
+        x((T)p1.x), y((T)p1.y), w((T)p2.x), h((T)p2.y) {}
 
-	//conversion operators
-	//convert to SDL_Rect
-	operator SDL_Rect ( ) ;
+    inline T& X() { return x; }
+    inline T& Y() { return y; }
+    inline T& W() { return w; }
+    inline T& H() { return h; }
 
-	//convert to CPoint
-	operator FSPoint ( ) ;
+    inline T getX() const { return x; }
+    inline T getY() const { return y; }
+    inline T getW() const { return w; }
+    inline T getH() const { return h; }
 
-	//set values for members
-	FSRectangle& set ( Sint16 x , Sint16 y , Sint16 w , Sint16 h ) ;
-	//copy member values from another CRectangle
-	FSRectangle& copy ( FSRectangle& rc ) ;
+    void setX(T nx) { x = nx; }
+    void setY(T ny) { y = ny; }
+    void setW(T nw) { w = nw; }
+    void setH(T nh) { h = nh; }
 
-	//set to an empty rectangle
-	FSRectangle& setEmpty ( ) ;
-	//check for emptiness
-	bool IsEmpty ( ) ;
+    inline operator SDL_Rect() {
+        return SDL_Rect(x,y,w,h);
+    }
 
-	//offset rectangle by coordinates or point
-	FSRectangle& Offset ( Sint16 dx , Sint16 dy ) ;
-	FSRectangle& Offset ( FSPoint& pt ) ;
+    inline operator FSPoint() {
+        return FSPoint(x,y);
+    }
 
-	//move to a position, either coordinates or point
-	FSRectangle& move ( Sint16 x , Sint16 y ) ;
-	FSRectangle& move ( FSPoint& pt ) ;
+    FSRect<T>& set (T nx,T ny,T nw,T nh) {
+        x=nx;
+        y=ny;
+        w=nw;
+        h=nh;
+        return *this;
+    }
 
-	//intersect with another rectangle
-	bool Intersect ( FSRectangle& rc ) ;
-	//create union with another rectangle
-	//CRectangle& Union ( CRectangle& rc ) ;
+    template <class U>
+    inline bool intersect(const U& rc) {
+        return (x > rc.w) || (y > rc.h) || (w < rc.x) || (h < rc.y) ?
+                false : true;
+    }
 
-	//check if a point is within the rectangle
-	bool Contains ( Sint16 x , Sint16 y ) ;
-	bool Contains ( FSPoint& pt ) ;
+    inline bool contains(T cx, T cy) {
+        return (cx > x) && (cx < w) && (cy > y) && (cy < h);
+    }
 
-	//assignment operators
-	FSRectangle& operator = ( FSRectangle& rc ) ;
-	FSRectangle& operator += ( FSPoint& pt ) ;
-	FSRectangle& operator -= ( FSPoint& pt ) ;
-	/*CRectangle& operator += ( CRectangle& rc ) ;
-	CRectangle& operator -= ( CRectangle& rc ) ;
-
-	//arithmetic operators
-	CRectangle operator + ( CPoint& pt ) ;
-	CRectangle operator - ( CPoint& pt ) ;*/
-	FSRectangle operator + ( FSRectangle& rc ) ;
-	FSRectangle operator - ( FSRectangle& rc ) ;
-
-	//comparisons
-	bool operator == ( FSRectangle& rc ) ;
-	bool operator != ( FSRectangle& rc ) ;
-
-	//clip or wrap points
-	FSPoint Clip ( FSPoint pt ) ;
-	FSPoint Wrap ( FSPoint pt ) ;
+    template <class U>
+    inline bool contains(const U& rc) {
+        return contains(rc.x,rc.y) && contains(rc.w,rc.h);
+    }
 };
 
-//add/subtract point and rectangle
-FSRectangle operator + ( FSPoint& pt , FSRectangle& rc ) ;
-FSRectangle operator - ( FSPoint& pt , FSRectangle& rc ) ;
+typedef FSRect<Sint16> FSRectangle;
 
+/**
+ * FSRelRect, Rectangle class with relative coordinates
+ *
+ * (6,1).__
+ *      |  |
+ *      |  |
+ *      |__.(2,3)
+ *
+ */
+/*
+template <class T>
+struct FSRelRect : FSRect<T> {
+    using FSRect<T>::x;
+    using FSRect<T>::w;
+    using FSRect<T>::h;
+    using FSRect<T>::y;
+
+    FSRelRect(const FSRect<T>& rc):
+        FSRect<T>(rc.x,rc.y,rc.w - x,rc.h - y) {}
+
+    inline operator FSRect<T>() {
+        return FSRect<T>(x,y,x+w,y+h);
+    }
+
+    template <class U>
+    inline bool intersect(const U& rc) {
+        return (x > (rc.x+rc.w)) || (y > (rc.y+rc.h)) ||
+                ((x+w) < rc.x) || ((y+h) < rc.y) ?
+                false : true;
+    }
+
+    inline bool contains(T cx, T cy) {
+        return (cx > x) && (cx < (x+w)) && (cy > y) && (cy < (y+h));
+    }
+
+    template <class U>
+    inline bool contains(const U& rc) {
+        return contains(rc.x,rc.y) && contains(rc.w,rc.h);
+    }
+};
+*/
 #endif
