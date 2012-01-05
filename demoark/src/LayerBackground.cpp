@@ -262,10 +262,6 @@ void CFloor::refresh(int cx, int cy) {
 	
 }
 
-LayerBGCollection& CFloor::getLayers() {
-	return Layer;
-}
-
 #ifdef MENSAJES_MSGIDS
 int CFloor::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
 	printf("Piso :: ");

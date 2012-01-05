@@ -403,10 +403,6 @@ Uint32* CMap::getLayerType() {
 	return LayerType;
 }
 
-Uint8 CMap::getPrecissionPlus() {
-	return precissionPlus;
-}
-
 Uint8 CMap::setPrecissionPlus(Uint8 n) {
 	Uint8 aux = precissionPlus;
 	precissionPlus=n;

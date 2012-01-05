@@ -18,7 +18,7 @@ class CLayerBG : public FSMessageHandler {
 public:
 	FSRectangle* area;
 	FSRectangle* clipping;
-	Uint8 size; // 100 = 100% del tamaño original.
+	Uint8 size; // 100 = 100% del tamaï¿½o original.
 	CMap* mapa; // 
 	Uint8 flags; // Espejado, girado...
 	Uint8 alpha;  // Transparencias...
@@ -76,7 +76,7 @@ public:
 
 class CLayerInf : public CLayerUniform { 
 private:
-	bool pisable; // Hay algún elemento de la capa accesible a los actores.
+	bool pisable; // Hay algï¿½n elemento de la capa accesible a los actores.
 public:
 	CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,bool pisable,FSMessageHandler * pmhParent=NULL);
 	CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent=NULL);
@@ -86,7 +86,7 @@ public:
 
 class CLayerSup : public CLayerUniform { 
 private:
-	Uint8 desfase; // Cuanto más cerca, más rápido se mueven las tiles.	
+	Uint8 desfase; // Cuanto mï¿½s cerca, mï¿½s rï¿½pido se mueven las tiles.	
 public:
 	CLayerSup(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent=NULL);
 	virtual ~CLayerSup();
@@ -94,7 +94,7 @@ public:
 
 class CLayerFondo : public CLayerUniform { 
 private:
-	Uint8 desfase; // Cuanto más lejos, más lento se mueven las tiles.
+	Uint8 desfase; // Cuanto mï¿½s lejos, mï¿½s lento se mueven las tiles.
 public:
 	CLayerFondo(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent=NULL);
 	virtual ~CLayerFondo();
@@ -113,7 +113,7 @@ public:
 	CFloor(FSRectangle* area, CMap* mapa,int id,FSMessageHandler * pmhParent=NULL);
 	virtual ~CFloor();
 	virtual void refresh(int cx, int cy);
-	virtual inline LayerBGCollection& getLayers();
+	virtual inline LayerBGCollection& getLayers() { return Layer; }
 
 #ifdef MENSAJES_MSGIDS
 	int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);

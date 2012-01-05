@@ -22,102 +22,106 @@
 #include "FSparserXML.h"
 
 enum TypeError {
-	TE_standard,
-	TE_fileExists,
-	TE_controlViolation,
-	TE_SDL_NOMSG,
-	TE_SDL_MSG,
-	TE_OPENGL_NOMSG,
-	TE_OPENGL_MSG
+    TE_standard,
+    TE_fileExists,
+    TE_controlViolation,
+    TE_SDL_NOMSG,
+    TE_SDL_MSG,
+    TE_OPENGL_NOMSG,
+    TE_OPENGL_MSG
 };
 
 
 class FSLibrary : public FSMessageHandler  
 {
 private:
-	
-	static FSLibrary* s_pTheLibrary;
 
-	FSEngine* actualEngine;
+    static FSLibrary* s_pTheLibrary;
 
-	// Lista de motores añadidas por el usuario
-	list<FSEngine*> engineIn;
+    FSEngine* actualEngine;
 
-	// Lista de motores ejecutados por orden del usuario sin ser añadidos (mediante mensajeria).
-	list<FSEngine*> engineOut;
+    // Lista de motores aï¿½adidas por el usuario
+    list<FSEngine*> engineIn;
+
+    // Lista de motores ejecutados por orden del usuario sin ser aï¿½adidos (mediante mensajeria).
+    list<FSEngine*> engineOut;
 
 #ifdef IN_FILE_ERROR
-	bool errorsInSession;
+    bool errorsInSession;
 #endif
 
-	static list<string> errors;
+    static list<string> errors;
 
 #ifdef DEBUGTEST
 
-	static bool debugging;
-	static int debugticks;
+    static bool debugging;
+    static int debugticks;
 
 #endif
 
-	
-	static void setLibrary(FSLibrary* pTheLib);
 
-	static void setActualEngine(FSEngine* newEngineActive);
+    static void setLibrary(FSLibrary* pTheLib);
 
-	friend class FSEngine;
+    static void setActualEngine(FSEngine* newEngineActive);
 
-	
-	FSLibrary(bool xmlconfig =false);
+    friend class FSEngine;
 
-	FSLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
-	
-	static void onExit();
+    FSLibrary(bool xmlconfig =false);
 
-	int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
-	void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
+    FSLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
-	static string toStringErrorGL(GLenum e);
-	
-	virtual ~FSLibrary();
+
+    static void onExit();
+
+    int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
+    void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
+
+    static string toStringErrorGL(GLenum e);
+
+    virtual ~FSLibrary();
 
 public:
 
-	static int startLibrary(bool xmlconfig);
+    static int startLibrary(bool xmlconfig);
 
-	static int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
-	
-	static int processEngines();
+    static int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
-	
-	inline static FSLibrary* getLibrary();	
+    static int processEngines();
 
-	inline static FSEngine* getActualEngine();
 
-	static int addEngine(FSEngine* engine,int priority);
+    inline static FSLibrary* getLibrary() {
+        return s_pTheLibrary;
+    }
 
-	static Uint32 MSGID_Exit;
-	static Uint32 MSGID_Restart;
-	static Uint32 MSGID_RunEngine;
-	static Uint32 MSGID_ReloadEngine;
-	static Uint32 MSGID_ChangeEngine;
-	static Uint32 MSGID_KillEngine;
+    inline static FSEngine* getActualEngine() {
+        return getLibrary()?getLibrary()->actualEngine:NULL;
+    }
 
-	static void Error (const char*,TypeError e=TE_standard);
-	static void Error (std::string,TypeError e=TE_standard);
-	static void Error (char*,TypeError e=TE_standard);
+    static int addEngine(FSEngine* engine,int priority);
 
-	static string readLastError();
-	static string popError();
+    static Uint32 MSGID_Exit;
+    static Uint32 MSGID_Restart;
+    static Uint32 MSGID_RunEngine;
+    static Uint32 MSGID_ReloadEngine;
+    static Uint32 MSGID_ChangeEngine;
+    static Uint32 MSGID_KillEngine;
+
+    static void Error (const char*,TypeError e=TE_standard);
+    static void Error (std::string,TypeError e=TE_standard);
+    static void Error (char*,TypeError e=TE_standard);
+
+    static string readLastError();
+    static string popError();
 
 #ifdef DEBUGTEST
 
-	static void debug(bool startdebug, const char* warning=NULL);
-	static bool inDebug();
+    static void debug(bool startdebug, const char* warning=NULL);
+    static bool inDebug();
 
 #endif
 
-	bool static orderEngine(FSEngine*,FSEngine*);
+    bool static orderEngine(FSEngine*,FSEngine*);
 
 };
 

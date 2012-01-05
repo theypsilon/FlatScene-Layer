@@ -576,7 +576,7 @@ int FSControlOutputText::color(int text,FSColor* col, float alpha, TypeColorTBox
 int FSControlOutputText::locateRenderScene ( float posx, float posy, float width, float height, float zoom) {
 
 	if ( width == 0.0 || height == 0.0) {
-		FSLibrary::Error("Width\Height invalid value");
+		FSLibrary::Error("Width/Height invalid value");
 		return FRACASO;
 	}
 

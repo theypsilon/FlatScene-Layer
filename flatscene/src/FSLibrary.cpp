@@ -250,7 +250,7 @@ int FSLibrary::processEngines() {
 
 	setActualEngine(NULL);
 
-	// Selección del CEngine a ejecutar entre el Conjunto de CEngine.
+	// Selecciï¿½n del CEngine a ejecutar entre el Conjunto de CEngine.
 
 	getLibrary()->engineIn.sort(FSLibrary::orderEngine);
 
@@ -280,7 +280,7 @@ int FSLibrary::processEngines() {
 		getLibrary()->engineIn.front()->done=true;
 	}
 
-	// Ejecución del CEngine seleccionado	
+	// Ejecuciï¿½n del CEngine seleccionado	
 	
 	while (getActualEngine()) {
 
@@ -296,12 +296,6 @@ int FSLibrary::processEngines() {
 	}
 	
 	return EXITO;
-}
-
-FSEngine* FSLibrary::getActualEngine() {
-
-	return (getLibrary()?getLibrary()->actualEngine:NULL);
-
 }
 
 int FSLibrary::addEngine(FSEngine* engine,int priority) {
@@ -433,7 +427,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 			FSEngine* act = getActualEngine(); // Lo salvamos para recuperarlo al final. 
 
-			setActualEngine(engine); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Imágenes.
+			setActualEngine(engine); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Imï¿½genes.
 
 			for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end(); it!=jt; ++it) 
 				if (engine == *it) {
@@ -472,7 +466,7 @@ void FSLibrary::Error (std::string s,TypeError e) {
 	} else if (e==TE_standard) {
 		s="|-| ERROR : Standard -> "+s;
 	} else if (e==TE_controlViolation) {
-		s="|-| ERROR : Violancíon del control de la librería. +: "+s;
+		s="|-| ERROR : Violancï¿½on del control de la librerï¿½a. +: "+s;
 	} else if (e==TE_SDL_NOMSG) {
 		s="|-| SDLError unknown. +: "+s;
 	} else if (e==TE_SDL_MSG) {
@@ -488,7 +482,7 @@ void FSLibrary::Error (std::string s,TypeError e) {
 
 #ifdef INSTANT_PRINT_ERROR
 	s ="\n"+ s + "\n";
-	fprintf(stderr,s.c_str());
+	fprintf(stderr,"%s",s.c_str());
 #endif
 	
 #ifdef IN_FILE_ERROR
@@ -553,13 +547,6 @@ string FSLibrary::popError() {
 	}
 }
 
-//get singleton
-FSLibrary* FSLibrary::getLibrary()
-{
-	//return static pointer to application
-	return(s_pTheLibrary);
-}
-
 #ifdef DEBUGTEST
 
 bool FSLibrary::debugging=false;
@@ -574,7 +561,7 @@ void FSLibrary::debug(bool startdebug,const char* warning) {
 		}
 		if (warning)
 			fprintf(stderr,"DEBUG: %s\n",warning);
-		FSLibrary::debugging = true;	// Siempre debe haber aquí un Breakpoint para el Visual Studio.
+		FSLibrary::debugging = true;	// Siempre debe haber aquï¿½ un Breakpoint para el Visual Studio.
 	}
 }
 
