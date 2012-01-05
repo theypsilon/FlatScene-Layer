@@ -86,7 +86,7 @@ typedef FSRect<Sint16> FSRectangle;
  *      |__.(2,3)
  *
  */
-
+/*
 template <class T>
 struct FSRelRect : FSRect<T> {
     using FSRect<T>::x;
@@ -94,14 +94,22 @@ struct FSRelRect : FSRect<T> {
     using FSRect<T>::h;
     using FSRect<T>::y;
 
+    FSRelRect(const FSRect<T>& rc):
+        FSRect<T>(rc.x,rc.y,rc.w - x,rc.h - y) {}
+
+    inline operator FSRect<T>() {
+        return FSRect<T>(x,y,x+w,y+h);
+    }
+
     template <class U>
     inline bool intersect(const U& rc) {
-        return (x > rc.x+rc.w) || (y > rc.y+rc.h) || (x+w < rc.x) || (y+h < rc.y) ?
+        return (x > (rc.x+rc.w)) || (y > (rc.y+rc.h)) ||
+                ((x+w) < rc.x) || ((y+h) < rc.y) ?
                 false : true;
     }
 
     inline bool contains(T cx, T cy) {
-        return (cx > x) && (cx < x+w) && (cy > y) && (cy < y+h);
+        return (cx > x) && (cx < (x+w)) && (cy > y) && (cy < (y+h));
     }
 
     template <class U>
@@ -109,5 +117,5 @@ struct FSRelRect : FSRect<T> {
         return contains(rc.x,rc.y) && contains(rc.w,rc.h);
     }
 };
-
+*/
 #endif
