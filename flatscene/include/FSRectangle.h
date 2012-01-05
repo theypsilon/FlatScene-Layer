@@ -4,6 +4,15 @@
 #include "SDL.h"
 #include "FSPoint.h"
 
+/**
+ * FSRect, Rectangle class with absolute coordinates
+ *
+ * (6,1).__
+ *      |  |
+ *      |  |
+ *      |__.(8,4)
+ *
+ */
 template <class T>
 struct FSRect {
     T x,y,w,h;
@@ -50,27 +59,55 @@ struct FSRect {
         return *this;
     }
 
-    //intersect with another rectangle
     template <class U>
-    virtual bool intersect(const U& rc) {
+    inline bool intersect(const U& rc) {
         return (x > rc.w) || (y > rc.h) || (w < rc.x) || (h < rc.y) ?
                 false : true;
     }
 
-    virtual bool contains(T cx, T cy) {
+    inline bool contains(T cx, T cy) {
         return (cx > x) && (cx < w) && (cy > y) && (cy < h);
     }
 
     template <class U>
-    virtual bool contains(const U& rc) {
+    inline bool contains(const U& rc) {
         return contains(rc.x,rc.y) && contains(rc.w,rc.h);
     }
-
-    //clip or wrap points
-    FSPoint Clip ( FSPoint pt ) { return pt; }
-    FSPoint Wrap ( FSPoint pt ) { return pt; }
 };
 
 typedef FSRect<Sint16> FSRectangle;
+
+/**
+ * FSRelRect, Rectangle class with relative coordinates
+ *
+ * (6,1).__
+ *      |  |
+ *      |  |
+ *      |__.(2,3)
+ *
+ */
+
+template <class T>
+struct FSRelRect : FSRect<T> {
+    using FSRect<T>::x;
+    using FSRect<T>::w;
+    using FSRect<T>::h;
+    using FSRect<T>::y;
+
+    template <class U>
+    inline bool intersect(const U& rc) {
+        return (x > rc.x+rc.w) || (y > rc.y+rc.h) || (x+w < rc.x) || (y+h < rc.y) ?
+                false : true;
+    }
+
+    inline bool contains(T cx, T cy) {
+        return (cx > x) && (cx < x+w) && (cy > y) && (cy < y+h);
+    }
+
+    template <class U>
+    inline bool contains(const U& rc) {
+        return contains(rc.x,rc.y) && contains(rc.w,rc.h);
+    }
+};
 
 #endif
