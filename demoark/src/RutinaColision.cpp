@@ -56,7 +56,7 @@ bool CBasicCollision0::run(int x, int y, int z, CActorScrollMap* mobil) {
 									r2.W()+=obs->m_Scrollxy.X();
 									r2.Y()+=obs->m_Scrollxy.Y();
 									r2.H()+=obs->m_Scrollxy.Y();
-									if (r2.Intersect(r1))
+									if (r2.intersect(r1))
 										return true;
 								}
 							}

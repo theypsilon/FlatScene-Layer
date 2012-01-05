@@ -9,17 +9,15 @@ struct FSRect {
     T x,y,w,h;
 
     FSRect (T x=0, T y=0, T w=0, T h=0):
-        x{x}, y{y}, w{w}, h{h} {}
-
-    FSRect ( SDL_Rect& rc ):
-        x{(T)rc.x}, y{(T)rc.y}, w{(T)rc.w}, h{(T)rc.h} {}
-
-    FSRect ( SDL_Rect* rc ):
-        x{(T)rc->x}, y{(T)rc->y}, w{(T)rc->w}, h{(T)rc->h} {}
+        x(x), y(y), w(w), h(h) {}
 
     template <class U>
-    FSRect ( FSRect<U>& rc ):
-        x{(T)rc.x}, y{(T)rc.y}, w{(T)rc.w}, h{(T)rc.h} {}
+    FSRect (const U& rc):
+        x((T)rc.x), y((T)rc.y), w((T)rc.w), h((T)rc.h) {}
+
+    template <class U1,class U2>
+    FSRect (const U1& p1,const U2& p2):
+        x((T)p1.x), y((T)p1.y), w((T)p2.x), h((T)p2.y) {}
 
     inline T& X() { return x; }
     inline T& Y() { return y; }
@@ -37,11 +35,11 @@ struct FSRect {
     void setH(T nh) { h = nh; }
 
     inline operator SDL_Rect() {
-        return SDL_Rect{x,y,w,h};
+        return SDL_Rect(x,y,w,h);
     }
 
     inline operator FSPoint() {
-        return FSPoint{x,y};
+        return FSPoint(x,y);
     }
 
     FSRect<T>& set (T nx,T ny,T nw,T nh) {
@@ -53,21 +51,24 @@ struct FSRect {
     }
 
     //intersect with another rectangle
-    bool Intersect ( FSRect<T>& rc ) {
-        return (
-        (x >= rc.x && x <= rc.w && y >= rc.y && y <= rc.h) ||
-        (w >= rc.x && w <= rc.w && y >= rc.y && y <= rc.h) ||
-        (x >= rc.x && x <= rc.w && h >= rc.y && h <= rc.h) ||
-        (w >= rc.x && w <= rc.w && h >= rc.y && h <= rc.h) );
+    template <class U>
+    virtual bool intersect(const U& rc) {
+        return (x > rc.w) || (y > rc.h) || (w < rc.x) || (h < rc.y) ?
+                false : true;
     }
-/*
-    //check if a point is within the rectangle
-    bool Contains ( T x , T y ) ;
-    bool Contains ( FSPoint& pt ) ;
+
+    virtual bool contains(T cx, T cy) {
+        return (cx > x) && (cx < w) && (cy > y) && (cy < h);
+    }
+
+    template <class U>
+    virtual bool contains(const U& rc) {
+        return contains(rc.x,rc.y) && contains(rc.w,rc.h);
+    }
 
     //clip or wrap points
-    FSPoint Clip ( FSPoint pt ) ;
-    FSPoint Wrap ( FSPoint pt ) ;*/
+    FSPoint Clip ( FSPoint pt ) { return pt; }
+    FSPoint Wrap ( FSPoint pt ) { return pt; }
 };
 
 typedef FSRect<Sint16> FSRectangle;
