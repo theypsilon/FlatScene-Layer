@@ -69,7 +69,7 @@ public:
 	virtual inline Uint32 getLastTileset();
 	virtual inline Uint32 getLastDurezaset();
 
-	virtual inline Uint8 getPrecissionPlus();
+	virtual inline Uint8 getPrecissionPlus() const { return precissionPlus; }
 	virtual inline Uint8 setPrecissionPlus(Uint8 n);
 
 	virtual Uint32 getPixel(int x, int y, int z);

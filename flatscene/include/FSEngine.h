@@ -32,7 +32,7 @@ protected:
 	
 	virtual int onIdle();
 
-	inline virtual void deselect();
+	virtual void deselect();
 
 
 

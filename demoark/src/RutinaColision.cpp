@@ -1,6 +1,7 @@
 #include "RutinaColision.h"
 #include "Map.h"
 #include "FSLibrary.h"
+#include "ActorScrollMap.h"
 
 CRutinaColision* CRutinaColision::collisionFactory(int i) {
 	CRutinaColision* ret = NULL;
