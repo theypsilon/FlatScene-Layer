@@ -113,7 +113,7 @@ int CTestOSDesktopInterface::drawFrame() {
 
 int CTestOSDesktopInterface::onIdle() {
 
-    printf("x : %d        y : %d\r",raton->renderPoint.X(),raton->renderPoint.Y());
+    printf("x : %d        y : %d\r",raton->renderPoint.x,raton->renderPoint.y);
 
 /*	if (right)  {
         float yrotrad;
@@ -210,8 +210,8 @@ void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
     CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLibrary::getActualEngine();
 
-    int x = os->raton->renderPoint.X() = event->motion.x;
-    int y = os->raton->renderPoint.Y() = event->motion.y;
+    int x = os->raton->renderPoint.x = event->motion.x;
+    int y = os->raton->renderPoint.y = event->motion.y;
 
     if (os->lastx != 0.0) {
 

@@ -205,7 +205,7 @@ void CMap::load() {
 	dur= alloc(TileBG**,LayerFloor[numLayers-1]+1);
 	for (int c=0;c<=LayerFloor[numLayers-1];c++) {
 		bool primera=false;
-		// TODO : posible bug por la expresión ((primera==false)||(LayerFloor[i-1]==LayerFloor[i])
+		// TODO : posible bug por la expresiï¿½n ((primera==false)||(LayerFloor[i-1]==LayerFloor[i])
 		for (;(i<numLayers)&&((primera==false)||(LayerFloor[i-1]==LayerFloor[i]));i++) {
 			if (!primera && LayerType[i]==1) {
 				primera=true;
@@ -237,9 +237,9 @@ void CMap::load() {
 		CActorScrollMap* actscroll = dynamic_cast<CActorScrollMap*>(*it);
 
 		if (actscroll) {
-			int MAz = actscroll->m_Scrollxy.Z() ;
-			int MAx = actscroll->m_Scrollxy.X() / getTileW();
-			int MAy = actscroll->m_Scrollxy.Y() / getTileH();
+			int MAz = actscroll->m_Scrollxy.z ;
+			int MAx = actscroll->m_Scrollxy.x / getTileW();
+			int MAy = actscroll->m_Scrollxy.y / getTileH();
 			if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
 				actscroll->placeInMA = MA[MAz][MAx][MAy];
 				actscroll->placeInMA->push_back(actscroll);
@@ -309,9 +309,9 @@ int CMap::incActor(FSActor* act) {
 		act->setUniverse(this);
 		actor.push_back(act);
 		if (isLoaded()) {
-			int MAz = actscroll->m_Scrollxy.Z() ;
-			int MAx = actscroll->m_Scrollxy.X() / getTileW();
-			int MAy = actscroll->m_Scrollxy.Y() / getTileH();
+			int MAz = actscroll->m_Scrollxy.z ;
+			int MAx = actscroll->m_Scrollxy.x / getTileW();
+			int MAy = actscroll->m_Scrollxy.y / getTileH();
 			if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
 				actscroll->placeInMA = MA[MAz][MAx][MAy];
 				actscroll->placeInMA->push_back(actscroll);
@@ -321,7 +321,7 @@ int CMap::incActor(FSActor* act) {
 		}
 		return EXITO;
 	} else {
-		FSLibrary::Error((string("Se ha añadido un actor al mapa ")+getName()+string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
+		FSLibrary::Error((string("Se ha aï¿½adido un actor al mapa ")+getName()+string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
 		return FRACASO;
 	}
 }

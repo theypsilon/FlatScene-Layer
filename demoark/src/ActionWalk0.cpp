@@ -32,9 +32,9 @@ void CActionWalk0::firstExecute() {
 
 void CActionWalk0::execute() {
 	if (!executor->collisionMap(0,movy)) 
-		executor->m_Scrollxy.Y()+=movy;
+		executor->m_Scrollxy.y+=movy;
 	if (!executor->collisionMap(movx,0)) 
-		executor->m_Scrollxy.X()+=movx;
+		executor->m_Scrollxy.x+=movx;
 
 	executor->setSprite(sptset[seq],nextStep());
 	

@@ -14,19 +14,19 @@ bool CBasicCollision0::run(int x, int y, int z, CActorScrollMap* mobil) {
 	RectArea* rA = mobil->getSprite()->getArea(0);
 	CMap* map = (CMap*)mobil->getUniverse();
 
-	//Write.erase( Write.line(0,mobil->renderPoint.X(),mobil->renderPoint.Y(),"color : #%06X",map->getPixel(x,y,z)), true);
+	//Write.erase( Write.line(0,mobil->renderPoint.x,mobil->renderPoint.y,"color : #%06X",map->getPixel(x,y,z)), true);
 
 	if (rA) {
 		RectArea::iterator beginMobil = rA->begin();
 		RectArea::iterator finMobil = rA->end();
 		for (RectArea::iterator it = beginMobil;it!=finMobil;++it) {
 			FSRectangle* rect = *it;
-			for (int initialx=x+rect->X(),maxx=x+rect->W();initialx <= maxx;initialx++) {
+			for (int initialx=x+rect->x,maxx=x+rect->w;initialx <= maxx;initialx++) {
 				if (map->getPixel(initialx,y,z)==0xFFA800F8) {
 					return true;
 				}
 			}
-			for (int initialy=y+rect->Y(),maxy=y+rect->H();initialy <= maxy;initialy++) {
+			for (int initialy=y+rect->y,maxy=y+rect->h;initialy <= maxy;initialy++) {
 				if (map->getPixel(x,initialy,z)==0xFFA800F8) {
 					return true;
 				}
@@ -46,16 +46,16 @@ bool CBasicCollision0::run(int x, int y, int z, CActorScrollMap* mobil) {
 
 							for (RectArea::iterator itR1 = beginMobil; itR1 != finMobil; ++itR1) {
 								r1 = **itR1;
-								r1.X()+=x;
-								r1.W()+=x;
-								r1.Y()+=y;
-								r1.H()+=y;
+								r1.x+=x;
+								r1.w+=x;
+								r1.y+=y;
+								r1.h+=y;
 								for (RectArea::iterator itR2 = obs->getSprite()->getArea(0)->begin(),finObs = obs->getSprite()->getArea(0)->end(); itR2!=finObs;++itR2) {
 									r2 = **itR2;
-									r2.X()+=obs->m_Scrollxy.X();
-									r2.W()+=obs->m_Scrollxy.X();
-									r2.Y()+=obs->m_Scrollxy.Y();
-									r2.H()+=obs->m_Scrollxy.Y();
+									r2.x+=obs->m_Scrollxy.x;
+									r2.w+=obs->m_Scrollxy.x;
+									r2.y+=obs->m_Scrollxy.y;
+									r2.h+=obs->m_Scrollxy.y;
 									if (r2.intersect(r1))
 										return true;
 								}

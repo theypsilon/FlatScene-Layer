@@ -51,11 +51,11 @@ FSImage* FSSprite::getImage ( ) {
 
 void FSSprite::put (FSPoint& ptDst ,Uint8 flags) {
 	if (flags & 0x001) {
-		ptDst.Y() -= cpoint->Y();
-		ptDst.X() -= getImage()->getWidth() - cpoint->X();
+		ptDst.y -= cpoint->y;
+		ptDst.x -= getImage()->getWidth() - cpoint->x;
 	} else {
-		ptDst.X() -= cpoint->X();
-		ptDst.Y() -= cpoint->Y();
+		ptDst.x -= cpoint->x;
+		ptDst.y -= cpoint->y;
 	}
 
 	FSImage::put(ptDst,flags);

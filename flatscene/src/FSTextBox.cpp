@@ -14,8 +14,8 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 	string allText(text);
 	Uint16 limite=xBox=Lim;
 
-	float currentX = upleft.X()+MARGEN;
-	float currentY = upleft.Y()+MARGEN-2;
+	float currentX = upleft.x+MARGEN;
+	float currentY = upleft.y+MARGEN-2;
 	currentY += TTF_FontAscent(fuente->fuente)/2 ;
 
 	col.r=255;
@@ -67,7 +67,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			}
 
 			if ((currentX + cuenta - x)>= (limite - MARGEN)) {
-				currentX = upleft.X() + MARGEN;
+				currentX = upleft.x + MARGEN;
 				currentY += (float)TTF_FontLineSkip(fuente->fuente);
 			} else {
 				maxStep++;
@@ -80,7 +80,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			}
 			
 		} else if (newChar == '\n') {
-			currentX = upleft.X() + MARGEN;
+			currentX = upleft.x + MARGEN;
 			currentY += (float)TTF_FontLineSkip(fuente->fuente);
 		} else {
 			maxStep++;

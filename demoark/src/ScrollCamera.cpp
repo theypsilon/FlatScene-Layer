@@ -16,8 +16,8 @@ FSCamera(target,area,pmhParent) {
 		centro=this->centro=new FSPoint(area->getW()/2,area->getH()/2);
 	} else {
 		this->centro=centro;
-		centro->X()=centro->X()%area->getW();
-		centro->Y()=centro->Y()%area->getH();
+		centro->x=centro->x%area->getW();
+		centro->y=centro->y%area->getH();
 	}
 	if (margenDesp >= 0.9) {
 		margenDesp = 0;
@@ -135,29 +135,29 @@ int CScrollCamera::refresh() {
 	
 	CActorScrollMap* scrolltarget = (CActorScrollMap*) target;
 
-	int mov_x = CX() - scrolltarget->m_Scrollxy.X();
+	int mov_x = CX() - scrolltarget->m_Scrollxy.x;
 
 	if (abs( mov_x ) > intraMargenX) {
 		if ( mov_x < 0 ) {
-			CX()=scrolltarget->m_Scrollxy.X()-intraMargenX;
+			CX()=scrolltarget->m_Scrollxy.x-intraMargenX;
 		} else {
-			CX()=scrolltarget->m_Scrollxy.X()+intraMargenX;
+			CX()=scrolltarget->m_Scrollxy.x+intraMargenX;
 		}
 
 		if ( CX() < centro->getX() + map->getTileW()) { // La camara no enfoca los bordes del map.
 			CX() = centro->getX()+ map->getTileW();
-		} else 	if ( CX() > map->getW()*map->getTileW() - area->getW() + centro->getX() - map->getTileW()) { // Quizás sería más apropiado restarle adicionalmente 1 unidad a los margenes exteriores del map (derecha y abajo).
+		} else 	if ( CX() > map->getW()*map->getTileW() - area->getW() + centro->getX() - map->getTileW()) { // Quizï¿½s serï¿½a mï¿½s apropiado restarle adicionalmente 1 unidad a los margenes exteriores del map (derecha y abajo).
 			CX() = map->getW()*map->getTileW() - area->getW() + centro->getX() - map->getTileW() ;
 		}
 	}
 
-	int mov_y=CY()-scrolltarget->m_Scrollxy.Y();
+	int mov_y=CY()-scrolltarget->m_Scrollxy.y;
 
 	if (abs(mov_y) > intraMargenY) {
 		if ( mov_y < 0 ) {
-			CY()=scrolltarget->m_Scrollxy.Y()-intraMargenY;
+			CY()=scrolltarget->m_Scrollxy.y-intraMargenY;
 		} else {
-			CY()=scrolltarget->m_Scrollxy.Y()+intraMargenY;
+			CY()=scrolltarget->m_Scrollxy.y+intraMargenY;
 		}
 
 		if ( CY() < centro->getY() + map->getTileH() ) {
@@ -167,11 +167,11 @@ int CScrollCamera::refresh() {
 		}
 	}
 
-	scrolltarget->renderPoint.X() = scrolltarget->m_Scrollxy.X() -(CX() - (area->getW()/2));  
-    scrolltarget->renderPoint.Y() = scrolltarget->m_Scrollxy.Y() -(CY() - (area->getH()/2));
+	scrolltarget->renderPoint.x = scrolltarget->m_Scrollxy.x -(CX() - (area->getW()/2));  
+    scrolltarget->renderPoint.y = scrolltarget->m_Scrollxy.y -(CY() - (area->getH()/2));
 
 #ifdef MENSAJES_COORDENADAS
-	Write.erase(Write.line(0,area->getX()*2+area->getW()*2-300,area->getY()*2+area->getH()*2-60,"Scroll X: %d    Scroll Y: %d", scrolltarget->m_Scrollxy.X(),scrolltarget->m_Scrollxy.Y()),true);
+	Write.erase(Write.line(0,area->getX()*2+area->getW()*2-300,area->getY()*2+area->getH()*2-60,"Scroll X: %d    Scroll Y: %d", scrolltarget->m_Scrollxy.x,scrolltarget->m_Scrollxy.y),true);
 	Write.erase(Write.line(0,area->getX()*2+area->getW()*2-300,area->getY()*2+area->getH()*2-30,"Camera X: %d    Camera Y: %d",CX(),CY()),true);
 	
 #endif

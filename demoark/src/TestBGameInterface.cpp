@@ -58,10 +58,10 @@ int CTestBGameInterface::onIdle()
 		FSScreen::pushMatrix();
 
 		FSPoint ptDst(*spt->getCenter());
-		ptDst.X()+=100;
-		ptDst.Y()+=100;
+		ptDst.x+=100;
+		ptDst.y+=100;
 
-		FSScreen::translate((float)ptDst.X(),(float)ptDst.Y(),0);  
+		FSScreen::translate((float)ptDst.x,(float)ptDst.y,0);  
 
 	}
 

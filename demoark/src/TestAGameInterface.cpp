@@ -29,7 +29,7 @@ int CTestAGameInterface::drawFrame() {
 
 	for (int i=0;i<cams.size();i++) {
 
-		cams[i]->locateRenderScene(cams[i]->getArea()->X()*2,cams[i]->getArea()->Y()*2,cams[i]->getArea()->W()*2,cams[i]->getArea()->H()*2);
+		cams[i]->locateRenderScene(cams[i]->getArea()->x*2,cams[i]->getArea()->y*2,cams[i]->getArea()->w*2,cams[i]->getArea()->h*2);
 
 		//cams[i]->scale(2.0,2.0,1.0);
 
@@ -143,7 +143,7 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 			// Si el enlace no es hacia el mismo mapa...
 			if (strcmp(nameMapaOrigen.c_str(),g.destino.c_str())!=0) {
 					//Hay una alternativa a este algoritmo en backup(4), la pega de este esque durante un frame tiene un mapa mas en memoria q no sirve de nada.
-					//Además, este no reconvierte un mapa cuando es idóneo, en lugar de crear uno nuevo y destruir el viejo que es más costoso.
+					//Ademï¿½s, este no reconvierte un mapa cuando es idï¿½neo, en lugar de crear uno nuevo y destruir el viejo que es mï¿½s costoso.
 					mapaOrigen->decActor((CActorScrollMap*)p);
 
 					CMap* mapaDestino = (CMap*)FSMultiverse.add(new CMap(g.destino.c_str()));	// Si no existe, lo crea, si existe no, y en cualquier caso lo devuelve.
@@ -155,7 +155,7 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 
 					for (int i=0;i<cams.size();i++) {
 						if (cams[i]->Target()==((FSActor*)p)) {
-							cams[i]->resyncUniverse(); // Si el mapa pasa a no ser enfocado por ninguna cámara, se descarga (unload).
+							cams[i]->resyncUniverse(); // Si el mapa pasa a no ser enfocado por ninguna cï¿½mara, se descarga (unload).
 						} /*else if (strcmp((cams[i]->getUniverse()->getName()).c_str(),nameMapaOrigen.c_str())==0 
 						|| strcmp((cams[i]->getUniverse()->getName()).c_str(),g.destino.c_str())==0)
 							cams[i]->resyncUniverse();*/

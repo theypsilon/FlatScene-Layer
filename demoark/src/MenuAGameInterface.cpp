@@ -137,7 +137,7 @@ void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 			opcion++;
 	}
 
-	dest.Y()=25+15*opcion;
+	dest.y=25+15*opcion;
 }
 
 void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {

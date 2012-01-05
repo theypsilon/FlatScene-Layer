@@ -86,8 +86,8 @@ void FSImage::put ( FSFloatPoint& ptDst, Uint8 flags)
 
 	SRenderTranscalation* c_init = new SRenderTranscalation();
 
-	c_init->x = ptDst.X();
-	c_init->y = ptDst.Y();
+	c_init->x = ptDst.x;
+	c_init->y = ptDst.y;
 	c_init->z = 0.0;
 
 	em = new SToRender();
@@ -160,7 +160,7 @@ void FSImage::put ( FSFloatPoint& ptDst, Uint8 flags)
 		glPushMatrix();
 		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex); 
 
-		glTranslatef((float)ptDst.X(),(float)ptDst.Y(),0);  
+		glTranslatef((float)ptDst.x,(float)ptDst.y,0);  
 
 		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
 		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
@@ -237,8 +237,8 @@ void FSImage::put ( FSPoint& ptDst, Uint8 flags)
 
 	SRenderTranscalation* c_init = new SRenderTranscalation();
 
-	c_init->x = ptDst.X();
-	c_init->y = ptDst.Y();
+	c_init->x = ptDst.x;
+	c_init->y = ptDst.y;
 	c_init->z = 0.0;
 
 	em = new SToRender();
@@ -301,7 +301,7 @@ void FSImage::put ( FSPoint& ptDst, Uint8 flags)
 		glPushMatrix();
 		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex); 
 
-		glTranslatef((float)ptDst.X(),(float)ptDst.Y(),0);  
+		glTranslatef((float)ptDst.x,(float)ptDst.y,0);  
 
 		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
 		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;

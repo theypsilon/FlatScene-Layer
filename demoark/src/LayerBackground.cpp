@@ -105,15 +105,15 @@ void CLayerUniform::refresh(int cx, int cy) {
 			TileBG ind =  tile[(j+cy)%mapa->getH()][(i+cx)%mapa->getW()];
 			if (ind.graph>0) {
 				ind.graph--;
-				p.X()=i*mapa->getTileW();
-				p.Y()=j*mapa->getTileH();
+				p.x=i*mapa->getTileW();
+				p.y=j*mapa->getTileH();
 
 				if (ind.flags & 0x001) {
-					p.X()+=mapa->getTileW();
+					p.x+=mapa->getTileW();
 				}
 
 				if (ind.flags & 0x010) {
-					p.Y()+=mapa->getTileH();
+					p.y+=mapa->getTileH();
 				}
 
 				CImg.get(mapa->getTileset()+ind.fileGraph)->get(ind.graph)->put(p,ind.flags);
