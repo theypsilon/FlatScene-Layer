@@ -1,3 +1,4 @@
+*.patch
 libflatscene.a
 testdemoark
 
