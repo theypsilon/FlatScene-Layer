@@ -9,7 +9,6 @@
 #include "FSColor.h"
 #include "FSPoint.h"
 #include "FSdefinitions.h"
-#include "FSTextBox.h"
 
 class FSEngine;
 
@@ -18,66 +17,10 @@ enum TypeText {
     TT_BOX
 };
 
-struct SEffectText {
-    GLfloat red,green,blue,alpha;
-    TypeColorTBox boxflags;
-    bool persistent;
-};
-
-struct SText {
-private:
-    TypeText type;
-public:
-    union {
-        SLineText* Line;
-        FSTextBox* Box;
-    };
-
-    SEffectText* fx;
-
-    SText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) {
-
-        fx = NULL;
-        Box = new FSTextBox(file,text,x,y,Lim,ttf_fnt,next);
-        type = TT_BOX;
-    }
-
-    SText() {
-        fx = NULL;
-        Line = new SLineText;
-        type = TT_LINE;
-    }
-
-    ~SText() {
-        if (fx) {
-            delete fx;
-            fx=NULL;
-        }
-
-        if (type == TT_BOX) {
-            delete Box;
-            Box = NULL;
-        } else if (type == TT_LINE) {
-            delete Line;
-            Line = NULL;
-        }
-
-    }
-
-    TypeText Type() {
-        return type;
-    }
-
-};
-
-struct SData {
-    map<int,SText*> Texts;
-
-    list<int> lastIndexTextAdded;
-
-    list<int> deleteTextBuffer;
-
-    SDL_Color fgcolor;
+enum TypeColorTBox {
+    TCTB_ALL,
+    TCTB_TEXT,
+    TCTB_BOX
 };
 
 class FSControlOutputText {
@@ -118,6 +61,7 @@ public:
 private:
     struct FSControlOutputTextImpl;
     FSControlOutputTextImpl* _impl;
+    friend class FSScreen;
 };
 
 extern FSControlOutputText Write;

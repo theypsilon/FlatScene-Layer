@@ -1,13 +1,12 @@
-#include "FSTextBox.h"
+#include "FSControlOutputTextImpl.h"
 #include "FSTime.h"
 #include "SDL.h"
 
 #include "FSLibrary.h"
-#include "FSControlOutputText.h"
 
 #define MARGEN 20
 
-FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) : 
+FSControlOutputText::FSControlOutputTextImpl::FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) :
 file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
 timer(Chrono.getTick()), step(0), maxStep(0)	{
 
@@ -111,7 +110,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 }
 
-FSTextBox::~FSTextBox() {
+FSControlOutputText::FSControlOutputTextImpl::FSTextBox::~FSTextBox() {
 	deleteBox();
 
 	if (fx)
@@ -130,7 +129,7 @@ FSTextBox::~FSTextBox() {
 	Write.unloadFont(Write.searchFont(fuente->fuente));
 }
 
-int FSTextBox::update() {
+int FSControlOutputText::FSControlOutputTextImpl::FSTextBox::update() {
 
 	if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_BOX )) {
 		box->color(fx->red,fx->green,fx->blue,fx->alpha);
@@ -175,7 +174,7 @@ int FSTextBox::update() {
 
 }
 
-void FSTextBox::deleteBox() {
+void FSControlOutputText::FSControlOutputTextImpl::FSTextBox::deleteBox() {
 	if (box)
 		FSScreen::imageToDelete.push_back(box); // delete box;
 	box=NULL;
@@ -183,7 +182,7 @@ void FSTextBox::deleteBox() {
 
 
 
-void FSTextBox::createBox() {
+void FSControlOutputText::FSControlOutputTextImpl::FSTextBox::createBox() {
 	if (box) {
 		FSLibrary::Error("Ya existe el fondo de la caja que se pretende crear.");
 		return;
@@ -201,7 +200,7 @@ void FSTextBox::createBox() {
 	box = new FSImage(FSImage::toSCanvas(surface));
 }
 
-int FSTextBox::finish() {
+int FSControlOutputText::FSControlOutputTextImpl::FSTextBox::finish() {
 	int ret = -1;
 	if (next!=-1) {
 
@@ -218,11 +217,7 @@ int FSTextBox::finish() {
 	return ret;
 }
 
-
-SLineText::SLineText() {
-}
-
-SLineText::~SLineText() {
+FSControlOutputText::FSControlOutputTextImpl::SLineText::~SLineText() {
 	for (list<SChar>::iterator it=letra.begin(),kt=letra.end();it!=kt;++it) {
 		if (it->p) {
 			delete it->p;
