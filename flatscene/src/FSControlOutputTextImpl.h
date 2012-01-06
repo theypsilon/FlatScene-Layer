@@ -3,6 +3,8 @@
 
 #include "FSControlOutputText.h"
 
+class FSEngine;
+
 struct FSControlOutputText::FSControlOutputTextImpl {
     struct SData;
     struct SFont;

@@ -10,8 +10,6 @@
 #include "FSPoint.h"
 #include "FSdefinitions.h"
 
-class FSEngine;
-
 enum TypeText {
     TT_LINE,
     TT_BOX
