@@ -16,14 +16,14 @@ FSEngine* FSControlOutputText::FSControlOutputTextImpl::setAdmin(FSEngine* newAd
 
     if (newAdmin != ret) {
 
-        FSControlOutputTextImpl::SData* thiFSControlOutputTextImpl::SData = session[newAdmin];
-        if (!thiFSControlOutputTextImpl::SData) {
-            thiFSControlOutputTextImpl::SData = session[newAdmin] = new FSControlOutputTextImpl::SData;
-            thiFSControlOutputTextImpl::SData->fgcolor.b=255;
-            thiFSControlOutputTextImpl::SData->fgcolor.g=255;
-            thiFSControlOutputTextImpl::SData->fgcolor.r=255;
+        FSControlOutputTextImpl::SData* thisData = session[newAdmin];
+        if (!thisData) {
+            thisData = session[newAdmin] = new FSControlOutputTextImpl::SData;
+            thisData->fgcolor.b=255;
+            thisData->fgcolor.g=255;
+            thisData->fgcolor.r=255;
         }
-        data = thiFSControlOutputTextImpl::SData;
+        data = thisData;
 
         admin = newAdmin;
     }
@@ -126,7 +126,7 @@ int FSControlOutputText::searchFont(int idtext) {
 
 	for (map<FSEngine*,FSControlOutputTextImpl::SData*>::iterator kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
 		if (kt->second->Texts.find(idtext) != kt->second->Texts.end()) {
-			FSControlOutputTextImpl::SText* t = kt->second->Texts[idtext];
+			FSControlOutputTextImpl::FSText* t = kt->second->Texts[idtext];
 
 			switch (t->Type()) {
 				case TT_LINE :
@@ -320,7 +320,7 @@ int FSControlOutputText::line(int fuente, int x,int y, const char* text,...) {
 
 		
 
-		FSControlOutputTextImpl::SText* t = _impl->data->Texts[ret] = new FSControlOutputTextImpl::SText;
+		FSControlOutputTextImpl::FSText* t = _impl->data->Texts[ret] = new FSControlOutputTextImpl::FSText;
 		t->Line->fuente = _impl->Fonts[fuente];
 
 		string allText(buffer);
@@ -409,7 +409,7 @@ int FSControlOutputText::erase(int text,bool nextframe) {
 
 		} else {
 
-			FSControlOutputTextImpl::SText* t = _impl->data->Texts[text];
+			FSControlOutputTextImpl::FSText* t = _impl->data->Texts[text];
 
 			if (t->Type() == TT_LINE && t->fx) {
 				delete t->fx;
@@ -426,7 +426,7 @@ int FSControlOutputText::erase(int text,bool nextframe) {
 	}	else if (text==ALL_TEXT) {
 
 			while (!_impl->data->Texts.empty()) {
-				map<int,FSControlOutputTextImpl::SText*>::iterator it=_impl->data->Texts.begin();
+				map<int,FSControlOutputTextImpl::FSText*>::iterator it=_impl->data->Texts.begin();
 
 				if (it->second->Type() == TT_LINE && it->second->fx) {
 					delete it->second->fx;
@@ -521,7 +521,7 @@ int FSControlOutputText::inBox(const char* file, int index) {
 				}
 			}
 
-			_impl->data->Texts[ret] = new FSControlOutputTextImpl::SText(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next);
+			_impl->data->Texts[ret] = new FSControlOutputTextImpl::FSText(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next);
 
 			//data->Boxs.push_back(new CTextBox(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next));
 
@@ -543,7 +543,7 @@ int FSControlOutputText::color(int text,float red, float green, float blue, floa
 
 	if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
 	
-			FSControlOutputTextImpl::SText* t = _impl->data->Texts[text];
+			FSControlOutputTextImpl::FSText* t = _impl->data->Texts[text];
 
 			FSControlOutputTextImpl::SEffectText* fx = new FSControlOutputTextImpl::SEffectText;
 
@@ -616,9 +616,9 @@ int FSControlOutputText::render() {
 		FSScreen::locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
 
 
-	map<int,FSControlOutputTextImpl::SText*> deleteText;
+	map<int,FSControlOutputTextImpl::FSText*> deleteText;
 
-	for (map<int,FSControlOutputTextImpl::SText*>::iterator it=_impl->data->Texts.begin(),kt=_impl->data->Texts.end();it!=kt;++it) {
+	for (map<int,FSControlOutputTextImpl::FSText*>::iterator it=_impl->data->Texts.begin(),kt=_impl->data->Texts.end();it!=kt;++it) {
 
 		FSControlOutputTextImpl::SEffectText* fx = it->second->fx;
 
@@ -637,13 +637,13 @@ int FSControlOutputText::render() {
 				it->second->fx = NULL;
 			}
 		}	else	if (it->second->Type() == TT_BOX) {
-			FFSControlOutputTextImpl::STextBox* b = it->second->Box;
+			FSControlOutputTextImpl::FSTextBox* b = it->second->Box;
 			if (b->update()==-1) 
 				deleteText[it->first]=it->second;
 		}
 	}
 
-	for (map<int,FSControlOutputTextImpl::SText*>::iterator it=deleteText.begin(),kt=deleteText.end();it!=kt;++it) {
+	for (map<int,FSControlOutputTextImpl::FSText*>::iterator it=deleteText.begin(),kt=deleteText.end();it!=kt;++it) {
 
 		int aux = it->second->Box->finish();
 		if (aux != -1) {
@@ -658,7 +658,7 @@ int FSControlOutputText::render() {
 	}
 
 	if (_impl->session.find(NULL)!=_impl->session.end()) {
-		for (map<int,FSControlOutputTextImpl::SText*>::iterator it=_impl->session.begin()->second->Texts.begin(),kt=_impl->session.begin()->second->Texts.end();it!=kt;++it) {
+		for (map<int,FSControlOutputTextImpl::FSText*>::iterator it=_impl->session.begin()->second->Texts.begin(),kt=_impl->session.begin()->second->Texts.end();it!=kt;++it) {
 			if (it->second->Type() == TT_LINE && it->second->Line) {
 				FSControlOutputTextImpl::SLineText* l = it->second->Line;
 				FSControlOutputTextImpl::SEffectText* fx = it->second->fx;
@@ -693,7 +693,7 @@ void FSControlOutputText::clear() {
 		_impl->setAdmin(it->first);
 
 		while (!_impl->data->Texts.empty()) {
-			map<int,FSControlOutputTextImpl::SText*>::iterator it=_impl->data->Texts.begin();
+			map<int,FSControlOutputTextImpl::FSText*>::iterator it=_impl->data->Texts.begin();
 			delete it->second;
 			_impl->data->Texts.erase(it);
 		}
