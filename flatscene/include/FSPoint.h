@@ -43,6 +43,7 @@ struct FS2DPoint {
 	FS2DPoint& set(T x,T y) {
         this->x = x;
         this->y = y;
+		return *this;
     }
 
 	virtual T distance(FS2DPoint& pt) {

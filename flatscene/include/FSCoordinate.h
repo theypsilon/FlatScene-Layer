@@ -35,6 +35,7 @@ struct FS3DPoint : public FS2DPoint<T> {
         this->x = x;
         this->y = y;
         this->z = z;
+		return *this;
     }
 
 	T distance ( FS3DPoint<T>& coord ) {
