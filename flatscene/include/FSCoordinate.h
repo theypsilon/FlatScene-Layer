@@ -13,7 +13,8 @@ struct FS3DPoint : public FS2DPoint<T> {
     FS3DPoint(T x=0,T y=0,T z=0)
     : FS2DPoint<T>::FS2DPoint(x,y), z(z) {}
 
-    FS3DPoint(FS3DPoint<T>& coord) {
+    template <class U>
+    FS3DPoint(const U& coord) {
         x = coord.x;
         y = coord.y;
         z = coord.z;
@@ -28,8 +29,9 @@ struct FS3DPoint : public FS2DPoint<T> {
         z = nz;
         return *this;
     }
-
-    T distance ( FS3DPoint<T>& coord ) {
+    
+    template <class U>
+    T distance ( const U& coord ) {
         T d_x = coord.x > x ?   coord.x - x :   x - coord.x;
         T d_y = coord.y > y ?   coord.y - y :   y - coord.y;
         T d_z = coord.z > z ?   coord.z - z :   z - coord.z;
