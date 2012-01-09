@@ -1,9 +1,9 @@
-#include "FSControlOutputTextImpl.h"
+#include "FSWriterImpl.h"
 #include "FSLibrary.h"
 #include "FSparserXML.h"
 #include "FSScreen.h"
 
-FSEngine* FSControlOutputText::FSControlOutputTextImpl::setAdmin(FSEngine* newAdmin) {
+FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
 
     FSEngine* ret = admin;
 
@@ -16,9 +16,9 @@ FSEngine* FSControlOutputText::FSControlOutputTextImpl::setAdmin(FSEngine* newAd
 
     if (newAdmin != ret) {
 
-        FSControlOutputTextImpl::SData* thisData = session[newAdmin];
+        WriterImpl::SData* thisData = session[newAdmin];
         if (!thisData) {
-            thisData = session[newAdmin] = new FSControlOutputTextImpl::SData;
+            thisData = session[newAdmin] = new WriterImpl::SData;
             thisData->fgcolor.b=255;
             thisData->fgcolor.g=255;
             thisData->fgcolor.r=255;
@@ -31,14 +31,14 @@ FSEngine* FSControlOutputText::FSControlOutputTextImpl::setAdmin(FSEngine* newAd
     return ret;
 }
 
-FSControlOutputText* FSControlOutputText::FSControlOutputTextImpl::singleton=NULL;
+FSWriter* FSWriter::WriterImpl::singleton=NULL;
 
-FSControlOutputText::FSControlOutputText() : _impl(new FSControlOutputTextImpl) {
+FSWriter::FSWriter() : _impl(new WriterImpl) {
     _impl->admin = (FSEngine*) 0xFFFFFFFF;
     _impl->data = NULL;
     _impl->fontSize = 20;
 
-    FSControlOutputTextImpl::singleton = NULL;
+    WriterImpl::singleton = NULL;
 
 	if (TTF_Init()==-1) {
 		FSLibrary::Error("Failed to Init SDL_ttf:",TE_SDL_MSG);
@@ -47,17 +47,17 @@ FSControlOutputText::FSControlOutputText() : _impl(new FSControlOutputTextImpl) 
 
 	atexit(TTF_Quit);
 
-	if (FSControlOutputTextImpl::singleton) {
+	if (WriterImpl::singleton) {
 		FSLibrary::Error("COutputText (Write) ya estaba creado.",TE_controlViolation);
 		return;
 	}
 
-	FSControlOutputTextImpl::singleton = this;
+	WriterImpl::singleton = this;
 
 	_impl->setAdmin(NULL);
 }
 
-FSControlOutputText::~FSControlOutputText() {
+FSWriter::~FSWriter() {
 	clear();
 
 	if (_impl->session.find(NULL)!=_impl->session.end())
@@ -67,28 +67,28 @@ FSControlOutputText::~FSControlOutputText() {
 	delete _impl;
 }
 
-int FSControlOutputText::setfontSize(int newSize) {
+int FSWriter::setfontSize(int newSize) {
 	int ret = _impl->fontSize;
 	_impl->fontSize = newSize;
 	return ret;
 }
 
-int FSControlOutputText::searchFont(const char* name, int withSize) {
+int FSWriter::searchFont(const char* name, int withSize) {
 	int aux = setfontSize(withSize);
 	int ret = searchFont(name);
 	setfontSize(aux);
 	return ret;
 }
 
-int FSControlOutputText::searchFont(const char* name) {
+int FSWriter::searchFont(const char* name) {
 #ifdef TEXT_OPERATIVE
 
-	if (!FSControlOutputTextImpl::singleton) {
+	if (!WriterImpl::singleton) {
 		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
 		return FRACASO;
 	}
 
-	for (map<int,FSControlOutputTextImpl::SFont*>::iterator it = _impl->Fonts.begin();it!=_impl->Fonts.end();++it) {
+	for (map<int,WriterImpl::SFont*>::iterator it = _impl->Fonts.begin();it!=_impl->Fonts.end();++it) {
 		if (strcmp(it->second->cadena.c_str(),name)==0 && it->second->size==_impl->fontSize) {
 			return it->first;
 		}
@@ -97,15 +97,15 @@ int FSControlOutputText::searchFont(const char* name) {
 	return FRACASO;
 }
 
-int FSControlOutputText::searchFont(TTF_Font* fnt) {
+int FSWriter::searchFont(TTF_Font* fnt) {
 #ifdef TEXT_OPERATIVE
 
-	if (!FSControlOutputTextImpl::singleton) {
+	if (!WriterImpl::singleton) {
 		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
 		return FRACASO;
 	}
 
-	for (map<int,FSControlOutputTextImpl::SFont*>::iterator it = _impl->Fonts.begin();it!=_impl->Fonts.end();++it) {
+	for (map<int,WriterImpl::SFont*>::iterator it = _impl->Fonts.begin();it!=_impl->Fonts.end();++it) {
 		if (it->second->fuente == fnt) {
 			return it->first;
 		}
@@ -114,19 +114,19 @@ int FSControlOutputText::searchFont(TTF_Font* fnt) {
 	return FRACASO;
 }
 
-int FSControlOutputText::searchFont(int idtext) {
+int FSWriter::searchFont(int idtext) {
 #ifdef TEXT_OPERATIVE
 
-	if (!FSControlOutputTextImpl::singleton) {
+	if (!WriterImpl::singleton) {
 		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
 		return FRACASO;
 	}
 
 	TTF_Font* ret = NULL;
 
-	for (map<FSEngine*,FSControlOutputTextImpl::SData*>::iterator kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
+	for (map<FSEngine*,WriterImpl::SData*>::iterator kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
 		if (kt->second->Texts.find(idtext) != kt->second->Texts.end()) {
-			FSControlOutputTextImpl::FSText* t = kt->second->Texts[idtext];
+			WriterImpl::FSText* t = kt->second->Texts[idtext];
 
 			switch (t->Type()) {
 				case TT_LINE :
@@ -146,21 +146,21 @@ int FSControlOutputText::searchFont(int idtext) {
 	return FRACASO;
 }
 
-int FSControlOutputText::loadFont(const char* fuente,int withSize) {
+int FSWriter::loadFont(const char* fuente,int withSize) {
 	int aux = setfontSize(withSize);
 	int ret = loadFont(fuente);
 	setfontSize(aux);
 	return ret;
 }
 
-int FSControlOutputText::loadFont(const char* fuente) {
+int FSWriter::loadFont(const char* fuente) {
 
 	string s(fuente);
-	FSControlOutputTextImpl::SFont* font_ttf;
+	WriterImpl::SFont* font_ttf;
 	int ret= searchFont(fuente);
 #ifdef TEXT_OPERATIVE
 
-	if (!FSControlOutputTextImpl::singleton) {
+	if (!WriterImpl::singleton) {
 		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
 		return FRACASO;
 	}
@@ -178,7 +178,7 @@ int FSControlOutputText::loadFont(const char* fuente) {
 				}
 			}
 		}
-		font_ttf = _impl->Fonts[ret] = new FSControlOutputTextImpl::SFont;
+		font_ttf = _impl->Fonts[ret] = new WriterImpl::SFont;
 		font_ttf->fuente=TTF_OpenFont((s+".ttf").c_str(),_impl->fontSize);
 		if (font_ttf->fuente==NULL) {
 			FSLibrary::Error("No se ha cargado la fuente: "+s+".ttf  ",TE_fileExists);
@@ -199,18 +199,18 @@ int FSControlOutputText::loadFont(const char* fuente) {
 
 }
 
-int FSControlOutputText::unloadFont(const char* fuente,int withSize) {
+int FSWriter::unloadFont(const char* fuente,int withSize) {
 	return unloadFont(searchFont(fuente,withSize));
 }
 
 
-int FSControlOutputText::unloadFont(const char* fuente) {
+int FSWriter::unloadFont(const char* fuente) {
 	return unloadFont(searchFont(fuente));
 }
 
-int FSControlOutputText::unloadFont(int fuente) {
+int FSWriter::unloadFont(int fuente) {
 #ifdef TEXT_OPERATIVE
-	if (!FSControlOutputTextImpl::singleton) {
+	if (!WriterImpl::singleton) {
 		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
 		return FRACASO;
 	}
@@ -220,7 +220,7 @@ int FSControlOutputText::unloadFont(int fuente) {
 		return FRACASO;
 	}
 
-	FSControlOutputTextImpl::SFont* f = _impl->Fonts[fuente];
+	WriterImpl::SFont* f = _impl->Fonts[fuente];
 	int c = --(_impl->countFonts[f]);
 	if (c < 1) {
 		if (c==0) {
@@ -245,7 +245,7 @@ int FSControlOutputText::unloadFont(int fuente) {
 	return EXITO;
 }
 /*
-CColor CControlOutputText::setColor(int r,int g,int b) {
+CColor CWriter::setColor(int r,int g,int b) {
 #ifdef TEXT_OPERATIVE
 	if (!singleton) {
 		CLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
@@ -265,7 +265,7 @@ CColor CControlOutputText::setColor(int r,int g,int b) {
 #endif
 }
 
-CColor CControlOutputText::setColor(CColor& color) {
+CColor CWriter::setColor(CColor& color) {
 #ifdef TEXT_OPERATIVE
 	if (!singleton) {
 		CLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
@@ -285,11 +285,11 @@ CColor CControlOutputText::setColor(CColor& color) {
 #endif
 }
 */
-int FSControlOutputText::line(int fuente, int x,int y, const char* text,...) {
+int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 	int ret = FRACASO;
 #ifdef TEXT_OPERATIVE
 
-	if (!FSControlOutputTextImpl::singleton) {
+	if (!WriterImpl::singleton) {
 		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
 		return FRACASO;
 	}
@@ -320,7 +320,7 @@ int FSControlOutputText::line(int fuente, int x,int y, const char* text,...) {
 
 		
 
-		FSControlOutputTextImpl::FSText* t = _impl->data->Texts[ret] = new FSControlOutputTextImpl::FSText;
+		WriterImpl::FSText* t = _impl->data->Texts[ret] = new WriterImpl::FSText;
 		t->Line->fuente = _impl->Fonts[fuente];
 
 		string allText(buffer);
@@ -363,7 +363,7 @@ int FSControlOutputText::line(int fuente, int x,int y, const char* text,...) {
 				currentY += (float)TTF_FontLineSkip(t->Line->fuente->fuente);
 			} else {
 
-				FSControlOutputTextImpl::SChar newT;
+				WriterImpl::SChar newT;
 
 				newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
 				currentX += (float)advance;
@@ -390,10 +390,10 @@ int FSControlOutputText::line(int fuente, int x,int y, const char* text,...) {
 
 }
 
-int FSControlOutputText::erase(int text,bool nextframe) {
+int FSWriter::erase(int text,bool nextframe) {
 #ifdef TEXT_OPERATIVE
 
-	if (!FSControlOutputTextImpl::singleton) {
+	if (!WriterImpl::singleton) {
 		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
 		return FRACASO;
 	}
@@ -409,7 +409,7 @@ int FSControlOutputText::erase(int text,bool nextframe) {
 
 		} else {
 
-			FSControlOutputTextImpl::FSText* t = _impl->data->Texts[text];
+			WriterImpl::FSText* t = _impl->data->Texts[text];
 
 			if (t->Type() == TT_LINE && t->fx) {
 				delete t->fx;
@@ -426,7 +426,7 @@ int FSControlOutputText::erase(int text,bool nextframe) {
 	}	else if (text==ALL_TEXT) {
 
 			while (!_impl->data->Texts.empty()) {
-				map<int,FSControlOutputTextImpl::FSText*>::iterator it=_impl->data->Texts.begin();
+				map<int,WriterImpl::FSText*>::iterator it=_impl->data->Texts.begin();
 
 				if (it->second->Type() == TT_LINE && it->second->fx) {
 					delete it->second->fx;
@@ -445,7 +445,7 @@ int FSControlOutputText::erase(int text,bool nextframe) {
 	return EXITO;
 }
 
-int FSControlOutputText::inBox(const char* file, int index) {
+int FSWriter::inBox(const char* file, int index) {
 	int ret = FRACASO;
 #ifdef TEXT_OPERATIVE
 	
@@ -491,7 +491,7 @@ int FSControlOutputText::inBox(const char* file, int index) {
 		if (textNode && textNode->Attribute("msg") && textNode->Attribute("x") && textNode->Attribute("y") && textNode->Attribute("w")) {
 
 			int x,y,w;
-			FSControlOutputTextImpl::SFont* ttf_fnt;
+			WriterImpl::SFont* ttf_fnt;
 			int next = -1;
 
 			textNode->QueryIntAttribute("x",&x);
@@ -521,7 +521,7 @@ int FSControlOutputText::inBox(const char* file, int index) {
 				}
 			}
 
-			_impl->data->Texts[ret] = new FSControlOutputTextImpl::FSText(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next);
+			_impl->data->Texts[ret] = new WriterImpl::FSText(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next);
 
 			//data->Boxs.push_back(new CTextBox(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next));
 
@@ -536,16 +536,16 @@ int FSControlOutputText::inBox(const char* file, int index) {
 }
 
 
-int FSControlOutputText::color(int text,float red, float green, float blue, float alpha, TypeColorTBox boxflags, bool persistent) {
+int FSWriter::color(int text,float red, float green, float blue, float alpha, TypeColorTBox boxflags, bool persistent) {
 #ifdef TEXT_OPERATIVE
 	if (_impl->admin != FSLibrary::getActualEngine())
 	    _impl->setAdmin(FSLibrary::getActualEngine());
 
 	if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
 	
-			FSControlOutputTextImpl::FSText* t = _impl->data->Texts[text];
+			WriterImpl::FSText* t = _impl->data->Texts[text];
 
-			FSControlOutputTextImpl::SEffectText* fx = new FSControlOutputTextImpl::SEffectText;
+			WriterImpl::SEffectText* fx = new WriterImpl::SEffectText;
 
 			fx->alpha = alpha;
 			fx->blue = blue;
@@ -576,13 +576,13 @@ int FSControlOutputText::color(int text,float red, float green, float blue, floa
 
 }
 
-int FSControlOutputText::color(int text,FSColor* col, float alpha, TypeColorTBox boxflags, bool persistent) {
+int FSWriter::color(int text,FSColor* col, float alpha, TypeColorTBox boxflags, bool persistent) {
 
 	return color(text,((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha,boxflags,persistent);
 
 }
 
-int FSControlOutputText::locateRenderScene ( float posx, float posy, float width, float height, float zoom) {
+int FSWriter::locateRenderScene ( float posx, float posy, float width, float height, float zoom) {
 
 	if ( width == 0.0 || height == 0.0) {
 		FSLibrary::Error("Width/Height invalid value");
@@ -598,10 +598,10 @@ int FSControlOutputText::locateRenderScene ( float posx, float posy, float width
 	return EXITO;
 }
 
-int FSControlOutputText::render() {
+int FSWriter::render() {
 #ifdef TEXT_OPERATIVE
 
-	if (!FSControlOutputTextImpl::singleton) {
+	if (!WriterImpl::singleton) {
 		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
 		return FRACASO;
 	}
@@ -616,15 +616,15 @@ int FSControlOutputText::render() {
 		FSScreen::locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
 
 
-	map<int,FSControlOutputTextImpl::FSText*> deleteText;
+	map<int,WriterImpl::FSText*> deleteText;
 
-	for (map<int,FSControlOutputTextImpl::FSText*>::iterator it=_impl->data->Texts.begin(),kt=_impl->data->Texts.end();it!=kt;++it) {
+	for (map<int,WriterImpl::FSText*>::iterator it=_impl->data->Texts.begin(),kt=_impl->data->Texts.end();it!=kt;++it) {
 
-		FSControlOutputTextImpl::SEffectText* fx = it->second->fx;
+		WriterImpl::SEffectText* fx = it->second->fx;
 
 		if (it->second->Type() == TT_LINE) {
-			FSControlOutputTextImpl::SLineText* l = it->second->Line;
-			for (list<FSControlOutputTextImpl::SChar>::iterator jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt) {
+			WriterImpl::SLineText* l = it->second->Line;
+			for (list<WriterImpl::SChar>::iterator jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt) {
 				if (fx) {
 					l->fuente->render[jt->glyph]->color(fx->red,fx->green,fx->blue,fx->alpha);
 				}
@@ -637,13 +637,13 @@ int FSControlOutputText::render() {
 				it->second->fx = NULL;
 			}
 		}	else	if (it->second->Type() == TT_BOX) {
-			FSControlOutputTextImpl::FSTextBox* b = it->second->Box;
+			WriterImpl::FSTextBox* b = it->second->Box;
 			if (b->update()==-1) 
 				deleteText[it->first]=it->second;
 		}
 	}
 
-	for (map<int,FSControlOutputTextImpl::FSText*>::iterator it=deleteText.begin(),kt=deleteText.end();it!=kt;++it) {
+	for (map<int,WriterImpl::FSText*>::iterator it=deleteText.begin(),kt=deleteText.end();it!=kt;++it) {
 
 		int aux = it->second->Box->finish();
 		if (aux != -1) {
@@ -658,11 +658,11 @@ int FSControlOutputText::render() {
 	}
 
 	if (_impl->session.find(NULL)!=_impl->session.end()) {
-		for (map<int,FSControlOutputTextImpl::FSText*>::iterator it=_impl->session.begin()->second->Texts.begin(),kt=_impl->session.begin()->second->Texts.end();it!=kt;++it) {
+		for (map<int,WriterImpl::FSText*>::iterator it=_impl->session.begin()->second->Texts.begin(),kt=_impl->session.begin()->second->Texts.end();it!=kt;++it) {
 			if (it->second->Type() == TT_LINE && it->second->Line) {
-				FSControlOutputTextImpl::SLineText* l = it->second->Line;
-				FSControlOutputTextImpl::SEffectText* fx = it->second->fx;
-				for (list<FSControlOutputTextImpl::SChar>::iterator jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt)  {
+				WriterImpl::SLineText* l = it->second->Line;
+				WriterImpl::SEffectText* fx = it->second->fx;
+				for (list<WriterImpl::SChar>::iterator jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt)  {
 					if (fx) 
 						l->fuente->render[jt->glyph]->color(fx->red,fx->green,fx->blue,fx->alpha);
 					
@@ -686,14 +686,14 @@ int FSControlOutputText::render() {
 	return EXITO;
 }
 
-void FSControlOutputText::clear() {
+void FSWriter::clear() {
 #ifdef TEXT_OPERATIVE
 	while (!_impl->session.empty()) {
-		map<FSEngine*,FSControlOutputTextImpl::SData*>::iterator it= _impl->session.begin();
+		map<FSEngine*,WriterImpl::SData*>::iterator it= _impl->session.begin();
 		_impl->setAdmin(it->first);
 
 		while (!_impl->data->Texts.empty()) {
-			map<int,FSControlOutputTextImpl::FSText*>::iterator it=_impl->data->Texts.begin();
+			map<int,WriterImpl::FSText*>::iterator it=_impl->data->Texts.begin();
 			delete it->second;
 			_impl->data->Texts.erase(it);
 		}
@@ -711,7 +711,7 @@ void FSControlOutputText::clear() {
 	_impl->setAdmin(NULL);
 
 	while (!_impl->Fonts.empty()) {
-		map<int,FSControlOutputTextImpl::SFont*>::iterator it = _impl->Fonts.begin();
+		map<int,WriterImpl::SFont*>::iterator it = _impl->Fonts.begin();
 		TTF_CloseFont(it->second->fuente);
 		map<Uint16,FSImage*>& chars = it->second->render;
 		while (!chars.empty()) {
@@ -723,7 +723,7 @@ void FSControlOutputText::clear() {
 		_impl->Fonts.erase(it);
 	}
 	while (!_impl->countFonts.empty()) {
-		map<FSControlOutputTextImpl::SFont*,int>::iterator it = _impl->countFonts.begin();
+		map<WriterImpl::SFont*,int>::iterator it = _impl->countFonts.begin();
 		_impl->countFonts.erase(it);
 	}
 	while (!_impl->lastIndexFontAdded.empty())
@@ -731,4 +731,4 @@ void FSControlOutputText::clear() {
 #endif
 }
 
-FSControlOutputText Write;
+FSWriter Write;

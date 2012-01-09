@@ -1,5 +1,5 @@
 #include "FSTime.h"
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 #include "FSScreen.h"
 #include "FSLibrary.h"
 
@@ -120,6 +120,6 @@ bool FSTime::isTimeForAll() {
 }
 
 // TODO : Liberar los espacios de memoria correspondiente a los engines cuando estos sean eliminados. 
-//				No es prioritario porque la creación y destrucción de engines durante la ejecución debería ser mínima, y la memoria reservada es muy pequeña.
+//				No es prioritario porque la creaciï¿½n y destrucciï¿½n de engines durante la ejecuciï¿½n deberï¿½a ser mï¿½nima, y la memoria reservada es muy pequeï¿½a.
 
 FSTime Chrono;

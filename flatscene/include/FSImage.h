@@ -54,8 +54,8 @@ private:
 	friend class FSTextBox;
 	friend class FSSprite;
 	friend class FSSpriteset;
-	friend class FSControlOutputText;
 	friend class FSControlImages;
+	friend class FSWriter;
 	friend class FSScreen;
 
 	static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);

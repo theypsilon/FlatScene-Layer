@@ -11,7 +11,7 @@
 
 #include "FSControlImages.h"
 #include "FSControlMultiverse.h"
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 #include "FSTime.h"
 
 #include "FSCamera.h"

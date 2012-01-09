@@ -1,6 +1,6 @@
 #include "FSScreen.h"
 #include "FSLibrary.h"
-#include "FSControlOutputTextImpl.h"
+#include "FSWriterImpl.h"
 
 void FSScreen::saveResources(GraphicResources &info) {
 	
@@ -15,7 +15,7 @@ void FSScreen::saveResources(GraphicResources &info) {
 
 	CImg.clear();
 
-	for (map<int,FSControlOutputText::FSControlOutputTextImpl::SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
+	for (map<int,FSWriter::WriterImpl::SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
 		map<Uint16,FSImage*>& chars = it->second->render;
 		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
 			imageToDelete.push_back(jt->second); // delete
@@ -23,9 +23,9 @@ void FSScreen::saveResources(GraphicResources &info) {
 		}
 	}
 
-	for (map<FSEngine*,FSControlOutputText::FSControlOutputTextImpl::SData*>::iterator it=Write._impl->session.begin();it!=Write._impl->session.end();++it) {
-		map<int,FSControlOutputText::FSControlOutputTextImpl::FSText*>& auxBoxs = it->second->Texts;
-		for (map<int,FSControlOutputText::FSControlOutputTextImpl::FSText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
+	for (map<FSEngine*,FSWriter::WriterImpl::SData*>::iterator it=Write._impl->session.begin();it!=Write._impl->session.end();++it) {
+		map<int,FSWriter::WriterImpl::FSText*>& auxBoxs = it->second->Texts;
+		for (map<int,FSWriter::WriterImpl::FSText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
 			if (jt->second->Type() == TT_BOX && jt->second->Box)
 				jt->second->Box->deleteBox();
 		}
@@ -37,7 +37,7 @@ void FSScreen::saveResources(GraphicResources &info) {
 
 void FSScreen::reloadResources(GraphicResources &info) {
 	
-	for (map<int,FSControlOutputText::FSControlOutputTextImpl::SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
+	for (map<int,FSWriter::WriterImpl::SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
 		map<Uint16,FSImage*>& chars = it->second->render;
 		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
 			if (!jt->second) {
@@ -48,9 +48,9 @@ void FSScreen::reloadResources(GraphicResources &info) {
 		}
 	}
 
-	for (map<FSEngine*,FSControlOutputText::FSControlOutputTextImpl::SData*>::iterator it=Write._impl->session.begin();it!=Write._impl->session.end();++it) {
-		map<int,FSControlOutputText::FSControlOutputTextImpl::FSText*>& auxBoxs = it->second->Texts;
-		for (map<int,FSControlOutputText::FSControlOutputTextImpl::FSText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
+	for (map<FSEngine*,FSWriter::WriterImpl::SData*>::iterator it=Write._impl->session.begin();it!=Write._impl->session.end();++it) {
+		map<int,FSWriter::WriterImpl::FSText*>& auxBoxs = it->second->Texts;
+		for (map<int,FSWriter::WriterImpl::FSText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
 			if (jt->second->Type() == TT_BOX && jt->second->Box)
 				jt->second->Box->createBox();
 		}

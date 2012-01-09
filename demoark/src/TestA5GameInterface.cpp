@@ -4,7 +4,7 @@
 
 #include "TestA5GameInterface.h"
 #include "FSLibrary.h"
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 
 #include "EnemyPunto.h"
 #include "EnemyNPC.h"

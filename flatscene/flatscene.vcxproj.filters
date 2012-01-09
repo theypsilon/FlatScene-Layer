@@ -42,7 +42,7 @@
     <ClCompile Include="src\FSControlMultiverse.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSControlOutputText.cpp">
+    <ClCompile Include="src\FSWriter.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
     <ClCompile Include="src\FSCoordinate.cpp">
@@ -116,7 +116,7 @@
     <ClInclude Include="include\FSControlMultiverse.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSControlOutputText.h">
+    <ClInclude Include="include\FSWriter.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
     <ClInclude Include="include\FSCoordinate.h">

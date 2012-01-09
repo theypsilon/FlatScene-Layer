@@ -1,11 +1,11 @@
 #ifndef __WRITE_IMPL_H__
 #define __WRITE_IMPL_H__
 
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 
 class FSEngine;
 
-struct FSControlOutputText::FSControlOutputTextImpl {
+struct FSWriter::WriterImpl {
     struct SData;
     struct SFont;
     struct SEffectText;
@@ -27,7 +27,7 @@ struct FSControlOutputText::FSControlOutputTextImpl {
     float height;
     float zoom;
 
-    static FSControlOutputText* singleton;
+    static FSWriter* singleton;
 
     FSEngine* setAdmin(FSEngine* newAdmin);
 

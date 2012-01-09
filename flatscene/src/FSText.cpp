@@ -1,18 +1,18 @@
-#include "FSControlOutputTextImpl.h"
+#include "FSWriterImpl.h"
 
-FSControlOutputText::FSControlOutputTextImpl::FSText::FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) {
+FSWriter::WriterImpl::FSText::FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) {
     fx = NULL;
     Box = new FSTextBox(file,text,x,y,Lim,ttf_fnt,next);
     type = TT_BOX;
 }
 
-FSControlOutputText::FSControlOutputTextImpl::FSText::FSText() {
+FSWriter::WriterImpl::FSText::FSText() {
     fx = NULL;
     Line = new SLineText;
     type = TT_LINE;
 }
 
-FSControlOutputText::FSControlOutputTextImpl::FSText::~FSText() {
+FSWriter::WriterImpl::FSText::~FSText() {
     if (fx) {
         delete fx;
         fx=NULL;
@@ -28,6 +28,6 @@ FSControlOutputText::FSControlOutputTextImpl::FSText::~FSText() {
 
 }
 
-TypeText FSControlOutputText::FSControlOutputTextImpl::FSText::Type() const {
+TypeText FSWriter::WriterImpl::FSText::Type() const {
     return type;
 }

@@ -4,7 +4,7 @@
 
 #include "TestA0GameInterface.h"
 #include "FSLibrary.h"
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 
 #include "EnemyPunto.h"
 #include "EnemyNPC.h"
@@ -70,7 +70,7 @@ int  CTestA0GameInterface::onInit() {
 	activationIds.push_back("npc_normal_quiet");
 	activationIds.push_back("npc_normal_walk");
 
-	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuración.
+	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuraciï¿½n.
 	if (!xmldoc.LoadFile()) {	 FSLibrary::Error("resources/config.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChildElement("System"));

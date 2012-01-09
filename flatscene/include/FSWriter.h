@@ -21,10 +21,10 @@ enum TypeColorTBox {
     TCTB_BOX
 };
 
-class FSControlOutputText {
+class FSWriter {
 public:
-    FSControlOutputText();
-    ~FSControlOutputText();
+    FSWriter();
+    ~FSWriter();
 
     int setfontSize(int newSize);
 
@@ -57,11 +57,11 @@ public:
 
     void clear();
 private:
-    struct FSControlOutputTextImpl;
-    FSControlOutputTextImpl* _impl;
+    struct WriterImpl;
+    WriterImpl* _impl;
     friend class FSScreen;
 };
 
-extern FSControlOutputText Write;
+extern FSWriter Write;
 
 #endif

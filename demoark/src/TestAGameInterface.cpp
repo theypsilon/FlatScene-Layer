@@ -10,7 +10,7 @@
 
 #include "Map.h"
 
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 
 Uint32 CTestAGameInterface::MSGID_ChangeMap=FSMessageHandler::getNextMSGID(false);
 Uint32 CTestAGameInterface::MSGID_DeleteMap=FSMessageHandler::getNextMSGID(false);

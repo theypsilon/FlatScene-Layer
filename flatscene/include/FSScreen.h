@@ -125,7 +125,7 @@ private:
 	friend class FSImage;
 
 	friend class FSControlImages;
-	friend class FSControlOutputText;
+	friend class FSWriter;
 	friend class FSTextBox;
 
 public:
