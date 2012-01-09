@@ -202,7 +202,7 @@ void FSSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		} else if (mode != ONLY_SDL_SURFACE) 
 			return FSLibrary::Error("Librer�a no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
 
-		FSSprite* pspt=new FSSprite(FSImage::toSCanvas(chipset,mode));
+		FSSprite* pspt=new FSSprite(FSCanvas::toSCanvas(chipset,mode));
 
 		pspt->setName(s_aux.c_str());
 
@@ -427,13 +427,13 @@ void FSSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 
 		
 		if (sp_scale > 0 && sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
-			temp = FSImage::scaleSurface(sdl_surf,sp_scale);
+			temp = FSCanvas::scaleSurface(sdl_surf,sp_scale);
 			SDL_FreeSurface(sdl_surf);
 			sdl_surf=temp;
 			SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,chipset->format->colorkey);		// Reasignamos los formatos.
 		}
 
-		m_pImage=FSImage::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas(
+		m_pImage=FSCanvas::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas(
 
 		//Imagen creada, ahora el resto de su estructura de datos.
 
@@ -655,7 +655,7 @@ void FSSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 					return FSLibrary::Error("Librer�a no inicializada antes de crear CSpriteSet con texturas. Usa ONLY_SDL_SURFACE.");
 
 				if (sp_scale > 0 && sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
-					temp = FSImage::scaleSurface(sdl_surf,sp_scale);
+					temp = FSCanvas::scaleSurface(sdl_surf,sp_scale);
 					SDL_FreeSurface(sdl_surf);
 					sdl_surf=temp;
 					SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,sdl_surf->format->colorkey);		// Reasignamos los formatos.
@@ -663,7 +663,7 @@ void FSSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 
 
 
-				m_pImage = FSImage::toSCanvas(sdl_surf,mode);
+				m_pImage = FSCanvas::toSCanvas(sdl_surf,mode);
 
 				TiXmlElement* cpoint = NULL;
 

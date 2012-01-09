@@ -1,7 +1,7 @@
 #ifndef __MAINCANVAS_H__
 #define __MAINCANVAS_H__
 
-#include "FSImage.h"
+#include "FSCanvas.h"
 #include "FSControlImages.h"
 #include "FSColor.h"
 #include <list>
@@ -89,7 +89,7 @@ private:
 
 	static list<FSSprite*> spriteToDelete;
 	static list<FSSpriteset*> spritesetToDelete;
-	static list<FSImage*> imageToDelete;
+	static list<FSCanvas*> imageToDelete;
 
 	static void deleteResources();
 
@@ -122,7 +122,7 @@ private:
 
 	friend class FSSpriteset;
 	friend class FSSprite;
-	friend class FSImage;
+	friend class FSCanvas;
 
 	friend class FSControlImages;
 	friend class FSWriter;

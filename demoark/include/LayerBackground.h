@@ -5,7 +5,7 @@
 #include "FSActor.h"
 #include "FSSpriteSet.h"
 #include "FSRectangle.h"
-#include "FSImage.h"
+#include "FSCanvas.h"
 #include "FSColor.h"
 #include "FSControlImages.h"
 #include "Map.h"

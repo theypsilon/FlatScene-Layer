@@ -90,7 +90,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			currentX += (float)advance;
 
 			if (fuente->render.find(newChar)==fuente->render.end()) {
-				fuente->render[newChar] = new FSImage(FSImage::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
+				fuente->render[newChar] = new FSCanvas(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
 			}
 
 			newT.glyph=newChar;
@@ -197,7 +197,7 @@ void FSWriter::WriterImpl::FSTextBox::createBox() {
 	SDL_FreeSurface(aux_surf);
 	SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
 
-	box = new FSImage(FSImage::toSCanvas(surface));
+	box = new FSCanvas(FSCanvas::toSCanvas(surface));
 }
 
 int FSWriter::WriterImpl::FSTextBox::finish() {

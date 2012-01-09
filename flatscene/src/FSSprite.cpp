@@ -1,7 +1,7 @@
 #include "FSSprite.h"
 #include "FSScreen.h"
 
-FSSprite::FSSprite ( SCanvas pSurface, FSPoint* zerocpSource) : FSImage(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED) {
+FSSprite::FSSprite ( SCanvas pSurface, FSPoint* zerocpSource) : FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED) {
 
 	if (zerocpSource==NULL) 
 		cpoint =new FSPoint(0,0);
@@ -45,8 +45,8 @@ FSSprite::~FSSprite ( ) {
 	
 }
 
-FSImage* FSSprite::getImage ( ) {
-	return ( (FSImage*) this ) ;
+FSCanvas* FSSprite::getImage ( ) {
+	return ( (FSCanvas*) this ) ;
 }
 
 void FSSprite::put (FSPoint& ptDst ,Uint8 flags) {
@@ -58,7 +58,7 @@ void FSSprite::put (FSPoint& ptDst ,Uint8 flags) {
 		ptDst.y -= cpoint->y;
 	}
 
-	FSImage::put(ptDst,flags);
+	FSCanvas::put(ptDst,flags);
 }
 //TODO
 

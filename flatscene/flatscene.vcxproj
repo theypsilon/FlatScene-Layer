@@ -124,7 +124,7 @@
     <ClInclude Include="include\FSCoordinate.h" />
     <ClInclude Include="include\FSdefinitions.h" />
     <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSImage.h" />
+    <ClInclude Include="include\FSCanvas.h" />
     <ClInclude Include="include\FSLibrary.h" />
     <ClInclude Include="include\FSMessageHandler.h" />
     <ClInclude Include="include\FSparserXML.h" />

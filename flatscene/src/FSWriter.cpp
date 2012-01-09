@@ -225,9 +225,9 @@ int FSWriter::unloadFont(int fuente) {
 	if (c < 1) {
 		if (c==0) {
 			TTF_CloseFont(f->fuente);
-			map<Uint16,FSImage*>& chars =f->render;
+			map<Uint16,FSCanvas*>& chars =f->render;
 			while (!chars.empty()) {
-				map<Uint16,FSImage*>::iterator jt = chars.begin();
+				map<Uint16,FSCanvas*>::iterator jt = chars.begin();
 				FSScreen::imageToDelete.push_back(jt->second); // delete jt->second;
 				chars.erase(jt);
 			}
@@ -373,7 +373,7 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 					fg.b=0xFF;
 					fg.g=0xFF;
 					fg.r=0xFF;
-					t->Line->fuente->render[newChar] = new FSImage(FSImage::toSCanvas(TTF_RenderGlyph_Blended(t->Line->fuente->fuente,newChar,fg)));
+					t->Line->fuente->render[newChar] = new FSCanvas(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(t->Line->fuente->fuente,newChar,fg)));
 				}
 
 				newT.glyph=newChar;
@@ -713,9 +713,9 @@ void FSWriter::clear() {
 	while (!_impl->Fonts.empty()) {
 		map<int,WriterImpl::SFont*>::iterator it = _impl->Fonts.begin();
 		TTF_CloseFont(it->second->fuente);
-		map<Uint16,FSImage*>& chars = it->second->render;
+		map<Uint16,FSCanvas*>& chars = it->second->render;
 		while (!chars.empty()) {
-			map<Uint16,FSImage*>::iterator jt = chars.begin();
+			map<Uint16,FSCanvas*>::iterator jt = chars.begin();
 			FSScreen::imageToDelete.push_back(jt->second); // delete jt->second;
 			chars.erase(jt);
 		}

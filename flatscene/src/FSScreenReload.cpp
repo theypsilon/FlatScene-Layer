@@ -16,8 +16,8 @@ void FSScreen::saveResources(GraphicResources &info) {
 	CImg.clear();
 
 	for (map<int,FSWriter::WriterImpl::SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
-		map<Uint16,FSImage*>& chars = it->second->render;
-		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
+		map<Uint16,FSCanvas*>& chars = it->second->render;
+		for (map<Uint16,FSCanvas*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
 			imageToDelete.push_back(jt->second); // delete
 			jt->second = NULL;
 		}
@@ -38,10 +38,10 @@ void FSScreen::saveResources(GraphicResources &info) {
 void FSScreen::reloadResources(GraphicResources &info) {
 	
 	for (map<int,FSWriter::WriterImpl::SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
-		map<Uint16,FSImage*>& chars = it->second->render;
-		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
+		map<Uint16,FSCanvas*>& chars = it->second->render;
+		for (map<Uint16,FSCanvas*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
 			if (!jt->second) {
-				jt->second = new FSSprite(FSImage::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,Write._impl->data->fgcolor)));
+				jt->second = new FSSprite(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,Write._impl->data->fgcolor)));
 			} else {
 				return FSLibrary::Error("No se puede recargar el recurso glyph porque no había sido descargado anteriormente.");
 			}

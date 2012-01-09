@@ -128,7 +128,7 @@
     <ClInclude Include="include\FSEngine.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSImage.h">
+    <ClInclude Include="include\FSCanvas.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
     <ClInclude Include="include\FSLibrary.h">

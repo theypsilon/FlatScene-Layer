@@ -24,7 +24,7 @@ list<SToRender*> FSScreen::graphicMaterial;
 
 list<FSSprite*> FSScreen::spriteToDelete;
 list<FSSpriteset*> FSScreen::spritesetToDelete;
-list<FSImage*> FSScreen::imageToDelete;
+list<FSCanvas*> FSScreen::imageToDelete;
 
 map<TypeResource,void (*)(void*)> FSScreen::procRenders;
 
@@ -882,7 +882,7 @@ void FSScreen::deleteResources() {
 
 	spriteToDelete.clear();
 
-	for (list<FSImage*>::iterator it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
+	for (list<FSCanvas*>::iterator it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
 		delete (*it);
 
 	imageToDelete.clear();

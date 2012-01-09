@@ -39,7 +39,7 @@ struct FSWriter::WriterImpl {
     struct SFont {
         string cadena;
         TTF_Font* fuente;
-        map<Uint16,FSImage*> render;
+        map<Uint16,FSCanvas*> render;
         int size;
     };
 
@@ -63,7 +63,7 @@ struct FSWriter::WriterImpl {
         int timer;
         SDL_Color col;
 
-        FSImage* box;
+        FSCanvas* box;
         Uint8 xBox;
         Uint8 yBox;
 
