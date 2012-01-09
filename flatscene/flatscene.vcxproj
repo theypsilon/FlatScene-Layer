@@ -88,56 +88,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\debugfuncs.cpp" />
-    <ClCompile Include="src\FSActor.cpp" />
-    <ClCompile Include="src\FSCamera.cpp" />
-    <ClCompile Include="src\FSColor.cpp" />
-    <ClCompile Include="src\FSControlImages.cpp" />
-    <ClCompile Include="src\FSControlMultiverse.cpp" />
-    <ClCompile Include="src\FSWriter.cpp" />
-    <ClCompile Include="src\FSCoordinate.cpp" />
-    <ClCompile Include="src\FSEngine.cpp" />
-    <ClCompile Include="src\FSImage.cpp" />
-    <ClCompile Include="src\FSLibrary.cpp" />
-    <ClCompile Include="src\FSMessageHandler.cpp" />
-    <ClCompile Include="src\FSPoint.cpp" />
-    <ClCompile Include="src\FSRectangle.cpp" />
-    <ClCompile Include="src\FSScreen.cpp" />
-    <ClCompile Include="src\FSSprite.cpp" />
-    <ClCompile Include="src\FSSpriteSet.cpp" />
-    <ClCompile Include="src\FSTextBox.cpp" />
-    <ClCompile Include="src\FSTime.cpp" />
-    <ClCompile Include="src\FSUniverse.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\*.cpp" />
+    <ClCompile Include="src\tinyxml\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\debugfuncs.h" />
-    <ClInclude Include="include\FSActor.h" />
-    <ClInclude Include="include\FSCamera.h" />
-    <ClInclude Include="include\FSColor.h" />
-    <ClInclude Include="include\FSControlImages.h" />
-    <ClInclude Include="include\FSControlMultiverse.h" />
-    <ClInclude Include="include\FSWriter.h" />
-    <ClInclude Include="include\FSCoordinate.h" />
-    <ClInclude Include="include\FSdefinitions.h" />
-    <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSCanvas.h" />
-    <ClInclude Include="include\FSLibrary.h" />
-    <ClInclude Include="include\FSMessageHandler.h" />
-    <ClInclude Include="include\FSparserXML.h" />
-    <ClInclude Include="include\FSPoint.h" />
-    <ClInclude Include="include\FSRectangle.h" />
-    <ClInclude Include="include\FSScreen.h" />
-    <ClInclude Include="include\FSSprite.h" />
-    <ClInclude Include="include\FSSpriteSet.h" />
-    <ClInclude Include="include\FSTextBox.h" />
-    <ClInclude Include="include\FSTime.h" />
-    <ClInclude Include="include\FSUniverse.h" />
-    <ClInclude Include="include\tinyxml\tinystr.h" />
-    <ClInclude Include="include\tinyxml\tinyxml.h" />
+    <ClInclude Include="include\*.h" />
+    <ClInclude Include="include\tinyxml\*.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
