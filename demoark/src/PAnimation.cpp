@@ -57,9 +57,9 @@ PImage::~PImage() {
 }
 void PImage::dibujar(int spt) {
 	FSPoint pt(100,100);
-	CImg.get(sptSet)->get(spt)->put(pt);
+	Img.get(sptSet)->get(spt)->put(pt);
 }
 
 FSSprite* PImage::dame(int spt) {
-	return CImg.get(sptSet)->get(spt);
+	return Img.get(sptSet)->get(spt);
 }

@@ -77,16 +77,16 @@ void CMap::load() {
 
 	for (node = input.FirstChildElement("TileGraphs").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
 		if (tileSet == -1) 
-			tileSet = lastTileset = CImg.add(node->Attribute("name"));
+			tileSet = lastTileset = Img.add(node->Attribute("name"));
 		else
-			lastTileset = CImg.add(node->Attribute("name"));
+			lastTileset = Img.add(node->Attribute("name"));
 	}
 
 	for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
 		if (durezaSet == -1)
-			durezaSet = lastDurezaset = CImg.add(node->Attribute("name"),ONLY_SDL_SURFACE);
+			durezaSet = lastDurezaset = Img.add(node->Attribute("name"),ONLY_SDL_SURFACE);
 		else
-			lastDurezaset = CImg.add(node->Attribute("name"));
+			lastDurezaset = Img.add(node->Attribute("name"));
 	}
 
 	if (durezaSet == -1 || tileSet == -1) {
@@ -294,10 +294,10 @@ void CMap::unload() {
 	delete[] Gates;
 
 	for (int i=tileSet,j=lastTileset;i<=j;i++)
-		CImg.remove(i);
+		Img.remove(i);
 
 	for (int i=durezaSet,j=lastDurezaset;i<=j;i++)
-		CImg.remove(i);
+		Img.remove(i);
 
 	loaded=false;
 }
@@ -435,7 +435,7 @@ Uint32 CMap::getPixel(int x, int y,int z) {
 		
 		if (tile_pisado>0) {
 			tile_pisado--;
-			FSSprite* canv=CImg.get(durezaSet+dur[z][i][j].fileDur)->get(tile_pisado);
+			FSSprite* canv=Img.get(durezaSet+dur[z][i][j].fileDur)->get(tile_pisado);
 
 			int flags = dur[z][i][j].flags;
 

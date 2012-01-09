@@ -36,10 +36,10 @@ int FSActor::setSprite(int file,int graph) {
 }
 
 FSSprite* FSActor::getSprite() {
-	return CImg.get(file)->get(graph);
+	return Img.get(file)->get(graph);
 }
 
 FSActor* FSActor::clone() {
-	FSLibrary::Error("CActor no implementa un metodo de clonación por defecto.");
+	FSLibrary::Error("CActor no implementa un metodo de clonaciï¿½n por defecto.");
 	return NULL;
 }

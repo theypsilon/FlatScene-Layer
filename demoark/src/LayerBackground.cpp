@@ -116,7 +116,7 @@ void CLayerUniform::refresh(int cx, int cy) {
 					p.y+=mapa->getTileH();
 				}
 
-				CImg.get(mapa->getTileset()+ind.fileGraph)->get(ind.graph)->put(p,ind.flags);
+				Img.get(mapa->getTileset()+ind.fileGraph)->get(ind.graph)->put(p,ind.flags);
 			} 
 		}
 	}

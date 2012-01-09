@@ -33,7 +33,7 @@ int CTestBGameInterface::onInit() {
 	for (int i=0;i<num;i++)
 		sequence[i]=i;
 	
-	CImg.add("Character");
+	Img.add("Character");
 
 	anim = new PAnimation(num,sequence,0);*/
 
@@ -74,7 +74,7 @@ int CTestBGameInterface::onExit()
 {
 	delete anim;
 
-	CImg.remove(CImg.search("resources/Character"));
+	Img.remove(Img.search("resources/Character"));
 
 #ifdef LOG_SISTEMA
 	printf("\nTestB termina.\n\n");

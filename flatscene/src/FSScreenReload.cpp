@@ -4,16 +4,16 @@
 
 void FSScreen::saveResources(GraphicResources &info) {
 	
-	for (SpritesetCollection::iterator it=CImg.set.begin(),kt=CImg.set.end();it!=kt;++it)	{
+	for (SpritesetCollection::iterator it=Img.set.begin(),kt=Img.set.end();it!=kt;++it)	{
 		SpritesetInfo aux;
 		aux.number = it->first;
 		aux.name =	it->second->getName();
 		aux.mode = it->second->getMode();
-		aux.times = CImg.getCount(it->first);
+		aux.times = Img.getCount(it->first);
 		info.push_back(aux);
 	}
 
-	CImg.clear();
+	Img.clear();
 
 	for (map<int,FSWriter::WriterImpl::SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
 		map<Uint16,FSCanvas*>& chars = it->second->render;
@@ -60,12 +60,12 @@ void FSScreen::reloadResources(GraphicResources &info) {
 	int aux = -1;
 
 	for (GraphicResources::iterator it=info.begin(),et=info.end();it!=et;++it) {
-		number = CImg.add((*it).name.c_str(),(*it).mode);
+		number = Img.add((*it).name.c_str(),(*it).mode);
 		if (number != it->number) {
-			CImg.set[it->number] = CImg.set[number];
-			CImg.set.erase(number);
-			CImg.lastIndexAdded.push(number);
+			Img.set[it->number] = Img.set[number];
+			Img.set.erase(number);
+			Img.lastIndexAdded.push(number);
 		}
-		CImg.count[CImg.get(it->number)]=it->times;
+		Img.count[Img.get(it->number)]=it->times;
 	}
 }

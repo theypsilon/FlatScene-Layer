@@ -11,7 +11,7 @@ CActionXPunto::CActionXPunto(CActorScrollMap* executor,TiXmlElement* fuente,cons
 	for (int i=0;i<this->num;i++) {
 		this->limitofsequence[i]=1;
 		this->flags[i] = 0;
-		this->sptset[i]=CImg.add("Punto");
+		this->sptset[i]=Img.add("Punto");
 		this->sequence[i] = alloc(int,1);
 		this->sequence[i][0] = 0;
 	}

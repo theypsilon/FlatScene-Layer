@@ -128,4 +128,4 @@ int FSControlImages::getCount(Uint32 n) {
 	return ret;
 }
 
-FSControlImages CImg;
+FSControlImages Img;

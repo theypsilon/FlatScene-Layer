@@ -43,7 +43,7 @@ FSSprite* CActorMouse::getSprite() {
 
 	FSSprite* spt;
 
-	spt = CImg.get(file)->get(graph);
+	spt = Img.get(file)->get(graph);
 
 	return spt;
 }
