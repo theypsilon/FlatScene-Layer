@@ -11,7 +11,8 @@ struct FS2DPoint {
     FS2DPoint ( T x = 0 , T y  = 0 ) 
     : x(x), y(y) {}
 
-    FS2DPoint ( FS2DPoint<T>& pt )
+    template <class U>
+    FS2DPoint ( const U& pt )
     : x(pt.x), y(pt.y) {}
 
     inline T getX() const { return x; }
@@ -26,7 +27,8 @@ struct FS2DPoint {
         return *this;
     }
 
-    virtual T distance(FS2DPoint& pt) {
+    template <class U>
+    T distance(const U& pt) {
         T d_x = pt.x > x ? pt.x - x : x - pt.x;
         T d_y = pt.y > y ? pt.y - y : y - pt.y;
 
