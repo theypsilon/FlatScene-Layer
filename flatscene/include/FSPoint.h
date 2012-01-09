@@ -20,9 +20,10 @@ struct FS2DPoint {
     void setX(T nx) { x = nx; }
     void setY(T ny) { y = ny; }
 
-    FS2DPoint& set(T x,T y) {
-        this->x = x;
-        this->y = y;
+    FS2DPoint& set(T nx,T ny) {
+        x = nx;
+        y = ny;
+        return *this;
     }
 
     virtual T distance(FS2DPoint& pt) {

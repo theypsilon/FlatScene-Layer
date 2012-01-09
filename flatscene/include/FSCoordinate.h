@@ -22,10 +22,11 @@ struct FS3DPoint : public FS2DPoint<T> {
     inline T getZ() const { return z; }
     void setZ(T nz) { z = nz; }
 
-    FS3DPoint<T>& set(T x,T y,T z) {
-        this->x = x;
-        this->y = y;
-        this->z = z;
+    FS3DPoint<T>& set(T nx,T ny,T nz) {
+        x = nx;
+        y = ny;
+        z = nz;
+        return *this;
     }
 
     T distance ( FS3DPoint<T>& coord ) {
