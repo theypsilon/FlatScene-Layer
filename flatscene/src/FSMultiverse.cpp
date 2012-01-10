@@ -20,6 +20,13 @@ FSMessageHandler* FSMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAd
     }
 }
 
+FSMultiverse& FSMultiverse::Instance() {
+    if (!MultiverseImpl::singleton)
+        MultiverseImpl::singleton = new FSMultiverse;
+
+    return *MultiverseImpl::singleton;
+}
+
 
 FSMultiverse::FSMultiverse() : _impl(new MultiverseImpl) {
 
@@ -205,4 +212,4 @@ UniverseCollection::iterator FSMultiverse::end() {
     }
 }
 
-FSMultiverse Cosmos;
+FSMultiverse& Cosmos = FSMultiverse::Instance();

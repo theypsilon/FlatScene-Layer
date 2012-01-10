@@ -23,12 +23,14 @@ public:
 
     UniverseCollection::iterator begin();
     UniverseCollection::iterator end();
+
+    static FSMultiverse& Instance();
 private:
     friend class FSUniverse;
     struct MultiverseImpl;
     MultiverseImpl* _impl;
 };
 
-extern FSMultiverse Cosmos;
+extern FSMultiverse& Cosmos;
 
 #endif
