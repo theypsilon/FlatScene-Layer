@@ -39,7 +39,7 @@
     <ClCompile Include="src\FSImages.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSControlMultiverse.cpp">
+    <ClCompile Include="src\FSMultiverse.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
     <ClCompile Include="src\FSWriter.cpp">
@@ -113,7 +113,7 @@
     <ClInclude Include="include\FSImages.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSControlMultiverse.h">
+    <ClInclude Include="include\FSMultiverse.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
     <ClInclude Include="include\FSWriter.h">

@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "ScrollCamera.h"
-#include "FSControlMultiverse.h"
+#include "FSMultiverse.h"
 #include "FSImages.h"
  
 #include "TileBG.h"

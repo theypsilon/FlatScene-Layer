@@ -10,7 +10,7 @@
 #include "FSEngine.h"
 
 #include "FSImages.h"
-#include "FSControlMultiverse.h"
+#include "FSMultiverse.h"
 #include "FSWriter.h"
 #include "FSTime.h"
 

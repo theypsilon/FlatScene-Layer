@@ -1,16 +1,16 @@
 #ifndef __MULTIVERSE_IMPL__
 #define __MULTIVERSE_IMPL__
 
-#include "FSControlMultiverse.h"
+#include "FSMultiverse.h"
 
-struct FSControlMultiverse::MultiverseImpl {
+struct FSMultiverse::MultiverseImpl {
     FSMessageHandler* admin;
     MultiverseByAdmin session;
     UniverseCollection* unisCurrent;
 
     FSMessageHandler* setAdmin(FSMessageHandler* newAdmin);
 
-    static FSControlMultiverse* singleton;
+    static FSMultiverse* singleton;
 
     bool working;
 };

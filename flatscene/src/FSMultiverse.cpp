@@ -1,8 +1,8 @@
 #include "FSMultiverseImpl.h"
 #include "FSLibrary.h"
 
-FSControlMultiverse* FSControlMultiverse::MultiverseImpl::singleton=NULL;
-FSMessageHandler* FSControlMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAdmin) {
+FSMultiverse* FSMultiverse::MultiverseImpl::singleton=NULL;
+FSMessageHandler* FSMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAdmin) {
     if (newAdmin != admin) {
         if (newAdmin) {
             unisCurrent = session[newAdmin];
@@ -21,7 +21,7 @@ FSMessageHandler* FSControlMultiverse::MultiverseImpl::setAdmin(FSMessageHandler
 }
 
 
-FSControlMultiverse::FSControlMultiverse() : _impl(new MultiverseImpl) {
+FSMultiverse::FSMultiverse() : _impl(new MultiverseImpl) {
 
     _impl->admin = NULL;
     _impl->unisCurrent = NULL;
@@ -37,7 +37,7 @@ FSControlMultiverse::FSControlMultiverse() : _impl(new MultiverseImpl) {
     MultiverseImpl::singleton = this;
 }
 
-FSControlMultiverse::~FSControlMultiverse() {
+FSMultiverse::~FSMultiverse() {
     for (MultiverseByAdmin::iterator it = (*_impl).session.begin(),jt=(*_impl).session.end();it!=jt;++it) {
         _impl->setAdmin(it->first);
         clear();
@@ -46,7 +46,7 @@ FSControlMultiverse::~FSControlMultiverse() {
     delete _impl;
 }
 
-FSUniverse* FSControlMultiverse::add(FSUniverse* uni,Uint8 slot) {
+FSUniverse* FSMultiverse::add(FSUniverse* uni,Uint8 slot) {
 
     if ((*_impl).admin != FSLibrary::getActualEngine())
         _impl->setAdmin(FSLibrary::getActualEngine());
@@ -82,7 +82,7 @@ FSUniverse* FSControlMultiverse::add(FSUniverse* uni,Uint8 slot) {
     return uniDev;
 }
 
-FSUniverse* FSControlMultiverse::universeNamed(const char* uniName,Uint8 slot) {
+FSUniverse* FSMultiverse::universeNamed(const char* uniName,Uint8 slot) {
     if (uniName)    {
         std::string cad(uniName);
         return universeNamed(cad,slot);
@@ -93,7 +93,7 @@ FSUniverse* FSControlMultiverse::universeNamed(const char* uniName,Uint8 slot) {
 }
 
 
-FSUniverse* FSControlMultiverse::universeNamed(std::string uniName,Uint8 slot) {
+FSUniverse* FSMultiverse::universeNamed(std::string uniName,Uint8 slot) {
     if ((*_impl).admin != FSLibrary::getActualEngine())
         _impl->setAdmin(FSLibrary::getActualEngine());
 
@@ -112,7 +112,7 @@ FSUniverse* FSControlMultiverse::universeNamed(std::string uniName,Uint8 slot) {
     }
 }
 
-int FSControlMultiverse::size() {
+int FSMultiverse::size() {
     if ((*_impl).admin != FSLibrary::getActualEngine())
         _impl->setAdmin(FSLibrary::getActualEngine());
 
@@ -124,7 +124,7 @@ int FSControlMultiverse::size() {
     }
 }
 
-void FSControlMultiverse::erase(FSUniverse *mapKilled) {
+void FSMultiverse::erase(FSUniverse *mapKilled) {
     if ((*_impl).admin != FSLibrary::getActualEngine())
         _impl->setAdmin(FSLibrary::getActualEngine());
 
@@ -151,7 +151,7 @@ void FSControlMultiverse::erase(FSUniverse *mapKilled) {
 
 }
 
-void FSControlMultiverse::clear() {
+void FSMultiverse::clear() {
     if ((*_impl).admin != FSLibrary::getActualEngine())
         _impl->setAdmin(FSLibrary::getActualEngine());
 
@@ -177,7 +177,7 @@ void FSControlMultiverse::clear() {
     }
 }
 
-UniverseCollection::iterator FSControlMultiverse::begin() {
+UniverseCollection::iterator FSMultiverse::begin() {
     if ((*_impl).admin != FSLibrary::getActualEngine())
         _impl->setAdmin(FSLibrary::getActualEngine());
 
@@ -191,7 +191,7 @@ UniverseCollection::iterator FSControlMultiverse::begin() {
     }
 }
 
-UniverseCollection::iterator FSControlMultiverse::end() {
+UniverseCollection::iterator FSMultiverse::end() {
     if ((*_impl).admin != FSLibrary::getActualEngine())
         _impl->setAdmin(FSLibrary::getActualEngine());
 
@@ -205,4 +205,4 @@ UniverseCollection::iterator FSControlMultiverse::end() {
     }
 }
 
-FSControlMultiverse Cosmos;
+FSMultiverse Cosmos;

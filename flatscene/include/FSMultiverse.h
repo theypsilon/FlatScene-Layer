@@ -9,10 +9,10 @@
 typedef  std::list<FSUniverse*> UniverseCollection;
 typedef map<FSMessageHandler*,UniverseCollection*> MultiverseByAdmin;
 
-class FSControlMultiverse {
+class FSMultiverse {
 public:
-    FSControlMultiverse();
-    ~FSControlMultiverse();
+    FSMultiverse();
+    ~FSMultiverse();
 
     FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
     FSUniverse* universeNamed(string uniName,Uint8 slot=0);
@@ -29,6 +29,6 @@ private:
     MultiverseImpl* _impl;
 };
 
-extern FSControlMultiverse Cosmos;
+extern FSMultiverse Cosmos;
 
 #endif
