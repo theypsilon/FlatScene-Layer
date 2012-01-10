@@ -2,7 +2,7 @@
 #define __MAINCANVAS_H__
 
 #include "FSCanvas.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 #include "FSColor.h"
 #include <list>
 
@@ -124,7 +124,7 @@ private:
 	friend class FSSprite;
 	friend class FSCanvas;
 
-	friend class FSControlImages;
+	friend class FSImages;
 	friend class FSWriter;
 	friend class FSTextBox;
 

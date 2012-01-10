@@ -1,6 +1,6 @@
 #include "MenuAGameInterface.h"
 #include "FSLibrary.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 #include "FSWriter.h"
 #include "FSScreen.h"
 

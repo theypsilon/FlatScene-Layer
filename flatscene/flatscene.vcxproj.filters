@@ -36,7 +36,7 @@
     <ClCompile Include="src\FSColor.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSControlImages.cpp">
+    <ClCompile Include="src\FSImages.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
     <ClCompile Include="src\FSControlMultiverse.cpp">
@@ -110,7 +110,7 @@
     <ClInclude Include="include\FSColor.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSControlImages.h">
+    <ClInclude Include="include\FSImages.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
     <ClInclude Include="include\FSControlMultiverse.h">

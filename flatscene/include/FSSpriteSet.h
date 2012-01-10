@@ -18,7 +18,7 @@ class FSSpriteset {
 private :
 
 	static Uint16 globalAuxiliar;
-	//Inicializa Spriteset con los contenidos del fichero de tipo gráfico, cuyo nombre es obtenido por el constructor.
+	//Inicializa Spriteset con los contenidos del fichero de tipo grï¿½fico, cuyo nombre es obtenido por el constructor.
 	void loadChipset(string& c,Uint8 mode=ONLY_TEXTURE,string* cPrev=NULL);
 
 	void loadChipsetSplit(string grd,Uint8 mode=ONLY_TEXTURE);
@@ -29,10 +29,10 @@ private :
 
 	Uint8 mode;
 
-	friend class FSControlImages;
+	friend class FSImages;
 	//construct empty sprite set
 	FSSpriteset();
-	//constructor que inicializa la colección con un fichero externo.
+	//constructor que inicializa la colecciï¿½n con un fichero externo.
 	FSSpriteset(string c,Uint8 mode=ONLY_TEXTURE);
 
 	virtual ~FSSpriteset();

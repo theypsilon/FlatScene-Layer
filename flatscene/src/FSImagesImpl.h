@@ -1,15 +1,15 @@
 #ifndef __FS_IMAGES_IMPL__
 #define __FS_IMAGES_IMPL__
 
-#include "FSControlImages.h"
+#include "FSImages.h"
 
-struct FSControlImages::ImagesImpl {
+struct FSImages::ImagesImpl {
     SpritesetCollection set;
     SpritesetCount count;
 
     stack<int> lastIndexAdded;
 
-    static FSControlImages* singleton;
+    static FSImages* singleton;
 };
 
 #endif

@@ -10,7 +10,7 @@
 #include "Enemy.h"
 #include "ScrollCamera.h"
 #include "FSControlMultiverse.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
  
 #include "TileBG.h"
 #include <vector>
