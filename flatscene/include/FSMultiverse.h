@@ -11,9 +11,6 @@ typedef map<FSMessageHandler*,UniverseCollection*> MultiverseByAdmin;
 
 class FSMultiverse {
 public:
-    FSMultiverse();
-    ~FSMultiverse();
-
     FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
     FSUniverse* universeNamed(string uniName,Uint8 slot=0);
     FSUniverse* universeNamed(const char* uniName,Uint8 slot=0);
@@ -26,7 +23,10 @@ public:
 
     static FSMultiverse& Instance();
 private:
-    friend class FSUniverse;
+     FSMultiverse();
+    ~FSMultiverse();
+
+   friend class FSUniverse;
     struct MultiverseImpl;
     MultiverseImpl* _impl;
 };
