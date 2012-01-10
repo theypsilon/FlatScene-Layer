@@ -34,14 +34,9 @@ FSMultiverse::FSMultiverse() : _impl(new MultiverseImpl) {
     _impl->unisCurrent = NULL;
     _impl->working = false;
 
-    MultiverseImpl::singleton = NULL;
-
     if (MultiverseImpl::singleton) {
         FSLibrary::Error("Cosmos ya estaba creado.",TE_controlViolation);
-        return;
     }
-
-    MultiverseImpl::singleton = this;
 }
 
 FSMultiverse::~FSMultiverse() {
