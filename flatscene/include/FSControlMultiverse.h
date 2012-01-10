@@ -10,31 +10,23 @@ typedef  std::list<FSUniverse*> UniverseCollection;
 typedef map<FSMessageHandler*,UniverseCollection*> MultiverseByAdmin;
 
 class FSControlMultiverse {
-private:
-	FSMessageHandler* admin;	
-	MultiverseByAdmin session;
-	UniverseCollection* unisCurrent;
-
-	FSMessageHandler* setAdmin(FSMessageHandler* newAdmin);
-
-	static FSControlMultiverse* singleton;
-
-	bool working;
-
-	friend class FSUniverse;
 public:
-	FSControlMultiverse();
-	~FSControlMultiverse();
+    FSControlMultiverse();
+    ~FSControlMultiverse();
 
-	FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
-	FSUniverse* universeNamed(string uniName,Uint8 slot=0);
-	FSUniverse* universeNamed(const char* uniName,Uint8 slot=0);
-	void erase(FSUniverse* uniKilled);
-	void clear();
-	int size();
+    FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
+    FSUniverse* universeNamed(string uniName,Uint8 slot=0);
+    FSUniverse* universeNamed(const char* uniName,Uint8 slot=0);
+    void erase(FSUniverse* uniKilled);
+    void clear();
+    int size();
 
-	UniverseCollection::iterator begin();
-	UniverseCollection::iterator end();
+    UniverseCollection::iterator begin();
+    UniverseCollection::iterator end();
+private:
+    friend class FSUniverse;
+    struct MultiverseImpl;
+    MultiverseImpl* _impl;
 };
 
 extern FSControlMultiverse FSMultiverse;

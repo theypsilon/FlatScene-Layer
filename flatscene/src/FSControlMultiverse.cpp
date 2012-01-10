@@ -1,201 +1,208 @@
-#include "FSControlMultiverse.h"
+#include "FSMultiverseImpl.h"
 #include "FSLibrary.h"
 
-FSControlMultiverse* FSControlMultiverse::singleton=NULL;
+FSControlMultiverse* FSControlMultiverse::MultiverseImpl::singleton=NULL;
+FSMessageHandler* FSControlMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAdmin) {
+    if (newAdmin != admin) {
+        if (newAdmin) {
+            unisCurrent = session[newAdmin];
+            if (!unisCurrent) {
+                unisCurrent = new UniverseCollection();
+                session[newAdmin]=unisCurrent;
+            }
+        }
 
-FSControlMultiverse::FSControlMultiverse() : admin(NULL), working(false) {
-	singleton = NULL;
+        FSMessageHandler* oldAdmin = admin;
+        admin = newAdmin;
+        return oldAdmin;
+    } else {
+        return admin;
+    }
+}
 
-	if (singleton) {
-		FSLibrary::Error("FSMultiverse ya estaba creado.",TE_controlViolation);
-		return;
-	}
 
-	singleton = this;
+FSControlMultiverse::FSControlMultiverse() : _impl(new MultiverseImpl) {
+
+    _impl->admin = NULL;
+    _impl->unisCurrent = NULL;
+    _impl->working = false;
+
+    MultiverseImpl::singleton = NULL;
+
+    if (MultiverseImpl::singleton) {
+        FSLibrary::Error("FSMultiverse ya estaba creado.",TE_controlViolation);
+        return;
+    }
+
+    MultiverseImpl::singleton = this;
 }
 
 FSControlMultiverse::~FSControlMultiverse() {
-	for (MultiverseByAdmin::iterator it = session.begin(),jt=session.end();it!=jt;++it) {
-		setAdmin(it->first);
-		clear();
-	}
-}
+    for (MultiverseByAdmin::iterator it = (*_impl).session.begin(),jt=(*_impl).session.end();it!=jt;++it) {
+        _impl->setAdmin(it->first);
+        clear();
+    }
 
-FSMessageHandler* FSControlMultiverse::setAdmin(FSMessageHandler* newAdmin) {
-	if (newAdmin != admin) {
-		if (newAdmin) {
-			unisCurrent = session[newAdmin];
-			if (!unisCurrent) {
-				unisCurrent = new UniverseCollection();
-				session[newAdmin]=unisCurrent;
-			}
-		}
-
-		FSMessageHandler* oldAdmin = admin;
-		admin = newAdmin;
-		return oldAdmin;
-	} else {
-		return admin;
-	}
+    delete _impl;
 }
 
 FSUniverse* FSControlMultiverse::add(FSUniverse* uni,Uint8 slot) {
 
-	if (admin != FSLibrary::getActualEngine())
-		setAdmin(FSLibrary::getActualEngine());
+    if ((*_impl).admin != FSLibrary::getActualEngine())
+        _impl->setAdmin(FSLibrary::getActualEngine());
 
-	if (!admin || !uni || slot == 255) {
-		if (!admin)	FSLibrary::Error("No se puede realizar dicha operación si el administrador no existe.");
-		else if (!uni) FSLibrary::Error("No se puede realizar dicha operación si no se indica un nombre correcto.");
-		else if (slot == 255) FSLibrary::Error("Slot limit exceded. 255 no es posible.");
-		else FSLibrary::Error("Error desconocido.");
+    if (!(*_impl).admin || !uni || slot == 255) {
+        if (!(*_impl).admin)    FSLibrary::Error("No se puede realizar dicha operaciï¿½n si el (*_impl).administrador no existe.");
+        else if (!uni) FSLibrary::Error("No se puede realizar dicha operaciï¿½n si no se indica un nombre correcto.");
+        else if (slot == 255) FSLibrary::Error("Slot limit exceded. 255 no es posible.");
+        else FSLibrary::Error("Error desconocido.");
 
-		if (uni) {
-			working = true;
-			delete uni;
-			working = false;
-		}
+        if (uni) {
+            (*_impl).working = true;
+            delete uni;
+            (*_impl).working = false;
+        }
 
-		return NULL;
-	}
+        return NULL;
+    }
 
-	string& stName = uni->getName();
-	FSUniverse* uniDev = universeNamed(stName,slot);
-	if (uniDev==NULL) {
-		uniDev = uni;
-		uni->slot = slot;
-		uni->setParent(admin);
-		unisCurrent->push_back(uni);
-	} else {
-		working = true;
-		delete uni;
-		working = false;
-	}
+    string& stName = uni->getName();
+    FSUniverse* uniDev = universeNamed(stName,slot);
+    if (uniDev==NULL) {
+        uniDev = uni;
+        uni->slot = slot;
+        uni->setParent((*_impl).admin);
+        (*_impl).unisCurrent->push_back(uni);
+    } else {
+        (*_impl).working = true;
+        delete uni;
+        (*_impl).working = false;
+    }
 
-	return uniDev;
+    return uniDev;
 }
 
 FSUniverse* FSControlMultiverse::universeNamed(const char* uniName,Uint8 slot) {
-	if (uniName)	{
-		std::string cad(uniName);
-		return universeNamed(cad,slot);
-	} else {
-		FSLibrary::Error("No se ha indicado un nombre para el universo.");
-		return NULL;
-	}
+    if (uniName)    {
+        std::string cad(uniName);
+        return universeNamed(cad,slot);
+    } else {
+        FSLibrary::Error("No se ha indicado un nombre para el universo.");
+        return NULL;
+    }
 }
 
 
 FSUniverse* FSControlMultiverse::universeNamed(std::string uniName,Uint8 slot) {
-	if (admin != FSLibrary::getActualEngine())
-		setAdmin(FSLibrary::getActualEngine());
+    if ((*_impl).admin != FSLibrary::getActualEngine())
+        _impl->setAdmin(FSLibrary::getActualEngine());
 
-	if (admin) {
-		FSUniverse* uniDev=NULL;
-		for (UniverseCollection::iterator it=unisCurrent->begin(),et=unisCurrent->end();it!=et;++it)  {
-			if ((*it)->getName()==uniName && (*it)->slot == slot) {
-				uniDev = (*it);
-				break;
-			}
-		}
-		return uniDev;
-	} else {
-		FSLibrary::Error("No se puede realizar dicha operación si el administrador no existe.");
-		return NULL;
-	}
+    if ((*_impl).admin) {
+        FSUniverse* uniDev=NULL;
+        for (UniverseCollection::iterator it=(*_impl).unisCurrent->begin(),et=(*_impl).unisCurrent->end();it!=et;++it)  {
+            if ((*it)->getName()==uniName && (*it)->slot == slot) {
+                uniDev = (*it);
+                break;
+            }
+        }
+        return uniDev;
+    } else {
+        FSLibrary::Error("No se puede realizar dicha operaciï¿½n si el (*_impl).administrador no existe.");
+        return NULL;
+    }
 }
 
 int FSControlMultiverse::size() {
-	if (admin != FSLibrary::getActualEngine())
-		setAdmin(FSLibrary::getActualEngine());
+    if ((*_impl).admin != FSLibrary::getActualEngine())
+        _impl->setAdmin(FSLibrary::getActualEngine());
 
-	if (admin)
-		return unisCurrent->size();
-	else {
-		FSLibrary::Error("No se puede realizar dicha operación si el administrador no existe.");
-		return 0;
-	}
+    if ((*_impl).admin)
+        return (*_impl).unisCurrent->size();
+    else {
+        FSLibrary::Error("No se puede realizar dicha operaciï¿½n si el (*_impl).administrador no existe.");
+        return 0;
+    }
 }
 
 void FSControlMultiverse::erase(FSUniverse *mapKilled) {
-	if (admin != FSLibrary::getActualEngine())
-		setAdmin(FSLibrary::getActualEngine());
+    if ((*_impl).admin != FSLibrary::getActualEngine())
+        _impl->setAdmin(FSLibrary::getActualEngine());
 
-	if (!admin || !mapKilled)
-		if (!admin) FSLibrary::Error("No se puede borrar el universo si el administrador no existe.");
-		else if (!mapKilled) FSLibrary::Error("No se puede borrar el universo porque no es válido.");
-		else FSLibrary::Error("Error desconocido.");
+    if (!(*_impl).admin || !mapKilled)
+        if (!(*_impl).admin) FSLibrary::Error("No se puede borrar el universo si el (*_impl).administrador no existe.");
+        else if (!mapKilled) FSLibrary::Error("No se puede borrar el universo porque no es vï¿½lido.");
+        else FSLibrary::Error("Error desconocido.");
 
-	bool enc = false;
+    bool enc = false;
 
-	for (UniverseCollection::iterator it=unisCurrent->begin(),et=unisCurrent->end();it!=et;++it) {
-		if (mapKilled==*it) {
-			unisCurrent->erase(it);
-			enc=true;
-			break;
-		}
-	}
+    for (UniverseCollection::iterator it=(*_impl).unisCurrent->begin(),et=(*_impl).unisCurrent->end();it!=et;++it) {
+        if (mapKilled==*it) {
+            (*_impl).unisCurrent->erase(it);
+            enc=true;
+            break;
+        }
+    }
 
-	if (enc) {
-		working=true;
-		delete mapKilled;
-		working=false;
-	}
+    if (enc) {
+        (*_impl).working=true;
+        delete mapKilled;
+        (*_impl).working=false;
+    }
 
 }
 
 void FSControlMultiverse::clear() {
-	if (admin != FSLibrary::getActualEngine())
-		setAdmin(FSLibrary::getActualEngine());
+    if ((*_impl).admin != FSLibrary::getActualEngine())
+        _impl->setAdmin(FSLibrary::getActualEngine());
 
-	if (admin) {
-		if (unisCurrent)	{
-			UniverseCollection::iterator it ;
-			while ( !unisCurrent->empty ( ) )
-			{
-				it = unisCurrent->begin ( ) ;
-				FSUniverse* m = *it ;
-				unisCurrent->erase ( it ) ;
-				working=true;
-				delete m ;
-				working=false;
-			}
-			delete unisCurrent;
-			unisCurrent=NULL;
+    if ((*_impl).admin) {
+        if ((*_impl).unisCurrent)   {
+            UniverseCollection::iterator it ;
+            while ( !(*_impl).unisCurrent->empty ( ) )
+            {
+                it = (*_impl).unisCurrent->begin ( ) ;
+                FSUniverse* m = *it ;
+                (*_impl).unisCurrent->erase ( it ) ;
+                (*_impl).working=true;
+                delete m ;
+                (*_impl).working=false;
+            }
+            delete (*_impl).unisCurrent;
+            (*_impl).unisCurrent=NULL;
 
-			session.erase(session.find(admin));
+            (*_impl).session.erase((*_impl).session.find((*_impl).admin));
 
-			admin = NULL;
-		}	
-	}
+            (*_impl).admin = NULL;
+        }
+    }
 }
 
 UniverseCollection::iterator FSControlMultiverse::begin() {
-	if (admin != FSLibrary::getActualEngine())
-		setAdmin(FSLibrary::getActualEngine());
+    if ((*_impl).admin != FSLibrary::getActualEngine())
+        _impl->setAdmin(FSLibrary::getActualEngine());
 
-	if (admin)
-		return unisCurrent->begin();
-	else {
-		FSLibrary::Error("No se puede realizar dicha operación si el administrador no existe.");
-		if (session.find(NULL)==session.end())
-			session[NULL]= new UniverseCollection();
-		return session[NULL]->begin();
-	}
+    if ((*_impl).admin)
+        return (*_impl).unisCurrent->begin();
+    else {
+        FSLibrary::Error("No se puede realizar dicha operaciï¿½n si el (*_impl).administrador no existe.");
+        if ((*_impl).session.find(NULL)==(*_impl).session.end())
+            (*_impl).session[NULL]= new UniverseCollection();
+        return (*_impl).session[NULL]->begin();
+    }
 }
 
 UniverseCollection::iterator FSControlMultiverse::end() {
-	if (admin != FSLibrary::getActualEngine())
-		setAdmin(FSLibrary::getActualEngine());
-	
-	if (admin)
-		return unisCurrent->end();
-	else {
-		FSLibrary::Error("No se puede realizar dicha operación si el administrador no existe.");
-		if (session.find(NULL)==session.end())
-			session[NULL]= new UniverseCollection();
-		return session[NULL]->begin();
-	}
+    if ((*_impl).admin != FSLibrary::getActualEngine())
+        _impl->setAdmin(FSLibrary::getActualEngine());
+
+    if ((*_impl).admin)
+        return (*_impl).unisCurrent->end();
+    else {
+        FSLibrary::Error("No se puede realizar dicha operaciï¿½n si el (*_impl).administrador no existe.");
+        if ((*_impl).session.find(NULL)==(*_impl).session.end())
+            (*_impl).session[NULL]= new UniverseCollection();
+        return (*_impl).session[NULL]->begin();
+    }
 }
 
 FSControlMultiverse FSMultiverse;
