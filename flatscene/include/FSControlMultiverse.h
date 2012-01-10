@@ -29,6 +29,6 @@ private:
     MultiverseImpl* _impl;
 };
 
-extern FSControlMultiverse FSMultiverse;
+extern FSControlMultiverse Cosmos;
 
 #endif

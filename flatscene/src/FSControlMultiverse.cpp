@@ -30,7 +30,7 @@ FSControlMultiverse::FSControlMultiverse() : _impl(new MultiverseImpl) {
     MultiverseImpl::singleton = NULL;
 
     if (MultiverseImpl::singleton) {
-        FSLibrary::Error("FSMultiverse ya estaba creado.",TE_controlViolation);
+        FSLibrary::Error("Cosmos ya estaba creado.",TE_controlViolation);
         return;
     }
 
@@ -205,4 +205,4 @@ UniverseCollection::iterator FSControlMultiverse::end() {
     }
 }
 
-FSControlMultiverse FSMultiverse;
+FSControlMultiverse Cosmos;

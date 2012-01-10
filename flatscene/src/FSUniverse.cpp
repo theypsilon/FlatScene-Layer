@@ -7,7 +7,7 @@ FSUniverse::FSUniverse(string name) : FSMessageHandler(NULL), name(name) , loade
 }
 
 FSUniverse::~FSUniverse() {
-	if (!FSMultiverse._impl->working) {
+	if (!Cosmos._impl->working) {
 		FSLibrary::Error("Solo se puede destruir el Universo a traves del Multiverso.",TE_controlViolation);
 	}
 	ActorCollection::iterator it ;
@@ -79,7 +79,7 @@ ActorCollection::iterator FSUniverse::actorEnd() {
 }
 
 bool FSUniverse::isLoaded() {
-	if (!FSMultiverse._impl->working && slot == 255) {
+	if (!Cosmos._impl->working && slot == 255) {
 		FSLibrary::Error("No se ha inicializado este mapa, a traves del Multiverso. Inutilizable.");
 		return false;
 	}
