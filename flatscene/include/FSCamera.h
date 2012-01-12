@@ -6,7 +6,7 @@
  
 #include "FSRectangle.h"
 #include "FSCanvas.h"
-#include "FSControlMultiverse.h"
+#include "FSMultiverse.h"
 #include "FSScreen.h"
 #include <vector>
 #include <string>

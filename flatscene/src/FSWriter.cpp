@@ -38,6 +38,12 @@ FSWriter::FSWriter() : _impl(new WriterImpl) {
     _impl->data = NULL;
     _impl->fontSize = 20;
 
+	_impl->posx =
+	_impl->posy =
+	_impl->width =
+	_impl->height =
+	_impl->zoom = 0;
+
     WriterImpl::singleton = NULL;
 
 	if (TTF_Init()==-1) {

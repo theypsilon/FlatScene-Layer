@@ -84,9 +84,9 @@ int  CTestA0GameInterface::onInit() {
 
 	CMap* mapDemo; 
 	if (input.FirstChildElement("demonpc").ToElement() && input.FirstChildElement("demonpc").ToElement()->Attribute("initial-map"))
-		mapDemo = (CMap*) FSMultiverse.add(new CMap(input.FirstChildElement("demonpc").ToElement()->Attribute("initial-map")));
+		mapDemo = (CMap*) Cosmos.add(new CMap(input.FirstChildElement("demonpc").ToElement()->Attribute("initial-map")));
 	else
-		mapDemo = (CMap*) FSMultiverse.add(new CMap("mapa2"));
+		mapDemo = (CMap*) Cosmos.add(new CMap("mapa2"));
 	mapDemo->load();
 
 	if (cantNPC >= 1) {

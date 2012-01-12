@@ -9,8 +9,8 @@
 #include "FSScreen.h"
 #include "FSEngine.h"
 
-#include "FSControlImages.h"
-#include "FSControlMultiverse.h"
+#include "FSImages.h"
+#include "FSMultiverse.h"
 #include "FSWriter.h"
 #include "FSTime.h"
 

@@ -1,6 +1,6 @@
 #include "Animation.h"
 #include "FSLibrary.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 
 CAnimation::CAnimation() : seq(0), paso(0) {
 }
@@ -39,7 +39,7 @@ void CAnimation::cloneThisInto(CAnimation* clon) {
 					clon->sequence[i][j]=sequence[i][j];
 			}
 		} else 
-			FSLibrary::Error("Se pretende clonar una acción que aún no se ha definido.");
+			FSLibrary::Error("Se pretende clonar una acciï¿½n que aï¿½n no se ha definido.");
 
 }
 
@@ -61,13 +61,13 @@ void CAnimation::reinicia() {
 
 void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner) {
 
-	TiXmlElement* nodeSequence = newNode->FirstChildElement("animation");	// Buscamos la animación.
+	TiXmlElement* nodeSequence = newNode->FirstChildElement("animation");	// Buscamos la animaciï¿½n.
 
-	if (nodeSequence)	// Si existe, buscamos la primera secuencia de la animación.
+	if (nodeSequence)	// Si existe, buscamos la primera secuencia de la animaciï¿½n.
 		nodeSequence = nodeSequence->FirstChildElement("sequence");
 
 	if (!nodeSequence)	// Si no, falla.
-		FSLibrary::Error("Animación no encontrada en el fichero de acciones.");
+		FSLibrary::Error("Animaciï¿½n no encontrada en el fichero de acciones.");
 
 	list<string> files;
 	list<int*> sequences;
@@ -79,7 +79,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 
 		if(strcmp(file.substr(0,1).c_str(),"*")==0) {	// Si es un alias...
 			aliasFileAnimation(file,owner);	// Busca el archivo apropiado y lo devuelve a file.
-		} // Una vez con el nombre del fichero de gráficos en file... 
+		} // Una vez con el nombre del fichero de grï¿½ficos en file... 
 
 		if (nodeSequence && nodeSequence->Attribute("flags")) { // Si se indican las flags...
 			flags.push_back(atoi(nodeSequence->Attribute("flags")));
@@ -90,12 +90,12 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 
 		list<int> steps;
 		while (step && step->FirstChildElement("img") && step->FirstChildElement("img")->Attribute("value")) { // Mientras no acabe la secuencia...
-			steps.push_back(atoi(step->FirstChildElement("img")->Attribute("value")));	// En el futuro, cada paso de la secuencia puede que esté compuesto por más imágenes.
+			steps.push_back(atoi(step->FirstChildElement("img")->Attribute("value")));	// En el futuro, cada paso de la secuencia puede que estï¿½ compuesto por mï¿½s imï¿½genes.
 			step = step->NextSiblingElement();
 		}
 
 		if (steps.empty())
-			FSLibrary::Error("Secuencia de animación sin al menos 1 paso en el arbol de acciones.");
+			FSLibrary::Error("Secuencia de animaciï¿½n sin al menos 1 paso en el arbol de acciones.");
 
 		int* seq = alloc(int,steps.size());
 
@@ -114,7 +114,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 	}
 
 	if (sequences.empty() || sequences.size()!=limiteSeq.size() || sequences.size()!=flags.size() || sequences.size()!=files.size()) {
-		FSLibrary::Error("Conflicto generado en la captura de la animación.");
+		FSLibrary::Error("Conflicto generado en la captura de la animaciï¿½n.");
 	}
 
 	this->num=sequences.size();
@@ -134,7 +134,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 	}
 
 	if (!limiteSeq.empty() || !flags.empty() || !files.empty() || !sequences.empty())
-		FSLibrary::Error("El buffer de creación de la animación no ha sido vaciado.");
+		FSLibrary::Error("El buffer de creaciï¿½n de la animaciï¿½n no ha sido vaciado.");
 
 	flags.clear();
 	sequences.clear();
@@ -156,7 +156,7 @@ void CAnimation::aliasFileAnimation(std::string &file,const char* owner) {
 		animAlias = animAlias->NextSiblingElement();
 
 	if (animAlias) {
-		animAlias = animAlias->FirstChildElement("animation");	// Buscamos la animación cuyo owner coincida con este caso.
+		animAlias = animAlias->FirstChildElement("animation");	// Buscamos la animaciï¿½n cuyo owner coincida con este caso.
 		while (animAlias && strcmp(animAlias->Attribute("owner"),owner)!=0)
 			animAlias = animAlias ->NextSiblingElement();
 
@@ -165,5 +165,5 @@ void CAnimation::aliasFileAnimation(std::string &file,const char* owner) {
 	}
 
 	if (!animAlias)
-		FSLibrary::Error("El alias reclamado no se corresponde con ninguna animación registrada.");
+		FSLibrary::Error("El alias reclamado no se corresponde con ninguna animaciï¿½n registrada.");
 }

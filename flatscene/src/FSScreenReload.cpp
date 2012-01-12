@@ -1,10 +1,11 @@
 #include "FSScreen.h"
 #include "FSLibrary.h"
 #include "FSWriterImpl.h"
+#include "FSImagesImpl.h"
 
 void FSScreen::saveResources(GraphicResources &info) {
 	
-	for (SpritesetCollection::iterator it=Img.set.begin(),kt=Img.set.end();it!=kt;++it)	{
+	for (SpritesetCollection::iterator it=Img._impl->set.begin(),kt=Img._impl->set.end();it!=kt;++it)	{
 		SpritesetInfo aux;
 		aux.number = it->first;
 		aux.name =	it->second->getName();
@@ -62,10 +63,10 @@ void FSScreen::reloadResources(GraphicResources &info) {
 	for (GraphicResources::iterator it=info.begin(),et=info.end();it!=et;++it) {
 		number = Img.add((*it).name.c_str(),(*it).mode);
 		if (number != it->number) {
-			Img.set[it->number] = Img.set[number];
-			Img.set.erase(number);
-			Img.lastIndexAdded.push(number);
+			Img._impl->set[it->number] = Img._impl->set[number];
+			Img._impl->set.erase(number);
+			Img._impl->lastIndexAdded.push(number);
 		}
-		Img.count[Img.get(it->number)]=it->times;
+		Img._impl->count[Img.get(it->number)]=it->times;
 	}
 }

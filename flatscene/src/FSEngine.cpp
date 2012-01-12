@@ -4,7 +4,7 @@
 
 #include "FSEngine.h"
 #include "FSLibrary.h"
-#include "FSControlMultiverse.h"
+#include "FSMultiverse.h"
 #include "FSWriter.h"
 
 
@@ -183,7 +183,7 @@ int FSEngine::onExit()
 
 	//TODO comprobar valor de vuelta de las siguientes 2 funciones.
 
-	FSMultiverse.clear();
+	Cosmos.clear();
 	Write.erase();
 
 	initialized = false;

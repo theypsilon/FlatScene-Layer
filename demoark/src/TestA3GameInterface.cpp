@@ -65,7 +65,7 @@ int CTestA3GameInterface::onInit() {
 	activationIds.push_back("npc_normal_quiet");
 	activationIds.push_back("npc_normal_walk");
 
-	CMap* mapDemo = (CMap*) FSMultiverse.add(new CMap("mapextmur"));
+	CMap* mapDemo = (CMap*) Cosmos.add(new CMap("mapextmur"));
 	mapDemo->load();
 
 	player[0]->m_Scrollxy.set(mapDemo->getW()*mapDemo->getTileW()/2,mapDemo->getH()*mapDemo->getTileH()/2,0);

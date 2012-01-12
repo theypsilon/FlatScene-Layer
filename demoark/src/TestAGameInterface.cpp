@@ -47,7 +47,7 @@ int CTestAGameInterface::onIdle()	{
 
 	//if (~Chrono.getTick() & 0x01) {
 
-	for (UniverseCollection::iterator it=FSMultiverse.begin();it!=FSMultiverse.end();++it) {
+	for (UniverseCollection::iterator it=Cosmos.begin();it!=Cosmos.end();++it) {
 		FSUniverse* mapAct = (*it);
 
 		for (ActorCollection::iterator jt=mapAct->actorBegin();jt!=mapAct->actorEnd();++jt) {
@@ -146,7 +146,7 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 					//Adem�s, este no reconvierte un mapa cuando es id�neo, en lugar de crear uno nuevo y destruir el viejo que es m�s costoso.
 					mapaOrigen->decActor((CActorScrollMap*)p);
 
-					CMap* mapaDestino = (CMap*)FSMultiverse.add(new CMap(g.destino.c_str()));	// Si no existe, lo crea, si existe no, y en cualquier caso lo devuelve.
+					CMap* mapaDestino = (CMap*)Cosmos.add(new CMap(g.destino.c_str()));	// Si no existe, lo crea, si existe no, y en cualquier caso lo devuelve.
 
 					if (!mapaDestino->isLoaded())
 						mapaDestino->load();
@@ -163,16 +163,16 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 			} 
 #ifdef LOG_MAPAS
 			printf("\tMapas en memoria: ");
-			for (UniverseCollection::iterator it=FSMultiverse.begin();it!=FSMultiverse.end();++it) {
+			for (UniverseCollection::iterator it=Cosmos.begin();it!=Cosmos.end();++it) {
 				if ((*it)->isLoaded())
 					printf("%s, ",(*it)->getName().c_str());
 			}
-			printf("%d\n",FSMultiverse.size());
+			printf("%d\n",Cosmos.size());
 #endif
 		}
 
 	} else if (MsgID==MSGID_DeleteMap)	{
-		FSMultiverse.erase((FSUniverse*)Parm1);
+		Cosmos.erase((FSUniverse*)Parm1);
 	} else if (MsgID==MSGID_KillEnemy) {
 		void** parm = (void**) Parm2;
 
