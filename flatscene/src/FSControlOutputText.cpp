@@ -1,31 +1,9 @@
-#include "FSControlOutputText.h"
+#include "FSControlOutputTextImpl.h"
 #include "FSLibrary.h"
 #include "FSparserXML.h"
 #include "FSScreen.h"
 
-struct FSControlOutputText::FSControlOutputTextImpl {
-    map<FSEngine*,SData*> session;
-
-    SData* data;
-    FSEngine* admin;
-
-
-    map<int,SFont*> Fonts;
-    map<SFont*,int> countFonts;
-    list<int> lastIndexFontAdded;
-    int fontSize;
-
-    float posx;
-    float posy;
-    float width;
-    float height;
-    float zoom;
-
-    static FSControlOutputText* singleton;
-
-    friend class FSScreen;
-
-    FSEngine* setAdmin(FSEngine* newAdmin) {
+FSEngine* FSControlOutputText::FSControlOutputTextImpl::setAdmin(FSEngine* newAdmin) {
 
         FSEngine* ret = admin;
 
@@ -52,7 +30,6 @@ struct FSControlOutputText::FSControlOutputTextImpl {
     #endif
         return ret;
     }
-};
 
 FSControlOutputText* FSControlOutputText::FSControlOutputTextImpl::singleton=NULL;
 

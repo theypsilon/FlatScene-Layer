@@ -116,6 +116,7 @@ public:
 
     void clear();
 private:
+	friend class FSScreen;
     struct FSControlOutputTextImpl;
     FSControlOutputTextImpl* _impl;
 };

@@ -1,7 +1,7 @@
 #include "FSScreen.h"
 #include "FSLibrary.h"
 #include "FSEngine.h"
-#include "FSControlOutputText.h"
+#include "FSControlOutputTextImpl.h"
 
 SDL_Surface* FSScreen::m_SDL_Surface=NULL;
 
@@ -902,7 +902,7 @@ void FSScreen::saveResources(GraphicResources &info) {
 
 	CImg.clear();
 
-	for (map<int,SFont*>::iterator it=Write.Fonts.begin();it!=Write.Fonts.end();++it) {
+	for (map<int,SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
 		map<Uint16,FSImage*>& chars = it->second->render;
 		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
 			imageToDelete.push_back(jt->second); // delete
@@ -910,7 +910,7 @@ void FSScreen::saveResources(GraphicResources &info) {
 		}
 	}
 
-	for (map<FSEngine*,SData*>::iterator it=Write.session.begin();it!=Write.session.end();++it) {
+	for (map<FSEngine*,SData*>::iterator it=Write._impl->session.begin();it!=Write._impl->session.end();++it) {
 		map<int,SText*>& auxBoxs = it->second->Texts;
 		for (map<int,SText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
 			if (jt->second->Type() == TT_BOX && jt->second->Box)
@@ -924,18 +924,18 @@ void FSScreen::saveResources(GraphicResources &info) {
 
 void FSScreen::reloadResources(GraphicResources &info) {
 	
-	for (map<int,SFont*>::iterator it=Write.Fonts.begin();it!=Write.Fonts.end();++it) {
+	for (map<int,SFont*>::iterator it=Write._impl->Fonts.begin();it!=Write._impl->Fonts.end();++it) {
 		map<Uint16,FSImage*>& chars = it->second->render;
 		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
 			if (!jt->second) {
-				jt->second = new FSSprite(FSImage::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,Write.data->fgcolor)));
+				jt->second = new FSSprite(FSImage::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,Write._impl->data->fgcolor)));
 			} else {
 				return FSLibrary::Error("No se puede recargar el recurso glyph porque no había sido descargado anteriormente.");
 			}
 		}
 	}
 
-	for (map<FSEngine*,SData*>::iterator it=Write.session.begin();it!=Write.session.end();++it) {
+	for (map<FSEngine*,SData*>::iterator it=Write._impl->session.begin();it!=Write._impl->session.end();++it) {
 		map<int,SText*>& auxBoxs = it->second->Texts;
 		for (map<int,SText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
 			if (jt->second->Type() == TT_BOX && jt->second->Box)
