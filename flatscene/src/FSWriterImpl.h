@@ -27,8 +27,6 @@ struct FSWriter::WriterImpl {
     float height;
     float zoom;
 
-    static FSWriter* singleton;
-
     FSEngine* setAdmin(FSEngine* newAdmin);
 
     struct SChar {

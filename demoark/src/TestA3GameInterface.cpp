@@ -51,6 +51,7 @@ int CTestA3GameInterface::onInit() {
 	activationIds.push_back("pj_normal_alsa");
 
 
+
 	player.push_back(new CPlayer(this));	
 	player[0]->eventChange=false;
 	

@@ -10,6 +10,7 @@
 #include "FSPoint.h"
 #include "FSdefinitions.h"
 #include "FSSingleton.h"
+#include "FSNoncopyable.h"
 
 enum TypeText {
     TT_LINE,
@@ -22,7 +23,8 @@ enum TypeColorTBox {
     TCTB_BOX
 };
 
-class FSWriter {
+class FSWriter : private FSNoncopyable, public FSSingleton<FSWriter> {
+    friend class FSSingleton<FSWriter>;
 public:
     int setfontSize(int newSize);
 
@@ -56,13 +58,11 @@ public:
     void clear();
 private:
     FSWriter();
-    FSWriter(const FSWriter&);
-    FSWriter& operator=(const FSWriter&);
     ~FSWriter();
 
     struct WriterImpl;
     WriterImpl* _impl;
-    friend class FSSingleton<FSWriter>;
+    
     friend class FSScreen;
 };
 
