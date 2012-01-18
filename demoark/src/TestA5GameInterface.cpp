@@ -4,7 +4,7 @@
 
 #include "TestA5GameInterface.h"
 #include "FSLibrary.h"
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 
 #include "EnemyPunto.h"
 #include "EnemyNPC.h"
@@ -70,7 +70,7 @@ int  CTestA5GameInterface::onInit() {
 	activationIds.push_back("npc_normal_quiet");
 	activationIds.push_back("npc_normal_walk");
 
-	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuración.
+	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuraciï¿½n.
 	if (!xmldoc.LoadFile()) {	 FSLibrary::Error("resources/config.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChildElement("System"));
@@ -143,7 +143,7 @@ int CTestA5GameInterface::drawFrame() {
 
 	for (int i=0;i<cams.size();i++) {
 
-		cams[i]->locateRenderScene(cams[i]->getArea()->X()*2,cams[i]->getArea()->Y()*2,cams[i]->getArea()->W()*2,cams[i]->getArea()->H()*2);
+		cams[i]->locateRenderScene(cams[i]->getArea()->x*2,cams[i]->getArea()->y*2,cams[i]->getArea()->w*2,cams[i]->getArea()->h*2);
 
 		cams[i]->rotate(40,1.0,1.0,0.0);
 

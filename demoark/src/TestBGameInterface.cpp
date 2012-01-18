@@ -33,7 +33,7 @@ int CTestBGameInterface::onInit() {
 	for (int i=0;i<num;i++)
 		sequence[i]=i;
 	
-	CImg.add("Character");
+	Img.add("Character");
 
 	anim = new PAnimation(num,sequence,0);*/
 
@@ -58,10 +58,10 @@ int CTestBGameInterface::onIdle()
 		FSScreen::pushMatrix();
 
 		FSPoint ptDst(*spt->getCenter());
-		ptDst.X()+=100;
-		ptDst.Y()+=100;
+		ptDst.x+=100;
+		ptDst.y+=100;
 
-		FSScreen::translate((float)ptDst.X(),(float)ptDst.Y(),0);  
+		FSScreen::translate((float)ptDst.x,(float)ptDst.y,0);  
 
 	}
 
@@ -74,7 +74,7 @@ int CTestBGameInterface::onExit()
 {
 	delete anim;
 
-	CImg.remove(CImg.search("resources/Character"));
+	Img.remove(Img.search("resources/Character"));
 
 #ifdef LOG_SISTEMA
 	printf("\nTestB termina.\n\n");

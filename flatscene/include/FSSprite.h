@@ -1,7 +1,7 @@
 #ifndef __SPRITE_H__
 #define __SPRITE_H__
 
-#include "FSImage.h"
+#include "FSCanvas.h"
 #include <string>
 #include <vector>
 using namespace std;
@@ -9,65 +9,65 @@ using namespace std;
 typedef vector<FSRectangle*> RectArea;
 
 enum SpriteOpaque {
-	SPRITE_OPAQUE_NOT_CHEQUED,
-	SPRITE_OPAQUE,
-	SPRITE_TRANSPARENT,
-	SPRITE_OPAQUE_TRANSFORMED
+    SPRITE_OPAQUE_NOT_CHEQUED,
+    SPRITE_OPAQUE,
+    SPRITE_TRANSPARENT,
+    SPRITE_OPAQUE_TRANSFORMED
 };
 
 //CSprite--abstracts Image+Control Point.
-class FSSprite : public FSImage
+class FSSprite : public FSCanvas
 {
 private:
-	//Nombre
-	string name;
-	//Lista de Control points
-	FSPoint* cpoint;
-	vector<RectArea*> areas;
+    //Nombre
+    string name;
+    //Lista de Control points
+    FSPoint* cpoint;
+    vector<RectArea*> areas;
 
-	//lo crea de una imagen fuente, añadiéndole el punto de control 0 si existe.
-	FSSprite ( SCanvas pSurface, FSPoint* zerocpSource = NULL) ;
-	//destruye el sprite.
-	virtual ~FSSprite ( ) ;
+    //lo crea de una imagen fuente, aï¿½adiï¿½ndole el punto de control 0 si existe.
+    FSSprite ( SCanvas pSurface, FSPoint* zerocpSource = NULL) ;
+    //destruye el sprite.
+    virtual ~FSSprite ( ) ;
 
-	//devuelve puntero a la Imagen
-	inline FSImage* getImage ( ) ;
+    //devuelve puntero a la Imagen
+    inline FSCanvas* getImage ( ) ;
 
-	friend class FSSpriteset;
-	friend class FSScreen;
+    friend class FSSpriteset;
+    friend class FSScreen;
 
-	SpriteOpaque opaque;
+    SpriteOpaque opaque;
 
 public:
-	//asigna nombre
-	void setName(const char* newName);
-	//devuelve nombre
-	string getName();
-	//devuelve la lista de puntos de control.
-	vector<RectArea*>& getAllAreas () ;
-	//devuelve el enésimo punto de control dentro del array de puntos de control.
-	RectArea* getArea(int n);
+    //asigna nombre
+    void setName(const char* newName);
+    //devuelve nombre
+    string getName();
+    //devuelve la lista de puntos de control.
+    vector<RectArea*>& getAllAreas () ;
+    //devuelve el enï¿½simo punto de control dentro del array de puntos de control.
+    RectArea* getArea(int n);
 
-	FSRectangle* getRect(int n,int m);
+    FSRectangle* getRect(int n,int m);
 
-	FSPoint* getCenter();
+    FSPoint* getCenter();
 
-	void replaceCenter(FSPoint* c);
-	//añade al final de la lista el punto cpSource
-	int addArea(RectArea* area);
+    void replaceCenter(FSPoint* c);
+    //aï¿½ade al final de la lista el punto cpSource
+    int addArea(RectArea* area);
 
-	int addRect(int area,FSRectangle* rect);
-	//substituye en el punto de control de la posición n, por cpSource
-	void replaceArea(int n,RectArea* area);
-	//devuelve el número de Control Points que posee el Sprite.
-	void replaceRect(int area,int n,FSRectangle* rect);
+    int addRect(int area,FSRectangle* rect);
+    //substituye en el punto de control de la posiciï¿½n n, por cpSource
+    void replaceArea(int n,RectArea* area);
+    //devuelve el nï¿½mero de Control Points que posee el Sprite.
+    void replaceRect(int area,int n,FSRectangle* rect);
 
-	int size();
+    int size();
 
-	SpriteOpaque isOpaque();
+    SpriteOpaque isOpaque();
 
-	//renderiza el gráfico.
-	void put ( FSPoint& ptDst , Uint8 flags=0) ;
+    //renderiza el grï¿½fico.
+    void put ( FSPoint& ptDst , Uint8 flags=0) ;
 
 };
 

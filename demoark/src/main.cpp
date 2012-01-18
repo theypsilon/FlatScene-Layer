@@ -73,7 +73,7 @@ void funcEstres(int p) {
 
 	for (int i = 0; i < p ; i++) {
 
-		CImg.remove(CImg.add("resources/Character"));
+		Img.remove(Img.add("resources/Character"));
 
 		if (i> 300)
 			FSScreen::render();
@@ -95,7 +95,7 @@ void funcEstres(int p) {
 
 	}
 
-	int s = CImg.add("resources/Character");
+	int s = Img.add("resources/Character");
 
 	FSScreen::locateRenderScene();
 
@@ -103,15 +103,15 @@ void funcEstres(int p) {
 
 		FSPoint pt(i%100,rand()%200);
 
-		CImg.get(s)->get(0)->put(pt);
+		Img.get(s)->get(0)->put(pt);
 
 		FSScreen::render();
 
 	}
 
-	CImg.remove(s);
+	Img.remove(s);
 
 
-	printf("\nprueba de estrés finalizada");
+	printf("\nprueba de estrï¿½s finalizada");
 
 }

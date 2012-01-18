@@ -1,21 +1,20 @@
-#include "FSTextBox.h"
+#include "FSWriterImpl.h"
 #include "FSTime.h"
 #include "SDL.h"
 
 #include "FSLibrary.h"
-#include "FSControlOutputText.h"
 
 #define MARGEN 20
 
-FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) : 
+FSWriter::WriterImpl::FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) :
 file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
 timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 	string allText(text);
 	Uint16 limite=xBox=Lim;
 
-	float currentX = upleft.X()+MARGEN;
-	float currentY = upleft.Y()+MARGEN-2;
+	float currentX = upleft.x+MARGEN;
+	float currentY = upleft.y+MARGEN-2;
 	currentY += TTF_FontAscent(fuente->fuente)/2 ;
 
 	col.r=255;
@@ -67,7 +66,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			}
 
 			if ((currentX + cuenta - x)>= (limite - MARGEN)) {
-				currentX = upleft.X() + MARGEN;
+				currentX = upleft.x + MARGEN;
 				currentY += (float)TTF_FontLineSkip(fuente->fuente);
 			} else {
 				maxStep++;
@@ -80,7 +79,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			}
 			
 		} else if (newChar == '\n') {
-			currentX = upleft.X() + MARGEN;
+			currentX = upleft.x + MARGEN;
 			currentY += (float)TTF_FontLineSkip(fuente->fuente);
 		} else {
 			maxStep++;
@@ -91,7 +90,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			currentX += (float)advance;
 
 			if (fuente->render.find(newChar)==fuente->render.end()) {
-				fuente->render[newChar] = new FSImage(FSImage::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
+				fuente->render[newChar] = new FSCanvas(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
 			}
 
 			newT.glyph=newChar;
@@ -111,7 +110,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 
 }
 
-FSTextBox::~FSTextBox() {
+FSWriter::WriterImpl::FSTextBox::~FSTextBox() {
 	deleteBox();
 
 	if (fx)
@@ -130,7 +129,7 @@ FSTextBox::~FSTextBox() {
 	Write.unloadFont(Write.searchFont(fuente->fuente));
 }
 
-int FSTextBox::update() {
+int FSWriter::WriterImpl::FSTextBox::update() {
 
 	if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_BOX )) {
 		box->color(fx->red,fx->green,fx->blue,fx->alpha);
@@ -175,7 +174,7 @@ int FSTextBox::update() {
 
 }
 
-void FSTextBox::deleteBox() {
+void FSWriter::WriterImpl::FSTextBox::deleteBox() {
 	if (box)
 		FSScreen::imageToDelete.push_back(box); // delete box;
 	box=NULL;
@@ -183,7 +182,7 @@ void FSTextBox::deleteBox() {
 
 
 
-void FSTextBox::createBox() {
+void FSWriter::WriterImpl::FSTextBox::createBox() {
 	if (box) {
 		FSLibrary::Error("Ya existe el fondo de la caja que se pretende crear.");
 		return;
@@ -198,10 +197,10 @@ void FSTextBox::createBox() {
 	SDL_FreeSurface(aux_surf);
 	SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
 
-	box = new FSImage(FSImage::toSCanvas(surface));
+	box = new FSCanvas(FSCanvas::toSCanvas(surface));
 }
 
-int FSTextBox::finish() {
+int FSWriter::WriterImpl::FSTextBox::finish() {
 	int ret = -1;
 	if (next!=-1) {
 
@@ -218,11 +217,7 @@ int FSTextBox::finish() {
 	return ret;
 }
 
-
-SLineText::SLineText() {
-}
-
-SLineText::~SLineText() {
+FSWriter::WriterImpl::SLineText::~SLineText() {
 	for (list<SChar>::iterator it=letra.begin(),kt=letra.end();it!=kt;++it) {
 		if (it->p) {
 			delete it->p;

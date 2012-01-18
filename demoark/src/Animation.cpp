@@ -9,7 +9,7 @@ CAnimation::~CAnimation() {
 	if (sequence && limitofsequence && sptset && flags) {
 		for (int i=0;i<num;i++) {
 			freemem(sequence[i]);
-			CImg.remove(sptset[i]);
+			Img.remove(sptset[i]);
 		}
 		freemem(sequence);
 		freemem(flags);
@@ -33,7 +33,7 @@ void CAnimation::cloneThisInto(CAnimation* clon) {
 			for (int i=0;i<num;i++) {
 				clon->limitofsequence[i] = limitofsequence[i];
 				clon->flags[i] = flags[i];
-				clon->sptset[i] = CImg.add(CImg.get(sptset[i])->getName().c_str());
+				clon->sptset[i] = Img.add(Img.get(sptset[i])->getName().c_str());
 				clon->sequence[i] = alloc(int,limitofsequence[i]);
 				for (int j=0;j<limitofsequence[i];j++)
 					clon->sequence[i][j]=sequence[i][j];
@@ -127,7 +127,7 @@ void CAnimation::generateAnimationByXML(TiXmlElement* newNode, const char* owner
 		limiteSeq.pop_front();
 		this->flags[i] = flags.front();
 		flags.pop_front();
-		this->sptset[i]=CImg.add(files.front().c_str());
+		this->sptset[i]=Img.add(files.front().c_str());
 		files.pop_front();
 		this->sequence[i] = sequences.front();
 		sequences.pop_front();

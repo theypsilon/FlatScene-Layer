@@ -94,7 +94,7 @@
     <ClCompile Include="src\FSColor.cpp" />
     <ClCompile Include="src\FSControlImages.cpp" />
     <ClCompile Include="src\FSControlMultiverse.cpp" />
-    <ClCompile Include="src\FSControlOutputText.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
     <ClCompile Include="src\FSCoordinate.cpp" />
     <ClCompile Include="src\FSEngine.cpp" />
     <ClCompile Include="src\FSImage.cpp" />
@@ -120,11 +120,11 @@
     <ClInclude Include="include\FSColor.h" />
     <ClInclude Include="include\FSControlImages.h" />
     <ClInclude Include="include\FSControlMultiverse.h" />
-    <ClInclude Include="include\FSControlOutputText.h" />
+    <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\FSCoordinate.h" />
     <ClInclude Include="include\FSdefinitions.h" />
     <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSImage.h" />
+    <ClInclude Include="include\FSCanvas.h" />
     <ClInclude Include="include\FSLibrary.h" />
     <ClInclude Include="include\FSMessageHandler.h" />
     <ClInclude Include="include\FSparserXML.h" />

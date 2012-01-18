@@ -29,7 +29,7 @@ void CActorScrollMap::init(list<string>& activationIds)	{
 	// Nodos de Acciones:
 	TiXmlDocument xmldoc("resources/actiontree.xml");
 
-	if (!xmldoc.LoadFile()) FSLibrary::Error("actiontree.xml",TE_fileExists);	// Cargamos el archivo con la información referente a los nodos de acción.
+	if (!xmldoc.LoadFile()) FSLibrary::Error("actiontree.xml",TE_fileExists);	// Cargamos el archivo con la informaciï¿½n referente a los nodos de acciï¿½n.
 
 	TiXmlHandle input = TiXmlHandle(xmldoc.FirstChild());
 
@@ -64,10 +64,10 @@ void CActorScrollMap::init(list<string>& activationIds)	{
 	if (!actionTree.mix())
 		FSLibrary::Error("Error en la fase de mezcla del grafo de acciones");
 
-	// actNeutro será la acciónd e partida.
+	// actNeutro serï¿½ la acciï¿½nd e partida.
 	actNeutro = actionTree.getNeutro();
 
-	// los gráficos iniciales del Actor por tanto, serán los iniciales de actNeutro.
+	// los grï¿½ficos iniciales del Actor por tanto, serï¿½n los iniciales de actNeutro.
 	flags = actNeutro->flags[actNeutro->seq];
 	file = actNeutro->sptset[actNeutro->seq];
 	graph = actNeutro->sequence[actNeutro->seq][actNeutro->paso>>3];
@@ -80,9 +80,9 @@ void CActorScrollMap::init(list<string>& activationIds)	{
 
 void CActorScrollMap::draw(FSPoint& offset) {
 
-	FSPoint paux(m_Scrollxy.X(),m_Scrollxy.Y());
-	paux.X() -= offset.X();
-	paux.Y() -= offset.Y();
+	FSPoint paux(m_Scrollxy.x,m_Scrollxy.y);
+	paux.x -= offset.x;
+	paux.y -= offset.y;
 
 	getSprite()->put(paux,flags);
 
@@ -134,22 +134,22 @@ void CActorScrollMap::removeActionCandidate(CAction* n) {
 
 void CActorScrollMap::selectActionCandidate() {
 
-	CAction* firstN;	// Preparamos la variable que contendrá la mejor acción candidata.
+	CAction* firstN;	// Preparamos la variable que contendrï¿½ la mejor acciï¿½n candidata.
 
 	eventChange=false;
 
-	if (!listActionCandidate.empty()) { // Si hay alguna acción candidata.
+	if (!listActionCandidate.empty()) { // Si hay alguna acciï¿½n candidata.
 
-		listActionCandidate.sort(CAction::orderReferenceNodes);	// Ordenar lista de acciones candidatas según prioridad.
+		listActionCandidate.sort(CAction::orderReferenceNodes);	// Ordenar lista de acciones candidatas segï¿½n prioridad.
 		ActionCollection::iterator it=listActionCandidate.begin();
 
-		firstN=*it;	// Referenciamos la acción candidata de mayor prioridad.
+		firstN=*it;	// Referenciamos la acciï¿½n candidata de mayor prioridad.
 		CAction* secondN=NULL;
 		++it;
 
-		ActionCollection repN;	// Aquí almacenaremos las acciones candidatas de igual prioridad si hace falta.
+		ActionCollection repN;	// Aquï¿½ almacenaremos las acciones candidatas de igual prioridad si hace falta.
 
-		while (it!=listActionCandidate.end()) { //Mientras hay más candidatas en la lista...
+		while (it!=listActionCandidate.end()) { //Mientras hay mï¿½s candidatas en la lista...
 			secondN=firstN;
 			firstN=*it;
 			++it;	// Apunta al siguiente elemento de la lista.
@@ -161,7 +161,7 @@ void CActorScrollMap::selectActionCandidate() {
 			}
 		}
 
-		if (!repN.empty()) { // Si hay alguna acción repetida;
+		if (!repN.empty()) { // Si hay alguna acciï¿½n repetida;
 			firstN=firstN->mix(repN); // Las unimos.
 			if (!firstN) {
 				char c[1024];
@@ -171,18 +171,18 @@ void CActorScrollMap::selectActionCandidate() {
 		}
 
 	} else 
-		firstN=actNeutro;	// Si no hay acciones candidatas, asignamos por defecto la acción neutra.
+		firstN=actNeutro;	// Si no hay acciones candidatas, asignamos por defecto la acciï¿½n neutra.
 
-	actActual=firstN; // Asignamos la mejor acción al personaje.
+	actActual=firstN; // Asignamos la mejor acciï¿½n al personaje.
 }
 
 bool CActorScrollMap::collisionMap(int mov_x,int mov_y) {
 	CMap* inUniverse = dynamic_cast<CMap*>(getUniverse());
 	if (inUniverse!=NULL && getSprite()!=NULL && inUniverse->isLoaded()) {
 		
-		int invariantx=(m_Scrollxy.X()+mov_x);
-		int invarianty=(m_Scrollxy.Y()+mov_y);
-		int invariantz= m_Scrollxy.Z();
+		int invariantx=(m_Scrollxy.x+mov_x);
+		int invarianty=(m_Scrollxy.y+mov_y);
+		int invariantz= m_Scrollxy.z;
 		int MAx = invariantx / inUniverse->getTileW();
 		int MAy = invarianty / inUniverse->getTileH();
 
@@ -195,13 +195,13 @@ bool CActorScrollMap::collisionMap(int mov_x,int mov_y) {
 					if (!upfloor) {
 						upfloor=true;
 						downfloor=false;
-						invariantz = ++m_Scrollxy.Z();
+						invariantz = ++m_Scrollxy.z;
 					}
 				} else if (colorSwitch==0xFFF800F8) {
 					if (!downfloor) {
 						downfloor=true;
 						upfloor=false;
-						invariantz = --m_Scrollxy.Z();
+						invariantz = --m_Scrollxy.z;
 					}
 				} else {
 					downfloor=false;
@@ -216,7 +216,7 @@ bool CActorScrollMap::collisionMap(int mov_x,int mov_y) {
 				}
 
 	#ifdef  MENSAJES_COLISIONCOLOR
-				int colorDebug=(inUniverse->getPixel(invariantx,invarianty,m_Scrollxy.Z()));
+				int colorDebug=(inUniverse->getPixel(invariantx,invarianty,m_Scrollxy.z));
 				printf("%d          \r",colorDebug);
 	#endif
 			}
@@ -235,11 +235,11 @@ bool CActorScrollMap::collisionMap(int mov_x,int mov_y) {
 
 
 FSActor* CActorScrollMap::clone() {
-	FSLibrary::Error("CActorScrollMap no implementa un metodo de clonación por defecto.");
+	FSLibrary::Error("CActorScrollMap no implementa un metodo de clonaciï¿½n por defecto.");
 	return NULL;
 }
 
 bool CActorScrollMap::orderReferenceActors(CActorScrollMap* x, CActorScrollMap* y) {
-	return ((x->m_Scrollxy.Y())<(y->m_Scrollxy.Y()));
+	return ((x->m_Scrollxy.y)<(y->m_Scrollxy.y));
 }
 

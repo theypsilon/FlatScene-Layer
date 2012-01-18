@@ -47,5 +47,10 @@ CMakeFiles
 ehthumbs.db
 Icon?
 Thumbs.db
+
+#-------------------------------#
+# Rules created by 'git ignore' #
+#-------------------------------#
+
 .cproject
 .project

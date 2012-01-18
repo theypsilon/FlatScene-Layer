@@ -6,7 +6,7 @@
  
 #include "LayerBackground.h"
 #include "FSRectangle.h"
-#include "FSImage.h"
+#include "FSCanvas.h"
 #include "Map.h"
 #include "FSControlMultiverse.h"
 #include <vector>

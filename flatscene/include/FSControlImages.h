@@ -35,7 +35,7 @@ public:
 	int getCount(Uint32 n);
 };
 
-extern FSControlImages CImg;
+extern FSControlImages Img;
 
 
 #endif

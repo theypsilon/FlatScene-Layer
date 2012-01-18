@@ -1,7 +1,7 @@
 #include "MenuAGameInterface.h"
 #include "FSLibrary.h"
 #include "FSControlImages.h"
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 #include "FSScreen.h"
 
 //constructor
@@ -29,7 +29,7 @@ int CMenuAGameInterface::onInit() {
 	printf("\nMenuA comienza.\n\n");
 #endif
 
-	file=CImg.add("resources/Menu");
+	file=Img.add("resources/Menu");
 
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,60);
 
@@ -83,7 +83,7 @@ int CMenuAGameInterface::onIdle()
 
 	FSScreen::scale(2.0,2.0,1.0);
 
-	CImg.get(file)->get(0)->put(m);
+	Img.get(file)->get(0)->put(m);
 
 	FSScreen::popMatrix();
 
@@ -98,7 +98,7 @@ int CMenuAGameInterface::onExit()
 
 	SDL_EnableKeyRepeat(0,0);
 
-	CImg.remove(file);
+	Img.remove(file);
 #ifdef LOG_SISTEMA
 	printf("\nMenuA termina.\n\n");
 #endif
@@ -137,7 +137,7 @@ void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 			opcion++;
 	}
 
-	dest.Y()=25+15*opcion;
+	dest.y=25+15*opcion;
 }
 
 void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {

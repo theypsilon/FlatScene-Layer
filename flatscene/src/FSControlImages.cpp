@@ -3,11 +3,11 @@
 
 FSControlImages* FSControlImages::singleton=NULL;
 
-map<TypeResource,void (*)(void*)> FSImage::procRenders;
+map<TypeResource,void (*)(void*)> FSCanvas::procRenders;
 
 FSControlImages::FSControlImages() {
 
-	FSImage::initProcRenders();
+	FSCanvas::initProcRenders();
 
 	singleton = NULL;
 
@@ -128,4 +128,4 @@ int FSControlImages::getCount(Uint32 n) {
 	return ret;
 }
 
-FSControlImages CImg;
+FSControlImages Img;

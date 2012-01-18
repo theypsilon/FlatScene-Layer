@@ -12,37 +12,37 @@ private:
 
 public:
 
-	// TODO : variables y funciones públicas adicionales
+	// TODO : variables y funciones pï¿½blicas adicionales
 
-	// Constructor con clase menajera como parámetro de entrada 
+	// Constructor con clase menajera como parï¿½metro de entrada 
 	CActorTemplate(FSMessageHandler* pmhParent=NULL);
 
-	// Destructor, ahí deberemos liberar los recursos
+	// Destructor, ahï¿½ deberemos liberar los recursos
 	~CActorTemplate();
 
-	// Devuelve un CSprite. Definición opcional. Ya tiene la siguiente implementación :
+	// Devuelve un CSprite. Definiciï¿½n opcional. Ya tiene la siguiente implementaciï¿½n :
 	//
 	//	CSprite* CActor::getSprite() {
-	//		return CImg.get(file)->get(graph);
+	//		return Img.get(file)->get(graph);
 	//	}
 	//
-	// Sólo definir si se desea hacer una operación diferente
+	// Sï¿½lo definir si se desea hacer una operaciï¿½n diferente
 	FSSprite* getSprite();
 
-	// Método pensado para ser invocado en CEngine::onIdle.
-	// Deberá actualizar el estado del CActor cuando sea necesario.
+	// Mï¿½todo pensado para ser invocado en CEngine::onIdle.
+	// Deberï¿½ actualizar el estado del CActor cuando sea necesario.
 	int move();
 
-	// Opcional. Debería devolver una cadena que identificara de algún modo al actor.
-	// Su implementación por defecto devuelve la cadena "criature" que debemos introducir 
-	// en la implementación del Constructor (ver en la parte de implementación).
+	// Opcional. Deberï¿½a devolver una cadena que identificara de algï¿½n modo al actor.
+	// Su implementaciï¿½n por defecto devuelve la cadena "criature" que debemos introducir 
+	// en la implementaciï¿½n del Constructor (ver en la parte de implementaciï¿½n).
 	string getCreature();
 	
-	// Opcional. Su implementación por defecto es una simple asignación a la variable miembro CUniverse* inUniverse.
+	// Opcional. Su implementaciï¿½n por defecto es una simple asignaciï¿½n a la variable miembro CUniverse* inUniverse.
 	int setUniverse(FSUniverse* m);
 
-	// Opcional. Por si se quiere implementar una función que facilite la inicialización de muchos actores dle mismo tipo.
-	// Si no se le da una implementación y el método es invocado, devuelve NULL y registra un error.
+	// Opcional. Por si se quiere implementar una funciï¿½n que facilite la inicializaciï¿½n de muchos actores dle mismo tipo.
+	// Si no se le da una implementaciï¿½n y el mï¿½todo es invocado, devuelve NULL y registra un error.
 	virtual FSActor* clone();
 
 };

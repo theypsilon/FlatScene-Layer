@@ -30,10 +30,10 @@ int CTestOSDesktopInterface::onInit() {
 
     camarar = new CCameraOS(raton, new FSRectangle(0,0,FSScreen::getWidth(),FSScreen::getHeight()),this);
 
-    fondo->file = CImg.add("flower-wallpaper-800x600.jpg");
+    fondo->file = Img.add("flower-wallpaper-800x600.jpg");
     fondo->graph = 0;
         
-    raton->file = CImg.add("Raton");
+    raton->file = Img.add("Raton");
     raton->graph = 0;
 
     fondo->renderPoint.set(-400,0);
@@ -68,12 +68,12 @@ int CTestOSDesktopInterface::loop() {
 
 int CTestOSDesktopInterface::onExit() {
     if (raton) {
-        CImg.remove(raton->file);
+        Img.remove(raton->file);
         delete raton;
     }
 
     if (fondo) {
-        CImg.remove(fondo->file);
+        Img.remove(fondo->file);
         delete fondo;
     }
 
@@ -113,7 +113,7 @@ int CTestOSDesktopInterface::drawFrame() {
 
 int CTestOSDesktopInterface::onIdle() {
 
-    printf("x : %d        y : %d\r",raton->renderPoint.X(),raton->renderPoint.Y());
+    printf("x : %d        y : %d\r",raton->renderPoint.x,raton->renderPoint.y);
 
 /*	if (right)  {
         float yrotrad;
@@ -210,8 +210,8 @@ void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
     CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLibrary::getActualEngine();
 
-    int x = os->raton->renderPoint.X() = event->motion.x;
-    int y = os->raton->renderPoint.Y() = event->motion.y;
+    int x = os->raton->renderPoint.x = event->motion.x;
+    int y = os->raton->renderPoint.y = event->motion.y;
 
     if (os->lastx != 0.0) {
 

@@ -1,7 +1,7 @@
 #ifndef __RUTINA_COLISION_H__
 #define __RUTINA_COLISION_H__
 
-#include "ActorScrollMap.h"
+class CActorScrollMap;
 
 class CRutinaColision {
 public:

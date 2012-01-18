@@ -58,23 +58,23 @@ void CActionSimpleDemo0::execute() {
 
 		for (RectArea::iterator itR1 = beginMobil; itR1 != finMobil; ++itR1) {
 			r1 = **itR1;
-			r1.Y()+=y;
-			r1.H()+=y;
+			r1.y+=y;
+			r1.h+=y;
 
 			if (flagsE & 0x01) {
-				Sint16 aux= - r1.X()+x;
-				r1.X() = - r1.W() +x;
-				r1.W() = aux;
+				Sint16 aux= - r1.x+x;
+				r1.x = - r1.w +x;
+				r1.w = aux;
 			} else {
-				r1.X()+=x;
-				r1.W()+=x;
+				r1.x+=x;
+				r1.w+=x;
 			}
 
-			int Mx = r1.X() / map->getTileW() - map->getPrecissionPlus();
-			int initMy = r1.Y()/ map->getTileH() - map->getPrecissionPlus();
+			int Mx = r1.x / map->getTileW() - map->getPrecissionPlus();
+			int initMy = r1.y/ map->getTileH() - map->getPrecissionPlus();
 
-			int maxMx = r1.W()/map->getTileW() + map->getPrecissionPlus();
-			int maxMy = r1.H()/map->getTileH() + map->getPrecissionPlus();
+			int maxMx = r1.w/map->getTileW() + map->getPrecissionPlus();
+			int maxMy = r1.h/map->getTileH() + map->getPrecissionPlus();
 
 			for (;Mx <= maxMx;Mx++) {
 				if (Mx < 0 || Mx >= w)
@@ -93,10 +93,10 @@ void CActionSimpleDemo0::execute() {
 
 						for (RectArea::iterator itR2 = obs->getSprite()->getArea(1)->begin(),finObs = obs->getSprite()->getArea(1)->end(); itR2!=finObs;++itR2) {
 							r2 = **itR2;
-							r2.X()+=obs->m_Scrollxy.X();
-							r2.W()+=obs->m_Scrollxy.X();
-							r2.Y()+=obs->m_Scrollxy.Y();
-							r2.H()+=obs->m_Scrollxy.Y();
+							r2.x+=obs->m_Scrollxy.x;
+							r2.w+=obs->m_Scrollxy.x;
+							r2.y+=obs->m_Scrollxy.y;
+							r2.h+=obs->m_Scrollxy.y;
 							if (r2.intersect(r1) && (typeid(*obs)!=typeid(*executor)))
 								presas.push(obs);
 						}				

@@ -5,11 +5,11 @@
 #include "Action.h"
 #include "GarbageCollector.h"
 #include "OrderGraph.h"
+#include "RutinaColision.h"
 
 using namespace std;
 
 
-class CRutinaColision;
 class CActorScrollMap;
 
 typedef list<CActorScrollMap*> ActorScrollCollection;

@@ -1,14 +1,14 @@
-#include "FSImage.h"
+#include "FSCanvas.h"
 #include "FSLibrary.h"
 
 #include "debugfuncs.h"
 
-FSImage::FSImage ( SCanvas pSurface ) 
+FSCanvas::FSCanvas( SCanvas pSurface ) 
 {
 	m_pSurface = pSurface;
 }
 
-FSImage::~FSImage ( ) 
+FSCanvas::~FSCanvas( ) 
 {
 
 	if (m_pSurface.sdl_surf) {
@@ -21,7 +21,7 @@ FSImage::~FSImage ( )
 	clearSurface();
 }
 
-void FSImage::initProcRenders() {
+void FSCanvas::initProcRenders() {
 
 	procRenders[TR_ROTATION] = procRendRotation;
 	procRenders[TR_TRANSLATION] = procRendTranslation;
@@ -32,18 +32,18 @@ void FSImage::initProcRenders() {
 
 }
 
-void FSImage::clearSurface ( ) 
+void FSCanvas::clearSurface ( ) 
 {
 	m_pSurface.bpp = m_pSurface.h = m_pSurface.h2 = m_pSurface.w = m_pSurface.w2 = m_pSurface.tex = 0;
 	m_pSurface.sdl_surf = NULL;
 
 }
 
-SCanvas* FSImage::getCanvas() {
+SCanvas* FSCanvas::getCanvas() {
 	return &m_pSurface;
 }
 
-Uint32 FSImage::getPixel ( int x , int y ) 
+Uint32 FSCanvas::getPixel ( int x , int y ) 
 {
 	SDL_Surface* surface= m_pSurface.sdl_surf;
 	if (surface && surface->w > x && surface->h > y) {
@@ -58,17 +58,17 @@ Uint32 FSImage::getPixel ( int x , int y )
 	}
 }
 
-int FSImage::getWidth () 
+int FSCanvas::getWidth () 
 {
 	return ( m_pSurface.w2 );
 }
 
-int FSImage::getHeight () 
+int FSCanvas::getHeight () 
 {
 	return ( m_pSurface.h2 ) ;	
 }
 
-void FSImage::put ( FSFloatPoint& ptDst, Uint8 flags) 
+void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) 
 {	
 
 #ifdef MAINRENDERLOOP
@@ -86,8 +86,8 @@ void FSImage::put ( FSFloatPoint& ptDst, Uint8 flags)
 
 	SRenderTranscalation* c_init = new SRenderTranscalation();
 
-	c_init->x = ptDst.X();
-	c_init->y = ptDst.Y();
+	c_init->x = ptDst.x;
+	c_init->y = ptDst.y;
 	c_init->z = 0.0;
 
 	em = new SToRender();
@@ -160,7 +160,7 @@ void FSImage::put ( FSFloatPoint& ptDst, Uint8 flags)
 		glPushMatrix();
 		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex); 
 
-		glTranslatef((float)ptDst.X(),(float)ptDst.Y(),0);  
+		glTranslatef((float)ptDst.x,(float)ptDst.y,0);  
 
 		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
 		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
@@ -219,7 +219,7 @@ void FSImage::put ( FSFloatPoint& ptDst, Uint8 flags)
 
 }
 
-void FSImage::put ( FSPoint& ptDst, Uint8 flags) 
+void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) 
 {	
 
 #ifdef MAINRENDERLOOP
@@ -237,8 +237,8 @@ void FSImage::put ( FSPoint& ptDst, Uint8 flags)
 
 	SRenderTranscalation* c_init = new SRenderTranscalation();
 
-	c_init->x = ptDst.X();
-	c_init->y = ptDst.Y();
+	c_init->x = ptDst.x;
+	c_init->y = ptDst.y;
 	c_init->z = 0.0;
 
 	em = new SToRender();
@@ -301,7 +301,7 @@ void FSImage::put ( FSPoint& ptDst, Uint8 flags)
 		glPushMatrix();
 		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex); 
 
-		glTranslatef((float)ptDst.X(),(float)ptDst.Y(),0);  
+		glTranslatef((float)ptDst.x,(float)ptDst.y,0);  
 
 		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
 		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
@@ -360,7 +360,7 @@ void FSImage::put ( FSPoint& ptDst, Uint8 flags)
 }
 
 
-SDL_Surface* FSImage::scaleSurface( SDL_Surface* s_surf, int factor) {
+SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 
 	SDL_Surface* ret = NULL;
 
@@ -417,7 +417,7 @@ SDL_Surface* FSImage::scaleSurface( SDL_Surface* s_surf, int factor) {
 	return ret;
 }
 
-SCanvas FSImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
+SCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
 	if (pow2(mode) != mode)
 		FSLibrary::Error("CCanvas::LoadIMG -> modo erroneo.");
@@ -638,7 +638,7 @@ SCanvas FSImage::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 }
 
 
-Uint32 FSImage::pow2 (Uint32 n) {
+Uint32 FSCanvas::pow2 (Uint32 n) {
 	Uint32 c=1;
 	while (c < n) 
 		c<<=1;
@@ -646,7 +646,7 @@ Uint32 FSImage::pow2 (Uint32 n) {
 	return c;
 }
 
-int FSImage::rotate(float angle, float x, float y, float z) {
+int FSCanvas::rotate(float angle, float x, float y, float z) {
 
 	//SCALE
 
@@ -666,7 +666,7 @@ int FSImage::rotate(float angle, float x, float y, float z) {
 
 	return EXITO;
 }
-int FSImage::translate(float x, float y, float z) {
+int FSCanvas::translate(float x, float y, float z) {
 
 	//SCALE
 
@@ -685,7 +685,7 @@ int FSImage::translate(float x, float y, float z) {
 
 	return EXITO;
 }
-int FSImage::scale(float x, float y, float z) {
+int FSCanvas::scale(float x, float y, float z) {
 
 	//SCALE
 
@@ -705,7 +705,7 @@ int FSImage::scale(float x, float y, float z) {
 	return EXITO;
 }
 
-int FSImage::color(float red, float green, float blue, float alpha) {
+int FSCanvas::color(float red, float green, float blue, float alpha) {
 
 	if (red > 1.0) red = 1.0;
 	if (green > 1.0) green = 1.0;
@@ -744,21 +744,21 @@ int FSImage::color(float red, float green, float blue, float alpha) {
 	return EXITO;
 }
 
-int FSImage::color(FSColor* col, float alpha) {
+int FSCanvas::color(FSColor* col, float alpha) {
 
 	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
 }
 
 
-void FSImage::procRendPush(void* pointer) {
+void FSCanvas::procRendPush(void* pointer) {
 	FSScreen::pushMatrix();
 }
 
-void FSImage::procRendPop(void* pointer) {
+void FSCanvas::procRendPop(void* pointer) {
 	FSScreen::popMatrix();
 }
 
-void FSImage::procRendRotation(void* pointer) {
+void FSCanvas::procRendRotation(void* pointer) {
 
 	SRenderRotation* n = (SRenderRotation*) pointer;
 
@@ -773,7 +773,7 @@ void FSImage::procRendRotation(void* pointer) {
 
 }
 
-void FSImage::procRendTranslation(void* pointer) {
+void FSCanvas::procRendTranslation(void* pointer) {
 
 
 	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
@@ -789,7 +789,7 @@ void FSImage::procRendTranslation(void* pointer) {
 
 }
 
-void FSImage::procRendScalation(void* pointer) {
+void FSCanvas::procRendScalation(void* pointer) {
 
 	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
 
@@ -804,7 +804,7 @@ void FSImage::procRendScalation(void* pointer) {
 
 }
 
-void FSImage::procRendColor(void* pointer) {
+void FSCanvas::procRendColor(void* pointer) {
 
 	SRenderColor* n = (SRenderColor*) pointer;
 
