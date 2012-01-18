@@ -737,4 +737,4 @@ void FSWriter::clear() {
 #endif
 }
 
-FSWriter Write;
+FSWriter& Write = FSSingleton<FSWriter>::I();

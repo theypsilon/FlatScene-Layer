@@ -9,6 +9,7 @@
 #include "FSColor.h"
 #include "FSPoint.h"
 #include "FSdefinitions.h"
+#include "FSSingleton.h"
 
 enum TypeText {
     TT_LINE,
@@ -23,9 +24,6 @@ enum TypeColorTBox {
 
 class FSWriter {
 public:
-    FSWriter();
-    ~FSWriter();
-
     int setfontSize(int newSize);
 
     int searchFont(const char* name,int withSize);
@@ -57,11 +55,18 @@ public:
 
     void clear();
 private:
+    FSWriter();
+    FSWriter(const FSWriter&);
+    FSWriter& operator=(const FSWriter&);
+    ~FSWriter();
+
     struct WriterImpl;
     WriterImpl* _impl;
+    friend class FSSingleton<FSWriter>;
     friend class FSScreen;
 };
 
-extern FSWriter Write;
+
+extern FSWriter& Write;
 
 #endif
