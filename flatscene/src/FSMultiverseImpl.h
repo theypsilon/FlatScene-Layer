@@ -10,8 +10,6 @@ struct FSMultiverse::MultiverseImpl {
 
     FSMessageHandler* setAdmin(FSMessageHandler* newAdmin);
 
-    static FSMultiverse* singleton;
-
     bool working;
 };
 

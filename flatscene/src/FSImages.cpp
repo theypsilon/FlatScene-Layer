@@ -1,23 +1,10 @@
 #include "FSImagesImpl.h"
 #include "FSLibrary.h"
 
-FSImages* FSImages::ImagesImpl::singleton=NULL;
-
 map<TypeResource,void (*)(void*)> FSCanvas::procRenders;
 
 FSImages::FSImages() : _impl(new ImagesImpl) {
-
 	FSCanvas::initProcRenders();
-
-	ImagesImpl::singleton = NULL;
-
-	if (ImagesImpl::singleton) {
-		FSLibrary::Error("CControlImages (CImg) ya estaba creado.",TE_controlViolation);
-		return;
-	}
-
-	ImagesImpl::singleton = this;
-
 }
 
 FSImages::~FSImages() {
@@ -129,4 +116,4 @@ int FSImages::getCount(Uint32 n) {
 	return ret;
 }
 
-FSImages Img;
+FSImages& Img = FSImages::I();

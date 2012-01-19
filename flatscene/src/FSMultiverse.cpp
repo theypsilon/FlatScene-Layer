@@ -1,7 +1,6 @@
 #include "FSMultiverseImpl.h"
 #include "FSLibrary.h"
 
-FSMultiverse* FSMultiverse::MultiverseImpl::singleton=NULL;
 FSMessageHandler* FSMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAdmin) {
     if (newAdmin != admin) {
         if (newAdmin) {
@@ -20,23 +19,10 @@ FSMessageHandler* FSMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAd
     }
 }
 
-FSMultiverse& FSMultiverse::Instance() {
-    if (!MultiverseImpl::singleton)
-        MultiverseImpl::singleton = new FSMultiverse;
-
-    return *MultiverseImpl::singleton;
-}
-
-
 FSMultiverse::FSMultiverse() : _impl(new MultiverseImpl) {
-
     _impl->admin = NULL;
     _impl->unisCurrent = NULL;
     _impl->working = false;
-
-    if (MultiverseImpl::singleton) {
-        FSLibrary::Error("Cosmos ya estaba creado.",TE_controlViolation);
-    }
 }
 
 FSMultiverse::~FSMultiverse() {
@@ -207,4 +193,4 @@ UniverseCollection::iterator FSMultiverse::end() {
     }
 }
 
-FSMultiverse& Cosmos = FSMultiverse::Instance();
+FSMultiverse& Cosmos = FSMultiverse::I();

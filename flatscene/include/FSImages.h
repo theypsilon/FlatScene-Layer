@@ -2,6 +2,8 @@
 #define __COLLECTION_IMAGES__
 
 #include "FSSpriteSet.h"
+#include "FSSingleton.h"
+#include "FSNoncopyable.h"
 #include <stack>
 #include <string>
 #include <map>
@@ -11,11 +13,9 @@ using namespace std;
 typedef map<int,FSSpriteset*> SpritesetCollection;
 typedef map<FSSpriteset*,int> SpritesetCount;
 
-class FSImages {
+class FSImages : private FSNoncopyable, public FSSingleton<FSImages> {
+    friend class FSSingleton<FSImages>;
 public:
-    FSImages();
-    ~FSImages();
-
     int add(const char* name,Uint8 mode=ONLY_TEXTURE);
     int remove(Uint32 n);
     FSSpriteset* get(Uint32 n);
@@ -24,14 +24,16 @@ public:
     int search(FSSpriteset* object);
     void clear();
     int getCount(Uint32 n);
-
 private:
+    FSImages();
+    ~FSImages();
+
     struct ImagesImpl;
     ImagesImpl* _impl;
     friend class FSScreen;
 };
 
-extern FSImages Img;
+extern FSImages& Img;
 
 
 #endif

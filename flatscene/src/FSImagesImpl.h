@@ -8,8 +8,6 @@ struct FSImages::ImagesImpl {
     SpritesetCount count;
 
     stack<int> lastIndexAdded;
-
-    static FSImages* singleton;
 };
 
 #endif

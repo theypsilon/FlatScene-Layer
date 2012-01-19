@@ -3,13 +3,16 @@
 
 #include "FSUniverse.h"
 #include "FSMessageHandler.h"
+#include "FSSingleton.h"
+#include "FSNoncopyable.h"
 #include <map>
 #include <string>
 
 typedef  std::list<FSUniverse*> UniverseCollection;
 typedef map<FSMessageHandler*,UniverseCollection*> MultiverseByAdmin;
 
-class FSMultiverse {
+class FSMultiverse : private FSNoncopyable, public FSSingleton<FSMultiverse> {
+    friend class FSSingleton<FSMultiverse>;
 public:
     FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
     FSUniverse* universeNamed(string uniName,Uint8 slot=0);
@@ -21,12 +24,11 @@ public:
     UniverseCollection::iterator begin();
     UniverseCollection::iterator end();
 
-    static FSMultiverse& Instance();
 private:
-     FSMultiverse();
+    FSMultiverse();
     ~FSMultiverse();
 
-   friend class FSUniverse;
+    friend class FSUniverse;
     struct MultiverseImpl;
     MultiverseImpl* _impl;
 };
