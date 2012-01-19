@@ -21,6 +21,9 @@
 #include <stdlib.h>
 #include "FSparserXML.h"
 
+#include "FSSingleton.h"
+#include "FSNoncopyable.h"
+
 enum TypeError {
     TE_standard,
     TE_fileExists,
@@ -32,10 +35,10 @@ enum TypeError {
 };
 
 
-class FSLibrary : public FSMessageHandler  
+class FSLibrary : public FSMessageHandler, private FSNoncopyable, public FSSingleton<FSLibrary>
 {
+	friend class FSSingleton<FSLibrary>;
 private:
-
     static FSLibrary* s_pTheLibrary;
 
     FSEngine* actualEngine;
@@ -64,22 +67,12 @@ private:
 
     static void setActualEngine(FSEngine* newEngineActive);
 
-    friend class FSEngine;
-
-
-    FSLibrary(bool xmlconfig =false);
-
-    FSLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
-
-
     static void onExit();
 
     int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
     void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 
     static string toStringErrorGL(GLenum e);
-
-    virtual ~FSLibrary();
 
 public:
 
@@ -90,12 +83,12 @@ public:
     static int processEngines();
 
 
-    inline static FSLibrary* getLibrary() {
-        return s_pTheLibrary;
+    inline static FSLibrary& getLibrary() {
+        return I();
     }
 
     inline static FSEngine* getActualEngine() {
-        return getLibrary()?getLibrary()->actualEngine:NULL;
+        return I().actualEngine;
     }
 
     static int addEngine(FSEngine* engine,int priority);
@@ -122,8 +115,18 @@ public:
 #endif
 
     bool static orderEngine(FSEngine*,FSEngine*);
+private:
+    FSLibrary(bool xmlconfig =false);
+    FSLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
+    virtual ~FSLibrary();
 
+	struct LibraryImpl;
+	LibraryImpl* _impl;
+
+    friend class FSEngine;
 };
+
+extern FSLibrary& FSLib;
 
 #define SINERROR "|-| No error"
 

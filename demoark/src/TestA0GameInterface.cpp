@@ -205,22 +205,22 @@ void CTestA0GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 	} else if (sym==SDLK_ESCAPE) {
 
-		CMenuAGameInterface* men = new CMenuAGameInterface(FSLibrary::getLibrary());
+		CMenuAGameInterface* men = new CMenuAGameInterface(&FSLibrary::getLibrary());
 		men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
 		men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
 		men->setPrevious(this);
 
-		FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_RunEngine, (MSGPARM)men);
+		FSLibrary::getLibrary().SendMessage(FSLibrary::MSGID_RunEngine, (MSGPARM)men);
 	} else if (sym==SDLK_SPACE) {
 
-		CFreezeGameInterface* fgi = new CFreezeGameInterface(FSLibrary::getLibrary());
+		CFreezeGameInterface* fgi = new CFreezeGameInterface(&FSLibrary::getLibrary());
 		fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
 		fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
 		fgi->setPrevious(this);
 
-		FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_RunEngine, (MSGPARM)fgi);
+		FSLibrary::getLibrary().SendMessage(FSLibrary::MSGID_RunEngine, (MSGPARM)fgi);
 	} else if (sym==SDLK_DELETE) {
 		getParent()->SendMessage(FSLibrary::MSGID_Restart);
 	} else if (sym==SDLK_F1) {

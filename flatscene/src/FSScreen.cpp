@@ -30,10 +30,6 @@ map<TypeResource,void (*)(void*)> FSScreen::procRenders;
 
 int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
 { 
-	if (FSLibrary::getLibrary() == NULL) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
 		
 	if (m_SDL_Surface) {
 		FSLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
@@ -98,10 +94,6 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
 
 int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, bool fullscreen, bool doublebuff)
 { 
-	if (FSLibrary::getLibrary() == NULL) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
 		
 	if (m_SDL_Surface) {
 		FSLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 

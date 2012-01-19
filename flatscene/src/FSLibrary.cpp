@@ -9,7 +9,7 @@
 #endif
 #endif
 
-#include "FSLibrary.h"
+#include "FSLibraryImpl.h"
 
 #define EXITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); setActualEngine(A); A->onExit(); setActualEngine(eaux); }
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); setActualEngine(A); A->onInit(); setActualEngine(eaux); }
@@ -22,36 +22,23 @@ Uint32 FSLibrary::MSGID_ReloadEngine=FSMessageHandler::getNextMSGID();
 Uint32 FSLibrary::MSGID_ChangeEngine=FSMessageHandler::getNextMSGID();
 Uint32 FSLibrary::MSGID_KillEngine=FSMessageHandler::getNextMSGID();
 
-
-FSLibrary* FSLibrary::s_pTheLibrary=NULL;
-
 list<string> FSLibrary::errors;
 
 
 void FSLibrary::setLibrary(FSLibrary* pTheLib)
 {
-	
-	if(s_pTheLibrary!=NULL)
-	{
-		
-		Error("More than one CLibrary created!",TE_controlViolation);
-		
-		return;
-	}
-	
-	s_pTheLibrary=pTheLib;
-
 #ifdef DEBUGTEST
 	FSLibrary::debugticks=Chrono.getTick();
 #endif
 }
 
 void FSLibrary::setActualEngine(FSEngine *newEngineActive) {
-	getLibrary()->actualEngine = newEngineActive;
+	getLibrary().actualEngine = newEngineActive;
 }
 
 
 FSLibrary::FSLibrary(bool xmlconfig):
+		_impl(new LibraryImpl),
 FSMessageHandler(NULL)
 {
 #ifdef IN_FILE_ERROR
@@ -116,13 +103,12 @@ FSMessageHandler(NULL)
 
 
 FSLibrary::FSLibrary ( int width , int height , int bpp , bool fullscreen, bool doublebuff ) :
+				_impl(new LibraryImpl),
 FSMessageHandler(NULL)
 {
 #ifdef IN_FILE_ERROR
 	FSLibrary::errorsInSession = false;
 #endif
-	
-	setLibrary(this);
 
 	setActualEngine(NULL);
 
@@ -144,12 +130,7 @@ FSMessageHandler(NULL)
 
 }
 
-int FSLibrary::startLibrary(bool xmlconfig)
-{
-	if (s_pTheLibrary!=NULL)	{
-		Error("La biblioteca ya ha sido inicializada.");
-		return FRACASO;
-	}
+int FSLibrary::startLibrary(bool xmlconfig) {
 
 	int num_e = errors.size();
 
@@ -163,12 +144,7 @@ int FSLibrary::startLibrary(bool xmlconfig)
 	return EXITO;
 }
 
-int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff )
-{
-	if (s_pTheLibrary!=NULL)	{
-		Error("La biblioteca ya ha sido inicializada.");
-		return FRACASO;
-	}
+int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
 
 	int num_e = errors.size();
 
@@ -185,36 +161,37 @@ int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen,
 
 FSLibrary::~FSLibrary()
 {
+	delete _impl;
 }
 
 
 void FSLibrary::onExit()
 {
 
-	while( !getLibrary()->engineIn.empty() ) {
+	while( !getLibrary().engineIn.empty() ) {
 
-		FSEngine * engine = *getLibrary()->engineIn.begin();
+		FSEngine * engine = *getLibrary().engineIn.begin();
 
-		getLibrary()->engineOut.remove(engine);
+		getLibrary().engineOut.remove(engine);
 
 		setActualEngine(engine);
 		if (engine->isInitialized())
 			engine->onExit();
 
-		getLibrary()->engineIn.erase(getLibrary()->engineIn.begin());
+		getLibrary().engineIn.erase(getLibrary().engineIn.begin());
 
 		delete engine;
 	}
 
-	while( !getLibrary()->engineOut.empty() ) {
+	while( !getLibrary().engineOut.empty() ) {
 
-		FSEngine * engine = *getLibrary()->engineOut.begin();
+		FSEngine * engine = *getLibrary().engineOut.begin();
 
 		setActualEngine(engine);
 		if (engine->isInitialized())
 			engine->onExit();
 
-		getLibrary()->engineOut.erase(getLibrary()->engineOut.begin());
+		getLibrary().engineOut.erase(getLibrary().engineOut.begin());
 
 		delete engine;
 	}
@@ -241,20 +218,13 @@ void FSLibrary::onExit()
 
 int FSLibrary::processEngines() {
 	
-	if(!s_pTheLibrary)
-	{		
-		Error("Biblioteca no inicializada");
-		
-		return FRACASO;
-	}
-
 	setActualEngine(NULL);
 
 	// Selecci�n del CEngine a ejecutar entre el Conjunto de CEngine.
 
-	getLibrary()->engineIn.sort(FSLibrary::orderEngine);
+	getLibrary().engineIn.sort(FSLibrary::orderEngine);
 
-	for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();
+	for (list<FSEngine*>::iterator it = getLibrary().engineIn.begin(), jt = getLibrary().engineIn.end();
 		it != jt && getActualEngine()==NULL; 
 		++it) {
 
@@ -268,16 +238,16 @@ int FSLibrary::processEngines() {
 
 	if (getActualEngine() == NULL) {
 
-		for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) 
+		for (list<FSEngine*>::iterator it = getLibrary().engineIn.begin(), jt = getLibrary().engineIn.end();	it != jt; 	++it) 
 			(*it)->done = false;
 
-		if (getLibrary()->engineIn.empty()) {
+		if (getLibrary().engineIn.empty()) {
 			FSLibrary::Error("There are no engines in queue!");
 			return FRACASO;
 		}
 
-		setActualEngine(getLibrary()->engineIn.front());
-		getLibrary()->engineIn.front()->done=true;
+		setActualEngine(getLibrary().engineIn.front());
+		getLibrary().engineIn.front()->done=true;
 	}
 
 	// Ejecuci�n del CEngine seleccionado	
@@ -292,7 +262,7 @@ int FSLibrary::processEngines() {
 
 		getActualEngine()->loop();
 
-		getLibrary()->readMessages();
+		getLibrary().readMessages();
 	}
 	
 	return EXITO;
@@ -300,11 +270,11 @@ int FSLibrary::processEngines() {
 
 int FSLibrary::addEngine(FSEngine* engine,int priority) {
 
-	if (s_pTheLibrary==NULL || engine == NULL)
+	if (engine == NULL)
 		return FRACASO;
 
 	engine->priority = priority;
-	getLibrary()->engineIn.push_back(engine);
+	getLibrary().engineIn.push_back(engine);
 
 	return EXITO;
 }
@@ -331,7 +301,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 	} else if (MsgID==MSGID_Restart) {
 
-		for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) {
+		for (list<FSEngine*>::iterator it = getLibrary().engineIn.begin(), jt = getLibrary().engineIn.end();	it != jt; 	++it) {
 			FSEngine* engine = *it;
 			setActualEngine(engine);
 			engine->done = false;
@@ -339,7 +309,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 				engine->onExit();
 		}
 
-		getLibrary()->engineIn.sort(FSLibrary::orderEngine);
+		getLibrary().engineIn.sort(FSLibrary::orderEngine);
 
 		setActualEngine(engineIn.front());
 		engineIn.front()->done = true;
@@ -365,10 +335,10 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 			bool find = false;
 
-			for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();it!=jt;++it)
+			for (list<FSEngine*>::iterator it = getLibrary().engineIn.begin(), jt = getLibrary().engineIn.end();it!=jt;++it)
 				find = find || engine == *it;
 
-			for (list<FSEngine*>::iterator it = getLibrary()->engineOut.begin(), jt = getLibrary()->engineOut.end();it!=jt;++it)
+			for (list<FSEngine*>::iterator it = getLibrary().engineOut.begin(), jt = getLibrary().engineOut.end();it!=jt;++it)
 				find = find || engine == *it;
 
 			if (!engine) {
@@ -398,9 +368,9 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
 		setActualEngine(NULL);
 
-		getLibrary()->engineIn.sort(FSLibrary::orderEngine);
+		getLibrary().engineIn.sort(FSLibrary::orderEngine);
 
-		for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();
+		for (list<FSEngine*>::iterator it = getLibrary().engineIn.begin(), jt = getLibrary().engineIn.end();
 			it != jt && getActualEngine()==NULL; 
 			++it) {
 
@@ -412,11 +382,11 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 		}
 
 		if (getActualEngine() == NULL) {
-			for (list<FSEngine*>::iterator it = getLibrary()->engineIn.begin(), jt = getLibrary()->engineIn.end();	it != jt; 	++it) 
+			for (list<FSEngine*>::iterator it = getLibrary().engineIn.begin(), jt = getLibrary().engineIn.end();	it != jt; 	++it) 
 				(*it)->done = false;
 
-			setActualEngine(getLibrary()->engineIn.front());
-			getLibrary()->engineIn.front()->done=true;
+			setActualEngine(getLibrary().engineIn.front());
+			getLibrary().engineIn.front()->done=true;
 		}
 
 	} else if (MsgID==MSGID_KillEngine) {
@@ -497,15 +467,15 @@ void FSLibrary::Error (std::string s,TypeError e) {
 			fprintf(stderr,s.c_str());
 		} else {
 			fprintf(stderr,s.c_str());
-			if (!getLibrary()->errorsInSession) {
+			if (!getLibrary().errorsInSession) {
 				s="Session with errors start"+s;
-				getLibrary()->errorsInSession=true;
+				getLibrary().errorsInSession=true;
 			}
 			fprintf(f,s.c_str());
 			fclose(f);
 		}
 
-		getLibrary()->SendMessage(MSGID_Exit);
+		getLibrary().SendMessage(MSGID_Exit);
 
 	} 
 #endif
@@ -581,3 +551,5 @@ bool FSLibrary::orderEngine(FSEngine* x, FSEngine* y) {
 	return ((x->priority)<(y->priority));
 
 }
+
+FSLibrary& FSLib = FSLibrary::getLibrary();

@@ -107,11 +107,6 @@ const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*))
 //bucle principal
 int FSEngine::loop() {
 
-	if (!FSLibrary::getLibrary()) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
-
 	if (!isInitialized()) {
 		FSLibrary::Error("Engine not inicialized");
 		return FRACASO;
@@ -132,7 +127,7 @@ int FSEngine::loop() {
 			SDL_PollEvent(&event)==1) {
 				
 			if(event.type==SDL_QUIT) {
-				FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_Exit);
+				FSLibrary::getLibrary().SendMessage(FSLibrary::MSGID_Exit);
 				break;
 			}
 

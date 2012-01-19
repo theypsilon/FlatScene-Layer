@@ -25,25 +25,25 @@ int main(int argc,char* argv[])
 
 	FSEngine** engine = new FSEngine*[20];
 	
-	engine[0] = new CTestA0GameInterface(FSLibrary::getLibrary());
+	engine[0] = new CTestA0GameInterface(&FSLibrary::getLibrary());
 
 	engine[0]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
 	engine[0]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
 	FSLibrary::addEngine(engine[0],10);
 
-	engine[1] = new CTestA3GameInterface(FSLibrary::getLibrary());
+	engine[1] = new CTestA3GameInterface(&FSLibrary::getLibrary());
 
 	engine[1]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
 	engine[1]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
 	FSLibrary::addEngine(engine[1],11);
 
-	engine[2] = new CTestA5GameInterface(FSLibrary::getLibrary());
+	engine[2] = new CTestA5GameInterface(&FSLibrary::getLibrary());
 
 	engine[2]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
 	engine[2]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
 	FSLibrary::addEngine(engine[2],12);
 
-	engine[3] = new CTestA4GameInterface(FSLibrary::getLibrary());
+	engine[3] = new CTestA4GameInterface(&FSLibrary::getLibrary());
 
 	engine[3]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
 	engine[3]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);

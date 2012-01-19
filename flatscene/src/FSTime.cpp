@@ -16,11 +16,6 @@ FSTime::~FSTime() {
 
 int FSTime::getTick() {
 
-	if (!FSLibrary::getLibrary()) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
-
 	if (admin != FSLibrary::getActualEngine()) {
 		admin = FSLibrary::getActualEngine();
 		actTime = & fc[admin];
@@ -64,11 +59,6 @@ int FSTime::setFPS(int fpsNew, bool all) {
 int  FSTime::nextFrame() {
 
 	int ret = EXITO;
-
-	if (!FSLibrary::getLibrary()) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
 
 	if (admin != FSLibrary::getActualEngine()) {
 		admin = FSLibrary::getActualEngine();

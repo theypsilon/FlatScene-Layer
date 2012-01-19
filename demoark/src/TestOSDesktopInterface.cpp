@@ -181,7 +181,7 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
             os->down = true;
 
         } else if (key==SDLK_F1) 
-            FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_ChangeEngine);
+            FSLibrary::getLibrary().SendMessage(FSLibrary::MSGID_ChangeEngine);
 
     } else if (event->type == SDL_KEYUP) {
 
