@@ -14,8 +14,6 @@ if ( NOT SDL_FOUND )
 	message ( FATAL ERROR "SDL not found!" )	
 endif ( NOT SDL_FOUND )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=gnu++0x")
-
 file ( GLOB SRCS flatscene/src/*.cpp flatscene/src/tinyxml/*.cpp )
 file ( GLOB HDRS flatscene/include/*.h flatscene/include/tinyxml/*.h )
 
