@@ -671,4 +671,6 @@ void FSWriter::clear() {
 #endif
 }
 
+#ifdef GLOBAL_SINGLETON_REFERENCES
 FSWriter& Write = FSWriter::I();
+#endif

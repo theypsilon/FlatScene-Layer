@@ -193,4 +193,6 @@ UniverseCollection::iterator FSMultiverse::end() {
     }
 }
 
+#ifdef GLOBAL_SINGLETON_REFERENCES
 FSMultiverse& Cosmos = FSMultiverse::I();
+#endif

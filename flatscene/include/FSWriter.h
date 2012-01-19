@@ -66,7 +66,8 @@ private:
     friend class FSScreen;
 };
 
-
+#ifdef GLOBAL_SINGLETON_REFERENCES
 extern FSWriter& Write;
+#endif
 
 #endif

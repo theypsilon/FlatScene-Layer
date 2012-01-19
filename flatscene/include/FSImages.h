@@ -33,7 +33,8 @@ private:
     friend class FSScreen;
 };
 
+#ifdef GLOBAL_SINGLETON_REFERENCES
 extern FSImages& Img;
-
+#endif
 
 #endif

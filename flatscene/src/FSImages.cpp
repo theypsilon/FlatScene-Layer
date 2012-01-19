@@ -115,5 +115,6 @@ int FSImages::getCount(Uint32 n) {
 		ret = (*_impl).count[get(n)];
 	return ret;
 }
-
+#ifdef GLOBAL_SINGLETON_REFERENCES
 FSImages& Img = FSImages::I();
+#endif

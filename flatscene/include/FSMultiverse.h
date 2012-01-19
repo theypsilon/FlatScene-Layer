@@ -33,6 +33,8 @@ private:
     MultiverseImpl* _impl;
 };
 
+#ifdef GLOBAL_SINGLETON_REFERENCES
 extern FSMultiverse& Cosmos;
+#endif
 
 #endif
