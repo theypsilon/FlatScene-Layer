@@ -159,7 +159,7 @@ int CTestOSDesktopInterface::onIdle() {
 
 void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
-    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLibrary::getActualEngine();
+    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLib.getActualEngine();
     SDLKey key = event->key.keysym.sym;
 
     if (event->type == SDL_KEYDOWN) {
@@ -181,7 +181,7 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
             os->down = true;
 
         } else if (key==SDLK_F1) 
-            FSLibrary::getLibrary().SendMessage(FSLibrary::MSGID_ChangeEngine);
+            FSLib.getLibrary().SendMessage(FSLib.MSGID_ChangeEngine);
 
     } else if (event->type == SDL_KEYUP) {
 
@@ -208,7 +208,7 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
 void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
-    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLibrary::getActualEngine();
+    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLib.getActualEngine();
 
     int x = os->raton->renderPoint.x = event->motion.x;
     int y = os->raton->renderPoint.y = event->motion.y;

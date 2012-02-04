@@ -44,7 +44,7 @@ void FSScreen::reloadResources(GraphicResources &info) {
 			if (!jt->second) {
 				jt->second = new FSSprite(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,Write._impl->data->fgcolor)));
 			} else {
-				return FSLibrary::Error("No se puede recargar el recurso glyph porque no había sido descargado anteriormente.");
+				return FSLibrary::I().Error("No se puede recargar el recurso glyph porque no había sido descargado anteriormente.");
 			}
 		}
 	}

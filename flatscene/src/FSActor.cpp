@@ -40,6 +40,6 @@ FSSprite* FSActor::getSprite() {
 }
 
 FSActor* FSActor::clone() {
-	FSLibrary::Error("CActor no implementa un metodo de clonaci�n por defecto.");
+	FSLibrary::I().Error("CActor no implementa un metodo de clonaci�n por defecto.");
 	return NULL;
 }

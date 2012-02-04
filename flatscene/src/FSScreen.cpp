@@ -32,12 +32,12 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
 { 
 		
 	if (m_SDL_Surface) {
-		FSLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
+		FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n"); 
 		return FRACASO;
 	}
 
 	if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-		FSLibrary::Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+		FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
 #ifdef LOG_SISTEMA
@@ -65,7 +65,7 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
 		flags |= SDL_FULLSCREEN;
 
 	if ((m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-		FSLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+		FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
 
@@ -96,12 +96,12 @@ int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, 
 { 
 		
 	if (m_SDL_Surface) {
-		FSLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
+		FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n"); 
 		return FRACASO;
 	}
 
 	if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-		FSLibrary::Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+		FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
 #ifdef LOG_SISTEMA
@@ -129,7 +129,7 @@ int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, 
 		flags |= SDL_FULLSCREEN;
 
 	if ((m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-		FSLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+		FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
 		return FRACASO;
 	}
 
@@ -171,7 +171,7 @@ void FSScreen::initProcRenders() {
 int FSScreen::render ( ) 
 {
 	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
+		FSLibrary::I().Error("Video context not inicialized");
 		return false;
 	}
 
@@ -211,7 +211,7 @@ int FSScreen::render ( )
 int FSScreen::clear ( ) 
 {
 	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
+		FSLibrary::I().Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -429,7 +429,7 @@ int FSScreen::color(FSColor* col, float alpha) {
 int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 
 	if (rendering) {
-		FSLibrary::Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
+		FSLibrary::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
 		return FRACASO;
 	}
 
@@ -739,7 +739,7 @@ void FSScreen::procRendColor(void* pointer) {
 
 int FSScreen::beginRenderMode(Uint32 flags) {
 	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
+		FSLibrary::I().Error("Video context not inicialized");
 		return FRACASO;
 	}
 	
@@ -755,7 +755,7 @@ int FSScreen::beginRenderMode(Uint32 flags) {
 
 int FSScreen::endRenderMode(Uint32 flags) {
 	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
+		FSLibrary::I().Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -772,7 +772,7 @@ int FSScreen::endRenderMode(Uint32 flags) {
 int FSScreen::quit()
 {
 	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
+		FSLibrary::I().Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -789,7 +789,7 @@ Uint8 FSScreen::getBpp() {
 
 int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float scaley, bool fullscreen) {
 	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
+		FSLibrary::I().Error("Video context not inicialized");
 		return FRACASO;
 	}
 	
@@ -814,7 +814,7 @@ int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float s
 int FSScreen::ToggleFullscreen() {
 
 	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
+		FSLibrary::I().Error("Video context not inicialized");
 		return FRACASO;
 	}
 
@@ -840,7 +840,7 @@ int FSScreen::ToggleFullscreen() {
 int FSScreen::setDoublebuffer(bool doublebuff) {
 
 	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
+		FSLibrary::I().Error("Video context not inicialized");
 		return FRACASO;
 	}
 

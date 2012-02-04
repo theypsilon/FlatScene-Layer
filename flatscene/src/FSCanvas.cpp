@@ -378,7 +378,7 @@ SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 		ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,0,0,0,0);
 
 	else {
-		FSLibrary::Error("depth mode not valid",TE_SDL_NOMSG);
+		FSLibrary::I().Error("depth mode not valid",TE_SDL_NOMSG);
 		return ret;
 
 	}
@@ -420,7 +420,7 @@ SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 SCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
 	if (pow2(mode) != mode)
-		FSLibrary::Error("CCanvas::LoadIMG -> modo erroneo.");
+		FSLibrary::I().Error("CCanvas::LoadIMG -> modo erroneo.");
 
 	SCanvas pSurface;
 
@@ -428,7 +428,7 @@ SCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 	SDL_Rect area;
 
 	if (surface == NULL) {
-		FSLibrary::Error("CCanvas::LoadIMG -> image Null.");
+		FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
 		pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
 		pSurface.sdl_surf = NULL;
 		return pSurface;
@@ -467,7 +467,7 @@ SCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 				  0x000000ff);
 		#endif
 		if (image == NULL) {
-			FSLibrary::Error("CCanvas::LoadIMG -> image Null.");
+			FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
 			return pSurface;
 		}
 

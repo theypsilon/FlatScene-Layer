@@ -91,7 +91,7 @@ void CTestBGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CTestBGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_TAB && pushed) {
-		getParent()->SendMessage(FSLibrary::MSGID_ChangeEngine,(void*)false);
+		getParent()->SendMessage(FSLib.MSGID_ChangeEngine,(void*)false);
 		pushed=false;
 	}
 }

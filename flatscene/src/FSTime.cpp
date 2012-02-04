@@ -16,8 +16,8 @@ FSTime::~FSTime() {
 
 int FSTime::getTick() {
 
-	if (admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
+	if (admin != FSLibrary::I().getActualEngine()) {
+		admin = FSLibrary::I().getActualEngine();
 		actTime = & fc[admin];
 	}
 
@@ -26,8 +26,8 @@ int FSTime::getTick() {
 
 int FSTime::setInterval(int msNew, bool all) {
 
-	if (!all && admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
+	if (!all && admin != FSLibrary::I().getActualEngine()) {
+		admin = FSLibrary::I().getActualEngine();
 		actTime = & fc[admin];
 	}
 
@@ -60,8 +60,8 @@ int  FSTime::nextFrame() {
 
 	int ret = EXITO;
 
-	if (admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
+	if (admin != FSLibrary::I().getActualEngine()) {
+		admin = FSLibrary::I().getActualEngine();
 		actTime = & fc[admin];
 	}
 
@@ -92,10 +92,10 @@ int  FSTime::nextFrame() {
 	if (SDL_GetTicks() > auxTimer + 1000) {
 		auxTimer=SDL_GetTicks();
 
-		if (adminText.find(FSLibrary::getActualEngine())!=adminText.end())
-			Write.erase(adminText[FSLibrary::getActualEngine()]);
+		if (adminText.find(FSLibrary::I().getActualEngine())!=adminText.end())
+			Write.erase(adminText[FSLibrary::I().getActualEngine()]);
 
-		adminText[FSLibrary::getActualEngine()]=Write.line(0,5,5,"FPS: %d ",fps);
+		adminText[FSLibrary::I().getActualEngine()]=Write.line(0,5,5,"FPS: %d ",fps);
 
 		fps=0;
 	}

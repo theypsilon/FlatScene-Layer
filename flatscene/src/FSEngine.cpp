@@ -108,26 +108,26 @@ const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*))
 int FSEngine::loop() {
 
 	if (!isInitialized()) {
-		FSLibrary::Error("Engine not inicialized");
+		FSLibrary::I().Error("Engine not inicialized");
 		return FRACASO;
 	}
 
-	FSLibrary::setActualEngine(this);
+	FSLibrary::I().setActualEngine(this);
 	
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event)==1);
 		
-	while (FSLibrary::getActualEngine() == this) {
+	while (FSLibrary::I().getActualEngine() == this) {
 			
 		if(
 #ifdef DEBUGTEST
-			!FSLibrary::inDebug() && 
+			!FSLibrary::I().inDebug() && 
 #endif
 			SDL_PollEvent(&event)==1) {
 				
 			if(event.type==SDL_QUIT) {
-				FSLibrary::getLibrary().SendMessage(FSLibrary::MSGID_Exit);
+				FSLibrary::I().getLibrary().SendMessage(FSLibrary::I().MSGID_Exit);
 				break;
 			}
 
@@ -152,13 +152,13 @@ int FSEngine::loop() {
 void FSEngine::deselect() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)==1) { }
-	FSLibrary::setActualEngine(NULL);
+	FSLibrary::I().setActualEngine(NULL);
 }
 
 int FSEngine::drawFrame() {
 
 	if (!isInitialized()) {
-		FSLibrary::Error("Motor not inicialized");
+		FSLibrary::I().Error("Motor not inicialized");
 		return FRACASO;
 	}
 

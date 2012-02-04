@@ -50,7 +50,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 		int minx,maxy,advance;
 
 		if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance)== -1)
-			FSLibrary::Error("TTF_GlyphMetrics fallo.");
+			FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
 
 		if (newChar == ' ' ) {
 			const char* caux = allText.c_str();
@@ -59,7 +59,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
 				if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
-					FSLibrary::Error("TTF_GlyphMetrics fallo.");
+					FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
 
 				cuenta += (float)minx;
 
@@ -184,16 +184,16 @@ void FSWriter::WriterImpl::FSTextBox::deleteBox() {
 
 void FSWriter::WriterImpl::FSTextBox::createBox() {
 	if (box) {
-		FSLibrary::Error("Ya existe el fondo de la caja que se pretende crear.");
+		FSLibrary::I().Error("Ya existe el fondo de la caja que se pretende crear.");
 		return;
 	}
 
 	SDL_Surface *surface, *aux_surf;
 
 	aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,FSScreen::getBpp(),0,0,255,0);
-	if (!aux_surf)	FSLibrary::Error("No se ha creado bien la superficie para la TextBox.");
+	if (!aux_surf)	FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
 	surface = SDL_DisplayFormat(aux_surf);
-	if (!surface)	FSLibrary::Error("No se ha creado bien la superficie para la TextBox.");
+	if (!surface)	FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
 	SDL_FreeSurface(aux_surf);
 	SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
 

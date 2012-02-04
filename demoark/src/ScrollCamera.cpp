@@ -78,7 +78,7 @@ int CScrollCamera::loadUniverse() {
 		CY()=-1000;
 	}
 
-	if (map==NULL) FSLibrary::Error("map nulo.");
+	if (map==NULL) FSLib.Error("map nulo.");
 
 	if (!map->isLoaded())
 		map->load();

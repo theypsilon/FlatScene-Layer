@@ -142,12 +142,12 @@ void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_ESCAPE && pushed) {
-		getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
-		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
+		getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
+		getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
 	} else if (sym==SDLK_RETURN && pushed) {
 		if (opcion == 0) {
-			getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
-			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
+			getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
 		}	else if (opcion == 1) {
 			FSScreen::ToggleFullscreen();
 
@@ -161,7 +161,7 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 				Write.erase(y);
 				y=Write.line(0,232,70,"%s",c);
 			} catch (...) {
-				FSLibrary::Error("MenuA IdTexts vector bad access");
+				FSLib.Error("MenuA IdTexts vector bad access");
 			}
 		
 		} else if (opcion == 2) {
@@ -191,15 +191,15 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 				Write.erase(y);
 				y=Write.line(0,110,100,"%s",c);
 			} catch (...) {
-				FSLibrary::Error("MenuA IdTexts vector bad access");
+				FSLib.Error("MenuA IdTexts vector bad access");
 			}
 		} else if (opcion == 3) {
-			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
-			getParent()->SendMessage(FSLibrary::MSGID_Restart);
+			getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLib.MSGID_Restart);
 			
 		} else if (opcion == 4) {
-			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
-			getParent()->SendMessage(FSLibrary::MSGID_Exit);
+			getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLib.MSGID_Exit);
 		}
 		
 		pushed=false;

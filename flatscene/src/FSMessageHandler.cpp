@@ -1,10 +1,10 @@
 #include "FSMessageHandler.h"
 #include "FSLibrary.h"
 
-//inicialización de miembros estáticos
+//inicializaciï¿½n de miembros estï¿½ticos
 Uint32 FSMessageHandler::s_NextMSGID=1;
 
-//asignación de identificador a mensajes.
+//asignaciï¿½n de identificador a mensajes.
 Uint32 FSMessageHandler::MSGID_addChild=FSMessageHandler::getNextMSGID();
 Uint32 FSMessageHandler::MSGID_RemoveChild=FSMessageHandler::getNextMSGID();
 #ifdef MENSAJES_MSGIDS
@@ -101,7 +101,7 @@ int FSMessageHandler::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 		}
 		
 	}	else  {
-		FSLibrary::Error("Mensaje de tipo no registrado",TE_standard);
+		FSLibrary::I().Error("Mensaje de tipo no registrado",TE_standard);
 		return FRACASO;
 	}
 	
@@ -178,7 +178,7 @@ MSGPARM FSMessageHandler::FSMessage::getParm(int n) {
 	} else if (n==2) {
 		return Parm2;
 	} else {
-		FSLibrary::Error("Parámetro requerido imposible.");
+		FSLibrary::I().Error("Parï¿½metro requerido imposible.");
 		return (void*)FRACASO;
 	}
 }

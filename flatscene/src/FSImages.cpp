@@ -67,7 +67,7 @@ int FSImages::remove(Uint32 n) {
 				(*_impl).count.erase((*_impl).count.find(sptset));
 				(*_impl).lastIndexAdded.push(n);
 			} else {
-				FSLibrary::Error("Cantidad de Spriteset violada.",TE_controlViolation);
+				FSLibrary::I().Error("Cantidad de Spriteset violada.",TE_controlViolation);
 				return FRACASO;
 			}
 		}
@@ -75,7 +75,7 @@ int FSImages::remove(Uint32 n) {
 		return EXITO;
 	}
 
-	FSLibrary::Error("No existe el Spriteset que se pretende eliminar.",TE_controlViolation);
+	FSLibrary::I().Error("No existe el Spriteset que se pretende eliminar.",TE_controlViolation);
 	return FRACASO;
 
 }

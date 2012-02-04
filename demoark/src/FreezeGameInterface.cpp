@@ -80,13 +80,13 @@ int CFreezeGameInterface::onMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2, 
 
 void CFreezeGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_SPACE && pushed) {
-		getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
-		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
+		getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
+		getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
 	} else if (sym==SDLK_F1 && pushed) {
 		previous->done = true;
 
-		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
-		getParent()->SendMessage(FSLibrary::MSGID_ChangeEngine);
+		getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+		getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
 
 	}
 }

@@ -30,7 +30,7 @@ CActionGraph::~CActionGraph() {
 }
 
 COrder* CActionGraph::createNode(const char *c, TiXmlElement *newNode,const char* s) {
-	if (!newNode->Attribute("id")) FSLibrary::Error("Acción sin identificador imposible de crear.");
+	if (!newNode->Attribute("id")) FSLib.Error("Acciï¿½n sin identificador imposible de crear.");
 	COrder* newInstance = NULL;
 	string name = (s==NULL)?string(c) : string(c)+s;
 	if (strcmp(c,"quiet")==0) {
@@ -63,7 +63,7 @@ COrder* CActionGraph::createNode(const char *c, TiXmlElement *newNode,const char
 	} else if (strcmp(c,"air-land super attack")==0) {
 		newInstance = new COrder( CActionFight::ActionFightFactory(player,newNode)  , name);
 	} else if (strcmp(c,"restringed")==0) {
-		FSLibrary::Error("Se ha intentado agregar un tipo de acción restringido.");
+		FSLib.Error("Se ha intentado agregar un tipo de acciï¿½n restringido.");
 	}
 	return newInstance;
 }
@@ -94,7 +94,7 @@ bool CActionGraph::add(TiXmlElement *newNode) {
 							newAccion = createNode(tipos[tipoActual],hijo,(string("/")+hijo->Attribute("subnode")).c_str());
 							newAccion->prioridad = hijo->Attribute("priority") ? atoi(hijo->Attribute("priority")) : -1;
 							if (!newAccion)
-								FSLibrary::Error((string("\nNodo de tipo ")+tipos[tipoActual]+" erroneo en el arbol de acciones del jugador.").c_str());
+								FSLib.Error((string("\nNodo de tipo ")+tipos[tipoActual]+" erroneo en el arbol de acciones del jugador.").c_str());
 							nodosHijo.push_back(newAccion);
 							TiXmlElement* enlace = hijo->FirstChildElement("link");
 							while (enlace && enlace->Attribute("ref") && enlace->Attribute("event")) {
@@ -113,7 +113,7 @@ bool CActionGraph::add(TiXmlElement *newNode) {
 								int miembro = atoi(enlace->Attribute("member"));
 
 								if (mapaDeFamilias.find(familyName)!=mapaDeFamilias.end() && (mapaDeFamilias[familyName]).find(miembro)!= (mapaDeFamilias[familyName]).end())
-									FSLibrary::Error("En cada familia de acciones, no puede haber más de una acción con el mismo puesto de miembro.");
+									FSLib.Error("En cada familia de acciones, no puede haber mï¿½s de una acciï¿½n con el mismo puesto de miembro.");
 
 								(mapaDeFamilias[familyName])[miembro]=newAccion->nodo;
 								enlace = enlace->NextSiblingElement();
@@ -142,7 +142,7 @@ bool CActionGraph::add(TiXmlElement *newNode) {
 						newAccion = createNode(tipos[tipoActual],newNode);		
 						newAccion->prioridad = newNode->Attribute("priority") ? atoi(newNode->Attribute("priority")) : -1;
 						if (!newAccion)
-							FSLibrary::Error((string("\nNodo de tipo ")+tipos[tipoActual]+" erroneo en el arbol de acciones del jugador.").c_str());
+							FSLib.Error((string("\nNodo de tipo ")+tipos[tipoActual]+" erroneo en el arbol de acciones del jugador.").c_str());
 						TiXmlElement* hijo = newNode->FirstChildElement("link");
 						while (hijo && strcmp(hijo->Value(),"link")==0 && hijo->Attribute("ref") && hijo->Attribute("event")) {
 							string ref(hijo->Attribute("ref"));
@@ -162,7 +162,7 @@ bool CActionGraph::add(TiXmlElement *newNode) {
 							int miembro = atoi(hijo->Attribute("member"));
 
 							if (mapaDeFamilias.find(familyName)!=mapaDeFamilias.end() && (mapaDeFamilias[familyName]).find(miembro)!= (mapaDeFamilias[familyName]).end())
-								FSLibrary::Error("En cada familia de acciones, no puede haber más de una acción con el mismo puesto de miembro.");
+								FSLib.Error("En cada familia de acciones, no puede haber mï¿½s de una acciï¿½n con el mismo puesto de miembro.");
 
 							(mapaDeFamilias[familyName])[miembro]=newAccion->nodo;
 							hijo = hijo->NextSiblingElement();
@@ -173,7 +173,7 @@ bool CActionGraph::add(TiXmlElement *newNode) {
 			return true;
 			
 		} else {
-			FSLibrary::Error(string("Tipo de nodo ya usado o indefinido... type:")+parentNode->Attribute("type"));
+			FSLib.Error(string("Tipo de nodo ya usado o indefinido... type:")+parentNode->Attribute("type"));
 		}
 
 	}
@@ -229,31 +229,31 @@ bool CActionGraph::mix() {
 	}
 #endif
 	// Enlazamiento entre acciones.
-	for (list<COrder*>::iterator it=nodos.begin();it!=nodos.end();++it) {		// Por cada acción
+	for (list<COrder*>::iterator it=nodos.begin();it!=nodos.end();++it) {		// Por cada acciï¿½n
 		for (list<CEnlace>::iterator kt=(*it)->enlaces.begin();kt!=(*it)->enlaces.end();++kt) {	// Recorremos todos sus enlaces
 			if (strcmp((*kt).evento.c_str(),"onkeydown")==0) { // Si es un enlace de tipo onkeydown...
-				int tecla = getKey((*kt).tecla.c_str());	// Miramos que tecla tiene (lugar que ocuparía en el array de keydowns de la acción)
+				int tecla = getKey((*kt).tecla.c_str());	// Miramos que tecla tiene (lugar que ocuparï¿½a en el array de keydowns de la acciï¿½n)
 				
-				CAction* n = (CAction*)search((*kt).referencia.c_str());	// Obtenemos la acción que corresponde a dicha referencia.
+				CAction* n = (CAction*)search((*kt).referencia.c_str());	// Obtenemos la acciï¿½n que corresponde a dicha referencia.
 				if (tecla==-1 || !n) {
 					printf("\n%s\n",(*kt).referencia.c_str());
-					FSLibrary::Error("\nFallo en dependencias en la fase de mezcla del grafo de acciones.");
+					FSLib.Error("\nFallo en dependencias en la fase de mezcla del grafo de acciones.");
 				}
-				((CAction*)((*it)->nodo))->setKeydown(tecla,n);	// Enlazamos la acción referenciada a la acción de esta iteración para 'it'.
+				((CAction*)((*it)->nodo))->setKeydown(tecla,n);	// Enlazamos la acciï¿½n referenciada a la acciï¿½n de esta iteraciï¿½n para 'it'.
 			} else if (strcmp((*kt).evento.c_str(),"onkeyup")==0) {	// Si es de tipo onkeyup... lo mismo.
 				int tecla = getKey((*kt).tecla.c_str());
 				CAction* n = (CAction*)search((*kt).referencia.c_str());
 				if (tecla==-1 || !n) {
 					printf("\n%s\n",(*kt).referencia.c_str());
-					FSLibrary::Error("\nFallo en dependencias en la fase de mezcla del grafo de acciones.");
+					FSLib.Error("\nFallo en dependencias en la fase de mezcla del grafo de acciones.");
 				}
 				((CAction*)((*it)->nodo))->setKeyup(tecla,n);
 			} else if (strcmp((*kt).evento.c_str(),"onrepeat")==0) {	// TODO : Para no liar el XML es recomendable implementarlo
-				FSLibrary::Error("\nAún no se ha implementado funcionalidad para el evento 'onrepeat'.");
+				FSLib.Error("\nAï¿½n no se ha implementado funcionalidad para el evento 'onrepeat'.");
 			}
 		}
 		if ((*it)->prioridad > -1) {
-			((CAction*)(*it)->nodo)->setPriority((*it)->prioridad);		// Asignamos la prioridad que le toca a la acción (si no lo hacemos, será 0).
+			((CAction*)(*it)->nodo)->setPriority((*it)->prioridad);		// Asignamos la prioridad que le toca a la acciï¿½n (si no lo hacemos, serï¿½ 0).
 		}
 	}
 	vector<CAction*>* arrayArrows;

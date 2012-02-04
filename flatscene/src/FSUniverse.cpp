@@ -8,7 +8,7 @@ FSUniverse::FSUniverse(string name) : FSMessageHandler(NULL), name(name) , loade
 
 FSUniverse::~FSUniverse() {
 	if (!Cosmos._impl->working) {
-		FSLibrary::Error("Solo se puede destruir el Universo a traves del Multiverso.",TE_controlViolation);
+		FSLibrary::I().Error("Solo se puede destruir el Universo a traves del Multiverso.",TE_controlViolation);
 	}
 	ActorCollection::iterator it ;
 	FSActor* a ;
@@ -36,7 +36,7 @@ string& FSUniverse::getName() {
 int FSUniverse::incActor(FSActor* act) {
 
 	if (!act) {
-		FSLibrary::Error("Puntero a CActor nulo");
+		FSLibrary::I().Error("Puntero a CActor nulo");
 		return FRACASO;
 	}
 
@@ -45,7 +45,7 @@ int FSUniverse::incActor(FSActor* act) {
 	if (u) 
 		for (ActorCollection::iterator it = u->actorBegin(), jt = u->actorEnd();it!=jt;++it) 
 			if (act == *it) {
-				FSLibrary::Error("Actor actualmente incluido en otro Universe");
+				FSLibrary::I().Error("Actor actualmente incluido en otro Universe");
 				return FRACASO;
 			}
 
@@ -55,7 +55,7 @@ int FSUniverse::incActor(FSActor* act) {
 int FSUniverse::decActor(FSActor* act) {
 
 	if (!act) {
-		FSLibrary::Error("Puntero a CActor nulo");
+		FSLibrary::I().Error("Puntero a CActor nulo");
 		return FRACASO;
 	}
 
@@ -66,7 +66,7 @@ int FSUniverse::decActor(FSActor* act) {
 			return EXITO;
 		}
 
-	FSLibrary::Error("Actor actualmente no incluido en este Universe");
+	FSLibrary::I().Error("Actor actualmente no incluido en este Universe");
 	return FRACASO;
 }
 
@@ -80,7 +80,7 @@ ActorCollection::iterator FSUniverse::actorEnd() {
 
 bool FSUniverse::isLoaded() {
 	if (!Cosmos._impl->working && slot == 255) {
-		FSLibrary::Error("No se ha inicializado este mapa, a traves del Multiverso. Inutilizable.");
+		FSLibrary::I().Error("No se ha inicializado este mapa, a traves del Multiverso. Inutilizable.");
 		return false;
 	}
 	return loaded;

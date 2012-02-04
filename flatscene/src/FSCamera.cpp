@@ -49,7 +49,7 @@ FSUniverse* FSCamera::getUniverse() {
 int FSCamera::loadUniverse() {
 
 	if (uni != NULL) {
-		FSLibrary::Error("Universe already loaded");
+		FSLibrary::I().Error("Universe already loaded");
 		return FRACASO;
 	}
 
@@ -59,7 +59,7 @@ int FSCamera::loadUniverse() {
 
 int FSCamera::unloadUniverse() {
 	if (uni == NULL) {
-		FSLibrary::Error("No Universe in focus");
+		FSLibrary::I().Error("No Universe in focus");
 		return FRACASO;
 	}
 
@@ -96,7 +96,7 @@ FSActor* FSCamera::Target() {
 
 int FSCamera::setTarget(FSActor* newTarget) {
 	if (newTarget == this->target) {
-		FSLibrary::Error("Actor objetivo ya establecido");
+		FSLibrary::I().Error("Actor objetivo ya establecido");
 		return FRACASO;
 	}
 
@@ -107,7 +107,7 @@ int FSCamera::setTarget(FSActor* newTarget) {
 		this->target=newTarget;
 	}
 
-	CX()=CY()=-1000; // Usado para forzar una recalibración de las coordenadas de la cámara en su primer uso.
+	CX()=CY()=-1000; // Usado para forzar una recalibraciï¿½n de las coordenadas de la cï¿½mara en su primer uso.
 	
 	return EXITO;
 }
@@ -511,7 +511,7 @@ int FSCamera::color(FSColor* col, float alpha) {
 
 int FSCamera::reubicate(FSRectangle* nArea) {
 	if (area == nArea) {
-		FSLibrary::Error("Area ya establecida");
+		FSLibrary::I().Error("Area ya establecida");
 		return FRACASO;
 	}
 

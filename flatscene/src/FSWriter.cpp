@@ -38,7 +38,7 @@ FSWriter::FSWriter() : _impl(new WriterImpl) {
 	_impl->zoom = 0;
 
 	if (TTF_Init()==-1) {
-		FSLibrary::Error("Failed to Init SDL_ttf:",TE_SDL_MSG);
+		FSLibrary::I().Error("Failed to Init SDL_ttf:",TE_SDL_MSG);
 		return;
 	}
 
@@ -151,7 +151,7 @@ int FSWriter::loadFont(const char* fuente) {
 		font_ttf = _impl->Fonts[ret] = new WriterImpl::SFont;
 		font_ttf->fuente=TTF_OpenFont((s+".ttf").c_str(),_impl->fontSize);
 		if (font_ttf->fuente==NULL) {
-			FSLibrary::Error("No se ha cargado la fuente: "+s+".ttf  ",TE_fileExists);
+			FSLibrary::I().Error("No se ha cargado la fuente: "+s+".ttf  ",TE_fileExists);
 			delete font_ttf;
 			_impl->lastIndexFontAdded.push_back(ret);
 			return FRACASO;
@@ -181,7 +181,7 @@ int FSWriter::unloadFont(const char* fuente) {
 int FSWriter::unloadFont(int fuente) {
 #ifdef TEXT_OPERATIVE
 	if (_impl->Fonts.find(fuente)==_impl->Fonts.end()) {
-		FSLibrary::Error("No existe la Fuente que se pretende eliminar.",TE_controlViolation);
+		FSLibrary::I().Error("No existe la Fuente que se pretende eliminar.",TE_controlViolation);
 		return FRACASO;
 	}
 
@@ -201,7 +201,7 @@ int FSWriter::unloadFont(int fuente) {
 			_impl->countFonts.erase(_impl->countFonts.find(f));
 			_impl->lastIndexFontAdded.push_back(fuente);
 		} else {
-			FSLibrary::Error("Cantidad de Fuente violada.",TE_controlViolation);
+			FSLibrary::I().Error("Cantidad de Fuente violada.",TE_controlViolation);
 			return FRACASO;
 		}
 	}
@@ -244,8 +244,8 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 	int ret = FRACASO;
 #ifdef TEXT_OPERATIVE
 
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 	if (_impl->Fonts.find(fuente) != _impl->Fonts.end()) {
 		va_list lista;
@@ -343,8 +343,8 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 int FSWriter::erase(int text,bool nextframe) {
 #ifdef TEXT_OPERATIVE
 
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 	if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
 		
@@ -394,8 +394,8 @@ int FSWriter::inBox(const char* file, int index) {
 	int ret = FRACASO;
 #ifdef TEXT_OPERATIVE
 	
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 	if (_impl->admin) {
 
@@ -403,12 +403,12 @@ int FSWriter::inBox(const char* file, int index) {
 		s += ".xml";
 
 		TiXmlDocument xmldoc(s.c_str());
-		if (!xmldoc.LoadFile()) {	 FSLibrary::Error(file,TE_fileExists); }	// Cargamos la biblioteca de textos.
+		if (!xmldoc.LoadFile()) {	 FSLibrary::I().Error(file,TE_fileExists); }	// Cargamos la biblioteca de textos.
 
 		TiXmlElement* parent = xmldoc.FirstChildElement("TextList");
 
 		if (!parent) {	 
-			FSLibrary::Error(file,TE_fileExists); 
+			FSLibrary::I().Error(file,TE_fileExists); 
 			return FRACASO;
 		}	
 
@@ -421,7 +421,7 @@ int FSWriter::inBox(const char* file, int index) {
 			gsize = textNode->QueryIntAttribute("size",&gsize);
 		} else {
 			if (_impl->Fonts.empty()) {
-				FSLibrary::Error("No hay fuente especificada");
+				FSLibrary::I().Error("No hay fuente especificada");
 				return FRACASO;
 			}
 			gfont = _impl->Fonts[0]->cadena.c_str();
@@ -471,10 +471,10 @@ int FSWriter::inBox(const char* file, int index) {
 			//data->Boxs.push_back(new CTextBox(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next));
 
 		} else {
-			FSLibrary::Error("Texto no encontrado");
+			FSLibrary::I().Error("Texto no encontrado");
 		}
 	} else {
-		FSLibrary::Error("Los cuadros de texto deben crearse bajo el dominio de un manejador de eventos");
+		FSLibrary::I().Error("Los cuadros de texto deben crearse bajo el dominio de un manejador de eventos");
 	}
 #endif
 	return ret;
@@ -483,8 +483,8 @@ int FSWriter::inBox(const char* file, int index) {
 
 int FSWriter::color(int text,float red, float green, float blue, float alpha, TypeColorTBox boxflags, bool persistent) {
 #ifdef TEXT_OPERATIVE
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 	if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
 	
@@ -511,7 +511,7 @@ int FSWriter::color(int text,float red, float green, float blue, float alpha, Ty
 			
 	} else {
 
-		FSLibrary::Error("Text not found");
+		FSLibrary::I().Error("Text not found");
 		return FRACASO;
 
 	}
@@ -530,7 +530,7 @@ int FSWriter::color(int text,FSColor* col, float alpha, TypeColorTBox boxflags, 
 int FSWriter::locateRenderScene ( float posx, float posy, float width, float height, float zoom) {
 
 	if ( width == 0.0 || height == 0.0) {
-		FSLibrary::Error("Width/Height invalid value");
+		FSLibrary::I().Error("Width/Height invalid value");
 		return FRACASO;
 	}
 
@@ -546,8 +546,8 @@ int FSWriter::locateRenderScene ( float posx, float posy, float width, float hei
 int FSWriter::render() {
 #ifdef TEXT_OPERATIVE
 
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 
 	if ( _impl->width == 0.0 || _impl->height == 0.0)

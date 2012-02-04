@@ -91,7 +91,7 @@ FSActor* CEnemy::clone() {
 	for (list<CAction*>::iterator it=nodes.begin();it!=nodes.end();++it) {
 		CAction* cloneAction = (*it)->clone(cloneEnemy);
 		if (nodesNew.find(*it)!=nodesNew.end())
-			FSLibrary::Error("Conflicto clonando el CEnemy.");
+			FSLib.Error("Conflicto clonando el CEnemy.");
 		nodesNew[*it]=cloneAction;
 		cloneEnemy->garbage->add(cloneAction);
 	}
@@ -102,7 +102,7 @@ FSActor* CEnemy::clone() {
 		vector<CAction*>* newBrothers = new vector<CAction*>;
 		for (int i = 0 ; i < size;i++) {
 			if (nodesNew.find((*brothers)[i])==nodesNew.end())
-				FSLibrary::Error("Conflicto clonando el CEnemy.");
+				FSLib.Error("Conflicto clonando el CEnemy.");
 			newBrothers->push_back(nodesNew[(*brothers)[i]]);
 			nodesNew[(*brothers)[i]]->setBrothers(newBrothers);
 		}
@@ -118,7 +118,7 @@ FSActor* CEnemy::clone() {
 				it->second->setKeyup(i,nodesNew[it->second->getKeyup(i)]);
 			}
 		} else if (it->first!=it->second) {
-			FSLibrary::Error("Conflicto clonando el CEnemy.");
+			FSLib.Error("Conflicto clonando el CEnemy.");
 		}
 	}
 
@@ -143,6 +143,6 @@ CEnemy* CEnemy::Factory(const char* creature,FSMessageHandler * pmhParent) {
 	} else if (strcmp(creature,"EPUNTO")==0) {
 		return new CEnemyPunto(pmhParent);
 	}
-	FSLibrary::Error("Factoria CEnemy fallo");
+	FSLib.Error("Factoria CEnemy fallo");
 	return NULL;
 }
