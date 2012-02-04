@@ -180,7 +180,7 @@ int FSLibrary::processEngines() {
 
     // Selecci�n del CEngine a ejecutar entre el Conjunto de CEngine.
 
-    engineIn.sort(FSLibrary::orderEngine);
+    engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
     for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end();
         it != jt && getActualEngine()==NULL;
@@ -267,7 +267,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
                 engine->onExit();
         }
 
-        engineIn.sort(FSLibrary::orderEngine);
+        engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
         setActualEngine(engineIn.front());
         engineIn.front()->done = true;
@@ -326,7 +326,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
         setActualEngine(NULL);
 
-        engineIn.sort(FSLibrary::orderEngine);
+        engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
         for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end();
             it != jt && getActualEngine()==NULL;
@@ -504,7 +504,7 @@ bool FSLibrary::inDebug() {
 
 #endif
 
-bool FSLibrary::orderEngine(FSEngine* x, FSEngine* y) {
+bool FSLibrary::LibraryImpl::orderEngine(FSEngine* x, FSEngine* y) {
 
     return ((x->priority)<(y->priority));
 

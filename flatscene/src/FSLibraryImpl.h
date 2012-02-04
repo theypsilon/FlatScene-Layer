@@ -31,6 +31,8 @@ struct FSLibrary::LibraryImpl {
     void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 
     string toStringErrorGL(GLenum e);
+
+    static bool orderEngine(FSEngine*,FSEngine*);
 };
 
 #endif

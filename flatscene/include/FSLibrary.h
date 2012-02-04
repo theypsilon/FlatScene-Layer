@@ -114,7 +114,7 @@ public:
 
 #endif
 
-    static bool orderEngine(FSEngine*,FSEngine*);
+
 private:
     FSLibrary();
     virtual ~FSLibrary();
