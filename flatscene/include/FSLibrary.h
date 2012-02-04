@@ -37,7 +37,7 @@ enum TypeError {
 
 class FSLibrary : public FSMessageHandler, private FSNoncopyable, public FSSingleton<FSLibrary>
 {
-	friend class FSSingleton<FSLibrary>;
+    friend class FSSingleton<FSLibrary>;
 private:
     static FSLibrary* s_pTheLibrary;
 
@@ -116,17 +116,17 @@ public:
 
     bool static orderEngine(FSEngine*,FSEngine*);
 private:
-    FSLibrary(bool xmlconfig =false);
-    FSLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
+    FSLibrary();
     virtual ~FSLibrary();
 
-	struct LibraryImpl;
-	LibraryImpl* _impl;
+    struct LibraryImpl;
+    LibraryImpl* _impl;
 
     friend class FSEngine;
 };
-
+#ifdef GLOBAL_SINGLETON_REFERENCES
 extern FSLibrary& FSLib;
+#endif
 
 #define SINERROR "|-| No error"
 
