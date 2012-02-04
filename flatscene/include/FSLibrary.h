@@ -76,22 +76,22 @@ private:
 
 public:
 
-    static int startLibrary(bool xmlconfig);
+    int startLibrary(bool xmlconfig);
 
-    static int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
+    int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
-    static int processEngines();
+    int processEngines();
 
 
-    inline static FSLibrary& getLibrary() {
+    inline FSLibrary& getLibrary() {
         return I();
     }
 
-    inline static FSEngine* getActualEngine() {
+    inline FSEngine* getActualEngine() {
         return I().actualEngine;
     }
 
-    static int addEngine(FSEngine* engine,int priority);
+    int addEngine(FSEngine* engine,int priority);
 
     static Uint32 MSGID_Exit;
     static Uint32 MSGID_Restart;
@@ -100,21 +100,21 @@ public:
     static Uint32 MSGID_ChangeEngine;
     static Uint32 MSGID_KillEngine;
 
-    static void Error (const char*,TypeError e=TE_standard);
-    static void Error (std::string,TypeError e=TE_standard);
-    static void Error (char*,TypeError e=TE_standard);
+    void Error (const char*,TypeError e=TE_standard);
+    void Error (std::string,TypeError e=TE_standard);
+    void Error (char*,TypeError e=TE_standard);
 
-    static string readLastError();
-    static string popError();
+    string readLastError();
+    string popError();
 
 #ifdef DEBUGTEST
 
-    static void debug(bool startdebug, const char* warning=NULL);
-    static bool inDebug();
+    void debug(bool startdebug, const char* warning=NULL);
+    bool inDebug();
 
 #endif
 
-    bool static orderEngine(FSEngine*,FSEngine*);
+    static bool orderEngine(FSEngine*,FSEngine*);
 private:
     FSLibrary();
     virtual ~FSLibrary();

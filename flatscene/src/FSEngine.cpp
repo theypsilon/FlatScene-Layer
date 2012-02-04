@@ -80,7 +80,7 @@ void CEngine::setEventHandler(Uint8 type,void (T::*eventHandler)(SDL_Event*)) {
 	}
 
 	this->eventHandlerRegister2[type] = f;
-}/*
+}
 
 const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
 

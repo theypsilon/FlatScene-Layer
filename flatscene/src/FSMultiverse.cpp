@@ -116,10 +116,11 @@ void FSMultiverse::erase(FSUniverse *mapKilled) {
     if ((*_impl).admin != FSLibrary::I().getActualEngine())
         _impl->setAdmin(FSLibrary::I().getActualEngine());
 
-    if (!(*_impl).admin || !mapKilled)
+    if (!(*_impl).admin || !mapKilled) {
         if (!(*_impl).admin) FSLibrary::I().Error("No se puede borrar el universo si el (*_impl).administrador no existe.");
         else if (!mapKilled) FSLibrary::I().Error("No se puede borrar el universo porque no es v�lido.");
         else FSLibrary::I().Error("Error desconocido.");
+    }
 
     bool enc = false;
 

@@ -243,6 +243,7 @@ int FSScreen::clear ( )
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
 	glLoadIdentity();	
 
+	return EXITO;
 }
 
 float FSScreen::getA() {
