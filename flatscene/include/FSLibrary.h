@@ -40,20 +40,6 @@ class FSLibrary : public FSMessageHandler, private FSNoncopyable, public FSSingl
     friend class FSSingleton<FSLibrary>;
 private:
 
-#ifdef IN_FILE_ERROR
-    bool errorsInSession;
-#endif
-
-    static list<string> errors;
-
-#ifdef DEBUGTEST
-
-    static bool debugging;
-    static int debugticks;
-
-#endif
-
-
     static void setLibrary(FSLibrary* pTheLib);
 
     static void setActualEngine(FSEngine* newEngineActive);

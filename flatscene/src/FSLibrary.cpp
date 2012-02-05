@@ -22,13 +22,11 @@ Uint32 FSLibrary::MSGID_ReloadEngine=FSMessageHandler::getNextMSGID();
 Uint32 FSLibrary::MSGID_ChangeEngine=FSMessageHandler::getNextMSGID();
 Uint32 FSLibrary::MSGID_KillEngine=FSMessageHandler::getNextMSGID();
 
-list<string> FSLibrary::errors;
-
 
 void FSLibrary::setLibrary(FSLibrary* pTheLib)
 {
 #ifdef DEBUGTEST
-    FSLibrary::debugticks=Chrono.getTick();
+    (*_impl).debugticks=Chrono.getTick();
 #endif
 }
 
@@ -42,7 +40,11 @@ FSEngine* FSLibrary::getActualEngine() {
 
 FSLibrary::FSLibrary(): FSMessageHandler(NULL), _impl(new LibraryImpl) {
 #ifdef IN_FILE_ERROR
-    FSLibrary::errorsInSession = false;
+    (*_impl).errorsInSession = false;
+#endif
+#ifdef DEBUGTEST
+    (*_impl).debugticks=0;
+    (*_impl).debugging=false;
 #endif
 
     setLibrary(this);
@@ -152,7 +154,7 @@ FSLibrary::~FSLibrary()
     setActualEngine(NULL);
 
 #ifdef IN_FILE_ERROR
-    if (errorsInSession) {
+    if ((*_impl).errorsInSession) {
         FILE* f=fopen("error.log","a+");
         if (f) {
             fprintf(f,"Session with errors finished without runtime collapse.\n");
@@ -396,7 +398,7 @@ void FSLibrary::Error (std::string s,TypeError e) {
         s= "|-| OpenGLError -> "+toStringErrorGL(glGetError())+" +: "+s;
     }
 
-    errors.push_back(s);
+    (*_impl).errors.push_back(s);
 
 #ifdef INSTANT_PRINT_ERROR
     s ="\n"+ s + "\n";
@@ -415,9 +417,9 @@ void FSLibrary::Error (std::string s,TypeError e) {
             fprintf(stderr,s.c_str());
         } else {
             fprintf(stderr,s.c_str());
-            if (!errorsInSession) {
+            if (!(*_impl).errorsInSession) {
                 s="Session with errors start"+s;
-                errorsInSession=true;
+                (*_impl).errorsInSession=true;
             }
             fprintf(f,s.c_str());
             fclose(f);
@@ -449,47 +451,43 @@ string FSLibrary::toStringErrorGL(GLenum e) {
 }
 
 string FSLibrary::readLastError() {
-    if (errors.empty())
+    if ((*_impl).errors.empty())
         return SINERROR;
     else
-        return errors.back();
+        return (*_impl).errors.back();
 }
 
 string FSLibrary::popError() {
-    if (errors.empty())
+    if ((*_impl).errors.empty())
         return SINERROR;
     else {
-        string ret = errors.back();
-        errors.pop_back();
+        string ret = (*_impl).errors.back();
+        (*_impl).errors.pop_back();
         return ret;
     }
 }
 
 #ifdef DEBUGTEST
 
-bool FSLibrary::debugging=false;
-
-int FSLibrary::debugticks=0;
-
 void FSLibrary::debug(bool startdebug,const char* warning) {
     if (startdebug) {
-        if (!FSLibrary::debugging) {
+        if (!(*_impl).debugging) {
             debugticks=Chrono.getTick();
             fprintf(stderr,"\n** (+) La aplicacion ha entrado en estado de debug **\n");
         }
         if (warning)
             fprintf(stderr,"DEBUG: %s\n",warning);
-        FSLibrary::debugging = true;    // Siempre debe haber aqu� un Breakpoint para el Visual Studio.
+        (*_impl).debugging = true;    // Siempre debe haber aqu� un Breakpoint para el Visual Studio.
     }
 }
 
 bool FSLibrary::inDebug() {
-    if (FSLibrary::debugging)
+    if ((*_impl).debugging)
         if (Chrono.getTick() > debugticks + DEBUGTESTTICKS) {
             fprintf(stderr,"\n** (-) La aplicacion ha salido del estado de debug **\n");
-            FSLibrary::debugging=false;
+            (*_impl).debugging=false;
         }
-    return FSLibrary::debugging;
+    return (*_impl).debugging;
 }
 
 #endif
