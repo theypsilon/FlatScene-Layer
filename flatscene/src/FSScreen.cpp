@@ -1,6 +1,12 @@
-#include "FSScreen.h"
+#include "FSScreenImpl.h"
 #include "FSLibrary.h"
 #include "FSEngine.h"
+
+FSScreen::FSScreen() : _impl(new ScreenImpl) {}
+
+FSScreen::~FSScreen() {
+    delete _impl;
+}
 
 SDL_Surface* FSScreen::m_SDL_Surface=NULL;
 

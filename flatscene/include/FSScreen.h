@@ -6,6 +6,9 @@
 #include "FSColor.h"
 #include <list>
 
+#include "FSSingleton.h"
+#include "FSNoncopyable.h"
+
 #define RENDER_TEXTURE_STANDARD 0x00000001
 
 typedef list<SpritesetInfo> GraphicResources;
@@ -69,11 +72,15 @@ struct SRenderColor { // ROTATION
 };
 
 
-
-//main canvas, abstract primary display surface
-class FSScreen
-{
+class FSScreen : private FSNoncopyable, public FSSingleton<FSScreen> {
+    friend class FSSingleton<FSScreen>;
 private:
+    class ScreenImpl;
+    ScreenImpl* _impl;
+
+    FSScreen();
+    virtual ~FSScreen();
+
 	static SDL_Surface* m_SDL_Surface;
 
 	static bool rendering;

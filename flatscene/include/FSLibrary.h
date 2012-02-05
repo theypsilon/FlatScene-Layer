@@ -35,8 +35,7 @@ enum TypeError {
 };
 
 
-class FSLibrary : public FSMessageHandler, private FSNoncopyable, public FSSingleton<FSLibrary>
-{
+class FSLibrary : public FSMessageHandler, private FSNoncopyable, public FSSingleton<FSLibrary> {
     friend class FSSingleton<FSLibrary>;
 
 protected:
