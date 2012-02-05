@@ -6,6 +6,7 @@ class CActorScrollMap;
 class CRutinaColision {
 public:
 	virtual bool run(int x,int y,int z,CActorScrollMap* mobil)=0;
+	virtual ~CRutinaColision() {}
 
 	static CRutinaColision* collisionFactory(int i=0);
 };

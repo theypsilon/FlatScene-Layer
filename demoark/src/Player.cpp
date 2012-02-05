@@ -42,8 +42,8 @@ void CPlayer::init(list<string>& activationIds, int v) {
 		while (player) {
 			TiXmlElement* buttom = player->FirstChildElement("buttom");
 			while (buttom) {
-				int c;
-				if (c=strcmp(buttom->Attribute("value"),actual.ToElement()->Attribute("id"))==0) 
+				int c = strcmp(buttom->Attribute("value"),actual.ToElement()->Attribute("id"));
+				if (c==0)
 					buttom->SetAttribute("value",actual.ToElement()->Attribute("value"));
 				buttom = buttom->NextSiblingElement();
 			}
