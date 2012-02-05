@@ -33,7 +33,7 @@ void FSLibrary::setLibrary(FSLibrary* pTheLib)
 }
 
 void FSLibrary::setActualEngine(FSEngine *newEngineActive) {
-    FSLibrary::I().actualEngine = newEngineActive;
+    FSLibrary::I()._impl->actualEngine = newEngineActive;
 }
 
 
@@ -44,7 +44,7 @@ FSLibrary::FSLibrary(): FSMessageHandler(NULL), _impl(new LibraryImpl) {
 
     setLibrary(this);
 
-    actualEngine = NULL;
+    (*_impl).actualEngine = NULL;
 
     if(SDL_Init(SDL_INIT_TIMER)==-1)
     {
@@ -180,9 +180,9 @@ int FSLibrary::processEngines() {
 
     // Selecci�n del CEngine a ejecutar entre el Conjunto de CEngine.
 
-    engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
+    (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
-    for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end();
+    for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
         it != jt && getActualEngine()==NULL;
         ++it) {
 
@@ -196,16 +196,16 @@ int FSLibrary::processEngines() {
 
     if (getActualEngine() == NULL) {
 
-        for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end();    it != jt;   ++it)
+        for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
             (*it)->done = false;
 
-        if (engineIn.empty()) {
+        if ((*_impl).engineIn.empty()) {
             FSLibrary::Error("There are no engines in queue!");
             return FRACASO;
         }
 
-        setActualEngine(engineIn.front());
-        engineIn.front()->done=true;
+        setActualEngine((*_impl).engineIn.front());
+        (*_impl).engineIn.front()->done=true;
     }
 
     // Ejecuci�n del CEngine seleccionado
@@ -232,7 +232,7 @@ int FSLibrary::addEngine(FSEngine* engine,int priority) {
         return FRACASO;
 
     engine->priority = priority;
-    engineIn.push_back(engine);
+    (*_impl).engineIn.push_back(engine);
 
     return EXITO;
 }
@@ -241,8 +241,8 @@ int FSLibrary::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 
     if ( MsgID >= MSGID_Exit && MsgID <= MSGID_KillEngine ) {
 
-        if (actualEngine)
-            actualEngine->deselect();
+        if ((*_impl).actualEngine)
+            (*_impl).actualEngine->deselect();
 
         bufferMessages.push_back(new FSMessage(MsgID,Parm1,Parm2));
 
@@ -259,7 +259,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     } else if (MsgID==MSGID_Restart) {
 
-        for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end();    it != jt;   ++it) {
+        for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it) {
             FSEngine* engine = *it;
             setActualEngine(engine);
             engine->done = false;
@@ -267,10 +267,10 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
                 engine->onExit();
         }
 
-        engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
+        (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
-        setActualEngine(engineIn.front());
-        engineIn.front()->done = true;
+        setActualEngine((*_impl).engineIn.front());
+        (*_impl).engineIn.front()->done = true;
 
         Write.clear();
         Write.loadFont("tahoma");
@@ -293,14 +293,14 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
             bool find = false;
 
-            for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end();it!=jt;++it)
+            for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
                 find = find || engine == *it;
 
-            for (list<FSEngine*>::iterator it = engineOut.begin(), jt = engineOut.end();it!=jt;++it)
+            for (list<FSEngine*>::iterator it = (*_impl).engineOut.begin(), jt = (*_impl).engineOut.end();it!=jt;++it)
                 find = find || engine == *it;
 
             if (!engine) {
-                engineOut.push_back(engine);
+                (*_impl).engineOut.push_back(engine);
             }
 
             setActualEngine(engine);
@@ -317,8 +317,8 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
             Write.erase();
 
-            if (actualEngine && actualEngine->isInitialized())
-                actualEngine->onExit();
+            if ((*_impl).actualEngine && (*_impl).actualEngine->isInitialized())
+                (*_impl).actualEngine->onExit();
         }
 
     } else if (MsgID==MSGID_ChangeEngine) {
@@ -326,9 +326,9 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
         setActualEngine(NULL);
 
-        engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
+        (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
-        for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end();
+        for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
             it != jt && getActualEngine()==NULL;
             ++it) {
 
@@ -340,11 +340,11 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
         }
 
         if (getActualEngine() == NULL) {
-            for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end();    it != jt;   ++it)
+            for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
                 (*it)->done = false;
 
-            setActualEngine(engineIn.front());
-            engineIn.front()->done=true;
+            setActualEngine((*_impl).engineIn.front());
+            (*_impl).engineIn.front()->done=true;
         }
 
     } else if (MsgID==MSGID_KillEngine) {
@@ -357,9 +357,9 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
             setActualEngine(engine); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Im�genes.
 
-            for (list<FSEngine*>::iterator it = engineIn.begin(), jt = engineIn.end(); it!=jt; ++it)
+            for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it)
                 if (engine == *it) {
-                    engineIn.erase(it);
+                    (*_impl).engineIn.erase(it);
                     break;
                 }
 
@@ -370,7 +370,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
             setActualEngine(act); // Recuperamos el engine actual.
 
-            if (actualEngine == engine)
+            if ((*_impl).actualEngine == engine)
                 setActualEngine(NULL);
 
             engine = NULL;

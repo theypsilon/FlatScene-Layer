@@ -39,15 +39,6 @@ class FSLibrary : public FSMessageHandler, private FSNoncopyable, public FSSingl
 {
     friend class FSSingleton<FSLibrary>;
 private:
-    static FSLibrary* s_pTheLibrary;
-
-    FSEngine* actualEngine;
-
-    // Lista de motores a�adidas por el usuario
-    list<FSEngine*> engineIn;
-
-    // Lista de motores ejecutados por orden del usuario sin ser a�adidos (mediante mensajeria).
-    list<FSEngine*> engineOut;
 
 #ifdef IN_FILE_ERROR
     bool errorsInSession;
