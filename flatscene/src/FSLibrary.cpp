@@ -36,6 +36,9 @@ void FSLibrary::setActualEngine(FSEngine *newEngineActive) {
     FSLibrary::I()._impl->actualEngine = newEngineActive;
 }
 
+FSEngine* FSLibrary::getActualEngine() {
+    return _impl->actualEngine;
+}
 
 FSLibrary::FSLibrary(): FSMessageHandler(NULL), _impl(new LibraryImpl) {
 #ifdef IN_FILE_ERROR
@@ -55,7 +58,6 @@ FSLibrary::FSLibrary(): FSMessageHandler(NULL), _impl(new LibraryImpl) {
     }
 
     atexit(SDL_Quit);
-    atexit(onExit);
 
 }
 
@@ -119,47 +121,35 @@ int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen,
 
 FSLibrary::~FSLibrary()
 {
-    delete _impl;
-}
+    while( !(*_impl).engineIn.empty() ) {
 
+        FSEngine * engine = *(*_impl).engineIn.begin();
 
-void FSLibrary::onExit()
-{
-
-    while( !FSLibrary::I().engineIn.empty() ) {
-
-        FSEngine * engine = *FSLibrary::I().engineIn.begin();
-
-        FSLibrary::I().engineOut.remove(engine);
+        (*_impl).engineOut.remove(engine);
 
         setActualEngine(engine);
         if (engine->isInitialized())
             engine->onExit();
 
-        FSLibrary::I().engineIn.erase(FSLibrary::I().engineIn.begin());
+        (*_impl).engineIn.erase((*_impl).engineIn.begin());
 
         delete engine;
     }
 
-    while( !FSLibrary::I().engineOut.empty() ) {
+    while( !(*_impl).engineOut.empty() ) {
 
-        FSEngine * engine = *FSLibrary::I().engineOut.begin();
+        FSEngine * engine = *(*_impl).engineOut.begin();
 
         setActualEngine(engine);
         if (engine->isInitialized())
             engine->onExit();
 
-        FSLibrary::I().engineOut.erase(FSLibrary::I().engineOut.begin());
+        (*_impl).engineOut.erase((*_impl).engineOut.begin());
 
         delete engine;
     }
 
     setActualEngine(NULL);
-
-    Write.clear();
-
-
-    FSScreen::quit();
 
 #ifdef IN_FILE_ERROR
     if (errorsInSession) {
@@ -171,8 +161,8 @@ void FSLibrary::onExit()
     }
 #endif
 
+    delete _impl;
 }
-
 
 int FSLibrary::processEngines() {
 

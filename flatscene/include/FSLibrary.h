@@ -58,8 +58,6 @@ private:
 
     static void setActualEngine(FSEngine* newEngineActive);
 
-    static void onExit();
-
     int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
     void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 
@@ -78,9 +76,7 @@ public:
         return I();
     }
 
-    inline FSEngine* getActualEngine() {
-        return I().actualEngine;
-    }
+    FSEngine* getActualEngine();
 
     int addEngine(FSEngine* engine,int priority);
 
