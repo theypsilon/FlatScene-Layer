@@ -38,16 +38,11 @@ enum TypeError {
 class FSLibrary : public FSMessageHandler, private FSNoncopyable, public FSSingleton<FSLibrary>
 {
     friend class FSSingleton<FSLibrary>;
-private:
 
-    static void setLibrary(FSLibrary* pTheLib);
-
-    static void setActualEngine(FSEngine* newEngineActive);
+protected:
 
     int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
     void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
-
-    static string toStringErrorGL(GLenum e);
 
 public:
 

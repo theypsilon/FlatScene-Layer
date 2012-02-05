@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "FSEngine.h"
-#include "FSLibrary.h"
+#include "FSLibraryImpl.h"
 #include "FSMultiverse.h"
 #include "FSWriter.h"
 
@@ -112,7 +112,7 @@ int FSEngine::loop() {
 		return FRACASO;
 	}
 
-	FSLibrary::I().setActualEngine(this);
+	FSLibrary::I()._impl->setActualEngine(this);
 	
 	SDL_Event event;
 
@@ -152,7 +152,7 @@ int FSEngine::loop() {
 void FSEngine::deselect() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)==1) { }
-	FSLibrary::I().setActualEngine(NULL);
+	FSLibrary::I()._impl->setActualEngine(NULL);
 }
 
 int FSEngine::drawFrame() {

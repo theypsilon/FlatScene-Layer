@@ -22,10 +22,7 @@ struct FSLibrary::LibraryImpl {
     int debugticks;
 #endif
 
-
-    void setLibrary(FSLibrary* pTheLib);
     void setActualEngine(FSEngine* newEngineActive);
-    void onExit();
 
     int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
     void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
