@@ -266,6 +266,9 @@ int FSScreen::locateRenderScene(float posx, float posy, float width, float heigh
 
 #ifdef MAINRENDERLOOP
 
+    (width <= 0.0)?  width  = FSScreen::I().m_Width  : 0 ;
+    (height <= 0.0)? height = FSScreen::I().m_Height : 0 ;
+
 	SRenderLocation* n = new SRenderLocation;
 	n->posx = posx;
 	n->posy = posy;
