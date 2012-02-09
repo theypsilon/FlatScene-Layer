@@ -93,9 +93,9 @@ int  FSTime::nextFrame() {
 		auxTimer=SDL_GetTicks();
 
 		if (adminText.find(FSLibrary::I().getActualEngine())!=adminText.end())
-			Write.erase(adminText[FSLibrary::I().getActualEngine()]);
+			FSWriter::I().erase(adminText[FSLibrary::I().getActualEngine()]);
 
-		adminText[FSLibrary::I().getActualEngine()]=Write.line(0,5,5,"FPS: %d ",fps);
+		adminText[FSLibrary::I().getActualEngine()]=FSWriter::I().line(0,5,5,"FPS: %d ",fps);
 
 		fps=0;
 	}

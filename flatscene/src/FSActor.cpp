@@ -36,7 +36,7 @@ int FSActor::setSprite(int file,int graph) {
 }
 
 FSSprite* FSActor::getSprite() {
-	return Img.get(file)->get(graph);
+	return FSImages::I().get(file)->get(graph);
 }
 
 FSActor* FSActor::clone() {

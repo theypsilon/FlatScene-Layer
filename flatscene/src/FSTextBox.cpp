@@ -126,7 +126,7 @@ FSWriter::WriterImpl::FSTextBox::~FSTextBox() {
 		charInDisplay.erase(it);
 	}
 
-	Write.unloadFont(Write.searchFont(fuente->fuente));
+	FSWriter::I().unloadFont(FSWriter::I().searchFont(fuente->fuente));
 }
 
 int FSWriter::WriterImpl::FSTextBox::update() {
@@ -204,9 +204,9 @@ int FSWriter::WriterImpl::FSTextBox::finish() {
 	int ret = -1;
 	if (next!=-1) {
 
-		ret = Write.inBox(file.c_str(),next);
+		ret = FSWriter::I().inBox(file.c_str(),next);
 		if (fx && fx->persistent) {
-			Write.color(ret,fx->red,fx->green,fx->blue,fx->alpha,fx->boxflags,true);
+			FSWriter::I().color(ret,fx->red,fx->green,fx->blue,fx->alpha,fx->boxflags,true);
 		}
 		if (ret == -1) {
 			; // ODOT : Quitar el error de la cola.

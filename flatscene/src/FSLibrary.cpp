@@ -246,8 +246,8 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
         _impl->setActualEngine((*_impl).engineIn.front());
         (*_impl).engineIn.front()->done = true;
 
-        Write.clear();
-        Write.loadFont("tahoma");
+        FSWriter::I().clear();
+        FSWriter::I().loadFont("tahoma");
 
 #ifdef WIN32
         system("CLS");
@@ -289,7 +289,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
             _impl->setActualEngine(engine);
 
-            Write.erase();
+            FSWriter::I().erase();
 
             if ((*_impl).actualEngine && (*_impl).actualEngine->isInitialized())
                 (*_impl).actualEngine->onExit();

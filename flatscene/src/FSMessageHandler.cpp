@@ -61,8 +61,8 @@ int FSMessageHandler::SendMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 	if (Parm2)
 		parametros++;
 	if (textM0>=0)
-		Write.erase(textM0);
-	textM0 = Write.line(0,240,5,"Last MSG [%d] %dP",(int)MsgID,parametros);
+		FSWriter::I().erase(textM0);
+	textM0 = FSWriter::I().line(0,240,5,"Last MSG [%d] %dP",(int)MsgID,parametros);
 #endif
 
 	if ((MsgID % 2) == 0)		

@@ -178,8 +178,8 @@ int FSEngine::onExit()
 
 	//TODO comprobar valor de vuelta de las siguientes 2 funciones.
 
-	Cosmos.clear();
-	Write.erase();
+	FSMultiverse::I().clear();
+	FSWriter::I().erase();
 
 	initialized = false;
 
