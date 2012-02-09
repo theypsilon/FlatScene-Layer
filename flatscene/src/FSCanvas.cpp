@@ -80,7 +80,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_PUSHMATRIX;
 	em->pointer = NULL;
 
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().graphicMaterial.push_back(em);
 
 	//TRANSLATE
 
@@ -95,7 +95,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_TRANSLATION;
 	em->pointer = (void*) c_init;
 
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().graphicMaterial.push_back(em);
 
 	// USER DEFINED EFFECTS IN
 
@@ -117,7 +117,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 
 	em->type = TR_FLOATCANVAS;
 	em->pointer = (void*) new SRenderFloatCanvas(m_pSurface,ptDst,flags);
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().graphicMaterial.push_back(em);
 
 	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
 
@@ -152,7 +152,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_POPMATRIX;
 	em->pointer = NULL;
 
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().graphicMaterial.push_back(em);
 
 #else
 
@@ -231,7 +231,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 	em->type = TR_PUSHMATRIX;
 	em->pointer = NULL;
 
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().graphicMaterial.push_back(em);
 
 	//TRANSLATE
 
@@ -246,7 +246,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 	em->type = TR_TRANSLATION;
 	em->pointer = (void*) c_init;
 
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().graphicMaterial.push_back(em);
 
 	// USER DEFINED EFFECTS IN
 
@@ -268,7 +268,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 
 	em->type = TR_CANVAS;
 	em->pointer = (void*) new SRenderCanvas(m_pSurface,ptDst,flags);
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().graphicMaterial.push_back(em);
 
 	
 	// USER DEFINED EFFECTS OUT
@@ -292,7 +292,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 	em->type = TR_POPMATRIX;
 	em->pointer = NULL;
 
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().graphicMaterial.push_back(em);
 
 
 #else
@@ -729,10 +729,10 @@ int FSCanvas::color(float red, float green, float blue, float alpha) {
 
 	SRenderColor * c_fin = new SRenderColor();
 
-	c_fin->red = FSScreen::red;//2.0 - red;
-	c_fin->green = FSScreen::green;//2.0 - green;
-	c_fin->blue = FSScreen::blue;//2.0 - blue;
-	c_fin->alpha =  FSScreen::alpha;//2.0 - alpha;
+	c_fin->red = FSScreen::I().red;//2.0 - red;
+	c_fin->green = FSScreen::I().green;//2.0 - green;
+	c_fin->blue = FSScreen::I().blue;//2.0 - blue;
+	c_fin->alpha =  FSScreen::I().alpha;//2.0 - alpha;
 
 	SToRender* r_fin = new SToRender();
 
@@ -751,11 +751,11 @@ int FSCanvas::color(FSColor* col, float alpha) {
 
 
 void FSCanvas::procRendPush(void* pointer) {
-	FSScreen::pushMatrix();
+	FSScreen::I().pushMatrix();
 }
 
 void FSCanvas::procRendPop(void* pointer) {
-	FSScreen::popMatrix();
+	FSScreen::I().popMatrix();
 }
 
 void FSCanvas::procRendRotation(void* pointer) {
@@ -769,7 +769,7 @@ void FSCanvas::procRendRotation(void* pointer) {
 
 	delete n;
 
-	FSScreen::rotate(angle,x,y,z);
+	FSScreen::I().rotate(angle,x,y,z);
 
 }
 
@@ -785,7 +785,7 @@ void FSCanvas::procRendTranslation(void* pointer) {
 
 	delete n;
 
-	FSScreen::translate(x,y,z);
+	FSScreen::I().translate(x,y,z);
 
 }
 
@@ -799,7 +799,7 @@ void FSCanvas::procRendScalation(void* pointer) {
 
 	delete n;
 
-	FSScreen::scale(x,y,z);
+	FSScreen::I().scale(x,y,z);
 
 
 }
@@ -815,6 +815,6 @@ void FSCanvas::procRendColor(void* pointer) {
 
 	delete n;
 
-	FSScreen::color(red,green,blue,alpha);
+	FSScreen::I().color(red,green,blue,alpha);
 
 }

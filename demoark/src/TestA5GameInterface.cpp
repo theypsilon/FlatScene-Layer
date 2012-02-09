@@ -31,7 +31,7 @@ int  CTestA5GameInterface::onInit() {
 	if (FSEngine::onInit() == FRACASO)
 		return FRACASO;
 
-	FSScreen::clear();
+	FSDraw.clear();
 
 #ifdef LOG_SISTEMA
 	printf("\nTestA0 comienza.\n\n");
@@ -139,7 +139,7 @@ int  CTestA5GameInterface::onInit() {
 
 int CTestA5GameInterface::drawFrame() {
 
-	FSScreen::projectionMode(TRP_PERSPECTIVE,1600);
+	FSDraw.projectionMode(TRP_PERSPECTIVE,1600);
 
 	for (int i=0;i<cams.size();i++) {
 
@@ -206,7 +206,7 @@ void CTestA5GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 		getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
 	} else if (sym==SDLK_F3) {
 		deselect();
-		FSScreen::ToggleFullscreen();
+		FSDraw.ToggleFullscreen();
 		loop();
 	} else if (sym==SDLK_TAB) {
 		if (cams[0]->Target() == player[0])

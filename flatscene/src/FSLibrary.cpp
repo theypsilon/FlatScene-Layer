@@ -56,8 +56,6 @@ FSLibrary::FSLibrary(): FSMessageHandler(NULL), _impl(new LibraryImpl) {
 
 int FSLibrary::startLibrary(bool xmlconfig) {
 
-    FSLibrary::I();
-
     if (xmlconfig) {
 
         bool fullscreen= false;
@@ -94,21 +92,15 @@ int FSLibrary::startLibrary(bool xmlconfig) {
 
         srand(rand());
 
-        FSScreen::start(res_x,res_y,bpp,fullscreen,doublebuff);
+        return FSScreen::I().start(res_x,res_y,bpp,fullscreen,doublebuff);
 
     }
-    FSScreen::initProcRenders();
 
     return EXITO;
 }
 
 int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
-    FSLibrary::I();
-
-    FSScreen::start(width,height,bpp,fullscreen,doublebuff);
-    FSScreen::initProcRenders();
-
-    return EXITO;
+    return FSScreen::I().start(width,height,bpp,fullscreen,doublebuff);
 }
 
 

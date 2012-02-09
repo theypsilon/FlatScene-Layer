@@ -65,7 +65,7 @@ int  FSTime::nextFrame() {
 		actTime = & fc[admin];
 	}
 
-	if ( FSScreen::render() == FRACASO )
+	if ( FSScreen::I().render() == FRACASO )
 		return FRACASO;
 
 	if (all) {

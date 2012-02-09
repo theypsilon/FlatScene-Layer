@@ -22,13 +22,13 @@ int CTestOSDesktopInterface::onInit() {
 
     fondo = new CActorMouse(this);
 
-    camaraf = new CCameraOS(fondo, new FSRectangle(0,0,FSScreen::getWidth(),FSScreen::getHeight()),this);
+    camaraf = new CCameraOS(fondo, new FSRectangle(0,0,FSDraw.getWidth(),FSDraw.getHeight()),this);
 
-    FSScreen::projectionMode(TRP_PERSPECTIVE,1000);
+    FSDraw.projectionMode(TRP_PERSPECTIVE,1000);
 
     raton = new CActorMouse(this);
 
-    camarar = new CCameraOS(raton, new FSRectangle(0,0,FSScreen::getWidth(),FSScreen::getHeight()),this);
+    camarar = new CCameraOS(raton, new FSRectangle(0,0,FSDraw.getWidth(),FSDraw.getHeight()),this);
 
     fondo->file = Img.add("flower-wallpaper-800x600.jpg");
     fondo->graph = 0;
@@ -43,8 +43,8 @@ int CTestOSDesktopInterface::onInit() {
 
 int CTestOSDesktopInterface::loop() {
 
-    if (FSScreen::changeScreen(800,600,32,1.0,1.0,false) == FRACASO)
-        FSScreen::start(800,600,32,1.0,1.0,false);
+    if (FSDraw.changeScreen(800,600,32,1.0,1.0,false) == FRACASO)
+        FSDraw.start(800,600,32,1.0,1.0,false);
 
 
     Write.erase();
@@ -58,7 +58,7 @@ int CTestOSDesktopInterface::loop() {
     
     FSEngine::loop();
 
-    FSScreen::changeScreen(640,480,32,2.0,2.0,false);
+    FSDraw.changeScreen(640,480,32,2.0,2.0,false);
 
 
 

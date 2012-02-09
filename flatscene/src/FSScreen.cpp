@@ -2,37 +2,31 @@
 #include "FSLibrary.h"
 #include "FSEngine.h"
 
-FSScreen::FSScreen() : _impl(new ScreenImpl) {}
+FSScreen::FSScreen() : _impl(new ScreenImpl) {
+    m_SDL_Surface=NULL;
+
+    m_FullScreen=false;
+    m_Doublebuff=true;
+    rendering=false;
+    m_maxZ=400.0;
+
+    trp=TRP_PERSPECTIVE;
+
+    m_Bpp=0;
+    m_Width=0;
+    m_Height=0;
+
+    alpha =1.0;
+    red =1.0;
+    green =1.0;
+    blue =1.0;
+
+    initProcRenders();
+}
 
 FSScreen::~FSScreen() {
     delete _impl;
 }
-
-SDL_Surface* FSScreen::m_SDL_Surface=NULL;
-
-bool FSScreen::m_FullScreen=false;
-bool FSScreen::m_Doublebuff=true;
-bool FSScreen::rendering=false;
-float FSScreen::m_maxZ=400.0;
-
-TypeRendeProjection FSScreen::trp=TRP_PERSPECTIVE;
-
-int FSScreen::m_Bpp=0;
-int FSScreen::m_Width=0;
-int FSScreen::m_Height=0;
-
-float FSScreen::alpha =1.0;
-float FSScreen::red =1.0;
-float FSScreen::green =1.0;
-float FSScreen::blue =1.0;
-
-list<SToRender*> FSScreen::graphicMaterial;
-
-list<FSSprite*> FSScreen::spriteToDelete;
-list<FSSpriteset*> FSScreen::spritesetToDelete;
-list<FSCanvas*> FSScreen::imageToDelete;
-
-map<TypeResource,void (*)(void*)> FSScreen::procRenders;
 
 int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
 { 
@@ -667,6 +661,8 @@ void FSScreen::procRendLocation(void* pointer) {
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
 
+	static const TypeRendeProjection& trp = FSScreen::I().trp;
+
 	if (trp == TRP_ORTHO) {
 
 		//Opción ortogonal
@@ -675,6 +671,8 @@ void FSScreen::procRendLocation(void* pointer) {
 		glOrtho( 0.0, (double)width, (double)height, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
 
 	} else {
+
+	    static const float& m_maxZ = FSScreen::I().m_maxZ;
 
 		//Opción de perspectiva 1
 		gluPerspective(90.0f,width/height,1.0,m_maxZ);
@@ -886,3 +884,7 @@ void FSScreen::deleteResources() {
 
 	imageToDelete.clear();
 }
+
+#ifdef GLOBAL_SINGLETON_REFERENCES
+FSScreen& FSDraw = FSScreen::I();
+#endif

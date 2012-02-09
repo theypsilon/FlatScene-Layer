@@ -18,7 +18,7 @@ FSCamera::~FSCamera() {
 
 		SToRender* irp = *iri;
 
-		FSScreen::procRenders[irp->type](irp->pointer);
+		FSScreen::I().procRenders[irp->type](irp->pointer);
 
 		delete *iri;
 
@@ -31,7 +31,7 @@ FSCamera::~FSCamera() {
 
 		SToRender* erp = *eri;
 
-		FSScreen::procRenders[erp->type](erp->pointer);
+		FSScreen::I().procRenders[erp->type](erp->pointer);
 
 		delete *eri;
 
@@ -171,11 +171,11 @@ void FSCamera::initProcRenders() {
 }
 
 void FSCamera::procRendPush(void* pointer) {
-	FSScreen::pushMatrix();
+	FSScreen::I().pushMatrix();
 }
 
 void FSCamera::procRendPop(void* pointer) {
-	FSScreen::popMatrix();
+	FSScreen::I().popMatrix();
 }
 
 void FSCamera::procRendLocation(void* pointer) {
@@ -190,7 +190,7 @@ void FSCamera::procRendLocation(void* pointer) {
 
 	delete n;
 
-	FSScreen::locateRenderScene(posx,posy,width,height,zoom);
+	FSScreen::I().locateRenderScene(posx,posy,width,height,zoom);
 
 }
 
@@ -206,7 +206,7 @@ void FSCamera::procRendRotation(void* pointer) {
 
 	delete n;
 
-	FSScreen::rotate(angle,x,y,z);
+	FSScreen::I().rotate(angle,x,y,z);
 
 }
 
@@ -222,7 +222,7 @@ void FSCamera::procRendTranslation(void* pointer) {
 
 	delete n;
 
-	FSScreen::translate(x,y,z);
+	FSScreen::I().translate(x,y,z);
 
 }
 
@@ -236,7 +236,7 @@ void FSCamera::procRendScalation(void* pointer) {
 
 	delete n;
 
-	FSScreen::scale(x,y,z);
+	FSScreen::I().scale(x,y,z);
 
 
 }
@@ -252,7 +252,7 @@ void FSCamera::procRendColor(void* pointer) {
 
 	delete n;
 
-	FSScreen::color(red,green,blue,alpha);
+	FSScreen::I().color(red,green,blue,alpha);
 
 }
 
@@ -271,9 +271,9 @@ int FSCamera::locateRenderScene( float posx, float posy, float width, float heig
 
 	if (rendering) {
 
-		FSScreen::pushMatrix();
+		FSScreen::I().pushMatrix();
 
-		FSScreen::locateRenderScene(posx,posy,width,height,zoom);
+		FSScreen::I().locateRenderScene(posx,posy,width,height,zoom);
 
 	} else {
 
@@ -322,9 +322,9 @@ int FSCamera::rotate(float angle, float x, float y, float z) {
 
 	if (rendering) {
 
-		FSScreen::pushMatrix();
+		FSScreen::I().pushMatrix();
 
-		FSScreen::rotate(angle,x,y,z);
+		FSScreen::I().rotate(angle,x,y,z);
 
 	} else {
 
@@ -370,9 +370,9 @@ int FSCamera::translate(float x, float y, float z) {
 
 	if (rendering) {
 
-		FSScreen::pushMatrix();
+		FSScreen::I().pushMatrix();
 
-		FSScreen::translate(x,y,z);
+		FSScreen::I().translate(x,y,z);
 
 	} else {
 
@@ -417,9 +417,9 @@ int FSCamera::scale(float x, float y, float z) {
 
 	if (rendering) {
 
-		FSScreen::pushMatrix();
+		FSScreen::I().pushMatrix();
 
-		FSScreen::scale(x,y,z);
+		FSScreen::I().scale(x,y,z);
 
 	} else {
 
@@ -469,7 +469,7 @@ int FSCamera::color(float red, float green, float blue, float alpha) {
 	if (alpha > 1.0) alpha = 1.0;
 
 	if (rendering) {
-		FSScreen::color(red,green,blue,alpha);
+		FSScreen::I().color(red,green,blue,alpha);
 	} else {
 		SRenderColor * c_init = new SRenderColor();
 
@@ -488,10 +488,10 @@ int FSCamera::color(float red, float green, float blue, float alpha) {
 
 	SRenderColor * c_fin = new SRenderColor();
 
-	c_fin->red = FSScreen::red;//2.0 - red;
-	c_fin->green = FSScreen::green;//2.0 - green;
-	c_fin->blue = FSScreen::blue;//2.0 - blue;
-	c_fin->alpha =  FSScreen::alpha;//2.0 - alpha;
+	c_fin->red = FSScreen::I().red;//2.0 - red;
+	c_fin->green = FSScreen::I().green;//2.0 - green;
+	c_fin->blue = FSScreen::I().blue;//2.0 - blue;
+	c_fin->alpha =  FSScreen::I().alpha;//2.0 - alpha;
 
 	SToRender* r_fin = new SToRender();
 

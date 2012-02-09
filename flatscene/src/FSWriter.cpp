@@ -193,7 +193,7 @@ int FSWriter::unloadFont(int fuente) {
 			map<Uint16,FSCanvas*>& chars =f->render;
 			while (!chars.empty()) {
 				map<Uint16,FSCanvas*>::iterator jt = chars.begin();
-				FSScreen::imageToDelete.push_back(jt->second); // delete jt->second;
+				FSScreen::I().imageToDelete.push_back(jt->second); // delete jt->second;
 				chars.erase(jt);
 			}
 			delete f;
@@ -551,9 +551,9 @@ int FSWriter::render() {
 
 
 	if ( _impl->width == 0.0 || _impl->height == 0.0)
-		FSScreen::locateRenderScene(0,0,FSScreen::getWidth(),FSScreen::getHeight(),0); //
+		FSScreen::I().locateRenderScene(0,0,FSScreen::I().getWidth(),FSScreen::I().getHeight(),0); //
 	else
-		FSScreen::locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
+		FSScreen::I().locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
 
 
 	map<int,WriterImpl::FSText*> deleteText;
@@ -656,7 +656,7 @@ void FSWriter::clear() {
 		map<Uint16,FSCanvas*>& chars = it->second->render;
 		while (!chars.empty()) {
 			map<Uint16,FSCanvas*>::iterator jt = chars.begin();
-			FSScreen::imageToDelete.push_back(jt->second); // delete jt->second;
+			FSScreen::I().imageToDelete.push_back(jt->second); // delete jt->second;
 			chars.erase(jt);
 		}
 		delete it->second;

@@ -25,7 +25,7 @@ CTestAGameInterface::~CTestAGameInterface()	{
 
 int CTestAGameInterface::drawFrame() {
 
-	FSScreen::projectionMode(TRP_PERSPECTIVE,1600);
+	FSDraw.projectionMode(TRP_PERSPECTIVE,1600);
 
 	for (int i=0;i<cams.size();i++) {
 

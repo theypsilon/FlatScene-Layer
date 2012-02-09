@@ -176,7 +176,7 @@ int FSWriter::WriterImpl::FSTextBox::update() {
 
 void FSWriter::WriterImpl::FSTextBox::deleteBox() {
 	if (box)
-		FSScreen::imageToDelete.push_back(box); // delete box;
+		FSScreen::I().imageToDelete.push_back(box); // delete box;
 	box=NULL;
 }
 
@@ -190,7 +190,7 @@ void FSWriter::WriterImpl::FSTextBox::createBox() {
 
 	SDL_Surface *surface, *aux_surf;
 
-	aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,FSScreen::getBpp(),0,0,255,0);
+	aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,FSScreen::I().getBpp(),0,0,255,0);
 	if (!aux_surf)	FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
 	surface = SDL_DisplayFormat(aux_surf);
 	if (!surface)	FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");

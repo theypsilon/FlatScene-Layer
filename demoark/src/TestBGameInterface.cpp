@@ -26,7 +26,7 @@ int CTestBGameInterface::onInit() {
 	if (FSEngine::onInit() == FRACASO)
 		return FRACASO;
 
-	FSScreen::clear();
+	FSDraw.clear();
 
 /*	int num=1;
 	int* sequence = alloc(int,num);
@@ -45,7 +45,7 @@ int CTestBGameInterface::onInit() {
 //idle. Main loop.
 int CTestBGameInterface::onIdle()
 {
-	FSScreen::clear();
+	FSDraw.clear();
 
 	FSSprite* spt = anim->paso_a_paso_spt();
 	
@@ -55,13 +55,13 @@ int CTestBGameInterface::onIdle()
 
 	if (spt->size() > actZone) {
 
-		FSScreen::pushMatrix();
+		FSDraw.pushMatrix();
 
 		FSPoint ptDst(*spt->getCenter());
 		ptDst.x+=100;
 		ptDst.y+=100;
 
-		FSScreen::translate((float)ptDst.x,(float)ptDst.y,0);  
+		FSDraw.translate((float)ptDst.x,(float)ptDst.y,0);  
 
 	}
 

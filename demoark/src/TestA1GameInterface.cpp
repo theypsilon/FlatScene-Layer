@@ -22,7 +22,7 @@ CTestA1GameInterface::~CTestA1GameInterface()
 
 int CTestA1GameInterface::drawFrame() {
 
-	FSScreen::projectionMode(TRP_ORTHO);
+	FSDraw.projectionMode(TRP_ORTHO);
 
 	for (int i=0;i<cams.size();i++) {
 
@@ -43,7 +43,7 @@ int CTestA1GameInterface::onInit() {
 	if (FSEngine::onInit() == FRACASO)
 		return FRACASO;
 
-	FSScreen::clear();
+	FSDraw.clear();
 
 #ifdef LOG_SISTEMA
 	printf("\nTestA1 comienza.\n\n");
@@ -145,7 +145,7 @@ void CTestA1GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 		getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
 	} else if (sym==SDLK_F3) {
 		deselect();
-		FSScreen::ToggleFullscreen();
+		FSDraw.ToggleFullscreen();
 		loop();
 	}
 	CTestAGameInterface::onKeyDown(sym,mod,unicode);

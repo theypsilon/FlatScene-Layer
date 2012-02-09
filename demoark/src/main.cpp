@@ -21,7 +21,7 @@ int main(int argc,char* argv[])
 
 
 	///*
-	FSScreen::start(640,480,32,1.0,1.0,false);
+	FSDraw.start(640,480,32,1.0,1.0,false);
 
 	FSEngine** engine = new FSEngine*[20];
 	
@@ -76,7 +76,7 @@ void funcEstres(int p) {
 		Img.remove(Img.add("resources/Character"));
 
 		if (i> 300)
-			FSScreen::render();
+			FSDraw.render();
 
 	}
 
@@ -97,7 +97,7 @@ void funcEstres(int p) {
 
 	int s = Img.add("resources/Character");
 
-	FSScreen::locateRenderScene();
+	FSDraw.locateRenderScene();
 
 	for (int i = 0; i < p ; i++) {
 
@@ -105,7 +105,7 @@ void funcEstres(int p) {
 
 		Img.get(s)->get(0)->put(pt);
 
-		FSScreen::render();
+		FSDraw.render();
 
 	}
 

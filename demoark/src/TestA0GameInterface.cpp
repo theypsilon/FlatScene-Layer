@@ -31,7 +31,7 @@ int  CTestA0GameInterface::onInit() {
 	if (FSEngine::onInit() == FRACASO)
 		return FRACASO;
 
-	FSScreen::clear();
+	FSDraw.clear();
 
 #ifdef LOG_SISTEMA
 	printf("\nTestA0 comienza.\n\n");
@@ -229,7 +229,7 @@ void CTestA0GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 		getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
 	} else if (sym==SDLK_F3) {
 		deselect();
-		FSScreen::ToggleFullscreen();
+		FSDraw.ToggleFullscreen();
 		loop();
 	} else if (sym==SDLK_TAB) {
 		if (cams[0]->Target() == player[0])

@@ -81,35 +81,35 @@ private:
     FSScreen();
     virtual ~FSScreen();
 
-	static SDL_Surface* m_SDL_Surface;
+	SDL_Surface* m_SDL_Surface;
 
-	static bool rendering;
-	static TypeRendeProjection trp;
+	bool rendering;
+	TypeRendeProjection trp;
 
-	static float m_maxZ;
+	float m_maxZ;
 
-	static bool m_FullScreen,m_Doublebuff;
+	bool m_FullScreen,m_Doublebuff;
 
-	static int m_Width,m_Height,m_Bpp;
+	int m_Width,m_Height,m_Bpp;
 
-	static list<SToRender*> graphicMaterial;
+	list<SToRender*> graphicMaterial;
 
-	static list<FSSprite*> spriteToDelete;
-	static list<FSSpriteset*> spritesetToDelete;
-	static list<FSCanvas*> imageToDelete;
+	list<FSSprite*> spriteToDelete;
+	list<FSSpriteset*> spritesetToDelete;
+	list<FSCanvas*> imageToDelete;
 
-	static void deleteResources();
+	void deleteResources();
 
-	static void saveResources(GraphicResources& info);
-	static void reloadResources(GraphicResources& info);
-
-
-	static float red,green,blue,alpha;
+	void saveResources(GraphicResources& info);
+	void reloadResources(GraphicResources& info);
 
 
-	static map<TypeResource,void (*)(void*)> procRenders;
+	float red,green,blue,alpha;
 
-	static void initProcRenders();
+
+	map<TypeResource,void (*)(void*)> procRenders;
+
+	void initProcRenders();
 
 	static void procRendCanvas(void* pointer);
 	static void procRendFloatCanvas(void* pointer);
@@ -121,10 +121,9 @@ private:
 	static void procRendScalation(void* pointer);
 	static void procRendColor(void* pointer);
 
-	static int beginRenderMode(Uint32 flags);
-	static int endRenderMode(Uint32 flags);
+	int beginRenderMode(Uint32 flags);
+	int endRenderMode(Uint32 flags);
 
-	friend class FSLibrary;
 	friend class FSCamera;
 
 	friend class FSSpriteset;
@@ -137,42 +136,46 @@ private:
 
 public:
 	//constructor
-	static int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
-	static int start ( int width , int height , int bpp , float scalex, float scaley,bool fullscreen, bool doublebuff=true ) ;
+	int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
+	int start ( int width , int height , int bpp , float scalex, float scaley,bool fullscreen, bool doublebuff=true ) ;
 
-	static int render();
+	int render();
 
-	static int clear ( ) ;
+	int clear ( ) ;
 
-	static int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
-	static int translate(float x, float y, float z);
-	static int scale(float x, float y, float z);
-	static int color(float red, float green, float blue, float alpha);
-	static int color(FSColor* col,float alpha=1.0);
-	static int projectionMode(TypeRendeProjection trp, float zMax=400.0);
+	int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
+	int translate(float x, float y, float z);
+	int scale(float x, float y, float z);
+	int color(float red, float green, float blue, float alpha);
+	int color(FSColor* col,float alpha=1.0);
+	int projectionMode(TypeRendeProjection trp, float zMax=400.0);
 
-	static int pushMatrix();
-	static int popMatrix();
+	int pushMatrix();
+	int popMatrix();
 
-	static int locateRenderScene ( float posx=0.0, float posy=0.0, float width=m_Width, float height=m_Height, float zoom = 1.0) ;
+	int locateRenderScene ( float posx=0.0, float posy=0.0, float width=0.0, float height=0.0, float zoom = 1.0) ;
 
-	static Uint8 getBpp();
+	Uint8 getBpp();
 
-	static  int changeScreen( int width , int height , int bpp ,  float scalex=1.0, float scaley=1.0, bool fullscreen = m_FullScreen) ;
+	int changeScreen( int width , int height , int bpp ,  float scalex=1.0, float scaley=1.0, bool fullscreen = false) ;
 
-	static int ToggleFullscreen ();
+	int ToggleFullscreen ();
 
-	static int setDoublebuffer (bool doublebuff);
+	int setDoublebuffer (bool doublebuff);
 	//destructor
-	static int quit();
+	int quit();
 
-	static int getWidth() { return m_Width; };
+	int getWidth() { return m_Width; };
 
-	static int getHeight() { return m_Height; };
+	int getHeight() { return m_Height; };
 
-	static bool isFullscreen() { return m_FullScreen; };
+	bool isFullscreen() { return m_FullScreen; };
 
-	static float getR(),getG(),getB(),getA();
+	float getR(),getG(),getB(),getA();
 };
+#ifdef GLOBAL_SINGLETON_REFERENCES
+extern FSScreen& FSDraw;
+#endif
+
 
 #endif 

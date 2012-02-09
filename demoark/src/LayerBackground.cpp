@@ -207,15 +207,15 @@ void CFloor::refresh(int cx, int cy) {
 
 	//CScreen::rotate(40,1.0,1.0,0.0);
 
-	FSScreen::pushMatrix();
+	FSDraw.pushMatrix();
 
-	FSScreen::translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
+	FSDraw.translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
 
 	for (;capa<Layer.size() && !capaSuperior(Layer[capa]);capa++) {
 		Layer[capa]->refresh(cxl,cyl);
 	}
 
-	FSScreen::popMatrix();
+	FSDraw.popMatrix();
 
 	float aux_w=floor(((float)area->getW())/((float)mapa->getTileW())+0.9);
 	float aux_h=floor(((float)area->getH())/((float)mapa->getTileH())+0.9);
@@ -249,15 +249,15 @@ void CFloor::refresh(int cx, int cy) {
 #endif
 	}
 
-	FSScreen::pushMatrix();
+	FSDraw.pushMatrix();
 
-	FSScreen::translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
+	FSDraw.translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
 
 	for (;capa<Layer.size();capa++) {
 		Layer[capa]->refresh(cxl,cyl);
 	}
 
-	FSScreen::popMatrix();
+	FSDraw.popMatrix();
 
 	
 }
