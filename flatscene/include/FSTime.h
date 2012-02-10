@@ -20,7 +20,7 @@ private:
 		};
 	};
 
-	map<FSEngine*,STimeData> fc;
+	mutable map<FSEngine*,STimeData> fc;
 
 #ifdef MENSAJES_FPS
 	unsigned int fps;

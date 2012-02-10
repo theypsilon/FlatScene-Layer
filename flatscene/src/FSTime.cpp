@@ -18,7 +18,7 @@ unsigned int FSTime::getTick() const {
 
 	if (admin != FSLibrary::I().getActualEngine()) {
 		admin = FSLibrary::I().getActualEngine();
-		actTime = & const_cast<STimeData&>(fc.at(admin));
+		actTime = & fc[admin];
 	}
 
 	return actTime->frameCount;
