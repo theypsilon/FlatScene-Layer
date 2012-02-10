@@ -58,4 +58,8 @@ run.sh
 Debug
 Release
 
-flatscene.opensdf flatscene.opensdf flatscene.sdf flatscene.sln flatscene.suo flatscene.v11.suo
+flatscene.opensdf
+flatscene.sdf
+flatscene.sln
+flatscene.suo
+flatscene.v11.suo
