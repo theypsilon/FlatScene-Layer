@@ -4,6 +4,7 @@
 #include "FSScreen.h"
 
 struct FSScreen::ScreenImpl {
+
     SDL_Surface* m_SDL_Surface;
 
     bool rendering;
@@ -46,6 +47,7 @@ struct FSScreen::ScreenImpl {
 
     int beginRenderMode(Uint32 flags);
     int endRenderMode(Uint32 flags);
+
 };
 
 #endif

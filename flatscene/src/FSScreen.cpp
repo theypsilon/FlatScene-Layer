@@ -225,9 +225,9 @@ int FSScreen::clear ( )
 		SToRender* em = *it;
 
 		if (em->type == TR_CANVAS)
-			delete ((SRenderCanvas*)em->pointer);
+			delete ((SRenderCanvas<FSPoint>*)em->pointer);
 		else if (em->type == TR_FLOATCANVAS)
-			delete ((SRenderFloatCanvas*)em->pointer);
+			delete ((SRenderCanvas<FSFloatPoint>*)em->pointer);
 		else if (em->type == TR_LOCATION)
 			delete ((SRenderLocation*)em->pointer);
 		else if (em->type == TR_ROTATION)
@@ -494,7 +494,7 @@ int FSScreen::popMatrix() {
 
 void FSScreen::ScreenImpl::procRendCanvas(void* pointer) {
 
-	SRenderCanvas* n = (SRenderCanvas*) pointer;
+	SRenderCanvas<FSPoint>* n = (SRenderCanvas<FSPoint>*) pointer;
 
 	SCanvas m_pSurface = n->canvas;
 	Uint8 flags = n->flags;
@@ -558,7 +558,7 @@ void FSScreen::ScreenImpl::procRendCanvas(void* pointer) {
 
 void FSScreen::ScreenImpl::procRendFloatCanvas(void* pointer) {
 
-	SRenderFloatCanvas* n = (SRenderFloatCanvas*) pointer;
+	SRenderCanvas<FSFloatPoint>* n = (SRenderCanvas<FSFloatPoint>*) pointer;
 
 	SCanvas m_pSurface = (n->canvas);
 	Uint8 flags = n->flags;

@@ -23,22 +23,13 @@ struct SToRender {
 	void* pointer;
 };
 
+template <class PointType>
 struct SRenderCanvas {
 	SCanvas canvas;
-	FSPoint ptDst;
+	PointType ptDst;
 	Uint8 flags;
 
-	SRenderCanvas(SCanvas canvas, FSPoint ptDst, Uint8 flags) 
-	: canvas(canvas), ptDst(ptDst), flags(flags) {
-	}
-};
-
-struct SRenderFloatCanvas {
-	SCanvas canvas;
-	FSFloatPoint ptDst;
-	Uint8 flags;
-
-	SRenderFloatCanvas(SCanvas canvas,FSFloatPoint ptDst, Uint8 flags) 
+	SRenderCanvas(SCanvas canvas, PointType ptDst, Uint8 flags) 
 	: canvas(canvas), ptDst(ptDst), flags(flags) {
 	}
 };
