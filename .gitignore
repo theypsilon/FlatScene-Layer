@@ -55,5 +55,6 @@ Thumbs.db
 .cproject
 .project
 run.sh
-Debug Debug
-Release Release
+Debug
+Release
+
