@@ -1,4 +1,5 @@
 #include "FSCamera.h"
+#include "FSScreenImpl.h"
 #include "FSLibrary.h"
 
 map<TypeResource,void (*)(void*)> FSCamera::procRenders;
@@ -14,11 +15,13 @@ x(-1000),y(-1000) {
 
 FSCamera::~FSCamera() {
 
+    //FIXME replace this lines with a call to render if possible
+
 	for (list<SToRender*>::iterator iri = initRenderList.begin(), ire = initRenderList.end();iri!=ire;++iri) {
 
 		SToRender* irp = *iri;
 
-		FSScreen::I().procRenders[irp->type](irp->pointer);
+		FSScreen::I()._impl->procRenders[irp->type](irp->pointer);
 
 		delete *iri;
 
@@ -31,7 +34,7 @@ FSCamera::~FSCamera() {
 
 		SToRender* erp = *eri;
 
-		FSScreen::I().procRenders[erp->type](erp->pointer);
+		FSScreen::I()._impl->procRenders[erp->type](erp->pointer);
 
 		delete *eri;
 

@@ -34,15 +34,15 @@ struct FSScreen::ScreenImpl {
 
     void initProcRenders();
 
-    void procRendCanvas(void* pointer);
-    void procRendFloatCanvas(void* pointer);
-    void procRendRotation(void* pointer);
-    void procRendTranslation(void* pointer);
-    void procRendLocation(void* pointer);
-    void procRendPush(void* pointer);
-    void procRendPop(void* pointer);
-    void procRendScalation(void* pointer);
-    void procRendColor(void* pointer);
+    static void procRendCanvas(void* pointer);
+    static void procRendFloatCanvas(void* pointer);
+    static void procRendRotation(void* pointer);
+    static void procRendTranslation(void* pointer);
+    static void procRendLocation(void* pointer);
+    static void procRendPush(void* pointer);
+    static void procRendPop(void* pointer);
+    static void procRendScalation(void* pointer);
+    static void procRendColor(void* pointer);
 
     int beginRenderMode(Uint32 flags);
     int endRenderMode(Uint32 flags);
