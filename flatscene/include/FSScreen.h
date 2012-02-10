@@ -75,7 +75,7 @@ struct SRenderColor { // ROTATION
 class FSScreen : private FSNoncopyable, public FSSingleton<FSScreen> {
     friend class FSSingleton<FSScreen>;
 private:
-    class ScreenImpl;
+    struct ScreenImpl;
     ScreenImpl* _impl;
 
     FSScreen();

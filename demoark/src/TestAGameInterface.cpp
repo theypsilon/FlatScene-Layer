@@ -27,9 +27,14 @@ int CTestAGameInterface::drawFrame() {
 
 	FSDraw.projectionMode(TRP_PERSPECTIVE,1600);
 
-	for (int i=0;i<cams.size();i++) {
+	for (Uint32 i=0;i<cams.size();i++) {
 
-		cams[i]->locateRenderScene(cams[i]->getArea()->x*2,cams[i]->getArea()->y*2,cams[i]->getArea()->w*2,cams[i]->getArea()->h*2);
+		cams[i]->locateRenderScene(
+			(float)cams[i]->getArea()->x*2,
+			(float)cams[i]->getArea()->y*2,
+			(float)cams[i]->getArea()->w*2,
+			(float)cams[i]->getArea()->h*2
+		);
 
 		//cams[i]->scale(2.0,2.0,1.0);
 
@@ -132,9 +137,13 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 
 		bool enc=false;
 		gate g;
-		for (int i=0;(!enc)&&(i<mapaOrigen->getGates());i++) {
+		for (Uint32 i=0;(!enc)&&(i<mapaOrigen->getGates());i++) {
 			g=mapaOrigen->getGate(i);
-			enc = enc || ((g.regionx1<= p->m_Scrollxy.getX()) && (g.regionx2>=p->m_Scrollxy.getX())&&(g.regiony1<=(p->m_Scrollxy.getY()+mov_y))&&(g.regiony2>= (p->m_Scrollxy.getY()+mov_y))&&(p->m_Scrollxy.getZ()==g.regionz));
+			enc = enc || (((int)g.regionx1<= p->m_Scrollxy.x) && 
+						 ((int)g.regionx2>=p->m_Scrollxy.x)&&
+						 ((int)g.regiony1<=(p->m_Scrollxy.y+mov_y))&&
+						 ((int)g.regiony2>= (p->m_Scrollxy.y+mov_y))&&
+						 ((int)p->m_Scrollxy.getZ()==g.regionz));
 		}
 		if (enc) {
 
@@ -153,7 +162,7 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 
 					mapaDestino->incActor((FSActor*)p);
 
-					for (int i=0;i<cams.size();i++) {
+					for (Uint32 i=0;i<cams.size();i++) {
 						if (cams[i]->Target()==((FSActor*)p)) {
 							cams[i]->resyncUniverse(); // Si el mapa pasa a no ser enfocado por ninguna c�mara, se descarga (unload).
 						} /*else if (strcmp((cams[i]->getUniverse()->getName()).c_str(),nameMapaOrigen.c_str())==0 

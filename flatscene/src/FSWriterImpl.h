@@ -38,7 +38,7 @@ struct FSWriter::WriterImpl {
         string cadena;
         TTF_Font* fuente;
         map<Uint16,FSCanvas*> render;
-        int size;
+        unsigned int size;
     };
 
     struct SLineText{
@@ -58,15 +58,15 @@ struct FSWriter::WriterImpl {
 
         SEffectText* fx;
 
-        int timer;
+        unsigned int timer;
         SDL_Color col;
 
         FSCanvas* box;
         Uint8 xBox;
         Uint8 yBox;
 
-        int step;
-        int maxStep;
+        unsigned int step;
+        unsigned int maxStep;
 
         FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next);
 

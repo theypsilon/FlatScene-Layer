@@ -10,7 +10,7 @@ Uint16 FSSpriteset::globalAuxiliar=0;
 
 FSSpriteset::FSSpriteset()
 {
-	getSpriteList ( ).clear ( ) ;
+	m_vecSprites.clear ( ) ;
 	name="";
 	this->mode = ONLY_TEXTURE;
 	FSLibrary::I().Error("Por ahora no permito crear Spritesets de la nada.");
@@ -19,7 +19,7 @@ FSSpriteset::FSSpriteset()
 FSSpriteset::FSSpriteset(string c, Uint8 mode)
 {
 	globalAuxiliar=0;	// Lo ponemos a cero, pues vamos a empezar un ciclo.
-	getSpriteList ( ).clear ( ) ;
+	m_vecSprites.clear ( ) ;
 	loadChipset(c,mode);
 	this->mode = mode;
 	name=c;
@@ -30,11 +30,11 @@ FSSpriteset::~FSSpriteset()
 
 	SpriteCollection::iterator iter ;
 	FSSprite* pspt ;
-	while ( !getSpriteList ( ).empty ( ) )
+	while ( !m_vecSprites.empty ( ) )
 	{
-		iter = getSpriteList().begin ( ) ;
+		iter = m_vecSprites.begin ( ) ;
 		pspt = *iter ;
-		getSpriteList ( ).erase ( iter ) ;
+		m_vecSprites.erase ( iter ) ;
 		delete pspt ;
 	}
 
@@ -61,46 +61,40 @@ bool FSSpriteset::setName(string& name) {
 
 void FSSpriteset::add ( FSSprite* pspt ) 
 {
-	getSpriteList ( ).push_back ( pspt ) ;
+	m_vecSprites.push_back ( pspt ) ;
 }
 
 bool FSSpriteset::has ( FSSprite* pspt ) 
 {
-	SpriteCollection::iterator iter = find ( getSpriteList ( ).begin ( ) , getSpriteList ( ).end ( ) , pspt ) ;
-	return ( iter != getSpriteList ( ).end ( ) ) ;
+	SpriteCollection::iterator iter = find ( m_vecSprites.begin ( ) , m_vecSprites.end ( ) , pspt ) ;
+	return ( iter != m_vecSprites.end ( ) ) ;
 }
 
 int FSSpriteset::search( FSSprite* pspt ) 
 {
-	SpriteCollection::iterator iter = find ( getSpriteList ( ).begin ( ) , getSpriteList ( ).end ( ) , pspt ) ;
-	if ( iter == getSpriteList ( ).end ( ) ) return ( -1 ) ;
-	return ( iter - getSpriteList ( ).begin ( ) ) ;
+	SpriteCollection::iterator iter = find ( m_vecSprites.begin ( ) , m_vecSprites.end ( ) , pspt ) ;
+	if ( iter == m_vecSprites.end ( ) ) return ( -1 ) ;
+	return ( iter - m_vecSprites.begin ( ) ) ;
 }
 
 void FSSpriteset::remove ( FSSprite* pspt ) 
 {
-	SpriteCollection::iterator iter = find ( getSpriteList ( ).begin ( ) , getSpriteList ( ).end ( ) , pspt ) ;
-	if ( iter == getSpriteList ( ).end ( ) ) return ;
-	getSpriteList ( ).erase ( iter ) ;
+	SpriteCollection::iterator iter = find ( m_vecSprites.begin ( ) , m_vecSprites.end ( ) , pspt ) ;
+	if ( iter == m_vecSprites.end ( ) ) return ;
+	m_vecSprites.erase ( iter ) ;
 }
 
-FSSprite* FSSpriteset::get ( int n ) 
+FSSprite* FSSpriteset::get ( unsigned int n ) const
 {
-	if ( n < getSpriteList ().size()) {
-		return ( getSpriteList ( ) [n] ) ;
+	if ( n < m_vecSprites.size()) {
+		return ( m_vecSprites.at(n) ) ;
 	} else {
 		return NULL;
 	}
 }
-
-SpriteCollection& FSSpriteset::getSpriteList ( ) 
-{
-	return ( m_vecSprites ) ;
-}
-
 int FSSpriteset::size ( ) 
 {
-	return ( getSpriteList ( ).size ( ) ) ;
+	return ( m_vecSprites.size ( ) ) ;
 }
 
 void FSSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
@@ -293,7 +287,7 @@ void FSSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		return FSLibrary::I().Error(("Estructura defectuosa del archivo: "+s_aux+"\nEl tama�o de la imagen debe ser m�ltiplo exacto de las celdas.").c_str()); 
 	}
 
-	if (columnas <= 0 || columnas > chipset->w) { 
+	if (columnas <= 0 || (int)columnas > chipset->w) { 
 		return FSLibrary::I().Error(("Estructura defectuosa del archivo: "+s_aux+"\nCantidad de columnas imposible.").c_str()); 
 	}
 
@@ -321,7 +315,6 @@ void FSSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 	rect.x=0;
 	rect.y=0;
 
-	SCanvas m_pImage;
 	FSSprite* m_pSprite;
 
 	struct { int w,h,nump; const char *name; } iinfo;
@@ -433,7 +426,7 @@ void FSSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 			SDL_SetColorKey(sdl_surf,SDL_SRCCOLORKEY,chipset->format->colorkey);		// Reasignamos los formatos.
 		}
 
-		m_pImage=FSCanvas::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas(
+		SCanvas m_pImage = FSCanvas::toSCanvas(sdl_surf,mode);		// Convertimos la SDL_Surface en SCanvas(
 
 		//Imagen creada, ahora el resto de su estructura de datos.
 
@@ -460,7 +453,7 @@ void FSSpriteset::loadChipset(string& c,Uint8 mode,string* cPrev) {
 		if (!simple)	
 			area = input.ChildElement("img",i).FirstChildElement("area").ToElement(); // Si el spriteset no es simple, buscamos areas en la imagen.
 
-		for (int numArea=0,countGlobalAreas=0;(countGlobalAreas < globalAreas.size()) || (area && area->Attribute("id"));numArea++) {	// Si hay...
+		for (unsigned int numArea=0,countGlobalAreas=0;(countGlobalAreas < globalAreas.size()) || (area && area->Attribute("id"));numArea++) {	// Si hay...
 			RectArea* rArea = new RectArea; // Preparamos la nueva area.
 		#ifdef LOG_SPRITESET_INFO
 			int idebug=0;
@@ -619,7 +612,6 @@ void FSSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 	rect.x=0;
 	rect.y=0;
 
-	SCanvas m_pImage;
 	FSSprite* m_pSprite;
 
 	struct { int w,h,nump; const char *name; } iinfo;
@@ -689,7 +681,7 @@ void FSSpriteset::loadChipsetSplit(string grd,Uint8 mode) {
 
 		TiXmlElement* area = elmnt->FirstChildElement("area"); // Si el spriteset no es simple, buscamos areas en la imagen.
 
-		for (int numArea=0,countGlobalAreas=0;(countGlobalAreas < globalAreas.size()) || (area && area->Attribute("id"));numArea++) {	// Si hay...
+		for (unsigned int numArea=0,countGlobalAreas=0;(countGlobalAreas < globalAreas.size()) || (area && area->Attribute("id"));numArea++) {	// Si hay...
 			RectArea* rArea = new RectArea; // Preparamos la nueva area.
 		#ifdef LOG_SPRITESET_INFO
 			int idebug=0;

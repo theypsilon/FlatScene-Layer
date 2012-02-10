@@ -40,7 +40,6 @@ private :
 	void add ( FSSprite* pspt ) ;
 	bool setName(string& name);
 	void remove ( FSSprite* pspt ) ;
-	SpriteCollection& getSpriteList ( ) ;
 
 	friend class FSScreen;
 
@@ -50,7 +49,7 @@ public:
 
 	int search ( FSSprite* pspt ) ;
 
-	FSSprite* get ( int n ) ;
+	FSSprite* get ( unsigned int n ) const;
 
 	int size () ;
 

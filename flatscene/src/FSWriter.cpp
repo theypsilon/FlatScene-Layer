@@ -240,6 +240,8 @@ CColor CWriter::setColor(CColor& color) {
 #endif
 }
 */
+#define _CRT_SECURE_NO_WARNINGS
+
 int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 	int ret = FRACASO;
 #ifdef TEXT_OPERATIVE
@@ -255,6 +257,7 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 		vsprintf (buffer, text, lista);
 
 		va_end (lista);
+		#define _crt_va_end(ap)      ( ap = (va_list)0 )
 
 		if (!_impl->data->lastIndexTextAdded.empty()) {
 			ret = _impl->data->lastIndexTextAdded.back();
@@ -275,8 +278,8 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 
 		string allText(buffer);
 
-		float currentX = x;
-		float currentY = y + (float)TTF_FontAscent(t->Line->fuente->fuente) -3;
+		float currentX = (float) x;
+		float currentY = (float) y + (float)TTF_FontAscent(t->Line->fuente->fuente) -3;
 
 		size_t length = allText.length();
 
@@ -309,7 +312,7 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 			TTF_GlyphMetrics(t->Line->fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance);
 
 			if (newChar == '\n') {
-				currentX = x;
+				currentX = (float) x;
 				currentY += (float)TTF_FontLineSkip(t->Line->fuente->fuente);
 			} else {
 
@@ -523,7 +526,7 @@ int FSWriter::color(int text,float red, float green, float blue, float alpha, Ty
 
 int FSWriter::color(int text,FSColor* col, float alpha, TypeColorTBox boxflags, bool persistent) {
 
-	return color(text,((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha,boxflags,persistent);
+	return color(text,((float)col->getR())/255.0f,((float)col->getG())/255.0f,((float)col->getB())/255.0f,alpha,boxflags,persistent);
 
 }
 
@@ -551,7 +554,7 @@ int FSWriter::render() {
 
 
 	if ( _impl->width == 0.0 || _impl->height == 0.0)
-		FSScreen::I().locateRenderScene(0,0,FSScreen::I().getWidth(),FSScreen::I().getHeight(),0); //
+		FSScreen::I().locateRenderScene(0,0,(float)FSScreen::I().getWidth(),(float)FSScreen::I().getHeight(),0); //
 	else
 		FSScreen::I().locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
 

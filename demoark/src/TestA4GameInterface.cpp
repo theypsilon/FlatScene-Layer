@@ -120,8 +120,8 @@ int  CTestA4GameInterface::onInit() {
 	mapDemo->incActor((FSActor*)player[0]);
 	mapDemo->incActor((FSActor*)player[1]);
 
-	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(0,0,RESOLUCION_X/2,RESOLUCION_Y),NULL,0.35));
-	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(RESOLUCION_X/2,0,RESOLUCION_X/2,RESOLUCION_Y),NULL,0.35));
+	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(0,0,RESOLUCION_X/2,RESOLUCION_Y),NULL,0.35f));
+	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(RESOLUCION_X/2,0,RESOLUCION_X/2,RESOLUCION_Y),NULL,0.35f));
 
 	Write.color(Write.inBox("resources/texts0",0),1.0,1.0,1.0,0.7,TCTB_BOX,true);
 

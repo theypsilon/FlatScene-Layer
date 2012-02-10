@@ -13,8 +13,8 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 	string allText(text);
 	Uint16 limite=xBox=Lim;
 
-	float currentX = upleft.x+MARGEN;
-	float currentY = upleft.y+MARGEN-2;
+	float currentX = (float) upleft.x+MARGEN;
+	float currentY = (float) upleft.y+MARGEN-2;
 	currentY += TTF_FontAscent(fuente->fuente)/2 ;
 
 	col.r=255;
@@ -66,7 +66,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			}
 
 			if ((currentX + cuenta - x)>= (limite - MARGEN)) {
-				currentX = upleft.x + MARGEN;
+				currentX = (float) upleft.x + MARGEN;
 				currentY += (float)TTF_FontLineSkip(fuente->fuente);
 			} else {
 				maxStep++;
@@ -79,7 +79,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			}
 			
 		} else if (newChar == '\n') {
-			currentX = upleft.x + MARGEN;
+			currentX = (float) upleft.x + MARGEN;
 			currentY += (float)TTF_FontLineSkip(fuente->fuente);
 		} else {
 			maxStep++;
@@ -155,8 +155,8 @@ int FSWriter::WriterImpl::FSTextBox::update() {
 		return -1;
 	}
 
-	int i=0;
-	for (list<SChar>::iterator it=charInDisplay.begin();it!=charInDisplay.end() && i<step;++it) {
+	unsigned int i=0;
+	for (list<SChar>::iterator it=charInDisplay.begin(), et=charInDisplay.end();it!=et && i<step;++it) {
 		if (it->p) {
 			if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
 				fuente->render[it->glyph]->color(fx->red,fx->green,fx->blue,fx->alpha);

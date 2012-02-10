@@ -14,17 +14,17 @@ FSTime::FSTime() : actTime(NULL), admin(NULL), all(false), allMsInterval(16) {
 FSTime::~FSTime() {
 }
 
-int FSTime::getTick() {
+unsigned int FSTime::getTick() const {
 
 	if (admin != FSLibrary::I().getActualEngine()) {
 		admin = FSLibrary::I().getActualEngine();
-		actTime = & fc[admin];
+		actTime = & const_cast<STimeData&>(fc.at(admin));
 	}
 
 	return actTime->frameCount;
 }
 
-int FSTime::setInterval(int msNew, bool all) {
+unsigned int FSTime::setInterval(unsigned int msNew, bool all) {
 
 	if (!all && admin != FSLibrary::I().getActualEngine()) {
 		admin = FSLibrary::I().getActualEngine();
@@ -46,7 +46,7 @@ int FSTime::setInterval(int msNew, bool all) {
 	return aux;
 }
 
-int FSTime::setFPS(int fpsNew, bool all) {
+unsigned int FSTime::setFPS(unsigned int fpsNew, bool all) {
 
 	int aux = setInterval(1000 / fpsNew, all);
 
@@ -105,7 +105,7 @@ int  FSTime::nextFrame() {
 	return ret;
 }
 
-bool FSTime::isTimeForAll() {
+bool FSTime::isTimeForAll() const {
 	return all;
 }
 

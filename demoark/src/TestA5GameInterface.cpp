@@ -120,9 +120,9 @@ int  CTestA5GameInterface::onInit() {
 	mapDemo->incActor((FSActor*)player[0]);
 	mapDemo->incActor((FSActor*)player[1]);
 
-	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(0,0,RESOLUCION_X,RESOLUCION_Y),NULL,0.35));
+	cams.push_back(new CScrollCamera((FSActor*)player[0],new FSRectangle(0,0,RESOLUCION_X,RESOLUCION_Y),NULL,0.35f));
 
-	Write.color(Write.inBox("resources/texts0",0),1.0,1.0,1.0,0.7,TCTB_BOX,true);
+	Write.color(Write.inBox("resources/texts0",0),1.0f,1.0f,1.0f,0.7f,TCTB_BOX,true);
 
 	Write.line(0,260,10,"ESC para Menu.");
 
@@ -141,11 +141,16 @@ int CTestA5GameInterface::drawFrame() {
 
 	FSDraw.projectionMode(TRP_PERSPECTIVE,1600);
 
-	for (int i=0;i<cams.size();i++) {
+	for (unsigned int i=0;i<cams.size();i++) {
 
-		cams[i]->locateRenderScene(cams[i]->getArea()->x*2,cams[i]->getArea()->y*2,cams[i]->getArea()->w*2,cams[i]->getArea()->h*2);
+		cams[i]->locateRenderScene(
+			(float)cams[i]->getArea()->x*2,
+			(float)cams[i]->getArea()->y*2,
+			(float)cams[i]->getArea()->w*2,
+			(float)cams[i]->getArea()->h*2
+		);
 
-		cams[i]->rotate(40,1.0,1.0,0.0);
+		cams[i]->rotate(40.0f,1.0f,1.0f,0.0f);
 
 		cams[i]->render();
 
@@ -215,8 +220,8 @@ void CTestA5GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 			cams[0]->setTarget(player[0]);
 	} else if (sym==SDLK_LCTRL) {
 		srand(rand());
-		int cont = player.size() + enemy.size();
-		int v = rand()%cont;
+		Uint32 cont = player.size() + enemy.size();
+		Uint32 v = rand()%cont;
 		if ( v < player.size() )
 			cams[0]->setTarget(player[v]);
 		else {

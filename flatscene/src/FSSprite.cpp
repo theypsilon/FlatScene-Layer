@@ -70,7 +70,7 @@ string FSSprite::getName() {
 	return name;
 }
 
-int FSSprite::addRect(int area,FSRectangle* rect) {
+int FSSprite::addRect(unsigned int area,FSRectangle* rect) {
 	areas[area]->push_back(rect);
 	return (areas[area]->size()-1);
 }
@@ -81,7 +81,7 @@ int FSSprite::addArea(RectArea* area) {
 }
 
 
-RectArea* FSSprite::getArea (int n ) 
+RectArea* FSSprite::getArea (unsigned int n ) 
 {
 #ifdef VECTOR_COMP
 	if ((n<0) || (n >= areas.size()))
@@ -90,7 +90,7 @@ RectArea* FSSprite::getArea (int n )
 	return (areas[n]) ;
 }
 
-FSRectangle* FSSprite::getRect (int n ,int m) 
+FSRectangle* FSSprite::getRect (unsigned int n ,unsigned int m) 
 {
 #ifdef VECTOR_COMP
 	if ((n<0) || (n >= areas.size()) || (m<0) || (m >= areas[n]->size()))
@@ -108,7 +108,7 @@ void FSSprite::replaceCenter(FSPoint *c) {
 	cpoint = c;
 }
 
-void FSSprite::replaceArea(int n,RectArea* area) {
+void FSSprite::replaceArea(unsigned int n,RectArea* area) {
 	if (n < areas.size()) {
 		RectArea::iterator iter2 ;
 		FSRectangle* rect;
@@ -123,7 +123,7 @@ void FSSprite::replaceArea(int n,RectArea* area) {
 	}
 }
 
-void FSSprite::replaceRect(int area,int n,FSRectangle* rect) {
+void FSSprite::replaceRect(unsigned int area,unsigned int n,FSRectangle* rect) {
 	if ((area < areas.size()) && (n < areas[area]->size())) {
 		delete (*areas[area])[n];
 		(*areas[area])[n]=rect;

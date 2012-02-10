@@ -12,9 +12,9 @@ using namespace std;
 class FSTime {
 private:
 	struct STimeData {
-		int msInterval;
-		int msLast;
-		int frameCount;
+		unsigned int msInterval;
+		unsigned int msLast;
+		unsigned int frameCount;
 
 		STimeData() : msInterval(16), msLast(0), frameCount(0) {
 		};
@@ -23,25 +23,25 @@ private:
 	map<FSEngine*,STimeData> fc;
 
 #ifdef MENSAJES_FPS
-	int fps;
-	int auxTimer;
+	unsigned int fps;
+	unsigned int auxTimer;
 	map<FSEngine*,int> adminText;
 #endif
 
-	STimeData* actTime;
-	FSEngine* admin;
+	mutable STimeData* actTime;
+	mutable FSEngine* admin;
 
 	bool all;
-	int allMsInterval;
+	unsigned int allMsInterval;
 public:
 	FSTime();
 	~FSTime();
-	int setInterval(int msNew, bool all=false);
-	int setFPS(int fpsNew, bool all=false);
+	unsigned int setInterval(unsigned int msNew, bool all=false);
+	unsigned int setFPS(unsigned int fpsNew, bool all=false);
 	int nextFrame();
-	int getTick();
+	unsigned int getTick() const;
 
-	bool isTimeForAll();
+	bool isTimeForAll() const;
 };
 
 extern FSTime Chrono;
