@@ -491,10 +491,10 @@ int FSCamera::color(float red, float green, float blue, float alpha) {
 
 	SRenderColor * c_fin = new SRenderColor();
 
-	c_fin->red = FSScreen::I().red;//2.0 - red;
-	c_fin->green = FSScreen::I().green;//2.0 - green;
-	c_fin->blue = FSScreen::I().blue;//2.0 - blue;
-	c_fin->alpha =  FSScreen::I().alpha;//2.0 - alpha;
+	c_fin->red = FSScreen::I()._impl->red;//2.0 - red;
+	c_fin->green = FSScreen::I()._impl->green;//2.0 - green;
+	c_fin->blue = FSScreen::I()._impl->blue;//2.0 - blue;
+	c_fin->alpha =  FSScreen::I()._impl->alpha;//2.0 - alpha;
 
 	SToRender* r_fin = new SToRender();
 

@@ -5,21 +5,21 @@
 FSScreen::FSScreen() : _impl(new ScreenImpl) {
     _impl->m_SDL_Surface=NULL;
 
-    m_FullScreen=false;
-    m_Doublebuff=true;
-    rendering=false;
-    m_maxZ=400.0;
+    _impl->m_FullScreen=false;
+    _impl->m_Doublebuff=true;
+    _impl->rendering=false;
+    _impl->m_maxZ=400.0f;
 
-    trp=TRP_PERSPECTIVE;
+    _impl->trp=TRP_PERSPECTIVE;
 
-    m_Bpp=0;
-    m_Width=0;
-    m_Height=0;
+    _impl->m_Bpp=0;
+    _impl->m_Width=0;
+    _impl->m_Height=0;
 
-    alpha =1.0;
-    red =1.0;
-    green =1.0;
-    blue =1.0;
+    _impl->alpha =1.0f;
+    _impl->red =1.0f;
+    _impl->green =1.0f;
+    _impl->blue =1.0f;
 
     _impl->initProcRenders();
 }
@@ -69,11 +69,11 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
 		return FRACASO;
 	}
 
-	m_FullScreen=fullscreen;
-	m_Doublebuff=doublebuff;
-	m_Width=width;
-	m_Height=height;
-	m_Bpp=bpp;
+	_impl->m_FullScreen=fullscreen;
+	_impl->m_Doublebuff=doublebuff;
+	_impl->m_Width=width;
+	_impl->m_Height=height;
+	_impl->m_Bpp=bpp;
 
 	// Set the OpenGL state after creating the context with SDL_SetVideoMode
 
@@ -133,11 +133,11 @@ int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, 
 		return FRACASO;
 	}
 
-	m_FullScreen=fullscreen;
-	m_Doublebuff=doublebuff;
-	m_Width=width;
-	m_Height=height;
-	m_Bpp=bpp;
+	_impl->m_FullScreen=fullscreen;
+	_impl->m_Doublebuff=doublebuff;
+	_impl->m_Width=width;
+	_impl->m_Height=height;
+	_impl->m_Bpp=bpp;
 
 
 	glMatrixMode( GL_PROJECTION );
@@ -177,11 +177,12 @@ int FSScreen::render ( )
 
 #ifdef MAINRENDERLOOP
 
-	rendering = true;
+	_impl->rendering = true;
 
 	_impl->beginRenderMode(RENDER_TEXTURE_STANDARD);
 
     const map<TypeResource,void (*)(void*)>& procRenders = _impl->procRenders;
+    list<SToRender*>& graphicMaterial = _impl->graphicMaterial;
 
 	for (list<SToRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
 
@@ -196,7 +197,7 @@ int FSScreen::render ( )
 
 	graphicMaterial.clear();
 
-	rendering = false;
+	_impl->rendering = false;
 
 #endif
 
@@ -205,7 +206,7 @@ int FSScreen::render ( )
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	glLoadIdentity();	
 
-	deleteResources();
+	_impl->deleteResources();
 
 	return EXITO;
 }
@@ -219,6 +220,7 @@ int FSScreen::clear ( )
 
 #ifdef MAINRENDERLOOP
 
+	list<SToRender*>& graphicMaterial = _impl->graphicMaterial;
 	for (list<SToRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
 		SToRender* em = *it;
 
@@ -240,7 +242,7 @@ int FSScreen::clear ( )
 
 #endif
 
-	deleteResources();
+	_impl->deleteResources();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
 	glLoadIdentity();	
@@ -249,27 +251,27 @@ int FSScreen::clear ( )
 }
 
 float FSScreen::getA() {
-	return alpha;
+	return _impl->alpha;
 }
 
 float FSScreen::getR() {
-	return red;
+	return _impl->red;
 }
 
 float FSScreen::getG() {
-	return green;
+	return _impl->green;
 }
 
 float FSScreen::getB() {
-	return blue;
+	return _impl->blue;
 }
 
 int FSScreen::locateRenderScene(float posx, float posy, float width, float height,float zoom) {
 
 #ifdef MAINRENDERLOOP
 
-    (width <= 0.0f)?  width  = FSScreen::I().m_Width  : 0 ;
-    (height <= 0.0f)? height = FSScreen::I().m_Height : 0 ;
+    (width <= 0.0f)?  width  = FSScreen::I()._impl->m_Width  : 0 ;
+    (height <= 0.0f)? height = FSScreen::I()._impl->m_Height : 0 ;
 
 	SRenderLocation* n = new SRenderLocation;
 	n->posx = posx;
@@ -283,7 +285,7 @@ int FSScreen::locateRenderScene(float posx, float posy, float width, float heigh
 	em->type = TR_LOCATION;
 	em->pointer = (void*) n;
 
-	graphicMaterial.push_back(em);
+	_impl->graphicMaterial.push_back(em);
 
 #else
 
@@ -338,7 +340,7 @@ int FSScreen::rotate(float angle, float x, float y, float z) {
 	em->type = TR_ROTATION;
 	em->pointer = (void*) n;
 
-	graphicMaterial.push_back(em);
+	_impl->graphicMaterial.push_back(em);
 
 #else
 
@@ -363,7 +365,7 @@ int FSScreen::translate(float x, float y, float z) {
 	em->type = TR_TRANSLATION;
 	em->pointer = (void*) n;
 
-	graphicMaterial.push_back(em);
+	_impl->graphicMaterial.push_back(em);
 
 #else
 
@@ -388,7 +390,7 @@ int FSScreen::scale(float x, float y, float z) {
 	em->type = TR_SCALATION;
 	em->pointer = (void*) n;
 
-	graphicMaterial.push_back(em);
+	_impl->graphicMaterial.push_back(em);
 
 #else
 
@@ -405,17 +407,17 @@ int FSScreen::color(float red, float green, float blue, float alpha) {
 
 	SRenderColor* n = new SRenderColor;
 
-	FSScreen::red = n->red = red;
-	FSScreen::green = n->green = green;
-	FSScreen::blue = n->blue = blue;
-	FSScreen::alpha = n->alpha = alpha;
+	_impl->red = n->red = red;
+	_impl->green = n->green = green;
+	_impl->blue = n->blue = blue;
+	_impl->alpha = n->alpha = alpha;
 
 	SToRender* em = new SToRender;
 
 	em->type = TR_COLOR;
 	em->pointer = (void*) n;
 
-	graphicMaterial.push_back(em);
+	_impl->graphicMaterial.push_back(em);
 
 #else
 
@@ -428,19 +430,19 @@ int FSScreen::color(float red, float green, float blue, float alpha) {
 
 int FSScreen::color(FSColor* col, float alpha) {
 
-	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
+	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,_impl->alpha);
 
 }
 
 int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 
-	if (rendering) {
+	if (_impl->rendering) {
 		FSLibrary::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
 		return FRACASO;
 	}
 
-	m_maxZ = zMax;
-	FSScreen::trp = trp;
+	_impl->m_maxZ = zMax;
+	_impl->trp = trp;
 
 	return EXITO;
 
@@ -455,7 +457,7 @@ int FSScreen::pushMatrix() {
 	em->type = TR_PUSHMATRIX;
 	em->pointer = NULL;
 
-	graphicMaterial.push_back(em);
+	_impl->graphicMaterial.push_back(em);
 
 #else
 
@@ -476,7 +478,7 @@ int FSScreen::popMatrix() {
 	em->type = TR_POPMATRIX;
 	em->pointer = NULL;
 
-	graphicMaterial.push_back(em);
+	_impl->graphicMaterial.push_back(em);
 
 #else
 
@@ -666,7 +668,7 @@ void FSScreen::ScreenImpl::procRendLocation(void* pointer) {
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
 
-	static const TypeRendeProjection& trp = FSScreen::I().trp;
+	static const TypeRendeProjection& trp = FSScreen::I()._impl->trp;
 
 	if (trp == TRP_ORTHO) {
 
@@ -677,7 +679,7 @@ void FSScreen::ScreenImpl::procRendLocation(void* pointer) {
 
 	} else {
 
-	    static const float& m_maxZ = FSScreen::I().m_maxZ;
+	    static const float& m_maxZ = FSScreen::I()._impl->m_maxZ;
 
 		//Opción de perspectiva 1
 		gluPerspective(90.0f,width/height,1.0,m_maxZ);
@@ -794,7 +796,19 @@ int FSScreen::quit()
 }
 
 Uint8 FSScreen::getBpp() {
-	return m_Bpp;
+	return _impl->m_Bpp;
+}
+
+int FSScreen::getWidth() {
+	return _impl->m_Width;
+}
+
+int FSScreen::getHeight() {
+	return _impl->m_Height;
+}
+
+bool FSScreen::isFullscreen() {
+	return _impl->m_FullScreen;
 }
 
 int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float scaley, bool fullscreen) {
@@ -808,14 +822,14 @@ int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float s
 	
 	GraphicResources info;
 
-	saveResources(info);
+	_impl->saveResources(info);
 
 	quit();
 
-	if ( start (width,height,bpp,scalex, scaley,fullscreen,m_Doublebuff) == FRACASO)
+	if ( start (width,height,bpp,scalex, scaley,fullscreen,_impl->m_Doublebuff) == FRACASO)
 		return FRACASO;
 
-	reloadResources(info);
+	_impl->reloadResources(info);
 
 	return EXITO;
 	
@@ -832,16 +846,16 @@ int FSScreen::ToggleFullscreen() {
 
 	GraphicResources info;
 
-	saveResources(info);
+	_impl->saveResources(info);
 
 	quit();
 
-	m_FullScreen = !m_FullScreen;
+	_impl->m_FullScreen = !_impl->m_FullScreen;
 
-	if ( start (m_Width,m_Height,m_Bpp,m_FullScreen,m_Doublebuff) == FRACASO )
+	if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,_impl->m_Doublebuff) == FRACASO )
 		return FRACASO;	
 
-	reloadResources(info);
+	_impl->reloadResources(info);
 
 	return EXITO;
 
@@ -854,40 +868,22 @@ int FSScreen::setDoublebuffer(bool doublebuff) {
 		return FRACASO;
 	}
 
-	if (doublebuff!=m_Doublebuff) {
+	if (doublebuff!=_impl->m_Doublebuff) {
 		clear();
 
 		GraphicResources info;
 
-		saveResources(info);
+		_impl->saveResources(info);
 
 		quit();
 
-		if ( start (m_Width,m_Height,m_Bpp,m_FullScreen,doublebuff) == FRACASO)
+		if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,doublebuff) == FRACASO)
 			return FRACASO;
 
-		reloadResources(info);
+		_impl->reloadResources(info);
 	}
 
 	return EXITO;
-}
-
-void FSScreen::deleteResources() {
-	
-	for (list<FSSpriteset*>::iterator it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
-		delete (*it);
-
-	spritesetToDelete.clear();
-	
-	for (list<FSSprite*>::iterator it = spriteToDelete.begin(), jt = spriteToDelete.end() ; it!=jt;++it)
-		delete (*it);
-
-	spriteToDelete.clear();
-
-	for (list<FSCanvas*>::iterator it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
-		delete (*it);
-
-	imageToDelete.clear();
 }
 
 #ifdef GLOBAL_SINGLETON_REFERENCES

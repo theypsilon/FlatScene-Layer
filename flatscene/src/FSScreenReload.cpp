@@ -1,9 +1,27 @@
-#include "FSScreen.h"
 #include "FSLibrary.h"
 #include "FSWriterImpl.h"
 #include "FSImagesImpl.h"
+#include "FSScreenImpl.h"
 
-void FSScreen::saveResources(GraphicResources &info) {
+void FSScreen::ScreenImpl::deleteResources() {
+	
+	for (list<FSSpriteset*>::iterator it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
+		delete (*it);
+
+	spritesetToDelete.clear();
+	
+	for (list<FSSprite*>::iterator it = spriteToDelete.begin(), jt = spriteToDelete.end() ; it!=jt;++it)
+		delete (*it);
+
+	spriteToDelete.clear();
+
+	for (list<FSCanvas*>::iterator it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
+		delete (*it);
+
+	imageToDelete.clear();
+}
+
+void FSScreen::ScreenImpl::saveResources(GraphicResources &info) {
 
     FSImages& img = FSImages::I();
     FSWriter& writer = FSWriter::I();
@@ -39,7 +57,7 @@ void FSScreen::saveResources(GraphicResources &info) {
 
 }
 
-void FSScreen::reloadResources(GraphicResources &info) {
+void FSScreen::ScreenImpl::reloadResources(GraphicResources &info) {
 
     FSImages& img = FSImages::I();
     FSWriter& writer = FSWriter::I();

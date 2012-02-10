@@ -1,6 +1,7 @@
 #include "FSWriterImpl.h"
 #include "FSTime.h"
 #include "SDL.h"
+#include "FSScreenImpl.h"
 
 #include "FSLibrary.h"
 
@@ -176,7 +177,7 @@ int FSWriter::WriterImpl::FSTextBox::update() {
 
 void FSWriter::WriterImpl::FSTextBox::deleteBox() {
 	if (box)
-		FSScreen::I().imageToDelete.push_back(box); // delete box;
+		FSScreen::I()._impl->imageToDelete.push_back(box); // delete box;
 	box=NULL;
 }
 

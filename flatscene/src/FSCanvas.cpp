@@ -1,5 +1,6 @@
 #include "FSCanvas.h"
 #include "FSLibrary.h"
+#include "FSScreenImpl.h"
 
 #include "debugfuncs.h"
 
@@ -80,7 +81,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_PUSHMATRIX;
 	em->pointer = NULL;
 
-	FSScreen::I().graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 	//TRANSLATE
 
@@ -95,7 +96,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_TRANSLATION;
 	em->pointer = (void*) c_init;
 
-	FSScreen::I().graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 	// USER DEFINED EFFECTS IN
 
@@ -117,7 +118,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 
 	em->type = TR_FLOATCANVAS;
 	em->pointer = (void*) new SRenderFloatCanvas(m_pSurface,ptDst,flags);
-	FSScreen::I().graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
 
@@ -152,7 +153,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 	em->type = TR_POPMATRIX;
 	em->pointer = NULL;
 
-	FSScreen::I().graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 #else
 
@@ -231,7 +232,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 	em->type = TR_PUSHMATRIX;
 	em->pointer = NULL;
 
-	FSScreen::I().graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 	//TRANSLATE
 
@@ -246,7 +247,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 	em->type = TR_TRANSLATION;
 	em->pointer = (void*) c_init;
 
-	FSScreen::I().graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 	// USER DEFINED EFFECTS IN
 
@@ -268,7 +269,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 
 	em->type = TR_CANVAS;
 	em->pointer = (void*) new SRenderCanvas(m_pSurface,ptDst,flags);
-	FSScreen::I().graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 	
 	// USER DEFINED EFFECTS OUT
@@ -292,7 +293,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 	em->type = TR_POPMATRIX;
 	em->pointer = NULL;
 
-	FSScreen::I().graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 
 #else
@@ -729,10 +730,10 @@ int FSCanvas::color(float red, float green, float blue, float alpha) {
 
 	SRenderColor * c_fin = new SRenderColor();
 
-	c_fin->red = FSScreen::I().red;//2.0 - red;
-	c_fin->green = FSScreen::I().green;//2.0 - green;
-	c_fin->blue = FSScreen::I().blue;//2.0 - blue;
-	c_fin->alpha =  FSScreen::I().alpha;//2.0 - alpha;
+	c_fin->red = FSScreen::I()._impl->red;//2.0 - red;
+	c_fin->green = FSScreen::I()._impl->green;//2.0 - green;
+	c_fin->blue = FSScreen::I()._impl->blue;//2.0 - blue;
+	c_fin->alpha =  FSScreen::I()._impl->alpha;//2.0 - alpha;
 
 	SToRender* r_fin = new SToRender();
 

@@ -74,46 +74,6 @@ struct SRenderColor { // ROTATION
 
 class FSScreen : private FSNoncopyable, public FSSingleton<FSScreen> {
     friend class FSSingleton<FSScreen>;
-private:
-    struct ScreenImpl;
-    ScreenImpl* _impl;
-
-    FSScreen();
-    virtual ~FSScreen();
-
-	bool rendering;
-	TypeRendeProjection trp;
-
-	float m_maxZ;
-
-	bool m_FullScreen,m_Doublebuff;
-
-	int m_Width,m_Height,m_Bpp;
-
-	list<SToRender*> graphicMaterial;
-
-	list<FSSprite*> spriteToDelete;
-	list<FSSpriteset*> spritesetToDelete;
-	list<FSCanvas*> imageToDelete;
-
-	void deleteResources();
-
-	void saveResources(GraphicResources& info);
-	void reloadResources(GraphicResources& info);
-
-
-	float red,green,blue,alpha;
-
-	friend class FSCamera;
-
-	friend class FSSpriteset;
-	friend class FSSprite;
-	friend class FSCanvas;
-
-	friend class FSImages;
-	friend class FSWriter;
-	friend class FSTextBox;
-
 public:
 	//constructor
 	int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
@@ -145,13 +105,30 @@ public:
 	//destructor
 	int quit();
 
-	int getWidth() { return m_Width; };
+	int getWidth();
 
-	int getHeight() { return m_Height; };
+	int getHeight();
 
-	bool isFullscreen() { return m_FullScreen; };
+	bool isFullscreen();
 
 	float getR(),getG(),getB(),getA();
+
+private:
+    struct ScreenImpl;
+    ScreenImpl* _impl;
+
+    FSScreen();
+    virtual ~FSScreen();
+
+	friend class FSCamera;
+
+	friend class FSSpriteset;
+	friend class FSSprite;
+	friend class FSCanvas;
+
+	friend class FSImages;
+	friend class FSWriter;
+	friend class FSTextBox;
 };
 #ifdef GLOBAL_SINGLETON_REFERENCES
 extern FSScreen& FSDraw;

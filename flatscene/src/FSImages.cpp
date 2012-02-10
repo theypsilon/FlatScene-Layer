@@ -1,5 +1,6 @@
-#include "FSImagesImpl.h"
 #include "FSLibrary.h"
+#include "FSImagesImpl.h"
+#include "FSScreenImpl.h"
 
 map<TypeResource,void (*)(void*)> FSCanvas::procRenders;
 
@@ -21,7 +22,7 @@ void FSImages::clear() {
 		pspt = iter->second ;
 		(*_impl).set.erase ( iter ) ;
 		if (SDL_GetVideoSurface())
-			FSScreen::I().spritesetToDelete.push_back(pspt); // delete sptset;
+			FSScreen::I()._impl->spritesetToDelete.push_back(pspt); // delete sptset;
 		else
 			delete pspt;
 	}
@@ -60,7 +61,7 @@ int FSImages::remove(Uint32 n) {
 		if (c < 1)  {
 			if (c==0) {
 				if (SDL_GetVideoSurface())
-					FSScreen::I().spritesetToDelete.push_back(sptset); // delete sptset;
+					FSScreen::I()._impl->spritesetToDelete.push_back(sptset); // delete sptset;
 				else
 					delete sptset;
 				(*_impl).set.erase((*_impl).set.find(n));

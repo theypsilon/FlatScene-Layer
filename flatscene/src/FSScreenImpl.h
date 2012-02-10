@@ -1,5 +1,5 @@
-#ifndef __FS_IMAGES_IMPL__
-#define __FS_IMAGES_IMPL__
+#ifndef __FS_SCREEN_IMPL__
+#define __FS_SCREEN_IMPL__
 
 #include "FSScreen.h"
 

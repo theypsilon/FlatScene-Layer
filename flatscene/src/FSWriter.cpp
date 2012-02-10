@@ -1,7 +1,7 @@
 #include "FSWriterImpl.h"
 #include "FSLibrary.h"
 #include "FSparserXML.h"
-#include "FSScreen.h"
+#include "FSScreenImpl.h"
 
 FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
 
@@ -193,7 +193,7 @@ int FSWriter::unloadFont(int fuente) {
 			map<Uint16,FSCanvas*>& chars =f->render;
 			while (!chars.empty()) {
 				map<Uint16,FSCanvas*>::iterator jt = chars.begin();
-				FSScreen::I().imageToDelete.push_back(jt->second); // delete jt->second;
+				FSScreen::I()._impl->imageToDelete.push_back(jt->second); // delete jt->second;
 				chars.erase(jt);
 			}
 			delete f;
@@ -659,7 +659,7 @@ void FSWriter::clear() {
 		map<Uint16,FSCanvas*>& chars = it->second->render;
 		while (!chars.empty()) {
 			map<Uint16,FSCanvas*>::iterator jt = chars.begin();
-			FSScreen::I().imageToDelete.push_back(jt->second); // delete jt->second;
+			FSScreen::I()._impl->imageToDelete.push_back(jt->second); // delete jt->second;
 			chars.erase(jt);
 		}
 		delete it->second;
