@@ -23,43 +23,77 @@ struct SToRender {
 	void* pointer;
 };
 
-template <class PointType>
-struct SRenderCanvas {
+struct SRender {
+	virtual void operator()()=0;
+};
+
+struct SRenderLocation : SRender { // LOCATE
+	float posx;
+	float posy;
+	float width;
+	float height;
+
+	void operator()();
+};
+
+struct SRenderTranscalation : SRender { // TRANSLATE && SCALATION
+	float x;
+	float y;
+	float z;
+	float invalid;
+
+	void operator()();
+};
+
+struct SRenderRotation : SRender { // ROTATION
+	float angle;
+	float x;
+	float y;
+	float z;
+
+	void operator()();
+};
+
+struct SRenderColor : SRender { // ROTATION
+	float red;
+	float green;
+	float blue;
+	float alpha;
+
+	void operator()();
+};
+
+struct SRenderCanvasFloat : SRender {
 	SCanvas canvas;
-	PointType ptDst;
+	FSFloatPoint ptDst;
 	Uint8 flags;
 
-	SRenderCanvas(SCanvas canvas, PointType ptDst, Uint8 flags) 
+	SRenderCanvasFloat(SCanvas canvas, FSFloatPoint ptDst, Uint8 flags)
 	: canvas(canvas), ptDst(ptDst), flags(flags) {
 	}
+
+	void operator()();
 };
 
-struct SRenderLocation { // LOCATE
-	float posx;
-	float posy; 
-	float width; 
-	float height; 
-	float zoom;
+struct SRenderCanvasInt : SRender {
+	SCanvas canvas;
+	FSPoint ptDst;
+	Uint8 flags;
+
+	SRenderCanvasInt(SCanvas canvas, FSPoint ptDst, Uint8 flags)
+	: canvas(canvas), ptDst(ptDst), flags(flags) {
+	}
+
+	void operator()();
 };
 
-struct SRenderTranscalation { // TRANSLATE && SCALATION
-	GLfloat x;
-	GLfloat y;
-	GLfloat z;
+
+struct SRenderPushMatrix : SRender { // ROTATION
+	void operator()();
 };
 
-struct SRenderRotation { // ROTATION
-	GLfloat angle;
-	GLfloat x; 
-	GLfloat y; 
-	GLfloat z; 
-};
-
-struct SRenderColor { // ROTATION
-	GLfloat red;
-	GLfloat green; 
-	GLfloat blue; 
-	GLfloat alpha; 
+struct SRenderPopMatrix : SRender { // ROTATION
+	void operator()();
 };
 
 
@@ -120,6 +154,8 @@ private:
 	friend class FSImages;
 	friend class FSWriter;
 	friend class FSTextBox;
+
+	friend class SRenderLocation;
 };
 #ifdef GLOBAL_SINGLETON_REFERENCES
 extern FSScreen& FSDraw;

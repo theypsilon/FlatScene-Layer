@@ -117,7 +117,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 	 em = new SToRender;
 
 	em->type = TR_FLOATCANVAS;
-	em->pointer = (void*) new SRenderCanvas<FSFloatPoint>(m_pSurface,ptDst,flags);
+	em->pointer = (void*) new SRenderCanvasFloat(m_pSurface,ptDst,flags);
 	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
@@ -268,7 +268,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 	em = new SToRender;
 
 	em->type = TR_CANVAS;
-	em->pointer = (void*) new SRenderCanvas<FSPoint>(m_pSurface,ptDst,flags);
+	em->pointer = (void*) new SRenderCanvasInt(m_pSurface,ptDst,flags);
 	FSScreen::I()._impl->graphicMaterial.push_back(em);
 
 	

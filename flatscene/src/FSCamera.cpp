@@ -189,11 +189,10 @@ void FSCamera::procRendLocation(void* pointer) {
 	float posy = n->posy;
 	float width = n->width;
 	float height = n->height;
-	float zoom = n->zoom;
 
 	delete n;
 
-	FSScreen::I().locateRenderScene(posx,posy,width,height,zoom);
+	FSScreen::I().locateRenderScene(posx,posy,width,height);
 
 }
 
@@ -297,7 +296,6 @@ int FSCamera::locateRenderScene( float posx, float posy, float width, float heig
 		c_init->posy = posy;
 		c_init->width = width;
 		c_init->height = height;
-		c_init->zoom = zoom;
 
 		r_init = new SToRender();
 
