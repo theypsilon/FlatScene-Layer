@@ -18,13 +18,13 @@ enum TypeRendeProjection {
 	TRP_PERSPECTIVE
 };
 
-struct SToRender {
-	TypeResource type;
-	void* pointer;
-};
-
 struct SRender {
 	virtual void operator()()=0;
+};
+
+struct SToRender {
+	TypeResource type;
+	SRender* pointer;
 };
 
 struct SRenderLocation : SRender { // LOCATE

@@ -16,7 +16,7 @@ struct FSScreen::ScreenImpl {
 
     int m_Width,m_Height,m_Bpp;
 
-    list<SToRender*> graphicMaterial;
+    list<SRender*> graphicMaterial;
 
     list<FSSprite*> spriteToDelete;
     list<FSSpriteset*> spritesetToDelete;

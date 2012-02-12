@@ -300,7 +300,7 @@ int FSCamera::locateRenderScene( float posx, float posy, float width, float heig
 		r_init = new SToRender();
 
 		r_init->type = TR_LOCATION;
-		r_init->pointer = (void*) c_init;
+		r_init->pointer = (SRender*) c_init;
 
 		initRenderList.push_back(r_init);
 
@@ -350,7 +350,7 @@ int FSCamera::rotate(float angle, float x, float y, float z) {
 		r_init = new SToRender();
 
 		r_init->type = TR_ROTATION;
-		r_init->pointer = (void*) c_init;
+		r_init->pointer = (SRender*) c_init;
 
 		initRenderList.push_back(r_init);
 
@@ -397,7 +397,7 @@ int FSCamera::translate(float x, float y, float z) {
 		r_init = new SToRender();
 
 		r_init->type = TR_TRANSLATION;
-		r_init->pointer = (void*) c_init;
+		r_init->pointer = (SRender*) c_init;
 
 		initRenderList.push_back(r_init);
 
@@ -444,7 +444,7 @@ int FSCamera::scale(float x, float y, float z) {
 		r_init = new SToRender();
 
 		r_init->type = TR_SCALATION;
-		r_init->pointer = (void*) c_init;
+		r_init->pointer = (SRender*) c_init;
 
 		initRenderList.push_back(r_init);
 
@@ -482,7 +482,7 @@ int FSCamera::color(float red, float green, float blue, float alpha) {
 		SToRender* r_init = new SToRender();
 
 		r_init->type = TR_COLOR;
-		r_init->pointer = (void*) c_init;
+		r_init->pointer = (SRender*) c_init;
 
 		initRenderList.push_back(r_init);
 	}
@@ -497,7 +497,7 @@ int FSCamera::color(float red, float green, float blue, float alpha) {
 	SToRender* r_fin = new SToRender();
 
 	r_fin->type = TR_COLOR;
-	r_fin->pointer = (void*) c_fin;
+	r_fin->pointer = (SRender*) c_fin;
 
 	endRenderList.push_front(r_fin);
 

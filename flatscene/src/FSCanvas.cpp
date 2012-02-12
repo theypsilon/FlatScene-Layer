@@ -68,20 +68,12 @@ int FSCanvas::getHeight ()
 {
 	return ( m_pSurface.h2 ) ;	
 }
-
-void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) 
-{	
-
+void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) {
 #ifdef MAINRENDERLOOP
 
 	//PUSHMATRIX
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_PUSHMATRIX;
-	em->pointer = NULL;
-
-	FSScreen::I()._impl->graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(new SRenderPushMatrix());
 
 	//TRANSLATE
 
@@ -91,12 +83,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 	c_init->y = ptDst.y;
 	c_init->z = 0.0;
 
-	em = new SToRender();
-
-	em->type = TR_TRANSLATION;
-	em->pointer = (void*) c_init;
-
-	FSScreen::I()._impl->graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(c_init);
 
 	// USER DEFINED EFFECTS IN
 
@@ -114,11 +101,9 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 
 	// PAINT FLOATCANVAS
 
-	 em = new SToRender;
-
-	em->type = TR_FLOATCANVAS;
-	em->pointer = (void*) new SRenderCanvasFloat(m_pSurface,ptDst,flags);
-	FSScreen::I()._impl->graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(
+		new SRenderCanvasFloat(m_pSurface,ptDst,flags)
+	);
 
 	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
 
@@ -148,12 +133,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 
 	// POPMATRIX
 
-	em = new SToRender;
-
-	em->type = TR_POPMATRIX;
-	em->pointer = NULL;
-
-	FSScreen::I()._impl->graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(new SRenderPopMatrix());
 
 #else
 
@@ -214,25 +194,14 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 		glPopMatrix();
 	}
 
-
-
 #endif
-
 }
-
-void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) 
-{	
-
+void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) {
 #ifdef MAINRENDERLOOP
 
 	//PUSHMATRIX
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_PUSHMATRIX;
-	em->pointer = NULL;
-
-	FSScreen::I()._impl->graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(new SRenderPushMatrix());
 
 	//TRANSLATE
 
@@ -242,12 +211,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 	c_init->y = ptDst.y;
 	c_init->z = 0.0;
 
-	em = new SToRender();
-
-	em->type = TR_TRANSLATION;
-	em->pointer = (void*) c_init;
-
-	FSScreen::I()._impl->graphicMaterial.push_back(em);
+	FSScreen::I()._impl->graphicMaterial.push_back(c_init);
 
 	// USER DEFINED EFFECTS IN
 
@@ -263,15 +227,24 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 
 	initRenderList.clear();
 
-	// PAINT CANVAS
+	// PAINT FLOATCANVAS
 
-	em = new SToRender;
+	FSScreen::I()._impl->graphicMaterial.push_back(
+		new SRenderCanvasFloat(m_pSurface,ptDst,flags)
+	);
 
-	em->type = TR_CANVAS;
-	em->pointer = (void*) new SRenderCanvasInt(m_pSurface,ptDst,flags);
-	FSScreen::I()._impl->graphicMaterial.push_back(em);
+	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
 
-	
+		SToRender* erp = *eri;
+
+		procRenders[erp->type](erp->pointer);
+
+		delete erp;
+
+	}
+
+	endRenderList.clear();
+
 	// USER DEFINED EFFECTS OUT
 
 	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
@@ -288,13 +261,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 
 	// POPMATRIX
 
-	em = new SToRender;
-
-	em->type = TR_POPMATRIX;
-	em->pointer = NULL;
-
-	FSScreen::I()._impl->graphicMaterial.push_back(em);
-
+	FSScreen::I()._impl->graphicMaterial.push_back(new SRenderPopMatrix());
 
 #else
 
@@ -355,11 +322,8 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 		glPopMatrix();
 	}
 
-
 #endif
-
 }
-
 
 SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 
@@ -661,7 +625,7 @@ int FSCanvas::rotate(float angle, float x, float y, float z) {
 	SToRender* r_init = new SToRender();
 
 	r_init->type = TR_ROTATION;
-	r_init->pointer = (void*) c_init;
+	r_init->pointer = (SRender*) c_init;
 
 	initRenderList.push_back(r_init);
 
@@ -680,7 +644,7 @@ int FSCanvas::translate(float x, float y, float z) {
 	SToRender* r_init = new SToRender();
 
 	r_init->type = TR_TRANSLATION;
-	r_init->pointer = (void*) c_init;
+	r_init->pointer = (SRender*) c_init;
 
 	initRenderList.push_back(r_init);
 
@@ -699,7 +663,7 @@ int FSCanvas::scale(float x, float y, float z) {
 	SToRender* r_init = new SToRender();
 
 	r_init->type = TR_SCALATION;
-	r_init->pointer = (void*) c_init;
+	r_init->pointer = (SRender*) c_init;
 
 	initRenderList.push_back(r_init);
 
@@ -723,7 +687,7 @@ int FSCanvas::color(float red, float green, float blue, float alpha) {
 	SToRender* r_init = new SToRender();
 
 	r_init->type = TR_COLOR;
-	r_init->pointer = (void*) c_init;
+	r_init->pointer = (SRender*) c_init;
 
 	initRenderList.push_back(r_init);
 	
@@ -738,7 +702,7 @@ int FSCanvas::color(float red, float green, float blue, float alpha) {
 	SToRender* r_fin = new SToRender();
 
 	r_fin->type = TR_COLOR;
-	r_fin->pointer = (void*) c_fin;
+	r_fin->pointer = (SRender*) c_fin;
 
 	endRenderList.push_front(r_fin);
 

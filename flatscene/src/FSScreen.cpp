@@ -168,7 +168,7 @@ void FSScreen::ScreenImpl::initProcRenders() {
 	procRenders[TR_COLOR] = ScreenImpl::procRendColor;
 }
 
-int FSScreen::render ( ) 
+int FSScreen::render() 
 {
 	if (!_impl->m_SDL_Surface) {
 		FSLibrary::I().Error("Video context not inicialized");
@@ -182,13 +182,13 @@ int FSScreen::render ( )
 	_impl->beginRenderMode(RENDER_TEXTURE_STANDARD);
 
     const map<TypeResource,void (*)(void*)>& procRenders = _impl->procRenders;
-    list<SToRender*>& graphicMaterial = _impl->graphicMaterial;
+    list<SRender*>& graphicMaterial = _impl->graphicMaterial;
 
-	for (list<SToRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+	for (list<SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
 
-		SToRender* em =(*it);
 
-		procRenders.at(em->type)(em->pointer);
+		SRender& r = **it;
+		r();
 
 		delete *it;
 	}
@@ -220,21 +220,8 @@ int FSScreen::clear ( )
 
 #ifdef MAINRENDERLOOP
 
-	list<SToRender*>& graphicMaterial = _impl->graphicMaterial;
-	for (list<SToRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-		SToRender* em = *it;
-
-		if (em->type == TR_CANVAS)
-			delete ((SRenderCanvasInt*)em->pointer);
-		else if (em->type == TR_FLOATCANVAS)
-			delete ((SRenderCanvasFloat*)em->pointer);
-		else if (em->type == TR_LOCATION)
-			delete ((SRenderLocation*)em->pointer);
-		else if (em->type == TR_ROTATION)
-			delete ((SRenderRotation*)em->pointer);
-		else if (em->type == TR_SCALATION || em->type == TR_TRANSLATION)
-			delete ((SRenderTranscalation*)em->pointer);
-
+	list<SRender*>& graphicMaterial = _impl->graphicMaterial;
+	for (list<SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
 		delete *it;
 	}
 
@@ -268,8 +255,6 @@ float FSScreen::getB() {
 
 int FSScreen::locateRenderScene(float posx, float posy, float width, float height,float zoom) {
 
-#ifdef MAINRENDERLOOP
-
     (width <= 0.0f)?  width  = FSScreen::I()._impl->m_Width  : 0 ;
     (height <= 0.0f)? height = FSScreen::I()._impl->m_Height : 0 ;
 
@@ -279,44 +264,11 @@ int FSScreen::locateRenderScene(float posx, float posy, float width, float heigh
 	n->width = width;
 	n->height = height;
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_LOCATION;
-	em->pointer = (void*) n;
-
-	_impl->graphicMaterial.push_back(em);
-
+#ifdef MAINRENDERLOOP
+	_impl->graphicMaterial.push_back(n);
 #else
-
-	glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-
-	//Opción ortogonal
-	glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
-	glScalef(m_ScaleX*zoom,m_ScaleY*zoom,1.0);
-
-	//Opción de perspectiva 1
-	//gluPerspective(90.0f,width/height,1.0,400.0);
-	//glTranslatef(0.0,0.0,-120.0);
-	//glRotatef(180.0,1.0,0.0,0.0);
-	//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-	//Opción de perspectiva 2
-	//gluPerspective(60.0f,width/height,1.0,400.0);
-	//glTranslatef(0.0,0.0,-205.0);
-	//glRotatef(180.0,1.0,0.0,0.0);
-	//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-	//Opción de perspectiva 3
-	//gluPerspective(45.0f,width/height,1.0,400.0);
-	//glTranslatef(0.0,0.0,-290.0);
-	//glRotatef(180.0,1.0,0.0,0.0);
-	//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-	//glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
-	//glTranslatef(0.0,-100.0,120.0);
-
+	n->operator()();
+	delete n;
 #endif
 
 	return EXITO;
@@ -325,26 +277,17 @@ int FSScreen::locateRenderScene(float posx, float posy, float width, float heigh
 
 int FSScreen::rotate(float angle, float x, float y, float z) {
 
-
-#ifdef MAINRENDERLOOP
-
 	SRenderRotation* n = new SRenderRotation;
 	n->angle = angle;
 	n->x = x;
 	n->y = y;
 	n->z = z;
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_ROTATION;
-	em->pointer = (void*) n;
-
-	_impl->graphicMaterial.push_back(em);
-
+#ifdef MAINRENDERLOOP
+	_impl->graphicMaterial.push_back(n);
 #else
-
-	glRotatef(angle,x,y,z);
-
+	n->operator()();
+	delete n;
 #endif
 
 	return EXITO;
@@ -352,57 +295,39 @@ int FSScreen::rotate(float angle, float x, float y, float z) {
 
 int FSScreen::translate(float x, float y, float z) {
 
-#ifdef MAINRENDERLOOP
-
 	SRenderTranscalation* n = new SRenderTranscalation;
 	n->x = x;
 	n->y = y;
 	n->z = z;
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_TRANSLATION;
-	em->pointer = (void*) n;
-
-	_impl->graphicMaterial.push_back(em);
-
+#ifdef MAINRENDERLOOP
+	_impl->graphicMaterial.push_back(n);
 #else
-
-	glTranslatef(x,y,z);
-
+	n->operator()();
+	delete n;
 #endif
 
 	return EXITO;
 }
 
 int FSScreen::scale(float x, float y, float z) {
-
-#ifdef MAINRENDERLOOP
-
+	
 	SRenderTranscalation* n = new SRenderTranscalation;
 	n->x = x;
 	n->y = y;
 	n->z = z;
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_SCALATION;
-	em->pointer = (void*) n;
-
-	_impl->graphicMaterial.push_back(em);
-
+#ifdef MAINRENDERLOOP
+	_impl->graphicMaterial.push_back(n);
 #else
-
-	glScalef(x,y,z);
-
+	n->operator()();
+	delete n;
 #endif
 
 	return EXITO;
 }
 
 int FSScreen::color(float red, float green, float blue, float alpha) {
-
-#ifdef MAINRENDERLOOP
 
 	SRenderColor* n = new SRenderColor;
 
@@ -411,17 +336,11 @@ int FSScreen::color(float red, float green, float blue, float alpha) {
 	_impl->blue = n->blue = blue;
 	_impl->alpha = n->alpha = alpha;
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_COLOR;
-	em->pointer = (void*) n;
-
-	_impl->graphicMaterial.push_back(em);
-
+#ifdef MAINRENDERLOOP
+	_impl->graphicMaterial.push_back(n);
 #else
-
-	glColor4f(red,green,blue,alpha);
-
+	n->operator()();
+	delete n;
 #endif
 
 	return EXITO;
@@ -448,20 +367,12 @@ int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 }
 
 int FSScreen::pushMatrix() {
-
+	SRender* n = new SRenderPushMatrix();
 #ifdef MAINRENDERLOOP
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_PUSHMATRIX;
-	em->pointer = NULL;
-
-	_impl->graphicMaterial.push_back(em);
-
+	_impl->graphicMaterial.push_back(n);
 #else
-
-	glPushMatrix();
-
+	n->operator()();
+	delete n;
 #endif
 
 	return EXITO;
@@ -469,20 +380,12 @@ int FSScreen::pushMatrix() {
 }
 
 int FSScreen::popMatrix() {
-
+	SRender* n = new SRenderPopMatrix();
 #ifdef MAINRENDERLOOP
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_POPMATRIX;
-	em->pointer = NULL;
-
-	_impl->graphicMaterial.push_back(em);
-
+	_impl->graphicMaterial.push_back(n);
 #else
-
-	glPopMatrix();
-
+	n->operator()();
+	delete n;
 #endif
 
 	return EXITO;
@@ -951,10 +854,7 @@ void SRenderPopMatrix::operator()() {
 	glPopMatrix();
 }
 
-void SRenderCanvasInt::operator()() {
-
-	SCanvas& m_pSurface = canvas;
-
+inline void SRenderCanvasFunc(SCanvas& m_pSurface,Uint8 flags) {
 	if (m_pSurface.h != 0 || m_pSurface.w !=0 ) {
 
 		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex);
@@ -1006,61 +906,7 @@ void SRenderCanvasInt::operator()() {
 		glEnd();
 
 	}
-}
+};
 
-void SRenderCanvasFloat::operator()() {
-
-	SCanvas& m_pSurface = canvas;
-
-	if (m_pSurface.h != 0 || m_pSurface.w !=0 ) {
-
-		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex);
-
-		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
-		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
-
-		//glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
-
-		glBegin(GL_QUADS);
-			if (flags == 0) {
-				glTexCoord2f(0.0f, relH);
-				glVertex2f(0, m_pSurface.h2);
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags == 1) {
-
-				glTexCoord2f(relW, relH);
-				glVertex2f(0, m_pSurface.h2);
-				glTexCoord2f(0.0f, relH);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags==2) {
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0, m_pSurface.h2);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, relH);
-				glVertex2f(0,0);
-			} else  {
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0, m_pSurface.h2);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, relH);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, relH);
-				glVertex2f(0,0);
-			}
-		glEnd();
-
-	}
-}
+void SRenderCanvasInt::operator()() { SRenderCanvasFunc(canvas,flags); }
+void SRenderCanvasFloat::operator()() { SRenderCanvasFunc(canvas,flags); }
