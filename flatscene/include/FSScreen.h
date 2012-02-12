@@ -32,6 +32,7 @@ struct SRenderLocation : SRender { // LOCATE
 	float posy;
 	float width;
 	float height;
+	float zoom;
 
 	void operator()();
 };

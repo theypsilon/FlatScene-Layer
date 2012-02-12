@@ -260,6 +260,7 @@ int FSScreen::locateRenderScene(float posx, float posy, float width, float heigh
 	n->posy = posy;
 	n->width = width;
 	n->height = height;
+	n->zoom = zoom;
 
 #ifdef MAINRENDERLOOP
 	_impl->graphicMaterial.push_back(n);
