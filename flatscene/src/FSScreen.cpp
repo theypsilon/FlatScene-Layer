@@ -185,10 +185,9 @@ int FSScreen::render()
     list<SRender*>& graphicMaterial = _impl->graphicMaterial;
 
 	for (list<SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-		SRender& r = **it;
-		r();
-
-		delete *it;
+		SRender* r = *it;
+		(*r)();
+		delete r;
 	}
 
 	_impl->endRenderMode(RENDER_TEXTURE_STANDARD);

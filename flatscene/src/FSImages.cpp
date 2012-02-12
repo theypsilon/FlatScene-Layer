@@ -2,11 +2,7 @@
 #include "FSImagesImpl.h"
 #include "FSScreenImpl.h"
 
-map<TypeResource,void (*)(void*)> FSCanvas::procRenders;
-
-FSImages::FSImages() : _impl(new ImagesImpl) {
-	FSCanvas::initProcRenders();
-}
+FSImages::FSImages() : _impl(new ImagesImpl) {}
 
 FSImages::~FSImages() {
 	clear();

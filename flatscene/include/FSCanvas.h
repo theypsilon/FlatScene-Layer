@@ -15,6 +15,7 @@
 #include "FSColor.h"
 #include <string>
 #include <list>
+#include <functional>
 #include <map>
 
 using namespace std;
@@ -62,19 +63,8 @@ private:
 
     static inline Uint32 pow2 (Uint32 n);
 
-    list<SToRender*> initRenderList;
-    list<SToRender*> endRenderList;
-
-    static map<TypeResource,void (*)(void*)> procRenders;
-
-    static void initProcRenders();
-
-    static void procRendRotation(void* pointer);
-    static void procRendTranslation(void* pointer);
-    static void procRendScalation(void* pointer);
-    static void procRendColor(void* pointer);
-    static void procRendPush(void* pointer);
-    static void procRendPop(void* pointer);
+	list<std::function<void(void)>> initCallbackList;
+	list<std::function<void(void)>> endCallbackList;
 
 public:
 
