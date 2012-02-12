@@ -77,7 +77,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) {
 
 	//TRANSLATE
 
-	SRenderTranscalation* c_init = new SRenderTranscalation();
+	SRenderTranslation* c_init = new SRenderTranslation();
 
 	c_init->x = ptDst.x;
 	c_init->y = ptDst.y;
@@ -205,7 +205,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) {
 
 	//TRANSLATE
 
-	SRenderTranscalation* c_init = new SRenderTranscalation();
+	SRenderTranslation* c_init = new SRenderTranslation();
 
 	c_init->x = ptDst.x;
 	c_init->y = ptDst.y;
@@ -635,7 +635,7 @@ int FSCanvas::translate(float x, float y, float z) {
 
 	//SCALE
 
-	SRenderTranscalation* c_init = new SRenderTranscalation();
+	SRenderTranslation* c_init = new SRenderTranslation();
 
 	c_init->x = x;
 	c_init->y = y;
@@ -654,7 +654,7 @@ int FSCanvas::scale(float x, float y, float z) {
 
 	//SCALE
 
-	SRenderTranscalation* c_init = new SRenderTranscalation();
+	SRenderScalation* c_init = new SRenderScalation();
 
 	c_init->x = x;
 	c_init->y = y;
@@ -741,7 +741,7 @@ void FSCanvas::procRendRotation(void* pointer) {
 void FSCanvas::procRendTranslation(void* pointer) {
 
 
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
+	SRenderTranslation* n = (SRenderTranslation*) pointer;
 
 	GLfloat x = n->x;
 	GLfloat y = n->y;
@@ -756,7 +756,7 @@ void FSCanvas::procRendTranslation(void* pointer) {
 
 void FSCanvas::procRendScalation(void* pointer) {
 
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
+	SRenderScalation* n = (SRenderScalation*) pointer;
 
 	GLfloat x = n->x;
 	GLfloat y = n->y;

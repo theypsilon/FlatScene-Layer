@@ -185,8 +185,6 @@ int FSScreen::render()
     list<SRender*>& graphicMaterial = _impl->graphicMaterial;
 
 	for (list<SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-
-
 		SRender& r = **it;
 		r();
 
@@ -295,7 +293,7 @@ int FSScreen::rotate(float angle, float x, float y, float z) {
 
 int FSScreen::translate(float x, float y, float z) {
 
-	SRenderTranscalation* n = new SRenderTranscalation;
+	SRenderTranslation* n = new SRenderTranslation;
 	n->x = x;
 	n->y = y;
 	n->z = z;
@@ -312,7 +310,7 @@ int FSScreen::translate(float x, float y, float z) {
 
 int FSScreen::scale(float x, float y, float z) {
 	
-	SRenderTranscalation* n = new SRenderTranscalation;
+	SRenderScalation* n = new SRenderScalation;
 	n->x = x;
 	n->y = y;
 	n->z = z;
@@ -540,7 +538,7 @@ void FSScreen::ScreenImpl::procRendRotation(void* pointer) {
 void FSScreen::ScreenImpl::procRendTranslation(void* pointer) {
 
 
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
+	SRenderTranslation* n = (SRenderTranslation*) pointer;
 
 	GLfloat x = n->x;
 	GLfloat y = n->y;
@@ -623,7 +621,7 @@ void FSScreen::ScreenImpl::procRendPop(void* pointer) {
 
 void FSScreen::ScreenImpl::procRendScalation(void* pointer) {
 
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
+	SRenderScalation* n = (SRenderScalation*) pointer;
 
 	GLfloat x = n->x;
 	GLfloat y = n->y;
@@ -833,8 +831,12 @@ void SRenderLocation::operator()() {
 	}
 }
 
-void SRenderTranscalation::operator()() {
+void SRenderTranslation::operator()() {
 	glTranslatef(x,y,z);
+}
+
+void SRenderScalation::operator()() {
+	glScalef(x,y,z);
 }
 
 void SRenderRotation::operator()() {

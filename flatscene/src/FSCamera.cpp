@@ -215,7 +215,7 @@ void FSCamera::procRendRotation(void* pointer) {
 void FSCamera::procRendTranslation(void* pointer) {
 
 
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
+	SRenderTranslation* n = (SRenderTranslation*) pointer;
 
 	GLfloat x = n->x;
 	GLfloat y = n->y;
@@ -230,7 +230,7 @@ void FSCamera::procRendTranslation(void* pointer) {
 
 void FSCamera::procRendScalation(void* pointer) {
 
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
+	SRenderScalation* n = (SRenderScalation*) pointer;
 
 	GLfloat x = n->x;
 	GLfloat y = n->y;
@@ -388,7 +388,7 @@ int FSCamera::translate(float x, float y, float z) {
 
 		//SCALE
 
-		SRenderTranscalation* c_init = new SRenderTranscalation();
+		SRenderTranslation* c_init = new SRenderTranslation();
 
 		c_init->x = x;
 		c_init->y = y;
@@ -435,7 +435,7 @@ int FSCamera::scale(float x, float y, float z) {
 
 		//SCALE
 
-		SRenderTranscalation* c_init = new SRenderTranscalation();
+		SRenderScalation* c_init = new SRenderScalation();
 
 		c_init->x = x;
 		c_init->y = y;

@@ -36,11 +36,18 @@ struct SRenderLocation : SRender { // LOCATE
 	void operator()();
 };
 
-struct SRenderTranscalation : SRender { // TRANSLATE && SCALATION
+struct SRenderTranslation : SRender { // TRANSLATE && SCALATION
 	float x;
 	float y;
 	float z;
-	float invalid;
+
+	void operator()();
+};
+
+struct SRenderScalation : SRender { // TRANSLATE && SCALATION
+	float x;
+	float y;
+	float z;
 
 	void operator()();
 };
