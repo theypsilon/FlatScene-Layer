@@ -30,9 +30,6 @@ struct FSScreen::ScreenImpl {
 
     float red,green,blue,alpha;
 
-
-    map<TypeResource,void (*)(void*)> procRenders;
-
     int beginRenderMode(Uint32 flags);
     int endRenderMode(Uint32 flags);
 

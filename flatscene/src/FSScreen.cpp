@@ -166,13 +166,11 @@ int FSScreen::render()
 
 	_impl->beginRenderMode(RENDER_TEXTURE_STANDARD);
 
-    const map<TypeResource,void (*)(void*)>& procRenders = _impl->procRenders;
     list<SRender*>& graphicMaterial = _impl->graphicMaterial;
 
 	for (list<SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
 		SRender* r = *it;
 		(*r)();
-		delete r;
 	}
 
 	_impl->endRenderMode(RENDER_TEXTURE_STANDARD);
@@ -350,11 +348,11 @@ int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 }
 
 int FSScreen::pushMatrix() {
-	SRender* rr = new SRenderPushMatrix;
+	static SRenderPushMatrix rr;
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(rr);
+	_impl->graphicMaterial.push_back(static_cast<SRender*>(&rr));
 #else
-	(*rr)();
+	rr();
 #endif
 
 	return EXITO;
@@ -362,11 +360,11 @@ int FSScreen::pushMatrix() {
 }
 
 int FSScreen::popMatrix() {
-	SRender* rr = new SRenderPopMatrix;
+	static SRenderPopMatrix rr;
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(rr);
+	_impl->graphicMaterial.push_back(static_cast<SRender*>(&rr));
 #else
-	(*rr)();
+	rr();
 #endif
 
 	return EXITO;
@@ -554,22 +552,27 @@ void SRenderLocation::operator()() {
 		//glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
 		//glTranslatef(0.0,-100.0,120.0);
 	}
+    delete this;
 }
 
 void SRenderTranslation::operator()() {
 	glTranslatef(x,y,z);
+    delete this;
 }
 
 void SRenderScalation::operator()() {
 	glScalef(x,y,z);
+    delete this;
 }
 
 void SRenderRotation::operator()() {
 	glRotatef(angle,x,y,z);
+    delete this;
 }
 
 void SRenderColor::operator()() {
 	glColor4f(red,green,blue,alpha);
+    delete this;
 }
 
 void SRenderPushMatrix::operator()() {
@@ -578,7 +581,7 @@ void SRenderPushMatrix::operator()() {
 }
 
 void SRenderPopMatrix::operator()() {
-	glPopMatrix();
+    glPopMatrix();
 }
 
 inline void SRenderCanvasFunc(SCanvas& m_pSurface,Uint8 flags) {
@@ -635,5 +638,5 @@ inline void SRenderCanvasFunc(SCanvas& m_pSurface,Uint8 flags) {
 	}
 };
 
-void SRenderCanvasInt::operator()() { SRenderCanvasFunc(canvas,flags); }
-void SRenderCanvasFloat::operator()() { SRenderCanvasFunc(canvas,flags); }
+void SRenderCanvasInt::operator()() { SRenderCanvasFunc(canvas,flags); delete this; }
+void SRenderCanvasFloat::operator()() { SRenderCanvasFunc(canvas,flags); delete this; }
