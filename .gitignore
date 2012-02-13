@@ -52,6 +52,7 @@ Thumbs.db
 # Rules created by 'git ignore' #
 #-------------------------------#
 
+.settings
 .cproject
 .project
 run.sh
