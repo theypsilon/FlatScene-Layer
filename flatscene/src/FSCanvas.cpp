@@ -62,17 +62,11 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) {
 
 	//PUSHMATRIX
 
-	FSScreen::I()._impl->graphicMaterial.push_back(new SRenderPushMatrix());
+	FSScreen::I().pushMatrix();
 
 	//TRANSLATE
 
-	SRenderTranslation* c_init = new SRenderTranslation();
-
-	c_init->x = ptDst.x;
-	c_init->y = ptDst.y;
-	c_init->z = 0.0;
-
-	FSScreen::I()._impl->graphicMaterial.push_back(c_init);
+    FSScreen::I().translate(ptDst.x,ptDst.y,0);
 
 	// USER DEFINED EFFECTS IN
 
@@ -101,7 +95,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) {
 
 	// POPMATRIX
 
-	FSScreen::I()._impl->graphicMaterial.push_back(new SRenderPopMatrix());
+	FSScreen::I().popMatrix();
 
 #else
 
@@ -169,17 +163,11 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) {
 
 	//PUSHMATRIX
 
-	FSScreen::I()._impl->graphicMaterial.push_back(new SRenderPushMatrix());
+	FSScreen::I().pushMatrix();
 
 	//TRANSLATE
 
-	SRenderTranslation* c_init = new SRenderTranslation();
-
-	c_init->x = ptDst.x;
-	c_init->y = ptDst.y;
-	c_init->z = 0.0;
-
-	FSScreen::I()._impl->graphicMaterial.push_back(c_init);
+	FSScreen::I().translate(ptDst.x,ptDst.y,0);
 
 	// USER DEFINED EFFECTS IN
 
@@ -206,7 +194,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) {
 
 	// POPMATRIX
 
-	FSScreen::I()._impl->graphicMaterial.push_back(new SRenderPopMatrix());
+	FSScreen::I().popMatrix();
 
 #else
 

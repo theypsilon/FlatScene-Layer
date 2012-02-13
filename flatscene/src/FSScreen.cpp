@@ -20,8 +20,6 @@ FSScreen::FSScreen() : _impl(new ScreenImpl) {
     _impl->red =1.0f;
     _impl->green =1.0f;
     _impl->blue =1.0f;
-
-    _impl->initProcRenders();
 }
 
 FSScreen::~FSScreen() {
@@ -153,19 +151,6 @@ int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, 
 
 	return EXITO;
 
-}
-
-void FSScreen::ScreenImpl::initProcRenders() {
-
-	procRenders[TR_CANVAS] = ScreenImpl::procRendCanvas;
-	procRenders[TR_FLOATCANVAS] = ScreenImpl::procRendFloatCanvas;
-	procRenders[TR_ROTATION] = ScreenImpl::procRendRotation;
-	procRenders[TR_TRANSLATION] = ScreenImpl::procRendTranslation;
-	procRenders[TR_LOCATION] = ScreenImpl::procRendLocation;
-	procRenders[TR_PUSHMATRIX] = ScreenImpl::procRendPush;
-	procRenders[TR_POPMATRIX] = ScreenImpl::procRendPop;
-	procRenders[TR_SCALATION] = ScreenImpl::procRendScalation;
-	procRenders[TR_COLOR] = ScreenImpl::procRendColor;
 }
 
 int FSScreen::render() 
@@ -365,12 +350,11 @@ int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 }
 
 int FSScreen::pushMatrix() {
-	SRender* n = new SRenderPushMatrix();
+	SRender* rr = new SRenderPushMatrix;
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(n);
+	_impl->graphicMaterial.push_back(rr);
 #else
-	n->operator()();
-	delete n;
+	(*rr)();
 #endif
 
 	return EXITO;
@@ -378,273 +362,14 @@ int FSScreen::pushMatrix() {
 }
 
 int FSScreen::popMatrix() {
-	SRender* n = new SRenderPopMatrix();
+	SRender* rr = new SRenderPopMatrix;
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(n);
+	_impl->graphicMaterial.push_back(rr);
 #else
-	n->operator()();
-	delete n;
+	(*rr)();
 #endif
 
 	return EXITO;
-
-}
-
-
-
-void FSScreen::ScreenImpl::procRendCanvas(void* pointer) {
-
-	SRenderCanvasInt* n = (SRenderCanvasInt*) pointer;
-
-	SCanvas m_pSurface = n->canvas;
-	Uint8 flags = n->flags;
-	FSPoint ptDst = n->ptDst;
-
-	delete n;
-
-	if (m_pSurface.h != 0 || m_pSurface.w !=0 ) {
-
-		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex); 
-
-		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
-		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
-
-		//glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
-
-		glBegin(GL_QUADS);
-			if (flags == 0) {
-				glTexCoord2f(0.0f, relH);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags == 1) {
-				
-				glTexCoord2f(relW, relH);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(0.0f, relH);		
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, 0.0f);						
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags==2) {
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, relH);	
-				glVertex2f(0,0);
-			} else  {
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(0.0f, 0.0f);		
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, relH);						
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, relH);
-				glVertex2f(0,0);
-			} 
-		glEnd();
-
-	}
-
-}
-
-void FSScreen::ScreenImpl::procRendFloatCanvas(void* pointer) {
-
-	SRenderCanvasFloat* n = (SRenderCanvasFloat*) pointer;
-
-	SCanvas m_pSurface = (n->canvas);
-	Uint8 flags = n->flags;
-	FSFloatPoint ptDst = n->ptDst;
-
-	delete n;
-
-	if (m_pSurface.h != 0 || m_pSurface.w !=0 ) {
-
-		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex); 
-
-		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
-		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
-
-		//glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
-
-		glBegin(GL_QUADS);
-			if (flags == 0) {
-				glTexCoord2f(0.0f, relH);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags == 1) {
-				
-				glTexCoord2f(relW, relH);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(0.0f, relH);		
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, 0.0f);						
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags==2) {
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, relH);	
-				glVertex2f(0,0);
-			} else  {
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(0.0f, 0.0f);		
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, relH);						
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, relH);
-				glVertex2f(0,0);
-			} 
-		glEnd();
-
-	}
-
-
-}
-void FSScreen::ScreenImpl::procRendRotation(void* pointer) {
-
-	SRenderRotation* n = (SRenderRotation*) pointer;
-
-	GLfloat angle = n->angle;
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-	GLfloat z = n->z;
-
-	delete n;
-
-	glRotatef(angle,x,y,z);
-
-}
-
-void FSScreen::ScreenImpl::procRendTranslation(void* pointer) {
-
-
-	SRenderTranslation* n = (SRenderTranslation*) pointer;
-
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-	GLfloat z = n->z;
-
-	delete n;
-			
-	glTranslatef(x,y,z);
-
-
-}
-
-void FSScreen::ScreenImpl::procRendLocation(void* pointer) {
-
-	SRenderLocation* n = (SRenderLocation*)pointer;
-
-	float posx = n->posx;
-	float posy = n->posy;
-	float width = n->width;
-	float height = n->height;
-
-	delete n;
-
-	//glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
-	glViewport(posx,posy,width,height);
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-
-	static const TypeRendeProjection& trp = FSScreen::I()._impl->trp;
-
-	if (trp == TRP_ORTHO) {
-
-		//Opción ortogonal
-		//glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
-
-		glOrtho( 0.0, (double)width, (double)height, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
-
-	} else {
-
-	    static const float& m_maxZ = FSScreen::I()._impl->m_maxZ;
-
-		//Opción de perspectiva 1
-		gluPerspective(90.0f,width/height,1.0,m_maxZ);
-		glTranslatef(-width/2,height/2,-240.0);
-		glRotatef(180.0,1.0,0.0,0.0);
-
-		//Opción de perspectiva 2
-		//gluPerspective(60.0f,width/height,1.0,400.0);
-		//glTranslatef(0.0,0.0,-205.0);
-		//glTranslatef(0.0,0.0,101.0);
-		//glRotatef(180.0,1.0,0.0,0.0);
-		//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-		//Opción de perspectiva 3
-		//gluPerspective(45.0f,width/height,1.0,400.0);
-		//glTranslatef(0.0,0.0,-290.0);
-		//glRotatef(180.0,1.0,0.0,0.0);
-		//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-		//glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
-		//glTranslatef(0.0,-100.0,120.0);
-	}
-
-
-}
-
-void FSScreen::ScreenImpl::procRendPush(void* pointer) {
-
-	glMatrixMode(GL_MODELVIEW);
-
-	glPushMatrix();
-
-}
-
-void FSScreen::ScreenImpl::procRendPop(void* pointer) {
-
-	glPopMatrix();
-
-}
-
-void FSScreen::ScreenImpl::procRendScalation(void* pointer) {
-
-	SRenderScalation* n = (SRenderScalation*) pointer;
-
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-	GLfloat z = n->z;
-
-	delete n;
-
-	glScalef(x ,y ,z);
-
-}
-
-void FSScreen::ScreenImpl::procRendColor(void* pointer) {
-
-	SRenderColor* n = (SRenderColor*) pointer;
-
-	GLfloat red = n->red;
-	GLfloat green = n->green;
-	GLfloat blue = n->blue;
-	GLfloat alpha = n->alpha;
-
-	delete n;
-
-	glColor4f(red,green,blue,alpha);
 
 }
 
