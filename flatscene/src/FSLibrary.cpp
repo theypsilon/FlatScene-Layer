@@ -103,8 +103,8 @@ int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen,
     return FSScreen::I().start(width,height,bpp,fullscreen,doublebuff);
 }
 
-
-FSLibrary::~FSLibrary() {
+void FSLibrary::LibraryImpl::onExit() {
+    LibraryImpl* _impl = FSLibrary::I()._impl;
     while( !(*_impl).engineIn.empty() ) {
 
         FSEngine * engine = *(*_impl).engineIn.begin();
@@ -144,7 +144,9 @@ FSLibrary::~FSLibrary() {
         }
     }
 #endif
+}
 
+FSLibrary::~FSLibrary() {
     delete _impl;
 }
 

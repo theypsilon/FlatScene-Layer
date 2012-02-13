@@ -30,6 +30,8 @@ struct FSLibrary::LibraryImpl {
     string toStringErrorGL(GLenum e);
 
     static bool orderEngine(FSEngine*,FSEngine*);
+
+    static void onExit();
 };
 
 #endif
