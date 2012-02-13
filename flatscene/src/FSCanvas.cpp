@@ -79,7 +79,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) {
 	// PAINT FLOATCANVAS
 
 	FSScreen::I()._impl->graphicMaterial.push_back(
-		new SRenderCanvasFloat(m_pSurface,ptDst,flags)
+		new FSScreen::ScreenImpl::SRenderCanvasFloat(m_pSurface,ptDst,flags)
 	);
 
 	// USER DEFINED EFFECTS OUT
@@ -178,7 +178,7 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) {
 	// PAINT FLOATCANVAS
 
 	FSScreen::I()._impl->graphicMaterial.push_back(
-		new SRenderCanvasFloat(m_pSurface,ptDst,flags)
+		new FSScreen::ScreenImpl::SRenderCanvasFloat(m_pSurface,ptDst,flags)
 	);
 
 	// USER DEFINED EFFECTS OUT

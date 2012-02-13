@@ -166,10 +166,10 @@ int FSScreen::render()
 
 	_impl->beginRenderMode(RENDER_TEXTURE_STANDARD);
 
-    list<SRender*>& graphicMaterial = _impl->graphicMaterial;
+    list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
 
-	for (list<SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-		SRender* r = *it;
+	for (list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+		ScreenImpl::SRender* r = *it;
 		(*r)();
 	}
 
@@ -200,9 +200,9 @@ int FSScreen::clear ( )
 
 #ifdef MAINRENDERLOOP
 
-	list<SRender*>& graphicMaterial = _impl->graphicMaterial;
-	for (list<SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-		delete *it;
+	list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
+	for (list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+		(**it)();
 	}
 
 	graphicMaterial.clear();
@@ -238,18 +238,17 @@ int FSScreen::locateRenderScene(float posx, float posy, float width, float heigh
     (width <= 0.0f)?  width  = FSScreen::I()._impl->m_Width  : 0 ;
     (height <= 0.0f)? height = FSScreen::I()._impl->m_Height : 0 ;
 
-	SRenderLocation* n = new SRenderLocation;
-	n->posx = posx;
-	n->posy = posy;
-	n->width = width;
-	n->height = height;
-	n->zoom = zoom;
+	ScreenImpl::SRenderLocation* rr = new ScreenImpl::SRenderLocation;
+	rr->posx = posx;
+	rr->posy = posy;
+	rr->width = width;
+	rr->height = height;
+	rr->zoom = zoom;
 
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(n);
+	_impl->graphicMaterial.push_back(rr);
 #else
-	n->operator()();
-	delete n;
+	(*rr)();
 #endif
 
 	return EXITO;
@@ -258,17 +257,16 @@ int FSScreen::locateRenderScene(float posx, float posy, float width, float heigh
 
 int FSScreen::rotate(float angle, float x, float y, float z) {
 
-	SRenderRotation* n = new SRenderRotation;
-	n->angle = angle;
-	n->x = x;
-	n->y = y;
-	n->z = z;
+	ScreenImpl::SRenderRotation* rr = new ScreenImpl::SRenderRotation;
+	rr->angle = angle;
+	rr->x = x;
+	rr->y = y;
+	rr->z = z;
 
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(n);
+	_impl->graphicMaterial.push_back(rr);
 #else
-	n->operator()();
-	delete n;
+	(*rr)();
 #endif
 
 	return EXITO;
@@ -276,16 +274,15 @@ int FSScreen::rotate(float angle, float x, float y, float z) {
 
 int FSScreen::translate(float x, float y, float z) {
 
-	SRenderTranslation* n = new SRenderTranslation;
-	n->x = x;
-	n->y = y;
-	n->z = z;
+	ScreenImpl::SRenderTranslation* rr = new ScreenImpl::SRenderTranslation;
+	rr->x = x;
+	rr->y = y;
+	rr->z = z;
 
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(n);
+	_impl->graphicMaterial.push_back(rr);
 #else
-	n->operator()();
-	delete n;
+	(*rr)();
 #endif
 
 	return EXITO;
@@ -293,16 +290,15 @@ int FSScreen::translate(float x, float y, float z) {
 
 int FSScreen::scale(float x, float y, float z) {
 	
-	SRenderScalation* n = new SRenderScalation;
-	n->x = x;
-	n->y = y;
-	n->z = z;
+	ScreenImpl::SRenderScalation* rr = new ScreenImpl::SRenderScalation;
+	rr->x = x;
+	rr->y = y;
+	rr->z = z;
 
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(n);
+	_impl->graphicMaterial.push_back(rr);
 #else
-	n->operator()();
-	delete n;
+	(*rr)();
 #endif
 
 	return EXITO;
@@ -310,18 +306,17 @@ int FSScreen::scale(float x, float y, float z) {
 
 int FSScreen::color(float red, float green, float blue, float alpha) {
 
-	SRenderColor* n = new SRenderColor;
+	ScreenImpl::SRenderColor* rr = new ScreenImpl::SRenderColor;
 
-	_impl->red = n->red = red;
-	_impl->green = n->green = green;
-	_impl->blue = n->blue = blue;
-	_impl->alpha = n->alpha = alpha;
+	_impl->red = rr->red = red;
+	_impl->green = rr->green = green;
+	_impl->blue = rr->blue = blue;
+	_impl->alpha = rr->alpha = alpha;
 
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(n);
+	_impl->graphicMaterial.push_back(rr);
 #else
-	n->operator()();
-	delete n;
+	(*rr)();
 #endif
 
 	return EXITO;
@@ -348,9 +343,9 @@ int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 }
 
 int FSScreen::pushMatrix() {
-	static SRenderPushMatrix rr;
+	static ScreenImpl::SRenderPushMatrix rr;
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(static_cast<SRender*>(&rr));
+	_impl->graphicMaterial.push_back(static_cast<ScreenImpl::SRender*>(&rr));
 #else
 	rr();
 #endif
@@ -360,9 +355,9 @@ int FSScreen::pushMatrix() {
 }
 
 int FSScreen::popMatrix() {
-	static SRenderPopMatrix rr;
+	static ScreenImpl::SRenderPopMatrix rr;
 #ifdef MAINRENDERLOOP
-	_impl->graphicMaterial.push_back(static_cast<SRender*>(&rr));
+	_impl->graphicMaterial.push_back(static_cast<ScreenImpl::SRender*>(&rr));
 #else
 	rr();
 #endif
@@ -512,7 +507,7 @@ int FSScreen::setDoublebuffer(bool doublebuff) {
 FSScreen& FSDraw = FSScreen::I();
 #endif
 
-void SRenderLocation::operator()() {
+void FSScreen::ScreenImpl::SRenderLocation::operator()() {
 	//glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
 	glViewport(posx,posy,width,height);
 	glMatrixMode( GL_PROJECTION );
@@ -555,32 +550,32 @@ void SRenderLocation::operator()() {
     delete this;
 }
 
-void SRenderTranslation::operator()() {
+void FSScreen::ScreenImpl::SRenderTranslation::operator()() {
 	glTranslatef(x,y,z);
     delete this;
 }
 
-void SRenderScalation::operator()() {
+void FSScreen::ScreenImpl::SRenderScalation::operator()() {
 	glScalef(x,y,z);
     delete this;
 }
 
-void SRenderRotation::operator()() {
+void FSScreen::ScreenImpl::SRenderRotation::operator()() {
 	glRotatef(angle,x,y,z);
     delete this;
 }
 
-void SRenderColor::operator()() {
+void FSScreen::ScreenImpl::SRenderColor::operator()() {
 	glColor4f(red,green,blue,alpha);
     delete this;
 }
 
-void SRenderPushMatrix::operator()() {
+void FSScreen::ScreenImpl::SRenderPushMatrix::operator()() {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 }
 
-void SRenderPopMatrix::operator()() {
+void FSScreen::ScreenImpl::SRenderPopMatrix::operator()() {
     glPopMatrix();
 }
 
@@ -638,5 +633,5 @@ inline void SRenderCanvasFunc(SCanvas& m_pSurface,Uint8 flags) {
 	}
 };
 
-void SRenderCanvasInt::operator()() { SRenderCanvasFunc(canvas,flags); delete this; }
-void SRenderCanvasFloat::operator()() { SRenderCanvasFunc(canvas,flags); delete this; }
+void FSScreen::ScreenImpl::SRenderCanvasInt::operator()() { SRenderCanvasFunc(canvas,flags); delete this; }
+void FSScreen::ScreenImpl::SRenderCanvasFloat::operator()() { SRenderCanvasFunc(canvas,flags); delete this; }
