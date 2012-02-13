@@ -75,8 +75,6 @@ private:
 	friend class FSImages;
 	friend class FSWriter;
 	friend class FSTextBox;
-
-	friend class SRenderLocation;
 };
 #ifdef GLOBAL_SINGLETON_REFERENCES
 extern FSScreen& FSDraw;
