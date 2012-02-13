@@ -28,20 +28,6 @@ typedef struct {
     SDL_Surface* sdl_surf; // NULL or not null, thats the question.
 }SCanvas;
 
-struct SToRender;
-
-enum TypeResource {
-    TR_CANVAS,
-    TR_FLOATCANVAS,
-    TR_ROTATION,
-    TR_TRANSLATION,
-    TR_LOCATION,
-    TR_PUSHMATRIX,
-    TR_POPMATRIX,
-    TR_SCALATION,
-    TR_COLOR
-};
-
 class FSCanvas {
 private:
     SCanvas m_pSurface ;
