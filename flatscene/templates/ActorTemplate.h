@@ -23,7 +23,7 @@ public:
 	// Devuelve un CSprite. Definici�n opcional. Ya tiene la siguiente implementaci�n :
 	//
 	//	CSprite* CActor::getSprite() {
-	//		return Img.get(file)->get(graph);
+	//		return FSImages::I().get(file)->get(graph);
 	//	}
 	//
 	// S�lo definir si se desea hacer una operaci�n diferente

@@ -2,9 +2,12 @@
 #define __MAINCANVAS_H__
 
 #include "FSCanvas.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 #include "FSColor.h"
 #include <list>
+
+#include "FSSingleton.h"
+#include "FSNoncopyable.h"
 
 #define RENDER_TEXTURE_STANDARD 0x00000001
 
@@ -15,157 +18,67 @@ enum TypeRendeProjection {
 	TRP_PERSPECTIVE
 };
 
-struct SToRender {
-	TypeResource type;
-	void* pointer;
-};
+class FSScreen : private FSNoncopyable, public FSSingleton<FSScreen> {
+    friend class FSSingleton<FSScreen>;
+public:
+	//constructor
+	int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
+	int start ( int width , int height , int bpp , float scalex, float scaley,bool fullscreen, bool doublebuff=true ) ;
 
-struct SRenderCanvas {
-	SCanvas canvas;
-	FSPoint ptDst;
-	Uint8 flags;
+	int render();
 
-	SRenderCanvas(SCanvas canvas, FSPoint ptDst, Uint8 flags) 
-	: canvas(canvas), ptDst(ptDst), flags(flags) {
-	}
-};
+	int clear ( ) ;
 
-struct SRenderFloatCanvas {
-	SCanvas canvas;
-	FSFloatPoint ptDst;
-	Uint8 flags;
+	int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
+	int translate(float x, float y, float z);
+	int scale(float x, float y, float z);
+	int color(float red, float green, float blue, float alpha);
+	int color(FSColor* col,float alpha=1.0);
+	int projectionMode(TypeRendeProjection trp, float zMax=400.0);
 
-	SRenderFloatCanvas(SCanvas canvas,FSFloatPoint ptDst, Uint8 flags) 
-	: canvas(canvas), ptDst(ptDst), flags(flags) {
-	}
-};
+	int pushMatrix();
+	int popMatrix();
 
-struct SRenderLocation { // LOCATE
-	float posx;
-	float posy; 
-	float width; 
-	float height; 
-	float zoom;
-};
+	int locateRenderScene ( float posx=0.0, float posy=0.0, float width=0.0, float height=0.0, float zoom = 1.0) ;
 
-struct SRenderTranscalation { // TRANSLATE && SCALATION
-	GLfloat x;
-	GLfloat y;
-	GLfloat z;
-};
+	Uint8 getBpp();
 
-struct SRenderRotation { // ROTATION
-	GLfloat angle;
-	GLfloat x; 
-	GLfloat y; 
-	GLfloat z; 
-};
+	int changeScreen( int width , int height , int bpp ,  float scalex=1.0, float scaley=1.0, bool fullscreen = false) ;
 
-struct SRenderColor { // ROTATION
-	GLfloat red;
-	GLfloat green; 
-	GLfloat blue; 
-	GLfloat alpha; 
-};
+	int ToggleFullscreen ();
 
+	int setDoublebuffer (bool doublebuff);
+	//destructor
+	int quit();
 
+	int getWidth();
 
-//main canvas, abstract primary display surface
-class FSScreen
-{
+	int getHeight();
+
+	bool isFullscreen();
+
+	float getR(),getG(),getB(),getA();
+
 private:
-	static SDL_Surface* m_SDL_Surface;
+    struct ScreenImpl;
+    ScreenImpl* _impl;
 
-	static bool rendering;
-	static TypeRendeProjection trp;
+    FSScreen();
+    virtual ~FSScreen();
 
-	static float m_maxZ;
-
-	static bool m_FullScreen,m_Doublebuff;
-
-	static int m_Width,m_Height,m_Bpp;
-
-	static list<SToRender*> graphicMaterial;
-
-	static list<FSSprite*> spriteToDelete;
-	static list<FSSpriteset*> spritesetToDelete;
-	static list<FSCanvas*> imageToDelete;
-
-	static void deleteResources();
-
-	static void saveResources(GraphicResources& info);
-	static void reloadResources(GraphicResources& info);
-
-
-	static float red,green,blue,alpha;
-
-
-	static map<TypeResource,void (*)(void*)> procRenders;
-
-	static void initProcRenders();
-
-	static void procRendCanvas(void* pointer);
-	static void procRendFloatCanvas(void* pointer);
-	static void procRendRotation(void* pointer);
-	static void procRendTranslation(void* pointer);
-	static void procRendLocation(void* pointer);
-	static void procRendPush(void* pointer);
-	static void procRendPop(void* pointer);
-	static void procRendScalation(void* pointer);
-	static void procRendColor(void* pointer);
-
-	static int beginRenderMode(Uint32 flags);
-	static int endRenderMode(Uint32 flags);
-
-	friend class FSLibrary;
 	friend class FSCamera;
 
 	friend class FSSpriteset;
 	friend class FSSprite;
 	friend class FSCanvas;
 
-	friend class FSControlImages;
+	friend class FSImages;
 	friend class FSWriter;
 	friend class FSTextBox;
-
-public:
-	//constructor
-	static int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
-	static int start ( int width , int height , int bpp , float scalex, float scaley,bool fullscreen, bool doublebuff=true ) ;
-
-	static int render();
-
-	static int clear ( ) ;
-
-	static int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
-	static int translate(float x, float y, float z);
-	static int scale(float x, float y, float z);
-	static int color(float red, float green, float blue, float alpha);
-	static int color(FSColor* col,float alpha=1.0);
-	static int projectionMode(TypeRendeProjection trp, float zMax=400.0);
-
-	static int pushMatrix();
-	static int popMatrix();
-
-	static int locateRenderScene ( float posx=0.0, float posy=0.0, float width=m_Width, float height=m_Height, float zoom = 1.0) ;
-
-	static Uint8 getBpp();
-
-	static  int changeScreen( int width , int height , int bpp ,  float scalex=1.0, float scaley=1.0, bool fullscreen = m_FullScreen) ;
-
-	static int ToggleFullscreen ();
-
-	static int setDoublebuffer (bool doublebuff);
-	//destructor
-	static int quit();
-
-	static int getWidth() { return m_Width; };
-
-	static int getHeight() { return m_Height; };
-
-	static bool isFullscreen() { return m_FullScreen; };
-
-	static float getR(),getG(),getB(),getA();
 };
+#ifdef GLOBAL_SINGLETON_REFERENCES
+extern FSScreen& FSDraw;
+#endif
+
 
 #endif 

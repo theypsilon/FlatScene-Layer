@@ -1,5 +1,5 @@
 #include "PAnimation.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 #include "FSLibrary.h"
 
 PAnimation::PAnimation(int num ,int* sequence, int sptset ) : FSMessageHandler(NULL), control(new PControlAnimation(num,sequence)), img(new PImage(sptset)), _retardo(16) {

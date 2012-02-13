@@ -22,13 +22,13 @@ int CTestOSDesktopInterface::onInit() {
 
     fondo = new CActorMouse(this);
 
-    camaraf = new CCameraOS(fondo, new FSRectangle(0,0,FSScreen::getWidth(),FSScreen::getHeight()),this);
+    camaraf = new CCameraOS(fondo, new FSRectangle(0,0,FSDraw.getWidth(),FSDraw.getHeight()),this);
 
-    FSScreen::projectionMode(TRP_PERSPECTIVE,1000);
+    FSDraw.projectionMode(TRP_PERSPECTIVE,1000);
 
     raton = new CActorMouse(this);
 
-    camarar = new CCameraOS(raton, new FSRectangle(0,0,FSScreen::getWidth(),FSScreen::getHeight()),this);
+    camarar = new CCameraOS(raton, new FSRectangle(0,0,FSDraw.getWidth(),FSDraw.getHeight()),this);
 
     fondo->file = Img.add("flower-wallpaper-800x600.jpg");
     fondo->graph = 0;
@@ -43,8 +43,8 @@ int CTestOSDesktopInterface::onInit() {
 
 int CTestOSDesktopInterface::loop() {
 
-    if (FSScreen::changeScreen(800,600,32,1.0,1.0,false) == FRACASO)
-        FSScreen::start(800,600,32,1.0,1.0,false);
+    if (FSDraw.changeScreen(800,600,32,1.0,1.0,false) == FRACASO)
+        FSDraw.start(800,600,32,1.0,1.0,false);
 
 
     Write.erase();
@@ -58,7 +58,7 @@ int CTestOSDesktopInterface::loop() {
     
     FSEngine::loop();
 
-    FSScreen::changeScreen(640,480,32,2.0,2.0,false);
+    FSDraw.changeScreen(640,480,32,2.0,2.0,false);
 
 
 
@@ -159,7 +159,7 @@ int CTestOSDesktopInterface::onIdle() {
 
 void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
-    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLibrary::getActualEngine();
+    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLib.getActualEngine();
     SDLKey key = event->key.keysym.sym;
 
     if (event->type == SDL_KEYDOWN) {
@@ -181,7 +181,7 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
             os->down = true;
 
         } else if (key==SDLK_F1) 
-            FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_ChangeEngine);
+            FSLib.getLibrary().SendMessage(FSLib.MSGID_ChangeEngine);
 
     } else if (event->type == SDL_KEYUP) {
 
@@ -208,18 +208,18 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
 void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
-    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLibrary::getActualEngine();
+    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLib.getActualEngine();
 
-    int x = os->raton->renderPoint.x = event->motion.x;
-    int y = os->raton->renderPoint.y = event->motion.y;
+	float x = (float) (os->raton->renderPoint.x = (int) event->motion.x),
+		  y = (float) (os->raton->renderPoint.y = (int) event->motion.y);
 
     if (os->lastx != 0.0) {
 
-        int diffx=x-os->lastx;
-        int diffy=y-os->lasty;
+        float diffx=x-os->lastx,
+			  diffy=y-os->lasty;
 
-        os->xrot += (float) diffy / 10.0; 
-        os->yrot += (float) diffx / 10.0;    
+        os->xrot += diffy / 10.0f; 
+        os->yrot += diffx / 10.0f;    
 
     }
 

@@ -7,7 +7,7 @@
 #include "FSRectangle.h"
 #include "FSCanvas.h"
 #include "FSColor.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 #include "Map.h"
 #include <math.h>
 #include <vector>

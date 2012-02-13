@@ -15,6 +15,7 @@
 #include "FSColor.h"
 #include <string>
 #include <list>
+#include <functional>
 #include <map>
 
 using namespace std;
@@ -26,20 +27,6 @@ typedef struct {
     Uint8 bpp;
     SDL_Surface* sdl_surf; // NULL or not null, thats the question.
 }SCanvas;
-
-struct SToRender;
-
-enum TypeResource {
-    TR_CANVAS,
-    TR_FLOATCANVAS,
-    TR_ROTATION,
-    TR_TRANSLATION,
-    TR_LOCATION,
-    TR_PUSHMATRIX,
-    TR_POPMATRIX,
-    TR_SCALATION,
-    TR_COLOR
-};
 
 class FSCanvas {
 private:
@@ -54,7 +41,7 @@ private:
     friend class FSSprite;
     friend class FSSpriteset;
     friend class FSWriter;
-    friend class FSControlImages;
+    friend class FSImages;
     friend class FSScreen;
 
     static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
@@ -62,19 +49,8 @@ private:
 
     static inline Uint32 pow2 (Uint32 n);
 
-    list<SToRender*> initRenderList;
-    list<SToRender*> endRenderList;
-
-    static map<TypeResource,void (*)(void*)> procRenders;
-
-    static void initProcRenders();
-
-    static void procRendRotation(void* pointer);
-    static void procRendTranslation(void* pointer);
-    static void procRendScalation(void* pointer);
-    static void procRendColor(void* pointer);
-    static void procRendPush(void* pointer);
-    static void procRendPop(void* pointer);
+	list<std::function<void(void)>> initCallbackList;
+	list<std::function<void(void)>> endCallbackList;
 
 public:
 

@@ -1,8 +1,8 @@
 #include "ActorMouse.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 
 CActorMouse::CActorMouse(FSMessageHandler * pmhParent) : 
-// Se ha de llamar a la clase Base para una correcta inicialización
+// Se ha de llamar a la clase Base para una correcta inicializaciï¿½n
 FSActor("raton",pmhParent) {
 
 	// TODO
@@ -36,7 +36,7 @@ int CActorMouse::setUniverse(FSUniverse* m) {
 
 	return EXITO;
 
-	// CActor::setUniverse(m) realiza la asignación : inUniverse=m;
+	// CActor::setUniverse(m) realiza la asignaciï¿½n : inUniverse=m;
 }
 
 FSSprite* CActorMouse::getSprite() {

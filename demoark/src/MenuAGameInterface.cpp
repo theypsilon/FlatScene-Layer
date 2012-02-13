@@ -1,6 +1,6 @@
 #include "MenuAGameInterface.h"
 #include "FSLibrary.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 #include "FSWriter.h"
 #include "FSScreen.h"
 
@@ -35,7 +35,7 @@ int CMenuAGameInterface::onInit() {
 
 	dest.set(22,25);
 
-	FSScreen::locateRenderScene();
+	FSDraw.locateRenderScene();
 
 	texts.push_back("Continuar");
 	texts.push_back("Modo de Pantalla : ");
@@ -50,7 +50,7 @@ int CMenuAGameInterface::onInit() {
 	}
 
 	char c[32];
-	if (!FSScreen::isFullscreen())
+	if (!FSDraw.isFullscreen())
 		sprintf(c,"Modo Ventana");
 	else
 		sprintf(c,"Pantalla Completa");
@@ -73,19 +73,19 @@ int CMenuAGameInterface::onInit() {
 //idle. Main loop.
 int CMenuAGameInterface::onIdle()
 {
-	FSScreen::clear();
+	FSDraw.clear();
 
-	FSScreen::locateRenderScene(0,0,RESOLUCION_X*2,RESOLUCION_Y*2);
+	FSDraw.locateRenderScene(0,0,RESOLUCION_X*2,RESOLUCION_Y*2);
 
 	FSPoint m = dest;
 
-	FSScreen::pushMatrix();
+	FSDraw.pushMatrix();
 
-	FSScreen::scale(2.0,2.0,1.0);
+	FSDraw.scale(2.0,2.0,1.0);
 
 	Img.get(file)->get(0)->put(m);
 
-	FSScreen::popMatrix();
+	FSDraw.popMatrix();
 
 	Write.render();
 	
@@ -142,17 +142,17 @@ void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_ESCAPE && pushed) {
-		getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
-		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
+		getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
+		getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
 	} else if (sym==SDLK_RETURN && pushed) {
 		if (opcion == 0) {
-			getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
-			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
+			getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
 		}	else if (opcion == 1) {
-			FSScreen::ToggleFullscreen();
+			FSDraw.ToggleFullscreen();
 
 			char c[32];
-			if (!FSScreen::isFullscreen())
+			if (!FSDraw.isFullscreen())
 				sprintf(c,"Modo Ventana");
 			else
 				sprintf(c,"Pantalla Completa");
@@ -161,17 +161,17 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 				Write.erase(y);
 				y=Write.line(0,232,70,"%s",c);
 			} catch (...) {
-				FSLibrary::Error("MenuA IdTexts vector bad access");
+				FSLib.Error("MenuA IdTexts vector bad access");
 			}
 		
 		} else if (opcion == 2) {
 			int aux = Chrono.setInterval(0,true);
 			if (aux == 0)	 {
 				aux=16;
-				FSScreen::setDoublebuffer(true);
+				FSDraw.setDoublebuffer(true);
 			} else {
 				aux=0;
-				FSScreen::setDoublebuffer(false);
+				FSDraw.setDoublebuffer(false);
 			}
 
 			char c[32];
@@ -191,15 +191,15 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
 				Write.erase(y);
 				y=Write.line(0,110,100,"%s",c);
 			} catch (...) {
-				FSLibrary::Error("MenuA IdTexts vector bad access");
+				FSLib.Error("MenuA IdTexts vector bad access");
 			}
 		} else if (opcion == 3) {
-			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
-			getParent()->SendMessage(FSLibrary::MSGID_Restart);
+			getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLib.MSGID_Restart);
 			
 		} else if (opcion == 4) {
-			getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
-			getParent()->SendMessage(FSLibrary::MSGID_Exit);
+			getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+			getParent()->SendMessage(FSLib.MSGID_Exit);
 		}
 		
 		pushed=false;

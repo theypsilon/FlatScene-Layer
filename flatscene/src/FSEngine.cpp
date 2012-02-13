@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "FSEngine.h"
-#include "FSLibrary.h"
-#include "FSControlMultiverse.h"
+#include "FSLibraryImpl.h"
+#include "FSMultiverse.h"
 #include "FSWriter.h"
 
 
@@ -80,7 +80,7 @@ void CEngine::setEventHandler(Uint8 type,void (T::*eventHandler)(SDL_Event*)) {
 	}
 
 	this->eventHandlerRegister2[type] = f;
-}/*
+}
 
 const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
 
@@ -107,32 +107,27 @@ const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*))
 //bucle principal
 int FSEngine::loop() {
 
-	if (!FSLibrary::getLibrary()) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
-
 	if (!isInitialized()) {
-		FSLibrary::Error("Engine not inicialized");
+		FSLibrary::I().Error("Engine not inicialized");
 		return FRACASO;
 	}
 
-	FSLibrary::setActualEngine(this);
+	FSLibrary::I()._impl->setActualEngine(this);
 	
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event)==1);
 		
-	while (FSLibrary::getActualEngine() == this) {
+	while (FSLibrary::I().getActualEngine() == this) {
 			
 		if(
 #ifdef DEBUGTEST
-			!FSLibrary::inDebug() && 
+			!FSLibrary::I().inDebug() && 
 #endif
 			SDL_PollEvent(&event)==1) {
 				
 			if(event.type==SDL_QUIT) {
-				FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_Exit);
+				FSLibrary::I().getLibrary().SendMessage(FSLibrary::I().MSGID_Exit);
 				break;
 			}
 
@@ -157,13 +152,13 @@ int FSEngine::loop() {
 void FSEngine::deselect() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)==1) { }
-	FSLibrary::setActualEngine(NULL);
+	FSLibrary::I()._impl->setActualEngine(NULL);
 }
 
 int FSEngine::drawFrame() {
 
 	if (!isInitialized()) {
-		FSLibrary::Error("Motor not inicialized");
+		FSLibrary::I().Error("Motor not inicialized");
 		return FRACASO;
 	}
 
@@ -183,8 +178,8 @@ int FSEngine::onExit()
 
 	//TODO comprobar valor de vuelta de las siguientes 2 funciones.
 
-	FSMultiverse.clear();
-	Write.erase();
+	FSMultiverse::I().clear();
+	FSWriter::I().erase();
 
 	initialized = false;
 

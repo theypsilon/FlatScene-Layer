@@ -1,5 +1,6 @@
 #include "FSCanvas.h"
 #include "FSLibrary.h"
+#include "FSScreenImpl.h"
 
 #include "debugfuncs.h"
 
@@ -19,17 +20,6 @@ FSCanvas::~FSCanvas( )
 		glDeleteTextures( 1, &(m_pSurface.tex) );
 
 	clearSurface();
-}
-
-void FSCanvas::initProcRenders() {
-
-	procRenders[TR_ROTATION] = procRendRotation;
-	procRenders[TR_TRANSLATION] = procRendTranslation;
-	procRenders[TR_SCALATION] = procRendScalation;
-	procRenders[TR_COLOR] = procRendColor;
-	procRenders[TR_PUSHMATRIX] = procRendPush;
-	procRenders[TR_POPMATRIX] = procRendPop;
-
 }
 
 void FSCanvas::clearSurface ( ) 
@@ -67,92 +57,45 @@ int FSCanvas::getHeight ()
 {
 	return ( m_pSurface.h2 ) ;	
 }
-
-void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) 
-{	
-
+void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) {
 #ifdef MAINRENDERLOOP
 
 	//PUSHMATRIX
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_PUSHMATRIX;
-	em->pointer = NULL;
-
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().pushMatrix();
 
 	//TRANSLATE
 
-	SRenderTranscalation* c_init = new SRenderTranscalation();
-
-	c_init->x = ptDst.x;
-	c_init->y = ptDst.y;
-	c_init->z = 0.0;
-
-	em = new SToRender();
-
-	em->type = TR_TRANSLATION;
-	em->pointer = (void*) c_init;
-
-	FSScreen::graphicMaterial.push_back(em);
+    FSScreen::I().translate(ptDst.x,ptDst.y,0);
 
 	// USER DEFINED EFFECTS IN
 
-	for (list<SToRender*>::iterator iri = initRenderList.begin(), ire = initRenderList.end();iri!=ire;++iri) {
-
-		SToRender* irp = *iri;
-
-		procRenders[irp->type](irp->pointer);
-
-		delete irp;
-
+	for (list<std::function<void()>>::const_iterator iri = initCallbackList.begin(),ire = initCallbackList.end(); iri != ire; ++iri) {
+		(*iri)();
 	}
 
-	initRenderList.clear();
+	initCallbackList.clear();
 
 	// PAINT FLOATCANVAS
 
-	 em = new SToRender;
-
-	em->type = TR_FLOATCANVAS;
-	em->pointer = (void*) new SRenderFloatCanvas(m_pSurface,ptDst,flags);
-	FSScreen::graphicMaterial.push_back(em);
-
-	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
-
-		SToRender* erp = *eri;
-
-		procRenders[erp->type](erp->pointer);
-
-		delete erp;
-
-	}
-
-	endRenderList.clear();
+	FSScreen::I()._impl->graphicMaterial.push_back(
+		new FSScreen::ScreenImpl::SRenderCanvas<FSFloatPoint>(m_pSurface,ptDst,flags)
+	);
 
 	// USER DEFINED EFFECTS OUT
 
-	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
-
-		SToRender* erp = *eri;
-
-		procRenders[erp->type](erp->pointer);
-
-		delete erp;
-
+	for (list<std::function<void()>>::const_iterator iri = endCallbackList.begin(),ire = endCallbackList.end(); iri != ire; ++iri) {
+		(*iri)();
 	}
 
-	endRenderList.clear();
+	endCallbackList.clear();
+
+	if (!endCallbackList.empty())
+		throw std::logic_error("Canvas::put not empty");
 
 	// POPMATRIX
 
-	em = new SToRender;
-
-	em->type = TR_POPMATRIX;
-	em->pointer = NULL;
-
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().popMatrix();
 
 #else
 
@@ -213,87 +156,45 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags)
 		glPopMatrix();
 	}
 
-
-
 #endif
-
 }
-
-void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) 
-{	
-
+void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) {
 #ifdef MAINRENDERLOOP
 
 	//PUSHMATRIX
 
-	SToRender* em = new SToRender;
-
-	em->type = TR_PUSHMATRIX;
-	em->pointer = NULL;
-
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().pushMatrix();
 
 	//TRANSLATE
 
-	SRenderTranscalation* c_init = new SRenderTranscalation();
-
-	c_init->x = ptDst.x;
-	c_init->y = ptDst.y;
-	c_init->z = 0.0;
-
-	em = new SToRender();
-
-	em->type = TR_TRANSLATION;
-	em->pointer = (void*) c_init;
-
-	FSScreen::graphicMaterial.push_back(em);
+	FSScreen::I().translate(ptDst.x,ptDst.y,0);
 
 	// USER DEFINED EFFECTS IN
 
-	for (list<SToRender*>::iterator iri = initRenderList.begin(), ire = initRenderList.end();iri!=ire;++iri) {
-
-		SToRender* irp = *iri;
-
-		procRenders[irp->type](irp->pointer);
-
-		delete irp;
-
+	for (list<std::function<void()>>::const_iterator iri = initCallbackList.begin(),ire = initCallbackList.end(); iri != ire; ++iri) {
+		(*iri)();
 	}
 
-	initRenderList.clear();
+	// PAINT FLOATCANVAS
 
-	// PAINT CANVAS
+	FSScreen::I()._impl->graphicMaterial.push_back(
+		new FSScreen::ScreenImpl::SRenderCanvas<FSPoint>(m_pSurface,ptDst,flags)
+	);
 
-	em = new SToRender;
-
-	em->type = TR_CANVAS;
-	em->pointer = (void*) new SRenderCanvas(m_pSurface,ptDst,flags);
-	FSScreen::graphicMaterial.push_back(em);
-
-	
 	// USER DEFINED EFFECTS OUT
 
-	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
-
-		SToRender* erp = *eri;
-
-		procRenders[erp->type](erp->pointer);
-
-		delete erp;
-
+	for (list<std::function<void()>>::const_iterator iri = endCallbackList.begin(),ire = endCallbackList.end(); iri != ire; ++iri) {
+		(*iri)();
 	}
 
-	endRenderList.clear();
+	endCallbackList.clear();
+
+	if (!endCallbackList.empty())
+		throw std::logic_error("Canvas::put not empty");
 
 	// POPMATRIX
 
-	em = new SToRender;
-
-	em->type = TR_POPMATRIX;
-	em->pointer = NULL;
-
-	FSScreen::graphicMaterial.push_back(em);
-
+	FSScreen::I().popMatrix();
 
 #else
 
@@ -354,11 +255,8 @@ void FSCanvas::put ( FSPoint& ptDst, Uint8 flags)
 		glPopMatrix();
 	}
 
-
 #endif
-
 }
-
 
 SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 
@@ -378,7 +276,7 @@ SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 		ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,0,0,0,0);
 
 	else {
-		FSLibrary::Error("depth mode not valid",TE_SDL_NOMSG);
+		FSLibrary::I().Error("depth mode not valid",TE_SDL_NOMSG);
 		return ret;
 
 	}
@@ -420,7 +318,7 @@ SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 SCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
 	if (pow2(mode) != mode)
-		FSLibrary::Error("CCanvas::LoadIMG -> modo erroneo.");
+		FSLibrary::I().Error("CCanvas::LoadIMG -> modo erroneo.");
 
 	SCanvas pSurface;
 
@@ -428,7 +326,7 @@ SCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 	SDL_Rect area;
 
 	if (surface == NULL) {
-		FSLibrary::Error("CCanvas::LoadIMG -> image Null.");
+		FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
 		pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
 		pSurface.sdl_surf = NULL;
 		return pSurface;
@@ -467,7 +365,7 @@ SCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 				  0x000000ff);
 		#endif
 		if (image == NULL) {
-			FSLibrary::Error("CCanvas::LoadIMG -> image Null.");
+			FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
 			return pSurface;
 		}
 
@@ -648,59 +546,25 @@ Uint32 FSCanvas::pow2 (Uint32 n) {
 
 int FSCanvas::rotate(float angle, float x, float y, float z) {
 
-	//SCALE
-
-	SRenderRotation* c_init = new SRenderRotation();
-
-	c_init->x = x;
-	c_init->y = y;
-	c_init->z = z;
-	c_init->angle = angle;
-
-	SToRender* r_init = new SToRender();
-
-	r_init->type = TR_ROTATION;
-	r_init->pointer = (void*) c_init;
-
-	initRenderList.push_back(r_init);
+	initCallbackList.push_back([=](){
+		FSScreen::I().rotate(angle,x,y,z);
+	});
 
 	return EXITO;
 }
 int FSCanvas::translate(float x, float y, float z) {
 
-	//SCALE
-
-	SRenderTranscalation* c_init = new SRenderTranscalation();
-
-	c_init->x = x;
-	c_init->y = y;
-	c_init->z = z;
-
-	SToRender* r_init = new SToRender();
-
-	r_init->type = TR_TRANSLATION;
-	r_init->pointer = (void*) c_init;
-
-	initRenderList.push_back(r_init);
+	initCallbackList.push_back([=](){
+		FSScreen::I().translate(x,y,z);
+	});
 
 	return EXITO;
 }
 int FSCanvas::scale(float x, float y, float z) {
 
-	//SCALE
-
-	SRenderTranscalation* c_init = new SRenderTranscalation();
-
-	c_init->x = x;
-	c_init->y = y;
-	c_init->z = z;
-
-	SToRender* r_init = new SToRender();
-
-	r_init->type = TR_SCALATION;
-	r_init->pointer = (void*) c_init;
-
-	initRenderList.push_back(r_init);
+	initCallbackList.push_back([=](){
+		FSScreen::I().scale(x,y,z);
+	});
 
 	return EXITO;
 }
@@ -712,109 +576,22 @@ int FSCanvas::color(float red, float green, float blue, float alpha) {
 	if (blue > 1.0) blue = 1.0;
 	if (alpha > 1.0) alpha = 1.0;
 
-	SRenderColor * c_init = new SRenderColor();
+	initCallbackList.push_back([=](){
+		FSScreen::I().color(red,green,blue,alpha);
+	});
 
-	c_init->red = red;
-	c_init->green = green;
-	c_init->blue = blue;
-	c_init->alpha = alpha;
+	red = FSScreen::I()._impl->red;//2.0 - red;
+	green = FSScreen::I()._impl->green;//2.0 - green;
+	blue = FSScreen::I()._impl->blue;//2.0 - blue;
+	alpha =  FSScreen::I()._impl->alpha;//2.0 - alpha;
 
-	SToRender* r_init = new SToRender();
-
-	r_init->type = TR_COLOR;
-	r_init->pointer = (void*) c_init;
-
-	initRenderList.push_back(r_init);
-	
-
-	SRenderColor * c_fin = new SRenderColor();
-
-	c_fin->red = FSScreen::red;//2.0 - red;
-	c_fin->green = FSScreen::green;//2.0 - green;
-	c_fin->blue = FSScreen::blue;//2.0 - blue;
-	c_fin->alpha =  FSScreen::alpha;//2.0 - alpha;
-
-	SToRender* r_fin = new SToRender();
-
-	r_fin->type = TR_COLOR;
-	r_fin->pointer = (void*) c_fin;
-
-	endRenderList.push_front(r_fin);
+	endCallbackList.push_back([=](){
+		FSScreen::I().color(red,green,blue,alpha);
+	});
 
 	return EXITO;
 }
 
 int FSCanvas::color(FSColor* col, float alpha) {
-
 	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
-}
-
-
-void FSCanvas::procRendPush(void* pointer) {
-	FSScreen::pushMatrix();
-}
-
-void FSCanvas::procRendPop(void* pointer) {
-	FSScreen::popMatrix();
-}
-
-void FSCanvas::procRendRotation(void* pointer) {
-
-	SRenderRotation* n = (SRenderRotation*) pointer;
-
-	GLint angle = n->angle;
-	GLint x = n->x;
-	GLint y = n->y;
-	GLint z = n->z;
-
-	delete n;
-
-	FSScreen::rotate(angle,x,y,z);
-
-}
-
-void FSCanvas::procRendTranslation(void* pointer) {
-
-
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
-
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-
-	GLfloat z = n->z;
-
-	delete n;
-
-	FSScreen::translate(x,y,z);
-
-}
-
-void FSCanvas::procRendScalation(void* pointer) {
-
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
-
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-	GLfloat z = n->z;
-
-	delete n;
-
-	FSScreen::scale(x,y,z);
-
-
-}
-
-void FSCanvas::procRendColor(void* pointer) {
-
-	SRenderColor* n = (SRenderColor*) pointer;
-
-	GLfloat red = n->red;
-	GLfloat green = n->green;
-	GLfloat blue = n->blue;
-	GLfloat alpha = n->alpha;
-
-	delete n;
-
-	FSScreen::color(red,green,blue,alpha);
-
 }

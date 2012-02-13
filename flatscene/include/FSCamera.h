@@ -6,7 +6,7 @@
  
 #include "FSRectangle.h"
 #include "FSCanvas.h"
-#include "FSControlMultiverse.h"
+#include "FSMultiverse.h"
 #include "FSScreen.h"
 #include <vector>
 #include <string>
@@ -22,20 +22,9 @@ protected:
 
 	bool rendering;
 
-	list<SToRender*> initRenderList;
-	list<SToRender*> endRenderList;
+	list<std::function<void()>> initRenderList;
+	list<std::function<void()>> endRenderList;
 
-	static map<TypeResource,void (*)(void*)> procRenders;
-
-	static void initProcRenders();
-
-	static void procRendRotation(void* pointer);
-	static void procRendTranslation(void* pointer);
-	static void procRendLocation(void* pointer);
-	static void procRendScalation(void* pointer);
-	static void procRendColor(void* pointer);
-	static void procRendPush(void* pointer);
-	static void procRendPop(void* pointer);
 public:
 	
 	FSCamera(FSActor* target,FSRectangle* area,FSMessageHandler * pmhParent=NULL);

@@ -1,18 +1,13 @@
 #include "FSWriterImpl.h"
 #include "FSLibrary.h"
 #include "FSparserXML.h"
-#include "FSScreen.h"
+#include "FSScreenImpl.h"
 
 FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
 
     FSEngine* ret = admin;
 
 #ifdef TEXT_OPERATIVE
-
-    if (!singleton) {
-        FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-        return ret;
-    }
 
     if (newAdmin != ret) {
 
@@ -31,28 +26,23 @@ FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
     return ret;
 }
 
-FSWriter* FSWriter::WriterImpl::singleton=NULL;
-
 FSWriter::FSWriter() : _impl(new WriterImpl) {
     _impl->admin = (FSEngine*) 0xFFFFFFFF;
     _impl->data = NULL;
     _impl->fontSize = 20;
 
-    WriterImpl::singleton = NULL;
+	_impl->posx =
+	_impl->posy =
+	_impl->width =
+	_impl->height =
+	_impl->zoom = 0;
 
 	if (TTF_Init()==-1) {
-		FSLibrary::Error("Failed to Init SDL_ttf:",TE_SDL_MSG);
+		FSLibrary::I().Error("Failed to Init SDL_ttf:",TE_SDL_MSG);
 		return;
 	}
 
 	atexit(TTF_Quit);
-
-	if (WriterImpl::singleton) {
-		FSLibrary::Error("COutputText (Write) ya estaba creado.",TE_controlViolation);
-		return;
-	}
-
-	WriterImpl::singleton = this;
 
 	_impl->setAdmin(NULL);
 }
@@ -83,11 +73,6 @@ int FSWriter::searchFont(const char* name, int withSize) {
 int FSWriter::searchFont(const char* name) {
 #ifdef TEXT_OPERATIVE
 
-	if (!WriterImpl::singleton) {
-		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
 	for (map<int,WriterImpl::SFont*>::iterator it = _impl->Fonts.begin();it!=_impl->Fonts.end();++it) {
 		if (strcmp(it->second->cadena.c_str(),name)==0 && it->second->size==_impl->fontSize) {
 			return it->first;
@@ -100,11 +85,6 @@ int FSWriter::searchFont(const char* name) {
 int FSWriter::searchFont(TTF_Font* fnt) {
 #ifdef TEXT_OPERATIVE
 
-	if (!WriterImpl::singleton) {
-		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
 	for (map<int,WriterImpl::SFont*>::iterator it = _impl->Fonts.begin();it!=_impl->Fonts.end();++it) {
 		if (it->second->fuente == fnt) {
 			return it->first;
@@ -116,11 +96,6 @@ int FSWriter::searchFont(TTF_Font* fnt) {
 
 int FSWriter::searchFont(int idtext) {
 #ifdef TEXT_OPERATIVE
-
-	if (!WriterImpl::singleton) {
-		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
 
 	TTF_Font* ret = NULL;
 
@@ -160,11 +135,6 @@ int FSWriter::loadFont(const char* fuente) {
 	int ret= searchFont(fuente);
 #ifdef TEXT_OPERATIVE
 
-	if (!WriterImpl::singleton) {
-		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
 	if (ret < 0) {
 
 		if (!_impl->lastIndexFontAdded.empty()) {
@@ -181,7 +151,7 @@ int FSWriter::loadFont(const char* fuente) {
 		font_ttf = _impl->Fonts[ret] = new WriterImpl::SFont;
 		font_ttf->fuente=TTF_OpenFont((s+".ttf").c_str(),_impl->fontSize);
 		if (font_ttf->fuente==NULL) {
-			FSLibrary::Error("No se ha cargado la fuente: "+s+".ttf  ",TE_fileExists);
+			FSLibrary::I().Error("No se ha cargado la fuente: "+s+".ttf  ",TE_fileExists);
 			delete font_ttf;
 			_impl->lastIndexFontAdded.push_back(ret);
 			return FRACASO;
@@ -210,13 +180,8 @@ int FSWriter::unloadFont(const char* fuente) {
 
 int FSWriter::unloadFont(int fuente) {
 #ifdef TEXT_OPERATIVE
-	if (!WriterImpl::singleton) {
-		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
 	if (_impl->Fonts.find(fuente)==_impl->Fonts.end()) {
-		FSLibrary::Error("No existe la Fuente que se pretende eliminar.",TE_controlViolation);
+		FSLibrary::I().Error("No existe la Fuente que se pretende eliminar.",TE_controlViolation);
 		return FRACASO;
 	}
 
@@ -228,7 +193,7 @@ int FSWriter::unloadFont(int fuente) {
 			map<Uint16,FSCanvas*>& chars =f->render;
 			while (!chars.empty()) {
 				map<Uint16,FSCanvas*>::iterator jt = chars.begin();
-				FSScreen::imageToDelete.push_back(jt->second); // delete jt->second;
+				FSScreen::I()._impl->imageToDelete.push_back(jt->second); // delete jt->second;
 				chars.erase(jt);
 			}
 			delete f;
@@ -236,7 +201,7 @@ int FSWriter::unloadFont(int fuente) {
 			_impl->countFonts.erase(_impl->countFonts.find(f));
 			_impl->lastIndexFontAdded.push_back(fuente);
 		} else {
-			FSLibrary::Error("Cantidad de Fuente violada.",TE_controlViolation);
+			FSLibrary::I().Error("Cantidad de Fuente violada.",TE_controlViolation);
 			return FRACASO;
 		}
 	}
@@ -247,11 +212,6 @@ int FSWriter::unloadFont(int fuente) {
 /*
 CColor CWriter::setColor(int r,int g,int b) {
 #ifdef TEXT_OPERATIVE
-	if (!singleton) {
-		CLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
 	if (admin != CLibrary::getActualEngine())
 		setAdmin(CLibrary::getActualEngine());
 
@@ -267,11 +227,6 @@ CColor CWriter::setColor(int r,int g,int b) {
 
 CColor CWriter::setColor(CColor& color) {
 #ifdef TEXT_OPERATIVE
-	if (!singleton) {
-		CLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
 	if (admin != CLibrary::getActualEngine())
 		setAdmin(CLibrary::getActualEngine());
 
@@ -285,17 +240,14 @@ CColor CWriter::setColor(CColor& color) {
 #endif
 }
 */
+#define _CRT_SECURE_NO_WARNINGS
+
 int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 	int ret = FRACASO;
 #ifdef TEXT_OPERATIVE
 
-	if (!WriterImpl::singleton) {
-		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 	if (_impl->Fonts.find(fuente) != _impl->Fonts.end()) {
 		va_list lista;
@@ -305,6 +257,7 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 		vsprintf (buffer, text, lista);
 
 		va_end (lista);
+		#define _crt_va_end(ap)      ( ap = (va_list)0 )
 
 		if (!_impl->data->lastIndexTextAdded.empty()) {
 			ret = _impl->data->lastIndexTextAdded.back();
@@ -325,8 +278,8 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 
 		string allText(buffer);
 
-		float currentX = x;
-		float currentY = y + (float)TTF_FontAscent(t->Line->fuente->fuente) -3;
+		float currentX = (float) x;
+		float currentY = (float) y + (float)TTF_FontAscent(t->Line->fuente->fuente) -3;
 
 		size_t length = allText.length();
 
@@ -359,7 +312,7 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 			TTF_GlyphMetrics(t->Line->fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance);
 
 			if (newChar == '\n') {
-				currentX = x;
+				currentX = (float) x;
 				currentY += (float)TTF_FontLineSkip(t->Line->fuente->fuente);
 			} else {
 
@@ -393,13 +346,8 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 int FSWriter::erase(int text,bool nextframe) {
 #ifdef TEXT_OPERATIVE
 
-	if (!WriterImpl::singleton) {
-		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 	if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
 		
@@ -449,8 +397,8 @@ int FSWriter::inBox(const char* file, int index) {
 	int ret = FRACASO;
 #ifdef TEXT_OPERATIVE
 	
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 	if (_impl->admin) {
 
@@ -458,12 +406,12 @@ int FSWriter::inBox(const char* file, int index) {
 		s += ".xml";
 
 		TiXmlDocument xmldoc(s.c_str());
-		if (!xmldoc.LoadFile()) {	 FSLibrary::Error(file,TE_fileExists); }	// Cargamos la biblioteca de textos.
+		if (!xmldoc.LoadFile()) {	 FSLibrary::I().Error(file,TE_fileExists); }	// Cargamos la biblioteca de textos.
 
 		TiXmlElement* parent = xmldoc.FirstChildElement("TextList");
 
 		if (!parent) {	 
-			FSLibrary::Error(file,TE_fileExists); 
+			FSLibrary::I().Error(file,TE_fileExists); 
 			return FRACASO;
 		}	
 
@@ -476,7 +424,7 @@ int FSWriter::inBox(const char* file, int index) {
 			gsize = textNode->QueryIntAttribute("size",&gsize);
 		} else {
 			if (_impl->Fonts.empty()) {
-				FSLibrary::Error("No hay fuente especificada");
+				FSLibrary::I().Error("No hay fuente especificada");
 				return FRACASO;
 			}
 			gfont = _impl->Fonts[0]->cadena.c_str();
@@ -526,10 +474,10 @@ int FSWriter::inBox(const char* file, int index) {
 			//data->Boxs.push_back(new CTextBox(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next));
 
 		} else {
-			FSLibrary::Error("Texto no encontrado");
+			FSLibrary::I().Error("Texto no encontrado");
 		}
 	} else {
-		FSLibrary::Error("Los cuadros de texto deben crearse bajo el dominio de un manejador de eventos");
+		FSLibrary::I().Error("Los cuadros de texto deben crearse bajo el dominio de un manejador de eventos");
 	}
 #endif
 	return ret;
@@ -538,8 +486,8 @@ int FSWriter::inBox(const char* file, int index) {
 
 int FSWriter::color(int text,float red, float green, float blue, float alpha, TypeColorTBox boxflags, bool persistent) {
 #ifdef TEXT_OPERATIVE
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 	if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
 	
@@ -566,7 +514,7 @@ int FSWriter::color(int text,float red, float green, float blue, float alpha, Ty
 			
 	} else {
 
-		FSLibrary::Error("Text not found");
+		FSLibrary::I().Error("Text not found");
 		return FRACASO;
 
 	}
@@ -578,14 +526,14 @@ int FSWriter::color(int text,float red, float green, float blue, float alpha, Ty
 
 int FSWriter::color(int text,FSColor* col, float alpha, TypeColorTBox boxflags, bool persistent) {
 
-	return color(text,((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha,boxflags,persistent);
+	return color(text,((float)col->getR())/255.0f,((float)col->getG())/255.0f,((float)col->getB())/255.0f,alpha,boxflags,persistent);
 
 }
 
 int FSWriter::locateRenderScene ( float posx, float posy, float width, float height, float zoom) {
 
 	if ( width == 0.0 || height == 0.0) {
-		FSLibrary::Error("Width/Height invalid value");
+		FSLibrary::I().Error("Width/Height invalid value");
 		return FRACASO;
 	}
 
@@ -601,19 +549,14 @@ int FSWriter::locateRenderScene ( float posx, float posy, float width, float hei
 int FSWriter::render() {
 #ifdef TEXT_OPERATIVE
 
-	if (!WriterImpl::singleton) {
-		FSLibrary::Error("SDL_ttf no inicializado, ver errores registrados al inicio.",TE_SDL_NOMSG);
-		return FRACASO;
-	}
-
-	if (_impl->admin != FSLibrary::getActualEngine())
-	    _impl->setAdmin(FSLibrary::getActualEngine());
+	if (_impl->admin != FSLibrary::I().getActualEngine())
+	    _impl->setAdmin(FSLibrary::I().getActualEngine());
 
 
 	if ( _impl->width == 0.0 || _impl->height == 0.0)
-		FSScreen::locateRenderScene(0,0,FSScreen::getWidth(),FSScreen::getHeight(),0); //
+		FSScreen::I().locateRenderScene(0,0,(float)FSScreen::I().getWidth(),(float)FSScreen::I().getHeight(),0); //
 	else
-		FSScreen::locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
+		FSScreen::I().locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
 
 
 	map<int,WriterImpl::FSText*> deleteText;
@@ -716,7 +659,7 @@ void FSWriter::clear() {
 		map<Uint16,FSCanvas*>& chars = it->second->render;
 		while (!chars.empty()) {
 			map<Uint16,FSCanvas*>::iterator jt = chars.begin();
-			FSScreen::imageToDelete.push_back(jt->second); // delete jt->second;
+			FSScreen::I()._impl->imageToDelete.push_back(jt->second); // delete jt->second;
 			chars.erase(jt);
 		}
 		delete it->second;
@@ -731,4 +674,6 @@ void FSWriter::clear() {
 #endif
 }
 
-FSWriter Write;
+#ifdef GLOBAL_SINGLETON_REFERENCES
+FSWriter& Write = FSWriter::I();
+#endif

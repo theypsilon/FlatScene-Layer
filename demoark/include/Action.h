@@ -1,7 +1,7 @@
 #ifndef __ACTION_H__
 #define __ACTION_H__
 
-#include "FSControlImages.h"
+#include "FSImages.h"
 #include "Animation.h"
 #include "FSdefinitions.h"
 #include "Node.h"

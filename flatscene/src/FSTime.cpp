@@ -14,25 +14,20 @@ FSTime::FSTime() : actTime(NULL), admin(NULL), all(false), allMsInterval(16) {
 FSTime::~FSTime() {
 }
 
-int FSTime::getTick() {
+unsigned int FSTime::getTick() const {
 
-	if (!FSLibrary::getLibrary()) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
-
-	if (admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
+	if (admin != FSLibrary::I().getActualEngine()) {
+		admin = FSLibrary::I().getActualEngine();
 		actTime = & fc[admin];
 	}
 
 	return actTime->frameCount;
 }
 
-int FSTime::setInterval(int msNew, bool all) {
+unsigned int FSTime::setInterval(unsigned int msNew, bool all) {
 
-	if (!all && admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
+	if (!all && admin != FSLibrary::I().getActualEngine()) {
+		admin = FSLibrary::I().getActualEngine();
 		actTime = & fc[admin];
 	}
 
@@ -51,7 +46,7 @@ int FSTime::setInterval(int msNew, bool all) {
 	return aux;
 }
 
-int FSTime::setFPS(int fpsNew, bool all) {
+unsigned int FSTime::setFPS(unsigned int fpsNew, bool all) {
 
 	int aux = setInterval(1000 / fpsNew, all);
 
@@ -65,17 +60,12 @@ int  FSTime::nextFrame() {
 
 	int ret = EXITO;
 
-	if (!FSLibrary::getLibrary()) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
-
-	if (admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
+	if (admin != FSLibrary::I().getActualEngine()) {
+		admin = FSLibrary::I().getActualEngine();
 		actTime = & fc[admin];
 	}
 
-	if ( FSScreen::render() == FRACASO )
+	if ( FSScreen::I().render() == FRACASO )
 		return FRACASO;
 
 	if (all) {
@@ -102,10 +92,10 @@ int  FSTime::nextFrame() {
 	if (SDL_GetTicks() > auxTimer + 1000) {
 		auxTimer=SDL_GetTicks();
 
-		if (adminText.find(FSLibrary::getActualEngine())!=adminText.end())
-			Write.erase(adminText[FSLibrary::getActualEngine()]);
+		if (adminText.find(FSLibrary::I().getActualEngine())!=adminText.end())
+			FSWriter::I().erase(adminText[FSLibrary::I().getActualEngine()]);
 
-		adminText[FSLibrary::getActualEngine()]=Write.line(0,5,5,"FPS: %d ",fps);
+		adminText[FSLibrary::I().getActualEngine()]=FSWriter::I().line(0,5,5,"FPS: %d ",fps);
 
 		fps=0;
 	}
@@ -115,7 +105,7 @@ int  FSTime::nextFrame() {
 	return ret;
 }
 
-bool FSTime::isTimeForAll() {
+bool FSTime::isTimeForAll() const {
 	return all;
 }
 

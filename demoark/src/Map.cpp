@@ -35,7 +35,7 @@ void CMap::load() {
 	TiXmlDocument xmldoc(("resources/"+name+".xml").c_str());
 
 	if (!xmldoc.LoadFile()) {
-		FSLibrary::Error("No se puede abrir el XML del mapa");
+		FSLib.Error("No se puede abrir el XML del mapa");
 		return;
 	}
 
@@ -44,12 +44,12 @@ void CMap::load() {
 	TiXmlElement* node = input.ToElement();
 
 	if (!node) {
-		FSLibrary::Error("Estructura XML defectuosa del mapa");
+		FSLib.Error("Estructura XML defectuosa del mapa");
 		return;
 	}
 
 	if (!node->Attribute("width") || !node->Attribute("height") || !node->Attribute("layers") || !node->Attribute("tileWidth") || !node->Attribute("tileHeight") || !node->Attribute("name")) {
-		FSLibrary::Error("Atributos XML defectuosos en el mapa");
+		FSLib.Error("Atributos XML defectuosos en el mapa");
 		return;
 	}
 
@@ -90,7 +90,7 @@ void CMap::load() {
 	}
 
 	if (durezaSet == -1 || tileSet == -1) {
-		FSLibrary::Error("TileGraphs y/o TileCollisions defectuosos en el mapa");
+		FSLib.Error("TileGraphs y/o TileCollisions defectuosos en el mapa");
 		return;
 	}
 
@@ -110,7 +110,7 @@ void CMap::load() {
 		} else if (strcmp(auxcad,"upper")==0) {
 			LayerType[aux]=2;
 		} else {
-			FSLibrary::Error("LayerType invalidado cargando el mapa");
+			FSLib.Error("LayerType invalidado cargando el mapa");
 			return;
 		}
 
@@ -120,7 +120,7 @@ void CMap::load() {
 	}
 
 	if (aux != numLayers) {
-		FSLibrary::Error("Definicion de capas defectuosa en el mapa");
+		FSLib.Error("Definicion de capas defectuosa en el mapa");
 		return;
 	}
 
@@ -151,7 +151,7 @@ void CMap::load() {
 	}
 
 	if (aux!=numGates) {
-		FSLibrary::Error("Definicion de gates defectuosa en el mapa");
+		FSLib.Error("Definicion de gates defectuosa en el mapa");
 		return;
 	}
 
@@ -163,7 +163,7 @@ void CMap::load() {
 	
 	FILE* f_map;
 	if ((f_map=fopen(("resources/"+name+".dat").c_str(),"rb"))==NULL) {
-		 FSLibrary::Error(string("El mapa '\n")+name+"' no se encuentra.");
+		 FSLib.Error(string("El mapa '\n")+name+"' no se encuentra.");
 		 return;
 	}
 
@@ -172,7 +172,7 @@ void CMap::load() {
 	fread(&buffer,sizeof(char),4,f_map);
 
 	if (strcmp(buffer,"JMBM")!=0) {
-		FSLibrary::Error("Firma del mapa invalida");
+		FSLib.Error("Firma del mapa invalida");
 		return;
 	}
 
@@ -191,7 +191,7 @@ void CMap::load() {
 	fread(&buffer,sizeof(char),4,f_map);
 
 	if (strcmp(buffer,"JMBM")!=0) {
-		FSLibrary::Error("Firma del mapa invalida");
+		FSLib.Error("Firma del mapa invalida");
 		return;
 	}
 
@@ -321,7 +321,7 @@ int CMap::incActor(FSActor* act) {
 		}
 		return EXITO;
 	} else {
-		FSLibrary::Error((string("Se ha a�adido un actor al mapa ")+getName()+string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
+		FSLib.Error((string("Se ha a�adido un actor al mapa ")+getName()+string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
 		return FRACASO;
 	}
 }

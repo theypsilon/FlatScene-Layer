@@ -25,11 +25,16 @@ CTestAGameInterface::~CTestAGameInterface()	{
 
 int CTestAGameInterface::drawFrame() {
 
-	FSScreen::projectionMode(TRP_PERSPECTIVE,1600);
+	FSDraw.projectionMode(TRP_PERSPECTIVE,1600);
 
-	for (int i=0;i<cams.size();i++) {
+	for (Uint32 i=0;i<cams.size();i++) {
 
-		cams[i]->locateRenderScene(cams[i]->getArea()->x*2,cams[i]->getArea()->y*2,cams[i]->getArea()->w*2,cams[i]->getArea()->h*2);
+		cams[i]->locateRenderScene(
+			(float)cams[i]->getArea()->x*2,
+			(float)cams[i]->getArea()->y*2,
+			(float)cams[i]->getArea()->w*2,
+			(float)cams[i]->getArea()->h*2
+		);
 
 		//cams[i]->scale(2.0,2.0,1.0);
 
@@ -47,7 +52,7 @@ int CTestAGameInterface::onIdle()	{
 
 	//if (~Chrono.getTick() & 0x01) {
 
-	for (UniverseCollection::iterator it=FSMultiverse.begin();it!=FSMultiverse.end();++it) {
+	for (UniverseCollection::iterator it=Cosmos.begin();it!=Cosmos.end();++it) {
 		FSUniverse* mapAct = (*it);
 
 		for (ActorCollection::iterator jt=mapAct->actorBegin();jt!=mapAct->actorEnd();++jt) {
@@ -132,9 +137,13 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 
 		bool enc=false;
 		gate g;
-		for (int i=0;(!enc)&&(i<mapaOrigen->getGates());i++) {
+		for (Uint32 i=0;(!enc)&&(i<mapaOrigen->getGates());i++) {
 			g=mapaOrigen->getGate(i);
-			enc = enc || ((g.regionx1<= p->m_Scrollxy.getX()) && (g.regionx2>=p->m_Scrollxy.getX())&&(g.regiony1<=(p->m_Scrollxy.getY()+mov_y))&&(g.regiony2>= (p->m_Scrollxy.getY()+mov_y))&&(p->m_Scrollxy.getZ()==g.regionz));
+			enc = enc || (((int)g.regionx1<= p->m_Scrollxy.x) && 
+						 ((int)g.regionx2>=p->m_Scrollxy.x)&&
+						 ((int)g.regiony1<=(p->m_Scrollxy.y+mov_y))&&
+						 ((int)g.regiony2>= (p->m_Scrollxy.y+mov_y))&&
+						 ((int)p->m_Scrollxy.getZ()==g.regionz));
 		}
 		if (enc) {
 
@@ -146,14 +155,14 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 					//Adem�s, este no reconvierte un mapa cuando es id�neo, en lugar de crear uno nuevo y destruir el viejo que es m�s costoso.
 					mapaOrigen->decActor((CActorScrollMap*)p);
 
-					CMap* mapaDestino = (CMap*)FSMultiverse.add(new CMap(g.destino.c_str()));	// Si no existe, lo crea, si existe no, y en cualquier caso lo devuelve.
+					CMap* mapaDestino = (CMap*)Cosmos.add(new CMap(g.destino.c_str()));	// Si no existe, lo crea, si existe no, y en cualquier caso lo devuelve.
 
 					if (!mapaDestino->isLoaded())
 						mapaDestino->load();
 
 					mapaDestino->incActor((FSActor*)p);
 
-					for (int i=0;i<cams.size();i++) {
+					for (Uint32 i=0;i<cams.size();i++) {
 						if (cams[i]->Target()==((FSActor*)p)) {
 							cams[i]->resyncUniverse(); // Si el mapa pasa a no ser enfocado por ninguna c�mara, se descarga (unload).
 						} /*else if (strcmp((cams[i]->getUniverse()->getName()).c_str(),nameMapaOrigen.c_str())==0 
@@ -163,16 +172,16 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
 			} 
 #ifdef LOG_MAPAS
 			printf("\tMapas en memoria: ");
-			for (UniverseCollection::iterator it=FSMultiverse.begin();it!=FSMultiverse.end();++it) {
+			for (UniverseCollection::iterator it=Cosmos.begin();it!=Cosmos.end();++it) {
 				if ((*it)->isLoaded())
 					printf("%s, ",(*it)->getName().c_str());
 			}
-			printf("%d\n",FSMultiverse.size());
+			printf("%d\n",Cosmos.size());
 #endif
 		}
 
 	} else if (MsgID==MSGID_DeleteMap)	{
-		FSMultiverse.erase((FSUniverse*)Parm1);
+		Cosmos.erase((FSUniverse*)Parm1);
 	} else if (MsgID==MSGID_KillEnemy) {
 		void** parm = (void**) Parm2;
 

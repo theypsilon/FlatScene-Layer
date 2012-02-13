@@ -26,7 +26,7 @@ int CTestA3GameInterface::onInit() {
 	if (FSEngine::onInit() == FRACASO)
 		return FRACASO;
 
-	FSScreen::clear();
+	FSDraw.clear();
 
 #ifdef LOG_SISTEMA
 	printf("\nTestA3 comienza.\n\n");
@@ -51,6 +51,7 @@ int CTestA3GameInterface::onInit() {
 	activationIds.push_back("pj_normal_alsa");
 
 
+
 	player.push_back(new CPlayer(this));	
 	player[0]->eventChange=false;
 	
@@ -65,7 +66,7 @@ int CTestA3GameInterface::onInit() {
 	activationIds.push_back("npc_normal_quiet");
 	activationIds.push_back("npc_normal_walk");
 
-	CMap* mapDemo = (CMap*) FSMultiverse.add(new CMap("mapextmur"));
+	CMap* mapDemo = (CMap*) Cosmos.add(new CMap("mapextmur"));
 	mapDemo->load();
 
 	player[0]->m_Scrollxy.set(mapDemo->getW()*mapDemo->getTileW()/2,mapDemo->getH()*mapDemo->getTileH()/2,0);
@@ -156,30 +157,30 @@ int CTestA3GameInterface::drawFrame() {
 void CTestA3GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 	if (sym==SDLK_ESCAPE) {
 
-		CMenuAGameInterface* men = new CMenuAGameInterface(FSLibrary::getLibrary());
+		CMenuAGameInterface* men = new CMenuAGameInterface(&FSLib.getLibrary());
 		men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
 		men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
 		men->setPrevious(this);
 
-		FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_RunEngine, (MSGPARM)men);
+		FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)men);
 	} else if (sym==SDLK_SPACE) {
-		CFreezeGameInterface* fgi = new CFreezeGameInterface(FSLibrary::getLibrary());
+		CFreezeGameInterface* fgi = new CFreezeGameInterface(&FSLib.getLibrary());
 		fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
 		fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
 		fgi->setPrevious(this);
 
-		FSLibrary::getLibrary()->SendMessage(FSLibrary::MSGID_RunEngine, (MSGPARM)fgi);
+		FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)fgi);
 	} else if (sym==SDLK_DELETE) {
-		getParent()->SendMessage(FSLibrary::MSGID_Restart);
+		getParent()->SendMessage(FSLib.MSGID_Restart);
 	} else if (sym==SDLK_F1) {
-		getParent()->SendMessage(FSLibrary::MSGID_ChangeEngine);
+		getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
 	} else if (sym==SDLK_F2) {
-		getParent()->SendMessage(FSLibrary::MSGID_ReloadEngine,(MSGPARM)this);
+		getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
 	} else if (sym==SDLK_F3) {
 		deselect();
-		FSScreen::ToggleFullscreen();
+		FSDraw.ToggleFullscreen();
 		loop();
 	}
 	CTestAGameInterface::onKeyDown(sym,mod,unicode);

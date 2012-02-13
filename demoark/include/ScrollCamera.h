@@ -8,7 +8,7 @@
 #include "FSRectangle.h"
 #include "FSCanvas.h"
 #include "Map.h"
-#include "FSControlMultiverse.h"
+#include "FSMultiverse.h"
 #include <vector>
 #include <string>
 

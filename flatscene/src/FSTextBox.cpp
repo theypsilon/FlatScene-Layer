@@ -1,6 +1,7 @@
 #include "FSWriterImpl.h"
 #include "FSTime.h"
 #include "SDL.h"
+#include "FSScreenImpl.h"
 
 #include "FSLibrary.h"
 
@@ -13,8 +14,8 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 	string allText(text);
 	Uint16 limite=xBox=Lim;
 
-	float currentX = upleft.x+MARGEN;
-	float currentY = upleft.y+MARGEN-2;
+	float currentX = (float) upleft.x+MARGEN;
+	float currentY = (float) upleft.y+MARGEN-2;
 	currentY += TTF_FontAscent(fuente->fuente)/2 ;
 
 	col.r=255;
@@ -50,7 +51,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 		int minx,maxy,advance;
 
 		if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance)== -1)
-			FSLibrary::Error("TTF_GlyphMetrics fallo.");
+			FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
 
 		if (newChar == ' ' ) {
 			const char* caux = allText.c_str();
@@ -59,14 +60,14 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
 				if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
-					FSLibrary::Error("TTF_GlyphMetrics fallo.");
+					FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
 
 				cuenta += (float)minx;
 
 			}
 
 			if ((currentX + cuenta - x)>= (limite - MARGEN)) {
-				currentX = upleft.x + MARGEN;
+				currentX = (float) upleft.x + MARGEN;
 				currentY += (float)TTF_FontLineSkip(fuente->fuente);
 			} else {
 				maxStep++;
@@ -79,7 +80,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)	{
 			}
 			
 		} else if (newChar == '\n') {
-			currentX = upleft.x + MARGEN;
+			currentX = (float) upleft.x + MARGEN;
 			currentY += (float)TTF_FontLineSkip(fuente->fuente);
 		} else {
 			maxStep++;
@@ -126,7 +127,7 @@ FSWriter::WriterImpl::FSTextBox::~FSTextBox() {
 		charInDisplay.erase(it);
 	}
 
-	Write.unloadFont(Write.searchFont(fuente->fuente));
+	FSWriter::I().unloadFont(FSWriter::I().searchFont(fuente->fuente));
 }
 
 int FSWriter::WriterImpl::FSTextBox::update() {
@@ -155,8 +156,8 @@ int FSWriter::WriterImpl::FSTextBox::update() {
 		return -1;
 	}
 
-	int i=0;
-	for (list<SChar>::iterator it=charInDisplay.begin();it!=charInDisplay.end() && i<step;++it) {
+	unsigned int i=0;
+	for (list<SChar>::iterator it=charInDisplay.begin(), et=charInDisplay.end();it!=et && i<step;++it) {
 		if (it->p) {
 			if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
 				fuente->render[it->glyph]->color(fx->red,fx->green,fx->blue,fx->alpha);
@@ -176,7 +177,7 @@ int FSWriter::WriterImpl::FSTextBox::update() {
 
 void FSWriter::WriterImpl::FSTextBox::deleteBox() {
 	if (box)
-		FSScreen::imageToDelete.push_back(box); // delete box;
+		FSScreen::I()._impl->imageToDelete.push_back(box); // delete box;
 	box=NULL;
 }
 
@@ -184,16 +185,16 @@ void FSWriter::WriterImpl::FSTextBox::deleteBox() {
 
 void FSWriter::WriterImpl::FSTextBox::createBox() {
 	if (box) {
-		FSLibrary::Error("Ya existe el fondo de la caja que se pretende crear.");
+		FSLibrary::I().Error("Ya existe el fondo de la caja que se pretende crear.");
 		return;
 	}
 
 	SDL_Surface *surface, *aux_surf;
 
-	aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,FSScreen::getBpp(),0,0,255,0);
-	if (!aux_surf)	FSLibrary::Error("No se ha creado bien la superficie para la TextBox.");
+	aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,FSScreen::I().getBpp(),0,0,255,0);
+	if (!aux_surf)	FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
 	surface = SDL_DisplayFormat(aux_surf);
-	if (!surface)	FSLibrary::Error("No se ha creado bien la superficie para la TextBox.");
+	if (!surface)	FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
 	SDL_FreeSurface(aux_surf);
 	SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
 
@@ -204,9 +205,9 @@ int FSWriter::WriterImpl::FSTextBox::finish() {
 	int ret = -1;
 	if (next!=-1) {
 
-		ret = Write.inBox(file.c_str(),next);
+		ret = FSWriter::I().inBox(file.c_str(),next);
 		if (fx && fx->persistent) {
-			Write.color(ret,fx->red,fx->green,fx->blue,fx->alpha,fx->boxflags,true);
+			FSWriter::I().color(ret,fx->red,fx->green,fx->blue,fx->alpha,fx->boxflags,true);
 		}
 		if (ret == -1) {
 			; // ODOT : Quitar el error de la cola.

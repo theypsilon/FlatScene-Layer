@@ -46,9 +46,9 @@ public:
     //devuelve la lista de puntos de control.
     vector<RectArea*>& getAllAreas () ;
     //devuelve el en�simo punto de control dentro del array de puntos de control.
-    RectArea* getArea(int n);
+    RectArea* getArea(unsigned int n);
 
-    FSRectangle* getRect(int n,int m);
+    FSRectangle* getRect(unsigned int n,unsigned int m);
 
     FSPoint* getCenter();
 
@@ -56,11 +56,11 @@ public:
     //a�ade al final de la lista el punto cpSource
     int addArea(RectArea* area);
 
-    int addRect(int area,FSRectangle* rect);
+    int addRect(unsigned int area,FSRectangle* rect);
     //substituye en el punto de control de la posici�n n, por cpSource
-    void replaceArea(int n,RectArea* area);
+    void replaceArea(unsigned int n,RectArea* area);
     //devuelve el n�mero de Control Points que posee el Sprite.
-    void replaceRect(int area,int n,FSRectangle* rect);
+    void replaceRect(unsigned int area,unsigned int n,FSRectangle* rect);
 
     int size();
 

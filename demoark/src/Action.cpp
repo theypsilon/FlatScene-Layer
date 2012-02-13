@@ -72,7 +72,7 @@ void CAction::lastExecute() {
 }
 
 CAction* CAction::clone(CActorScrollMap* exe) {
-	FSLibrary::Error("CAction no implementa un metodo de clonación por defecto.");
+	FSLib.Error("CAction no implementa un metodo de clonaciï¿½n por defecto.");
 	return NULL;
 }
 

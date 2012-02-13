@@ -7,7 +7,7 @@
 #include <list>
 #include <string>
 
-class FSControlMultiverse;
+class FSMultiverse;
 
 class FSUniverse : public FSMessageHandler {
 private:
@@ -21,7 +21,7 @@ protected:
 	virtual ~FSUniverse();
 	FSUniverse(string name);
 
-	friend class FSControlMultiverse;
+	friend class FSMultiverse;
 
 	ActorCollection actor; 
 public:

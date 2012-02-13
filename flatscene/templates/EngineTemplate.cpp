@@ -13,9 +13,9 @@ CEngineTemplate::~CEngineTemplate()	{
 
 int CEngineTemplate::drawFrame() {
 
-	// TODO : Fase de renderización del Motor.
+	// TODO : Fase de renderizaciï¿½n del Motor.
 
-	// Ejemplo de renderización simple suponiendo que disponemos de un Conjunto de Cámaras
+	// Ejemplo de renderizaciï¿½n simple suponiendo que disponemos de un Conjunto de Cï¿½maras
 
 	/*for (int i=0;i<camaras.size();i++) {
 
@@ -24,14 +24,14 @@ int CEngineTemplate::drawFrame() {
 
 	}
 
-	Write.refresh();*/
+	FSWriter::I().refresh();*/
 
 	return EXITO;
 }
 
 int  CEngineTemplate::onInit() {
 
-	// TODO : Inicialización de recursos no cargados necesarios en 'onIdle'
+	// TODO : Inicializaciï¿½n de recursos no cargados necesarios en 'onIdle'
 
 	return EXITO;
 
@@ -40,7 +40,7 @@ int  CEngineTemplate::onInit() {
 //idle. Main loop.
 int CEngineTemplate::onIdle()	{
 
-	// TODO : Lógica principal del Motor.
+	// TODO : Lï¿½gica principal del Motor.
 
 	return EXITO;
 
@@ -48,7 +48,7 @@ int CEngineTemplate::onIdle()	{
 
 int CEngineTemplate::onExit() {
 
-	// TODO : Liberación de recursos no necesarios mientras no haya ejecución de 'onIdle'.
+	// TODO : Liberaciï¿½n de recursos no necesarios mientras no haya ejecuciï¿½n de 'onIdle'.
 
 	return EXITO;
 
@@ -57,13 +57,13 @@ int CEngineTemplate::onExit() {
 void CEngineTemplate::deselect() {
 	FSEngine::deselect();
 
-	// TODO : Siempre se debe llamar previamente al método de la clase base.
+	// TODO : Siempre se debe llamar previamente al mï¿½todo de la clase base.
 
 }
 
 int CEngineTemplate::loop() {
 
-	// TODO : Siempre se debe llamar posteriormente al método de la clase base.
+	// TODO : Siempre se debe llamar posteriormente al mï¿½todo de la clase base.
 
 	return FSEngine::loop();
 }
@@ -71,7 +71,7 @@ int CEngineTemplate::loop() {
 	 
 int CEngineTemplate::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 
-	// TODO : Gestión de mensajes
+	// TODO : Gestiï¿½n de mensajes
 
 	return EXITO;
 
@@ -80,6 +80,6 @@ int CEngineTemplate::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 	 
 void CEngineTemplate::pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 
-	// TODO : Gestión de mensajes
+	// TODO : Gestiï¿½n de mensajes
 
 }

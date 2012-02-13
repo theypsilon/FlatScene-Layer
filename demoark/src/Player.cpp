@@ -28,22 +28,22 @@ void CPlayer::init(list<string>& activationIds, int v) {
 #ifdef LOG_JUGADORES
 	printf("Iniciando jugador %d...\n",v);
 #endif
-	//Configuración de teclas del jugador.
+	//Configuraciï¿½n de teclas del jugador.
 
-	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuración.
-	if (!xmldoc.LoadFile()) {	 FSLibrary::Error("resources/config.xml",TE_fileExists); }
+	TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuraciï¿½n.
+	if (!xmldoc.LoadFile()) {	 FSLib.Error("resources/config.xml",TE_fileExists); }
 
 	TiXmlHandle input(xmldoc.FirstChildElement("Keys"));
 
-	// Primero sustituimos los valores de los botones de cada Player por su correspondiente numérico que detecta la libreria de I/O.
+	// Primero sustituimos los valores de los botones de cada Player por su correspondiente numï¿½rico que detecta la libreria de I/O.
 	for (int k=0, total=atoi(input.FirstChildElement("Alias").ToElement()->Attribute("total"))	;		k<total		;	k++) {
 		TiXmlHandle actual = input.FirstChildElement("Alias").ChildElement("keyalias",k);
 		TiXmlElement* player = input.FirstChildElement("Player").ToElement();
 		while (player) {
 			TiXmlElement* buttom = player->FirstChildElement("buttom");
 			while (buttom) {
-				int c;
-				if (c=strcmp(buttom->Attribute("value"),actual.ToElement()->Attribute("id"))==0) 
+				int c = strcmp(buttom->Attribute("value"),actual.ToElement()->Attribute("id"));
+				if (c==0)
 					buttom->SetAttribute("value",actual.ToElement()->Attribute("value"));
 				buttom = buttom->NextSiblingElement();
 			}
@@ -51,19 +51,19 @@ void CPlayer::init(list<string>& activationIds, int v) {
 		}
 	}
 
-	// Averiguamos que configuración de jugador es la que pertenece a este.
+	// Averiguamos que configuraciï¿½n de jugador es la que pertenece a este.
 	TiXmlElement* player = input.FirstChildElement("Player").ToElement();
 	while (player) {
 		if (atoi(player->Attribute("id"))==v) break;
 		player = player->NextSiblingElement();
 	}
 
-	if (!player) FSLibrary::Error("Estructura inválida de config.xml");
+	if (!player) FSLib.Error("Estructura invï¿½lida de config.xml");
 
 	// Ahora utilizamos player para navegar por sus botones.
 	player = player->FirstChildElement("buttom");
 	while (player) {
-		configKey((SDLKey)atoi(player->Attribute("value")),player->Attribute("id"));	// Y configuramos las teclas según el archivo de configuración.
+		configKey((SDLKey)atoi(player->Attribute("value")),player->Attribute("id"));	// Y configuramos las teclas segï¿½n el archivo de configuraciï¿½n.
 		player = player->NextSiblingElement();
 	}
 
@@ -101,7 +101,7 @@ void CPlayer::configKey(SDLKey sym,const char* keycode) {
 	} else if (pk_keycode=="PKEY_B8") {
 		key=PKEY_B8;
 	} else{
-		FSLibrary::Error(("Configuración de teclas inválidas en config.xml \n"+string(pk_keycode)).c_str());
+		FSLib.Error(("Configuraciï¿½n de teclas invï¿½lidas en config.xml \n"+string(pk_keycode)).c_str());
 	}
 
 	KeyAlias[key]=sym;
@@ -130,7 +130,7 @@ void CPlayer::blockFutureActionCandidates() {
 		if (actMov)	{			
 			vector<CAction*>* actionBrothers = actMov->getBrothers();
 			if (!actionBrothers || (actionBrothers->size() < 5))
-				FSLibrary::Error("Clase ActionMove falla.");
+				FSLib.Error("Clase ActionMove falla.");
 			setAction(actionBrothers->at(4));
 		}
 	}

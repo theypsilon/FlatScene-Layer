@@ -1,6 +1,7 @@
 PROJECT ( flatscene )
 
 CMAKE_MINIMUM_REQUIRED ( VERSION 2.6 )
+set (CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x")
 
 FIND_PACKAGE ( Boost COMPONENTS function )
 

@@ -52,5 +52,15 @@ Thumbs.db
 # Rules created by 'git ignore' #
 #-------------------------------#
 
+.settings
 .cproject
 .project
+Debug
+Release
+
+flatscene.opensdf
+flatscene.sdf
+flatscene.sln
+flatscene.suo
+flatscene.v11.suo
+lib

@@ -78,7 +78,7 @@ int CScrollCamera::loadUniverse() {
 		CY()=-1000;
 	}
 
-	if (map==NULL) FSLibrary::Error("map nulo.");
+	if (map==NULL) FSLib.Error("map nulo.");
 
 	if (!map->isLoaded())
 		map->load();
@@ -179,8 +179,8 @@ int CScrollCamera::refresh() {
 
 #ifdef __TESTZOOM__
 	if (zoom < 1.0) {
-		FSScreen::translate(-centro->getX()*zoom+centro->getX(),-centro->getY()*zoom+centro->getY(),0.0);
-		FSScreen::rotate((1.0-zoom)*8,0.0,0.0,1.0);
+		FSDraw.translate(-centro->getX()*zoom+centro->getX(),-centro->getY()*zoom+centro->getY(),0.0);
+		FSDraw.rotate((1.0-zoom)*8,0.0,0.0,1.0);
 	}
 	static float factorzoom=0.001;
 	if (zoom>1.5) {
@@ -195,7 +195,7 @@ int CScrollCamera::refresh() {
 	}
 #endif
 
-	FSScreen::scale(2.0,2.0,1.0);
+	FSDraw.scale(2.0,2.0,1.0);
 
 	//CScreen::translate(320.0/2,240.0/2,-120.0);
 
