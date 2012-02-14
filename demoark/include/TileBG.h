@@ -3,7 +3,6 @@
 
 #include "SDL.h"
 #include <string>
-using namespace std;
 
 typedef struct{
     Uint8 graph;

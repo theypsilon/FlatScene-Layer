@@ -71,8 +71,8 @@ public:
     void Error (std::string,TypeError e=TE_standard);
     void Error (char*,TypeError e=TE_standard);
 
-    string readLastError();
-    string popError();
+    std::string readLastError();
+    std::string popError();
 
 #ifdef DEBUGTEST
 

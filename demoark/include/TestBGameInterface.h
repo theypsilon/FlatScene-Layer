@@ -7,7 +7,6 @@
 
 #define TestIdB "TestB"
  
-using namespace std;
 /*
     ==CTestBGameInterface==
     CEngine componEnt test.

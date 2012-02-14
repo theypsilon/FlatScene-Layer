@@ -7,7 +7,6 @@
 #include <vector>
 #include <string>
  
-using namespace std;
 /*
     ==CMenuAGameInterface==
     CEngine componEnt test.

@@ -12,13 +12,11 @@
 #include <list>
 #include <typeinfo>
 #include "FSMessageHandler.h"
-using namespace std;
-
 
 class CActorScrollMap;
 class CAction;
 
-typedef list<CAction*> ActionCollection;
+typedef std::list<CAction*> ActionCollection;
 
 class CAction : public CNode, public CAnimation
 {

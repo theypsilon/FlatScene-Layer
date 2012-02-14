@@ -54,7 +54,7 @@ FSUniverse* FSMultiverse::add(FSUniverse* uni,Uint8 slot) {
         return NULL;
     }
 
-    string& stName = uni->getName();
+    std::string& stName = uni->getName();
     FSUniverse* uniDev = universeNamed(stName,slot);
     if (uniDev==NULL) {
         uniDev = uni;

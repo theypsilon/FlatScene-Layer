@@ -3,7 +3,6 @@
 
 #include "Action.h"
 #include <list>
-using namespace std;
 
 class CGarbageCollector {
 public:

@@ -20,11 +20,11 @@ struct FSScreen::ScreenImpl {
         virtual void operator()()=0;
     };
 
-    list<SRender*> graphicMaterial;
+    std::list<SRender*> graphicMaterial;
 
-    list<FSSprite*> spriteToDelete;
-    list<FSSpriteset*> spritesetToDelete;
-    list<FSCanvas*> imageToDelete;
+    std::list<FSSprite*> spriteToDelete;
+    std::list<FSSpriteset*> spritesetToDelete;
+    std::list<FSCanvas*> imageToDelete;
 
     void deleteResources();
 

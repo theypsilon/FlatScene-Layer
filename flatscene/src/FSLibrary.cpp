@@ -419,7 +419,7 @@ void FSLibrary::Error (char* c,TypeError e) {
 }
 
 string FSLibrary::LibraryImpl::toStringErrorGL(GLenum e) {
-    string s ="";
+    std::string s ="";
 
     switch (e) {
         case GL_NO_ERROR : s+="GL_NO_ERROR : No error has been recorded.";
@@ -445,7 +445,7 @@ string FSLibrary::popError() {
     if ((*_impl).errors.empty())
         return SINERROR;
     else {
-        string ret = (*_impl).errors.back();
+        std::string ret = (*_impl).errors.back();
         (*_impl).errors.pop_back();
         return ret;
     }

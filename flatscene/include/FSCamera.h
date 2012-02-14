@@ -11,8 +11,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 class FSCamera : public FSMessageHandler {
 protected:
     int x,y;

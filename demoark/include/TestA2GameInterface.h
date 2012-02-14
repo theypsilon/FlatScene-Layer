@@ -4,7 +4,6 @@
 #include "TestAGameInterface.h"
 
 #define TestIdA2 "TestA_animacion"
-using namespace std;
 
 
 class CTestA2GameInterface : public CTestAGameInterface {

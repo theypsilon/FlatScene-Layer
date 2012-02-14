@@ -18,8 +18,6 @@
 #include <functional>
 #include <map>
 
-using namespace std;
-
 typedef struct {
     GLuint tex;
     Uint32 w, h;                /* Read-only */

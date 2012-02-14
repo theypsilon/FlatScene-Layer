@@ -166,9 +166,9 @@ int FSScreen::render()
 
     _impl->beginRenderMode(RENDER_TEXTURE_STANDARD);
 
-    list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
+    std::list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
 
-    for (list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+    for (std::list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
     	ScreenImpl::SRender* r = *it;
     	(*r)();
     }
@@ -200,10 +200,17 @@ int FSScreen::clear ( )
 
 #ifdef MAINRENDERLOOP
 
+<<<<<<< Updated upstream
     list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
     for (list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
     	(**it)();
     }
+=======
+	std::list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
+	for (std::list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+		(**it)();
+	}
+>>>>>>> Stashed changes
 
     graphicMaterial.clear();
 

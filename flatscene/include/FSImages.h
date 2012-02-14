@@ -8,10 +8,8 @@
 #include <string>
 #include <map>
 
-using namespace std;
-
-typedef map<int,FSSpriteset*> SpritesetCollection;
-typedef map<FSSpriteset*,int> SpritesetCount;
+typedef std::map<int,FSSpriteset*> SpritesetCollection;
+typedef std::map<FSSpriteset*,int> SpritesetCount;
 
 class FSImages : private FSNoncopyable, public FSSingleton<FSImages> {
     friend class FSSingleton<FSImages>;

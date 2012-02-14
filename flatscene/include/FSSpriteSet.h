@@ -5,7 +5,7 @@
 #include "FSparserXML.h"
 #include <vector>
 
-typedef vector<FSSprite*> SpriteCollection;
+typedef std::vector<FSSprite*> SpriteCollection;
 
 typedef struct { 
     string name; 

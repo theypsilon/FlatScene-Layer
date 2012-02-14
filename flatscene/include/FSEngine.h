@@ -4,7 +4,7 @@
 #include "FSMessageHandler.h"
 #include "FSTime.h"
 #include <map>
-#include <boost/function.hpp>
+#include <functional>
 
 class FSLibrary;
 
@@ -15,7 +15,7 @@ private:
 
     bool initialized;
 
-    map<Uint8,boost::function<void (SDL_Event*)> > eventHandlerRegister2;
+    std::map<Uint8,std::function<void (SDL_Event*)> > eventHandlerRegister2;
 
     friend class FSLibrary;
 

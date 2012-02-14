@@ -5,7 +5,6 @@
 #include "FSSpriteSet.h"
 #include <string>
 #include <vector>
-using namespace std;
 
 class PControlAnimation;
 class PImage;

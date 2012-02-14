@@ -7,12 +7,10 @@
 #include "OrderGraph.h"
 #include "RutinaColision.h"
 
-using namespace std;
-
 
 class CActorScrollMap;
 
-typedef list<CActorScrollMap*> ActorScrollCollection;
+typedef std::list<CActorScrollMap*> ActorScrollCollection;
 
 
 class CActorScrollMap : public FSActor

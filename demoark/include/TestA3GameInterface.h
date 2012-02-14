@@ -4,7 +4,6 @@
 #include "TestAGameInterface.h"
 
 #define TestIdA3 "TestA_2players"
-using namespace std;
 
 
 class CTestA3GameInterface : public CTestAGameInterface {

@@ -4,7 +4,6 @@
 #include "TestAGameInterface.h"
 
 #define TestIdA1 "TestA_camaras"
-using namespace std;
 
 class CTestA1GameInterface : public CTestAGameInterface {
 public:

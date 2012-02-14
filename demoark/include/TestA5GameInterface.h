@@ -4,7 +4,6 @@
 #include "TestAGameInterface.h"
 
 #define TestIdA0 "TestA_base"
-using namespace std;
 
 
 class CTestA5GameInterface : public CTestAGameInterface {

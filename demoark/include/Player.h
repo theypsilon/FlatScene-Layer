@@ -7,7 +7,7 @@
 #include "TileBG.h"
 #include <list>
 #include "FSparserXML.h" 
-using namespace std;
+
 
 class CPlayer : public CActorScrollMap {
 public:
@@ -23,7 +23,7 @@ public:
 
     void blockFutureActionCandidates();
 
-    void init(list<string>& activationIds,int v);
+    void init(std::list<string>& activationIds,int v);
     int move();
     FSPoint m_Movxy;
 

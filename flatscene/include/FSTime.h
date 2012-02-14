@@ -7,8 +7,6 @@
 
 class FSEngine;
 
-using namespace std;
-
 class FSTime {
 private:
     struct STimeData {
@@ -20,12 +18,12 @@ private:
     	};
     };
 
-    mutable map<FSEngine*,STimeData> fc;
+    mutable std::map<FSEngine*,STimeData> fc;
 
 #ifdef MENSAJES_FPS
     unsigned int fps;
     unsigned int auxTimer;
-    map<FSEngine*,int> adminText;
+    std::map<FSEngine*,int> adminText;
 #endif
 
     mutable STimeData* actTime;

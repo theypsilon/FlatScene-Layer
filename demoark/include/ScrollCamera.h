@@ -12,8 +12,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 class CScrollCamera : public FSCamera {
 private:
     FSPoint* centro;

@@ -10,15 +10,15 @@ struct FSWriter::WriterImpl {
     struct SFont;
     struct SEffectText;
 
-    map<FSEngine*,SData*> session;
+    std::map<FSEngine*,SData*> session;
 
     SData* data;
     FSEngine* admin;
 
 
-    map<int,SFont*> Fonts;
-    map<SFont*,int> countFonts;
-    list<int> lastIndexFontAdded;
+    std::map<int,SFont*> Fonts;
+    std::map<SFont*,int> countFonts;
+    std::list<int> lastIndexFontAdded;
     int fontSize;
 
     float posx;
@@ -37,12 +37,12 @@ struct FSWriter::WriterImpl {
     struct SFont {
         string cadena;
         TTF_Font* fuente;
-        map<Uint16,FSCanvas*> render;
+        std::map<Uint16,FSCanvas*> render;
         unsigned int size;
     };
 
     struct SLineText{
-        list<SChar> letra;
+        std::list<SChar> letra;
         SFont* fuente;
 
         ~SLineText();
@@ -53,7 +53,7 @@ struct FSWriter::WriterImpl {
         string file;
         int next;
 
-        list<SChar> charInDisplay;
+        std::list<SChar> charInDisplay;
         FSPoint upleft;
 
         SEffectText* fx;
@@ -105,11 +105,11 @@ struct FSWriter::WriterImpl {
     };
 
     struct SData {
-        map<int,FSText*> Texts;
+        std::map<int,FSText*> Texts;
 
-        list<int> lastIndexTextAdded;
+        std::list<int> lastIndexTextAdded;
 
-        list<int> deleteTextBuffer;
+        std::list<int> deleteTextBuffer;
 
         SDL_Color fgcolor;
     };

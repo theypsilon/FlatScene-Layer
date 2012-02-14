@@ -9,7 +9,7 @@
 #include <string>
 
 typedef  std::list<FSUniverse*> UniverseCollection;
-typedef map<FSMessageHandler*,UniverseCollection*> MultiverseByAdmin;
+typedef std::map<FSMessageHandler*,UniverseCollection*> MultiverseByAdmin;
 
 class FSMultiverse : private FSNoncopyable, public FSSingleton<FSMultiverse> {
     friend class FSSingleton<FSMultiverse>;

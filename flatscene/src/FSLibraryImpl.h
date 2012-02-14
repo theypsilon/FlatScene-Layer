@@ -7,15 +7,15 @@ struct FSLibrary::LibraryImpl {
     FSEngine* actualEngine;
 
     // Lista de motores a�adidas por el usuario
-    list<FSEngine*> engineIn;
+    std::list<FSEngine*> engineIn;
     // Lista de motores ejecutados por orden del usuario sin ser a�adidos (mediante mensajeria).
-    list<FSEngine*> engineOut;
+    std::list<FSEngine*> engineOut;
 
 #ifdef IN_FILE_ERROR
     bool errorsInSession;
 #endif
 
-    list<string> errors;
+    std::list<string> errors;
 
 #ifdef DEBUGTEST
     bool debugging;

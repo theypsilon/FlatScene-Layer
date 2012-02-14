@@ -8,8 +8,6 @@
 
 #include "actions.h"
 
-using namespace std;
-
 
 typedef map<int,CAction*> memberFamily;
 typedef map<string,memberFamily> TypeFamily;

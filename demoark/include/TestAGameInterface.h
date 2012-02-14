@@ -16,7 +16,6 @@
 #include <vector>
 #include <map>
 #include <list>
-using namespace std;
 
 typedef struct{
     Uint8 player;

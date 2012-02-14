@@ -28,8 +28,8 @@ public:
     virtual void load();
     virtual void unload();
     bool isLoaded();
-    virtual string& getName();
-    virtual int changeUniverse(string name, Uint8 slot);
+    virtual std::string& getName();
+    virtual int changeUniverse(std::string name, Uint8 slot);
 
     virtual int incActor(FSActor* act);
     virtual int decActor(FSActor* act);

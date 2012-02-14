@@ -8,13 +8,12 @@
 #include <map>
 #include <vector>
 #include <deque>
-using namespace std;
 
 class FSActor;
 class CRutinaColision;
 class FSUniverse;
 
-typedef std::list<FSActor*> ActorCollection;
+typedef std::std::list<FSActor*> ActorCollection;
 
 class FSActor : public FSMessageHandler
 {
@@ -35,7 +34,7 @@ public:
 
     virtual int move();
 
-    virtual string getCreature();
+    virtual std::string getCreature();
     FSUniverse* getUniverse();
     virtual int setUniverse(FSUniverse* m);
     FSPoint renderPoint;

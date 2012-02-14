@@ -3,8 +3,6 @@
 
 #include "FSEngine.h"
 #include "FSdefinitions.h"
- 
-using namespace std;
 
 class CFreezeGameInterface : public FSEngine  
 {

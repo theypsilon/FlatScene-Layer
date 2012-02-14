@@ -4,9 +4,8 @@
 #include "FSCanvas.h"
 #include <string>
 #include <vector>
-using namespace std;
 
-typedef vector<FSRectangle*> RectArea;
+typedef std::vector<FSRectangle*> RectArea;
 
 enum SpriteOpaque {
     SPRITE_OPAQUE_NOT_CHEQUED,
@@ -20,10 +19,10 @@ class FSSprite : public FSCanvas
 {
 private:
     //Nombre
-    string name;
+    std::string name;
     //Lista de Control points
     FSPoint* cpoint;
-    vector<RectArea*> areas;
+    std::vector<RectArea*> areas;
 
     //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
     FSSprite ( SCanvas pSurface, FSPoint* zerocpSource = NULL) ;
@@ -42,9 +41,9 @@ public:
     //asigna nombre
     void setName(const char* newName);
     //devuelve nombre
-    string getName();
+    std::string getName();
     //devuelve la lista de puntos de control.
-    vector<RectArea*>& getAllAreas () ;
+    std::vector<RectArea*>& getAllAreas () ;
     //devuelve el en�simo punto de control dentro del array de puntos de control.
     RectArea* getArea(unsigned int n);
 
