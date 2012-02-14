@@ -115,7 +115,7 @@ int CTestOSDesktopInterface::onIdle() {
 
     printf("x : %d        y : %d\r",raton->renderPoint.x,raton->renderPoint.y);
 
-/*	if (right)  {
+/*    if (right)  {
         float yrotrad;
         yrotrad = (yrot / 180 * 3.141592654f);
         xpos += float(cos(yrotrad)) * 2.0;
@@ -210,13 +210,13 @@ void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
     CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLib.getActualEngine();
 
-	float x = (float) (os->raton->renderPoint.x = (int) event->motion.x),
-		  y = (float) (os->raton->renderPoint.y = (int) event->motion.y);
+    float x = (float) (os->raton->renderPoint.x = (int) event->motion.x),
+    	  y = (float) (os->raton->renderPoint.y = (int) event->motion.y);
 
     if (os->lastx != 0.0) {
 
         float diffx=x-os->lastx,
-			  diffy=y-os->lasty;
+    		  diffy=y-os->lasty;
 
         os->xrot += diffy / 10.0f; 
         os->yrot += diffx / 10.0f;    

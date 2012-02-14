@@ -7,29 +7,29 @@ CActionQuiet0::CActionQuiet0(CActorScrollMap* executor,TiXmlElement* fuente,cons
 }
 
 CActionQuiet0::~CActionQuiet0() { 
-	inDelete();
+    inDelete();
 }
 
 void CActionQuiet0::inDelete() {
-	CActionMove::inDelete();
+    CActionMove::inDelete();
 }
 
 void CActionQuiet0::firstExecute() {
-	executor->flags = flags[seq];
+    executor->flags = flags[seq];
 
-	paso=0;
+    paso=0;
 
 }
 
 
 void CActionQuiet0::execute() {
-	if (!executor->collisionMap(0,movy)) 
-		executor->m_Scrollxy.y+=movy;
-	if (!executor->collisionMap(movx,0)) 
-		executor->m_Scrollxy.x+=movx;
+    if (!executor->collisionMap(0,movy)) 
+    	executor->m_Scrollxy.y+=movy;
+    if (!executor->collisionMap(movx,0)) 
+    	executor->m_Scrollxy.x+=movx;
 
-	executor->setSprite(sptset[seq],nextStep());
-	
+    executor->setSprite(sptset[seq],nextStep());
+    
 }
 
 void CActionQuiet0::lastExecute() {
@@ -37,8 +37,8 @@ void CActionQuiet0::lastExecute() {
 }
 
 CAction* CActionQuiet0::clone(CActorScrollMap* exe) {
-	if (!exe)	exe = executor;
-	CActionQuiet0* ret = new CActionQuiet0(exe,NULL,getId());
-	cloneThisInto(ret);
-	return ret;
+    if (!exe)	exe = executor;
+    CActionQuiet0* ret = new CActionQuiet0(exe,NULL,getId());
+    cloneThisInto(ret);
+    return ret;
 }

@@ -9,17 +9,17 @@ using namespace std;
 class CTestA1GameInterface : public CTestAGameInterface {
 public:
 
-	CTestA1GameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestA1GameInterface(FSMessageHandler * pmhParent=NULL);
 
-	virtual ~CTestA1GameInterface();
+    virtual ~CTestA1GameInterface();
 
-	int onInit();
+    int onInit();
 
-	int onExit();
+    int onExit();
 
-	int drawFrame();
+    int drawFrame();
 
-	void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
+    void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
 };
 
 #endif //#ifndef __TESTEVENTHANDLER_H__

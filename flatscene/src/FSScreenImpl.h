@@ -17,7 +17,7 @@ struct FSScreen::ScreenImpl {
     int m_Width,m_Height,m_Bpp;
 
     struct SRender {
-	    virtual void operator()()=0;
+        virtual void operator()()=0;
     };
 
     list<SRender*> graphicMaterial;
@@ -38,121 +38,121 @@ struct FSScreen::ScreenImpl {
     int endRenderMode(Uint32 flags);
 
     struct SRenderLocation : SRender { // LOCATE
-	    float posx;
-	    float posy;
-	    float width;
-	    float height;
-	    float zoom;
+        float posx;
+        float posy;
+        float width;
+        float height;
+        float zoom;
 
-	    void operator()();
+        void operator()();
     };
 
     struct SRenderTranslation : SRender { // TRANSLATE && SCALATION
-	    float x;
-	    float y;
-	    float z;
+        float x;
+        float y;
+        float z;
 
-	    void operator()();
+        void operator()();
     };
 
     struct SRenderScalation : SRender { // TRANSLATE && SCALATION
-	    float x;
-	    float y;
-	    float z;
+        float x;
+        float y;
+        float z;
 
-	    void operator()();
+        void operator()();
     };
 
     struct SRenderRotation : SRender { // ROTATION
-	    float angle;
-	    float x;
-	    float y;
-	    float z;
+        float angle;
+        float x;
+        float y;
+        float z;
 
-	    void operator()();
+        void operator()();
     };
 
     struct SRenderColor : SRender { // ROTATION
-	    float red;
-	    float green;
-	    float blue;
-	    float alpha;
+        float red;
+        float green;
+        float blue;
+        float alpha;
 
-	    void operator()();
+        void operator()();
     };
 
     template <class PointType>
     struct SRenderCanvas : SRender {
-	    SCanvas canvas;
-	    PointType ptDst;
-	    Uint8 flags;
+        SCanvas canvas;
+        PointType ptDst;
+        Uint8 flags;
 
-	    SRenderCanvas<PointType>(SCanvas canvas, PointType ptDst, Uint8 flags)
-	    : canvas(canvas), ptDst(ptDst), flags(flags) {}
+        SRenderCanvas<PointType>(SCanvas canvas, PointType ptDst, Uint8 flags)
+        : canvas(canvas), ptDst(ptDst), flags(flags) {}
 
-	    void operator()() {
-	        if (canvas.h != 0 || canvas.w !=0 ) {
+        void operator()() {
+            if (canvas.h != 0 || canvas.w !=0 ) {
 
-		        glBindTexture(GL_TEXTURE_2D, canvas.tex);
+    	        glBindTexture(GL_TEXTURE_2D, canvas.tex);
 
-		        float relW = (float)canvas.w2/(float)canvas.w;
-		        float relH = (float)canvas.h2/(float)canvas.h;
+    	        float relW = (float)canvas.w2/(float)canvas.w;
+    	        float relH = (float)canvas.h2/(float)canvas.h;
 
-		        //glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
+    	        //glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
 
-		        glBegin(GL_QUADS);
-			        if (flags == 0) {
-				        glTexCoord2f(0.0f, relH);
-				        glVertex2f(0, canvas.h2);
-				        glTexCoord2f(relW, relH);
-				        glVertex2f(canvas.w2, canvas.h2);
-				        glTexCoord2f(relW, 0.0f);
-				        glVertex2f(canvas.w2, 0);
-				        glTexCoord2f(0.0f, 0.0f);
-				        glVertex2f(0,0);
-			        } else if (flags == 1) {
+    	        glBegin(GL_QUADS);
+    		        if (flags == 0) {
+    			        glTexCoord2f(0.0f, relH);
+    			        glVertex2f(0, canvas.h2);
+    			        glTexCoord2f(relW, relH);
+    			        glVertex2f(canvas.w2, canvas.h2);
+    			        glTexCoord2f(relW, 0.0f);
+    			        glVertex2f(canvas.w2, 0);
+    			        glTexCoord2f(0.0f, 0.0f);
+    			        glVertex2f(0,0);
+    		        } else if (flags == 1) {
 
-				        glTexCoord2f(relW, relH);
-				        glVertex2f(0, canvas.h2);
-				        glTexCoord2f(0.0f, relH);
-				        glVertex2f(canvas.w2, canvas.h2);
-				        glTexCoord2f(0.0f, 0.0f);
-				        glVertex2f(canvas.w2, 0);
-				        glTexCoord2f(relW, 0.0f);
-				        glVertex2f(0,0);
-			        } else if (flags==2) {
-				        glTexCoord2f(0.0f, 0.0f);
-				        glVertex2f(0, canvas.h2);
-				        glTexCoord2f(relW, 0.0f);
-				        glVertex2f(canvas.w2, canvas.h2);
-				        glTexCoord2f(relW, relH);
-				        glVertex2f(canvas.w2, 0);
-				        glTexCoord2f(0.0f, relH);
-				        glVertex2f(0,0);
-			        } else  {
-				        glTexCoord2f(relW, 0.0f);
-				        glVertex2f(0, canvas.h2);
-				        glTexCoord2f(0.0f, 0.0f);
-				        glVertex2f(canvas.w2, canvas.h2);
-				        glTexCoord2f(0.0f, relH);
-				        glVertex2f(canvas.w2, 0);
-				        glTexCoord2f(relW, relH);
-				        glVertex2f(0,0);
-			        }
-		        glEnd();
+    			        glTexCoord2f(relW, relH);
+    			        glVertex2f(0, canvas.h2);
+    			        glTexCoord2f(0.0f, relH);
+    			        glVertex2f(canvas.w2, canvas.h2);
+    			        glTexCoord2f(0.0f, 0.0f);
+    			        glVertex2f(canvas.w2, 0);
+    			        glTexCoord2f(relW, 0.0f);
+    			        glVertex2f(0,0);
+    		        } else if (flags==2) {
+    			        glTexCoord2f(0.0f, 0.0f);
+    			        glVertex2f(0, canvas.h2);
+    			        glTexCoord2f(relW, 0.0f);
+    			        glVertex2f(canvas.w2, canvas.h2);
+    			        glTexCoord2f(relW, relH);
+    			        glVertex2f(canvas.w2, 0);
+    			        glTexCoord2f(0.0f, relH);
+    			        glVertex2f(0,0);
+    		        } else  {
+    			        glTexCoord2f(relW, 0.0f);
+    			        glVertex2f(0, canvas.h2);
+    			        glTexCoord2f(0.0f, 0.0f);
+    			        glVertex2f(canvas.w2, canvas.h2);
+    			        glTexCoord2f(0.0f, relH);
+    			        glVertex2f(canvas.w2, 0);
+    			        glTexCoord2f(relW, relH);
+    			        glVertex2f(0,0);
+    		        }
+    	        glEnd();
 
-	        }
+            }
             delete this;
         };
     };
 
 
     struct SRenderPushMatrix : SRender { // ROTATION
-	    void operator()();
+        void operator()();
     };
 
     struct SRenderPopMatrix : SRender { // ROTATION
-	    void operator()();
+        void operator()();
     };
 
 };

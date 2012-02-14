@@ -9,21 +9,21 @@ using namespace std;
 
 class CTestA2GameInterface : public CTestAGameInterface {
 private:
-	int actZone;
+    int actZone;
 
-	CPlayer* principal;
+    CPlayer* principal;
 public:
 
-	CTestA2GameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestA2GameInterface(FSMessageHandler * pmhParent=NULL);
 
-	virtual ~CTestA2GameInterface();
+    virtual ~CTestA2GameInterface();
 
-	int onInit();
+    int onInit();
 
-	int onIdle();
-	int onExit();
+    int onIdle();
+    int onExit();
 
-	void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
+    void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
 };
 
 #endif //#ifndef __TESTEVENTHANDLER_H__

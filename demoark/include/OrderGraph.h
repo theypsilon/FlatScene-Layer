@@ -16,42 +16,42 @@ typedef map<string,memberFamily> TypeFamily;
 
 class CEnlace {
 public:
-	CEnlace(string referencia,string tecla,string evento);
-	~CEnlace();
-	string referencia;
-	string tecla;
-	string evento;
+    CEnlace(string referencia,string tecla,string evento);
+    ~CEnlace();
+    string referencia;
+    string tecla;
+    string evento;
 };
 
 class COrder {
 public:
 
-	COrder(CAction* n, string identidad="");
-	~COrder();
+    COrder(CAction* n, string identidad="");
+    ~COrder();
 
-	CAction* nodo;
-	int prioridad;
-	string identidad;
-	list<CEnlace> enlaces;
+    CAction* nodo;
+    int prioridad;
+    string identidad;
+    list<CEnlace> enlaces;
 };
 
 class COrderGraph {
 private:
-	CAction* actual;
+    CAction* actual;
 
 public:
 
-	COrderGraph();
-	virtual ~COrderGraph();
+    COrderGraph();
+    virtual ~COrderGraph();
 
-	virtual bool addByAttribute(const char* attrib,TiXmlElement* newNode)=0;
-	virtual bool addByAttribute(const char* attrib,TiXmlNode* newNode)=0;
-	virtual bool add(TiXmlElement* newNode)=0;
-	virtual bool add(TiXmlNode* newNode)=0;
-	virtual bool mix();
-	//virtual inline CAction* get();
+    virtual bool addByAttribute(const char* attrib,TiXmlElement* newNode)=0;
+    virtual bool addByAttribute(const char* attrib,TiXmlNode* newNode)=0;
+    virtual bool add(TiXmlElement* newNode)=0;
+    virtual bool add(TiXmlNode* newNode)=0;
+    virtual bool mix();
+    //virtual inline CAction* get();
 
-	//virtual bool isComplete()=0;
+    //virtual bool isComplete()=0;
 
 };
 
@@ -60,39 +60,39 @@ class CActorScrollMap;
 
 class CActionGraph : public COrderGraph {
 private:
-	list<COrder*> nodos;
-	COrder* actNeutro;
+    list<COrder*> nodos;
+    COrder* actNeutro;
 
-	TypeFamily mapaDeFamilias;
-	
-	const char** tipos ;
-	int numTipos;	
+    TypeFamily mapaDeFamilias;
+    
+    const char** tipos ;
+    int numTipos;	
 
-	bool validateMoveAttributes(TiXmlElement* node);
-	COrder* createNode(const char* c,TiXmlElement* newNode, const char* s=NULL);
-	int getKey(const char* c);
-	CAction* search(const char* c);
-	string sinBarra(const char* c);
+    bool validateMoveAttributes(TiXmlElement* node);
+    COrder* createNode(const char* c,TiXmlElement* newNode, const char* s=NULL);
+    int getKey(const char* c);
+    CAction* search(const char* c);
+    string sinBarra(const char* c);
 
-	CActorScrollMap* player;
+    CActorScrollMap* player;
 public:
 
-	CActionGraph(CActorScrollMap* pmhParent);
-	virtual ~CActionGraph();
+    CActionGraph(CActorScrollMap* pmhParent);
+    virtual ~CActionGraph();
 
-	bool addByAttribute(const char* attrib,TiXmlElement* newNode);
-	bool addByAttribute(const char* attrib,TiXmlNode* newNode);
-	bool add(TiXmlElement* newNode);
-	bool add(TiXmlNode* newNode);
-	bool mix();
-	CAction* getNeutro();
+    bool addByAttribute(const char* attrib,TiXmlElement* newNode);
+    bool addByAttribute(const char* attrib,TiXmlNode* newNode);
+    bool add(TiXmlElement* newNode);
+    bool add(TiXmlNode* newNode);
+    bool mix();
+    CAction* getNeutro();
 
 
-	//inline CAction* get();
+    //inline CAction* get();
 
-	//bool isComplete();
+    //bool isComplete();
 
-	CGarbageCollectorOfActions* createGarbageCollector();
+    CGarbageCollectorOfActions* createGarbageCollector();
 
 };
 

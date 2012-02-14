@@ -49,8 +49,8 @@ private:
 
     static inline Uint32 pow2 (Uint32 n);
 
-	list<std::function<void(void)>> initCallbackList;
-	list<std::function<void(void)>> endCallbackList;
+    list<std::function<void(void)>> initCallbackList;
+    list<std::function<void(void)>> endCallbackList;
 
 public:
 

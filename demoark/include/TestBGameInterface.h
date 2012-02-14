@@ -9,31 +9,31 @@
  
 using namespace std;
 /*
-	==CTestBGameInterface==
-	CEngine componEnt test.
+    ==CTestBGameInterface==
+    CEngine componEnt test.
 */
 class CTestBGameInterface : public FSEngine  
 {
 private:
-	bool pushed;
+    bool pushed;
 
-	PAnimation* anim;
+    PAnimation* anim;
 
-	int actZone;
+    int actZone;
 public:
-	//constructor
-	CTestBGameInterface(FSMessageHandler * pmhParent=NULL);
-	//destructor
-	virtual ~CTestBGameInterface();
-	//initialization
-	virtual int onInit();
-	//idle behavior
-	virtual int onIdle();
-	//cleanup
-	virtual int onExit();
-	//mouse move
-	virtual void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
-	virtual void onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode);
+    //constructor
+    CTestBGameInterface(FSMessageHandler * pmhParent=NULL);
+    //destructor
+    virtual ~CTestBGameInterface();
+    //initialization
+    virtual int onInit();
+    //idle behavior
+    virtual int onIdle();
+    //cleanup
+    virtual int onExit();
+    //mouse move
+    virtual void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
+    virtual void onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode);
 };
 
 #endif 

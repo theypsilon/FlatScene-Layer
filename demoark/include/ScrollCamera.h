@@ -16,22 +16,22 @@ using namespace std;
 
 class CScrollCamera : public FSCamera {
 private:
-	FSPoint* centro;
-	int intraMargenX, intraMargenY;
-	FloorCollection Pisos;
-	float zoom;
+    FSPoint* centro;
+    int intraMargenX, intraMargenY;
+    FloorCollection Pisos;
+    float zoom;
 public:
-	CScrollCamera(FSActor* target,FSRectangle* area, FSPoint* centro,float margenDesp=0.0,FSMessageHandler * pmhParent=NULL);
-	CScrollCamera(FSActor* target,FSRectangle* area,FSMessageHandler * pmhParent=NULL);
-	virtual ~CScrollCamera();
-	virtual int loadUniverse();
-	virtual int unloadUniverse();
-	virtual bool focusActor(FSActor* actAct);
-	virtual int refresh();
-	virtual void setZoom(float newZoom);
+    CScrollCamera(FSActor* target,FSRectangle* area, FSPoint* centro,float margenDesp=0.0,FSMessageHandler * pmhParent=NULL);
+    CScrollCamera(FSActor* target,FSRectangle* area,FSMessageHandler * pmhParent=NULL);
+    virtual ~CScrollCamera();
+    virtual int loadUniverse();
+    virtual int unloadUniverse();
+    virtual bool focusActor(FSActor* actAct);
+    virtual int refresh();
+    virtual void setZoom(float newZoom);
 
 #ifdef MENSAJES_MSGIDS
-	int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);
+    int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);
 #endif
 };
 

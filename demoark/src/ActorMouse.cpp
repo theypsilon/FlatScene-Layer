@@ -5,53 +5,53 @@ CActorMouse::CActorMouse(FSMessageHandler * pmhParent) :
 // Se ha de llamar a la clase Base para una correcta inicializaci�n
 FSActor("raton",pmhParent) {
 
-	// TODO
-	
+    // TODO
+    
 }
 CActorMouse::~CActorMouse() {
 
-	// TODO
+    // TODO
 
 }
 
 int CActorMouse::move() {
 
-	// TODO
+    // TODO
 
-	return EXITO;
+    return EXITO;
 }
 
 string CActorMouse::getCreature() {
 
-	// TODO
+    // TODO
 
-	return string("cadena personalizable");
+    return string("cadena personalizable");
 
-	// CActor::getCreature() accede al valor que hemos configurado en el Constructor.
+    // CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }
 
 int CActorMouse::setUniverse(FSUniverse* m) {
 
-	// TODO
+    // TODO
 
-	return EXITO;
+    return EXITO;
 
-	// CActor::setUniverse(m) realiza la asignaci�n : inUniverse=m;
+    // CActor::setUniverse(m) realiza la asignaci�n : inUniverse=m;
 }
 
 FSSprite* CActorMouse::getSprite() {
 
-	FSSprite* spt;
+    FSSprite* spt;
 
-	spt = Img.get(file)->get(graph);
+    spt = Img.get(file)->get(graph);
 
-	return spt;
+    return spt;
 }
 
 FSActor* CActorMouse::clone() {
-	FSActor* act = NULL;
+    FSActor* act = NULL;
 
-	// TODO
+    // TODO
 
-	return act;
+    return act;
 }

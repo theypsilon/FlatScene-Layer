@@ -10,17 +10,17 @@ using namespace std;
 class CTestA4GameInterface : public CTestAGameInterface {
 public:
 
-	CTestA4GameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestA4GameInterface(FSMessageHandler * pmhParent=NULL);
 
-	virtual ~CTestA4GameInterface();
+    virtual ~CTestA4GameInterface();
 
-	int onInit();
+    int onInit();
 
-	int onExit();
+    int onExit();
 
-	int drawFrame();
+    int drawFrame();
 
-	void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
+    void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
 };
 
 #endif 
