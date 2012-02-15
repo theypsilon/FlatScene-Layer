@@ -3,9 +3,9 @@
 #include "FSparserXML.h"
 #include "FSScreenImpl.h"
 
-FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
+std::shared_ptr<FSEngine> FSWriter::WriterImpl::setAdmin(std::shared_ptr<FSEngine> newAdmin) {
 
-    FSEngine* ret = admin;
+    std::shared_ptr<FSEngine> ret = admin;
 
 #ifdef TEXT_OPERATIVE
 
@@ -27,7 +27,7 @@ FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
 }
 
 FSWriter::FSWriter() : _impl(new WriterImpl) {
-    _impl->admin = (FSEngine*) 0xFFFFFFFF;
+    _impl->admin = nullptr;
     _impl->data = NULL;
     _impl->fontSize = 20;
 
@@ -44,14 +44,14 @@ FSWriter::FSWriter() : _impl(new WriterImpl) {
 
     atexit(TTF_Quit);
 
-    _impl->setAdmin(NULL);
+    _impl->setAdmin(nullptr);
 }
 
 FSWriter::~FSWriter() {
     clear();
 
-    if (_impl->session.find(NULL)!=_impl->session.end())
-        delete _impl->session[NULL];
+    if (_impl->session.find(nullptr)!=_impl->session.end())
+        delete _impl->session[nullptr];
 
     _impl->session.clear();
     delete _impl;
@@ -99,7 +99,7 @@ int FSWriter::searchFont(int idtext) {
 
     TTF_Font* ret = NULL;
 
-    for (std::map<FSEngine*,WriterImpl::SData*>::iterator kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
+    for (std::map<std::shared_ptr<FSEngine>,WriterImpl::SData*>::iterator kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
         if (kt->second->Texts.find(idtext) != kt->second->Texts.end()) {
             WriterImpl::FSText* t = kt->second->Texts[idtext];
 
@@ -600,7 +600,7 @@ int FSWriter::render() {
 
     }
 
-    if (_impl->session.find(NULL)!=_impl->session.end()) {
+    if (_impl->session.find(nullptr)!=_impl->session.end()) {
         for (std::map<int,WriterImpl::FSText*>::iterator it=_impl->session.begin()->second->Texts.begin(),kt=_impl->session.begin()->second->Texts.end();it!=kt;++it) {
             if (it->second->Type() == TT_LINE && it->second->Line) {
                 WriterImpl::SLineText* l = it->second->Line;
@@ -632,13 +632,13 @@ int FSWriter::render() {
 void FSWriter::clear() {
 #ifdef TEXT_OPERATIVE
     while (!_impl->session.empty()) {
-        std::map<FSEngine*,WriterImpl::SData*>::iterator it= _impl->session.begin();
+        auto it= _impl->session.begin();
         _impl->setAdmin(it->first);
 
         while (!_impl->data->Texts.empty()) {
-            std::map<int,WriterImpl::FSText*>::iterator it=_impl->data->Texts.begin();
-            delete it->second;
-            _impl->data->Texts.erase(it);
+            auto jt=_impl->data->Texts.begin();
+            delete jt->second;
+            _impl->data->Texts.erase(jt);
         }
 
         while (!_impl->data->lastIndexTextAdded.empty())
@@ -648,17 +648,17 @@ void FSWriter::clear() {
         _impl->session.erase(_impl->session.find(_impl->admin));
     }
 
-    _impl->admin=(FSEngine*)0xFFFFFFFF;
+    _impl->admin=nullptr;
     _impl->data=NULL;
 
-    _impl->setAdmin(NULL);
+    _impl->setAdmin(nullptr);
 
     while (!_impl->Fonts.empty()) {
-        std::map<int,WriterImpl::SFont*>::iterator it = _impl->Fonts.begin();
+        auto it = _impl->Fonts.begin();
         TTF_CloseFont(it->second->fuente);
         std::map<Uint16,FSCanvas*>& chars = it->second->render;
         while (!chars.empty()) {
-            std::map<Uint16,FSCanvas*>::iterator jt = chars.begin();
+            auto jt = chars.begin();
             FSScreen::I()._impl->imageToDelete.push_back(jt->second); // delete jt->second;
             chars.erase(jt);
         }
@@ -666,7 +666,7 @@ void FSWriter::clear() {
         _impl->Fonts.erase(it);
     }
     while (!_impl->countFonts.empty()) {
-        std::map<WriterImpl::SFont*,int>::iterator it = _impl->countFonts.begin();
+        auto it = _impl->countFonts.begin();
         _impl->countFonts.erase(it);
     }
     while (!_impl->lastIndexFontAdded.empty())

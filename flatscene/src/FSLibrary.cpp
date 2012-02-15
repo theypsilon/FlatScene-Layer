@@ -23,11 +23,11 @@ Uint32 FSLibrary::MSGID_ReloadEngine=FSMessageHandler::getNextMSGID();
 Uint32 FSLibrary::MSGID_ChangeEngine=FSMessageHandler::getNextMSGID();
 Uint32 FSLibrary::MSGID_KillEngine=FSMessageHandler::getNextMSGID();
 
-void FSLibrary::LibraryImpl::setActualEngine(FSEngine *newEngineActive) {
+void FSLibrary::LibraryImpl::setActualEngine(std::shared_ptr<FSEngine> newEngineActive) {
     actualEngine = newEngineActive;
 }
 
-FSEngine* FSLibrary::getActualEngine() {
+std::shared_ptr<FSEngine> FSLibrary::getActualEngine() {
     return _impl->actualEngine;
 }
 
@@ -40,7 +40,7 @@ FSLibrary::FSLibrary(): FSMessageHandler(NULL), _impl(new LibraryImpl) {
     (*_impl).debugticks=Chrono.getTick();
 #endif
 
-    (*_impl).actualEngine = NULL;
+    (*_impl).actualEngine = nullptr;
 
     if(SDL_Init(SDL_INIT_TIMER)==-1)
     {
@@ -104,36 +104,12 @@ int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen,
 }
 
 void FSLibrary::LibraryImpl::onExit() {
+
     LibraryImpl* _impl = FSLibrary::I()._impl;
-    while( !(*_impl).engineIn.empty() ) {
+    (*_impl).engineIn.clear();
+    (*_impl).engineOut.clear();
 
-        FSEngine * engine = *(*_impl).engineIn.begin();
-
-        (*_impl).engineOut.remove(engine);
-
-        _impl->setActualEngine(engine);
-        if (engine->isInitialized())
-            engine->onExit();
-
-        (*_impl).engineIn.erase((*_impl).engineIn.begin());
-
-        delete engine;
-    }
-
-    while( !(*_impl).engineOut.empty() ) {
-
-        FSEngine * engine = *(*_impl).engineOut.begin();
-
-        _impl->setActualEngine(engine);
-        if (engine->isInitialized())
-            engine->onExit();
-
-        (*_impl).engineOut.erase((*_impl).engineOut.begin());
-
-        delete engine;
-    }
-
-    _impl->setActualEngine(NULL);
+    _impl->setActualEngine(nullptr);
 
 #ifdef IN_FILE_ERROR
     if ((*_impl).errorsInSession) {
@@ -152,14 +128,14 @@ FSLibrary::~FSLibrary() {
 
 int FSLibrary::processEngines() {
 
-    _impl->setActualEngine(NULL);
+    _impl->setActualEngine(nullptr);
 
     // Selecci�n del CEngine a ejecutar entre el Conjunto de CEngine.
 
     (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
-    for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
-        it != jt && getActualEngine()==NULL;
+    for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
+        it != jt && getActualEngine()==nullptr;
         ++it) {
 
         if (!(*it)->done) {
@@ -172,7 +148,7 @@ int FSLibrary::processEngines() {
 
     if (getActualEngine() == NULL) {
 
-        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
+        for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
             (*it)->done = false;
 
         if ((*_impl).engineIn.empty()) {
@@ -202,9 +178,9 @@ int FSLibrary::processEngines() {
     return EXITO;
 }
 
-int FSLibrary::addEngine(FSEngine* engine,int priority) {
+int FSLibrary::addEngine(std::shared_ptr<FSEngine> engine,int priority) {
 
-    if (engine == NULL)
+    if (engine == nullptr)
         return FRACASO;
 
     engine->priority = priority;
@@ -235,8 +211,8 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     } else if (MsgID==MSGID_Restart) {
 
-        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it) {
-            FSEngine* engine = *it;
+        for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it) {
+            std::shared_ptr<FSEngine> engine = *it;
             _impl->setActualEngine(engine);
             engine->done = false;
             if (engine->isInitialized())
@@ -263,16 +239,16 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     } else if (MsgID==MSGID_RunEngine) {
 
-        FSEngine* engine = (FSEngine*)Parm1;
+        if (dynamic_cast<FSEngine*>((FSEngine*) Parm1)) {
 
-        if (dynamic_cast<FSEngine*>(engine)) {
+            std::shared_ptr<FSEngine> engine = std::make_shared<FSEngine>((FSEngine*)Parm1);
 
             bool find = false;
 
-            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
+            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
                 find = find || engine == *it;
 
-            for (std::list<FSEngine*>::iterator it = (*_impl).engineOut.begin(), jt = (*_impl).engineOut.end();it!=jt;++it)
+            for (auto it = (*_impl).engineOut.begin(), jt = (*_impl).engineOut.end();it!=jt;++it)
                 find = find || engine == *it;
 
             if (!engine) {
@@ -285,9 +261,9 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     } else if (MsgID==MSGID_ReloadEngine) {
 
-        FSEngine* engine = (FSEngine*) Parm1;
+        if (dynamic_cast<FSEngine*>((FSEngine*) Parm1)) {
 
-        if (dynamic_cast<FSEngine*>(engine)) {
+            std::shared_ptr<FSEngine> engine = std::make_shared<FSEngine>((FSEngine*)Parm1);
 
             _impl->setActualEngine(engine);
 
@@ -300,12 +276,12 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
     } else if (MsgID==MSGID_ChangeEngine) {
 
 
-        _impl->setActualEngine(NULL);
+        _impl->setActualEngine(nullptr);
 
         (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
-        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
-            it != jt && getActualEngine()==NULL;
+        for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
+            it != jt && getActualEngine()==nullptr;
             ++it) {
 
             if (!(*it)->done) {
@@ -315,8 +291,8 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
         }
 
-        if (getActualEngine() == NULL) {
-            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
+        if (getActualEngine() == nullptr) {
+            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
                 (*it)->done = false;
 
             _impl->setActualEngine((*_impl).engineIn.front());
@@ -325,15 +301,15 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     } else if (MsgID==MSGID_KillEngine) {
 
-        FSEngine* engine = (FSEngine*)Parm1;
+        if (dynamic_cast<FSEngine*>((FSEngine*) Parm1)) {
 
-        if (dynamic_cast<FSEngine*>(engine)) {
+            std::shared_ptr<FSEngine> engine = std::make_shared<FSEngine>((FSEngine*)Parm1);
 
-            FSEngine* act = getActualEngine(); // Lo salvamos para recuperarlo al final.
+            std::shared_ptr<FSEngine> act = getActualEngine(); // Lo salvamos para recuperarlo al final.
 
             _impl->setActualEngine(engine); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Im�genes.
 
-            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it)
+            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it)
                 if (engine == *it) {
                     (*_impl).engineIn.erase(it);
                     break;
@@ -342,14 +318,10 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
             if (engine->isInitialized())
                 engine->onExit();
 
-            delete engine;
-
             _impl->setActualEngine(act); // Recuperamos el engine actual.
 
             if ((*_impl).actualEngine == engine)
-                _impl->setActualEngine(NULL);
-
-            engine = NULL;
+                _impl->setActualEngine(nullptr);
 
         }
 
@@ -476,7 +448,7 @@ bool FSLibrary::inDebug() {
 
 #endif
 
-bool FSLibrary::LibraryImpl::orderEngine(FSEngine* x, FSEngine* y) {
+bool FSLibrary::LibraryImpl::orderEngine(std::shared_ptr<FSEngine>& x, std::shared_ptr<FSEngine>& y) {
 
     return ((x->priority)<(y->priority));
 

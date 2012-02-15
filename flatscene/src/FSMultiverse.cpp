@@ -1,7 +1,7 @@
 #include "FSMultiverseImpl.h"
 #include "FSLibrary.h"
 
-FSMessageHandler* FSMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAdmin) {
+std::shared_ptr<FSEngine> FSMultiverse::MultiverseImpl::setAdmin(std::shared_ptr<FSEngine> newAdmin) {
     if (newAdmin != admin) {
         if (newAdmin) {
             unisCurrent = session[newAdmin];
@@ -11,7 +11,7 @@ FSMessageHandler* FSMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAd
             }
         }
 
-        FSMessageHandler* oldAdmin = admin;
+        std::shared_ptr<FSEngine> oldAdmin = admin;
         admin = newAdmin;
         return oldAdmin;
     } else {
@@ -20,8 +20,8 @@ FSMessageHandler* FSMultiverse::MultiverseImpl::setAdmin(FSMessageHandler* newAd
 }
 
 FSMultiverse::FSMultiverse() : _impl(new MultiverseImpl) {
-    _impl->admin = NULL;
-    _impl->unisCurrent = NULL;
+    _impl->admin = nullptr;
+    _impl->unisCurrent = nullptr;
     _impl->working = false;
 }
 
@@ -56,10 +56,10 @@ FSUniverse* FSMultiverse::add(FSUniverse* uni,Uint8 slot) {
 
     std::string& stName = uni->getName();
     FSUniverse* uniDev = universeNamed(stName,slot);
-    if (uniDev==NULL) {
+    if (uniDev==nullptr) {
         uniDev = uni;
         uni->slot = slot;
-        uni->setParent((*_impl).admin);
+//        uni->setParent((*_impl).admin);
         (*_impl).unisCurrent->push_back(uni);
     } else {
         (*_impl).working = true;
@@ -87,7 +87,7 @@ FSUniverse* FSMultiverse::universeNamed(std::string uniName,Uint8 slot) {
 
     if ((*_impl).admin) {
         FSUniverse* uniDev=NULL;
-        for (UniverseCollection::iterator it=(*_impl).unisCurrent->begin(),et=(*_impl).unisCurrent->end();it!=et;++it)  {
+        for (auto it=(*_impl).unisCurrent->begin(),et=(*_impl).unisCurrent->end();it!=et;++it)  {
             if ((*it)->getName()==uniName && (*it)->slot == slot) {
                 uniDev = (*it);
                 break;
@@ -124,7 +124,7 @@ void FSMultiverse::erase(FSUniverse *mapKilled) {
 
     bool enc = false;
 
-    for (UniverseCollection::iterator it=(*_impl).unisCurrent->begin(),et=(*_impl).unisCurrent->end();it!=et;++it) {
+    for (auto it=(*_impl).unisCurrent->begin(),et=(*_impl).unisCurrent->end();it!=et;++it) {
         if (mapKilled==*it) {
             (*_impl).unisCurrent->erase(it);
             enc=true;

@@ -4,12 +4,12 @@
 #include "FSLibrary.h"
 
 struct FSLibrary::LibraryImpl {
-    FSEngine* actualEngine;
+    std::shared_ptr<FSEngine> actualEngine;
 
     // Lista de motores a�adidas por el usuario
-    std::list<FSEngine*> engineIn;
+    std::list<std::shared_ptr<FSEngine>> engineIn;
     // Lista de motores ejecutados por orden del usuario sin ser a�adidos (mediante mensajeria).
-    std::list<FSEngine*> engineOut;
+    std::list<std::shared_ptr<FSEngine>> engineOut;
 
 #ifdef IN_FILE_ERROR
     bool errorsInSession;
@@ -22,14 +22,14 @@ struct FSLibrary::LibraryImpl {
     int debugticks;
 #endif
 
-    void setActualEngine(FSEngine* newEngineActive);
+    void setActualEngine(std::shared_ptr<FSEngine> newEngineActive);
 
     int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
     void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 
     std::string toStringErrorGL(GLenum e);
 
-    static bool orderEngine(FSEngine*,FSEngine*);
+    static bool orderEngine(std::shared_ptr<FSEngine>&,std::shared_ptr<FSEngine>&);
 
     static void onExit();
 };

@@ -112,13 +112,15 @@ int FSEngine::loop() {
         return FRACASO;
     }
 
-    FSLibrary::I()._impl->setActualEngine(this);
+    auto self = std::make_shared<FSEngine>(this);
+
+    FSLibrary::I()._impl->setActualEngine(self);
     
     SDL_Event event;
 
     while (SDL_PollEvent(&event)==1);
 
-    while (FSLibrary::I().getActualEngine() == this) {
+    while (FSLibrary::I().getActualEngine() == self) {
 
         if(
 #ifdef DEBUGTEST

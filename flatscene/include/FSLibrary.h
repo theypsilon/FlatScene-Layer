@@ -18,11 +18,12 @@
 #include "FSUniverse.h"
 #include "FSActor.h"
 
-#include <stdlib.h>
 #include "FSparserXML.h"
 
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
+
+#include <memory>
 
 enum TypeError {
     TE_standard,
@@ -56,9 +57,9 @@ public:
         return I();
     }
 
-    FSEngine* getActualEngine();
+    std::shared_ptr<FSEngine> getActualEngine();
 
-    int addEngine(FSEngine* engine,int priority);
+    int addEngine(std::shared_ptr<FSEngine> engine,int priority);
 
     static Uint32 MSGID_Exit;
     static Uint32 MSGID_Restart;

@@ -4,11 +4,11 @@
 #include "FSMultiverse.h"
 
 struct FSMultiverse::MultiverseImpl {
-    FSMessageHandler* admin;
+    std::shared_ptr<FSEngine> admin;
     MultiverseByAdmin session;
     UniverseCollection* unisCurrent;
 
-    FSMessageHandler* setAdmin(FSMessageHandler* newAdmin);
+    std::shared_ptr<FSEngine> setAdmin(std::shared_ptr<FSEngine> newAdmin);
 
     bool working;
 };

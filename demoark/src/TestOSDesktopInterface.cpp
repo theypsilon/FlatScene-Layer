@@ -159,7 +159,7 @@ int CTestOSDesktopInterface::onIdle() {
 
 void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
-    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLib.getActualEngine();
+    auto os =  std::make_shared<CTestOSDesktopInterface>((FSEngine*)FSLib.getActualEngine().get());
     SDLKey key = event->key.keysym.sym;
 
     if (event->type == SDL_KEYDOWN) {
@@ -208,7 +208,7 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
 void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
-    CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLib.getActualEngine();
+    auto os =  std::make_shared<CTestOSDesktopInterface> (FSLib.getActualEngine().get());
 
     float x = (float) (os->raton->renderPoint.x = (int) event->motion.x),
           y = (float) (os->raton->renderPoint.y = (int) event->motion.y);

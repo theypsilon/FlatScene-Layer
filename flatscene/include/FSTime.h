@@ -2,6 +2,7 @@
 #define __TIME_H__
 
 #include <map>
+#include <memory>
 #include "SDL.h"
 #include "FSdefinitions.h"
 
@@ -18,16 +19,16 @@ private:
         };
     };
 
-    mutable std::map<FSEngine*,STimeData> fc;
+    mutable std::map<std::shared_ptr<FSEngine>,STimeData> fc;
 
 #ifdef MENSAJES_FPS
     unsigned int fps;
     unsigned int auxTimer;
-    std::map<FSEngine*,int> adminText;
+    std::map<std::shared_ptr<FSEngine>,int> adminText;
 #endif
 
     mutable STimeData* actTime;
-    mutable FSEngine* admin;
+    mutable std::shared_ptr<FSEngine> admin;
 
     bool all;
     unsigned int allMsInterval;

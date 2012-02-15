@@ -9,10 +9,9 @@
 #include "TestOSDesktopInterface.h"
 
 
-
 void funcEstres(int p);
 
-
+using namespace std;
 
 int main(int argc,char* argv[])
 {
@@ -23,27 +22,27 @@ int main(int argc,char* argv[])
     ///*
     FSDraw.start(640,480,32,1.0,1.0,false);
 
-    FSEngine** engine = new FSEngine*[20];
+    shared_ptr<FSEngine> engine[20];
     
-    engine[0] = new CTestA0GameInterface(&FSLib.getLibrary());
+    engine[0] = make_shared<FSEngine>(new CTestA0GameInterface(&FSLib.getLibrary()));
 
     engine[0]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
     engine[0]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
     FSLib.addEngine(engine[0],10);
 
-    engine[1] = new CTestA3GameInterface(&FSLib.getLibrary());
+    engine[1] =  make_shared<FSEngine>(new CTestA3GameInterface(&FSLib.getLibrary()));
 
     engine[1]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
     engine[1]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
     FSLib.addEngine(engine[1],11);
 
-    engine[2] = new CTestA5GameInterface(&FSLib.getLibrary());
+    engine[2] =  make_shared<FSEngine>(new CTestA5GameInterface(&FSLib.getLibrary()));
 
     engine[2]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
     engine[2]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
     FSLib.addEngine(engine[2],12);
 
-    engine[3] = new CTestA4GameInterface(&FSLib.getLibrary());
+    engine[3] =  make_shared<FSEngine>(new CTestA4GameInterface(&FSLib.getLibrary()));
 
     engine[3]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
     engine[3]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
@@ -56,8 +55,6 @@ int main(int argc,char* argv[])
     Write.loadFont("resources/tahoma");
 
     FSLib.processEngines();
-
-    delete engine;
     
     
     return(0);

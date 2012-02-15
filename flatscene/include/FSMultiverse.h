@@ -7,9 +7,12 @@
 #include "FSNoncopyable.h"
 #include <map>
 #include <string>
+#include <memory>
+
+class FSEngine;
 
 typedef  std::list<FSUniverse*> UniverseCollection;
-typedef std::map<FSMessageHandler*,UniverseCollection*> MultiverseByAdmin;
+typedef std::map<std::shared_ptr<FSEngine>,UniverseCollection*> MultiverseByAdmin;
 
 class FSMultiverse : private FSNoncopyable, public FSSingleton<FSMultiverse> {
     friend class FSSingleton<FSMultiverse>;

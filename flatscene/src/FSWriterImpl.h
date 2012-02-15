@@ -2,6 +2,7 @@
 #define __WRITE_IMPL_H__
 
 #include "FSWriter.h"
+#include <memory>
 
 class FSEngine;
 
@@ -10,10 +11,10 @@ struct FSWriter::WriterImpl {
     struct SFont;
     struct SEffectText;
 
-    std::map<FSEngine*,SData*> session;
+    std::map<std::shared_ptr<FSEngine>,SData*> session;
 
     SData* data;
-    FSEngine* admin;
+    std::shared_ptr<FSEngine> admin;
 
 
     std::map<int,SFont*> Fonts;
@@ -27,7 +28,7 @@ struct FSWriter::WriterImpl {
     float height;
     float zoom;
 
-    FSEngine* setAdmin(FSEngine* newAdmin);
+    std::shared_ptr<FSEngine> setAdmin(std::shared_ptr<FSEngine> newAdmin);
 
     struct SChar {
         Uint16 glyph;
