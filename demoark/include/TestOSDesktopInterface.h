@@ -2,12 +2,12 @@
 #define __TESTOSDESKTOPINTERFACE_H__
 
 #include "FSLibrary.h"
+#include "FSMessageHandler.h"
 
 #include "ActorMouse.h"
 #include "CameraOS.h"
 
-class CTestOSDesktopInterface : public FSEngine  
-{
+class CTestOSDesktopInterface : public FSEngine, public FSMessageHandler {
 private:
 
     FSActor* raton, *fondo;

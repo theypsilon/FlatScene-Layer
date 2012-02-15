@@ -1,15 +1,14 @@
 #ifndef __EVENTHANDLER_H__
 #define __EVENTHANDLER_H__
 
-#include "FSMessageHandler.h"
 #include "FSTime.h"
 #include <map>
 #include <functional>
+#include <memory>
 
 class FSLibrary;
 
-class FSEngine : public FSMessageHandler
-{
+class FSEngine : std::enable_shared_from_this<FSEngine> {
 private:
 
 
@@ -40,7 +39,7 @@ public:
     bool done;
 
     
-    FSEngine(FSMessageHandler * pmhParent=NULL);
+    FSEngine();
     
     virtual ~FSEngine();
 

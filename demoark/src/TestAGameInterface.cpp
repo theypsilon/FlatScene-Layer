@@ -17,7 +17,7 @@ Uint32 CTestAGameInterface::MSGID_DeleteMap=FSMessageHandler::getNextMSGID(false
 Uint32 CTestAGameInterface::MSGID_KillEnemy=FSMessageHandler::getNextMSGID(false);
 
 //constructor
-CTestAGameInterface::CTestAGameInterface(FSMessageHandler * pmhParent) : FSEngine(pmhParent)    {
+CTestAGameInterface::CTestAGameInterface(FSMessageHandler * pmhParent) : FSMessageHandler (pmhParent)    {
 }
 //destructor
 CTestAGameInterface::~CTestAGameInterface()    {

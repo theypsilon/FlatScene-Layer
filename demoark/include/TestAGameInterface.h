@@ -2,6 +2,8 @@
 #define __TESTAGAMEINTERFACE_H__
 
 #include "FSEngine.h"
+#include "FSMessageHandler.h"
+
 #include "FSdefinitions.h"
 #include "FSScreen.h"
 #include "ActionMove.h"
@@ -36,8 +38,7 @@ typedef std::vector<FSCamera*> CameraCollection;
     ==CTestAGameInterface==
     CEngine componEnt test.
 */
-class CTestAGameInterface : public FSEngine  
-{
+class CTestAGameInterface : public FSEngine, public FSMessageHandler {
 public:
     //sprite set
     FSSpriteset* m_pSpriteset;
@@ -56,7 +57,7 @@ public:
 
 public:
     //constructor
-    CTestAGameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestAGameInterface(FSMessageHandler * pmhParent=nullptr);
     //destructor
     virtual ~CTestAGameInterface();
     //initialization

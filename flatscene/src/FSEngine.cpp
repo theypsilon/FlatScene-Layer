@@ -9,18 +9,15 @@
 
 
 
-FSEngine::FSEngine(FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent)
-{
+FSEngine::FSEngine() {
     initialized = false;
     priority = 100;
     done = true;
 }
 
 
-FSEngine::~FSEngine()
-{
-        readMessages();
-}
+FSEngine::~FSEngine() {}
+
 bool FSEngine::isInitialized() {
     return initialized;
 }
@@ -112,7 +109,7 @@ int FSEngine::loop() {
         return FRACASO;
     }
 
-    auto self = std::make_shared<FSEngine>(this);
+    auto self = shared_from_this();
 
     FSLibrary::I()._impl->setActualEngine(self);
     

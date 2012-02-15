@@ -6,19 +6,11 @@
 #include "FSLibrary.h"
 #include "FSScreen.h"
 
-//constructor
-CTestBGameInterface::CTestBGameInterface(FSMessageHandler * pmhParent) : FSEngine(pmhParent), actZone(0)
-{
-    pushed=false;
-}
+CTestBGameInterface::CTestBGameInterface(FSMessageHandler * pmhParent) 
+    : FSMessageHandler(pmhParent), actZone(0), pushed(false) {}
 
-//destructor
-CTestBGameInterface::~CTestBGameInterface()
-{
+CTestBGameInterface::~CTestBGameInterface() {}
 
-}
-
-//initialization
 int CTestBGameInterface::onInit() {
 #ifdef LOG_SISTEMA
     printf("\nTestB comienza.\n\n");
@@ -42,9 +34,7 @@ int CTestBGameInterface::onInit() {
     return EXITO;
 }
 
-//idle. Main loop.
-int CTestBGameInterface::onIdle()
-{
+int CTestBGameInterface::onIdle() {
     FSDraw.clear();
 
     FSSprite* spt = anim->paso_a_paso_spt();
@@ -69,9 +59,7 @@ int CTestBGameInterface::onIdle()
     
 }
 
-//on cleanup
-int CTestBGameInterface::onExit()
-{
+int CTestBGameInterface::onExit() {
     delete anim;
 
     Img.remove(Img.search("resources/Character"));

@@ -1,6 +1,6 @@
 #include "TestOSDesktopInterface.h"
 
-CTestOSDesktopInterface::CTestOSDesktopInterface(FSMessageHandler * pmhParent) {
+CTestOSDesktopInterface::CTestOSDesktopInterface(FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent) {
     raton = fondo = NULL;
     camaraf = camarar = NULL;
 
@@ -159,7 +159,7 @@ int CTestOSDesktopInterface::onIdle() {
 
 void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
-    auto os =  std::make_shared<CTestOSDesktopInterface>((FSEngine*)FSLib.getActualEngine().get());
+    auto os =  std::dynamic_pointer_cast<CTestOSDesktopInterface>(FSLib.getActualEngine());
     SDLKey key = event->key.keysym.sym;
 
     if (event->type == SDL_KEYDOWN) {
@@ -208,7 +208,7 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
 void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
-    auto os =  std::make_shared<CTestOSDesktopInterface> (FSLib.getActualEngine().get());
+    auto os =  std::dynamic_pointer_cast<CTestOSDesktopInterface>(FSLib.getActualEngine());
 
     float x = (float) (os->raton->renderPoint.x = (int) event->motion.x),
           y = (float) (os->raton->renderPoint.y = (int) event->motion.y);

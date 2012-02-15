@@ -24,25 +24,25 @@ int main(int argc,char* argv[])
 
     shared_ptr<FSEngine> engine[20];
     
-    engine[0] = make_shared<FSEngine>(new CTestA0GameInterface(&FSLib.getLibrary()));
+    engine[0] = make_shared<FSEngine>(new CTestA0GameInterface(FSLib.getLibrary()));
 
     engine[0]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
     engine[0]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
     FSLib.addEngine(engine[0],10);
 
-    engine[1] =  make_shared<FSEngine>(new CTestA3GameInterface(&FSLib.getLibrary()));
+    engine[1] =  make_shared<FSEngine>(new CTestA3GameInterface(FSLib.getLibrary()));
 
     engine[1]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
     engine[1]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
     FSLib.addEngine(engine[1],11);
 
-    engine[2] =  make_shared<FSEngine>(new CTestA5GameInterface(&FSLib.getLibrary()));
+    engine[2] =  make_shared<FSEngine>(new CTestA5GameInterface(FSLib.getLibrary()));
 
     engine[2]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
     engine[2]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
     FSLib.addEngine(engine[2],12);
 
-    engine[3] =  make_shared<FSEngine>(new CTestA4GameInterface(&FSLib.getLibrary()));
+    engine[3] =  make_shared<FSEngine>(new CTestA4GameInterface(FSLib.getLibrary()));
 
     engine[3]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
     engine[3]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
