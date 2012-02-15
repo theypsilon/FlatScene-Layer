@@ -7,12 +7,12 @@ CEnemyNPC::CEnemyNPC(FSMessageHandler * pmhParent) : CEnemy("E0",pmhParent) {
 
 CEnemyNPC::~CEnemyNPC() {
     if (garbage) {
-    	delete garbage;
-    	garbage=NULL;
+        delete garbage;
+        garbage=NULL;
     }
     if (rutinaColision) {
-    	delete rutinaColision;
-    	rutinaColision=NULL;
+        delete rutinaColision;
+        rutinaColision=NULL;
     }
 }
 

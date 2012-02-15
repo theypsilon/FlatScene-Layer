@@ -17,14 +17,14 @@ CTestA3GameInterface::CTestA3GameInterface(FSMessageHandler * pmhParent) : CTest
 CTestA3GameInterface::~CTestA3GameInterface()
 {
 
-    	readMessages();
+        readMessages();
 }
 
 //initialization
 int CTestA3GameInterface::onInit() {
     //initialize parent class
     if (FSEngine::onInit() == FRACASO)
-    	return FRACASO;
+        return FRACASO;
 
     FSDraw.clear();
 
@@ -35,10 +35,10 @@ int CTestA3GameInterface::onInit() {
     //Inicializando array de correspondencia de teclas.
 #ifdef EVENTOS_RAPIDO
     for (int i=0;i<NUM_SDLKEY;i++)
-    	erasePlayerKeyAlias(i);
+        erasePlayerKeyAlias(i);
 #endif
 
-    list<string> activationIds;
+    std::list<std::string> activationIds;
     activationIds.push_back("pj_normal_quiet");
     activationIds.push_back("pj_normal_walk");
     activationIds.push_back("pj_normal_run");
@@ -52,12 +52,12 @@ int CTestA3GameInterface::onInit() {
 
 
 
-    player.push_back(new CPlayer(this));	
+    player.push_back(new CPlayer(this));
     player[0]->eventChange=false;
     
     player[0]->init(activationIds,0);
 
-    player.push_back(new CPlayer(this));	
+    player.push_back(new CPlayer(this));
     player[1]->eventChange=false;
     
     player[1]->init(activationIds,1);
@@ -80,24 +80,24 @@ int CTestA3GameInterface::onInit() {
     srand(rand());
     mapDemo->incActor(ene);
     while (ene->collisionMap(0,0)) {
-    	mapDemo->decActor(ene);
-    	ene->m_Scrollxy.set(100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
-    	srand(rand());
-    	mapDemo->incActor(ene);
+        mapDemo->decActor(ene);
+        ene->m_Scrollxy.set(100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
+        srand(rand());
+        mapDemo->incActor(ene);
     }
 
     for (int i=1;i<50;i++) {
-    	CEnemy* eneClon = (CEnemy*) ene->clone();
-    	enemy.push_back(eneClon);
-    	eneClon->m_Scrollxy.set(100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
-    	srand(rand());
-    	mapDemo->incActor(eneClon);
-    	while (eneClon->collisionMap(0,0)) {
-    		mapDemo->decActor(eneClon);
-    		eneClon->m_Scrollxy.set(100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
-    		srand(rand());
-    		mapDemo->incActor(eneClon);
-    	}
+        CEnemy* eneClon = (CEnemy*) ene->clone();
+        enemy.push_back(eneClon);
+        eneClon->m_Scrollxy.set(100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
+        srand(rand());
+        mapDemo->incActor(eneClon);
+        while (eneClon->collisionMap(0,0)) {
+            mapDemo->decActor(eneClon);
+            eneClon->m_Scrollxy.set(100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
+            srand(rand());
+            mapDemo->incActor(eneClon);
+        }
 
     }
 
@@ -127,10 +127,10 @@ int CTestA3GameInterface::onExit()
     FSCamera* c ;
     for ( CameraCollection::iterator it ; !cams.empty ( ); )
     {
-    	it = cams.begin ( ) ;
-    	c = *it ;
-    	cams.erase ( it ) ;
-    	delete c ;
+        it = cams.begin ( ) ;
+        c = *it ;
+        cams.erase ( it ) ;
+        delete c ;
     }
 
     player.clear();
@@ -157,31 +157,31 @@ int CTestA3GameInterface::drawFrame() {
 void CTestA3GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_ESCAPE) {
 
-    	CMenuAGameInterface* men = new CMenuAGameInterface(&FSLib.getLibrary());
-    	men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
-    	men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
+        CMenuAGameInterface* men = new CMenuAGameInterface(&FSLib.getLibrary());
+        men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
+        men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
-    	men->setPrevious(this);
+        men->setPrevious(this);
 
-    	FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)men);
+        FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)men);
     } else if (sym==SDLK_SPACE) {
-    	CFreezeGameInterface* fgi = new CFreezeGameInterface(&FSLib.getLibrary());
-    	fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
-    	fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
+        CFreezeGameInterface* fgi = new CFreezeGameInterface(&FSLib.getLibrary());
+        fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
+        fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
-    	fgi->setPrevious(this);
+        fgi->setPrevious(this);
 
-    	FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)fgi);
+        FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)fgi);
     } else if (sym==SDLK_DELETE) {
-    	getParent()->SendMessage(FSLib.MSGID_Restart);
+        getParent()->SendMessage(FSLib.MSGID_Restart);
     } else if (sym==SDLK_F1) {
-    	getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
+        getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
     } else if (sym==SDLK_F2) {
-    	getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
+        getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
     } else if (sym==SDLK_F3) {
-    	deselect();
-    	FSDraw.ToggleFullscreen();
-    	loop();
+        deselect();
+        FSDraw.ToggleFullscreen();
+        loop();
     }
     CTestAGameInterface::onKeyDown(sym,mod,unicode);
 }
@@ -190,17 +190,17 @@ void CTestA3GameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM P
     
     if (MsgID==CTestAGameInterface::MSGID_KillEnemy) {
 
-    	void** parm = (void**) Parm2;
+        void** parm = (void**) Parm2;
 
-    	CPlayer* murder = (CPlayer*) parm[1];
-    	if (murder) {
-    		if (player[0] == murder) {
-    			score1++;
-    		} else if (player[1] == murder) {
-    			score2++;
-    		}
-    	}
-    	
+        CPlayer* murder = (CPlayer*) parm[1];
+        if (murder) {
+            if (player[0] == murder) {
+                score1++;
+            } else if (player[1] == murder) {
+                score2++;
+            }
+        }
+
     }
 
     CTestAGameInterface::pendingMessage(MsgID,Parm1,Parm2);

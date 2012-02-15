@@ -37,7 +37,7 @@ bool PControlAnimation::primero() {
 int PControlAnimation::avanzar() {
     paso++;
     if (paso>=num)
-    	paso=0;
+        paso=0;
     return cuadro();
 }
 

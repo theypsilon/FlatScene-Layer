@@ -211,12 +211,12 @@ void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
     CTestOSDesktopInterface * os =  (CTestOSDesktopInterface*) FSLib.getActualEngine();
 
     float x = (float) (os->raton->renderPoint.x = (int) event->motion.x),
-    	  y = (float) (os->raton->renderPoint.y = (int) event->motion.y);
+          y = (float) (os->raton->renderPoint.y = (int) event->motion.y);
 
     if (os->lastx != 0.0) {
 
         float diffx=x-os->lastx,
-    		  diffy=y-os->lasty;
+              diffy=y-os->lasty;
 
         os->xrot += diffy / 10.0f; 
         os->yrot += diffx / 10.0f;    

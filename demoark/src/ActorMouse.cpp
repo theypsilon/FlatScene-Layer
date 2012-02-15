@@ -21,11 +21,11 @@ int CActorMouse::move() {
     return EXITO;
 }
 
-string CActorMouse::getCreature() {
+std::string CActorMouse::getCreature() {
 
     // TODO
 
-    return string("cadena personalizable");
+    return std::string("cadena personalizable");
 
     // CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }

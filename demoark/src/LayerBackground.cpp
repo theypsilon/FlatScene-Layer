@@ -13,7 +13,7 @@ CLayerBG::CLayerBG(CMap* mapa,FSRectangle* area,FSMessageHandler * pmhParent) : 
 CLayerBG::~CLayerBG(){
     /*
     if (clipping!=NULL)
-    	delete clipping;*/
+        delete clipping;*/
 }
 
 void CLayerBG::setAlpha(Uint8 alpha){ this->alpha=alpha; }
@@ -52,7 +52,7 @@ CLayerDinamic::CLayerDinamic(CMap* mapa,FSRectangle* area,Uint8 num_tiles,FSMess
 
 CLayerDinamic::~CLayerDinamic() {
 /*    for (int i=0;i<num_tiles;i++)
-    	delete (TileBG[i]);
+        delete (TileBG[i]);
     delete(TileBG);
     ~CLayerBG();*/
 }
@@ -61,7 +61,7 @@ void CLayerDinamic::init(float zoom) {
 /*    TileBG**=TileBG*[num_tiles];
     
     for (int i=0;i<num_tiles;i++)
-    	TileBG[i]=new DinamicTile(i);
+        TileBG[i]=new DinamicTile(i);
 
     refresh();*/
 }
@@ -70,7 +70,7 @@ void CLayerDinamic::refresh() {
 /*    if (clipping!=NULL) { ; }
 
     for (int i;i<num_tiles;i++)
-    	TileBG[i]->refresh(background);*/
+        TileBG[i]->refresh(background);*/
 }
 
 FSColor* CLayerDinamic::getPixel(Uint8 i,Uint8 w,Uint8 h) {
@@ -101,24 +101,24 @@ void CLayerUniform::refresh(int cx, int cy) {
     FSPoint p;
 
     for (int i=0;i<tam_w;i++) {
-    	for (int j=0;j<tam_h;j++) {
-    		TileBG ind =  tile[(j+cy)%mapa->getH()][(i+cx)%mapa->getW()];
-    		if (ind.graph>0) {
-    			ind.graph--;
-    			p.x=i*mapa->getTileW();
-    			p.y=j*mapa->getTileH();
+        for (int j=0;j<tam_h;j++) {
+            TileBG ind =  tile[(j+cy)%mapa->getH()][(i+cx)%mapa->getW()];
+            if (ind.graph>0) {
+                ind.graph--;
+                p.x=i*mapa->getTileW();
+                p.y=j*mapa->getTileH();
 
-    			if (ind.flags & 0x001) {
-    				p.x+=mapa->getTileW();
-    			}
+                if (ind.flags & 0x001) {
+                    p.x+=mapa->getTileW();
+                }
 
-    			if (ind.flags & 0x010) {
-    				p.y+=mapa->getTileH();
-    			}
+                if (ind.flags & 0x010) {
+                    p.y+=mapa->getTileH();
+                }
 
-    			Img.get(mapa->getTileset()+ind.fileGraph)->get(ind.graph)->put(p,ind.flags);
-    		} 
-    	}
+                Img.get(mapa->getTileset()+ind.fileGraph)->get(ind.graph)->put(p,ind.flags);
+            }
+        }
     }
 }
 
@@ -183,11 +183,11 @@ CFloor::~CFloor() {
     CLayerBG* pspt ;
     while ( !Layer.empty ( ) )
     {
-    	iter = Layer.begin ( ) ;
-    	pspt = *iter ;
-    	Layer.erase ( iter ) ;
-    	if (pspt!=NULL)
-    		delete pspt ;
+        iter = Layer.begin ( ) ;
+        pspt = *iter ;
+        Layer.erase ( iter ) ;
+        if (pspt!=NULL)
+            delete pspt ;
     }
 
 }
@@ -212,7 +212,7 @@ void CFloor::refresh(int cx, int cy) {
     FSDraw.translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
 
     for (;capa<Layer.size() && !capaSuperior(Layer[capa]);capa++) {
-    	Layer[capa]->refresh(cxl,cyl);
+        Layer[capa]->refresh(cxl,cyl);
     }
 
     FSDraw.popMatrix();
@@ -228,24 +228,24 @@ void CFloor::refresh(int cx, int cy) {
 
     for (int My=cyl,Myf=cyl+tam_h;My < Myf;My++) {
 #ifndef ACTORES_POR_ORDEN_EXACTO
-    	for (int Mx=cxl,Mxf=cxl+tam_w;Mx < Mxf;Mx++) {
-    		ActorScrollCollection* this_col = p_MA[Mx][My];
-    		this_col->sort(CActorScrollMap::orderReferenceActors);
-    		for (ActorScrollCollection::iterator it=this_col->begin();it!=this_col->end();++it) {
-    			(*it)->draw(offset);
-    		}
-    	}
+        for (int Mx=cxl,Mxf=cxl+tam_w;Mx < Mxf;Mx++) {
+            ActorScrollCollection* this_col = p_MA[Mx][My];
+            this_col->sort(CActorScrollMap::orderReferenceActors);
+            for (ActorScrollCollection::iterator it=this_col->begin();it!=this_col->end();++it) {
+                (*it)->draw(offset);
+            }
+        }
 #else
-    	ActorScrollCollection buffer;
-    	for (int Mx=cxl,Mxf=cxl+tam_w;Mx < Mxf;Mx++) {
-    		ActorScrollCollection* this_col = p_MA[Mx][My];
-    		buffer.insert(buffer.end(),this_col->begin(),this_col->end());
-    	}
-    	buffer.sort(CActorScrollMap::orderReferenceActors);
-    	for (ActorScrollCollection::iterator it=buffer.begin();it!=buffer.end();++it) {
-    		(*it)->draw(offset);
-    	}
-    	buffer.clear();
+        ActorScrollCollection buffer;
+        for (int Mx=cxl,Mxf=cxl+tam_w;Mx < Mxf;Mx++) {
+            ActorScrollCollection* this_col = p_MA[Mx][My];
+            buffer.insert(buffer.end(),this_col->begin(),this_col->end());
+        }
+        buffer.sort(CActorScrollMap::orderReferenceActors);
+        for (ActorScrollCollection::iterator it=buffer.begin();it!=buffer.end();++it) {
+            (*it)->draw(offset);
+        }
+        buffer.clear();
 #endif
     }
 
@@ -254,7 +254,7 @@ void CFloor::refresh(int cx, int cy) {
     FSDraw.translate((float)(-cx%tam_tile_w),(float)(-cy%tam_tile_h),0.0);
 
     for (;capa<Layer.size();capa++) {
-    	Layer[capa]->refresh(cxl,cyl);
+        Layer[capa]->refresh(cxl,cyl);
     }
 
     FSDraw.popMatrix();

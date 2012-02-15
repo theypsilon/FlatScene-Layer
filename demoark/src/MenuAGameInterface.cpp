@@ -23,7 +23,7 @@ CMenuAGameInterface::~CMenuAGameInterface()
 int CMenuAGameInterface::onInit() {
 
     if (FSEngine::onInit() == FRACASO)
-    	return FRACASO;
+        return FRACASO;
 
 #ifdef LOG_SISTEMA
     printf("\nMenuA comienza.\n\n");
@@ -44,25 +44,25 @@ int CMenuAGameInterface::onInit() {
     texts.push_back("Salir");
 
     int y = 40;
-    for (list<string>::iterator it=texts.begin();it!=texts.end();++it) {
-    	IdTexts.push_back(Write.line(0,60,y,"%s",it->c_str()));
-    	y+=30;
+    for (std::list<std::string>::iterator it=texts.begin();it!=texts.end();++it) {
+        IdTexts.push_back(Write.line(0,60,y,"%s",it->c_str()));
+        y+=30;
     }
 
     char c[32];
     if (!FSDraw.isFullscreen())
-    	sprintf(c,"Modo Ventana");
+        sprintf(c,"Modo Ventana");
     else
-    	sprintf(c,"Pantalla Completa");
+        sprintf(c,"Pantalla Completa");
 
     IdTexts.push_back(Write.line(0,232,70,"%s",c));
 
     int aux = Chrono.setInterval(0,Chrono.isTimeForAll());
     if (aux == 0) {
-    	sprintf(c,"ilimitado");
+        sprintf(c,"ilimitado");
     } else {
-    	sprintf(c,"%d",1000/aux);
-    	Chrono.setInterval(aux,Chrono.isTimeForAll());
+        sprintf(c,"%d",1000/aux);
+        Chrono.setInterval(aux,Chrono.isTimeForAll());
     }
 
     IdTexts.push_back(Write.line(0,110,100,"%s",c));
@@ -115,26 +115,26 @@ FSEngine* CMenuAGameInterface::setPrevious(FSEngine* newE) {
 
 void CMenuAGameInterface::onKeyMenu(SDL_Event* event) {
     if (event->type == SDL_KEYDOWN)
-    	onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+        onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
     else
-    	onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+        onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
 }
 
 
 void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if ((sym==SDLK_ESCAPE || sym==SDLK_RETURN)&& !pushed) {
-    	pushed=true;
+        pushed=true;
     } else if (sym == SDLK_UP) {
-    	if (opcion == 0)
-    		opcion=texts.size()-1;
-    	else
-    		opcion--;
+        if (opcion == 0)
+            opcion=texts.size()-1;
+        else
+            opcion--;
 
     } else if (sym == SDLK_DOWN) {
-    	if (opcion == (texts.size()-1))
-    		opcion=0;
-    	else
-    		opcion++;
+        if (opcion == (texts.size()-1))
+            opcion=0;
+        else
+            opcion++;
     }
 
     dest.y=25+15*opcion;
@@ -142,66 +142,66 @@ void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_ESCAPE && pushed) {
-    	getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
-    	getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+        getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
+        getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
     } else if (sym==SDLK_RETURN && pushed) {
-    	if (opcion == 0) {
-    		getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
-    		getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
-    	}	else if (opcion == 1) {
-    		FSDraw.ToggleFullscreen();
+        if (opcion == 0) {
+            getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
+            getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+        }   else if (opcion == 1) {
+            FSDraw.ToggleFullscreen();
 
-    		char c[32];
-    		if (!FSDraw.isFullscreen())
-    			sprintf(c,"Modo Ventana");
-    		else
-    			sprintf(c,"Pantalla Completa");
-    		try {
-    			int& y = IdTexts.at(texts.size()+0);
-    			Write.erase(y);
-    			y=Write.line(0,232,70,"%s",c);
-    		} catch (...) {
-    			FSLib.Error("MenuA IdTexts vector bad access");
-    		}
-    	
-    	} else if (opcion == 2) {
-    		int aux = Chrono.setInterval(0,true);
-    		if (aux == 0)	 {
-    			aux=16;
-    			FSDraw.setDoublebuffer(true);
-    		} else {
-    			aux=0;
-    			FSDraw.setDoublebuffer(false);
-    		}
+            char c[32];
+            if (!FSDraw.isFullscreen())
+                sprintf(c,"Modo Ventana");
+            else
+                sprintf(c,"Pantalla Completa");
+            try {
+                int& y = IdTexts.at(texts.size()+0);
+                Write.erase(y);
+                y=Write.line(0,232,70,"%s",c);
+            } catch (...) {
+                FSLib.Error("MenuA IdTexts vector bad access");
+            }
 
-    		char c[32];
-    		if (aux == 0) {
-    			sprintf(c,"ilimitado");
-    		} else {
-    			sprintf(c,"%d",1000/aux);
+        } else if (opcion == 2) {
+            int aux = Chrono.setInterval(0,true);
+            if (aux == 0)    {
+                aux=16;
+                FSDraw.setDoublebuffer(true);
+            } else {
+                aux=0;
+                FSDraw.setDoublebuffer(false);
+            }
 
-    			if (Chrono.isTimeForAll())
-    				aux = Chrono.setInterval(aux);
+            char c[32];
+            if (aux == 0) {
+                sprintf(c,"ilimitado");
+            } else {
+                sprintf(c,"%d",1000/aux);
 
-    			Chrono.setInterval(aux);
-    		}
+                if (Chrono.isTimeForAll())
+                    aux = Chrono.setInterval(aux);
 
-    		try {
-    			int& y = IdTexts.at(texts.size()+1);
-    			Write.erase(y);
-    			y=Write.line(0,110,100,"%s",c);
-    		} catch (...) {
-    			FSLib.Error("MenuA IdTexts vector bad access");
-    		}
-    	} else if (opcion == 3) {
-    		getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
-    		getParent()->SendMessage(FSLib.MSGID_Restart);
-    		
-    	} else if (opcion == 4) {
-    		getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
-    		getParent()->SendMessage(FSLib.MSGID_Exit);
-    	}
-    	
-    	pushed=false;
+                Chrono.setInterval(aux);
+            }
+
+            try {
+                int& y = IdTexts.at(texts.size()+1);
+                Write.erase(y);
+                y=Write.line(0,110,100,"%s",c);
+            } catch (...) {
+                FSLib.Error("MenuA IdTexts vector bad access");
+            }
+        } else if (opcion == 3) {
+            getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+            getParent()->SendMessage(FSLib.MSGID_Restart);
+
+        } else if (opcion == 4) {
+            getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+            getParent()->SendMessage(FSLib.MSGID_Exit);
+        }
+
+        pushed=false;
     }
 }

@@ -20,8 +20,8 @@ protected:
 
     bool rendering;
 
-    list<std::function<void()>> initRenderList;
-    list<std::function<void()>> endRenderList;
+    std::list<std::function<void()>> initRenderList;
+    std::list<std::function<void()>> endRenderList;
 
 public:
     

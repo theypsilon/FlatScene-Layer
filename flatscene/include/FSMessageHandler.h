@@ -8,7 +8,7 @@
 #include <windows.h>
 #endif
 
-#include "GL/gl.h"    		// Librería OpenGL32 
+#include "GL/gl.h"          // Librería OpenGL32
 #include "GL/glu.h"
 #include "SDL.h"
 #include "SDL_image.h"
@@ -25,17 +25,17 @@ class FSMessageHandler  {
 private:
     class FSMessage {
     private:
-    	Uint32 MsgID;
-    	MSGPARM Parm1;
-    	MSGPARM Parm2;
+        Uint32 MsgID;
+        MSGPARM Parm1;
+        MSGPARM Parm2;
 
-    	FSMessage(Uint32 MsgID=0,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL);
-    	virtual ~FSMessage();
-    	virtual Uint32 getMsgID();
-    	virtual MSGPARM getParm(int n);
+        FSMessage(Uint32 MsgID=0,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL);
+        virtual ~FSMessage();
+        virtual Uint32 getMsgID();
+        virtual MSGPARM getParm(int n);
 
-    	friend class FSMessageHandler;
-    	friend class FSLibrary;
+        friend class FSMessageHandler;
+        friend class FSLibrary;
     };
 
     typedef std::list<FSMessage*> MessageCollection;
@@ -62,7 +62,7 @@ public:
     virtual ~FSMessageHandler();
     
     FSMessageHandler * getParent();
-    void setParent(FSMessageHandler * pmhNewParent);	
+    void setParent(FSMessageHandler * pmhNewParent);
     bool HasParent();
     
 #ifdef MENSAJES_MSGIDS

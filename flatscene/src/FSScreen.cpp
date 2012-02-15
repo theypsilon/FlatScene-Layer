@@ -28,15 +28,15 @@ FSScreen::~FSScreen() {
 
 int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
 { 
-    	
+
     if (_impl->m_SDL_Surface) {
-    	FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n"); 
-    	return FRACASO;
+        FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n");
+        return FRACASO;
     }
 
     if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-    	FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
-    	return FRACASO;
+        FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+        return FRACASO;
     }
 #ifdef LOG_SISTEMA
     printf("Iniciando Video Mode...\n");
@@ -52,19 +52,19 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
     // con double buffer
 
     if (doublebuff) {
-    	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); 
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    	SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
+        SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
     }
 
     Uint32 flags = SDL_OPENGL;
 
     if (fullscreen) 
-    	flags |= SDL_FULLSCREEN;
+        flags |= SDL_FULLSCREEN;
 
     if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-    	FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
-    	return FRACASO;
+        FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+        return FRACASO;
     }
 
     _impl->m_FullScreen=fullscreen;
@@ -92,15 +92,15 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
 
 int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, bool fullscreen, bool doublebuff)
 { 
-    	
+
     if (_impl->m_SDL_Surface) {
-    	FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n"); 
-    	return FRACASO;
+        FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n");
+        return FRACASO;
     }
 
     if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-    	FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
-    	return FRACASO;
+        FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+        return FRACASO;
     }
 #ifdef LOG_SISTEMA
     printf("Iniciando Video Mode...\n");
@@ -116,19 +116,19 @@ int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, 
     // con double buffer
 
     if (doublebuff) {
-    	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); 
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    	SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
+        SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
     }
 
     Uint32 flags = SDL_OPENGL;
 
     if (fullscreen) 
-    	flags |= SDL_FULLSCREEN;
+        flags |= SDL_FULLSCREEN;
 
     if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-    	FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
-    	return FRACASO;
+        FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+        return FRACASO;
     }
 
     _impl->m_FullScreen=fullscreen;
@@ -156,8 +156,8 @@ int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, 
 int FSScreen::render() 
 {
     if (!_impl->m_SDL_Surface) {
-    	FSLibrary::I().Error("Video context not inicialized");
-    	return false;
+        FSLibrary::I().Error("Video context not inicialized");
+        return false;
     }
 
 #ifdef MAINRENDERLOOP
@@ -169,8 +169,8 @@ int FSScreen::render()
     std::list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
 
     for (std::list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-    	ScreenImpl::SRender* r = *it;
-    	(*r)();
+        ScreenImpl::SRender* r = *it;
+        (*r)();
     }
 
     _impl->endRenderMode(RENDER_TEXTURE_STANDARD);
@@ -182,9 +182,9 @@ int FSScreen::render()
 #endif
 
     SDL_GL_SwapBuffers();
-    	
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-    glLoadIdentity();	
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
 
     _impl->deleteResources();
 
@@ -194,23 +194,16 @@ int FSScreen::render()
 int FSScreen::clear ( ) 
 {
     if (!_impl->m_SDL_Surface) {
-    	FSLibrary::I().Error("Video context not inicialized");
-    	return FRACASO;
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
     }
 
 #ifdef MAINRENDERLOOP
 
-<<<<<<< Updated upstream
-    list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
-    for (list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-    	(**it)();
+    auto & graphicMaterial = _impl->graphicMaterial;
+    for (auto it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+        (**it)();
     }
-=======
-	std::list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
-	for (std::list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-		(**it)();
-	}
->>>>>>> Stashed changes
 
     graphicMaterial.clear();
 
@@ -218,8 +211,8 @@ int FSScreen::clear ( )
 
     _impl->deleteResources();
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
-    glLoadIdentity();	
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
+    glLoadIdentity();
 
     return EXITO;
 }
@@ -338,8 +331,8 @@ int FSScreen::color(FSColor* col, float alpha) {
 int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 
     if (_impl->rendering) {
-    	FSLibrary::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
-    	return FRACASO;
+        FSLibrary::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
+        return FRACASO;
     }
 
     _impl->m_maxZ = zMax;
@@ -375,15 +368,15 @@ int FSScreen::popMatrix() {
 
 int FSScreen::ScreenImpl::beginRenderMode(Uint32 flags) {
     if (!m_SDL_Surface) {
-    	FSLibrary::I().Error("Video context not inicialized");
-    	return FRACASO;
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
     }
     
     if (flags & RENDER_TEXTURE_STANDARD) {
-    	glEnable(GL_COLOR_MATERIAL);
-    	glEnable(GL_TEXTURE_2D);
-    	glEnable(GL_BLEND);
-    	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+        glEnable(GL_COLOR_MATERIAL);
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     return EXITO;
@@ -391,14 +384,14 @@ int FSScreen::ScreenImpl::beginRenderMode(Uint32 flags) {
 
 int FSScreen::ScreenImpl::endRenderMode(Uint32 flags) {
     if (!m_SDL_Surface) {
-    	FSLibrary::I().Error("Video context not inicialized");
-    	return FRACASO;
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
     }
 
     if (flags & RENDER_TEXTURE_STANDARD) {
-    	glDisable(GL_BLEND);
-    	glDisable(GL_TEXTURE_2D);
-    	glDisable(GL_COLOR_MATERIAL);
+        glDisable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_COLOR_MATERIAL);
     }
 
     return EXITO;
@@ -408,8 +401,8 @@ int FSScreen::ScreenImpl::endRenderMode(Uint32 flags) {
 int FSScreen::quit()
 {
     if (!_impl->m_SDL_Surface) {
-    	FSLibrary::I().Error("Video context not inicialized");
-    	return FRACASO;
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
     }
 
     SDL_FreeSurface(_impl->m_SDL_Surface);
@@ -437,8 +430,8 @@ bool FSScreen::isFullscreen() {
 
 int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float scaley, bool fullscreen) {
     if (!_impl->m_SDL_Surface) {
-    	FSLibrary::I().Error("Video context not inicialized");
-    	return FRACASO;
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
     }
     
 
@@ -451,7 +444,7 @@ int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float s
     quit();
 
     if ( start (width,height,bpp,scalex, scaley,fullscreen,_impl->m_Doublebuff) == FRACASO)
-    	return FRACASO;
+        return FRACASO;
 
     _impl->reloadResources(info);
 
@@ -462,8 +455,8 @@ int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float s
 int FSScreen::ToggleFullscreen() {
 
     if (!_impl->m_SDL_Surface) {
-    	FSLibrary::I().Error("Video context not inicialized");
-    	return FRACASO;
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
     }
 
     clear();
@@ -477,7 +470,7 @@ int FSScreen::ToggleFullscreen() {
     _impl->m_FullScreen = !_impl->m_FullScreen;
 
     if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,_impl->m_Doublebuff) == FRACASO )
-    	return FRACASO;	
+        return FRACASO;
 
     _impl->reloadResources(info);
 
@@ -488,23 +481,23 @@ int FSScreen::ToggleFullscreen() {
 int FSScreen::setDoublebuffer(bool doublebuff) {
 
     if (!_impl->m_SDL_Surface) {
-    	FSLibrary::I().Error("Video context not inicialized");
-    	return FRACASO;
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
     }
 
     if (doublebuff!=_impl->m_Doublebuff) {
-    	clear();
+        clear();
 
-    	GraphicResources info;
+        GraphicResources info;
 
-    	_impl->saveResources(info);
+        _impl->saveResources(info);
 
-    	quit();
+        quit();
 
-    	if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,doublebuff) == FRACASO)
-    		return FRACASO;
+        if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,doublebuff) == FRACASO)
+            return FRACASO;
 
-    	_impl->reloadResources(info);
+        _impl->reloadResources(info);
     }
 
     return EXITO;
@@ -524,35 +517,35 @@ void FSScreen::ScreenImpl::SRenderLocation::operator()() {
 
     if (trp == TRP_ORTHO) {
 
-    	//Opción ortogonal
-    	//glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
+        //Opción ortogonal
+        //glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
 
-    	glOrtho( 0.0, (double)width, (double)height, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
+        glOrtho( 0.0, (double)width, (double)height, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
 
     } else {
 
         static const float& m_maxZ = FSScreen::I()._impl->m_maxZ;
 
-    	//Opción de perspectiva 1
-    	gluPerspective(90.0f,width/height,1.0,m_maxZ);
-    	glTranslatef(-width/2,height/2,-240.0);
-    	glRotatef(180.0,1.0,0.0,0.0);
+        //Opción de perspectiva 1
+        gluPerspective(90.0f,width/height,1.0,m_maxZ);
+        glTranslatef(-width/2,height/2,-240.0);
+        glRotatef(180.0,1.0,0.0,0.0);
 
-    	//Opción de perspectiva 2
-    	//gluPerspective(60.0f,width/height,1.0,400.0);
-    	//glTranslatef(0.0,0.0,-205.0);
-    	//glTranslatef(0.0,0.0,101.0);
-    	//glRotatef(180.0,1.0,0.0,0.0);
-    	//glTranslatef(-width/2.0,-height/2.0,0.0);
+        //Opción de perspectiva 2
+        //gluPerspective(60.0f,width/height,1.0,400.0);
+        //glTranslatef(0.0,0.0,-205.0);
+        //glTranslatef(0.0,0.0,101.0);
+        //glRotatef(180.0,1.0,0.0,0.0);
+        //glTranslatef(-width/2.0,-height/2.0,0.0);
 
-    	//Opción de perspectiva 3
-    	//gluPerspective(45.0f,width/height,1.0,400.0);
-    	//glTranslatef(0.0,0.0,-290.0);
-    	//glRotatef(180.0,1.0,0.0,0.0);
-    	//glTranslatef(-width/2.0,-height/2.0,0.0);
+        //Opción de perspectiva 3
+        //gluPerspective(45.0f,width/height,1.0,400.0);
+        //glTranslatef(0.0,0.0,-290.0);
+        //glRotatef(180.0,1.0,0.0,0.0);
+        //glTranslatef(-width/2.0,-height/2.0,0.0);
 
-    	//glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
-    	//glTranslatef(0.0,-100.0,120.0);
+        //glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
+        //glTranslatef(0.0,-100.0,120.0);
     }
     delete this;
 }

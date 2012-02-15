@@ -5,7 +5,7 @@ CNode::CNode(int numLinks) {
     this->numLinks=numLinks;
     links =  alloc(CNode*,numLinks);
     for (int i=0;i<numLinks;i++)
-    	links[i]=NULL;
+        links[i]=NULL;
 }
 
 CNode::~CNode() {
@@ -19,8 +19,8 @@ CNode* CNode::get(int link) {
 CNode* CNode::set(int link,CNode* newNode) {
     CNode* ret=NULL;
     if ((link < numLinks) && (link >= 0)) {
-    	ret=links[link];
-    	links[link]=newNode;
+        ret=links[link];
+        links[link]=newNode;
     }
     return ret;
 }
@@ -31,7 +31,7 @@ int CNode::size() {
 
 void CNode::inDelete() {
     if (numLinks > 0) {
-    	freemem(links);
-    	numLinks=0;
+        freemem(links);
+        numLinks=0;
     }
 }

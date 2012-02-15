@@ -24,14 +24,14 @@ int CTestBGameInterface::onInit() {
     printf("\nTestB comienza.\n\n");
 #endif
     if (FSEngine::onInit() == FRACASO)
-    	return FRACASO;
+        return FRACASO;
 
     FSDraw.clear();
 
 /*    int num=1;
     int* sequence = alloc(int,num);
     for (int i=0;i<num;i++)
-    	sequence[i]=i;
+        sequence[i]=i;
     
     Img.add("Character");
 
@@ -55,13 +55,13 @@ int CTestBGameInterface::onIdle()
 
     if (spt->size() > actZone) {
 
-    	FSDraw.pushMatrix();
+        FSDraw.pushMatrix();
 
-    	FSPoint ptDst(*spt->getCenter());
-    	ptDst.x+=100;
-    	ptDst.y+=100;
+        FSPoint ptDst(*spt->getCenter());
+        ptDst.x+=100;
+        ptDst.y+=100;
 
-    	FSDraw.translate((float)ptDst.x,(float)ptDst.y,0);  
+        FSDraw.translate((float)ptDst.x,(float)ptDst.y,0);
 
     }
 
@@ -85,13 +85,13 @@ int CTestBGameInterface::onExit()
 
 void CTestBGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_TAB && !pushed) {
-    	pushed=true;
+        pushed=true;
     }
 }
 
 void CTestBGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_TAB && pushed) {
-    	getParent()->SendMessage(FSLib.MSGID_ChangeEngine,(void*)false);
-    	pushed=false;
+        getParent()->SendMessage(FSLib.MSGID_ChangeEngine,(void*)false);
+        pushed=false;
     }
 }

@@ -24,9 +24,9 @@ void CActionQuiet0::firstExecute() {
 
 void CActionQuiet0::execute() {
     if (!executor->collisionMap(0,movy)) 
-    	executor->m_Scrollxy.y+=movy;
+        executor->m_Scrollxy.y+=movy;
     if (!executor->collisionMap(movx,0)) 
-    	executor->m_Scrollxy.x+=movx;
+        executor->m_Scrollxy.x+=movx;
 
     executor->setSprite(sptset[seq],nextStep());
     
@@ -37,7 +37,7 @@ void CActionQuiet0::lastExecute() {
 }
 
 CAction* CActionQuiet0::clone(CActorScrollMap* exe) {
-    if (!exe)	exe = executor;
+    if (!exe)   exe = executor;
     CActionQuiet0* ret = new CActionQuiet0(exe,NULL,getId());
     cloneThisInto(ret);
     return ret;

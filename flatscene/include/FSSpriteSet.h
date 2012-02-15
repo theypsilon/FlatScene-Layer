@@ -8,7 +8,7 @@
 typedef std::vector<FSSprite*> SpriteCollection;
 
 typedef struct { 
-    string name; 
+    std::string name; 
     Uint8 mode; 
     int times;
     int number;
@@ -19,11 +19,11 @@ private :
 
     static Uint16 globalAuxiliar;
     //Inicializa Spriteset con los contenidos del fichero de tipo gr�fico, cuyo nombre es obtenido por el constructor.
-    void loadChipset(string& c,Uint8 mode=ONLY_TEXTURE,string* cPrev=NULL);
+    void loadChipset(std::string& c,Uint8 mode=ONLY_TEXTURE,std::string* cPrev=NULL);
 
-    void loadChipsetSplit(string grd,Uint8 mode=ONLY_TEXTURE);
+    void loadChipsetSplit(std::string grd,Uint8 mode=ONLY_TEXTURE);
 
-    string name;
+    std::string name;
     //Contenedor de Sprites.
     SpriteCollection m_vecSprites ;
 
@@ -33,12 +33,12 @@ private :
     //construct empty sprite set
     FSSpriteset();
     //constructor que inicializa la colecci�n con un fichero externo.
-    FSSpriteset(string c,Uint8 mode=ONLY_TEXTURE);
+    FSSpriteset(std::string c,Uint8 mode=ONLY_TEXTURE);
 
     virtual ~FSSpriteset();
 
     void add ( FSSprite* pspt ) ;
-    bool setName(string& name);
+    bool setName(std::string& name);
     void remove ( FSSprite* pspt ) ;
 
     friend class FSScreen;
@@ -53,7 +53,7 @@ public:
 
     int size () ;
 
-    string getName();
+    std::string getName();
 
     Uint8 getMode();
 
@@ -65,7 +65,7 @@ typedef struct {
 
 typedef struct { 
     bool relative ; 
-    vector<SDL_Rect_Signed> v; 
+    std::vector<SDL_Rect_Signed> v; 
 } RectsInfo;
 
 #endif

@@ -158,7 +158,7 @@ int FSLibrary::processEngines() {
 
     (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
-    for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
+    for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
         it != jt && getActualEngine()==NULL;
         ++it) {
 
@@ -172,7 +172,7 @@ int FSLibrary::processEngines() {
 
     if (getActualEngine() == NULL) {
 
-        for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
+        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
             (*it)->done = false;
 
         if ((*_impl).engineIn.empty()) {
@@ -235,7 +235,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     } else if (MsgID==MSGID_Restart) {
 
-        for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it) {
+        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it) {
             FSEngine* engine = *it;
             _impl->setActualEngine(engine);
             engine->done = false;
@@ -269,10 +269,10 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
             bool find = false;
 
-            for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
+            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
                 find = find || engine == *it;
 
-            for (list<FSEngine*>::iterator it = (*_impl).engineOut.begin(), jt = (*_impl).engineOut.end();it!=jt;++it)
+            for (std::list<FSEngine*>::iterator it = (*_impl).engineOut.begin(), jt = (*_impl).engineOut.end();it!=jt;++it)
                 find = find || engine == *it;
 
             if (!engine) {
@@ -304,7 +304,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
         (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
 
-        for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
+        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
             it != jt && getActualEngine()==NULL;
             ++it) {
 
@@ -316,7 +316,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
         }
 
         if (getActualEngine() == NULL) {
-            for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
+            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
                 (*it)->done = false;
 
             _impl->setActualEngine((*_impl).engineIn.front());
@@ -333,7 +333,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
             _impl->setActualEngine(engine); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Im�genes.
 
-            for (list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it)
+            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it)
                 if (engine == *it) {
                     (*_impl).engineIn.erase(it);
                     break;
@@ -418,7 +418,7 @@ void FSLibrary::Error (char* c,TypeError e) {
     Error(std::string(c),e);
 }
 
-string FSLibrary::LibraryImpl::toStringErrorGL(GLenum e) {
+std::string FSLibrary::LibraryImpl::toStringErrorGL(GLenum e) {
     std::string s ="";
 
     switch (e) {
@@ -434,14 +434,14 @@ string FSLibrary::LibraryImpl::toStringErrorGL(GLenum e) {
     return s;
 }
 
-string FSLibrary::readLastError() {
+std::string FSLibrary::readLastError() {
     if ((*_impl).errors.empty())
         return SINERROR;
     else
         return (*_impl).errors.back();
 }
 
-string FSLibrary::popError() {
+std::string FSLibrary::popError() {
     if ((*_impl).errors.empty())
         return SINERROR;
     else {

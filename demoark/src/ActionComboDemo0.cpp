@@ -23,7 +23,7 @@ CAction* CActionComboDemo0::mix(ActionCollection mix) {
 }
 
 CAction* CActionComboDemo0::clone(CActorScrollMap* exe) {
-    if (!exe)	exe = executor;
+    if (!exe)   exe = executor;
     CActionComboDemo0* ret = new CActionComboDemo0(exe,NULL,getId());
     cloneThisInto(ret);
     return ret;

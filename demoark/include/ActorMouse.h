@@ -36,7 +36,7 @@ public:
     // Opcional. Deber�a devolver una cadena que identificara de alg�n modo al actor.
     // Su implementaci�n por defecto devuelve la cadena "criature" que debemos introducir 
     // en la implementaci�n del Constructor (ver en la parte de implementaci�n).
-    string getCreature();
+    std::string getCreature();
     
     // Opcional. Su implementaci�n por defecto es una simple asignaci�n a la variable miembro CUniverse* inUniverse.
     int setUniverse(FSUniverse* m);

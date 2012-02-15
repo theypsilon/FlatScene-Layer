@@ -23,7 +23,7 @@ public:
 
     void blockFutureActionCandidates();
 
-    void init(std::list<string>& activationIds,int v);
+    void init(std::list<std::string>& activationIds,int v);
     int move();
     FSPoint m_Movxy;
 

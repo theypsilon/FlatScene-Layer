@@ -17,7 +17,7 @@ void CActionWalkAuto0::firstExecute() {
     executor->flags = flags[seq];
 
     /*if (executor->actUltimo==executor->actNeutro && executor->actUltimoMovimiento==this && !elapsed(2) && getSucesor()) {
-    	executor->actActual = getSucesor();	
+        executor->actActual = getSucesor();
     }*/
 
     paso=0;
@@ -31,14 +31,14 @@ void CActionWalkAuto0::firstExecute() {
 
 void CActionWalkAuto0::execute() {
     if (Chrono.getTick() > (timeNew + 60-lapso)) {
-    	executor->removeActionCandidate(this);
-    	executor->addActionCandidate((*getBrothers())[4]);
+        executor->removeActionCandidate(this);
+        executor->addActionCandidate((*getBrothers())[4]);
     }
     
     if (!executor->collisionMap(0,movy)) 
-    	executor->m_Scrollxy.y+=movy;
+        executor->m_Scrollxy.y+=movy;
     if (!executor->collisionMap(movx,0)) 
-    	executor->m_Scrollxy.x+=movx;
+        executor->m_Scrollxy.x+=movx;
 
     executor->setSprite(sptset[seq],nextStep());
     
@@ -46,15 +46,15 @@ void CActionWalkAuto0::execute() {
 
 void CActionWalkAuto0::lastExecute() {
     if (movx != 0) {
-    	if (movx > 0)
-    		(*getBrothers())[4]->seq=3;
-    	else
-    		(*getBrothers())[4]->seq=2;
+        if (movx > 0)
+            (*getBrothers())[4]->seq=3;
+        else
+            (*getBrothers())[4]->seq=2;
     } else {
-    	if (movy < 0)
-    		(*getBrothers())[4]->seq=1;
-    	else
-    		(*getBrothers())[4]->seq=0;
+        if (movy < 0)
+            (*getBrothers())[4]->seq=1;
+        else
+            (*getBrothers())[4]->seq=0;
     }
 }
 
@@ -63,7 +63,7 @@ bool CActionWalkAuto0::ThisType(const char* i) {
     int size = (sizeof(type)/sizeof(type[0]));
     bool ret = false;
     for (int it=0;it<size;it++)
-    	ret = ret || strcmp(type[it],i)==0;
+        ret = ret || strcmp(type[it],i)==0;
     return ret;
 }
 

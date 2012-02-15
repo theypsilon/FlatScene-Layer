@@ -51,7 +51,7 @@ public:
 
     bool collisionMap(int x, int y);
 
-    virtual void init(list<string>& activationIds);
+    virtual void init(std::list<std::string>& activationIds);
 
     virtual int move();
 

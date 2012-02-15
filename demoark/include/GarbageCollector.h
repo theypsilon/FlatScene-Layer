@@ -13,15 +13,15 @@ public:
 
 class CGarbageCollectorOfActions : public CGarbageCollector{
 private:
-    list<vector<CAction*>*> listOfBrothers;
-    list<CAction*> nodes;
+    std::list<std::vector<CAction*>*> listOfBrothers;
+    std::list<CAction*> nodes;
 public:
     CGarbageCollectorOfActions();
     ~CGarbageCollectorOfActions();
-    void add(vector<CAction*>* bro);
+    void add(std::vector<CAction*>* bro);
     void add(CAction* nod);
-    list<CAction*>& getListActions();
-    list<vector<CAction*>*>& getListBrothers();
+    std::list<CAction*>& getListActions();
+    std::list<std::vector<CAction*>*>& getListBrothers();
     void clean();
 };
 

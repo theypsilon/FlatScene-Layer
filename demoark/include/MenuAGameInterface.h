@@ -19,8 +19,8 @@ private:
     Uint8 opcion;
 
     int file;
-    vector<int> IdTexts;
-    list<string> texts;
+    std::vector<int> IdTexts;
+    std::list<std::string> texts;
 
     FSPoint dest;
 

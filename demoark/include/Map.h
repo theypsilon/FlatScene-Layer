@@ -26,8 +26,8 @@ private:
     Uint32 lastTileset;
     Uint32 lastDurezaset;
 
-    string datosTile;
-    string datosSong;
+    std::string datosTile;
+    std::string datosSong;
 
     TileBG*** tile;
     TileBG*** dur;
@@ -43,12 +43,12 @@ public:
 
     ActorScrollCollection**** MA;
 
-    CMap(string name);
+    CMap(std::string name);
     virtual ~CMap();
 
     virtual void load();
     virtual void unload();
-    virtual string& getName();
+    virtual std::string& getName();
 
     virtual int incActor(FSActor* act);
     virtual int decActor(FSActor* act);
@@ -78,7 +78,7 @@ public:
     int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);
 #endif
 
-    static void rescataChar(string& cad,int size,int n, FILE* f);
+    static void rescataChar(std::string& cad,int size,int n, FILE* f);
 };
 
 

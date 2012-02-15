@@ -35,7 +35,7 @@ struct FSWriter::WriterImpl {
     };
 
     struct SFont {
-        string cadena;
+        std::string cadena;
         TTF_Font* fuente;
         std::map<Uint16,FSCanvas*> render;
         unsigned int size;
@@ -50,7 +50,7 @@ struct FSWriter::WriterImpl {
 
     struct FSTextBox {
         SFont* fuente;
-        string file;
+        std::string file;
         int next;
 
         std::list<SChar> charInDisplay;

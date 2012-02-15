@@ -14,7 +14,7 @@ typedef struct{
 }TileBG;
 
 typedef struct{
-    string destino;
+    std::string destino;
     Uint32 regionx1;
     Uint32 regionx2;
     Uint32 regiony1;

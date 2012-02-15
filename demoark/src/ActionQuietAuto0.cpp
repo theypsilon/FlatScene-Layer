@@ -26,21 +26,21 @@ void CActionQuietAuto0::firstExecute() {
 
 void CActionQuietAuto0::execute() {
     if (Chrono.getTick() > timeNew + lapso) {
-    	int i = rand() % 100;
-    	srand(rand());
-    	if (i >= 0 && i < 25) {
-    		executor->removeActionCandidate(this);
-    		executor->addActionCandidate((*getBrothers())[1]);
-    	} else if (i >= 25 && i < 50) {
-    		executor->removeActionCandidate(this);
-    		executor->addActionCandidate((*getBrothers())[3]);
-    	} else if (i >= 50 && i < 75) {	
-    		executor->removeActionCandidate(this);
-    		executor->addActionCandidate((*getBrothers())[5]);
-    	} else if (i >= 75 && i < 100) {
-    		executor->removeActionCandidate(this);
-    		executor->addActionCandidate((*getBrothers())[7]);
-    	}
+        int i = rand() % 100;
+        srand(rand());
+        if (i >= 0 && i < 25) {
+            executor->removeActionCandidate(this);
+            executor->addActionCandidate((*getBrothers())[1]);
+        } else if (i >= 25 && i < 50) {
+            executor->removeActionCandidate(this);
+            executor->addActionCandidate((*getBrothers())[3]);
+        } else if (i >= 50 && i < 75) {
+            executor->removeActionCandidate(this);
+            executor->addActionCandidate((*getBrothers())[5]);
+        } else if (i >= 75 && i < 100) {
+            executor->removeActionCandidate(this);
+            executor->addActionCandidate((*getBrothers())[7]);
+        }
     }
 
     executor->setSprite(sptset[seq],nextStep());
@@ -52,7 +52,7 @@ void CActionQuietAuto0::lastExecute() {
 }
 
 CAction* CActionQuietAuto0::clone(CActorScrollMap* exe) {
-    if (!exe)	exe = executor;
+    if (!exe)   exe = executor;
     CActionQuietAuto0* ret = new CActionQuietAuto0(exe,NULL,getId());
     cloneThisInto(ret);
     return ret;

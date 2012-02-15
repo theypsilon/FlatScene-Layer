@@ -73,17 +73,17 @@ void funcEstres(int p) {
 
     for (int i = 0; i < p ; i++) {
 
-    	Img.remove(Img.add("resources/Character"));
+        Img.remove(Img.add("resources/Character"));
 
-    	if (i> 300)
-    		FSDraw.render();
+        if (i> 300)
+            FSDraw.render();
 
     }
 
 
     for (int i = 0; i < p ; i++) {
 
-    	Write.unloadFont(Write.loadFont("resources/tahoma"));
+        Write.unloadFont(Write.loadFont("resources/tahoma"));
 
     }
 
@@ -91,7 +91,7 @@ void funcEstres(int p) {
 
     for (int i = 0; i < p ; i++) {
 
-    	Write.erase(Write.line(f,i%100,0,"No se muestra"),true);
+        Write.erase(Write.line(f,i%100,0,"No se muestra"),true);
 
     }
 
@@ -101,11 +101,11 @@ void funcEstres(int p) {
 
     for (int i = 0; i < p ; i++) {
 
-    	FSPoint pt(i%100,rand()%200);
+        FSPoint pt(i%100,rand()%200);
 
-    	Img.get(s)->get(0)->put(pt);
+        Img.get(s)->get(0)->put(pt);
 
-    	FSDraw.render();
+        FSDraw.render();
 
     }
 

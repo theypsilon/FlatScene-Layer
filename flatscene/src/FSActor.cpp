@@ -18,7 +18,7 @@ int FSActor::move() {
 FSUniverse* FSActor::getUniverse() {
     return inUniverse;
 }
-string FSActor::getCreature() {
+std::string FSActor::getCreature() {
     return creature;
 }
 

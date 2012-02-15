@@ -184,25 +184,25 @@ FSColor& FSColor::operator*=(int Multiplier)
     //if multiplier is non-positive
     if(Multiplier<=0)
     {
-    	//make color black
-    	FSColor c(0,0,0);
-    	(*this)=c;
+        //make color black
+        FSColor c(0,0,0);
+        (*this)=c;
     }
     else
     {
-    	//temp var
-    	int temp;
-    	//add red
-    	temp=(getR()*Multiplier);
-    	setR(temp);
+        //temp var
+        int temp;
+        //add red
+        temp=(getR()*Multiplier);
+        setR(temp);
 
-    	//add green
-    	temp=(getG()*Multiplier);
-    	setG(temp);
+        //add green
+        temp=(getG()*Multiplier);
+        setG(temp);
 
-    	//add blue
-    	temp=(getB()*Multiplier);
-    	setB(temp);
+        //add blue
+        temp=(getB()*Multiplier);
+        setB(temp);
     }
     return(*this);
 }
@@ -212,25 +212,25 @@ FSColor& FSColor::operator/=(int Divisor)
     //if divisor is non-positive
     if(Divisor<=0)
     {
-    	//make color black
-    	FSColor c(0,0,0);
-    	(*this)=c;
+        //make color black
+        FSColor c(0,0,0);
+        (*this)=c;
     }
     else
     {
-    	//temp var
-    	int temp;
-    	//add red
-    	temp=(getR()/Divisor);
-    	setR(temp);
+        //temp var
+        int temp;
+        //add red
+        temp=(getR()/Divisor);
+        setR(temp);
 
-    	//add green
-    	temp=(getG()/Divisor);
-    	setG(temp);
+        //add green
+        temp=(getG()/Divisor);
+        setG(temp);
 
-    	//add blue
-    	temp=(getB()/Divisor);
-    	setB(temp);
+        //add blue
+        temp=(getB()/Divisor);
+        setB(temp);
     }
     return(*this);
 }

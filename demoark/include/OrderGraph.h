@@ -9,28 +9,28 @@
 #include "actions.h"
 
 
-typedef map<int,CAction*> memberFamily;
-typedef map<string,memberFamily> TypeFamily;
+typedef std::map<int,CAction*> memberFamily;
+typedef std::map<std::string,memberFamily> TypeFamily;
 
 class CEnlace {
 public:
-    CEnlace(string referencia,string tecla,string evento);
+    CEnlace(std::string referencia,std::string tecla,std::string evento);
     ~CEnlace();
-    string referencia;
-    string tecla;
-    string evento;
+    std::string referencia;
+    std::string tecla;
+    std::string evento;
 };
 
 class COrder {
 public:
 
-    COrder(CAction* n, string identidad="");
+    COrder(CAction* n, std::string identidad="");
     ~COrder();
 
     CAction* nodo;
     int prioridad;
-    string identidad;
-    list<CEnlace> enlaces;
+    std::string identidad;
+    std::list<CEnlace> enlaces;
 };
 
 class COrderGraph {
@@ -58,7 +58,7 @@ class CActorScrollMap;
 
 class CActionGraph : public COrderGraph {
 private:
-    list<COrder*> nodos;
+    std::list<COrder*> nodos;
     COrder* actNeutro;
 
     TypeFamily mapaDeFamilias;
@@ -70,7 +70,7 @@ private:
     COrder* createNode(const char* c,TiXmlElement* newNode, const char* s=NULL);
     int getKey(const char* c);
     CAction* search(const char* c);
-    string sinBarra(const char* c);
+    std::string sinBarra(const char* c);
 
     CActorScrollMap* player;
 public:

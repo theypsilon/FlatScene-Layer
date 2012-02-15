@@ -2,22 +2,22 @@
 #include "FSLibrary.h"
 #include "FSMultiverseImpl.h"
 
-FSUniverse::FSUniverse(string name) : FSMessageHandler(NULL), name(name) , loaded(false), numCameras(0), slot(255) {
+FSUniverse::FSUniverse(std::string name) : FSMessageHandler(NULL), name(name) , loaded(false), numCameras(0), slot(255) {
 
 }
 
 FSUniverse::~FSUniverse() {
     if (!FSMultiverse::I()._impl->working) {
-    	FSLibrary::I().Error("Solo se puede destruir el Universo a traves del Multiverso.",TE_controlViolation);
+        FSLibrary::I().Error("Solo se puede destruir el Universo a traves del Multiverso.",TE_controlViolation);
     }
     ActorCollection::iterator it ;
     FSActor* a ;
     while ( !actor.empty ( ) )
     {
-    	it = actor.begin ( ) ;
-    	a = *it ;
-    	actor.erase ( it ) ;
-    	delete a ;
+        it = actor.begin ( ) ;
+        a = *it ;
+        actor.erase ( it ) ;
+        delete a ;
     }
 }
 
@@ -29,25 +29,25 @@ void FSUniverse::unload() {
     loaded=false;
 }
 
-string& FSUniverse::getName() {
+std::string& FSUniverse::getName() {
     return name;
 }
 
 int FSUniverse::incActor(FSActor* act) {
 
     if (!act) {
-    	FSLibrary::I().Error("Puntero a CActor nulo");
-    	return FRACASO;
+        FSLibrary::I().Error("Puntero a CActor nulo");
+        return FRACASO;
     }
 
     FSUniverse* u = act->getUniverse();
 
     if (u) 
-    	for (ActorCollection::iterator it = u->actorBegin(), jt = u->actorEnd();it!=jt;++it) 
-    		if (act == *it) {
-    			FSLibrary::I().Error("Actor actualmente incluido en otro Universe");
-    			return FRACASO;
-    		}
+        for (ActorCollection::iterator it = u->actorBegin(), jt = u->actorEnd();it!=jt;++it)
+            if (act == *it) {
+                FSLibrary::I().Error("Actor actualmente incluido en otro Universe");
+                return FRACASO;
+            }
 
     return EXITO;
 }
@@ -55,16 +55,16 @@ int FSUniverse::incActor(FSActor* act) {
 int FSUniverse::decActor(FSActor* act) {
 
     if (!act) {
-    	FSLibrary::I().Error("Puntero a CActor nulo");
-    	return FRACASO;
+        FSLibrary::I().Error("Puntero a CActor nulo");
+        return FRACASO;
     }
 
     for (ActorCollection::iterator it = actorBegin(), jt = actorEnd();it!=jt;++it) 
-    	if (act == *it) {
-    		act->setUniverse(NULL);
-    		actor.erase(it);
-    		return EXITO;
-    	}
+        if (act == *it) {
+            act->setUniverse(NULL);
+            actor.erase(it);
+            return EXITO;
+        }
 
     FSLibrary::I().Error("Actor actualmente no incluido en este Universe");
     return FRACASO;
@@ -80,19 +80,19 @@ ActorCollection::iterator FSUniverse::actorEnd() {
 
 bool FSUniverse::isLoaded() {
     if (!FSMultiverse::I()._impl->working && slot == 255) {
-    	FSLibrary::I().Error("No se ha inicializado este mapa, a traves del Multiverso. Inutilizable.");
-    	return false;
+        FSLibrary::I().Error("No se ha inicializado este mapa, a traves del Multiverso. Inutilizable.");
+        return false;
     }
     return loaded;
 }
 
-int FSUniverse::changeUniverse(string newName,Uint8 slot) {
+int FSUniverse::changeUniverse(std::string newName,Uint8 slot) {
     if (!isLoaded()) {
-    	name=newName;
-    	this->slot = slot;
-    	return 0;
-    }	else
-    	return -1;
+        name=newName;
+        this->slot = slot;
+        return 0;
+    }   else
+        return -1;
 }
 
 void FSUniverse::incCameras() {
@@ -102,8 +102,8 @@ void FSUniverse::incCameras() {
 void FSUniverse::decCameras() {
     numCameras--;
     if (numCameras==0)
-    	if (isLoaded())
-    		unload();
+        if (isLoaded())
+            unload();
 }
 
 Uint32 FSUniverse::numActors() {

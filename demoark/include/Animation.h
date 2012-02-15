@@ -8,7 +8,7 @@
 
 class CAnimation {
 private:
-    static void aliasFileAnimation(string& file,const char* owner);
+    static void aliasFileAnimation(std::string& file,const char* owner);
 protected:
     void cloneThisInto(CAnimation* clon);
     void generateAnimationByXML(TiXmlElement* newNode, const char* owner);

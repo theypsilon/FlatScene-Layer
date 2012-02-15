@@ -25,8 +25,8 @@ private:
     CAction* actionKeyup[NUM_PJKEY];
     CAction* predecesor;
     CAction* sucesor;
-    vector<CAction*>* actionBrothers;
-    string  id;
+    std::vector<CAction*>* actionBrothers;
+    std::string  id;
 
     int priority;
 
@@ -44,8 +44,8 @@ public:
     void setPredecesor(CAction* actPre);
     void setSucesor(CAction* actSuc);
 
-    vector<CAction*>* getBrothers() { return actionBrothers; };
-    void setBrothers(vector<CAction*>* bro) { this->actionBrothers=bro; };
+    std::vector<CAction*>* getBrothers() { return actionBrothers; };
+    void setBrothers(std::vector<CAction*>* bro) { this->actionBrothers=bro; };
 
     CAction* getKeydown(int n);
     CAction* getKeyup(int n);

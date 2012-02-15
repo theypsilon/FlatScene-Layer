@@ -5,10 +5,10 @@
 CAction::CAction(CActorScrollMap* executor,TiXmlElement* fuente,const char* i) : priority(0), executor(executor), id(i), activo(false), predecesor(NULL), sucesor(NULL), actionBrothers(NULL),
 CNode(16), CAnimation() {
 
-    string creature = executor->getCreature();
+    std::string creature = executor->getCreature();
     
     if (fuente != NULL) {
-    	generateAnimationByXML(fuente,creature.c_str());		
+        generateAnimationByXML(fuente,creature.c_str());
     }
 
 }

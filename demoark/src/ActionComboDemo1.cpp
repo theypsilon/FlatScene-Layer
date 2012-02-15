@@ -14,19 +14,19 @@ void CActionComboDemo1::execute() {
 
     if (id!=16) {
 #ifdef MENSAJES_ACCIONES
-    	printf("Step%d                                                                     \r",id);
+        printf("Step%d                                                                     \r",id);
 #endif
-    	if (elapsed(10)) {
+        if (elapsed(10)) {
 #ifdef MENSAJES_ACCIONES
-    		printf("Step%d Time Elapsed          ",id);
+            printf("Step%d Time Elapsed          ",id);
 #endif
-    		executor->removeActionCandidate(this);
-    	}
+            executor->removeActionCandidate(this);
+        }
     } else {
 #ifdef MENSAJES_ACCIONES
-    	printf("Combo Launched!!       ");
+        printf("Combo Launched!!       ");
 #endif
-    	executor->removeActionCandidate(this);
+        executor->removeActionCandidate(this);
     }
 }
 

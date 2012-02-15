@@ -7,7 +7,7 @@ struct FSImages::ImagesImpl {
     SpritesetCollection set;
     SpritesetCount count;
 
-    stack<int> lastIndexAdded;
+    std::stack<int> lastIndexAdded;
 };
 
 #endif

@@ -2,7 +2,7 @@
 #include "TestAGameInterface.h"
 #include "FSLibrary.h"
 
-CMap::CMap(string name) : FSUniverse(name) {
+CMap::CMap(std::string name) : FSUniverse(name) {
 #ifdef LOG_MAPAS
     printf("Creando mapa '%s'...\n",name.c_str());
 #endif
@@ -10,13 +10,13 @@ CMap::CMap(string name) : FSUniverse(name) {
 
 CMap::~CMap() {
     if (isLoaded())
-    	unload();
+        unload();
 #ifdef LOG_MAPAS
     printf("Destruyendo mapa '%s'...\n",name.c_str());
 #endif
 }
 
-string& CMap::getName() {
+std::string& CMap::getName() {
     return name;
 }
 
@@ -35,8 +35,8 @@ void CMap::load() {
     TiXmlDocument xmldoc(("resources/"+name+".xml").c_str());
 
     if (!xmldoc.LoadFile()) {
-    	FSLib.Error("No se puede abrir el XML del mapa");
-    	return;
+        FSLib.Error("No se puede abrir el XML del mapa");
+        return;
     }
 
     TiXmlHandle input(xmldoc.FirstChildElement("Map"));
@@ -44,13 +44,13 @@ void CMap::load() {
     TiXmlElement* node = input.ToElement();
 
     if (!node) {
-    	FSLib.Error("Estructura XML defectuosa del mapa");
-    	return;
+        FSLib.Error("Estructura XML defectuosa del mapa");
+        return;
     }
 
     if (!node->Attribute("width") || !node->Attribute("height") || !node->Attribute("layers") || !node->Attribute("tileWidth") || !node->Attribute("tileHeight") || !node->Attribute("name")) {
-    	FSLib.Error("Atributos XML defectuosos en el mapa");
-    	return;
+        FSLib.Error("Atributos XML defectuosos en el mapa");
+        return;
     }
 
     node->QueryIntAttribute("width",(int*)&mapWidth);
@@ -63,72 +63,72 @@ void CMap::load() {
     datosTile = node->Attribute("name");
 
     if (node->QueryIntAttribute("precission-plus",&aux) == TIXML_SUCCESS)
-    	precissionPlus = (Uint8) aux;
+        precissionPlus = (Uint8) aux;
     else
-    	precissionPlus=1;
+        precissionPlus=1;
 
     aux= 0;
 
     node = input.FirstChildElement("Music").FirstChildElement().ToElement();
     if (node && node->Attribute("name"))
-    	datosSong = node->Attribute("name");
+        datosSong = node->Attribute("name");
 
     tileSet = durezaSet = -1;
 
     for (node = input.FirstChildElement("TileGraphs").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
-    	if (tileSet == -1) 
-    		tileSet = lastTileset = Img.add(node->Attribute("name"));
-    	else
-    		lastTileset = Img.add(node->Attribute("name"));
+        if (tileSet == -1)
+            tileSet = lastTileset = Img.add(node->Attribute("name"));
+        else
+            lastTileset = Img.add(node->Attribute("name"));
     }
 
     for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
-    	if (durezaSet == -1)
-    		durezaSet = lastDurezaset = Img.add(node->Attribute("name"),ONLY_SDL_SURFACE);
-    	else
-    		lastDurezaset = Img.add(node->Attribute("name"));
+        if (durezaSet == -1)
+            durezaSet = lastDurezaset = Img.add(node->Attribute("name"),ONLY_SDL_SURFACE);
+        else
+            lastDurezaset = Img.add(node->Attribute("name"));
     }
 
     if (durezaSet == -1 || tileSet == -1) {
-    	FSLib.Error("TileGraphs y/o TileCollisions defectuosos en el mapa");
-    	return;
+        FSLib.Error("TileGraphs y/o TileCollisions defectuosos en el mapa");
+        return;
     }
 
     LayerType= alloc(Uint32,numLayers);
     LayerFloor= alloc(Uint32,numLayers);
 
     for (node = input.FirstChildElement("LayerList").FirstChildElement().ToElement();
-    		node && node->Attribute("type") && node->Attribute("floor");
-    		node = node->NextSiblingElement()) {
+            node && node->Attribute("type") && node->Attribute("floor");
+            node = node->NextSiblingElement()) {
 
-    	const char* auxcad = node->Attribute("type");
+        const char* auxcad = node->Attribute("type");
 
-    	if (strcmp(auxcad,"background")==0) {
-    		LayerType[aux]=0;
-    	} else if (strcmp(auxcad,"lower")==0) {
-    		LayerType[aux]=1;
-    	} else if (strcmp(auxcad,"upper")==0) {
-    		LayerType[aux]=2;
-    	} else {
-    		FSLib.Error("LayerType invalidado cargando el mapa");
-    		return;
-    	}
+        if (strcmp(auxcad,"background")==0) {
+            LayerType[aux]=0;
+        } else if (strcmp(auxcad,"lower")==0) {
+            LayerType[aux]=1;
+        } else if (strcmp(auxcad,"upper")==0) {
+            LayerType[aux]=2;
+        } else {
+            FSLib.Error("LayerType invalidado cargando el mapa");
+            return;
+        }
 
-    	node->QueryIntAttribute("floor",(int*)& LayerFloor[aux]);
+        node->QueryIntAttribute("floor",(int*)& LayerFloor[aux]);
 
-    	aux++;
+        aux++;
     }
 
     if (aux != numLayers) {
-    	FSLib.Error("Definicion de capas defectuosa en el mapa");
-    	return;
+        FSLib.Error("Definicion de capas defectuosa en el mapa");
+        return;
     }
 
     for (node = input.FirstChildElement("GateList").FirstChildElement().ToElement();
-    		node && node->Attribute("target") && node->Attribute("x1") && node->Attribute("x2") && node->Attribute("y1") && node->Attribute("y2") && node->Attribute("z") && node->Attribute("target-x") && node->Attribute("target-y") && node->Attribute("target-z");
-    		node = node->NextSiblingElement()) {
+            node && node->Attribute("target") && node->Attribute("x1") && node->Attribute("x2") && node->Attribute("y1") && node->Attribute("y2") && node->Attribute("z") && node->Attribute("target-x") && node->Attribute("target-y") && node->Attribute("target-z");
+            node = node->NextSiblingElement()) {
 
-    	numGates++;
+        numGates++;
     }
 
     Gates = new gate[numGates];
@@ -136,23 +136,23 @@ void CMap::load() {
     aux = 0;
 
     for (node = input.FirstChildElement("GateList").FirstChildElement().ToElement();node;node = node->NextSiblingElement()) {
-    	gate* g= &Gates[aux];
-    	aux++;
+        gate* g= &Gates[aux];
+        aux++;
 
-    	g->destino = node->Attribute("target");
-    	node->QueryIntAttribute("x1",(int*) & (g->regionx1));
-    	node->QueryIntAttribute("x2",(int*) & (g->regionx2));
-    	node->QueryIntAttribute("y1",(int*) & (g->regiony1));
-    	node->QueryIntAttribute("y2",(int*) & (g->regiony2));
-    	node->QueryIntAttribute("z",(int*) & (g->regionz));
-    	node->QueryIntAttribute("target-x",(int*) & (g->destino_scroll_x));
-    	node->QueryIntAttribute("target-y",(int*) & (g->destino_scroll_y));
-    	node->QueryIntAttribute("target-z",(int*) & (g->destino_scroll_z));
+        g->destino = node->Attribute("target");
+        node->QueryIntAttribute("x1",(int*) & (g->regionx1));
+        node->QueryIntAttribute("x2",(int*) & (g->regionx2));
+        node->QueryIntAttribute("y1",(int*) & (g->regiony1));
+        node->QueryIntAttribute("y2",(int*) & (g->regiony2));
+        node->QueryIntAttribute("z",(int*) & (g->regionz));
+        node->QueryIntAttribute("target-x",(int*) & (g->destino_scroll_x));
+        node->QueryIntAttribute("target-y",(int*) & (g->destino_scroll_y));
+        node->QueryIntAttribute("target-z",(int*) & (g->destino_scroll_z));
     }
 
     if (aux!=numGates) {
-    	FSLib.Error("Definicion de gates defectuosa en el mapa");
-    	return;
+        FSLib.Error("Definicion de gates defectuosa en el mapa");
+        return;
     }
 
     xmldoc.Clear();
@@ -163,8 +163,8 @@ void CMap::load() {
     
     FILE* f_map;
     if ((f_map=fopen(("resources/"+name+".dat").c_str(),"rb"))==NULL) {
-    	 FSLib.Error(string("El mapa '\n")+name+"' no se encuentra.");
-    	 return;
+         FSLib.Error(std::string("El mapa '\n")+name+"' no se encuentra.");
+         return;
     }
 
     char buffer[5]="";
@@ -172,27 +172,27 @@ void CMap::load() {
     fread(&buffer,sizeof(char),4,f_map);
 
     if (strcmp(buffer,"JMBM")!=0) {
-    	FSLib.Error("Firma del mapa invalida");
-    	return;
+        FSLib.Error("Firma del mapa invalida");
+        return;
     }
 
     tile = alloc(TileBG**,numLayers);
     
     for (int i=0;i<numLayers;i++) {
-    	tile[i] = alloc(TileBG*,mapHeight);
-    	for (int j=0;j<mapHeight;j++) {
-    		tile[i][j]= alloc(TileBG,mapWidth);
-    		for (int k=0;k<mapWidth;k++) {
-    			fread(&tile[i][j][k],sizeof(TileBG),1,f_map);
-    		}
-    	}
+        tile[i] = alloc(TileBG*,mapHeight);
+        for (int j=0;j<mapHeight;j++) {
+            tile[i][j]= alloc(TileBG,mapWidth);
+            for (int k=0;k<mapWidth;k++) {
+                fread(&tile[i][j][k],sizeof(TileBG),1,f_map);
+            }
+        }
     }
 
     fread(&buffer,sizeof(char),4,f_map);
 
     if (strcmp(buffer,"JMBM")!=0) {
-    	FSLib.Error("Firma del mapa invalida");
-    	return;
+        FSLib.Error("Firma del mapa invalida");
+        return;
     }
 
     fclose(f_map);
@@ -204,53 +204,53 @@ void CMap::load() {
     int i=0;
     dur= alloc(TileBG**,LayerFloor[numLayers-1]+1);
     for (int c=0;c<=LayerFloor[numLayers-1];c++) {
-    	bool primera=false;
-    	// TODO : posible bug por la expresi�n ((primera==false)||(LayerFloor[i-1]==LayerFloor[i])
-    	for (;(i<numLayers)&&((primera==false)||(LayerFloor[i-1]==LayerFloor[i]));i++) {
-    		if (!primera && LayerType[i]==1) {
-    			primera=true;
-    			dur[c]= alloc(TileBG*,mapHeight);
-    			
-    			for (int j=0;j<mapHeight;j++) {
-    				dur[c][j]= alloc(TileBG,mapWidth);
-    				for (int k=0;k<mapWidth;k++) {
-    					dur[c][j][k]=tile[i][j][k];
-    				}
-    			}
-    		}
-    	}
+        bool primera=false;
+        // TODO : posible bug por la expresi�n ((primera==false)||(LayerFloor[i-1]==LayerFloor[i])
+        for (;(i<numLayers)&&((primera==false)||(LayerFloor[i-1]==LayerFloor[i]));i++) {
+            if (!primera && LayerType[i]==1) {
+                primera=true;
+                dur[c]= alloc(TileBG*,mapHeight);
+
+                for (int j=0;j<mapHeight;j++) {
+                    dur[c][j]= alloc(TileBG,mapWidth);
+                    for (int k=0;k<mapWidth;k++) {
+                        dur[c][j][k]=tile[i][j][k];
+                    }
+                }
+            }
+        }
 
     }
 
     MA = alloc(ActorScrollCollection***,1+LayerFloor[numLayers-1]);
     for (int z=0;z<=LayerFloor[numLayers-1];z++) {
-    	MA[z] = alloc(ActorScrollCollection**,mapWidth);
-    	for (int x=0;x<mapWidth;x++) {
-    		MA[z][x]= alloc(ActorScrollCollection*,mapHeight);
-    		for (int y=0;y<mapHeight;y++) {
-    			MA[z][x][y]=new ActorScrollCollection;
-    		}
-    	}
+        MA[z] = alloc(ActorScrollCollection**,mapWidth);
+        for (int x=0;x<mapWidth;x++) {
+            MA[z][x]= alloc(ActorScrollCollection*,mapHeight);
+            for (int y=0;y<mapHeight;y++) {
+                MA[z][x][y]=new ActorScrollCollection;
+            }
+        }
     }
 
     for (ActorCollection::iterator it = actor.begin();it!=actor.end();++it) {
-    	CActorScrollMap* actscroll = dynamic_cast<CActorScrollMap*>(*it);
+        CActorScrollMap* actscroll = dynamic_cast<CActorScrollMap*>(*it);
 
-    	if (actscroll) {
-    		int MAz = actscroll->m_Scrollxy.z ;
-    		int MAx = actscroll->m_Scrollxy.x / getTileW();
-    		int MAy = actscroll->m_Scrollxy.y / getTileH();
-    		if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
-    			actscroll->placeInMA = MA[MAz][MAx][MAy];
-    			actscroll->placeInMA->push_back(actscroll);
-    		} else {
-    			actscroll->placeInMA = NULL;
-    		}
-    	}
+        if (actscroll) {
+            int MAz = actscroll->m_Scrollxy.z ;
+            int MAx = actscroll->m_Scrollxy.x / getTileW();
+            int MAy = actscroll->m_Scrollxy.y / getTileH();
+            if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
+                actscroll->placeInMA = MA[MAz][MAx][MAy];
+                actscroll->placeInMA->push_back(actscroll);
+            } else {
+                actscroll->placeInMA = NULL;
+            }
+        }
     }
 
 
-    //	The map is ready.
+    //  The map is ready.
 
 
     loaded=true;
@@ -262,29 +262,29 @@ void CMap::unload() {
 #endif
     
     for (int z=0;z<=LayerFloor[numLayers-1];z++) {
-    	for (int x=0;x<mapWidth;x++) {
-    		for (int y=0;y<mapHeight;y++) {
-    			delete MA[z][x][y];
-    		}
-    		freemem(MA[z][x]);
-    	}
-    	freemem(MA[z]);
+        for (int x=0;x<mapWidth;x++) {
+            for (int y=0;y<mapHeight;y++) {
+                delete MA[z][x][y];
+            }
+            freemem(MA[z][x]);
+        }
+        freemem(MA[z]);
     }
     freemem(MA);
 
-    for (int i=0;i<numLayers;i++) {	
-    	for (int j=0;j<mapHeight;j++) {
-    		freemem(tile[i][j]);
-    	}
-    	freemem(tile[i]);
+    for (int i=0;i<numLayers;i++) {
+        for (int j=0;j<mapHeight;j++) {
+            freemem(tile[i][j]);
+        }
+        freemem(tile[i]);
     }
     freemem(tile);
 
     for (int i=0;i<=LayerFloor[numLayers-1];i++) {
-    	for (int j=0;j<mapHeight;j++) {
-    		freemem(dur[i][j]);
-    	}
-    	freemem(dur[i]);
+        for (int j=0;j<mapHeight;j++) {
+            freemem(dur[i][j]);
+        }
+        freemem(dur[i]);
     }
     freemem(dur);
 
@@ -294,10 +294,10 @@ void CMap::unload() {
     delete[] Gates;
 
     for (int i=tileSet,j=lastTileset;i<=j;i++)
-    	Img.remove(i);
+        Img.remove(i);
 
     for (int i=durezaSet,j=lastDurezaset;i<=j;i++)
-    	Img.remove(i);
+        Img.remove(i);
 
     loaded=false;
 }
@@ -306,23 +306,23 @@ int CMap::incActor(FSActor* act) {
     CActorScrollMap* actscroll = dynamic_cast<CActorScrollMap*>(act);
 
     if (actscroll && act->getUniverse()==NULL) {
-    	act->setUniverse(this);
-    	actor.push_back(act);
-    	if (isLoaded()) {
-    		int MAz = actscroll->m_Scrollxy.z ;
-    		int MAx = actscroll->m_Scrollxy.x / getTileW();
-    		int MAy = actscroll->m_Scrollxy.y / getTileH();
-    		if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
-    			actscroll->placeInMA = MA[MAz][MAx][MAy];
-    			actscroll->placeInMA->push_back(actscroll);
-    		} else {
-    			actscroll->placeInMA = NULL;
-    		}
-    	}
-    	return EXITO;
+        act->setUniverse(this);
+        actor.push_back(act);
+        if (isLoaded()) {
+            int MAz = actscroll->m_Scrollxy.z ;
+            int MAx = actscroll->m_Scrollxy.x / getTileW();
+            int MAy = actscroll->m_Scrollxy.y / getTileH();
+            if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
+                actscroll->placeInMA = MA[MAz][MAx][MAy];
+                actscroll->placeInMA->push_back(actscroll);
+            } else {
+                actscroll->placeInMA = NULL;
+            }
+        }
+        return EXITO;
     } else {
-    	FSLib.Error((string("Se ha a�adido un actor al mapa ")+getName()+string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
-    	return FRACASO;
+        FSLib.Error((std::string("Se ha a�adido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
+        return FRACASO;
     }
 }
 
@@ -330,21 +330,21 @@ int CMap::decActor(FSActor* act) {
     CActorScrollMap* actscroll = dynamic_cast<CActorScrollMap*>(act);
 
     for (ActorCollection::iterator i=actor.begin();i!=actor.end();++i) {
-    	if (act==*i) {
-    		actor.erase(i);
-    		if (isLoaded()) {
-    			actscroll->placeInMA->remove(actscroll);
-    			act->setUniverse(NULL);
-    		}
-    		break;
-    	}
+        if (act==*i) {
+            actor.erase(i);
+            if (isLoaded()) {
+                actscroll->placeInMA->remove(actscroll);
+                act->setUniverse(NULL);
+            }
+            break;
+        }
     }
     if (actor.size()==0) {
-    	if (getParent()!=NULL) {
-    		CTestAGameInterface* father=(CTestAGameInterface*)getParent();
-    		father->SendMessage(CTestAGameInterface::MSGID_DeleteMap,(MSGPARM)this);
-    		unload();
-    	}
+        if (getParent()!=NULL) {
+            CTestAGameInterface* father=(CTestAGameInterface*)getParent();
+            father->SendMessage(CTestAGameInterface::MSGID_DeleteMap,(MSGPARM)this);
+            unload();
+        }
     }
 
     return EXITO;
@@ -417,13 +417,13 @@ int CMap::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
 }
 #endif
 
-void CMap::rescataChar(string& cad,int size, int n, FILE *f) {
+void CMap::rescataChar(std::string& cad,int size, int n, FILE *f) {
     char c;
     cad.clear();
     for (int i=0;i<size;i++) {
-    	fread(&c,sizeof(char),n,f);
-    	if (c!='\\')
-    		cad+=c;
+        fread(&c,sizeof(char),n,f);
+        if (c!='\\')
+            cad+=c;
     }
 }
 
@@ -431,34 +431,34 @@ Uint32 CMap::getPixel(int x, int y,int z) {
     int j=x/getTileW();
     int i=y/getTileH();
     if (j>=0 && i>=0 && j<mapWidth && i<mapHeight) {
-    	int tile_pisado=dur[z][i][j].dur;
-    	
-    	if (tile_pisado>0) {
-    		tile_pisado--;
-    		FSSprite* canv=Img.get(durezaSet+dur[z][i][j].fileDur)->get(tile_pisado);
+        int tile_pisado=dur[z][i][j].dur;
 
-    		int flags = dur[z][i][j].flags;
+        if (tile_pisado>0) {
+            tile_pisado--;
+            FSSprite* canv=Img.get(durezaSet+dur[z][i][j].fileDur)->get(tile_pisado);
 
-    		x=x%(canv->getWidth());
-    		y=y%(canv->getHeight());
+            int flags = dur[z][i][j].flags;
 
-    		/*x=x%(canv->getWidth()*2);
-    		x/=2;
-    		y=y%(canv->getHeight()*2);
-    		y/=2;*/
+            x=x%(canv->getWidth());
+            y=y%(canv->getHeight());
 
-    		if (flags & 0x01) {
-    			x=canv->getWidth() - x -1;
-    		} 
-    			
-    		if (flags > 1) {
-    			y=canv->getHeight() - y -1;
-    		}			
+            /*x=x%(canv->getWidth()*2);
+            x/=2;
+            y=y%(canv->getHeight()*2);
+            y/=2;*/
 
-    		return (canv->getPixel(x,y));
-    		
-    	}
-    	return 0;
+            if (flags & 0x01) {
+                x=canv->getWidth() - x -1;
+            }
+
+            if (flags > 1) {
+                y=canv->getHeight() - y -1;
+            }
+
+            return (canv->getPixel(x,y));
+
+        }
+        return 0;
     }
     return 2575;
 }

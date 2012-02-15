@@ -24,16 +24,16 @@ CAction* CActionFight::ActionFightFactory(CActorScrollMap* executor,TiXmlElement
 
     CAction* ret = NULL;
     if (CActionSimpleDemo0::ThisType(i)) {
-    	ret = new CActionSimpleDemo0(executor,n,i);
+        ret = new CActionSimpleDemo0(executor,n,i);
     } else if (strcmp(i,"pj_normal_osa")==0) {
-    	ret =  new CActionComboDemo0(executor,n,i);
-    } else if (strcmp(i,"pj_normal_osa")==0) {	// TODO: Este debe cambiar.
-    	ret =  new CActionComboDemo1(executor,n,i);
+        ret =  new CActionComboDemo0(executor,n,i);
+    } else if (strcmp(i,"pj_normal_osa")==0) {  // TODO: Este debe cambiar.
+        ret =  new CActionComboDemo1(executor,n,i);
     }
 
     if (ret == NULL) {
-    	FSLib.Error(string("No existe una acci�n con esa id ")+i);
-    	ret = new CActionSimpleDemo0(executor,n,i);
+        FSLib.Error(std::string("No existe una acci�n con esa id ")+i);
+        ret = new CActionSimpleDemo0(executor,n,i);
     }
     return ret;
 }

@@ -30,7 +30,7 @@ typedef struct
     int posx, posy;
 } Textura;
 
-typedef vector<FSCamera*> CameraCollection;
+typedef std::vector<FSCamera*> CameraCollection;
 
 /*
     ==CTestAGameInterface==
@@ -49,8 +49,8 @@ public:
     KeySDLAlias PlayerKeyAlias[NUM_SDLKEY];
 #endif
 
-    vector<CPlayer*> player;
-    list<CEnemy*> enemy;
+    std::vector<CPlayer*> player;
+    std::list<CEnemy*> enemy;
 
     CameraCollection cams;
 

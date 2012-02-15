@@ -9,7 +9,7 @@ public:
     CEnemyPunto(FSMessageHandler * pmhParent=NULL);
     virtual ~CEnemyPunto();
 
-    void init(list<string>& activationIds,int x, int y,int z);
+    void init(std::list<std::string>& activationIds,int x, int y,int z);
 
     FSActor* clone();
 };

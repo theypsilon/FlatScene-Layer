@@ -10,12 +10,12 @@ class FSEngine;
 class FSTime {
 private:
     struct STimeData {
-    	unsigned int msInterval;
-    	unsigned int msLast;
-    	unsigned int frameCount;
+        unsigned int msInterval;
+        unsigned int msLast;
+        unsigned int frameCount;
 
-    	STimeData() : msInterval(16), msLast(0), frameCount(0) {
-    	};
+        STimeData() : msInterval(16), msLast(0), frameCount(0) {
+        };
     };
 
     mutable std::map<FSEngine*,STimeData> fc;

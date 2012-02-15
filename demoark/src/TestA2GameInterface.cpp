@@ -22,14 +22,14 @@ CTestA2GameInterface::CTestA2GameInterface(FSMessageHandler * pmhParent) : CTest
 CTestA2GameInterface::~CTestA2GameInterface()
 {
 
-    	readMessages();
+        readMessages();
 }
 
 //initialization
 int  CTestA2GameInterface::onInit() {
     //initialize parent class
     if (FSEngine::onInit() == FRACASO)
-    	return FRACASO;
+        return FRACASO;
 
     FSDraw.clear();
 
@@ -40,10 +40,10 @@ int  CTestA2GameInterface::onInit() {
     //Inicializando array de correspondencia de teclas.
 #ifdef EVENTOS_RAPIDO
     for (int i=0;i<NUM_SDLKEY;i++)
-    	erasePlayerKeyAlias(i);
+        erasePlayerKeyAlias(i);
 #endif
 
-    list<string> activationIds;
+    std::list<std::string> activationIds;
     activationIds.push_back("pj_normal_quiet");
     activationIds.push_back("pj_normal_walk");
     activationIds.push_back("pj_normal_run");
@@ -56,12 +56,12 @@ int  CTestA2GameInterface::onInit() {
     activationIds.push_back("pj_normal_alsa");
 
 
-    player.push_back(new CPlayer(this));	
+    player.push_back(new CPlayer(this));
     player[0]->eventChange=false;
     
     player[0]->init(activationIds,0);
 
-    player.push_back(new CPlayer(this));	
+    player.push_back(new CPlayer(this));
     player[1]->eventChange=false;
     
     player[1]->init(activationIds,1);
@@ -70,51 +70,51 @@ int  CTestA2GameInterface::onInit() {
     activationIds.push_back("npc_normal_quiet");
     activationIds.push_back("npc_normal_walk");
 
-    TiXmlDocument xmldoc("resources/config.xml");	// Cargamos el archivo de configuraci�n.
-    if (!xmldoc.LoadFile()) {	 FSLib.Error("resources/config.xml",TE_fileExists); }
+    TiXmlDocument xmldoc("resources/config.xml");   // Cargamos el archivo de configuraci�n.
+    if (!xmldoc.LoadFile()) {    FSLib.Error("resources/config.xml",TE_fileExists); }
 
     TiXmlHandle input(xmldoc.FirstChildElement("System"));
     int cantNPC=0;
 
     if (input.FirstChildElement("demonpc").ToElement() && input.FirstChildElement("demonpc").ToElement()->Attribute("cant"))
-    	cantNPC = atoi(input.FirstChildElement("demonpc").ToElement()->Attribute("cant"));
+        cantNPC = atoi(input.FirstChildElement("demonpc").ToElement()->Attribute("cant"));
 
     if (cantNPC < 0 || cantNPC > 100000)
-    	cantNPC = 0;
+        cantNPC = 0;
 
     CMap* mapDemo; 
     if (input.FirstChildElement("demonpc").ToElement() && input.FirstChildElement("demonpc").ToElement()->Attribute("initial-map"))
-    	mapDemo = (CMap*) Cosmos.add(new CMap(input.FirstChildElement("demonpc").ToElement()->Attribute("initial-map")));
+        mapDemo = (CMap*) Cosmos.add(new CMap(input.FirstChildElement("demonpc").ToElement()->Attribute("initial-map")));
     else
-    	mapDemo = (CMap*) Cosmos.add(new CMap("mapa2"));
+        mapDemo = (CMap*) Cosmos.add(new CMap("mapa2"));
     mapDemo->load();
 
     cantNPC = 3000;
 
     if (cantNPC >= 1) {
-    	CEnemy* ene = CEnemy::Factory("E0",this);
-    	enemy.push_back(ene);
-    	ene->init(activationIds,100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
-    	srand(rand());
-    	mapDemo->incActor(ene);
+        CEnemy* ene = CEnemy::Factory("E0",this);
+        enemy.push_back(ene);
+        ene->init(activationIds,100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
+        srand(rand());
+        mapDemo->incActor(ene);
 /*
-    	for (int i=0;i<100;i++) {
-    		for (int j=0;j<100;j++) {
-    			CEnemy* eneClon = (CEnemy*) ene->clone();
-    			enemy.push_back(eneClon);
-    			eneClon->m_Scrollxy.set(mapDemo->getW()*mapDemo->getTileW()/2-50+i,mapDemo->getH()*mapDemo->getTileH()/2-50+j,0);
-    			srand(rand());
-    			mapDemo->incActor(eneClon);
-    		}
-    	}*/
+        for (int i=0;i<100;i++) {
+            for (int j=0;j<100;j++) {
+                CEnemy* eneClon = (CEnemy*) ene->clone();
+                enemy.push_back(eneClon);
+                eneClon->m_Scrollxy.set(mapDemo->getW()*mapDemo->getTileW()/2-50+i,mapDemo->getH()*mapDemo->getTileH()/2-50+j,0);
+                srand(rand());
+                mapDemo->incActor(eneClon);
+            }
+        }*/
 
-    	for (int i=1;i<cantNPC;i++) {
-    		CEnemy* eneClon = (CEnemy*) ene->clone();
-    		enemy.push_back(eneClon);
-    		eneClon->m_Scrollxy.set(100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
-    		srand(rand());
-    		mapDemo->incActor(eneClon);
-    	}
+        for (int i=1;i<cantNPC;i++) {
+            CEnemy* eneClon = (CEnemy*) ene->clone();
+            enemy.push_back(eneClon);
+            eneClon->m_Scrollxy.set(100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
+            srand(rand());
+            mapDemo->incActor(eneClon);
+        }
     }
 
     player[0]->m_Scrollxy.set(mapDemo->getW()*mapDemo->getTileW()/2,mapDemo->getH()*mapDemo->getTileH()/2,0);
@@ -151,10 +151,10 @@ int CTestA2GameInterface::onExit()
     FSCamera* c ;
     for ( CameraCollection::iterator it ; !cams.empty ( ); )
     {
-    	it = cams.begin ( ) ;
-    	c = *it ;
-    	cams.erase ( it ) ;
-    	delete c ;
+        it = cams.begin ( ) ;
+        c = *it ;
+        cams.erase ( it ) ;
+        delete c ;
     }
 
     player.clear();
@@ -170,57 +170,57 @@ int CTestA2GameInterface::onExit()
 void CTestA2GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_ESCAPE) {
 
-    	CMenuAGameInterface* men = new CMenuAGameInterface(&FSLib.getLibrary());
-    	men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
-    	men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
+        CMenuAGameInterface* men = new CMenuAGameInterface(&FSLib.getLibrary());
+        men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
+        men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
-    	men->setPrevious(this);
+        men->setPrevious(this);
 
-    	FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)men);
+        FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)men);
     } else if (sym==SDLK_SPACE) {
 
-    	CFreezeGameInterface* fgi = new CFreezeGameInterface(&FSLib.getLibrary());
-    	fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
-    	fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
+        CFreezeGameInterface* fgi = new CFreezeGameInterface(&FSLib.getLibrary());
+        fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
+        fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
-    	fgi->setPrevious(this);
+        fgi->setPrevious(this);
 
-    	FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)fgi);
+        FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)fgi);
     } else if (sym==SDLK_DELETE) {
-    	getParent()->SendMessage(FSLib.MSGID_Restart);
+        getParent()->SendMessage(FSLib.MSGID_Restart);
     } else if (sym==SDLK_F1) {
-    	getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
+        getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
     } else if (sym==SDLK_F2) {
-    	getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
+        getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
     } else if (sym==SDLK_F3) {
-    	deselect();
-    	FSDraw.ToggleFullscreen();
-    	loop();
+        deselect();
+        FSDraw.ToggleFullscreen();
+        loop();
     } else if (sym==SDLK_TAB) {
-    	if (cams[0]->Target() == player[0])
-    		cams[0]->setTarget(player[1]);
-    	else
-    		cams[0]->setTarget(player[0]);
+        if (cams[0]->Target() == player[0])
+            cams[0]->setTarget(player[1]);
+        else
+            cams[0]->setTarget(player[0]);
     } else if (sym==SDLK_LCTRL) {
-    	srand(rand());
-    	int cont = player.size() + enemy.size();
-    	int v = rand()%cont;
-    	if ( v < player.size() )
-    		cams[0]->setTarget(player[v]);
-    	else {
-    		v -= player.size();
-    		if (v==0)
-    			cams[0]->setTarget(enemy.front());
-    		else {
-    			for (list<CEnemy*>::iterator it=enemy.begin(),et=enemy.end();it!=et;++it) {
-    				v--;
-    				if (v<=0) {
-    					cams[0]->setTarget(*it);
-    					break;
-    				}
-    			}
-    		}
-    	}
+        srand(rand());
+        int cont = player.size() + enemy.size();
+        int v = rand()%cont;
+        if ( v < player.size() )
+            cams[0]->setTarget(player[v]);
+        else {
+            v -= player.size();
+            if (v==0)
+                cams[0]->setTarget(enemy.front());
+            else {
+                for (std::list<CEnemy*>::iterator it=enemy.begin(),et=enemy.end();it!=et;++it) {
+                    v--;
+                    if (v<=0) {
+                        cams[0]->setTarget(*it);
+                        break;
+                    }
+                }
+            }
+        }
     } 
     CTestAGameInterface::onKeyDown(sym,mod,unicode);
 }

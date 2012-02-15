@@ -13,12 +13,12 @@ class FSActor;
 class CRutinaColision;
 class FSUniverse;
 
-typedef std::std::list<FSActor*> ActorCollection;
+typedef std::list<FSActor*> ActorCollection;
 
 class FSActor : public FSMessageHandler
 {
 private:
-    string creature;
+    std::string creature;
     FSUniverse* inUniverse;
 public:
 

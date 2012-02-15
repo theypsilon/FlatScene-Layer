@@ -15,11 +15,11 @@ private:
 
 protected:
     bool loaded;
-    string name;
+    std::string name;
     Uint8 slot;
 
     virtual ~FSUniverse();
-    FSUniverse(string name);
+    FSUniverse(std::string name);
 
     friend class FSMultiverse;
 

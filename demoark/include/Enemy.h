@@ -7,7 +7,7 @@ class CEnemy : public CActorScrollMap {
 public:
     CEnemy(const char* creature,FSMessageHandler * pmhParent=NULL);
     virtual ~CEnemy();
-    virtual void init(list<string>& activationIds,int x, int y,int z);
+    virtual void init(std::list<std::string>& activationIds,int x, int y,int z);
 
     virtual int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 

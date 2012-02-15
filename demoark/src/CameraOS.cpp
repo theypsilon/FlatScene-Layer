@@ -47,12 +47,12 @@ int CCameraOS::unloadUniverse() {
 
 int CCameraOS::resyncUniverse() {
 
-    /*		IMPLEMENTACI�N POR DEFECTO	
+    /*      IMPLEMENTACI�N POR DEFECTO
 
     if (unloadUniverse() == EXITO)
-    	return loadUniverse();
+        return loadUniverse();
     else
-    	return FRACASO;
+        return FRACASO;
     */
 
     // TODO
@@ -62,18 +62,18 @@ int CCameraOS::resyncUniverse() {
 
 int CCameraOS::setTarget(FSActor* newTarget) {
 
-    /*		IMPLEMENTACI�N POR DEFECTO */
+    /*      IMPLEMENTACI�N POR DEFECTO */
     
     /*if (newTarget == this->target) {
-    	CLibrary::Error("Actor objetivo ya establecido");
-    	return FRACASO;
+        CLibrary::Error("Actor objetivo ya establecido");
+        return FRACASO;
     }
 
     if (newTarget->getUniverse()!= this->target->getUniverse()) {
-    	this->target=newTarget;
-    	resyncUniverse();
+        this->target=newTarget;
+        resyncUniverse();
     } else {
-    	this->target=newTarget;
+        this->target=newTarget;
     }
 
     CX()=CY()=-1000; // Truco usado para forzar una recalibraci�n de las coordenadas de la c�mara en su primer uso.
@@ -88,9 +88,9 @@ int CCameraOS::refresh() {
 
     if (target) {
 
-    	FSPoint p = target->renderPoint;
+        FSPoint p = target->renderPoint;
 
-    	target->getSprite()->put(p);
+        target->getSprite()->put(p);
 
     }
 

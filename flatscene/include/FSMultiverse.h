@@ -15,7 +15,7 @@ class FSMultiverse : private FSNoncopyable, public FSSingleton<FSMultiverse> {
     friend class FSSingleton<FSMultiverse>;
 public:
     FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
-    FSUniverse* universeNamed(string uniName,Uint8 slot=0);
+    FSUniverse* universeNamed(std::string uniName,Uint8 slot=0);
     FSUniverse* universeNamed(const char* uniName,Uint8 slot=0);
     void erase(FSUniverse* uniKilled);
     void clear();

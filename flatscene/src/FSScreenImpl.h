@@ -93,53 +93,53 @@ struct FSScreen::ScreenImpl {
         void operator()() {
             if (canvas.h != 0 || canvas.w !=0 ) {
 
-    	        glBindTexture(GL_TEXTURE_2D, canvas.tex);
+                glBindTexture(GL_TEXTURE_2D, canvas.tex);
 
-    	        float relW = (float)canvas.w2/(float)canvas.w;
-    	        float relH = (float)canvas.h2/(float)canvas.h;
+                float relW = (float)canvas.w2/(float)canvas.w;
+                float relH = (float)canvas.h2/(float)canvas.h;
 
-    	        //glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
+                //glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
 
-    	        glBegin(GL_QUADS);
-    		        if (flags == 0) {
-    			        glTexCoord2f(0.0f, relH);
-    			        glVertex2f(0, canvas.h2);
-    			        glTexCoord2f(relW, relH);
-    			        glVertex2f(canvas.w2, canvas.h2);
-    			        glTexCoord2f(relW, 0.0f);
-    			        glVertex2f(canvas.w2, 0);
-    			        glTexCoord2f(0.0f, 0.0f);
-    			        glVertex2f(0,0);
-    		        } else if (flags == 1) {
+                glBegin(GL_QUADS);
+                    if (flags == 0) {
+                        glTexCoord2f(0.0f, relH);
+                        glVertex2f(0, canvas.h2);
+                        glTexCoord2f(relW, relH);
+                        glVertex2f(canvas.w2, canvas.h2);
+                        glTexCoord2f(relW, 0.0f);
+                        glVertex2f(canvas.w2, 0);
+                        glTexCoord2f(0.0f, 0.0f);
+                        glVertex2f(0,0);
+                    } else if (flags == 1) {
 
-    			        glTexCoord2f(relW, relH);
-    			        glVertex2f(0, canvas.h2);
-    			        glTexCoord2f(0.0f, relH);
-    			        glVertex2f(canvas.w2, canvas.h2);
-    			        glTexCoord2f(0.0f, 0.0f);
-    			        glVertex2f(canvas.w2, 0);
-    			        glTexCoord2f(relW, 0.0f);
-    			        glVertex2f(0,0);
-    		        } else if (flags==2) {
-    			        glTexCoord2f(0.0f, 0.0f);
-    			        glVertex2f(0, canvas.h2);
-    			        glTexCoord2f(relW, 0.0f);
-    			        glVertex2f(canvas.w2, canvas.h2);
-    			        glTexCoord2f(relW, relH);
-    			        glVertex2f(canvas.w2, 0);
-    			        glTexCoord2f(0.0f, relH);
-    			        glVertex2f(0,0);
-    		        } else  {
-    			        glTexCoord2f(relW, 0.0f);
-    			        glVertex2f(0, canvas.h2);
-    			        glTexCoord2f(0.0f, 0.0f);
-    			        glVertex2f(canvas.w2, canvas.h2);
-    			        glTexCoord2f(0.0f, relH);
-    			        glVertex2f(canvas.w2, 0);
-    			        glTexCoord2f(relW, relH);
-    			        glVertex2f(0,0);
-    		        }
-    	        glEnd();
+                        glTexCoord2f(relW, relH);
+                        glVertex2f(0, canvas.h2);
+                        glTexCoord2f(0.0f, relH);
+                        glVertex2f(canvas.w2, canvas.h2);
+                        glTexCoord2f(0.0f, 0.0f);
+                        glVertex2f(canvas.w2, 0);
+                        glTexCoord2f(relW, 0.0f);
+                        glVertex2f(0,0);
+                    } else if (flags==2) {
+                        glTexCoord2f(0.0f, 0.0f);
+                        glVertex2f(0, canvas.h2);
+                        glTexCoord2f(relW, 0.0f);
+                        glVertex2f(canvas.w2, canvas.h2);
+                        glTexCoord2f(relW, relH);
+                        glVertex2f(canvas.w2, 0);
+                        glTexCoord2f(0.0f, relH);
+                        glVertex2f(0,0);
+                    } else  {
+                        glTexCoord2f(relW, 0.0f);
+                        glVertex2f(0, canvas.h2);
+                        glTexCoord2f(0.0f, 0.0f);
+                        glVertex2f(canvas.w2, canvas.h2);
+                        glTexCoord2f(0.0f, relH);
+                        glVertex2f(canvas.w2, 0);
+                        glTexCoord2f(relW, relH);
+                        glVertex2f(0,0);
+                    }
+                glEnd();
 
             }
             delete this;

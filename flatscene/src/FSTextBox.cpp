@@ -11,7 +11,7 @@ FSWriter::WriterImpl::FSTextBox::FSTextBox(const char* file,const char* text,int
 file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
 timer(Chrono.getTick()), step(0), maxStep(0)    {
 
-    string allText(text);
+    std::string allText(text);
     Uint16 limite=xBox=Lim;
 
     float currentX = (float) upleft.x+MARGEN;
@@ -26,78 +26,78 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
     while (length > 0 ) {
 
-    	Uint16 newChar = allText.c_str()[0];
+        Uint16 newChar = allText.c_str()[0];
 
-    	if ((newChar & 0x80)  && (length  > 1)) {
+        if ((newChar & 0x80)  && (length  > 1)) {
 
-    		if ((newChar & 0x20) && (length  > 2)) {
+            if ((newChar & 0x20) && (length  > 2)) {
 
-    			allText =allText.substr(3,length);
+                allText =allText.substr(3,length);
 
-    		} else {
+            } else {
 
 
-    			newChar =  ((newChar & 0x1F) << 6) + ((allText.c_str()[1]) & 0x3F);
+                newChar =  ((newChar & 0x1F) << 6) + ((allText.c_str()[1]) & 0x3F);
 
-    			allText =allText.substr(2,length);
-    		}
+                allText =allText.substr(2,length);
+            }
 
-    	} else {
-    		allText =allText.substr(1,length);
-    	}
+        } else {
+            allText =allText.substr(1,length);
+        }
 
-    	length = allText.length();		
+        length = allText.length();
 
-    	int minx,maxy,advance;
+        int minx,maxy,advance;
 
-    	if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance)== -1)
-    		FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
+        if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance)== -1)
+            FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
 
-    	if (newChar == ' ' ) {
-    		const char* caux = allText.c_str();
-    		float cuenta = (float)advance;
+        if (newChar == ' ' ) {
+            const char* caux = allText.c_str();
+            float cuenta = (float)advance;
 
-    		for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
+            for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
-    			if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
-    				FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
+                if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
+                    FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
 
-    			cuenta += (float)minx;
+                cuenta += (float)minx;
 
-    		}
+            }
 
-    		if ((currentX + cuenta - x)>= (limite - MARGEN)) {
-    			currentX = (float) upleft.x + MARGEN;
-    			currentY += (float)TTF_FontLineSkip(fuente->fuente);
-    		} else {
-    			maxStep++;
-    			currentX += (float)advance;
-    			SChar newT;
+            if ((currentX + cuenta - x)>= (limite - MARGEN)) {
+                currentX = (float) upleft.x + MARGEN;
+                currentY += (float)TTF_FontLineSkip(fuente->fuente);
+            } else {
+                maxStep++;
+                currentX += (float)advance;
+                SChar newT;
 
-    			newT.p=NULL;
+                newT.p=NULL;
 
-    			charInDisplay.push_back(newT);
-    		}
-    		
-    	} else if (newChar == '\n') {
-    		currentX = (float) upleft.x + MARGEN;
-    		currentY += (float)TTF_FontLineSkip(fuente->fuente);
-    	} else {
-    		maxStep++;
+                charInDisplay.push_back(newT);
+            }
 
-    		SChar newT;
+        } else if (newChar == '\n') {
+            currentX = (float) upleft.x + MARGEN;
+            currentY += (float)TTF_FontLineSkip(fuente->fuente);
+        } else {
+            maxStep++;
 
-    		newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
-    		currentX += (float)advance;
+            SChar newT;
 
-    		if (fuente->render.find(newChar)==fuente->render.end()) {
-    			fuente->render[newChar] = new FSCanvas(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
-    		}
+            newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
+            currentX += (float)advance;
 
-    		newT.glyph=newChar;
+            if (fuente->render.find(newChar)==fuente->render.end()) {
+                fuente->render[newChar] = new FSCanvas(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
+            }
 
-    		charInDisplay.push_back(newT);
-    	}
+            newT.glyph=newChar;
+
+            charInDisplay.push_back(newT);
+        }
 
     }
 
@@ -115,16 +115,16 @@ FSWriter::WriterImpl::FSTextBox::~FSTextBox() {
     deleteBox();
 
     if (fx)
-    	delete fx;
+        delete fx;
     fx = NULL;
 
     while (!charInDisplay.empty()) {
-    	list<SChar>::iterator it=charInDisplay.begin();
-    	if (it->p) {
-    		delete it->p;
-    	}
-    	it->p=NULL;
-    	charInDisplay.erase(it);
+        std::list<SChar>::iterator it=charInDisplay.begin();
+        if (it->p) {
+            delete it->p;
+        }
+        it->p=NULL;
+        charInDisplay.erase(it);
     }
 
     FSWriter::I().unloadFont(FSWriter::I().searchFont(fuente->fuente));
@@ -133,42 +133,42 @@ FSWriter::WriterImpl::FSTextBox::~FSTextBox() {
 int FSWriter::WriterImpl::FSTextBox::update() {
 
     if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_BOX )) {
-    	box->color(fx->red,fx->green,fx->blue,fx->alpha);
+        box->color(fx->red,fx->green,fx->blue,fx->alpha);
     }
 
     box->put(upleft);
 
     if ((Chrono.getTick() > timer + 3) && (step <= maxStep)) {
 
-    	timer = Chrono.getTick();
+        timer = Chrono.getTick();
 
-    	step++;
+        step++;
 
     } else if ( Chrono.getTick() > timer + 100) {
-    	while (!charInDisplay.empty()) {
-    		list<SChar>::iterator it=charInDisplay.begin();
-    		if (it->p) {
-    			delete it->p;
-    		}
-    		it->p=NULL;
-    		charInDisplay.erase(it);
-    	}
-    	return -1;
+        while (!charInDisplay.empty()) {
+            std::list<SChar>::iterator it=charInDisplay.begin();
+            if (it->p) {
+                delete it->p;
+            }
+            it->p=NULL;
+            charInDisplay.erase(it);
+        }
+        return -1;
     }
 
     unsigned int i=0;
-    for (list<SChar>::iterator it=charInDisplay.begin(), et=charInDisplay.end();it!=et && i<step;++it) {
-    	if (it->p) {
-    		if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
-    			fuente->render[it->glyph]->color(fx->red,fx->green,fx->blue,fx->alpha);
-    		fuente->render[it->glyph]->put(*it->p);
-    	}
-    	i++;
+    for (std::list<SChar>::iterator it=charInDisplay.begin(), et=charInDisplay.end();it!=et && i<step;++it) {
+        if (it->p) {
+            if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
+                fuente->render[it->glyph]->color(fx->red,fx->green,fx->blue,fx->alpha);
+            fuente->render[it->glyph]->put(*it->p);
+        }
+        i++;
     }
 
     if (fx && !fx->persistent) {
-    	delete fx;
-    	fx = NULL;
+        delete fx;
+        fx = NULL;
     }
 
     return 0;
@@ -177,7 +177,7 @@ int FSWriter::WriterImpl::FSTextBox::update() {
 
 void FSWriter::WriterImpl::FSTextBox::deleteBox() {
     if (box)
-    	FSScreen::I()._impl->imageToDelete.push_back(box); // delete box;
+        FSScreen::I()._impl->imageToDelete.push_back(box); // delete box;
     box=NULL;
 }
 
@@ -185,16 +185,16 @@ void FSWriter::WriterImpl::FSTextBox::deleteBox() {
 
 void FSWriter::WriterImpl::FSTextBox::createBox() {
     if (box) {
-    	FSLibrary::I().Error("Ya existe el fondo de la caja que se pretende crear.");
-    	return;
+        FSLibrary::I().Error("Ya existe el fondo de la caja que se pretende crear.");
+        return;
     }
 
     SDL_Surface *surface, *aux_surf;
 
     aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,FSScreen::I().getBpp(),0,0,255,0);
-    if (!aux_surf)	FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
+    if (!aux_surf)  FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
     surface = SDL_DisplayFormat(aux_surf);
-    if (!surface)	FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
+    if (!surface)   FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
     SDL_FreeSurface(aux_surf);
     SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
 
@@ -205,13 +205,13 @@ int FSWriter::WriterImpl::FSTextBox::finish() {
     int ret = -1;
     if (next!=-1) {
 
-    	ret = FSWriter::I().inBox(file.c_str(),next);
-    	if (fx && fx->persistent) {
-    		FSWriter::I().color(ret,fx->red,fx->green,fx->blue,fx->alpha,fx->boxflags,true);
-    	}
-    	if (ret == -1) {
-    		; // ODOT : Quitar el error de la cola.
-    	}
+        ret = FSWriter::I().inBox(file.c_str(),next);
+        if (fx && fx->persistent) {
+            FSWriter::I().color(ret,fx->red,fx->green,fx->blue,fx->alpha,fx->boxflags,true);
+        }
+        if (ret == -1) {
+            ; // ODOT : Quitar el error de la cola.
+        }
 
     }
 
@@ -219,10 +219,10 @@ int FSWriter::WriterImpl::FSTextBox::finish() {
 }
 
 FSWriter::WriterImpl::SLineText::~SLineText() {
-    for (list<SChar>::iterator it=letra.begin(),kt=letra.end();it!=kt;++it) {
-    	if (it->p) {
-    		delete it->p;
-    		it->p=NULL;
-    	}
+    for (std::list<SChar>::iterator it=letra.begin(),kt=letra.end();it!=kt;++it) {
+        if (it->p) {
+            delete it->p;
+            it->p=NULL;
+        }
     }
 }

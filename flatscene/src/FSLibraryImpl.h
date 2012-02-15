@@ -15,7 +15,7 @@ struct FSLibrary::LibraryImpl {
     bool errorsInSession;
 #endif
 
-    std::list<string> errors;
+    std::list<std::string> errors;
 
 #ifdef DEBUGTEST
     bool debugging;
@@ -27,7 +27,7 @@ struct FSLibrary::LibraryImpl {
     int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
     void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 
-    string toStringErrorGL(GLenum e);
+    std::string toStringErrorGL(GLenum e);
 
     static bool orderEngine(FSEngine*,FSEngine*);
 

@@ -41,7 +41,7 @@ public:
 #endif
 };
 
-typedef vector<CLayerBG*> LayerBGCollection;
+typedef std::vector<CLayerBG*> LayerBGCollection;
 
 class CLayerDinamic : public CLayerBG { 
 private:
@@ -120,6 +120,6 @@ public:
 #endif
 };
 
-typedef vector<CFloor*> FloorCollection;
+typedef std::vector<CFloor*> FloorCollection;
 /**/
 #endif

@@ -7,16 +7,16 @@ CEnemyPunto::CEnemyPunto(FSMessageHandler * pmhParent) : CEnemy("EPUNTO",pmhPare
 
 CEnemyPunto::~CEnemyPunto() {
     if (garbage) {
-    	delete garbage;
-    	garbage=NULL;
+        delete garbage;
+        garbage=NULL;
     }
     if (rutinaColision) {
-    	delete rutinaColision;
-    	rutinaColision=NULL;
+        delete rutinaColision;
+        rutinaColision=NULL;
     }
 }
 
-void CEnemyPunto::init(list<string>& activationIds,int x, int y,int z) {
+void CEnemyPunto::init(std::list<std::string>& activationIds,int x, int y,int z) {
 #ifdef LOG_JUGADORES
     printf("Iniciando enemigo...\n");
 #endif
@@ -31,7 +31,7 @@ FSActor* CEnemyPunto::clone() {
 
     FSActor* ret = CEnemy::Factory("EPUNTO",getParent());
 
-    std::list<string> none;
+    std::list<std::string> none;
 
     ((CEnemy*)ret)->init(none,0,0,0);
 

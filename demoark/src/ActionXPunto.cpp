@@ -9,11 +9,11 @@ CActionXPunto::CActionXPunto(CActorScrollMap* executor,TiXmlElement* fuente,cons
     this->sptset= alloc(int,this->num);
     this->sequence=  alloc(int*,this->num);
     for (int i=0;i<this->num;i++) {
-    	this->limitofsequence[i]=1;
-    	this->flags[i] = 0;
-    	this->sptset[i]=Img.add("Punto");
-    	this->sequence[i] = alloc(int,1);
-    	this->sequence[i][0] = 0;
+        this->limitofsequence[i]=1;
+        this->flags[i] = 0;
+        this->sptset[i]=Img.add("Punto");
+        this->sequence[i] = alloc(int,1);
+        this->sequence[i][0] = 0;
     }
 
 }
