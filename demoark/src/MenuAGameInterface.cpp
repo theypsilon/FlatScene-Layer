@@ -4,22 +4,17 @@
 #include "FSWriter.h"
 #include "FSScreen.h"
 
-//constructor
-CMenuAGameInterface::CMenuAGameInterface(FSMessageHandler * pmhParent) : FSEngine(pmhParent)
-{
+CMenuAGameInterface::CMenuAGameInterface(FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent) {
     pushed=false;
     file=0;
     opcion=0;
     previous = NULL;
 }
 
-//destructor
-CMenuAGameInterface::~CMenuAGameInterface()
-{
+CMenuAGameInterface::~CMenuAGameInterface() {
 
 }
 
-//initialization
 int CMenuAGameInterface::onInit() {
 
     if (FSEngine::onInit() == FRACASO)
@@ -70,9 +65,7 @@ int CMenuAGameInterface::onInit() {
     return EXITO;
 }
 
-//idle. Main loop.
-int CMenuAGameInterface::onIdle()
-{
+int CMenuAGameInterface::onIdle() {
     FSDraw.clear();
 
     FSDraw.locateRenderScene(0,0,RESOLUCION_X*2,RESOLUCION_Y*2);
@@ -92,9 +85,7 @@ int CMenuAGameInterface::onIdle()
     return EXITO;
 }
 
-//on cleanup
-int CMenuAGameInterface::onExit()
-{
+int CMenuAGameInterface::onExit() {
 
     SDL_EnableKeyRepeat(0,0);
 
@@ -107,8 +98,8 @@ int CMenuAGameInterface::onExit()
 
 }
 
-FSEngine* CMenuAGameInterface::setPrevious(FSEngine* newE) {
-    FSEngine* ret = previous;
+std::shared_ptr<FSEngine> CMenuAGameInterface::setPrevious(std::shared_ptr<FSEngine> newE) {
+    std::shared_ptr<FSEngine> ret = previous;
     previous = newE;
     return ret;
 }
@@ -142,12 +133,20 @@ void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_ESCAPE && pushed) {
-        getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
-        getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+        getParent()->SendMessage(FSLib.MSGID_RunEngine,
+            reinterpret_cast<void*>(previous.get())
+        );
+        getParent()->SendMessage(FSLib.MSGID_KillEngine,
+            reinterpret_cast<void*>(shared_from_this().get())
+        );
     } else if (sym==SDLK_RETURN && pushed) {
         if (opcion == 0) {
-            getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
-            getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+            getParent()->SendMessage(FSLib.MSGID_RunEngine,
+                reinterpret_cast<void*>(previous.get())
+            );
+            getParent()->SendMessage(FSLib.MSGID_KillEngine,
+                reinterpret_cast<void*>(shared_from_this().get())
+            );
         }   else if (opcion == 1) {
             FSDraw.ToggleFullscreen();
 
@@ -194,11 +193,15 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
                 FSLib.Error("MenuA IdTexts vector bad access");
             }
         } else if (opcion == 3) {
-            getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+            getParent()->SendMessage(FSLib.MSGID_KillEngine,
+                reinterpret_cast<void*>(shared_from_this().get())
+            );
             getParent()->SendMessage(FSLib.MSGID_Restart);
 
         } else if (opcion == 4) {
-            getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+            getParent()->SendMessage(FSLib.MSGID_KillEngine,
+                reinterpret_cast<void*>(shared_from_this().get())
+            );
             getParent()->SendMessage(FSLib.MSGID_Exit);
         }
 

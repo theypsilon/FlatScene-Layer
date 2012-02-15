@@ -2,17 +2,19 @@
 #define __MENUAGAMEINTERFACE_H__
 
 #include "FSEngine.h"
+#include "FSMessageHandler.h"
+
 #include "FSdefinitions.h"
 #include "FSPoint.h"
 #include <vector>
 #include <string>
+#include <list>
  
 /*
     ==CMenuAGameInterface==
     CEngine componEnt test.
 */
-class CMenuAGameInterface : public FSEngine  
-{
+class CMenuAGameInterface : public FSEngine, public FSMessageHandler {
 private:
     bool pushed;
 
@@ -24,20 +26,20 @@ private:
 
     FSPoint dest;
 
-    FSEngine* previous;
+    std::shared_ptr<FSEngine> previous;
 public:
-    //constructor
+    
     CMenuAGameInterface(FSMessageHandler * pmhParent=NULL);
-    //destructor
+    
     virtual ~CMenuAGameInterface();
-    //initialization
+    
     virtual int onInit();
-    //idle behavior
+    
     virtual int onIdle();
-    //cleanup
+    
     virtual int onExit();
 
-    FSEngine* setPrevious(FSEngine*);
+    std::shared_ptr<FSEngine> setPrevious(std::shared_ptr<FSEngine>);
     
     void onKeyMenu(SDL_Event*);
 

@@ -126,7 +126,7 @@ void CTestA1GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
         men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
         men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
-        men->setPrevious(this);
+        men->setPrevious(shared_from_this());
 
         FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)men);
     } else if (sym==SDLK_SPACE) {
@@ -134,7 +134,7 @@ void CTestA1GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
         fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
         fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
-        fgi->setPrevious(this);
+        fgi->setPrevious(shared_from_this());
 
         FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)fgi);
     } else if (sym==SDLK_DELETE) {

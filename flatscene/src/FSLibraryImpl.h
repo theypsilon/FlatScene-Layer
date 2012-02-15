@@ -8,8 +8,6 @@ struct FSLibrary::LibraryImpl {
 
     // Lista de motores a�adidas por el usuario
     std::list<std::shared_ptr<FSEngine>> engineIn;
-    // Lista de motores ejecutados por orden del usuario sin ser a�adidos (mediante mensajeria).
-    std::list<std::shared_ptr<FSEngine>> engineOut;
 
 #ifdef IN_FILE_ERROR
     bool errorsInSession;

@@ -12,6 +12,8 @@
 #include "FSLibraryImpl.h"
 #include "FSScreenImpl.h"
 
+#include <exception>
+
 #define EXITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onExit(); _impl->setActualEngine(eaux); }
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onInit(); _impl->setActualEngine(eaux); }
 #define KILLENGINE(A); EXITENGINE(A); if (A) { delete A; A=NULL; }
@@ -107,7 +109,6 @@ void FSLibrary::LibraryImpl::onExit() {
 
     LibraryImpl* _impl = FSLibrary::I()._impl;
     (*_impl).engineIn.clear();
-    (*_impl).engineOut.clear();
 
     _impl->setActualEngine(nullptr);
 
@@ -207,7 +208,7 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     if (MsgID==MSGID_Exit) {
 
-        _impl->setActualEngine(NULL);
+        _impl->setActualEngine(nullptr);
 
     } else if (MsgID==MSGID_Restart) {
 
@@ -239,33 +240,40 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     } else if (MsgID==MSGID_RunEngine) {
 
-        if (dynamic_cast<FSEngine*>((FSEngine*) Parm1)) {
+        FSEngine* engine = reinterpret_cast<FSEngine*>(Parm1);
 
-            std::shared_ptr<FSEngine> engine = std::make_shared<FSEngine>((FSEngine*)Parm1);
+        if (engine != 0) {
 
-            bool find = false;
+            std::shared_ptr<FSEngine> find = nullptr;
 
             for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
-                find = find || engine == *it;
+                if (engine == it->get())
+                    find = *it;
 
-            for (auto it = (*_impl).engineOut.begin(), jt = (*_impl).engineOut.end();it!=jt;++it)
-                find = find || engine == *it;
-
-            if (!engine) {
-                (*_impl).engineOut.push_back(engine);
-            }
-
-            _impl->setActualEngine(engine);
+            if (find != nullptr)
+                _impl->setActualEngine(find);
+            else
+                _impl->setActualEngine(std::shared_ptr<FSEngine>(engine));
 
         }
 
     } else if (MsgID==MSGID_ReloadEngine) {
 
-        if (dynamic_cast<FSEngine*>((FSEngine*) Parm1)) {
+        FSEngine* engine = reinterpret_cast<FSEngine*>(Parm1);
 
-            std::shared_ptr<FSEngine> engine = std::make_shared<FSEngine>((FSEngine*)Parm1);
+        if (engine != 0) {
 
-            _impl->setActualEngine(engine);
+            std::shared_ptr<FSEngine> find = nullptr;
+
+            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
+                if (engine == it->get())
+                    find = *it;
+
+            if (find == nullptr)
+                if (engine == _impl->actualEngine.get())
+                    find = _impl->actualEngine;
+
+            _impl->setActualEngine(find);
 
             FSWriter::I().erase();
 
@@ -301,26 +309,32 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 
     } else if (MsgID==MSGID_KillEngine) {
 
-        if (dynamic_cast<FSEngine*>((FSEngine*) Parm1)) {
+        FSEngine* engine = reinterpret_cast<FSEngine*>(Parm1);
 
-            std::shared_ptr<FSEngine> engine = std::make_shared<FSEngine>((FSEngine*)Parm1);
+        if (engine != 0) {
 
             std::shared_ptr<FSEngine> act = getActualEngine(); // Lo salvamos para recuperarlo al final.
+            std::shared_ptr<FSEngine> find = nullptr;
 
-            _impl->setActualEngine(engine); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Im�genes.
-
-            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it)
-                if (engine == *it) {
+            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it) {
+                if (engine == it->get()) {
+                    find = *it;
                     (*_impl).engineIn.erase(it);
                     break;
                 }
+            }
 
-            if (engine->isInitialized())
-                engine->onExit();
+            if (find == nullptr && act.get() != engine)
+                find = std::shared_ptr<FSEngine>(engine);
+
+            _impl->setActualEngine(find); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Im�genes.
+
+            if (find->isInitialized())
+                find->onExit();
 
             _impl->setActualEngine(act); // Recuperamos el engine actual.
 
-            if ((*_impl).actualEngine == engine)
+            if ((*_impl).actualEngine == find)
                 _impl->setActualEngine(nullptr);
 
         }
