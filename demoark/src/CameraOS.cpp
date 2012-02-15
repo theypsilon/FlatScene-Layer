@@ -4,97 +4,97 @@
 // Library.h es necesario para el manejo de errores.
 
 CCameraOS::CCameraOS(FSActor* target, FSRectangle* area,FSMessageHandler * pmhParent) :
-// Se ha de llamar a la clase Base para una correcta inicialización
+// Se ha de llamar a la clase Base para una correcta inicializaciï¿½n
 FSCamera(target,area,pmhParent) {
-	
-	// TODO
+    
+    // TODO
 
 
-	file = 0;
-	graph = 0;
+    file = 0;
+    graph = 0;
 
 }
 
 CCameraOS::~CCameraOS() {
-	
-	// TODO
+    
+    // TODO
 
 }
 
 int CCameraOS::loadUniverse() {
 
-	if (uni!=NULL) {
+    if (uni!=NULL) {
 
-	// TODO
+    // TODO
 
-	}
+    }
 
-	return EXITO;
+    return EXITO;
 
 }
 
 int CCameraOS::unloadUniverse() {
 
-	if (uni!=NULL) {
+    if (uni!=NULL) {
 
-	// TODO
+    // TODO
 
-	}
+    }
 
-	return EXITO;
+    return EXITO;
 
 }
 
 int CCameraOS::resyncUniverse() {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO	
-	/*
-	if (unloadUniverse() == EXITO)
-		return loadUniverse();
-	else
-		return FRACASO;
-	*/
+    /*      IMPLEMENTACIï¿½N POR DEFECTO
 
-	// TODO
+    if (unloadUniverse() == EXITO)
+        return loadUniverse();
+    else
+        return FRACASO;
+    */
 
-	return EXITO;
+    // TODO
+
+    return EXITO;
 }
 
 int CCameraOS::setTarget(FSActor* newTarget) {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO */
-	
-	/*if (newTarget == this->target) {
-		CLibrary::Error("Actor objetivo ya establecido");
-		return FRACASO;
-	}
+    /*      IMPLEMENTACIï¿½N POR DEFECTO */
+    
+    /*if (newTarget == this->target) {
+        CLibrary::Error("Actor objetivo ya establecido");
+        return FRACASO;
+    }
 
-	if (newTarget->getUniverse()!= this->target->getUniverse()) {
-		this->target=newTarget;
-		resyncUniverse();
-	} else {
-		this->target=newTarget;
-	}
+    if (newTarget->getUniverse()!= this->target->getUniverse()) {
+        this->target=newTarget;
+        resyncUniverse();
+    } else {
+        this->target=newTarget;
+    }
 
-	CX()=CY()=-1000; // Truco usado para forzar una recalibración de las coordenadas de la cámara en su primer uso.
-	*/
+    CX()=CY()=-1000; // Truco usado para forzar una recalibraciï¿½n de las coordenadas de la cï¿½mara en su primer uso.
+    */
 
-	// TODO
-	
-	return EXITO;
+    // TODO
+    
+    return EXITO;
 }
 
 int CCameraOS::refresh() {
 
-	if (target) {
+    if (target) {
 
-		FSPoint p = target->renderPoint;
+        FSPoint p = target->renderPoint;
 
-		target->getSprite()->put(p);
+        target->getSprite()->put(p);
 
-	}
+    }
 
-	// TODO : Aquí debería ir las rutinas que invocan el proceso de renderización de cada elemento dentro del contexto de la cámara.
+    // TODO : Aquï¿½ deberï¿½a ir las rutinas que invocan el proceso de renderizaciï¿½n de cada elemento dentro del contexto de la cï¿½mara.
 
-	return EXITO;
+    return EXITO;
 }

@@ -6,37 +6,37 @@ CActionComboDemo1::CActionComboDemo1 (CActorScrollMap* executor,TiXmlElement* fu
 }
 
 CActionComboDemo1::~CActionComboDemo1() { 
-	inDelete();
+    inDelete();
 }
 
 void CActionComboDemo1::execute() {
-	int id = (int) idProvisional;
+    int id = (int) idProvisional;
 
-	if (id!=16) {
+    if (id!=16) {
 #ifdef MENSAJES_ACCIONES
-		printf("Step%d                                                                     \r",id);
+        printf("Step%d                                                                     \r",id);
 #endif
-		if (elapsed(10)) {
+        if (elapsed(10)) {
 #ifdef MENSAJES_ACCIONES
-			printf("Step%d Time Elapsed          ",id);
+            printf("Step%d Time Elapsed          ",id);
 #endif
-			executor->removeActionCandidate(this);
-		}
-	} else {
+            executor->removeActionCandidate(this);
+        }
+    } else {
 #ifdef MENSAJES_ACCIONES
-		printf("Combo Launched!!       ");
+        printf("Combo Launched!!       ");
 #endif
-		executor->removeActionCandidate(this);
-	}
+        executor->removeActionCandidate(this);
+    }
 }
 
 CAction* CActionComboDemo1::mix(ActionCollection mix) {
-	return this;
+    return this;
 }
 
 CAction* CActionComboDemo1::clone(CActorScrollMap* exe) {
-	if (!exe) exe = executor;
-	CActionComboDemo1* ret = new CActionComboDemo1(exe,NULL,getId());
-	cloneThisInto(ret);
-	return ret;
+    if (!exe) exe = executor;
+    CActionComboDemo1* ret = new CActionComboDemo1(exe,NULL,getId());
+    cloneThisInto(ret);
+    return ret;
 }

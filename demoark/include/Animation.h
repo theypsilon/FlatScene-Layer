@@ -8,25 +8,25 @@
 
 class CAnimation {
 private:
-	static void aliasFileAnimation(string& file,const char* owner);
+    static void aliasFileAnimation(std::string& file,const char* owner);
 protected:
-	void cloneThisInto(CAnimation* clon);
-	void generateAnimationByXML(TiXmlElement* newNode, const char* owner);
+    void cloneThisInto(CAnimation* clon);
+    void generateAnimationByXML(TiXmlElement* newNode, const char* owner);
 public:
-	CAnimation();
-	~CAnimation();
+    CAnimation();
+    ~CAnimation();
 
-	int nextStep();
-	void reinicia();
+    int nextStep();
+    void reinicia();
 
-	int paso;
-	int seq;
+    int paso;
+    int seq;
 
-	int num;
-	int* flags;
-	int* limitofsequence;
-	int** sequence;
-	int* sptset;
+    int num;
+    int* flags;
+    int* limitofsequence;
+    int** sequence;
+    int* sptset;
 };
 
 #endif

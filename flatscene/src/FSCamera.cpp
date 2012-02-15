@@ -1,530 +1,251 @@
 #include "FSCamera.h"
+#include "FSScreenImpl.h"
 #include "FSLibrary.h"
-
-map<TypeResource,void (*)(void*)> FSCamera::procRenders;
 
 FSCamera::FSCamera(FSActor* target, FSRectangle* area,FSMessageHandler * pmhParent) :
 FSMessageHandler(pmhParent), uni(NULL), target(target), area(area) , rendering(false),
-x(-1000),y(-1000) {
-
-	if (procRenders.size() == 0) 
-		initProcRenders();
-
-}
+x(-1000),y(-1000) {}
 
 FSCamera::~FSCamera() {
-
-	for (list<SToRender*>::iterator iri = initRenderList.begin(), ire = initRenderList.end();iri!=ire;++iri) {
-
-		SToRender* irp = *iri;
-
-		FSScreen::procRenders[irp->type](irp->pointer);
-
-		delete *iri;
-
-	}
-
-	initRenderList.clear();
-
-
-	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
-
-		SToRender* erp = *eri;
-
-		FSScreen::procRenders[erp->type](erp->pointer);
-
-		delete *eri;
-
-	}
-
-	endRenderList.clear();
-
-	delete area;
+    delete area;
 }
 
 FSUniverse* FSCamera::getUniverse() {
-	return uni;
+    return uni;
 }
 
 int FSCamera::loadUniverse() {
 
-	if (uni != NULL) {
-		FSLibrary::Error("Universe already loaded");
-		return FRACASO;
-	}
+    if (uni != NULL) {
+        FSLibrary::I().Error("Universe already loaded");
+        return FRACASO;
+    }
 
 
-	return EXITO;
+    return EXITO;
 }
 
 int FSCamera::unloadUniverse() {
-	if (uni == NULL) {
-		FSLibrary::Error("No Universe in focus");
-		return FRACASO;
-	}
+    if (uni == NULL) {
+        FSLibrary::I().Error("No Universe in focus");
+        return FRACASO;
+    }
 
 
-	uni->decCameras();
-	uni=NULL;
+    uni->decCameras();
+    uni=NULL;
 
-	return EXITO;
+    return EXITO;
 
 }
 
 int FSCamera::resyncUniverse() {
 
-	if (unloadUniverse() == EXITO)
-		return loadUniverse();
-	else
-		return FRACASO;
+    if (unloadUniverse() == EXITO)
+        return loadUniverse();
+    else
+        return FRACASO;
 }
 
 bool FSCamera::isOpened() {
-	return (uni!=NULL);
+    return (uni!=NULL);
 }
-
 
 int& FSCamera::CX() {
-	return x;
+    return x;
 }
 int& FSCamera::CY() {
-	return y;
+    return y;
 }
 FSActor* FSCamera::Target() {
-	return target;
+    return target;
 }
 
 int FSCamera::setTarget(FSActor* newTarget) {
-	if (newTarget == this->target) {
-		FSLibrary::Error("Actor objetivo ya establecido");
-		return FRACASO;
-	}
+    if (newTarget == this->target) {
+        FSLibrary::I().Error("Actor objetivo ya establecido");
+        return FRACASO;
+    }
 
-	if (newTarget->getUniverse()!= this->target->getUniverse()) {
-		this->target=newTarget;
-		resyncUniverse();
-	} else {
-		this->target=newTarget;
-	}
+    if (newTarget->getUniverse()!= this->target->getUniverse()) {
+        this->target=newTarget;
+        resyncUniverse();
+    } else {
+        this->target=newTarget;
+    }
 
-	CX()=CY()=-1000; // Usado para forzar una recalibración de las coordenadas de la cámara en su primer uso.
-	
-	return EXITO;
+    CX()=CY()=-1000; // Usado para forzar una recalibraciï¿½n de las coordenadas de la cï¿½mara en su primer uso.
+    
+    return EXITO;
 }
 
-
 FSRectangle* FSCamera::getArea() {
-	return area;
+    return area;
 }
 
 int FSCamera::render() {
 
-	rendering = true;
+    rendering = true;
 
-	for (list<SToRender*>::iterator iri = initRenderList.begin(), ire = initRenderList.end();iri!=ire;++iri) {
+    for (std::list<std::function<void()>>::const_iterator iri = initRenderList.begin(), ire = initRenderList.end();iri!=ire;++iri) {
+        (*iri)();
+    }
 
-		SToRender* irp = *iri;
+    initRenderList.clear();
 
-		procRenders[irp->type](irp->pointer);
+    int ret = refresh();
 
-		delete irp;
+    for (std::list<std::function<void()>>::const_iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
+        (*eri)();
+    }
 
-	}
+    endRenderList.clear();
 
-	initRenderList.clear();
+    rendering = false;
 
-	int ret = refresh();
-
-	for (list<SToRender*>::iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
-
-		SToRender* erp = *eri;
-
-		procRenders[erp->type](erp->pointer);
-
-		delete erp;
-
-	}
-
-	endRenderList.clear();
-
-	rendering = false;
-
-	return ret;
+    return ret;
 }
-
-
 
 int FSCamera::refresh() {
-	return EXITO;
-}
-
-void FSCamera::initProcRenders() {
-
-	procRenders[TR_ROTATION] = procRendRotation;
-	procRenders[TR_TRANSLATION] = procRendTranslation;
-	procRenders[TR_SCALATION] = procRendScalation;
-	procRenders[TR_COLOR] = procRendColor;
-	procRenders[TR_PUSHMATRIX] = procRendPush;
-	procRenders[TR_POPMATRIX] = procRendPop;
-	procRenders[TR_LOCATION] = procRendLocation;
-
-}
-
-void FSCamera::procRendPush(void* pointer) {
-	FSScreen::pushMatrix();
-}
-
-void FSCamera::procRendPop(void* pointer) {
-	FSScreen::popMatrix();
-}
-
-void FSCamera::procRendLocation(void* pointer) {
-
-	SRenderLocation* n = (SRenderLocation*) pointer;
-
-	float posx = n->posx;
-	float posy = n->posy;
-	float width = n->width;
-	float height = n->height;
-	float zoom = n->zoom;
-
-	delete n;
-
-	FSScreen::locateRenderScene(posx,posy,width,height,zoom);
-
-}
-
-
-void FSCamera::procRendRotation(void* pointer) {
-
-	SRenderRotation* n = (SRenderRotation*) pointer;
-
-	GLint angle = n->angle;
-	GLint x = n->x;
-	GLint y = n->y;
-	GLint z = n->z;
-
-	delete n;
-
-	FSScreen::rotate(angle,x,y,z);
-
-}
-
-void FSCamera::procRendTranslation(void* pointer) {
-
-
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
-
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-
-	GLfloat z = n->z;
-
-	delete n;
-
-	FSScreen::translate(x,y,z);
-
-}
-
-void FSCamera::procRendScalation(void* pointer) {
-
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
-
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-	GLfloat z = n->z;
-
-	delete n;
-
-	FSScreen::scale(x,y,z);
-
-
-}
-
-void FSCamera::procRendColor(void* pointer) {
-
-	SRenderColor* n = (SRenderColor*) pointer;
-
-	GLfloat red = n->red;
-	GLfloat green = n->green;
-	GLfloat blue = n->blue;
-	GLfloat alpha = n->alpha;
-
-	delete n;
-
-	FSScreen::color(red,green,blue,alpha);
-
+    return EXITO;
 }
 
 int FSCamera::locateRenderScene( FSRectangle* areaSc, float zoom ) {
-	return locateRenderScene(areaSc->getX(),areaSc->getY(),areaSc->getW(),areaSc->getH(),zoom);
+    return locateRenderScene(areaSc->getX(),areaSc->getY(),areaSc->getW(),areaSc->getH(),zoom);
 }
-
 int FSCamera::locateRenderScene( float posx, float posy, float width, float height, float zoom ) {
 
-	if (width == 0 || height == 0) {
-		posx = area->getX();
-		posy = area->getY();
-		width = area->getW();
-		height = area->getH();
-	}
+    if (width == 0 || height == 0) {
+        posx = area->getX();
+        posy = area->getY();
+        width = area->getW();
+        height = area->getH();
+    }
 
-	if (rendering) {
+    if (rendering) {
+        FSScreen::I().pushMatrix();
+        FSScreen::I().locateRenderScene(posx,posy,width,height,zoom);
+    } else {
+        initRenderList.push_back([](){
+            FSScreen::I().pushMatrix();
+        });
+        initRenderList.push_back([=](){
+            FSScreen::I().locateRenderScene(posx,posy,width,height,zoom);
+        });
+    }
 
-		FSScreen::pushMatrix();
+    endRenderList.push_front([](){
+        FSScreen::I().popMatrix();
+    });
 
-		FSScreen::locateRenderScene(posx,posy,width,height,zoom);
-
-	} else {
-
-		//PUSH
-
-		SToRender* r_init = new SToRender;
-
-		r_init->type = TR_PUSHMATRIX;
-		r_init->pointer = NULL;
-
-		initRenderList.push_back(r_init);
-
-		//LOCATE
-
-		SRenderLocation* c_init = new SRenderLocation();
-
-		c_init->posx = posx;
-		c_init->posy = posy;
-		c_init->width = width;
-		c_init->height = height;
-		c_init->zoom = zoom;
-
-		r_init = new SToRender();
-
-		r_init->type = TR_LOCATION;
-		r_init->pointer = (void*) c_init;
-
-		initRenderList.push_back(r_init);
-
-	}
-	
-	//POP
-
-	SToRender* r_fin = new SToRender;
-
-	r_fin->type = TR_POPMATRIX;
-	r_fin->pointer = NULL;
-
-	endRenderList.push_front(r_fin);
-
-
-	return EXITO;
+    return EXITO;
 }
-
 int FSCamera::rotate(float angle, float x, float y, float z) {
 
-	if (rendering) {
+    if (rendering) {
+        FSScreen::I().pushMatrix();
+        FSScreen::I().rotate(angle,x,y,z);
+    } else {
+        initRenderList.push_back([](){
+            FSScreen::I().pushMatrix();
+        });
+        initRenderList.push_back([=](){
+            FSScreen::I().rotate(angle,x,y,z);
+        });
+    }
 
-		FSScreen::pushMatrix();
+    endRenderList.push_front([](){
+        FSScreen::I().popMatrix();
+    });
 
-		FSScreen::rotate(angle,x,y,z);
-
-	} else {
-
-		//PUSH
-
-		SToRender* r_init = new SToRender;
-
-		r_init->type = TR_PUSHMATRIX;
-		r_init->pointer = NULL;
-
-		initRenderList.push_back(r_init);
-
-		//SCALE
-
-		SRenderRotation* c_init = new SRenderRotation();
-
-		c_init->x = x;
-		c_init->y = y;
-		c_init->z = z;
-		c_init->angle = angle;
-
-		r_init = new SToRender();
-
-		r_init->type = TR_ROTATION;
-		r_init->pointer = (void*) c_init;
-
-		initRenderList.push_back(r_init);
-
-	}
-
-	//POP
-
-	SToRender* r_fin = new SToRender;
-
-	r_fin->type = TR_POPMATRIX;
-	r_fin->pointer = NULL;
-
-	endRenderList.push_front(r_fin);
-
-	return EXITO;
+    return EXITO;
 }
 int FSCamera::translate(float x, float y, float z) {
 
-	if (rendering) {
+    if (rendering) {
+        FSScreen::I().pushMatrix();
+        FSScreen::I().translate(x,y,z);
+    } else {
+        initRenderList.push_back([](){
+            FSScreen::I().pushMatrix();
+        });
+        initRenderList.push_back([=](){
+            FSScreen::I().translate(x,y,z);
+        });
+    }
 
-		FSScreen::pushMatrix();
+    endRenderList.push_front([](){
+        FSScreen::I().popMatrix();
+    });
 
-		FSScreen::translate(x,y,z);
-
-	} else {
-
-		//PUSH
-
-		SToRender* r_init = new SToRender;
-
-		r_init->type = TR_PUSHMATRIX;
-		r_init->pointer = NULL;
-
-		initRenderList.push_back(r_init);
-
-		//SCALE
-
-		SRenderTranscalation* c_init = new SRenderTranscalation();
-
-		c_init->x = x;
-		c_init->y = y;
-		c_init->z = z;
-
-		r_init = new SToRender();
-
-		r_init->type = TR_TRANSLATION;
-		r_init->pointer = (void*) c_init;
-
-		initRenderList.push_back(r_init);
-
-	}
-
-	//POP
-
-	SToRender* r_fin = new SToRender;
-
-	r_fin->type = TR_POPMATRIX;
-	r_fin->pointer = NULL;
-
-	endRenderList.push_front(r_fin);
-
-	return EXITO;
+    return EXITO;
 }
 int FSCamera::scale(float x, float y, float z) {
 
-	if (rendering) {
+    if (rendering) {
+        FSScreen::I().pushMatrix();
+        FSScreen::I().scale(x,y,z);
+    } else {
+        initRenderList.push_back([](){
+            FSScreen::I().pushMatrix();
+        });
+        initRenderList.push_back([=](){
+            FSScreen::I().scale(x,y,z);
+        });
+    }
 
-		FSScreen::pushMatrix();
+    endRenderList.push_front([](){
+        FSScreen::I().popMatrix();
+    });
 
-		FSScreen::scale(x,y,z);
-
-	} else {
-
-		//PUSH
-
-		SToRender* r_init = new SToRender;
-
-		r_init->type = TR_PUSHMATRIX;
-		r_init->pointer = NULL;
-
-		initRenderList.push_back(r_init);
-
-		//SCALE
-
-		SRenderTranscalation* c_init = new SRenderTranscalation();
-
-		c_init->x = x;
-		c_init->y = y;
-		c_init->z = z;
-
-		r_init = new SToRender();
-
-		r_init->type = TR_SCALATION;
-		r_init->pointer = (void*) c_init;
-
-		initRenderList.push_back(r_init);
-
-	}
-
-	//POP
-
-	SToRender* r_fin = new SToRender;
-
-	r_fin->type = TR_POPMATRIX;
-	r_fin->pointer = NULL;
-
-	endRenderList.push_front(r_fin);
-
-	return EXITO;
+    return EXITO;
 }
-
 int FSCamera::color(float red, float green, float blue, float alpha) {
 
-	if (red > 1.0) red = 1.0;
-	if (green > 1.0) green = 1.0;
-	if (blue > 1.0) blue = 1.0;
-	if (alpha > 1.0) alpha = 1.0;
+    if (red > 1.0) red = 1.0;
+    if (green > 1.0) green = 1.0;
+    if (blue > 1.0) blue = 1.0;
+    if (alpha > 1.0) alpha = 1.0;
 
-	if (rendering) {
-		FSScreen::color(red,green,blue,alpha);
-	} else {
-		SRenderColor * c_init = new SRenderColor();
+    if (rendering) {
+        FSScreen::I().color(red,green,blue,alpha);
+    } else {
+        initRenderList.push_back([=](){
+            FSScreen::I().color(red,green,blue,alpha);
+        });
+    }
 
-		c_init->red = red;
-		c_init->green = green;
-		c_init->blue = blue;
-		c_init->alpha = alpha;
+    red = FSScreen::I()._impl->red;//2.0 - red;
+    green = FSScreen::I()._impl->green;//2.0 - green;
+    blue = FSScreen::I()._impl->blue;//2.0 - blue;
+    alpha =  FSScreen::I()._impl->alpha;//2.0 - alpha;
 
-		SToRender* r_init = new SToRender();
+    endRenderList.push_front([=](){
+        FSScreen::I().color(red,green,blue,alpha);
+    });
 
-		r_init->type = TR_COLOR;
-		r_init->pointer = (void*) c_init;
-
-		initRenderList.push_back(r_init);
-	}
-
-	SRenderColor * c_fin = new SRenderColor();
-
-	c_fin->red = FSScreen::red;//2.0 - red;
-	c_fin->green = FSScreen::green;//2.0 - green;
-	c_fin->blue = FSScreen::blue;//2.0 - blue;
-	c_fin->alpha =  FSScreen::alpha;//2.0 - alpha;
-
-	SToRender* r_fin = new SToRender();
-
-	r_fin->type = TR_COLOR;
-	r_fin->pointer = (void*) c_fin;
-
-	endRenderList.push_front(r_fin);
-
-	return EXITO;
+    return EXITO;
 }
-
 int FSCamera::color(FSColor* col, float alpha) {
-
-	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
+    return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
 }
-
 
 int FSCamera::reubicate(FSRectangle* nArea) {
-	if (area == nArea) {
-		FSLibrary::Error("Area ya establecida");
-		return FRACASO;
-	}
+    if (area == nArea) {
+        FSLibrary::I().Error("Area ya establecida");
+        return FRACASO;
+    }
 
-	delete area;
-	area=nArea;
+    delete area;
+    area=nArea;
 
-	return EXITO;
+    return EXITO;
 
 }
 
 #ifdef MENSAJES_MSGIDS
 int FSCamera::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
-	printf("Camera %d.%d :: ",area->getX(),area->getY());
-	return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
+    printf("Camera %d.%d :: ",area->getX(),area->getY());
+    return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
 }
 #endif

@@ -17,21 +17,16 @@ template <class T>
 struct FSRect {
     T x,y,w,h;
 
-    FSRect (T x=0, T y=0, T w=0, T h=0):
-        x(x), y(y), w(w), h(h) {}
+    FSRect (T x=0, T y=0, T w=0, T h=0)
+    : x(x), y(y), w(w), h(h) {}
 
     template <class U>
-    FSRect (const U& rc):
-        x((T)rc.x), y((T)rc.y), w((T)rc.w), h((T)rc.h) {}
+    FSRect (const U& rc)
+    : x((T)rc.x), y((T)rc.y), w((T)rc.w), h((T)rc.h) {}
 
     template <class U1,class U2>
-    FSRect (const U1& p1,const U2& p2):
-        x((T)p1.x), y((T)p1.y), w((T)p2.x), h((T)p2.y) {}
-
-    inline T& X() { return x; }
-    inline T& Y() { return y; }
-    inline T& W() { return w; }
-    inline T& H() { return h; }
+    FSRect (const U1& p1,const U2& p2)
+    : x((T)p1.x), y((T)p1.y), w((T)p2.x), h((T)p2.y) {}
 
     inline T getX() const { return x; }
     inline T getY() const { return y; }
@@ -94,8 +89,8 @@ struct FSRelRect : FSRect<T> {
     using FSRect<T>::h;
     using FSRect<T>::y;
 
-    FSRelRect(const FSRect<T>& rc):
-        FSRect<T>(rc.x,rc.y,rc.w - x,rc.h - y) {}
+    FSRelRect(const FSRect<T>& rc)
+    : FSRect<T>(rc.x,rc.y,rc.w - x,rc.h - y) {}
 
     inline operator FSRect<T>() {
         return FSRect<T>(x,y,x+w,y+h);

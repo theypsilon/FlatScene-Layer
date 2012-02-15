@@ -6,14 +6,14 @@
 class CActionSimpleDemo0 : public CActionFight
 {
 public:
-	CActionSimpleDemo0(CActorScrollMap* executor,TiXmlElement* fuente,const char* i);
-	~CActionSimpleDemo0();
-	void firstExecute();
-	void execute();
-	CAction* mix(ActionCollection mix);
+    CActionSimpleDemo0(CActorScrollMap* executor,TiXmlElement* fuente,const char* i);
+    ~CActionSimpleDemo0();
+    void firstExecute();
+    void execute();
+    CAction* mix(ActionCollection mix);
 
-	CAction* clone(CActorScrollMap* exe=NULL);
-	static bool ThisType(const char* i);
+    CAction* clone(CActorScrollMap* exe=NULL);
+    static bool ThisType(const char* i);
 };
 
 #endif

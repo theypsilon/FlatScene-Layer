@@ -1,18 +1,19 @@
 #ifndef __RUTINA_COLISION_H__
 #define __RUTINA_COLISION_H__
 
-#include "ActorScrollMap.h"
+class CActorScrollMap;
 
 class CRutinaColision {
 public:
-	virtual bool run(int x,int y,int z,CActorScrollMap* mobil)=0;
+    virtual bool run(int x,int y,int z,CActorScrollMap* mobil)=0;
+    virtual ~CRutinaColision() {}
 
-	static CRutinaColision* collisionFactory(int i=0);
+    static CRutinaColision* collisionFactory(int i=0);
 };
 
 class CBasicCollision0 : public CRutinaColision {
 public:
-	bool run(int x,int y,int z,CActorScrollMap* mobil);
+    bool run(int x,int y,int z,CActorScrollMap* mobil);
 };
 
 #endif

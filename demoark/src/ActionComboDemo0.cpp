@@ -6,25 +6,25 @@ CActionComboDemo0::CActionComboDemo0 (CActorScrollMap* executor,TiXmlElement* fu
 }
 
 CActionComboDemo0::~CActionComboDemo0() { 
-	inDelete();
+    inDelete();
 }
 
 void CActionComboDemo0::execute() {
 #ifdef MENSAJES_ACCIONES
-	printf("Doble acción!    ");
+    printf("Doble acción!    ");
 #endif
-	executor->removeActionCandidate((*getBrothers())[1]);
-	executor->removeActionCandidate((*getBrothers())[2]);
-	executor->removeActionCandidate(this);
+    executor->removeActionCandidate((*getBrothers())[1]);
+    executor->removeActionCandidate((*getBrothers())[2]);
+    executor->removeActionCandidate(this);
 }
 
 CAction* CActionComboDemo0::mix(ActionCollection mix) {
-	return this;
+    return this;
 }
 
 CAction* CActionComboDemo0::clone(CActorScrollMap* exe) {
-	if (!exe)	exe = executor;
-	CActionComboDemo0* ret = new CActionComboDemo0(exe,NULL,getId());
-	cloneThisInto(ret);
-	return ret;
+    if (!exe)   exe = executor;
+    CActionComboDemo0* ret = new CActionComboDemo0(exe,NULL,getId());
+    cloneThisInto(ret);
+    return ret;
 }

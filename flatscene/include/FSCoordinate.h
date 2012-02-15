@@ -8,37 +8,30 @@ struct FS3DPoint : public FS2DPoint<T> {
     using FS2DPoint<T>::x;
     using FS2DPoint<T>::y;
 
-	T z;
+    T z;
 
-	FS3DPoint(T x=0,T y=0,T z=0)
+    FS3DPoint(T x=0,T y=0,T z=0)
     : FS2DPoint<T>::FS2DPoint(x,y), z(z) {}
 
-	FS3DPoint(FS3DPoint<T>& coord) {
+    template <class U>
+    FS3DPoint(const U& coord) {
         x = coord.x;
         y = coord.y;
         z = coord.z;
     }
 
-    inline T getZ() const {
-        return z;
-    }
+    inline T getZ() const { return z; }
+    void setZ(T nz) { z = nz; }
 
-    inline T& Z() {
-        return z;
+    FS3DPoint<T>& set(T nx,T ny,T nz) {
+        x = nx;
+        y = ny;
+        z = nz;
+        return *this;
     }
-
-	void setZ(T z) {
-        this->z = z;
-    }
-
-	FS3DPoint<T>& set(T x,T y,T z) {
-        this->x = x;
-        this->y = y;
-        this->z = z;
-		return *this;
-    }
-
-	T distance ( FS3DPoint<T>& coord ) {
+    
+    template <class U>
+    T distance ( const U& coord ) {
         T d_x = coord.x > x ?   coord.x - x :   x - coord.x;
         T d_y = coord.y > y ?   coord.y - y :   y - coord.y;
         T d_z = coord.z > z ?   coord.z - z :   z - coord.z;

@@ -3,7 +3,7 @@
 CGarbageCollector::CGarbageCollector() {
 }
 CGarbageCollector::~CGarbageCollector() {
-	//clean();
+    //clean();
 }
 void CGarbageCollector::clean() {
 }
@@ -13,30 +13,30 @@ CGarbageCollectorOfActions::CGarbageCollectorOfActions() {
 }
 
 CGarbageCollectorOfActions::~CGarbageCollectorOfActions() {
-	clean();
+    clean();
 }
 
 void CGarbageCollectorOfActions::clean() {
-	for (list<CAction*>::iterator it=nodes.begin();it!=nodes.end();++it)
-		delete (*it);
-	nodes.clear();
-	for (list<vector<CAction*>*>::iterator it=listOfBrothers.begin();it!=listOfBrothers.end();++it)
-		delete (*it);
-	listOfBrothers.clear();
+    for (std::list<CAction*>::iterator it=nodes.begin();it!=nodes.end();++it)
+        delete (*it);
+    nodes.clear();
+    for (std::list<std::vector<CAction*>*>::iterator it=listOfBrothers.begin();it!=listOfBrothers.end();++it)
+        delete (*it);
+    listOfBrothers.clear();
 }
 
-void CGarbageCollectorOfActions::add(vector<CAction*>* bro) {
-	listOfBrothers.push_back(bro);
+void CGarbageCollectorOfActions::add(std::vector<CAction*>* bro) {
+    listOfBrothers.push_back(bro);
 }
 
 void CGarbageCollectorOfActions::add(CAction* nod) {
-	nodes.push_back(nod);
+    nodes.push_back(nod);
 }
 
-list<CAction*>& CGarbageCollectorOfActions::getListActions() {
-	return nodes;
+std::list<CAction*>& CGarbageCollectorOfActions::getListActions() {
+    return nodes;
 }
 
-list<vector<CAction*>*>& CGarbageCollectorOfActions::getListBrothers() {
-	return listOfBrothers;
+std::list<std::vector<CAction*>*>& CGarbageCollectorOfActions::getListBrothers() {
+    return listOfBrothers;
 }

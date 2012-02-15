@@ -4,23 +4,22 @@
 #include "TestAGameInterface.h"
 
 #define TestIdA0 "TestA_base"
-using namespace std;
 
 
 class CTestA5GameInterface : public CTestAGameInterface {
 public:
 
-	CTestA5GameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestA5GameInterface(FSMessageHandler * pmhParent=NULL);
 
-	virtual ~CTestA5GameInterface();
+    virtual ~CTestA5GameInterface();
 
-	int onInit();
+    int onInit();
 
-	int drawFrame();
+    int drawFrame();
 
-	int onExit();
+    int onExit();
 
-	void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
+    void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
 };
 
 #endif 

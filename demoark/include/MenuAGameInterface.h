@@ -7,43 +7,42 @@
 #include <vector>
 #include <string>
  
-using namespace std;
 /*
-	==CMenuAGameInterface==
-	CEngine componEnt test.
+    ==CMenuAGameInterface==
+    CEngine componEnt test.
 */
 class CMenuAGameInterface : public FSEngine  
 {
 private:
-	bool pushed;
+    bool pushed;
 
-	Uint8 opcion;
+    Uint8 opcion;
 
-	int file;
-	vector<int> IdTexts;
-	list<string> texts;
+    int file;
+    std::vector<int> IdTexts;
+    std::list<std::string> texts;
 
-	FSPoint dest;
+    FSPoint dest;
 
-	FSEngine* previous;
+    FSEngine* previous;
 public:
-	//constructor
-	CMenuAGameInterface(FSMessageHandler * pmhParent=NULL);
-	//destructor
-	virtual ~CMenuAGameInterface();
-	//initialization
-	virtual int onInit();
-	//idle behavior
-	virtual int onIdle();
-	//cleanup
-	virtual int onExit();
+    //constructor
+    CMenuAGameInterface(FSMessageHandler * pmhParent=NULL);
+    //destructor
+    virtual ~CMenuAGameInterface();
+    //initialization
+    virtual int onInit();
+    //idle behavior
+    virtual int onIdle();
+    //cleanup
+    virtual int onExit();
 
-	FSEngine* setPrevious(FSEngine*);
-	
-	void onKeyMenu(SDL_Event*);
+    FSEngine* setPrevious(FSEngine*);
+    
+    void onKeyMenu(SDL_Event*);
 
-	virtual void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
-	virtual void onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode);
+    virtual void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
+    virtual void onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode);
 };
 
 #endif 

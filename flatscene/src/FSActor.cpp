@@ -4,42 +4,42 @@
 
 FSActor::FSActor(const char* creature,FSMessageHandler * pmhParent) : 
 file(0), graph(0), flags(0), inUniverse(NULL), creature(creature), 
-	FSMessageHandler(pmhParent) {
-	
+    FSMessageHandler(pmhParent) {
+    
 }
 FSActor::~FSActor() {
 
 }
 
 int FSActor::move() {
-	return EXITO;
+    return EXITO;
 }
 
 FSUniverse* FSActor::getUniverse() {
-	return inUniverse;
+    return inUniverse;
 }
-string FSActor::getCreature() {
-	return creature;
+std::string FSActor::getCreature() {
+    return creature;
 }
 
 int FSActor::setUniverse(FSUniverse* m) {
-	inUniverse=m;
+    inUniverse=m;
 
-	return EXITO;
+    return EXITO;
 }
 
 int FSActor::setSprite(int file,int graph) {
-	this->file = file;
-	this->graph = graph;
+    this->file = file;
+    this->graph = graph;
 
-	return EXITO;
+    return EXITO;
 }
 
 FSSprite* FSActor::getSprite() {
-	return CImg.get(file)->get(graph);
+    return FSImages::I().get(file)->get(graph);
 }
 
 FSActor* FSActor::clone() {
-	FSLibrary::Error("CActor no implementa un metodo de clonación por defecto.");
-	return NULL;
+    FSLibrary::I().Error("CActor no implementa un metodo de clonaciï¿½n por defecto.");
+    return NULL;
 }

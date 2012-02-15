@@ -10,7 +10,9 @@
 
 
 // LIBRARY
-
+// instantiate the singletons before the main begins and create global
+// references for his use
+#define GLOBAL_SINGLETON_REFERENCES
 
 #define TEXT_BASE_SCALE 2
 #define BITMODE 32
@@ -46,16 +48,16 @@
 #define DEBUGLOGS
 
 #ifndef DEBUGLOGS 
-	#ifdef LOG_SISTEMA 
-		#undef LOG_SISTEMA 
-	#endif 
-	#ifdef LOG_SPRITESET
-		#undef LOG_SPRITESET
-	#endif 
+    #ifdef LOG_SISTEMA 
+    	#undef LOG_SISTEMA 
+    #endif 
+    #ifdef LOG_SPRITESET
+    	#undef LOG_SPRITESET
+    #endif 
 #endif
 
 #ifdef LOG_SPRITESET_INFO
-	#define LOG_SPRITESET
+    #define LOG_SPRITESET
 #endif
 
 
@@ -63,11 +65,11 @@
 
 //#define RESERVA_MEMORIA_SEGURA
 #ifdef RESERVA_MEMORIA_SEGURA
-	#define alloc(A,B) new A[B]
-	#define freemem(A) delete[](A)
+    #define alloc(A,B) new A[B]
+    #define freemem(A) delete[](A)
 #else
-	#define alloc(A,B) (A*)malloc((B)*sizeof(A))
-	#define freemem(A) free(A)
+    #define alloc(A,B) (A*)malloc((B)*sizeof(A))
+    #define freemem(A) free(A)
 #endif
 
 #define TAM_TILE 32
@@ -104,15 +106,15 @@
 #define DEBUGTESTLOGS
 
 #ifndef DEBUGTESTLOGS 
-	#ifdef LOG_MAPAS 
-		#undef LOG_MAPAS 
-	#endif 
-	#ifdef LOG_JUGADORES 
-		#undef LOG_JUGADORES 
-	#endif 
-	#ifdef LOG_ACCIONES 
-		#undef LOG_ACCIONES 
-	#endif 
+    #ifdef LOG_MAPAS 
+    	#undef LOG_MAPAS 
+    #endif 
+    #ifdef LOG_JUGADORES 
+    	#undef LOG_JUGADORES 
+    #endif 
+    #ifdef LOG_ACCIONES 
+    	#undef LOG_ACCIONES 
+    #endif 
 #endif
 
 // Nombres de Teclas.

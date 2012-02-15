@@ -1,57 +1,57 @@
 #include "ActorMouse.h"
-#include "FSControlImages.h"
+#include "FSImages.h"
 
 CActorMouse::CActorMouse(FSMessageHandler * pmhParent) : 
-// Se ha de llamar a la clase Base para una correcta inicialización
+// Se ha de llamar a la clase Base para una correcta inicializaciï¿½n
 FSActor("raton",pmhParent) {
 
-	// TODO
-	
+    // TODO
+    
 }
 CActorMouse::~CActorMouse() {
 
-	// TODO
+    // TODO
 
 }
 
 int CActorMouse::move() {
 
-	// TODO
+    // TODO
 
-	return EXITO;
+    return EXITO;
 }
 
-string CActorMouse::getCreature() {
+std::string CActorMouse::getCreature() {
 
-	// TODO
+    // TODO
 
-	return string("cadena personalizable");
+    return std::string("cadena personalizable");
 
-	// CActor::getCreature() accede al valor que hemos configurado en el Constructor.
+    // CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }
 
 int CActorMouse::setUniverse(FSUniverse* m) {
 
-	// TODO
+    // TODO
 
-	return EXITO;
+    return EXITO;
 
-	// CActor::setUniverse(m) realiza la asignación : inUniverse=m;
+    // CActor::setUniverse(m) realiza la asignaciï¿½n : inUniverse=m;
 }
 
 FSSprite* CActorMouse::getSprite() {
 
-	FSSprite* spt;
+    FSSprite* spt;
 
-	spt = CImg.get(file)->get(graph);
+    spt = Img.get(file)->get(graph);
 
-	return spt;
+    return spt;
 }
 
 FSActor* CActorMouse::clone() {
-	FSActor* act = NULL;
+    FSActor* act = NULL;
 
-	// TODO
+    // TODO
 
-	return act;
+    return act;
 }

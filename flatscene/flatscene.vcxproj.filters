@@ -36,13 +36,13 @@
     <ClCompile Include="src\FSColor.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSControlImages.cpp">
+    <ClCompile Include="src\FSImages.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSControlMultiverse.cpp">
+    <ClCompile Include="src\FSMultiverse.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSControlOutputText.cpp">
+    <ClCompile Include="src\FSWriter.cpp">
       <Filter>Archivos de código fuente\Library</Filter>
     </ClCompile>
     <ClCompile Include="src\FSCoordinate.cpp">
@@ -110,13 +110,13 @@
     <ClInclude Include="include\FSColor.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSControlImages.h">
+    <ClInclude Include="include\FSImages.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSControlMultiverse.h">
+    <ClInclude Include="include\FSMultiverse.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSControlOutputText.h">
+    <ClInclude Include="include\FSWriter.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
     <ClInclude Include="include\FSCoordinate.h">
@@ -128,7 +128,7 @@
     <ClInclude Include="include\FSEngine.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSImage.h">
+    <ClInclude Include="include\FSCanvas.h">
       <Filter>Archivos de encabezado\Library</Filter>
     </ClInclude>
     <ClInclude Include="include\FSLibrary.h">

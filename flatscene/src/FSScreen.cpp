@@ -1,958 +1,580 @@
-#include "FSScreen.h"
+#include "FSScreenImpl.h"
 #include "FSLibrary.h"
 #include "FSEngine.h"
-#include "FSControlOutputText.h"
 
-SDL_Surface* FSScreen::m_SDL_Surface=NULL;
+FSScreen::FSScreen() : _impl(new ScreenImpl) {
+    _impl->m_SDL_Surface=NULL;
 
-bool FSScreen::m_FullScreen=false;
-bool FSScreen::m_Doublebuff=true;
-bool FSScreen::rendering=false;
-float FSScreen::m_maxZ=400.0;
+    _impl->m_FullScreen=false;
+    _impl->m_Doublebuff=true;
+    _impl->rendering=false;
+    _impl->m_maxZ=400.0f;
 
-TypeRendeProjection FSScreen::trp=TRP_PERSPECTIVE;
+    _impl->trp=TRP_PERSPECTIVE;
 
-int FSScreen::m_Bpp=0;
-int FSScreen::m_Width=0;
-int FSScreen::m_Height=0;
+    _impl->m_Bpp=0;
+    _impl->m_Width=0;
+    _impl->m_Height=0;
 
-float FSScreen::alpha =1.0;
-float FSScreen::red =1.0;
-float FSScreen::green =1.0;
-float FSScreen::blue =1.0;
+    _impl->alpha =1.0f;
+    _impl->red =1.0f;
+    _impl->green =1.0f;
+    _impl->blue =1.0f;
+}
 
-list<SToRender*> FSScreen::graphicMaterial;
-
-list<FSSprite*> FSScreen::spriteToDelete;
-list<FSSpriteset*> FSScreen::spritesetToDelete;
-list<FSImage*> FSScreen::imageToDelete;
-
-map<TypeResource,void (*)(void*)> FSScreen::procRenders;
+FSScreen::~FSScreen() {
+    delete _impl;
+}
 
 int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
 { 
-	if (FSLibrary::getLibrary() == NULL) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
-		
-	if (m_SDL_Surface) {
-		FSLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
-		return FRACASO;
-	}
 
-	if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-		FSLibrary::Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
-		return FRACASO;
-	}
+    if (_impl->m_SDL_Surface) {
+        FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n");
+        return FRACASO;
+    }
+
+    if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
+        FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+        return FRACASO;
+    }
 #ifdef LOG_SISTEMA
-	printf("Iniciando Video Mode...\n");
+    printf("Iniciando Video Mode...\n");
 #endif
 
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-	// 32 bits por pixel
-//	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32); // TODO: Esta línea causa conflicto en Linux. Averiguar porque.
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+    // 32 bits por pixel
+//    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32); // TODO: Esta línea causa conflicto en Linux. Averiguar porque.
 
-	// con double buffer
+    // con double buffer
 
-	if (doublebuff) {
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); 
+    if (doublebuff) {
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-		SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
-	}
+        SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
+    }
 
-	Uint32 flags = SDL_OPENGL;
+    Uint32 flags = SDL_OPENGL;
 
-	if (fullscreen) 
-		flags |= SDL_FULLSCREEN;
+    if (fullscreen) 
+        flags |= SDL_FULLSCREEN;
 
-	if ((m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-		FSLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
-		return FRACASO;
-	}
+    if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
+        FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+        return FRACASO;
+    }
 
-	m_FullScreen=fullscreen;
-	m_Doublebuff=doublebuff;
-	m_Width=width;
-	m_Height=height;
-	m_Bpp=bpp;
+    _impl->m_FullScreen=fullscreen;
+    _impl->m_Doublebuff=doublebuff;
+    _impl->m_Width=width;
+    _impl->m_Height=height;
+    _impl->m_Bpp=bpp;
 
-	// Set the OpenGL state after creating the context with SDL_SetVideoMode
+    // Set the OpenGL state after creating the context with SDL_SetVideoMode
 
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-	    
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+        
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
 
-	glClearColor(0,0,0,0);
+    glClearColor(0,0,0,0);
 
-	SDL_ShowCursor( 0 );
-	SDL_WM_SetCaption("biblioteca-opengl-2d",NULL);
+    SDL_ShowCursor( 0 );
+    SDL_WM_SetCaption("biblioteca-opengl-2d",NULL);
 
-	return EXITO;
+    return EXITO;
 
 }
 
 int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, bool fullscreen, bool doublebuff)
 { 
-	if (FSLibrary::getLibrary() == NULL) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
-		
-	if (m_SDL_Surface) {
-		FSLibrary::Error("Video ya inicializado, orden imposible 'start'\n"); 
-		return FRACASO;
-	}
 
-	if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-		FSLibrary::Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
-		return FRACASO;
-	}
+    if (_impl->m_SDL_Surface) {
+        FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n");
+        return FRACASO;
+    }
+
+    if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
+        FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+        return FRACASO;
+    }
 #ifdef LOG_SISTEMA
-	printf("Iniciando Video Mode...\n");
+    printf("Iniciando Video Mode...\n");
 #endif
 
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-	// 32 bits por pixel
-//	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32); // TODO: Esta línea causa conflicto en Linux. Averiguar porque.
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+    // 32 bits por pixel
+//    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32); // TODO: Esta línea causa conflicto en Linux. Averiguar porque.
 
-	// con double buffer
+    // con double buffer
 
-	if (doublebuff) {
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); 
+    if (doublebuff) {
+        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-		SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
-	}
+        SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
+    }
 
-	Uint32 flags = SDL_OPENGL;
+    Uint32 flags = SDL_OPENGL;
 
-	if (fullscreen) 
-		flags |= SDL_FULLSCREEN;
+    if (fullscreen) 
+        flags |= SDL_FULLSCREEN;
 
-	if ((m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-		FSLibrary::Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
-		return FRACASO;
-	}
+    if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
+        FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+        return FRACASO;
+    }
 
-	m_FullScreen=fullscreen;
-	m_Doublebuff=doublebuff;
-	m_Width=width;
-	m_Height=height;
-	m_Bpp=bpp;
+    _impl->m_FullScreen=fullscreen;
+    _impl->m_Doublebuff=doublebuff;
+    _impl->m_Width=width;
+    _impl->m_Height=height;
+    _impl->m_Bpp=bpp;
 
 
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-	    
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+        
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
 
-	glClearColor(0,0,0,0);
+    glClearColor(0,0,0,0);
 
-	SDL_ShowCursor( 0 );
-	SDL_WM_SetCaption("biblioteca-opengl-2d",NULL);
+    SDL_ShowCursor( 0 );
+    SDL_WM_SetCaption("biblioteca-opengl-2d",NULL);
 
-	return EXITO;
+    return EXITO;
 
 }
 
-void FSScreen::initProcRenders() {
-
-	procRenders[TR_CANVAS] = procRendCanvas;
-	procRenders[TR_FLOATCANVAS] = procRendFloatCanvas;
-	procRenders[TR_ROTATION] = procRendRotation;
-	procRenders[TR_TRANSLATION] = procRendTranslation;
-	procRenders[TR_LOCATION] = procRendLocation;
-	procRenders[TR_PUSHMATRIX] = procRendPush;
-	procRenders[TR_POPMATRIX] = procRendPop;
-	procRenders[TR_SCALATION] = procRendScalation;
-	procRenders[TR_COLOR] = procRendColor;
-}
-
-int FSScreen::render ( ) 
+int FSScreen::render() 
 {
-	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
-		return false;
-	}
+    if (!_impl->m_SDL_Surface) {
+        FSLibrary::I().Error("Video context not inicialized");
+        return false;
+    }
 
 #ifdef MAINRENDERLOOP
 
-	rendering = true;
+    _impl->rendering = true;
 
-	beginRenderMode(RENDER_TEXTURE_STANDARD);
+    _impl->beginRenderMode(RENDER_TEXTURE_STANDARD);
 
-	for (list<SToRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+    std::list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
 
-		SToRender* em =(*it);
+    for (std::list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+        ScreenImpl::SRender* r = *it;
+        (*r)();
+    }
 
-		procRenders[em->type](em->pointer);
-		
-		delete *it;
-	}
+    _impl->endRenderMode(RENDER_TEXTURE_STANDARD);
 
-	endRenderMode(RENDER_TEXTURE_STANDARD);
+    graphicMaterial.clear();
 
-	graphicMaterial.clear();
-
-	rendering = false;
+    _impl->rendering = false;
 
 #endif
 
-	SDL_GL_SwapBuffers();
-		
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-	glLoadIdentity();	
+    SDL_GL_SwapBuffers();
 
-	deleteResources();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
 
-	return EXITO;
+    _impl->deleteResources();
+
+    return EXITO;
 }
 
 int FSScreen::clear ( ) 
 {
-	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
-		return FRACASO;
-	}
+    if (!_impl->m_SDL_Surface) {
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
+    }
 
 #ifdef MAINRENDERLOOP
 
-	for (list<SToRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-		SToRender* em = *it;
+    auto & graphicMaterial = _impl->graphicMaterial;
+    for (auto it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+        (**it)();
+    }
 
-		if (em->type == TR_CANVAS)
-			delete ((SRenderCanvas*)em->pointer);
-		else if (em->type == TR_FLOATCANVAS)
-			delete ((SRenderFloatCanvas*)em->pointer);
-		else if (em->type == TR_LOCATION)
-			delete ((SRenderLocation*)em->pointer);
-		else if (em->type == TR_ROTATION)
-			delete ((SRenderRotation*)em->pointer);
-		else if (em->type == TR_SCALATION || em->type == TR_TRANSLATION)
-			delete ((SRenderTranscalation*)em->pointer);
-
-		delete *it;
-	}
-
-	graphicMaterial.clear();
+    graphicMaterial.clear();
 
 #endif
 
-	deleteResources();
+    _impl->deleteResources();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
-	glLoadIdentity();	
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
+    glLoadIdentity();
 
+    return EXITO;
 }
 
 float FSScreen::getA() {
-	return alpha;
+    return _impl->alpha;
 }
 
 float FSScreen::getR() {
-	return red;
+    return _impl->red;
 }
 
 float FSScreen::getG() {
-	return green;
+    return _impl->green;
 }
 
 float FSScreen::getB() {
-	return blue;
+    return _impl->blue;
 }
 
 int FSScreen::locateRenderScene(float posx, float posy, float width, float height,float zoom) {
 
+    (width <= 0.0f)?  width  = FSScreen::I()._impl->m_Width  : 0 ;
+    (height <= 0.0f)? height = FSScreen::I()._impl->m_Height : 0 ;
+
+    ScreenImpl::SRenderLocation* rr = new ScreenImpl::SRenderLocation;
+    rr->posx = posx;
+    rr->posy = posy;
+    rr->width = width;
+    rr->height = height;
+    rr->zoom = zoom;
+
 #ifdef MAINRENDERLOOP
-
-	SRenderLocation* n = new SRenderLocation;
-	n->posx = posx;
-	n->posy = posy;
-	n->width = width;
-	n->height = height;
-	n->zoom = zoom;
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_LOCATION;
-	em->pointer = (void*) n;
-
-	graphicMaterial.push_back(em);
-
+    _impl->graphicMaterial.push_back(rr);
 #else
-
-	glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-
-	//Opción ortogonal
-	glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
-	glScalef(m_ScaleX*zoom,m_ScaleY*zoom,1.0);
-
-	//Opción de perspectiva 1
-	//gluPerspective(90.0f,width/height,1.0,400.0);
-	//glTranslatef(0.0,0.0,-120.0);
-	//glRotatef(180.0,1.0,0.0,0.0);
-	//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-	//Opción de perspectiva 2
-	//gluPerspective(60.0f,width/height,1.0,400.0);
-	//glTranslatef(0.0,0.0,-205.0);
-	//glRotatef(180.0,1.0,0.0,0.0);
-	//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-	//Opción de perspectiva 3
-	//gluPerspective(45.0f,width/height,1.0,400.0);
-	//glTranslatef(0.0,0.0,-290.0);
-	//glRotatef(180.0,1.0,0.0,0.0);
-	//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-	//glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
-	//glTranslatef(0.0,-100.0,120.0);
-
+    (*rr)();
 #endif
 
-	return EXITO;
+    return EXITO;
 
 }
 
 int FSScreen::rotate(float angle, float x, float y, float z) {
 
+    ScreenImpl::SRenderRotation* rr = new ScreenImpl::SRenderRotation;
+    rr->angle = angle;
+    rr->x = x;
+    rr->y = y;
+    rr->z = z;
 
 #ifdef MAINRENDERLOOP
-
-	SRenderRotation* n = new SRenderRotation;
-	n->angle = angle;
-	n->x = x;
-	n->y = y;
-	n->z = z;
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_ROTATION;
-	em->pointer = (void*) n;
-
-	graphicMaterial.push_back(em);
-
+    _impl->graphicMaterial.push_back(rr);
 #else
-
-	glRotatef(angle,x,y,z);
-
+    (*rr)();
 #endif
 
-	return EXITO;
+    return EXITO;
 }
 
 int FSScreen::translate(float x, float y, float z) {
 
+    ScreenImpl::SRenderTranslation* rr = new ScreenImpl::SRenderTranslation;
+    rr->x = x;
+    rr->y = y;
+    rr->z = z;
+
 #ifdef MAINRENDERLOOP
-
-	SRenderTranscalation* n = new SRenderTranscalation;
-	n->x = x;
-	n->y = y;
-	n->z = z;
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_TRANSLATION;
-	em->pointer = (void*) n;
-
-	graphicMaterial.push_back(em);
-
+    _impl->graphicMaterial.push_back(rr);
 #else
-
-	glTranslatef(x,y,z);
-
+    (*rr)();
 #endif
 
-	return EXITO;
+    return EXITO;
 }
 
 int FSScreen::scale(float x, float y, float z) {
+    
+    ScreenImpl::SRenderScalation* rr = new ScreenImpl::SRenderScalation;
+    rr->x = x;
+    rr->y = y;
+    rr->z = z;
 
 #ifdef MAINRENDERLOOP
-
-	SRenderTranscalation* n = new SRenderTranscalation;
-	n->x = x;
-	n->y = y;
-	n->z = z;
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_SCALATION;
-	em->pointer = (void*) n;
-
-	graphicMaterial.push_back(em);
-
+    _impl->graphicMaterial.push_back(rr);
 #else
-
-	glScalef(x,y,z);
-
+    (*rr)();
 #endif
 
-	return EXITO;
+    return EXITO;
 }
 
 int FSScreen::color(float red, float green, float blue, float alpha) {
 
+    ScreenImpl::SRenderColor* rr = new ScreenImpl::SRenderColor;
+
+    _impl->red = rr->red = red;
+    _impl->green = rr->green = green;
+    _impl->blue = rr->blue = blue;
+    _impl->alpha = rr->alpha = alpha;
+
 #ifdef MAINRENDERLOOP
-
-	SRenderColor* n = new SRenderColor;
-
-	FSScreen::red = n->red = red;
-	FSScreen::green = n->green = green;
-	FSScreen::blue = n->blue = blue;
-	FSScreen::alpha = n->alpha = alpha;
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_COLOR;
-	em->pointer = (void*) n;
-
-	graphicMaterial.push_back(em);
-
+    _impl->graphicMaterial.push_back(rr);
 #else
-
-	glColor4f(red,green,blue,alpha);
-
+    (*rr)();
 #endif
 
-	return EXITO;
+    return EXITO;
 }
 
 int FSScreen::color(FSColor* col, float alpha) {
 
-	return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
+    return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,_impl->alpha);
 
 }
 
 int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
 
-	if (rendering) {
-		FSLibrary::Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
-		return FRACASO;
-	}
+    if (_impl->rendering) {
+        FSLibrary::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
+        return FRACASO;
+    }
 
-	m_maxZ = zMax;
-	FSScreen::trp = trp;
+    _impl->m_maxZ = zMax;
+    _impl->trp = trp;
 
-	return EXITO;
+    return EXITO;
 
 }
 
 int FSScreen::pushMatrix() {
-
+    static ScreenImpl::SRenderPushMatrix rr;
 #ifdef MAINRENDERLOOP
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_PUSHMATRIX;
-	em->pointer = NULL;
-
-	graphicMaterial.push_back(em);
-
+    _impl->graphicMaterial.push_back(static_cast<ScreenImpl::SRender*>(&rr));
 #else
-
-	glPushMatrix();
-
+    rr();
 #endif
 
-	return EXITO;
+    return EXITO;
 
 }
 
 int FSScreen::popMatrix() {
-
+    static ScreenImpl::SRenderPopMatrix rr;
 #ifdef MAINRENDERLOOP
-
-	SToRender* em = new SToRender;
-
-	em->type = TR_POPMATRIX;
-	em->pointer = NULL;
-
-	graphicMaterial.push_back(em);
-
+    _impl->graphicMaterial.push_back(static_cast<ScreenImpl::SRender*>(&rr));
 #else
-
-	glPopMatrix();
-
+    rr();
 #endif
 
-	return EXITO;
+    return EXITO;
 
 }
 
+int FSScreen::ScreenImpl::beginRenderMode(Uint32 flags) {
+    if (!m_SDL_Surface) {
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
+    }
+    
+    if (flags & RENDER_TEXTURE_STANDARD) {
+        glEnable(GL_COLOR_MATERIAL);
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
 
-
-void FSScreen::procRendCanvas(void* pointer) {
-
-	SRenderCanvas* n = (SRenderCanvas*) pointer;
-
-	SCanvas m_pSurface = n->canvas;
-	Uint8 flags = n->flags;
-	FSPoint ptDst = n->ptDst;
-
-	delete n;
-
-	if (m_pSurface.h != 0 || m_pSurface.w !=0 ) {
-
-		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex); 
-
-		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
-		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
-
-		//glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
-
-		glBegin(GL_QUADS);
-			if (flags == 0) {
-				glTexCoord2f(0.0f, relH);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags == 1) {
-				
-				glTexCoord2f(relW, relH);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(0.0f, relH);		
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, 0.0f);						
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags==2) {
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, relH);	
-				glVertex2f(0,0);
-			} else  {
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(0.0f, 0.0f);		
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, relH);						
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, relH);
-				glVertex2f(0,0);
-			} 
-		glEnd();
-
-	}
-
+    return EXITO;
 }
 
-void FSScreen::procRendFloatCanvas(void* pointer) {
+int FSScreen::ScreenImpl::endRenderMode(Uint32 flags) {
+    if (!m_SDL_Surface) {
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
+    }
 
-	SRenderFloatCanvas* n = (SRenderFloatCanvas*) pointer;
+    if (flags & RENDER_TEXTURE_STANDARD) {
+        glDisable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_COLOR_MATERIAL);
+    }
 
-	SCanvas m_pSurface = (n->canvas);
-	Uint8 flags = n->flags;
-	FSFloatPoint ptDst = n->ptDst;
-
-	delete n;
-
-	if (m_pSurface.h != 0 || m_pSurface.w !=0 ) {
-
-		glBindTexture(GL_TEXTURE_2D, m_pSurface.tex); 
-
-		float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
-		float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
-
-		//glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
-
-		glBegin(GL_QUADS);
-			if (flags == 0) {
-				glTexCoord2f(0.0f, relH);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags == 1) {
-				
-				glTexCoord2f(relW, relH);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(0.0f, relH);		
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, 0.0f);						
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0,0);
-			} else if (flags==2) {
-				glTexCoord2f(0.0f, 0.0f);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(relW, relH);
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(0.0f, relH);	
-				glVertex2f(0,0);
-			} else  {
-				glTexCoord2f(relW, 0.0f);
-				glVertex2f(0, m_pSurface.h2);      
-				glTexCoord2f(0.0f, 0.0f);		
-				glVertex2f(m_pSurface.w2, m_pSurface.h2);
-				glTexCoord2f(0.0f, relH);						
-				glVertex2f(m_pSurface.w2, 0);
-				glTexCoord2f(relW, relH);
-				glVertex2f(0,0);
-			} 
-		glEnd();
-
-	}
-
-
-}
-void FSScreen::procRendRotation(void* pointer) {
-
-	SRenderRotation* n = (SRenderRotation*) pointer;
-
-	GLfloat angle = n->angle;
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-	GLfloat z = n->z;
-
-	delete n;
-
-	glRotatef(angle,x,y,z);
-
-}
-
-void FSScreen::procRendTranslation(void* pointer) {
-
-
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
-
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-	GLfloat z = n->z;
-
-	delete n;
-			
-	glTranslatef(x,y,z);
-
-
-}
-
-void FSScreen::procRendLocation(void* pointer) {
-
-	SRenderLocation* n = (SRenderLocation*)pointer;
-
-	float posx = n->posx;
-	float posy = n->posy;
-	float width = n->width;
-	float height = n->height;
-	float zoom = n->zoom;
-
-	delete n;
-
-	//glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
-	glViewport(posx,posy,width,height);
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-
-	if (trp == TRP_ORTHO) {
-
-		//Opción ortogonal
-		//glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
-
-		glOrtho( 0.0, (double)width, (double)height, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
-
-	} else {
-
-		//Opción de perspectiva 1
-		gluPerspective(90.0f,width/height,1.0,m_maxZ);
-		glTranslatef(-width/2,height/2,-240.0);
-		glRotatef(180.0,1.0,0.0,0.0);
-
-		//Opción de perspectiva 2
-		//gluPerspective(60.0f,width/height,1.0,400.0);
-		//glTranslatef(0.0,0.0,-205.0);
-		//glTranslatef(0.0,0.0,101.0);
-		//glRotatef(180.0,1.0,0.0,0.0);
-		//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-		//Opción de perspectiva 3
-		//gluPerspective(45.0f,width/height,1.0,400.0);
-		//glTranslatef(0.0,0.0,-290.0);
-		//glRotatef(180.0,1.0,0.0,0.0);
-		//glTranslatef(-width/2.0,-height/2.0,0.0);
-
-		//glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
-		//glTranslatef(0.0,-100.0,120.0);
-	}
-
-
-}
-
-void FSScreen::procRendPush(void* pointer) {
-
-	glMatrixMode(GL_MODELVIEW);
-
-	glPushMatrix();
-
-}
-
-void FSScreen::procRendPop(void* pointer) {
-
-	glPopMatrix();
-
-}
-
-void FSScreen::procRendScalation(void* pointer) {
-
-	SRenderTranscalation* n = (SRenderTranscalation*) pointer;
-
-	GLfloat x = n->x;
-	GLfloat y = n->y;
-	GLfloat z = n->z;
-
-	delete n;
-
-	glScalef(x ,y ,z);
-
-}
-
-void FSScreen::procRendColor(void* pointer) {
-
-	SRenderColor* n = (SRenderColor*) pointer;
-
-	GLfloat red = n->red;
-	GLfloat green = n->green;
-	GLfloat blue = n->blue;
-	GLfloat alpha = n->alpha;
-
-	delete n;
-
-	glColor4f(red,green,blue,alpha);
-
-}
-
-int FSScreen::beginRenderMode(Uint32 flags) {
-	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
-		return FRACASO;
-	}
-	
-	if (flags & RENDER_TEXTURE_STANDARD) {
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
-	}
-
-	return EXITO;
-}
-
-int FSScreen::endRenderMode(Uint32 flags) {
-	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
-		return FRACASO;
-	}
-
-	if (flags & RENDER_TEXTURE_STANDARD) {
-		glDisable(GL_BLEND);
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_COLOR_MATERIAL);
-	}
-
-	return EXITO;
+    return EXITO;
 }
 
 
 int FSScreen::quit()
 {
-	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
-		return FRACASO;
-	}
+    if (!_impl->m_SDL_Surface) {
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
+    }
 
-	SDL_FreeSurface(m_SDL_Surface);
-	m_SDL_Surface=NULL;
-	SDL_QuitSubSystem(SDL_INIT_VIDEO);
+    SDL_FreeSurface(_impl->m_SDL_Surface);
+    _impl->m_SDL_Surface=NULL;
+    SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
-	return EXITO;
+    return EXITO;
 }
 
 Uint8 FSScreen::getBpp() {
-	return m_Bpp;
+    return _impl->m_Bpp;
+}
+
+int FSScreen::getWidth() {
+    return _impl->m_Width;
+}
+
+int FSScreen::getHeight() {
+    return _impl->m_Height;
+}
+
+bool FSScreen::isFullscreen() {
+    return _impl->m_FullScreen;
 }
 
 int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float scaley, bool fullscreen) {
-	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
-		return FRACASO;
-	}
-	
+    if (!_impl->m_SDL_Surface) {
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
+    }
+    
 
-	clear();
-	
-	GraphicResources info;
+    clear();
+    
+    GraphicResources info;
 
-	saveResources(info);
+    _impl->saveResources(info);
 
-	quit();
+    quit();
 
-	if ( start (width,height,bpp,scalex, scaley,fullscreen,m_Doublebuff) == FRACASO)
-		return FRACASO;
+    if ( start (width,height,bpp,scalex, scaley,fullscreen,_impl->m_Doublebuff) == FRACASO)
+        return FRACASO;
 
-	reloadResources(info);
+    _impl->reloadResources(info);
 
-	return EXITO;
-	
+    return EXITO;
+    
 }
 
 int FSScreen::ToggleFullscreen() {
 
-	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
-		return FRACASO;
-	}
+    if (!_impl->m_SDL_Surface) {
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
+    }
 
-	clear();
+    clear();
 
-	GraphicResources info;
+    GraphicResources info;
 
-	saveResources(info);
+    _impl->saveResources(info);
 
-	quit();
+    quit();
 
-	m_FullScreen = !m_FullScreen;
+    _impl->m_FullScreen = !_impl->m_FullScreen;
 
-	if ( start (m_Width,m_Height,m_Bpp,m_FullScreen,m_Doublebuff) == FRACASO )
-		return FRACASO;	
+    if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,_impl->m_Doublebuff) == FRACASO )
+        return FRACASO;
 
-	reloadResources(info);
+    _impl->reloadResources(info);
 
-	return EXITO;
+    return EXITO;
 
 }
 
 int FSScreen::setDoublebuffer(bool doublebuff) {
 
-	if (!m_SDL_Surface) {
-		FSLibrary::Error("Video context not inicialized");
-		return FRACASO;
-	}
+    if (!_impl->m_SDL_Surface) {
+        FSLibrary::I().Error("Video context not inicialized");
+        return FRACASO;
+    }
 
-	if (doublebuff!=m_Doublebuff) {
-		clear();
+    if (doublebuff!=_impl->m_Doublebuff) {
+        clear();
 
-		GraphicResources info;
+        GraphicResources info;
 
-		saveResources(info);
+        _impl->saveResources(info);
 
-		quit();
+        quit();
 
-		if ( start (m_Width,m_Height,m_Bpp,m_FullScreen,doublebuff) == FRACASO)
-			return FRACASO;
+        if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,doublebuff) == FRACASO)
+            return FRACASO;
 
-		reloadResources(info);
-	}
+        _impl->reloadResources(info);
+    }
 
-	return EXITO;
+    return EXITO;
 }
 
-void FSScreen::deleteResources() {
-	
-	for (list<FSSpriteset*>::iterator it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
-		delete (*it);
+#ifdef GLOBAL_SINGLETON_REFERENCES
+FSScreen& FSDraw = FSScreen::I();
+#endif
 
-	spritesetToDelete.clear();
-	
-	for (list<FSSprite*>::iterator it = spriteToDelete.begin(), jt = spriteToDelete.end() ; it!=jt;++it)
-		delete (*it);
+void FSScreen::ScreenImpl::SRenderLocation::operator()() {
+    //glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
+    glViewport(posx,posy,width,height);
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
 
-	spriteToDelete.clear();
+    static const TypeRendeProjection& trp = FSScreen::I()._impl->trp;
 
-	for (list<FSImage*>::iterator it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
-		delete (*it);
+    if (trp == TRP_ORTHO) {
 
-	imageToDelete.clear();
+        //Opción ortogonal
+        //glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
+
+        glOrtho( 0.0, (double)width, (double)height, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
+
+    } else {
+
+        static const float& m_maxZ = FSScreen::I()._impl->m_maxZ;
+
+        //Opción de perspectiva 1
+        gluPerspective(90.0f,width/height,1.0,m_maxZ);
+        glTranslatef(-width/2,height/2,-240.0);
+        glRotatef(180.0,1.0,0.0,0.0);
+
+        //Opción de perspectiva 2
+        //gluPerspective(60.0f,width/height,1.0,400.0);
+        //glTranslatef(0.0,0.0,-205.0);
+        //glTranslatef(0.0,0.0,101.0);
+        //glRotatef(180.0,1.0,0.0,0.0);
+        //glTranslatef(-width/2.0,-height/2.0,0.0);
+
+        //Opción de perspectiva 3
+        //gluPerspective(45.0f,width/height,1.0,400.0);
+        //glTranslatef(0.0,0.0,-290.0);
+        //glRotatef(180.0,1.0,0.0,0.0);
+        //glTranslatef(-width/2.0,-height/2.0,0.0);
+
+        //glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
+        //glTranslatef(0.0,-100.0,120.0);
+    }
+    delete this;
 }
 
-void FSScreen::saveResources(GraphicResources &info) {
-	
-	for (SpritesetCollection::iterator it=CImg.set.begin(),kt=CImg.set.end();it!=kt;++it)	{
-		SpritesetInfo aux;
-		aux.number = it->first;
-		aux.name =	it->second->getName();
-		aux.mode = it->second->getMode();
-		aux.times = CImg.getCount(it->first);
-		info.push_back(aux);
-	}
-
-	CImg.clear();
-
-	for (map<int,SFont*>::iterator it=Write.Fonts.begin();it!=Write.Fonts.end();++it) {
-		map<Uint16,FSImage*>& chars = it->second->render;
-		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
-			imageToDelete.push_back(jt->second); // delete
-			jt->second = NULL;
-		}
-	}
-
-	for (map<FSEngine*,SData*>::iterator it=Write.session.begin();it!=Write.session.end();++it) {
-		map<int,SText*>& auxBoxs = it->second->Texts;
-		for (map<int,SText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
-			if (jt->second->Type() == TT_BOX && jt->second->Box)
-				jt->second->Box->deleteBox();
-		}
-	}
-
-	deleteResources();
-
+void FSScreen::ScreenImpl::SRenderTranslation::operator()() {
+    glTranslatef(x,y,z);
+    delete this;
 }
 
-void FSScreen::reloadResources(GraphicResources &info) {
-	
-	for (map<int,SFont*>::iterator it=Write.Fonts.begin();it!=Write.Fonts.end();++it) {
-		map<Uint16,FSImage*>& chars = it->second->render;
-		for (map<Uint16,FSImage*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
-			if (!jt->second) {
-				jt->second = new FSSprite(FSImage::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,Write.data->fgcolor)));
-			} else {
-				return FSLibrary::Error("No se puede recargar el recurso glyph porque no había sido descargado anteriormente.");
-			}
-		}
-	}
+void FSScreen::ScreenImpl::SRenderScalation::operator()() {
+    glScalef(x,y,z);
+    delete this;
+}
 
-	for (map<FSEngine*,SData*>::iterator it=Write.session.begin();it!=Write.session.end();++it) {
-		map<int,SText*>& auxBoxs = it->second->Texts;
-		for (map<int,SText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
-			if (jt->second->Type() == TT_BOX && jt->second->Box)
-				jt->second->Box->createBox();
-		}
-	}
+void FSScreen::ScreenImpl::SRenderRotation::operator()() {
+    glRotatef(angle,x,y,z);
+    delete this;
+}
 
-	int number = 0;
-	int aux = -1;
+void FSScreen::ScreenImpl::SRenderColor::operator()() {
+    glColor4f(red,green,blue,alpha);
+    delete this;
+}
 
-	for (GraphicResources::iterator it=info.begin(),et=info.end();it!=et;++it) {
-		number = CImg.add((*it).name.c_str(),(*it).mode);
-		if (number != it->number) {
-			CImg.set[it->number] = CImg.set[number];
-			CImg.set.erase(number);
-			CImg.lastIndexAdded.push(number);
-		}
-		CImg.count[CImg.get(it->number)]=it->times;
-	}
+void FSScreen::ScreenImpl::SRenderPushMatrix::operator()() {
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+}
+
+void FSScreen::ScreenImpl::SRenderPopMatrix::operator()() {
+    glPopMatrix();
 }

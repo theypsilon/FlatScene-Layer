@@ -6,12 +6,12 @@
 class CActionXPunto : public CAction
 {
 public:
-	CActionXPunto(CActorScrollMap* executor,TiXmlElement* fuente,const char* i);
-	virtual ~CActionXPunto();
-	void inDelete();
-	void firstExecute();
-	virtual void execute();
-	void lastExecute();
+    CActionXPunto(CActorScrollMap* executor,TiXmlElement* fuente,const char* i);
+    virtual ~CActionXPunto();
+    void inDelete();
+    void firstExecute();
+    virtual void execute();
+    void lastExecute();
 };
 
 

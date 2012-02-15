@@ -10,7 +10,7 @@ Uint32 CFreezeGameInterface::MSGID_PreviousEngine=FSMessageHandler::getNextMSGID
 
 //constructor
 CFreezeGameInterface::CFreezeGameInterface(FSMessageHandler * pmhParent) : FSEngine(pmhParent), previous(NULL) {
-	pushed=false;
+    pushed=false;
 }
 
 //destructor
@@ -22,71 +22,71 @@ CFreezeGameInterface::~CFreezeGameInterface() {
 int CFreezeGameInterface::onInit() {
 
 #ifdef LOG_SISTEMA
-	printf("\nFreeze comienza.\n\n");
+    printf("\nFreeze comienza.\n\n");
 #endif
 
-	return FSEngine::onInit();
+    return FSEngine::onInit();
 }
 
 //idle. Main loop.
 int CFreezeGameInterface::drawFrame() {
-	
-	if (previous)
-		return previous->drawFrame();
+    
+    if (previous)
+        return previous->drawFrame();
 
-	return EXITO;
-	
+    return EXITO;
+    
 }
 
 //on cleanup
 int CFreezeGameInterface::onExit() {
 
 #ifdef LOG_SISTEMA
-	printf("\nFreeze termina.\n\n");
+    printf("\nFreeze termina.\n\n");
 #endif
 
-	return FSEngine::onExit();
+    return FSEngine::onExit();
 
 }
 
 FSEngine* CFreezeGameInterface::setPrevious(FSEngine* ePrev) {
 
-	FSEngine* ret = previous;
-	previous = ePrev;
-	return ret;
+    FSEngine* ret = previous;
+    previous = ePrev;
+    return ret;
 
 }
 
 void CFreezeGameInterface::onKeyFreeze(SDL_Event* event) {
-	if (event->type == SDL_KEYDOWN)
-		onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
-	else
-		onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+    if (event->type == SDL_KEYDOWN)
+        onKeyDown(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
+    else
+        onKeyUp(event->key.keysym.sym,event->key.keysym.mod,event->key.keysym.unicode);
 }
 
 void CFreezeGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
-	if ((sym==SDLK_SPACE || sym==SDLK_F1)&& !pushed) {
-		pushed=true;
-	}
+    if ((sym==SDLK_SPACE || sym==SDLK_F1)&& !pushed) {
+        pushed=true;
+    }
 }
 
 int CFreezeGameInterface::onMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2, MSGPARM Parm3, MSGPARM Parm4) {
-	if (MsgID == CFreezeGameInterface::MSGID_PreviousEngine) {
-		previous = (FSEngine*) Parm1;
-		return EXITO;
-	} else
-		return FSEngine::onMessage(MsgID,Parm1,Parm2);
+    if (MsgID == CFreezeGameInterface::MSGID_PreviousEngine) {
+        previous = (FSEngine*) Parm1;
+        return EXITO;
+    } else
+        return FSEngine::onMessage(MsgID,Parm1,Parm2);
 }
 
 void CFreezeGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
-	if (sym==SDLK_SPACE && pushed) {
-		getParent()->SendMessage(FSLibrary::MSGID_RunEngine,(void*)previous);
-		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
-	} else if (sym==SDLK_F1 && pushed) {
-		previous->done = true;
+    if (sym==SDLK_SPACE && pushed) {
+        getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous);
+        getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+    } else if (sym==SDLK_F1 && pushed) {
+        previous->done = true;
 
-		getParent()->SendMessage(FSLibrary::MSGID_KillEngine,(void*)this);
-		getParent()->SendMessage(FSLibrary::MSGID_ChangeEngine);
+        getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)this);
+        getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
 
-	}
+    }
 }

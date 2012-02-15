@@ -19,7 +19,7 @@ FILES=	Action.cpp \
 	Color.cpp \
 	ControlImages.cpp \
 	ControlMultiverse.cpp \
-	ControlOutputText.cpp \
+	Writer.cpp \
 	Coordinate.cpp \
 	Enemy.cpp \
 	EnemyNPC.cpp \
@@ -84,7 +84,7 @@ OFILES= Action.o \
 	Color.o \
 	ControlImages.o \
 	ControlMultiverse.o \
-	ControlOutputText.o \
+	Writer.o \
 	Coordinate.o \
 	Enemy.o \
 	EnemyNPC.o \

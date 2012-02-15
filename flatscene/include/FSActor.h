@@ -8,7 +8,6 @@
 #include <map>
 #include <vector>
 #include <deque>
-using namespace std;
 
 class FSActor;
 class CRutinaColision;
@@ -19,28 +18,28 @@ typedef std::list<FSActor*> ActorCollection;
 class FSActor : public FSMessageHandler
 {
 private:
-	string creature;
-	FSUniverse* inUniverse;
+    std::string creature;
+    FSUniverse* inUniverse;
 public:
 
-	int file;
-	int graph;
-	Uint8 flags;
+    int file;
+    int graph;
+    Uint8 flags;
 
-	FSActor(const char* creature,FSMessageHandler * pmhParent=NULL);
-	virtual ~FSActor();
+    FSActor(const char* creature,FSMessageHandler * pmhParent=NULL);
+    virtual ~FSActor();
 
-	int setSprite(int file,int graph);
-	virtual FSSprite* getSprite();
+    int setSprite(int file,int graph);
+    virtual FSSprite* getSprite();
 
-	virtual int move();
+    virtual int move();
 
-	virtual string getCreature();
-	FSUniverse* getUniverse();
-	virtual int setUniverse(FSUniverse* m);
-	FSPoint renderPoint;
+    virtual std::string getCreature();
+    FSUniverse* getUniverse();
+    virtual int setUniverse(FSUniverse* m);
+    FSPoint renderPoint;
 
-	virtual FSActor* clone();
+    virtual FSActor* clone();
 
 };
 

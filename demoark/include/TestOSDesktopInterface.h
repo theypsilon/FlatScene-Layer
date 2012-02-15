@@ -10,35 +10,35 @@ class CTestOSDesktopInterface : public FSEngine
 {
 private:
 
-	FSActor* raton, *fondo;
-	FSCamera* camaraf, *camarar;
+    FSActor* raton, *fondo;
+    FSCamera* camaraf, *camarar;
 
-	float xpos,ypos,zpos, lastx, lasty;
+    float xpos,ypos,zpos, lastx, lasty;
 
-	float xrot,yrot;
+    float xrot,yrot;
 
-	int file;
+    int file;
 
-	int text;
+    int text;
 
-	bool up,down,left,right;
+    bool up,down,left,right;
 
 public:
 
-	CTestOSDesktopInterface(FSMessageHandler * pmhParent=NULL);
-	~CTestOSDesktopInterface();
+    CTestOSDesktopInterface(FSMessageHandler * pmhParent=NULL);
+    ~CTestOSDesktopInterface();
 
-	int onInit();
-	int onExit();
+    int onInit();
+    int onExit();
 
-	int drawFrame();
+    int drawFrame();
 
-	int onIdle();
+    int onIdle();
 
-	int loop();
+    int loop();
 
-	static void onKeyTestOS(SDL_Event*);
-	static void onMouseTestOS(SDL_Event*);
+    static void onKeyTestOS(SDL_Event*);
+    static void onMouseTestOS(SDL_Event*);
 };
 
 #endif

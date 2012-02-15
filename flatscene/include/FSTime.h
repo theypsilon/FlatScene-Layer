@@ -7,41 +7,39 @@
 
 class FSEngine;
 
-using namespace std;
-
 class FSTime {
 private:
-	struct STimeData {
-		int msInterval;
-		int msLast;
-		int frameCount;
+    struct STimeData {
+        unsigned int msInterval;
+        unsigned int msLast;
+        unsigned int frameCount;
 
-		STimeData() : msInterval(16), msLast(0), frameCount(0) {
-		};
-	};
+        STimeData() : msInterval(16), msLast(0), frameCount(0) {
+        };
+    };
 
-	map<FSEngine*,STimeData> fc;
+    mutable std::map<FSEngine*,STimeData> fc;
 
 #ifdef MENSAJES_FPS
-	int fps;
-	int auxTimer;
-	map<FSEngine*,int> adminText;
+    unsigned int fps;
+    unsigned int auxTimer;
+    std::map<FSEngine*,int> adminText;
 #endif
 
-	STimeData* actTime;
-	FSEngine* admin;
+    mutable STimeData* actTime;
+    mutable FSEngine* admin;
 
-	bool all;
-	int allMsInterval;
+    bool all;
+    unsigned int allMsInterval;
 public:
-	FSTime();
-	~FSTime();
-	int setInterval(int msNew, bool all=false);
-	int setFPS(int fpsNew, bool all=false);
-	int nextFrame();
-	int getTick();
+    FSTime();
+    ~FSTime();
+    unsigned int setInterval(unsigned int msNew, bool all=false);
+    unsigned int setFPS(unsigned int fpsNew, bool all=false);
+    int nextFrame();
+    unsigned int getTick() const;
 
-	bool isTimeForAll();
+    bool isTimeForAll() const;
 };
 
 extern FSTime Chrono;

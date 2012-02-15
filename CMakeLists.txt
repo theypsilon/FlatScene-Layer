@@ -1,8 +1,7 @@
 PROJECT ( flatscene )
 
 CMAKE_MINIMUM_REQUIRED ( VERSION 2.6 )
-
-FIND_PACKAGE ( Boost COMPONENTS function )
+set (CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x")
 
 FIND_PACKAGE ( OpenGL )
 
@@ -20,7 +19,6 @@ file ( GLOB HDRS flatscene/include/*.h flatscene/include/tinyxml/*.h )
 add_library ( flatscene ${SRCS} ${HDRS} )
 
 include_directories( ${SDL_INCLUDE_DIR} )
-include_directories( ${Boost_INCLUDE_DIRS} )
 include_directories( ${OPENGL_INCLUDE_DIR} )
 
 target_link_libraries ( flatscene
@@ -28,7 +26,6 @@ target_link_libraries ( flatscene
 	${SDLIMAGE_LIBRARY}
 	${SDLTTF_LIBRARY}
 	SDLmain
-	${Boost_LIBRARIES}
 	${OPENGL_LIBRARY}
 )
 

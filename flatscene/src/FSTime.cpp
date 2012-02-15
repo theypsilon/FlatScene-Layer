@@ -1,125 +1,115 @@
 #include "FSTime.h"
-#include "FSControlOutputText.h"
+#include "FSWriter.h"
 #include "FSScreen.h"
 #include "FSLibrary.h"
 
 
 FSTime::FSTime() : actTime(NULL), admin(NULL), all(false), allMsInterval(16) {
 #ifdef MENSAJES_FPS
-		fps=0;
-		auxTimer=0;
+        fps=0;
+        auxTimer=0;
 #endif
 }
 
 FSTime::~FSTime() {
 }
 
-int FSTime::getTick() {
+unsigned int FSTime::getTick() const {
 
-	if (!FSLibrary::getLibrary()) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
+    if (admin != FSLibrary::I().getActualEngine()) {
+        admin = FSLibrary::I().getActualEngine();
+        actTime = & fc[admin];
+    }
 
-	if (admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
-		actTime = & fc[admin];
-	}
-
-	return actTime->frameCount;
+    return actTime->frameCount;
 }
 
-int FSTime::setInterval(int msNew, bool all) {
+unsigned int FSTime::setInterval(unsigned int msNew, bool all) {
 
-	if (!all && admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
-		actTime = & fc[admin];
-	}
+    if (!all && admin != FSLibrary::I().getActualEngine()) {
+        admin = FSLibrary::I().getActualEngine();
+        actTime = & fc[admin];
+    }
 
-	int aux=0;
+    int aux=0;
 
-	if (all) {
-		FSTime::all = true;
-		aux = allMsInterval;
-		allMsInterval = msNew;
-	} else {
-		FSTime::all = false;
-		aux = actTime->msInterval;
-		actTime->msInterval = msNew;
-	}
+    if (all) {
+        FSTime::all = true;
+        aux = allMsInterval;
+        allMsInterval = msNew;
+    } else {
+        FSTime::all = false;
+        aux = actTime->msInterval;
+        actTime->msInterval = msNew;
+    }
 
-	return aux;
+    return aux;
 }
 
-int FSTime::setFPS(int fpsNew, bool all) {
+unsigned int FSTime::setFPS(unsigned int fpsNew, bool all) {
 
-	int aux = setInterval(1000 / fpsNew, all);
+    int aux = setInterval(1000 / fpsNew, all);
 
-	if (aux == FRACASO)
-		return FRACASO;
+    if (aux == FRACASO)
+        return FRACASO;
 
-	return (1000 / aux);
+    return (1000 / aux);
 }
 
 int  FSTime::nextFrame() {
 
-	int ret = EXITO;
+    int ret = EXITO;
 
-	if (!FSLibrary::getLibrary()) {
-		FSLibrary::Error("Library not inicialized");
-		return FRACASO;
-	}
+    if (admin != FSLibrary::I().getActualEngine()) {
+        admin = FSLibrary::I().getActualEngine();
+        actTime = & fc[admin];
+    }
 
-	if (admin != FSLibrary::getActualEngine()) {
-		admin = FSLibrary::getActualEngine();
-		actTime = & fc[admin];
-	}
+    if ( FSScreen::I().render() == FRACASO )
+        return FRACASO;
 
-	if ( FSScreen::render() == FRACASO )
-		return FRACASO;
+    if (all) {
 
-	if (all) {
+        while ((actTime->msLast + allMsInterval) > SDL_GetTicks()) {
+            SDL_Delay(1);
+        }
+        actTime->msLast = SDL_GetTicks();
+        actTime->frameCount++;
 
-		while ((actTime->msLast + allMsInterval) > SDL_GetTicks()) { 
-			SDL_Delay(1); 
-		}
-		actTime->msLast = SDL_GetTicks();
-		actTime->frameCount++;
+    } else {
 
-	} else {
+        while ((actTime->msLast + actTime->msInterval) > SDL_GetTicks()) {
+            SDL_Delay(1);
+        }
+        actTime->msLast = SDL_GetTicks();
+        actTime->frameCount++;
 
-		while ((actTime->msLast + actTime->msInterval) > SDL_GetTicks()) { 
-			SDL_Delay(1); 
-		}
-		actTime->msLast = SDL_GetTicks();
-		actTime->frameCount++;
-
-	}
+    }
 
 #ifdef MENSAJES_FPS
-	fps++;
+    fps++;
 
-	if (SDL_GetTicks() > auxTimer + 1000) {
-		auxTimer=SDL_GetTicks();
+    if (SDL_GetTicks() > auxTimer + 1000) {
+        auxTimer=SDL_GetTicks();
 
-		if (adminText.find(FSLibrary::getActualEngine())!=adminText.end())
-			Write.erase(adminText[FSLibrary::getActualEngine()]);
+        if (adminText.find(FSLibrary::I().getActualEngine())!=adminText.end())
+            FSWriter::I().erase(adminText[FSLibrary::I().getActualEngine()]);
 
-		adminText[FSLibrary::getActualEngine()]=Write.line(0,5,5,"FPS: %d ",fps);
+        adminText[FSLibrary::I().getActualEngine()]=FSWriter::I().line(0,5,5,"FPS: %d ",fps);
 
-		fps=0;
-	}
-	
+        fps=0;
+    }
+    
 #endif
 
-	return ret;
+    return ret;
 }
 
-bool FSTime::isTimeForAll() {
-	return all;
+bool FSTime::isTimeForAll() const {
+    return all;
 }
 
 // TODO : Liberar los espacios de memoria correspondiente a los engines cuando estos sean eliminados. 
-//				No es prioritario porque la creación y destrucción de engines durante la ejecución debería ser mínima, y la memoria reservada es muy pequeña.
+//              No es prioritario porque la creaciï¿½n y destrucciï¿½n de engines durante la ejecuciï¿½n deberï¿½a ser mï¿½nima, y la memoria reservada es muy pequeï¿½a.
 
 FSTime Chrono;
