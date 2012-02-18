@@ -1,0 +1,13 @@
+<Spriteset sprites='1' cellwidth='1' cellheight='1'>
+	<globalareas>
+		<area id='0' relative='true'>
+			<!--<rectangle x1='-6' x2='6' y1='-6' y2='6'/>-->
+		</area>
+		<area id='1' relative='true'>
+			<rectangle x1='0' x2='1' y1='0' y2='1'/>
+		</area>
+	</globalareas>
+	<img id='0' name='simple' width='1' height='1'>
+		<cpoint x='0' y='0'/>
+	</img>
+</Spriteset>

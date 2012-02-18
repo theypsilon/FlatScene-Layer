@@ -1,0 +1,574 @@
+<Actiontree>
+	<Movenodes>
+		<action type="quiet">
+			<node id="pj_normal_quiet" x="0" y="0">
+				
+				<link event="onkeydown" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeydown" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeydown" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeydown" key="RIGHT" ref="walk" subnode="right"/>					
+			
+				<link event="onkeydown" key="B1" ref="normal basic attack"/>
+				<link event="onkeydown" key="B2" ref="normal super attack"/>
+				<link event="onkeydown" key="B3" ref="push basic attack"/>
+				<!--<link event="onkeydown" key="B4" ref="long jump"/>-->
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>
+				
+				<family id="normal_move" member="4"/>
+				
+				<animation>
+					<sequence id="0" fileall="*normal_walk"><!-- * significa que es un alias-->	
+						<step id="0"><img value="0"/></step>
+					</sequence>
+					<sequence id="1" fileall="*normal_walk">
+						<step id="0"><img value="7"/></step>
+					</sequence>	
+					<sequence id="2" fileall="*normal_walk">
+						<step id="0"><img value="14"/></step>
+					</sequence>	
+					<sequence id="3" fileall="*normal_walk" flags="1">
+						<step id="0"><img value="14"/></step>
+					</sequence>			
+				</animation>
+			</node>	
+			<node id="npc_normal_quiet" x="0" y="0">				
+				<family id="normal_move" member="4"/>
+				
+				<animation>
+					<sequence id="0" fileall="*normal_walk"><!-- * significa que es un alias-->	
+						<step id="0"><img value="0"/></step>
+					</sequence>
+					<sequence id="1" fileall="*normal_walk">
+						<step id="0"><img value="7"/></step>
+					</sequence>	
+					<sequence id="2" fileall="*normal_walk">
+						<step id="0"><img value="14"/></step>
+					</sequence>	
+					<sequence id="3" fileall="*normal_walk" flags="1">
+						<step id="0"><img value="14"/></step>
+					</sequence>			
+				</animation>
+			</node>
+			<node id="testa2animation" x="0" y="0">				
+				<animation>
+					<sequence id="0" fileall="resources/ArkStandFight">
+						<step id="0"><img value="10"/></step>
+						<step id="1"><img value="11"/></step>
+						<step id="2"><img value="12"/></step>
+						<step id="3"><img value="13"/></step>
+						<step id="4"><img value="14"/></step>
+					</sequence>				
+				</animation>
+			</node>	
+		</action>
+		<action type="walk">
+			<node id="pj_normal_walk">
+				<node id="pj_normal_walk_upleft" subnode="upleft" x="-2" y="-2">
+					<family id="normal_move" member="0"/>
+					
+					<animation><!-- * significa que es un alias-->
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>				
+					</animation>
+				</node>		
+				<node id="pj_normal_walk_left" subnode="left" priority="16" x="-2" y="0">			
+					<family id="normal_move" member="1"/>
+					
+					<animation><!-- * significa que es un alias-->
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>				
+					</animation>
+					<!--<link event="onrepeat" ref="run" subnode="left"/>	-->		
+				</node>			
+				<node id="pj_normal_walk_downleft" subnode="downleft" x="-2" y="2">
+					<family id="normal_move" member="2"/>	
+					
+					<animation> 
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>					
+					</animation>					
+				</node>
+				<node id="pj_normal_walk_up" subnode="up" priority="16" x="0" y="-2">
+					<family id="normal_move" member="3"/>
+					
+					<!--<link event="onrepeat" ref="run" subnode="up"/>	-->					
+					<animation> 
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="8"/></step>
+							<step id="1"><img value="9"/></step>
+							<step id="2"><img value="10"/></step>
+							<step id="3"><img value="11"/></step>
+							<step id="4"><img value="12"/></step>
+							<step id="5"><img value="13"/></step>
+						</sequence>					
+					</animation>
+				</node>			
+				<!-- quiet -->
+				<node id="pj_normal_walk_down" subnode="down" priority="16" x="0" y="2">				
+					<family id="normal_move" member="5"/>
+					<!--<link event="onrepeat" ref="run" subnode="down"/>-->
+					<animation> 
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="1"/></step>
+							<step id="1"><img value="2"/></step>
+							<step id="2"><img value="3"/></step>
+							<step id="3"><img value="4"/></step>
+							<step id="4"><img value="5"/></step>
+							<step id="5"><img value="6"/></step>
+						</sequence>					
+					</animation>			
+				</node>			
+				<node id="pj_normal_walk_upright" subnode="upright" x="2" y="-2">
+					<family id="normal_move" member="6"/>
+					<animation> 
+						<sequence id="0" flags="1" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>		
+					</animation>
+				</node>	
+				<node id="pj_normal_walk_right" subnode="right" priority="16" x="2" y="0">
+					<family id="normal_move" member="7"/>
+					<!--<link event="onrepeat" ref="run" subnode="right"/>-->
+					<animation><!-- * significa que es un alias-->
+						<sequence id="0" flags="1" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>				
+					</animation>		
+				</node>			
+				<node id="pj_normal_walk_downright" subnode="downright" x="2" y="2">
+					<family id="normal_move" member="8"/>
+					<animation> 
+						<sequence id="0" flags="1" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>				
+					</animation>
+				</node>		
+				
+				<link event="onkeydown" key="UP" filter="ignoreself" ref="walk" subnode="up"/>
+				<link event="onkeydown" key="DOWN" filter="ignoreself" ref="walk" subnode="down"/>
+				<link event="onkeydown" key="LEFT" filter="ignoreself" ref="walk" subnode="left"/>
+				<link event="onkeydown" key="RIGHT" filter="ignoreself" ref="walk" subnode="right"/>									
+				
+				<link event="onkeydown" key="B1" ref="normal basic attack"/>
+				<link event="onkeydown" key="B2" ref="normal super attack"/>
+				<link event="onkeydown" key="B3" ref="push basic attack"/>
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>									
+			</node>
+			<node id="npc_normal_walk">
+				<node id="npc_normal_walk_upleft" subnode="upleft" x="-2" y="-2">
+					<family id="normal_move" member="0"/>
+					
+					<animation><!-- * significa que es un alias-->
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>				
+					</animation>
+				</node>		
+				<node id="npc_normal_walk_left" subnode="left" priority="16" x="-2" y="0">			
+					<family id="normal_move" member="1"/>
+					
+					<animation><!-- * significa que es un alias-->
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>				
+					</animation>
+					<!--<link event="onrepeat" ref="run" subnode="left"/>	-->		
+				</node>			
+				<node id="npc_normal_walk_downleft" subnode="downleft" x="-2" y="2">
+					<family id="normal_move" member="2"/>	
+					
+					<animation> 
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>					
+					</animation>					
+				</node>
+				<node id="npc_normal_walk_up" subnode="up" priority="16" x="0" y="-2">
+					<family id="normal_move" member="3"/>
+					
+					<!--<link event="onrepeat" ref="run" subnode="up"/>	-->					
+					<animation> 
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="8"/></step>
+							<step id="1"><img value="9"/></step>
+							<step id="2"><img value="10"/></step>
+							<step id="3"><img value="11"/></step>
+							<step id="4"><img value="12"/></step>
+							<step id="5"><img value="13"/></step>
+						</sequence>					
+					</animation>
+				</node>			
+				<!-- quiet -->
+				<node id="npc_normal_walk_down" subnode="down" priority="16" x="0" y="2">				
+					<family id="normal_move" member="5"/>
+					<!--<link event="onrepeat" ref="run" subnode="down"/>-->
+					<animation> 
+						<sequence id="0" fileall="*normal_walk">
+							<step id="0"><img value="1"/></step>
+							<step id="1"><img value="2"/></step>
+							<step id="2"><img value="3"/></step>
+							<step id="3"><img value="4"/></step>
+							<step id="4"><img value="5"/></step>
+							<step id="5"><img value="6"/></step>
+						</sequence>					
+					</animation>			
+				</node>			
+				<node id="npc_normal_walk_upright" subnode="upright" x="2" y="-2">
+					<family id="normal_move" member="6"/>
+					<animation> 
+						<sequence id="0" flags="1" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>		
+					</animation>
+				</node>	
+				<node id="npc_normal_walk_right" subnode="right" priority="16" x="2" y="0">
+					<family id="normal_move" member="7"/>
+					<!--<link event="onrepeat" ref="run" subnode="right"/>-->
+					<animation> 
+						<sequence id="0" flags="1" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>				
+					</animation>			
+				</node>			
+				<node id="npc_normal_walk_downright" subnode="downright" x="2" y="2">
+					<family id="normal_move" member="8"/>
+					<animation> 
+						<sequence id="0" flags="1" fileall="*normal_walk">
+							<step id="0"><img value="15"/></step>
+							<step id="1"><img value="16"/></step>
+							<step id="2"><img value="17"/></step>
+							<step id="3"><img value="18"/></step>
+							<step id="4"><img value="19"/></step>
+							<step id="5"><img value="20"/></step>
+						</sequence>				
+					</animation>
+				</node>										
+			</node>
+     </action>
+		<!--
+		<action type="run">
+			<node id="pj_normal_run">
+				<node id="pj_normal_run_left" subnode="left" x="-1" y="0" ppf="2"/>
+				<node id="pj_normal_run_up" subnode="up" x="0" y="-1" ppf="2"/>
+				<node id="pj_normal_run_down" subnode="down" x="0" y="1" ppf="2"/>
+				<node id="pj_normal_run_right" subnode="right" x="1" y="0" ppf="2"/>
+				
+				<link event="onkeydown" key="B1" ref="push basic attack"/>
+				<link event="onkeydown" key="B2" ref="onslaught super attack"/>
+				<link event="onkeydown" key="B3" ref="long jump"/>
+				<link event="onkeydown" key="B4" ref="jump"/>		
+	
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>								
+			</node>
+		</action>	
+		-->				
+	</Movenodes>
+	<Jumpnodes>
+		<!--
+		<action type="jump">
+			<node id="pj_normal_jump" priority="128">
+				<link event="onkeydown" key="UP" filter="ignoreself" ref="walk" subnode="up"/>
+				<link event="onkeydown" key="DOWN" filter="ignoreself" ref="walk" subnode="down"/>
+				<link event="onkeydown" key="LEFT" filter="ignoreself" ref="walk" subnode="left"/>
+				<link event="onkeydown" key="RIGHT" filter="ignoreself" ref="walk" subnode="right"/>									
+				
+				<link event="onkeydown" key="B1" ref="air basic attack"/>
+				<link event="onkeydown" key="B2" ref="air super attack"/>
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>				
+			</node>			
+		</action>
+		<action type="long jump">
+			<node id="pj_normal_longjump" priority="256">
+				<link event="onkeydown" key="UP" filter="ignoreself" ref="walk" subnode="up"/>
+				<link event="onkeydown" key="DOWN" filter="ignoreself" ref="walk" subnode="down"/>
+				<link event="onkeydown" key="LEFT" filter="ignoreself" ref="walk" subnode="left"/>
+				<link event="onkeydown" key="RIGHT" filter="ignoreself" ref="walk" subnode="right"/>									
+				
+				<link event="onkeydown" key="B2" ref="air-land super attack"/>
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>				
+			</node>				
+		</action>-->
+	</Jumpnodes>
+	<Simpleattacknodes>
+		<action type="normal basic attack">
+			<node id="pj_normal_ba" priority="64">
+				<link event="onkeydown" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeydown" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeydown" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeydown" key="RIGHT" ref="walk" subnode="right"/>	
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>
+				
+				<family id="normal_osa0" member="1"/>				
+				
+				<animation> 	
+					<sequence id="0" fileall="resources/ArkStandFight">
+						<step id="0"><img value="0"/></step>
+						<step id="1"><img value="1"/></step>
+						<step id="2"><img value="2"/></step>
+						<step id="4"><img value="3"/></step>
+						<step id="5"><img value="4"/></step>
+					</sequence>	
+					<sequence id="1" fileall="resources/ArkStandFight">
+						<step id="0"><img value="5"/></step>
+						<step id="1"><img value="6"/></step>
+						<step id="2"><img value="7"/></step>
+						<step id="4"><img value="8"/></step>
+						<step id="5"><img value="9"/></step>
+					</sequence>			
+					<sequence id="2" fileall="resources/ArkStandFight">
+						<step id="0"><img value="10"/></step>
+						<step id="1"><img value="11"/></step>
+						<step id="2"><img value="12"/></step>
+						<step id="4"><img value="13"/></step>
+						<step id="5"><img value="14"/></step>
+					</sequence>				
+				</animation>	
+			</node>	
+			<node id="npc_normal_ba" priority="64">
+				
+				<family id="normal_osa0" member="1"/>				
+				
+				<animation> 	
+					<sequence id="0" fileall="resources/CharacterFight">
+						<step id="0"><img value="0"/></step>
+					</sequence>				
+				</animation>	
+			</node>					
+		</action>
+		<action type="normal super attack">
+			<node id="pj_normal_sa" priority="64">
+				<link event="onkeydown" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeydown" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeydown" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeydown" key="RIGHT" ref="walk" subnode="right"/>	
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>	
+				
+				<family id="normal_osa0" member="2"/>			
+				
+				<animation> 	
+					<sequence id="0" fileall="resources/ArkStandFight">
+						<step id="0"><img value="0"/></step>
+						<step id="1"><img value="1"/></step>
+						<step id="2"><img value="2"/></step>
+						<step id="4"><img value="3"/></step>
+						<step id="5"><img value="4"/></step>
+					</sequence>	
+					<sequence id="1" fileall="resources/ArkStandFight">
+						<step id="0"><img value="5"/></step>
+						<step id="1"><img value="6"/></step>
+						<step id="2"><img value="7"/></step>
+						<step id="4"><img value="8"/></step>
+						<step id="5"><img value="9"/></step>
+					</sequence>			
+					<sequence id="2" fileall="resources/ArkStandFight">
+						<step id="0"><img value="10"/></step>
+						<step id="1"><img value="11"/></step>
+						<step id="2"><img value="12"/></step>
+						<step id="4"><img value="13"/></step>
+						<step id="5"><img value="14"/></step>
+					</sequence>						
+				</animation>		
+			</node>		
+			<node id="npc_normal_sa" priority="64">				
+				<family id="normal_osa0" member="2"/>			
+				
+				<animation> 	
+					<sequence id="0" fileall="resources/CharacterFight">
+						<step id="0"><img value="0"/></step>
+					</sequence>				
+				</animation>		
+			</node>			
+		</action>
+		
+		<action type="onslaught super attack">
+			<node id="pj_normal_osa" priority="128">
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>	
+				
+				<family id="normal_osa0" member="0"/>		
+				
+				<animation> 	
+					<sequence id="0" fileall="resources/CharacterFight">
+						<step id="0"><img value="0"/></step>
+					</sequence>				
+				</animation>			
+			</node>	
+			<node id="npc_normal_osa" priority="128">				
+				<family id="normal_osa0" member="0"/>		
+				
+				<animation> 	
+					<sequence id="0" fileall="resources/CharacterFight">
+						<step id="0"><img value="0"/></step>
+					</sequence>				
+				</animation>			
+			</node>					
+		</action>
+		<action type="push basic attack">
+			<node id="pj_normal_pba" priority="128">
+				<link event="onkeydown" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeydown" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeydown" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeydown" key="RIGHT" ref="walk" subnode="right"/>	
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>	
+				
+				<animation> 	
+					<sequence id="0" fileall="resources/ArkStandFight">
+						<step id="0"><img value="0"/></step>
+						<step id="1"><img value="1"/></step>
+						<step id="2"><img value="2"/></step>
+						<step id="4"><img value="3"/></step>
+						<step id="5"><img value="4"/></step>
+					</sequence>	
+					<sequence id="1" fileall="resources/ArkStandFight">
+						<step id="0"><img value="5"/></step>
+						<step id="1"><img value="6"/></step>
+						<step id="2"><img value="7"/></step>
+						<step id="4"><img value="8"/></step>
+						<step id="5"><img value="9"/></step>
+					</sequence>			
+					<sequence id="2" fileall="resources/ArkStandFight">
+						<step id="0"><img value="10"/></step>
+						<step id="1"><img value="11"/></step>
+						<step id="2"><img value="12"/></step>
+						<step id="4"><img value="13"/></step>
+						<step id="5"><img value="14"/></step>
+					</sequence>					
+				</animation>					
+			</node>	
+			<node id="npc_normal_pba" priority="128">
+				<animation> 	
+					<sequence id="0" fileall="resources/CharacterFight">
+						<step id="0"><img value="0"/></step>
+					</sequence>				
+				</animation>					
+			</node>				
+		</action><!--
+		<action type="air basic attack">
+			<node id="pj_normal_aba" priority="16">
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>						
+			</node>				
+		</action>
+		<action type="air super attack">
+			<node id="pj_normal_asa" priority="16">
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>						
+			</node>				
+		</action>
+		<action type="air-land super attack">
+			<node id="pj_normal_alsa" priority="16">
+				
+				<link event="onkeyup" key="UP" ref="walk" subnode="up"/>
+				<link event="onkeyup" key="DOWN" ref="walk" subnode="down"/>
+				<link event="onkeyup" key="LEFT" ref="walk" subnode="left"/>
+				<link event="onkeyup" key="RIGHT" ref="walk" subnode="right"/>						
+			</node>				
+		</action>
+		-->
+	</Simpleattacknodes>
+	<!--
+	<Combosnodes>
+		
+		
+	</Combosnodes>
+	-->
+	
+</Actiontree>
