@@ -8,7 +8,7 @@ int func_fracaso(const char* file, int line);
 #define AVOID_FRACASO
 
 #ifdef AVOID_FRACASO
-	#undef FRACASO;
+	#undef FRACASO
 	#define FRACASO func_fracaso(__FILE__,__LINE__);
 #endif
 
