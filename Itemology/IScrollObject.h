@@ -7,10 +7,10 @@
 
 class IScrollObject;
 
-typedef list<IScrollObject*> IScrollObjectCollection;
+typedef std::list<IScrollObject*> IScrollObjectCollection;
 
 class IScrollObject :
-	public CActor
+	public FSActor
 {
 private:
 	IScrollObjectCollection* placeInMA;
@@ -20,11 +20,11 @@ private:
 	static int instances;
 public:
 
-	CCoordinate place;
+	FSCoordinate place;
 	// TODO : variables y funciones públicas adicionales
 
 	// Constructor con clase menajera como parámetro de entrada 
-	IScrollObject(CMessageHandler* pmhParent=NULL);
+	IScrollObject();
 
 	// Destructor, ahí deberemos liberar los recursos
 	~IScrollObject();
@@ -36,7 +36,7 @@ public:
 	//	}
 	//
 	// Sólo definir si se desea hacer una operación diferente
-	CSprite* getSprite();
+	FSSprite* getSprite();
 
 	// Método pensado para ser invocado en CEngine::onIdle.
 	// Deberá actualizar el estado del CActor cuando sea necesario.
@@ -45,14 +45,14 @@ public:
 	// Opcional. Debería devolver una cadena que identificara de algún modo al actor.
 	// Su implementación por defecto devuelve la cadena "criature" que debemos introducir 
 	// en la implementación del Constructor (ver en la parte de implementación).
-	string getCreature();
+	std::string getCreature();
 	
 	// Opcional. Su implementación por defecto es una simple asignación a la variable miembro CUniverse* inUniverse.
-	int setUniverse(CUniverse* m);
+	int setUniverse(FSUniverse* m);
 
 	// Opcional. Por si se quiere implementar una función que facilite la inicialización de muchos actores dle mismo tipo.
 	// Si no se le da una implementación y el método es invocado, devuelve NULL y registra un error.
-	virtual CActor* clone();
+	virtual FSActor* clone();
 
 
 	static int getInstances() { return instances; };

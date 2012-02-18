@@ -39,7 +39,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Programacion\VS Workspace\flatscene - lib\flatscene;C:\Programacion\cLibs\SDL-1.2.14\include;C:\Programacion\cLibs\boost_1_46_1;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Programacion\VS Workspace\flatscene - lib\flatscene\include;C:\Programacion\cLibs\SDL-1.2.14\include;C:\Programacion\cLibs\boost_1_46_1;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Programacion\cLibs\SDL-1.2.14\lib;C:\Programacion\VS Workspace\flatscene - lib\flatscene\lib;C:\Programacion\cLibs\boost_1_46_1\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

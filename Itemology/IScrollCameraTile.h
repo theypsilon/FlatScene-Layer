@@ -4,7 +4,7 @@
 #include "iscrollcamera.h"
 
 class IScrollCameraTile :
-	public CCamera
+	public FSCamera
 {
 private:
 	int pix_w;
@@ -19,7 +19,7 @@ private:
 	TileBG** tiles;
 	int tileset;
 public:
-	IScrollCameraTile(TileBG** tiles,CActor* target,CRectangle* area,CMessageHandler* pmhParent=NULL);
+	IScrollCameraTile(TileBG** tiles,FSActor* target,FSRectangle* area);
 	~IScrollCameraTile(void);
 
 	int refresh();

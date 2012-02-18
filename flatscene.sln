@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 11
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flatscene", "flatscene\flatscene.vcxproj", "{1C9B2365-D06B-4100-BDBB-FB7306EF63EA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demoark", "demoark\demoark.vcxproj", "{B34E9CEF-E7BE-4D6B-AF79-9901613C555A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Itemology", "Itemology\Itemology.vcxproj", "{1888B1D7-9E2A-41E4-B631-6C769D459037}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1888B1D7-9E2A-41E4-B631-6C769D459037}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1888B1D7-9E2A-41E4-B631-6C769D459037}.Debug|Win32.Build.0 = Debug|Win32
+		{1888B1D7-9E2A-41E4-B631-6C769D459037}.Release|Win32.ActiveCfg = Release|Win32
+		{1888B1D7-9E2A-41E4-B631-6C769D459037}.Release|Win32.Build.0 = Release|Win32
 		{1C9B2365-D06B-4100-BDBB-FB7306EF63EA}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1C9B2365-D06B-4100-BDBB-FB7306EF63EA}.Debug|Win32.Build.0 = Debug|Win32
 		{1C9B2365-D06B-4100-BDBB-FB7306EF63EA}.Release|Win32.ActiveCfg = Release|Win32
 		{1C9B2365-D06B-4100-BDBB-FB7306EF63EA}.Release|Win32.Build.0 = Release|Win32
-		{B34E9CEF-E7BE-4D6B-AF79-9901613C555A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B34E9CEF-E7BE-4D6B-AF79-9901613C555A}.Debug|Win32.Build.0 = Debug|Win32
-		{B34E9CEF-E7BE-4D6B-AF79-9901613C555A}.Release|Win32.ActiveCfg = Release|Win32
-		{B34E9CEF-E7BE-4D6B-AF79-9901613C555A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

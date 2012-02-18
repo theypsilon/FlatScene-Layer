@@ -5,9 +5,9 @@
 #include "IDebug.h"
 
 
-IScrollCamera::IScrollCamera(CActor* target, CRectangle* area,CMessageHandler* pmhParent) :
+IScrollCamera::IScrollCamera(FSActor* target, FSRectangle* area) :
 // Se ha de llamar a la clase Base para una correcta inicialización
-CCamera(target,area,pmhParent), centro(new CPoint(area->getW()/2,area->getH()/2)), objetive("objetivo",this) {
+FSCamera(target,area), centro(new FSPoint(area->getW()/2,area->getH()/2)), objetive("objetivo") {
 	intraMargenX=intraMargenY=0;
 	loadUniverse();
 }
@@ -37,10 +37,10 @@ int IScrollCamera::loadUniverse() {
 
 	for (auto it = suni->layerlvl.begin(); it != suni->layerlvl.end() ; ++it) {
 
-		layerset.push_back( new IScrollCameraTile(it->tile,&objetive,area,this));
+		layerset.push_back( new IScrollCameraTile(it->tile,&objetive,area));
 
 		if (it->dur && et != suni->MA.end()) {
-			layerset.push_back( new IScrollCameraObject(*et,&objetive,area,this));
+			layerset.push_back( new IScrollCameraObject(*et,&objetive,area));
 			++et;
 		}
 	}
@@ -76,7 +76,7 @@ int IScrollCamera::resyncUniverse() {
 	return EXITO;
 }
 
-int IScrollCamera::setTarget(CActor* newTarget) {
+int IScrollCamera::setTarget(FSActor* newTarget) {
 
 	/*		IMPLEMENTACIÓN POR DEFECTO */
 	
@@ -108,13 +108,13 @@ int IScrollCamera::refresh() {
 	IScrollObject* scrolltarget = (IScrollObject*) target;
 	IScrollLevel* map = (IScrollLevel*) uni;
 
-	int mov_x = CX() - scrolltarget->place.X();
+	int mov_x = CX() - scrolltarget->place.x;
 
 	if (abs( mov_x ) > intraMargenX) {
 		if ( mov_x < 0 ) {
-			CX()=scrolltarget->place.X()-intraMargenX;
+			CX()=scrolltarget->place.x-intraMargenX;
 		} else {
-			CX()=scrolltarget->place.X()+intraMargenX;
+			CX()=scrolltarget->place.x+intraMargenX;
 		}
 		
 		if ( CX() < centro->getX() + map->getTileW()) { // La camara no enfoca los bordes del map.
@@ -124,13 +124,13 @@ int IScrollCamera::refresh() {
 		}
 	}
 
-	int mov_y=CY()-scrolltarget->place.Y();
+	int mov_y=CY()-scrolltarget->place.y;
 
 	if (abs(mov_y) > intraMargenY) {
 		if ( mov_y < 0 ) {
-			CY()=scrolltarget->place.Y()-intraMargenY;
+			CY()=scrolltarget->place.y-intraMargenY;
 		} else {
-			CY()=scrolltarget->place.Y()+intraMargenY;
+			CY()=scrolltarget->place.y+intraMargenY;
 		}
 		
 		if ( CY() < centro->getY() + map->getTileH() ) {
@@ -140,15 +140,15 @@ int IScrollCamera::refresh() {
 		}
 	}
 
-	scrolltarget->renderPoint.X() = scrolltarget->place.X() -(CX() - (area->getW()/2));  
-    scrolltarget->renderPoint.Y() = scrolltarget->place.Y() -(CY() - (area->getH()/2));
+	scrolltarget->renderPoint.x = scrolltarget->place.x -(CX() - (area->getW()/2));  
+    scrolltarget->renderPoint.y = scrolltarget->place.y -(CY() - (area->getH()/2));
 
-	objetive.renderPoint.X() = CX() - centro->getX();
-	objetive.renderPoint.Y() = CY() - centro->getY();
+	objetive.renderPoint.x = CX() - centro->getX();
+	objetive.renderPoint.y = CY() - centro->getY();
 
 	// GRAPHIC CALLS
 
-	locateRenderScene(area->X()*2,area->Y()*2,area->W()*2,area->H()*2);
+	locateRenderScene(area->x*2,area->y*2,area->w*2,area->h*2);
 
 	scale(2.0,2.0,1.0);
 

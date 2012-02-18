@@ -16,7 +16,7 @@ int func_fracaso(const char* file, int line);
 
 void assert_xml(int code,int line);
 
-void assert_text(string cad,int line);
+void assert_text(std::string cad,int line);
 
 #ifdef idebug_xml
 	#define axml(tinyxmlcall) assert_xml(tinyxmlcall, __LINE__)

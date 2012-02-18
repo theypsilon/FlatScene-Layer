@@ -1,18 +1,18 @@
 #include "IScrollCameraTile.h"
 
 
-IScrollCameraTile::IScrollCameraTile(TileBG** tiles, CActor* target,CRectangle* area,CMessageHandler* pmhParent) :
+IScrollCameraTile::IScrollCameraTile(TileBG** tiles, FSActor* target,FSRectangle* area) :
 // Se ha de llamar a la clase Base para una correcta inicialización
-CCamera(target,area,pmhParent) , tiles(tiles){
+FSCamera(target,area) , tiles(tiles){
 
 	if (!tiles) 
-		CLibrary::Error("CameraTile : Mala definición de tiles");
+		FSLib.Error("CameraTile : Mala definición de tiles");
 
 	IScrollLevel * uni = dynamic_cast<IScrollLevel*>(target->getUniverse());
 
 	if (!uni) {
 
-		CLibrary::Error("CameraTile : Mala definición del nivel");
+		FSLib.Error("CameraTile : Mala definición del nivel");
 		tileset = -1;
 
 	} else {
@@ -45,10 +45,10 @@ int IScrollCameraTile::refresh() {
 	if (tileset == -1)
 		return FRACASO;
 
-	CPoint p;
+	FSPoint p;
 
-	int actor_x = target->renderPoint.X();
-	int actor_y = target->renderPoint.Y();
+	int actor_x = target->renderPoint.x;
+	int actor_y = target->renderPoint.y;
 
 	translate(-actor_x % pix_w ,-actor_y % pix_h,0);
 
@@ -60,18 +60,18 @@ int IScrollCameraTile::refresh() {
 			TileBG ind =  tiles[(j+y)%tiles_h][(i+x)%tiles_w];
 			if (ind.graph>0) {
 				ind.graph--;
-				p.X()=i*pix_w;
-				p.Y()=j*pix_h;
+				p.x=i*pix_w;
+				p.y=j*pix_h;
 
 				if (ind.flags & 0x001) {
-					p.X()+=pix_w;
+					p.x+=pix_w;
 				}
 
 				if (ind.flags & 0x010) {
-					p.Y()+=pix_h;
+					p.y+=pix_h;
 				}
 
-				CImg.get(tileset+ind.fileGraph)->get(ind.graph)->put(p,ind.flags);
+				Img.get(tileset+ind.fileGraph)->get(ind.graph)->put(p,ind.flags);
 			} 
 		}
 	}

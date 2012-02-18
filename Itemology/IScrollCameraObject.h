@@ -1,12 +1,12 @@
 #pragma once
 #include "iscrollcamera.h"
 class IScrollCameraObject :
-	public CCamera
+	public FSCamera
 {
 private:
 	IScrollObjectCollection*** objects;
 public:
-	IScrollCameraObject(IScrollObjectCollection*** objects,CActor* target,CRectangle* area,CMessageHandler* pmhParent=NULL);
+	IScrollCameraObject(IScrollObjectCollection*** objects,FSActor* target,FSRectangle* area);
 	~IScrollCameraObject(void);
 
 	int refresh();

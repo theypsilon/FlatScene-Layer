@@ -2,9 +2,8 @@
 
 int IScrollObject::instances = 0;
 
-IScrollObject::IScrollObject(CMessageHandler* pmhParent) : 
-// Se ha de llamar a la clase Base para una correcta inicialización
-placeInMA(NULL), CActor("IScrollObject",pmhParent) {
+IScrollObject::IScrollObject() 
+: placeInMA(NULL), FSActor("IScrollObject") {
 
 	instances++;
 
@@ -28,35 +27,35 @@ int IScrollObject::move() {
 	return EXITO;
 }
 
-string IScrollObject::getCreature() {
+std::string IScrollObject::getCreature() {
 
 	// TODO
 
-	return CActor::getCreature();
+	return FSActor::getCreature();
 
 	// CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }
 
-int IScrollObject::setUniverse(CUniverse* m) {
+int IScrollObject::setUniverse(FSUniverse* m) {
 
 	// TODO
 
-	return CActor::setUniverse(m);
+	return FSActor::setUniverse(m);
 
 	// CActor::setUniverse(m) realiza la asignación : inUniverse=m;
 }
 
-CSprite* IScrollObject::getSprite() {
+FSSprite* IScrollObject::getSprite() {
 
-	CSprite* spt = CActor::getSprite();
+	FSSprite* spt = FSActor::getSprite();
 
 	// TODO
 
 	return spt;
 }
 
-CActor* IScrollObject::clone() {
-	CActor* act;
+FSActor* IScrollObject::clone() {
+	FSActor* act;
 
 	// TODO
 

@@ -1,7 +1,7 @@
 #include "IFirstEngine.h"
 #include "GenericAlgorithms.h"
 
-IFirstEngine::IFirstEngine(CMessageHandler* pmhParent) : CEngine(pmhParent)	{
+IFirstEngine::IFirstEngine() {
 
 	move[i_up] = false;
 	move[i_down] = false;
@@ -41,10 +41,6 @@ void IFirstEngine::onKeyboard(SDL_Event* e) {
 
 int IFirstEngine::drawFrame() {
 
-	// TODO : Fase de renderización del Motor.
-
-	// Ejemplo de renderización simple suponiendo que disponemos de un Conjunto de Cámaras
-
 	for (auto i = cams.begin(); i != cams.end(); ++i) {
 		(*i)->render();
 	}
@@ -56,7 +52,7 @@ int IFirstEngine::drawFrame() {
 
 int  IFirstEngine::onInit() {
 
-	CEngine::onInit();
+	FSEngine::onInit();
 
 
 	IScrollLevel* level = new IScrollLevel("resources/mapa1");
@@ -65,18 +61,15 @@ int  IFirstEngine::onInit() {
 
 	level->load();
 
-	mainactor = new IScrollObject(this);
+	mainactor = new IScrollObject();
 
 	mainactor->place.set(50,50,0);
 
 	level->incActor(mainactor);
 
-	cams.push_back( new IScrollCamera(mainactor,new CRectangle(0,0,320,240),this) );
+	cams.push_back( new IScrollCamera(mainactor,new FSRectangle(0,0,320,240)) );
 
 	printf("onInit : IScrollObjects %d \n",IScrollObject::getInstances());
-	
-
-	// TODO : Inicialización de recursos no cargados necesarios en 'onIdle'
 
 	return EXITO;
 
@@ -90,25 +83,13 @@ int IFirstEngine::onIdle()	{
 	if (!mainactor)
 		return FRACASO;
 
-	setIfTrue(move[i_up],mainactor->place.Y(),LambdaInc(-6));
-	setIfTrue(move[i_down],mainactor->place.Y(),LambdaInc(6));
-	setIfTrue(move[i_left],mainactor->place.X(),LambdaInc(-6));
-	setIfTrue(move[i_right],mainactor->place.X(),LambdaInc(6));
+	setIfTrue(move[i_up],mainactor->place.y,LambdaInc(-6));
+	setIfTrue(move[i_down],mainactor->place.y,LambdaInc(6));
+	setIfTrue(move[i_left],mainactor->place.x,LambdaInc(-6));
+	setIfTrue(move[i_right],mainactor->place.x,LambdaInc(6));
 
-	/*if (move[i_up])
-		mainactor->place.Y()-=6;
-
-	if (move[i_down])
-		mainactor->place.Y()+=6;
-
-	if (move[i_left])
-		mainactor->place.X()-=6;
-
-	if (move[i_right])
-		mainactor->place.X()+=6;*/
-
-	setIfTrue(mainactor->place.X(),cams[0]->getArea()->X() + cams[0]->getArea()->W() / 2 +32,LambdaLess);
-	setIfTrue(mainactor->place.Y(),cams[0]->getArea()->Y() + cams[0]->getArea()->H() / 2 +32,LambdaLess);
+	setIfTrue(mainactor->place.x,cams[0]->getArea()->x + cams[0]->getArea()->w / 2 +32,LambdaLess);
+	setIfTrue(mainactor->place.y,cams[0]->getArea()->y + cams[0]->getArea()->h / 2 +32,LambdaLess);
 
 	return EXITO;
 
@@ -131,14 +112,14 @@ int IFirstEngine::onExit() {
 
 	// TODO : Liberación de recursos no necesarios mientras no haya ejecución de 'onIdle'.
 
-	CEngine::onExit();
+	FSEngine::onExit();
 
 	return EXITO;
 
 }
 
 void IFirstEngine::deselect() {
-	CEngine::deselect();
+	FSEngine::deselect();
 
 	// TODO : Siempre se debe llamar previamente al método de la clase base.
 
@@ -148,21 +129,5 @@ int IFirstEngine::loop() {
 
 	// TODO : Siempre se debe llamar posteriormente al método de la clase base.
 
-	return CEngine::loop();
-}
-
-	 
-int IFirstEngine::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
-
-	// TODO : Gestión de mensajes
-
-	return EXITO;
-
-}
-
-	 
-void IFirstEngine::pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
-
-	// TODO : Gestión de mensajes
-
+	return FSEngine::loop();
 }

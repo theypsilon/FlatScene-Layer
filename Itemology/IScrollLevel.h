@@ -20,7 +20,7 @@ typedef struct {
 }ITileAndDur;
 
 typedef struct{
-	string destino;
+	std::string destino;
 	Uint32 regionx1;
 	Uint32 regionx2;
 	Uint32 regiony1;
@@ -34,7 +34,7 @@ typedef struct{
 
 
 class IScrollLevel :
-	public CUniverse
+	public FSUniverse
 {
 private:
 
@@ -53,32 +53,32 @@ private:
 	Uint32 lastTileset;
 	Uint32 lastDurezaset;
 
-	string datosTile;
-	string datosSong;
+	std::string datosTile;
+	std::string datosSong;
 
-	vector<ITileAndDur> layerlvl;
-	vector<TileBG**> linktodur;
+	std::vector<ITileAndDur> layerlvl;
+	std::vector<TileBG**> linktodur;
 
-	vector<Uint32> LayerFloor;
-	vector<Uint32> LayerType;
+	std::vector<Uint32> LayerFloor;
+	std::vector<Uint32> LayerType;
 
 	Uint32 numGates;
 
-	vector<gate> Gates;
+	std::vector<gate> Gates;
 
-	vector<IScrollObjectCollection***> MA;
+	std::vector<IScrollObjectCollection***> MA;
 
 	friend class IScrollCamera;
 
 public:
-	IScrollLevel(string name);
+	IScrollLevel(std::string name);
 	~IScrollLevel(void);
 	
 	virtual void load();
 	virtual void unload();
 
-	virtual int incActor(CActor* act);
-	virtual int decActor(CActor* act);
+	virtual int incActor(FSActor* act);
+	virtual int decActor(FSActor* act);
 	
 	virtual Uint32 getPixel(int x, int y, int z);
 

@@ -3,7 +3,7 @@
 #include "IDebug.h"
 
 
-IScrollLevel::IScrollLevel(string name) : CUniverse(name) {
+IScrollLevel::IScrollLevel(std::string name) : FSUniverse(name) {
 #ifdef LOG_MAPAS
 	printf("Creando mapa '%s'...\n",name.c_str());
 #endif
@@ -33,7 +33,7 @@ void IScrollLevel::load() {
 	TiXmlDocument xmldoc((name+".xml").c_str());
 
 	if (!xmldoc.LoadFile()) {
-		CLibrary::Error("No se puede abrir el XML del mapa");
+		FSLib.Error("No se puede abrir el XML del mapa");
 		return;
 	}
 
@@ -42,12 +42,12 @@ void IScrollLevel::load() {
 	TiXmlElement* node = input.ToElement();
 
 	if (!node) {
-		CLibrary::Error("Estructura XML defectuosa del mapa");
+		FSLib.Error("Estructura XML defectuosa del mapa");
 		return;
 	}
 
 	if (!node->Attribute("width") || !node->Attribute("height") || !node->Attribute("layers") || !node->Attribute("tileWidth") || !node->Attribute("tileHeight") || !node->Attribute("name")) {
-		CLibrary::Error("Atributos XML defectuosos en el mapa");
+		FSLib.Error("Atributos XML defectuosos en el mapa");
 		return;
 	}
 
@@ -75,20 +75,20 @@ void IScrollLevel::load() {
 
 	for (node = input.FirstChildElement("TileGraphs").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
 		if (tileSet == -1) 
-			tileSet = lastTileset = CImg.add(node->Attribute("name"));
+			tileSet = lastTileset = Img.add(node->Attribute("name"));
 		else
-			lastTileset = CImg.add(node->Attribute("name"));
+			lastTileset = Img.add(node->Attribute("name"));
 	}
 
 	for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
 		if (durezaSet == -1)
-			durezaSet = lastDurezaset = CImg.add(node->Attribute("name"),ONLY_SDL_SURFACE);
+			durezaSet = lastDurezaset = Img.add(node->Attribute("name"),ONLY_SDL_SURFACE);
 		else
-			lastDurezaset = CImg.add(node->Attribute("name"));
+			lastDurezaset = Img.add(node->Attribute("name"));
 	}
 
 	if (durezaSet == -1 || tileSet == -1) {
-		CLibrary::Error("TileGraphs y/o TileCollisions defectuosos en el mapa");
+		FSLib.Error("TileGraphs y/o TileCollisions defectuosos en el mapa");
 		return;
 	}
 
@@ -110,7 +110,7 @@ void IScrollLevel::load() {
 		} else if (strcmp(auxcad,"upper")==0) {
 			layertype = 2;
 		} else {
-			CLibrary::Error("LayerType invalidado cargando el mapa");
+			FSLib.Error("LayerType invalidado cargando el mapa");
 			return;
 		}
 
@@ -123,7 +123,7 @@ void IScrollLevel::load() {
 	}
 
 	if (LayerType.size() != numLayers) {
-		CLibrary::Error("Definicion de capas defectuosa en el mapa");
+		FSLib.Error("Definicion de capas defectuosa en el mapa");
 		return;
 	}
 
@@ -153,7 +153,7 @@ void IScrollLevel::load() {
 	}
 
 	if (Gates.size()!=numGates) {
-		CLibrary::Error("Definicion de gates defectuosa en el mapa");
+		FSLib.Error("Definicion de gates defectuosa en el mapa");
 		return;
 	}
 
@@ -165,7 +165,7 @@ void IScrollLevel::load() {
 	
 	FILE* f_map;
 	if ((f_map=fopen((name+".dat").c_str(),"rb"))==NULL) {
-		 CLibrary::Error(string("El mapa '\n")+name+"' no se encuentra.");
+		 FSLib.Error(std::string("El mapa '\n")+name+"' no se encuentra.");
 		 return;
 	}
 
@@ -174,7 +174,7 @@ void IScrollLevel::load() {
 	fread(&buffer,sizeof(char),4,f_map);
 
 	if (strcmp(buffer,"JMBM")!=0) {
-		CLibrary::Error("Firma del mapa invalida");
+		FSLib.Error("Firma del mapa invalida");
 		return;
 	}
 
@@ -197,7 +197,7 @@ void IScrollLevel::load() {
 	fread(&buffer,sizeof(char),4,f_map);
 
 	if (strcmp(buffer,"JMBM")!=0) {
-		CLibrary::Error("Firma del mapa invalida");
+		FSLib.Error("Firma del mapa invalida");
 		return;
 	}
 
@@ -238,9 +238,9 @@ void IScrollLevel::load() {
 		IScrollObject* actscroll = dynamic_cast<IScrollObject*>(*it);
 
 		if (actscroll) {
-			int MAz = actscroll->place.Z() ;
-			int MAx = actscroll->place.X() / getTileW();
-			int MAy = actscroll->place.Y() / getTileH();
+			int MAz = actscroll->place.z ;
+			int MAx = actscroll->place.x / getTileW();
+			int MAy = actscroll->place.y / getTileH();
 			if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
 				actscroll->placeInMA = MA[MAz][MAx][MAy];
 				actscroll->placeInMA->push_back(actscroll);
@@ -290,24 +290,24 @@ void IScrollLevel::unload() {
 	Gates.clear();
 
 	for (int i=tileSet,j=lastTileset;i<=j;i++)
-		CImg.remove(i);
+		Img.remove(i);
 
 	for (int i=durezaSet,j=lastDurezaset;i<=j;i++)
-		CImg.remove(i);
+		Img.remove(i);
 
 	loaded=false;
 }
 
-int IScrollLevel::incActor(CActor* act) {
+int IScrollLevel::incActor(FSActor* act) {
 	IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
 	if (actscroll && act->getUniverse()==NULL) {
 		act->setUniverse(this);
 		actor.push_back(act);
 		if (isLoaded()) {
-			int MAz = actscroll->place.Z() ;
-			int MAx = actscroll->place.X() / getTileW();
-			int MAy = actscroll->place.Y() / getTileH();
+			int MAz = actscroll->place.x ;
+			int MAx = actscroll->place.x / getTileW();
+			int MAy = actscroll->place.y / getTileH();
 			if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
 				actscroll->placeInMA = MA[MAz][MAx][MAy];
 				actscroll->placeInMA->push_back(actscroll);
@@ -317,12 +317,12 @@ int IScrollLevel::incActor(CActor* act) {
 		}
 		return EXITO;
 	} else {
-		CLibrary::Error((string("Se ha añadido un actor al mapa ")+getName()+string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
+		FSLib.Error((std::string("Se ha añadido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
 		return FRACASO;
 	}
 }
 
-int IScrollLevel::decActor(CActor* act) {
+int IScrollLevel::decActor(FSActor* act) {
 	IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
 	for (auto i=actor.begin();i!=actor.end();++i) {
@@ -357,7 +357,7 @@ Uint32 IScrollLevel::getPixel(int x, int y,int z) {
 		
 		if (tile_pisado>0) {
 			tile_pisado--;
-			CSprite* canv=CImg.get(durezaSet+ durtile.fileDur)->get(tile_pisado);
+			FSSprite* canv=Img.get(durezaSet+ durtile.fileDur)->get(tile_pisado);
 
 			int flags =  durtile.flags;
 
