@@ -9,8 +9,7 @@
 class CTestA4GameInterface : public CTestAGameInterface {
 public:
 
-    CTestA4GameInterface(FSMessageHandler * pmhParent=NULL);
-
+    CTestA4GameInterface();
     virtual ~CTestA4GameInterface();
 
     int onInit();

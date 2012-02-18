@@ -10,7 +10,7 @@
 #define TestIdB "TestB"
  
 
-class CTestBGameInterface : public FSEngine, public FSMessageHandler {
+class CTestBGameInterface : public FSEngine {
 private:
     bool pushed;
 
@@ -19,7 +19,7 @@ private:
     int actZone;
 public:
 
-    CTestBGameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestBGameInterface();
 
     virtual ~CTestBGameInterface();
 

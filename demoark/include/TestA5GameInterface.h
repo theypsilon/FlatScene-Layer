@@ -9,7 +9,7 @@
 class CTestA5GameInterface : public CTestAGameInterface {
 public:
 
-    CTestA5GameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestA5GameInterface();
 
     virtual ~CTestA5GameInterface();
 

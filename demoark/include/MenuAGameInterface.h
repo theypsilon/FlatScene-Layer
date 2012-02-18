@@ -14,7 +14,7 @@
     ==CMenuAGameInterface==
     CEngine componEnt test.
 */
-class CMenuAGameInterface : public FSEngine, public FSMessageHandler {
+class CMenuAGameInterface : public FSEngine {
 private:
     bool pushed;
 
@@ -26,10 +26,10 @@ private:
 
     FSPoint dest;
 
-    std::shared_ptr<FSEngine> previous;
+    FSEngine* previous;
 public:
     
-    CMenuAGameInterface(FSMessageHandler * pmhParent=NULL);
+    CMenuAGameInterface();
     
     virtual ~CMenuAGameInterface();
     
@@ -39,7 +39,7 @@ public:
     
     virtual int onExit();
 
-    std::shared_ptr<FSEngine> setPrevious(std::shared_ptr<FSEngine>);
+    FSEngine* setPrevious(FSEngine*);
     
     void onKeyMenu(SDL_Event*);
 

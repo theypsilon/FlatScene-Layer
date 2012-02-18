@@ -3,9 +3,9 @@
 
 // Library.h es necesario para el manejo de errores.
 
-CCameraOS::CCameraOS(FSActor* target, FSRectangle* area,FSMessageHandler * pmhParent) :
+CCameraOS::CCameraOS(FSActor* target, FSRectangle* area) :
 // Se ha de llamar a la clase Base para una correcta inicializaci�n
-FSCamera(target,area,pmhParent) {
+FSCamera(target,area) {
     
     // TODO
 

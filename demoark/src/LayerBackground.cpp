@@ -7,8 +7,8 @@
 //CLayerBG
 //
 
-CLayerBG::CLayerBG(CMap* mapa,FSRectangle* area,FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent) , area(area) ,  mapa(mapa)  {
-}
+CLayerBG::CLayerBG(CMap* mapa,FSRectangle* area) 
+: area(area) ,  mapa(mapa)  {}
 
 CLayerBG::~CLayerBG(){
     /*
@@ -34,18 +34,11 @@ void CLayerBG::clear() {
 void CLayerBG::init(float zoom) { }
 void CLayerBG::refresh(int cx, int cy) {}
 
-#ifdef MENSAJES_MSGIDS
-int CLayerBG::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
-    printf("Layer :: ");
-    return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
-}
-#endif
-
 //
 //CLayerDinamic
 //
 
-CLayerDinamic::CLayerDinamic(CMap* mapa,FSRectangle* area,Uint8 num_tiles,FSMessageHandler * pmhParent) : CLayerBG(mapa,area,pmhParent) {
+CLayerDinamic::CLayerDinamic(CMap* mapa,FSRectangle* area,Uint8 num_tiles) : CLayerBG(mapa,area) {
     this->num_tiles=num_tiles;
     init();
 }
@@ -81,7 +74,7 @@ FSColor* CLayerDinamic::getPixel(Uint8 i,Uint8 w,Uint8 h) {
 //CLayerUniform
 //
 
-CLayerUniform::CLayerUniform(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent) : CLayerBG(mapa,area,pmhParent), tile(tile) {
+CLayerUniform::CLayerUniform(CMap* mapa,FSRectangle* area,TileBG** tile) : CLayerBG(mapa,area), tile(tile) {
     init();
 }
 
@@ -138,11 +131,11 @@ FSColor* CLayerUniform::getPixel(Uint8 i, Uint8 j, Uint8 w, Uint8 h) {
 //CLayerInf
 //
 
-CLayerInf::CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,bool pisable,FSMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(pisable) {
+CLayerInf::CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,bool pisable) : CLayerUniform(mapa,area,tile) , pisable(pisable) {
     init();
 }
 
-CLayerInf::CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) , pisable(true){
+CLayerInf::CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile) : CLayerUniform(mapa,area,tile) , pisable(true){
     init();
 }
 
@@ -155,7 +148,7 @@ bool CLayerInf::isPisable() { return pisable; }
 //CLayerSup
 //
 
-CLayerSup::CLayerSup(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
+CLayerSup::CLayerSup(CMap* mapa,FSRectangle* area,TileBG** tile) : CLayerUniform(mapa,area,tile) {
     init();
 }
 CLayerSup::~CLayerSup() {
@@ -165,17 +158,15 @@ CLayerSup::~CLayerSup() {
 //
 //CLayerFondo
 //
-CLayerFondo::CLayerFondo(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent) : CLayerUniform(mapa,area,tile,pmhParent) {
+CLayerFondo::CLayerFondo(CMap* mapa,FSRectangle* area,TileBG** tile) : CLayerUniform(mapa,area,tile) {
     init();
 }
 CLayerFondo::~CLayerFondo() {
     //CLayerUniform::~CLayerUniform();
 }
 
-CFloor::CFloor(FSRectangle *area,CMap* mapa,int id, FSMessageHandler * pmhParent) : 
-FSMessageHandler(pmhParent), area(area) , mapa(mapa), id(id) {
-
-}
+CFloor::CFloor(FSRectangle *area,CMap* mapa,int id) 
+: area(area) , mapa(mapa), id(id) {}
 
 CFloor::~CFloor() {
 
@@ -261,10 +252,3 @@ void CFloor::refresh(int cx, int cy) {
 
     
 }
-
-#ifdef MENSAJES_MSGIDS
-int CFloor::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
-    printf("Piso :: ");
-    return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
-}
-#endif

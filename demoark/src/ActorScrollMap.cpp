@@ -6,10 +6,8 @@
 #include "FSUniverse.h"
 #include "tests.h"
 
-Uint32 CActorScrollMap::MSGID_Damage=FSMessageHandler::getNextMSGID();
-
-CActorScrollMap::CActorScrollMap(const char* creature,FSMessageHandler * pmhParent) : 
-FSActor(creature,pmhParent), dirx(0), diry(1), garbage(NULL),
+CActorScrollMap::CActorScrollMap(const char* creature,CTestAGameInterface& game) : 
+FSActor(creature), game(game), dirx(0), diry(1), garbage(NULL),
 actActual(NULL), actUltimo(NULL), actNeutro(NULL), actUltimoMovimiento(NULL), 
 upfloor(false), downfloor(false), rutinaColision(CRutinaColision::collisionFactory()),
 placeInMA(NULL) {
@@ -190,7 +188,7 @@ bool CActorScrollMap::collisionMap(int mov_x,int mov_y) {
             if ((mov_x + mov_y) == mov_x) {
                 Uint32 colorSwitch=inUniverse->getPixel(invariantx,invarianty,invariantz);
                 if (colorSwitch==0xFFF834F8) {
-                    getParent()->SendMessage((CTestAGameInterface::MSGID_ChangeMap),(MSGPARM)this,(MSGPARM)mov_y);
+                    game.changeMap(*this,mov_y);
                 } else if (colorSwitch==0xFF202020) {
                     if (!upfloor) {
                         upfloor=true;

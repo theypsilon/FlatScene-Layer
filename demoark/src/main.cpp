@@ -8,6 +8,7 @@
 #include "TestA5GameInterface.h"
 #include "TestOSDesktopInterface.h"
 
+#include <memory>
 
 void funcEstres(int p);
 
@@ -22,31 +23,31 @@ int main(int argc,char* argv[])
     ///*
     FSDraw.start(640,480,32,1.0,1.0,false);
 
-    shared_ptr<FSEngine> engine[20];
+    unique_ptr<FSEngine> engine = nullptr;
     
-    engine[0] = shared_ptr<FSEngine>(new CTestA0GameInterface);
+    engine = unique_ptr<FSEngine>(new CTestA0GameInterface);
 
-    engine[0]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
-    engine[0]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
-    FSLib.addEngine(engine[0],10);
+    engine->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
+    engine->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
+    FSLib.addEngine(move(engine),10);
 
-    engine[1] =  shared_ptr<FSEngine>(new CTestA3GameInterface);
+    engine =  unique_ptr<FSEngine>(new CTestA3GameInterface);
 
-    engine[1]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
-    engine[1]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
-    FSLib.addEngine(engine[1],11);
+    engine->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
+    engine->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
+    FSLib.addEngine(move(engine),11);
 
-    engine[2] =  shared_ptr<FSEngine>(new CTestA5GameInterface);
+    engine =  unique_ptr<FSEngine>(new CTestA5GameInterface);
 
-    engine[2]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
-    engine[2]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
-    FSLib.addEngine(engine[2],12);
+    engine->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
+    engine->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
+    FSLib.addEngine(move(engine),12);
 
-    engine[3] =  shared_ptr<FSEngine>(new CTestA4GameInterface);
+    engine =  unique_ptr<FSEngine>(new CTestA4GameInterface);
 
-    engine[3]->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
-    engine[3]->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
-    FSLib.addEngine(engine[3],13);
+    engine->setEventHandler(SDL_KEYDOWN,&CTestAGameInterface::onKeyTestA);
+    engine->setEventHandler(SDL_KEYUP,&CTestAGameInterface::onKeyTestA);
+    FSLib.addEngine(move(engine),13);
 
 #ifdef LOG_SISTEMA
     printf("Se bienvenido, Persona.\n\n");

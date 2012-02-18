@@ -6,8 +6,8 @@
 #include "FSLibrary.h"
 #include "FSScreen.h"
 
-CTestBGameInterface::CTestBGameInterface(FSMessageHandler * pmhParent) 
-    : FSMessageHandler(pmhParent), actZone(0), pushed(false) {}
+CTestBGameInterface::CTestBGameInterface() 
+    : actZone(0), pushed(false) {}
 
 CTestBGameInterface::~CTestBGameInterface() {}
 
@@ -79,7 +79,7 @@ void CTestBGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CTestBGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_TAB && pushed) {
-        getParent()->SendMessage(FSLib.MSGID_ChangeEngine,(void*)false);
+        FSLib.changeEngine();
         pushed=false;
     }
 }

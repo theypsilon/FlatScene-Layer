@@ -7,18 +7,10 @@
 #include "FreezeGameInterface.h"
 #include "MenuAGameInterface.h"
 
-//constructor
-CTestA1GameInterface::CTestA1GameInterface(FSMessageHandler * pmhParent) : CTestAGameInterface(pmhParent)
-{
+#include "Player.h"
 
-}
-
-//destructor
-CTestA1GameInterface::~CTestA1GameInterface()
-{
-
-        readMessages();
-}
+CTestA1GameInterface::CTestA1GameInterface() {}
+CTestA1GameInterface::~CTestA1GameInterface() {}
 
 int CTestA1GameInterface::drawFrame() {
 
@@ -67,13 +59,13 @@ int CTestA1GameInterface::onInit() {
     activationIds.push_back("pj_normal_asa");
     activationIds.push_back("pj_normal_alsa");
 
-    player.push_back(new CPlayer(this));
+    player.push_back(new CPlayer(*this));
     player[0]->eventChange=false;
 
     
     player[0]->init(activationIds,0);
     
-    player.push_back(new CPlayer(this)); 
+    player.push_back(new CPlayer(*this)); 
     player[1]->eventChange=false;
     player[1]->init(activationIds,1);
     player[1]->m_Scrollxy.set(270,100,0);
@@ -122,27 +114,26 @@ int CTestA1GameInterface::onExit() {
 void CTestA1GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_ESCAPE) {
 
-        CMenuAGameInterface* men = new CMenuAGameInterface(&FSLib.getLibrary());
+        std::unique_ptr<CMenuAGameInterface> men (new CMenuAGameInterface());
         men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
         men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
-        men->setPrevious(shared_from_this());
-
-        FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)men);
+        men->setPrevious(this);
+        FSLib.processEngine(std::move(men));
     } else if (sym==SDLK_SPACE) {
-        CFreezeGameInterface* fgi = new CFreezeGameInterface(&FSLib.getLibrary());
+
+        std::unique_ptr<CFreezeGameInterface> fgi (new CFreezeGameInterface());
         fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
         fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
-        fgi->setPrevious(shared_from_this());
-
-        FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)fgi);
+        fgi->setPrevious(this);
+        FSLib.processEngine(std::move(fgi));
     } else if (sym==SDLK_DELETE) {
-        getParent()->SendMessage(FSLib.MSGID_Restart);
+        FSLib.restart();
     } else if (sym==SDLK_F1) {
-        getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
+        FSLib.changeEngine();
     } else if (sym==SDLK_F2) {
-        getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
+        FSLib.reloadEngine(this);
     } else if (sym==SDLK_F3) {
         deselect();
         FSDraw.ToggleFullscreen();

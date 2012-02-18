@@ -14,7 +14,7 @@
 #include <list>
 #include "TileBG.h"
 
-class CLayerBG : public FSMessageHandler {
+class CLayerBG {
 public:
     FSRectangle* area;
     FSRectangle* clipping;
@@ -23,7 +23,7 @@ public:
     Uint8 flags; // Espejado, girado...
     Uint8 alpha;  // Transparencias...
 //public:
-    CLayerBG(CMap* mapa,FSRectangle* area,FSMessageHandler * pmhParent=NULL);
+    CLayerBG(CMap* mapa,FSRectangle* area);
     virtual ~CLayerBG();
     virtual void init(float zoom=1.0)=0;
     virtual void clear();
@@ -35,10 +35,6 @@ public:
     Uint8 getFlags();
     void setAlpha(Uint8 alpha);
     Uint8 getAlpha();
-
-#ifdef MENSAJES_MSGIDS
-    int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);
-#endif
 };
 
 typedef std::vector<CLayerBG*> LayerBGCollection;
@@ -48,7 +44,7 @@ private:
     Uint8 num_tiles;
     TileBG* tile; // Array[num_tiles];
 public:
-    CLayerDinamic(CMap* mapa,FSRectangle* area,Uint8 num_tiles,FSMessageHandler * pmhParent=NULL);
+    CLayerDinamic(CMap* mapa,FSRectangle* area,Uint8 num_tiles);
     virtual ~CLayerDinamic();
     virtual FSColor* getPixel(Uint8 i,Uint8 w,Uint8 h); 
     virtual void init(float zoom=1.0);
@@ -63,7 +59,7 @@ private:
     Uint8 tam_w; // SCREEN_W/tile_w+2;
     Uint8 tam_h; // SCREEN_H/tile_h+2;
 public:
-    CLayerUniform(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent=NULL);
+    CLayerUniform(CMap* mapa,FSRectangle* area,TileBG** tile);
     virtual ~CLayerUniform();
     Uint8 getTile_W();
     Uint8 getTile_H();
@@ -78,8 +74,8 @@ class CLayerInf : public CLayerUniform {
 private:
     bool pisable; // Hay alg�n elemento de la capa accesible a los actores.
 public:
-    CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,bool pisable,FSMessageHandler * pmhParent=NULL);
-    CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent=NULL);
+    CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile,bool pisable);
+    CLayerInf(CMap* mapa,FSRectangle* area,TileBG** tile);
     virtual ~CLayerInf();
     bool isPisable();
 };
@@ -88,7 +84,7 @@ class CLayerSup : public CLayerUniform {
 private:
     Uint8 desfase; // Cuanto m�s cerca, m�s r�pido se mueven las tiles.	
 public:
-    CLayerSup(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent=NULL);
+    CLayerSup(CMap* mapa,FSRectangle* area,TileBG** tile);
     virtual ~CLayerSup();
 };
 
@@ -96,11 +92,11 @@ class CLayerFondo : public CLayerUniform {
 private:
     Uint8 desfase; // Cuanto m�s lejos, m�s lento se mueven las tiles.
 public:
-    CLayerFondo(CMap* mapa,FSRectangle* area,TileBG** tile,FSMessageHandler * pmhParent=NULL);
+    CLayerFondo(CMap* mapa,FSRectangle* area,TileBG** tile);
     virtual ~CLayerFondo();
 };
 
-class CFloor : public FSMessageHandler {
+class CFloor {
 private:
     FSRectangle* area;
     bool capaSuperior(CLayerBG* layer);
@@ -110,14 +106,11 @@ public:
     Uint32 numLayers;
     LayerBGCollection Layer; // N
 
-    CFloor(FSRectangle* area, CMap* mapa,int id,FSMessageHandler * pmhParent=NULL);
+    CFloor(FSRectangle* area, CMap* mapa,int id);
     virtual ~CFloor();
     virtual void refresh(int cx, int cy);
     virtual inline LayerBGCollection& getLayers() { return Layer; }
 
-#ifdef MENSAJES_MSGIDS
-    int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);
-#endif
 };
 
 typedef std::vector<CFloor*> FloorCollection;

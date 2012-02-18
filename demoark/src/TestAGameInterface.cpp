@@ -7,21 +7,16 @@
 #include "TestA0GameInterface.h"
 #include "TestA1GameInterface.h"
 #include "TestA2GameInterface.h"
+#include "Player.h"
 
 #include "Map.h"
 
 #include "FSWriter.h"
 
-Uint32 CTestAGameInterface::MSGID_ChangeMap=FSMessageHandler::getNextMSGID(false);
-Uint32 CTestAGameInterface::MSGID_DeleteMap=FSMessageHandler::getNextMSGID(false);
-Uint32 CTestAGameInterface::MSGID_KillEnemy=FSMessageHandler::getNextMSGID(false);
+#include <algorithm>
 
-//constructor
-CTestAGameInterface::CTestAGameInterface(FSMessageHandler * pmhParent) : FSMessageHandler (pmhParent)    {
-}
-//destructor
-CTestAGameInterface::~CTestAGameInterface()    {
-}
+CTestAGameInterface::CTestAGameInterface() {}
+CTestAGameInterface::~CTestAGameInterface() {}
 
 int CTestAGameInterface::drawFrame() {
 
@@ -47,10 +42,7 @@ int CTestAGameInterface::drawFrame() {
     return EXITO;
 }
 
-//idle. Main loop.
-int CTestAGameInterface::onIdle()    {
-
-    //if (~Chrono.getTick() & 0x01) {
+int CTestAGameInterface::onIdle() {
 
     for (UniverseCollection::iterator it=Cosmos.begin();it!=Cosmos.end();++it) {
         FSUniverse* mapAct = (*it);
@@ -64,10 +56,10 @@ int CTestAGameInterface::onIdle()    {
 
         }
     }
-
-    //}
     
-    readMessages();
+    std::for_each(endTasks.begin(),endTasks.end(),
+        [](decltype(endTasks.front())& f) { f(); }
+    );
 
     return EXITO;
 
@@ -76,10 +68,9 @@ int CTestAGameInterface::onIdle()    {
 void CTestAGameInterface::deselect() {
     FSEngine::deselect();
 
-    for (std::vector<CPlayer*>::iterator it=player.begin();it!=player.end();++it)
-    {
-        CPlayer* c =*it;
-        c->blockFutureActionCandidates();
+    for (auto it=player.begin();it!=player.end();++it) {
+        CPlayer& c =**it;
+        c.blockFutureActionCandidates();
     }
 
 }
@@ -127,43 +118,41 @@ int CTestAGameInterface::SendMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
 }
 #endif
 
-void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
-    if (MsgID==MSGID_ChangeMap) {
-        CPlayer* p=(CPlayer*)Parm1;
-        CMap* mapaOrigen=(CMap*)p->getUniverse();
-        std::string nameMapaOrigen=mapaOrigen->getName();
+void CTestAGameInterface::changeMap(CActorScrollMap& actor,int direction) {
+    endTasks.push_back([&](){
+        CMap* mapaOrigen = (CMap*) actor.getUniverse();
 
-        int mov_y=(long)Parm2;
+        std::string& nameMapaOrigen=mapaOrigen->getName();
 
         bool enc=false;
         gate g;
         for (Uint32 i=0;(!enc)&&(i<mapaOrigen->getGates());i++) {
             g=mapaOrigen->getGate(i);
-            enc = enc || (((int)g.regionx1<= p->m_Scrollxy.x) &&
-                         ((int)g.regionx2>=p->m_Scrollxy.x)&&
-                         ((int)g.regiony1<=(p->m_Scrollxy.y+mov_y))&&
-                         ((int)g.regiony2>= (p->m_Scrollxy.y+mov_y))&&
-                         ((int)p->m_Scrollxy.getZ()==g.regionz));
+            enc = enc || (((int)g.regionx1<= actor.m_Scrollxy.x) &&
+                            ((int)g.regionx2>=actor.m_Scrollxy.x)&&
+                            ((int)g.regiony1<=(actor.m_Scrollxy.y+direction))&&
+                            ((int)g.regiony2>= (actor.m_Scrollxy.y+direction))&&
+                            ((int)actor.m_Scrollxy.getZ()==g.regionz));
         }
         if (enc) {
 
-            p->m_Scrollxy.set(g.destino_scroll_x,g.destino_scroll_y,g.destino_scroll_z);
+            actor.m_Scrollxy.set(g.destino_scroll_x,g.destino_scroll_y,g.destino_scroll_z);
 
             // Si el enlace no es hacia el mismo mapa...
             if (strcmp(nameMapaOrigen.c_str(),g.destino.c_str())!=0) {
                     //Hay una alternativa a este algoritmo en backup(4), la pega de este esque durante un frame tiene un mapa mas en memoria q no sirve de nada.
                     //Adem�s, este no reconvierte un mapa cuando es id�neo, en lugar de crear uno nuevo y destruir el viejo que es m�s costoso.
-                    mapaOrigen->decActor((CActorScrollMap*)p);
+                    mapaOrigen->decActor((CActorScrollMap*)&actor);
 
                     CMap* mapaDestino = (CMap*)Cosmos.add(new CMap(g.destino.c_str())); // Si no existe, lo crea, si existe no, y en cualquier caso lo devuelve.
 
                     if (!mapaDestino->isLoaded())
                         mapaDestino->load();
 
-                    mapaDestino->incActor((FSActor*)p);
+                    mapaDestino->incActor((FSActor*)&actor);
 
                     for (Uint32 i=0;i<cams.size();i++) {
-                        if (cams[i]->Target()==((FSActor*)p)) {
+                        if (cams[i]->Target()==((FSActor*)&actor)) {
                             cams[i]->resyncUniverse(); // Si el mapa pasa a no ser enfocado por ninguna c�mara, se descarga (unload).
                         } /*else if (strcmp((cams[i]->getUniverse()->getName()).c_str(),nameMapaOrigen.c_str())==0
                         || strcmp((cams[i]->getUniverse()->getName()).c_str(),g.destino.c_str())==0)
@@ -179,21 +168,21 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
             printf("%d\n",Cosmos.size());
 #endif
         }
+    });
+}
 
-    } else if (MsgID==MSGID_DeleteMap)  {
-        Cosmos.erase((FSUniverse*)Parm1);
-    } else if (MsgID==MSGID_KillEnemy) {
-        void** parm = (void**) Parm2;
+void CTestAGameInterface::deleteMap(FSUniverse* map) {
+    endTasks.push_back([&](){
+        Cosmos.erase(map);
+    });
+}
 
-        FSActor* victim = (FSActor*) Parm1;
-        FSUniverse* map = (FSUniverse*) parm[0];
+void CTestAGameInterface::killEnemy(FSActor* victim, FSActor* murder, FSUniverse* map) {
+    endTasks.push_back([&](){
         if (map && victim) {
-            FSActor* murder = (FSActor*) parm[1];
-            if (murder) {
-                ;
-            }
-            for (std::list<CEnemy*>::iterator it=enemy.begin(),et=enemy.end();it!=et;++it) {
-                if (*it == victim) {
+            for (auto it=enemy.begin(),et=enemy.end();it!=et;++it) {
+                FSActor* currentEnemy = (FSActor*) *it;
+                if (currentEnemy == victim) {
                     enemy.remove(*it);
                     map->decActor(victim);
                     delete victim;
@@ -202,11 +191,8 @@ void CTestAGameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Pa
                 }
             }
         }
-
-        delete parm;
-    }
+    });
 }
-
 
 void CTestAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 #ifdef EVENTOS_RAPIDO

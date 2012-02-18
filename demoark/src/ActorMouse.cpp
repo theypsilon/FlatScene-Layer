@@ -1,18 +1,9 @@
 #include "ActorMouse.h"
 #include "FSImages.h"
 
-CActorMouse::CActorMouse(FSMessageHandler * pmhParent) : 
-// Se ha de llamar a la clase Base para una correcta inicializaci�n
-FSActor("raton",pmhParent) {
-
-    // TODO
-    
-}
-CActorMouse::~CActorMouse() {
-
-    // TODO
-
-}
+CActorMouse::CActorMouse(CTestOSDesktopInterface& desktop)
+: FSActor("raton"), desktop(desktop) {}
+CActorMouse::~CActorMouse() {}
 
 int CActorMouse::move() {
 

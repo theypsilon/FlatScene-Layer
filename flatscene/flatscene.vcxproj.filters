@@ -25,150 +25,1009 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\debugfuncs.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSActor.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSCamera.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSColor.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSImages.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSMultiverse.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSWriter.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSCoordinate.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSEngine.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSImage.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSLibrary.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSMessageHandler.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSPoint.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSRectangle.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSScreen.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSSprite.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSSpriteSet.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSTextBox.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSTime.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FSUniverse.cpp">
-      <Filter>Archivos de código fuente\Library</Filter>
-    </ClCompile>
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMessageHandler.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
     <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente\TinyXML</Filter>
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp">
-      <Filter>Archivos de código fuente\TinyXML</Filter>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp">
-      <Filter>Archivos de código fuente\TinyXML</Filter>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp">
-      <Filter>Archivos de código fuente\TinyXML</Filter>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\debugfuncs.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSActor.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSCamera.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSColor.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSImages.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSMultiverse.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSWriter.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSCoordinate.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSdefinitions.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSEngine.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSCanvas.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSLibrary.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSMessageHandler.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSparserXML.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSPoint.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSRectangle.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSScreen.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSSprite.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSSpriteSet.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSTextBox.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSTime.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSUniverse.h">
-      <Filter>Archivos de encabezado\Library</Filter>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
+    <ClInclude Include="include\debugfuncs.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSparserXML.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\tinyxml\tinystr.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\tinyxml\tinyxml.h">
+    <ClInclude Include="include\tinyxml\tinyxml.h" />
+    <ClInclude Include="include\tinyxml\tinystr.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="include\tinyxml\tinyxml.h" />
   </ItemGroup>
 </Project>

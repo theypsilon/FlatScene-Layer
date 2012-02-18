@@ -2,7 +2,7 @@
 #include "FSLibrary.h"
 #include "TestAGameInterface.h"
 
-CEnemy::CEnemy(const char* creature,FSMessageHandler * pmhParent) : CActorScrollMap(creature,pmhParent) {
+CEnemy::CEnemy(const char* creature,CTestAGameInterface& game) : CActorScrollMap(creature,game) {
     m_Scrollxy.set(100,100,0);
 }
 
@@ -25,6 +25,10 @@ void CEnemy::init(std::list<std::string>& activationIds,int x, int y,int z) {
 
     CActorScrollMap::init(activationIds);
 
+}
+
+void CEnemy::damage(CActorScrollMap* executor) {
+    game.killEnemy(this,executor,this->getUniverse());
 }
 
 int CEnemy::move() {
@@ -65,21 +69,8 @@ int CEnemy::move() {
     return ret;
 }
 
-int CEnemy::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
-    if (MsgID == CActorScrollMap::MSGID_Damage) {
-        //CActor* hostil = (CActor*) Parm1;
-
-        void** parm = new void*[2];
-        parm[0] = (void*)getUniverse();
-        parm[1] = Parm1;
-        getParent()->SendMessage(CTestAGameInterface::MSGID_KillEnemy,(MSGPARM)this,(MSGPARM)parm);
-        return EXITO;
-    } else
-        return FSMessageHandler::onMessage(MsgID,Parm1,Parm2);
-}
-
 FSActor* CEnemy::clone() {
-    CEnemy* cloneEnemy = Factory(getCreature().c_str(),getParent());
+    CEnemy* cloneEnemy = Factory(getCreature().c_str(),game);
 
     std::list<CAction*>& nodes = this->garbage->getListActions();
     std::list<std::vector<CAction*>*>& listOfBrothers = this->garbage->getListBrothers();
@@ -137,11 +128,11 @@ FSActor* CEnemy::clone() {
 #include "EnemyNPC.h"
 #include "EnemyPunto.h"
 
-CEnemy* CEnemy::Factory(const char* creature,FSMessageHandler * pmhParent) {
+CEnemy* CEnemy::Factory(const char* creature,CTestAGameInterface& game) {
     if (strcmp(creature,"E0")==0) {
-        return new CEnemyNPC(pmhParent);
+        return new CEnemyNPC(game);
     } else if (strcmp(creature,"EPUNTO")==0) {
-        return new CEnemyPunto(pmhParent);
+        return new CEnemyPunto(game);
     }
     FSLib.Error("Factoria CEnemy fallo");
     return NULL;

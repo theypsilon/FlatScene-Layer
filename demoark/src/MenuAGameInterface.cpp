@@ -4,7 +4,7 @@
 #include "FSWriter.h"
 #include "FSScreen.h"
 
-CMenuAGameInterface::CMenuAGameInterface(FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent) {
+CMenuAGameInterface::CMenuAGameInterface() {
     pushed=false;
     file=0;
     opcion=0;
@@ -52,12 +52,12 @@ int CMenuAGameInterface::onInit() {
 
     IdTexts.push_back(Write.line(0,232,70,"%s",c));
 
-    int aux = Chrono.setInterval(0,Chrono.isTimeForAll());
+    int aux = Chrono.setInterval(0);
     if (aux == 0) {
         sprintf(c,"ilimitado");
     } else {
         sprintf(c,"%d",1000/aux);
-        Chrono.setInterval(aux,Chrono.isTimeForAll());
+        Chrono.setInterval(aux);
     }
 
     IdTexts.push_back(Write.line(0,110,100,"%s",c));
@@ -98,8 +98,8 @@ int CMenuAGameInterface::onExit() {
 
 }
 
-std::shared_ptr<FSEngine> CMenuAGameInterface::setPrevious(std::shared_ptr<FSEngine> newE) {
-    std::shared_ptr<FSEngine> ret = previous;
+FSEngine* CMenuAGameInterface::setPrevious(FSEngine* newE) {
+    auto ret = previous;
     previous = newE;
     return ret;
 }
@@ -133,20 +133,11 @@ void CMenuAGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_ESCAPE && pushed) {
-        getParent()->SendMessage(FSLib.MSGID_RunEngine,
-            reinterpret_cast<void*>(previous.get())
-        );
-        getParent()->SendMessage(FSLib.MSGID_KillEngine,
-            reinterpret_cast<void*>(shared_from_this().get())
-        );
+        FSLib.runEngine(previous);
+        FSLib.killEngine(this);
     } else if (sym==SDLK_RETURN && pushed) {
         if (opcion == 0) {
-            getParent()->SendMessage(FSLib.MSGID_RunEngine,
-                reinterpret_cast<void*>(previous.get())
-            );
-            getParent()->SendMessage(FSLib.MSGID_KillEngine,
-                reinterpret_cast<void*>(shared_from_this().get())
-            );
+            FSLib.exit();
         }   else if (opcion == 1) {
             FSDraw.ToggleFullscreen();
 
@@ -164,7 +155,7 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
             }
 
         } else if (opcion == 2) {
-            int aux = Chrono.setInterval(0,true);
+            int aux = Chrono.setInterval(0);
             if (aux == 0)    {
                 aux=16;
                 FSDraw.setDoublebuffer(true);
@@ -178,10 +169,6 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
                 sprintf(c,"ilimitado");
             } else {
                 sprintf(c,"%d",1000/aux);
-
-                if (Chrono.isTimeForAll())
-                    aux = Chrono.setInterval(aux);
-
                 Chrono.setInterval(aux);
             }
 
@@ -193,16 +180,12 @@ void CMenuAGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
                 FSLib.Error("MenuA IdTexts vector bad access");
             }
         } else if (opcion == 3) {
-            getParent()->SendMessage(FSLib.MSGID_KillEngine,
-                reinterpret_cast<void*>(shared_from_this().get())
-            );
-            getParent()->SendMessage(FSLib.MSGID_Restart);
+            FSLib.exit();
+            //FSLib.restart();
 
         } else if (opcion == 4) {
-            getParent()->SendMessage(FSLib.MSGID_KillEngine,
-                reinterpret_cast<void*>(shared_from_this().get())
-            );
-            getParent()->SendMessage(FSLib.MSGID_Exit);
+            FSLib.exit();
+            //FSLib.exit();
         }
 
         pushed=false;

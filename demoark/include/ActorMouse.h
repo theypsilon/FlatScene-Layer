@@ -3,19 +3,19 @@
 
 #include "FSActor.h"
 
+class CTestOSDesktopInterface;
 
-class CActorMouse : public FSActor
-{
-private:
+class CActorMouse : public FSActor {
+protected:
 
-    // TODO : funciones y variables privadas
-
+    // TODO : funciones y variables protegidas
+    CTestOSDesktopInterface& desktop;
 public:
 
     // TODO : variables y funciones p�blicas adicionales
 
     // Constructor con clase menajera como par�metro de entrada 
-    CActorMouse(FSMessageHandler * pmhParent=NULL);
+    CActorMouse(CTestOSDesktopInterface& desktop);
 
     // Destructor, ah� deberemos liberar los recursos
     ~CActorMouse();

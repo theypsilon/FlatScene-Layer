@@ -339,13 +339,6 @@ int CMap::decActor(FSActor* act) {
             break;
         }
     }
-    if (actor.size()==0) {
-        if (getParent()!=NULL) {
-            CTestAGameInterface* father=(CTestAGameInterface*)getParent();
-            father->SendMessage(CTestAGameInterface::MSGID_DeleteMap,(MSGPARM)this);
-            unload();
-        }
-    }
 
     return EXITO;
 }

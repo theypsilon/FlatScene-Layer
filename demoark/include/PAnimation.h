@@ -1,7 +1,6 @@
 #ifndef __PANIMATION_H__
 #define __PANIMATION_H__
 
-#include "FSMessageHandler.h"
 #include "FSSpriteSet.h"
 #include <string>
 #include <vector>
@@ -9,7 +8,7 @@
 class PControlAnimation;
 class PImage;
 
-class PAnimation : public FSMessageHandler {
+class PAnimation {
 private:
     PControlAnimation* control;
     PImage* img;

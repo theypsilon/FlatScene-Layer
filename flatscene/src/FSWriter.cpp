@@ -3,9 +3,9 @@
 #include "FSparserXML.h"
 #include "FSScreenImpl.h"
 
-std::shared_ptr<FSEngine> FSWriter::WriterImpl::setAdmin(std::shared_ptr<FSEngine> newAdmin) {
+FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
 
-    std::shared_ptr<FSEngine> ret = admin;
+    auto ret = admin;
 
 #ifdef TEXT_OPERATIVE
 
@@ -99,7 +99,7 @@ int FSWriter::searchFont(int idtext) {
 
     TTF_Font* ret = NULL;
 
-    for (std::map<std::shared_ptr<FSEngine>,WriterImpl::SData*>::iterator kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
+    for (auto kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
         if (kt->second->Texts.find(idtext) != kt->second->Texts.end()) {
             WriterImpl::FSText* t = kt->second->Texts[idtext];
 

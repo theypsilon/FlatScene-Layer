@@ -11,7 +11,7 @@ private:
     int score1,score2;
 public:
 
-    CTestA3GameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestA3GameInterface();
 
     virtual ~CTestA3GameInterface();
 
@@ -21,9 +21,9 @@ public:
 
     int drawFrame();
 
-    void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
+    void killEnemy(FSActor* victim, FSActor* murder, FSUniverse* map);
 
-    void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
+    void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
 };
 
 #endif 

@@ -7,7 +7,7 @@
 #include "ActorMouse.h"
 #include "CameraOS.h"
 
-class CTestOSDesktopInterface : public FSEngine, public FSMessageHandler {
+class CTestOSDesktopInterface : public FSEngine {
 private:
 
     FSActor* raton, *fondo;
@@ -25,7 +25,7 @@ private:
 
 public:
 
-    CTestOSDesktopInterface(FSMessageHandler * pmhParent=NULL);
+    CTestOSDesktopInterface();
     ~CTestOSDesktopInterface();
 
     int onInit();

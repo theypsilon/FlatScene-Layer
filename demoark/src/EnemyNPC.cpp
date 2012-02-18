@@ -1,7 +1,7 @@
 #include "EnemyNPC.h"
 #include "FSScreen.h"
 
-CEnemyNPC::CEnemyNPC(FSMessageHandler * pmhParent) : CEnemy("E0",pmhParent) {
+CEnemyNPC::CEnemyNPC(CTestAGameInterface& game) : CEnemy("E0",game) {
     m_Scrollxy.set(100,100,0);
 }
 

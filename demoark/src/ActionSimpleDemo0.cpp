@@ -1,5 +1,6 @@
 #include "ActionSimpleDemo0.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Map.h"
 #include "TestAGameInterface.h"
 
@@ -108,10 +109,10 @@ void CActionSimpleDemo0::execute() {
     }
 
     while (!presas.empty()) {
-        CActorScrollMap* presa = presas.top();
+        CEnemy* presa = dynamic_cast<CEnemy*>(presas.top());
         presas.pop();
-
-        presa->SendMessage(CActorScrollMap::MSGID_Damage,(MSGPARM)executor);
+        if (presa)
+            presa->damage(executor);
     }
 
     if (paso == 0) {

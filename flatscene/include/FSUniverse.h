@@ -9,7 +9,7 @@
 
 class FSMultiverse;
 
-class FSUniverse : public FSMessageHandler {
+class FSUniverse {
 private:
     Uint8 numCameras;
 

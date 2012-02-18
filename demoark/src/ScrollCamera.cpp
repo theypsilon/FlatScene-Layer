@@ -2,14 +2,14 @@
 #include "FSLibrary.h"
 #include "FSScreen.h"
 
-CScrollCamera::CScrollCamera(FSActor* target, FSRectangle* area,FSMessageHandler * pmhParent) :
-FSCamera(target,area,pmhParent), centro(new FSPoint(area->getW()/2,area->getH()/2)) {
+CScrollCamera::CScrollCamera(FSActor* target, FSRectangle* area)
+: FSCamera(target,area), centro(new FSPoint(area->getW()/2,area->getH()/2)) {
     intraMargenX=intraMargenY=0;
     loadUniverse();
 }
 
-CScrollCamera::CScrollCamera(FSActor* target, FSRectangle* area, FSPoint* centro, float margenDesp,FSMessageHandler *pmhParent) :
-FSCamera(target,area,pmhParent) {
+CScrollCamera::CScrollCamera(FSActor* target, FSRectangle* area, FSPoint* centro, float margenDesp)
+: FSCamera(target,area) {
     zoom=1.0;
 
     if (centro==NULL) {
@@ -92,15 +92,15 @@ int CScrollCamera::loadUniverse() {
 
     int capas=map->getLayer();
     for (int i=0,j=0;i<=PisoCapa[capas-1] && i<capas && j<capas;i++) {
-        Pisos.push_back(new CFloor(area,map,i,this));
+        Pisos.push_back(new CFloor(area,map,i));
         for (;j<capas && i==PisoCapa[j];j++) {
             CLayerBG* LayerAux;
             if (TipoCapa[j]==0)
-                LayerAux=(CLayerBG*)new CLayerFondo(map,area,Tiles[j],(FSMessageHandler*)Pisos[i]);
+                LayerAux=(CLayerBG*)new CLayerFondo(map,area,Tiles[j]);
             else if (TipoCapa[j]==1)
-                LayerAux=(CLayerBG*)new CLayerInf(map,area,Tiles[j],(FSMessageHandler*)Pisos[i]);
+                LayerAux=(CLayerBG*)new CLayerInf(map,area,Tiles[j]);
             else
-                LayerAux=(CLayerBG*)new CLayerSup(map,area,Tiles[j],(FSMessageHandler*)Pisos[i]);
+                LayerAux=(CLayerBG*)new CLayerSup(map,area,Tiles[j]);
             Pisos[i]->Layer.push_back(LayerAux);
         }
     }

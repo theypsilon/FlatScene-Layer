@@ -1,7 +1,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "FSMessageHandler.h"
+#include "TestAGameInterface.h"
 #include "ActorScrollMap.h"
 #include "FSPoint.h"
 #include "TileBG.h"
@@ -18,7 +18,7 @@ public:
     void configKey(SDLKey sym,const char* keycode);
     int KeyAliasFor(SDLKey sym);
 
-    CPlayer(FSMessageHandler * pmhParent=NULL);
+    CPlayer(CTestAGameInterface& game);
     ~CPlayer();
 
     void blockFutureActionCandidates();
@@ -27,11 +27,6 @@ public:
     int move();
     FSPoint m_Movxy;
 
-    int onMessage(Uint32 MsgID,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL); 
-
-#ifdef MENSAJES_MSGIDS
-    int SendMessage(Uint32 MsgID,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL);
-#endif
 #ifdef MENSAJES_ACCIONES
     int textA0;
     int textA1;

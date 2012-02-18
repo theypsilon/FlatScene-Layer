@@ -2,9 +2,8 @@
 #include "FSScreenImpl.h"
 #include "FSLibrary.h"
 
-FSCamera::FSCamera(FSActor* target, FSRectangle* area,FSMessageHandler * pmhParent) :
-FSMessageHandler(pmhParent), uni(NULL), target(target), area(area) , rendering(false),
-x(-1000),y(-1000) {}
+FSCamera::FSCamera(FSActor* target, FSRectangle* area)
+: uni(NULL), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}
 
 FSCamera::~FSCamera() {
     delete area;

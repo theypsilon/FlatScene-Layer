@@ -7,7 +7,7 @@
 #include "OrderGraph.h"
 #include "RutinaColision.h"
 
-
+class CTestAGameInterface;
 class CActorScrollMap;
 
 typedef std::list<CActorScrollMap*> ActorScrollCollection;
@@ -25,6 +25,8 @@ public:
     CAction* actNeutro;
     CAction* actUltimoMovimiento;
 
+    CTestAGameInterface& game;
+
     bool upfloor;
     bool downfloor;
     CRutinaColision* rutinaColision;
@@ -34,7 +36,7 @@ public:
 
     ActorScrollCollection* placeInMA;
 
-    CActorScrollMap(const char* creature,FSMessageHandler * pmhParent=NULL);
+    CActorScrollMap(const char* creature,CTestAGameInterface & game);
     virtual ~CActorScrollMap();
 
     virtual void draw(FSPoint& offset);

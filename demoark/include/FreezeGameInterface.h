@@ -6,15 +6,14 @@
 
 #include "FSdefinitions.h"
 
-class CFreezeGameInterface : public FSEngine, public FSMessageHandler
-{
+class CFreezeGameInterface : public FSEngine {
 private:
     bool pushed;
 
-    std::shared_ptr<FSEngine> previous;
+    FSEngine* previous;
 public:
 
-    CFreezeGameInterface(FSMessageHandler * pmhParent=NULL);
+    CFreezeGameInterface();
 
     virtual ~CFreezeGameInterface();
 
@@ -25,16 +24,13 @@ public:
     virtual int onExit();
 
 
-    std::shared_ptr<FSEngine> setPrevious(std::shared_ptr<FSEngine>);
+    FSEngine* setPrevious(FSEngine*);
 
     
     void onKeyFreeze(SDL_Event*);
 
     virtual void onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode);
     virtual void onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode);
-
-
-    static Uint32 MSGID_PreviousEngine;
 };
 
 #endif 

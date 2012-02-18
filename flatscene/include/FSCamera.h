@@ -11,7 +11,7 @@
 #include <vector>
 #include <string>
 
-class FSCamera : public FSMessageHandler {
+class FSCamera {
 protected:
     int x,y;
     FSActor* target;
@@ -25,7 +25,7 @@ protected:
 
 public:
     
-    FSCamera(FSActor* target,FSRectangle* area,FSMessageHandler * pmhParent=NULL);
+    FSCamera(FSActor* target,FSRectangle* area);
     virtual ~FSCamera();
     virtual int loadUniverse();
     virtual FSUniverse* getUniverse();

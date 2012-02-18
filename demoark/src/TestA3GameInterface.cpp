@@ -4,21 +4,15 @@
 #include "FreezeGameInterface.h"
 #include "MenuAGameInterface.h"
 
+#include "Player.h"
 #include "EnemyPunto.h"
 #include "EnemyNPC.h"
 
-//constructor
-CTestA3GameInterface::CTestA3GameInterface(FSMessageHandler * pmhParent) : CTestAGameInterface(pmhParent)
-{
+CTestA3GameInterface::CTestA3GameInterface() {
     score1=score2=0;
 }
 
-//destructor
-CTestA3GameInterface::~CTestA3GameInterface()
-{
-
-        readMessages();
-}
+CTestA3GameInterface::~CTestA3GameInterface() {}
 
 //initialization
 int CTestA3GameInterface::onInit() {
@@ -52,12 +46,12 @@ int CTestA3GameInterface::onInit() {
 
 
 
-    player.push_back(new CPlayer(this));
+    player.push_back(new CPlayer(*this));
     player[0]->eventChange=false;
     
     player[0]->init(activationIds,0);
 
-    player.push_back(new CPlayer(this));
+    player.push_back(new CPlayer(*this));
     player[1]->eventChange=false;
     
     player[1]->init(activationIds,1);
@@ -74,7 +68,7 @@ int CTestA3GameInterface::onInit() {
     mapDemo->incActor((FSActor*)player[0]);
     mapDemo->incActor((FSActor*)player[1]);
 
-    CEnemy* ene = CEnemy::Factory("E0",this);
+    CEnemy* ene = CEnemy::Factory("E0",*this);
     enemy.push_back(ene);
     ene->init(activationIds,100+rand()%(mapDemo->getW()*mapDemo->getTileW()-200),100+rand()%(mapDemo->getH()*mapDemo->getTileH()-200),0);
     srand(rand());
@@ -157,27 +151,26 @@ int CTestA3GameInterface::drawFrame() {
 void CTestA3GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_ESCAPE) {
 
-        CMenuAGameInterface* men = new CMenuAGameInterface(&FSLib.getLibrary());
+        std::unique_ptr<CMenuAGameInterface> men (new CMenuAGameInterface());
         men->setEventHandler(SDL_KEYDOWN,&CMenuAGameInterface::onKeyMenu);
         men->setEventHandler(SDL_KEYUP,&CMenuAGameInterface::onKeyMenu);
 
-        men->setPrevious(shared_from_this());
-
-        FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)men);
+        men->setPrevious(this);
+        FSLib.processEngine(std::move(men));
     } else if (sym==SDLK_SPACE) {
-        CFreezeGameInterface* fgi = new CFreezeGameInterface(&FSLib.getLibrary());
+
+        std::unique_ptr<CFreezeGameInterface> fgi (new CFreezeGameInterface());
         fgi->setEventHandler(SDL_KEYDOWN,&CFreezeGameInterface::onKeyFreeze);
         fgi->setEventHandler(SDL_KEYUP,&CFreezeGameInterface::onKeyFreeze);
 
-        fgi->setPrevious(shared_from_this());
-
-        FSLib.getLibrary().SendMessage(FSLib.MSGID_RunEngine, (MSGPARM)fgi);
+        fgi->setPrevious(this);
+        FSLib.processEngine(std::move(fgi));
     } else if (sym==SDLK_DELETE) {
-        getParent()->SendMessage(FSLib.MSGID_Restart);
+        FSLib.restart();
     } else if (sym==SDLK_F1) {
-        getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
+        FSLib.changeEngine();
     } else if (sym==SDLK_F2) {
-        getParent()->SendMessage(FSLib.MSGID_ReloadEngine,(MSGPARM)this);
+        FSLib.reloadEngine(this);
     } else if (sym==SDLK_F3) {
         deselect();
         FSDraw.ToggleFullscreen();
@@ -186,22 +179,13 @@ void CTestA3GameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
     CTestAGameInterface::onKeyDown(sym,mod,unicode);
 }
 
-void CTestA3GameInterface::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
-    
-    if (MsgID==CTestAGameInterface::MSGID_KillEnemy) {
-
-        void** parm = (void**) Parm2;
-
-        CPlayer* murder = (CPlayer*) parm[1];
-        if (murder) {
-            if (player[0] == murder) {
-                score1++;
-            } else if (player[1] == murder) {
-                score2++;
-            }
+void CTestA3GameInterface::killEnemy(FSActor* victim, FSActor* murder, FSUniverse* map) {
+    if (murder) {
+        if (player.at(0) == murder) {
+            score1++;
+        } else if (player.at(1) == murder) {
+            score2++;
         }
-
     }
-
-    CTestAGameInterface::pendingMessage(MsgID,Parm1,Parm2);
+    CTestAGameInterface::killEnemy(victim,murder,map);
 }

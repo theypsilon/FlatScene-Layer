@@ -1,6 +1,6 @@
 #include "TestOSDesktopInterface.h"
 
-CTestOSDesktopInterface::CTestOSDesktopInterface(FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent) {
+CTestOSDesktopInterface::CTestOSDesktopInterface() {
     raton = fondo = NULL;
     camaraf = camarar = NULL;
 
@@ -14,21 +14,19 @@ CTestOSDesktopInterface::CTestOSDesktopInterface(FSMessageHandler * pmhParent) :
     text = -1;
     file = -1;
 }
-CTestOSDesktopInterface::~CTestOSDesktopInterface() {
-
-}
+CTestOSDesktopInterface::~CTestOSDesktopInterface() {}
 
 int CTestOSDesktopInterface::onInit() {
 
-    fondo = new CActorMouse(this);
+    fondo = new CActorMouse(*this);
 
-    camaraf = new CCameraOS(fondo, new FSRectangle(0,0,FSDraw.getWidth(),FSDraw.getHeight()),this);
+    camaraf = new CCameraOS(fondo, new FSRectangle(0,0,FSDraw.getWidth(),FSDraw.getHeight()));
 
     FSDraw.projectionMode(TRP_PERSPECTIVE,1000);
 
-    raton = new CActorMouse(this);
+    raton = new CActorMouse(*this);
 
-    camarar = new CCameraOS(raton, new FSRectangle(0,0,FSDraw.getWidth(),FSDraw.getHeight()),this);
+    camarar = new CCameraOS(raton, new FSRectangle(0,0,FSDraw.getWidth(),FSDraw.getHeight()));
 
     fondo->file = Img.add("flower-wallpaper-800x600.jpg");
     fondo->graph = 0;
@@ -159,7 +157,7 @@ int CTestOSDesktopInterface::onIdle() {
 
 void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
-    auto os =  std::dynamic_pointer_cast<CTestOSDesktopInterface>(FSLib.getActualEngine());
+    auto os =  dynamic_cast<CTestOSDesktopInterface*>(FSLib.getActualEngine());
     SDLKey key = event->key.keysym.sym;
 
     if (event->type == SDL_KEYDOWN) {
@@ -181,7 +179,7 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
             os->down = true;
 
         } else if (key==SDLK_F1) 
-            FSLib.getLibrary().SendMessage(FSLib.MSGID_ChangeEngine);
+            FSLib.changeEngine();
 
     } else if (event->type == SDL_KEYUP) {
 
@@ -208,7 +206,7 @@ void CTestOSDesktopInterface::onKeyTestOS(SDL_Event* event) {
 
 void CTestOSDesktopInterface::onMouseTestOS(SDL_Event* event) {
 
-    auto os =  std::dynamic_pointer_cast<CTestOSDesktopInterface>(FSLib.getActualEngine());
+    auto os =  dynamic_cast<CTestOSDesktopInterface*>(FSLib.getActualEngine());
 
     float x = (float) (os->raton->renderPoint.x = (int) event->motion.x),
           y = (float) (os->raton->renderPoint.y = (int) event->motion.y);

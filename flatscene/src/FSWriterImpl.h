@@ -11,10 +11,10 @@ struct FSWriter::WriterImpl {
     struct SFont;
     struct SEffectText;
 
-    std::map<std::shared_ptr<FSEngine>,SData*> session;
+    std::map<FSEngine*,SData*> session;
 
     SData* data;
-    std::shared_ptr<FSEngine> admin;
+    FSEngine* admin;
 
 
     std::map<int,SFont*> Fonts;
@@ -28,7 +28,7 @@ struct FSWriter::WriterImpl {
     float height;
     float zoom;
 
-    std::shared_ptr<FSEngine> setAdmin(std::shared_ptr<FSEngine> newAdmin);
+    FSEngine* setAdmin(FSEngine* newAdmin);
 
     struct SChar {
         Uint16 glyph;

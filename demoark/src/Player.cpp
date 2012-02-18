@@ -2,7 +2,7 @@
 #include "TestAGameInterface.h"
 #include "FSLibrary.h"
 
-CPlayer::CPlayer(FSMessageHandler * pmhParent) : CActorScrollMap("PJ0",pmhParent) {
+CPlayer::CPlayer(CTestAGameInterface& game) : CActorScrollMap("PJ0",game) {
 #ifdef MENSAJES_ACCIONES
     textA0=-1;
     textA1=-1;
@@ -106,8 +106,7 @@ void CPlayer::configKey(SDLKey sym,const char* keycode) {
 
     KeyAlias[key]=sym;
 #ifdef EVENTOS_RAPIDO
-    CTestAGameInterface* father=(CTestAGameInterface*) getParent();
-    father->updatePlayerKeyAlias(sym,this,key);
+    game.updatePlayerKeyAlias(sym,this,key);
 #endif
 }
 
@@ -185,17 +184,4 @@ int CPlayer::move() {
 #endif
 
     return ret;
-}
-
-#ifdef MENSAJES_MSGIDS
-int CPlayer::SendMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
-    printf("Player 0 :: ");
-    return FSMessageHandler::SendMessage(MsgID,Parm1,Parm2);
-}
-#endif
-
-int CPlayer::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
-
-    return(FSMessageHandler::onMessage(MsgID,Parm1,Parm2));
-
 }

@@ -1,7 +1,7 @@
 #include "EnemyPunto.h"
 #include "FSLibrary.h"
 
-CEnemyPunto::CEnemyPunto(FSMessageHandler * pmhParent) : CEnemy("EPUNTO",pmhParent) {
+CEnemyPunto::CEnemyPunto(CTestAGameInterface& game) : CEnemy("EPUNTO",game) {
     m_Scrollxy.set(100,100,0);
 }
 
@@ -29,7 +29,7 @@ void CEnemyPunto::init(std::list<std::string>& activationIds,int x, int y,int z)
 
 FSActor* CEnemyPunto::clone() {
 
-    FSActor* ret = CEnemy::Factory("EPUNTO",getParent());
+    FSActor* ret = CEnemy::Factory("EPUNTO",game);
 
     std::list<std::string> none;
 

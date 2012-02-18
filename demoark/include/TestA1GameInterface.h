@@ -8,7 +8,7 @@
 class CTestA1GameInterface : public CTestAGameInterface {
 public:
 
-    CTestA1GameInterface(FSMessageHandler * pmhParent=NULL);
+    CTestA1GameInterface();
 
     virtual ~CTestA1GameInterface();
 

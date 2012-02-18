@@ -5,18 +5,10 @@
 #include "FreezeGameInterface.h"
 #include "FSLibrary.h"
 
+CFreezeGameInterface::CFreezeGameInterface() 
+: previous(nullptr), pushed(false) {}
 
-Uint32 CFreezeGameInterface::MSGID_PreviousEngine=FSMessageHandler::getNextMSGID();
-
-//constructor
-CFreezeGameInterface::CFreezeGameInterface(FSMessageHandler * pmhParent) : FSMessageHandler(pmhParent), previous(nullptr) {
-    pushed=false;
-}
-
-//destructor
-CFreezeGameInterface::~CFreezeGameInterface() {
-
-}
+CFreezeGameInterface::~CFreezeGameInterface() {}
 
 //initialization
 int CFreezeGameInterface::onInit() {
@@ -49,9 +41,9 @@ int CFreezeGameInterface::onExit() {
 
 }
 
-std::shared_ptr<FSEngine> CFreezeGameInterface::setPrevious(std::shared_ptr<FSEngine> ePrev) {
+FSEngine* CFreezeGameInterface::setPrevious(FSEngine* ePrev) {
 
-    std::shared_ptr<FSEngine> ret = previous;
+    auto ret = previous;
     previous = ePrev;
     return ret;
 
@@ -72,13 +64,10 @@ void CFreezeGameInterface::onKeyDown(SDLKey sym,SDLMod mod,Uint16 unicode) {
 
 void CFreezeGameInterface::onKeyUp(SDLKey sym,SDLMod mod,Uint16 unicode) {
     if (sym==SDLK_SPACE && pushed) {
-        getParent()->SendMessage(FSLib.MSGID_RunEngine,(void*)previous.get());
-        getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)shared_from_this().get());
+        FSLib.exit();
     } else if (sym==SDLK_F1 && pushed) {
         previous->done = true;
-
-        getParent()->SendMessage(FSLib.MSGID_KillEngine,(void*)shared_from_this().get());
-        getParent()->SendMessage(FSLib.MSGID_ChangeEngine);
+        FSLib.exit();
 
     }
 }

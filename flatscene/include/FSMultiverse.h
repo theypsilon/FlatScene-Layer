@@ -12,10 +12,8 @@
 class FSEngine;
 
 typedef  std::list<FSUniverse*> UniverseCollection;
-typedef std::map<std::shared_ptr<FSEngine>,UniverseCollection*> MultiverseByAdmin;
 
-class FSMultiverse : private FSNoncopyable, public FSSingleton<FSMultiverse> {
-    friend class FSSingleton<FSMultiverse>;
+class FSMultiverse : private FSNoncopyable {
 public:
     FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
     FSUniverse* universeNamed(std::string uniName,Uint8 slot=0);
@@ -27,17 +25,12 @@ public:
     UniverseCollection::iterator begin();
     UniverseCollection::iterator end();
 
-private:
     FSMultiverse();
     ~FSMultiverse();
-
+private:
     friend class FSUniverse;
     struct MultiverseImpl;
     MultiverseImpl* _impl;
 };
-
-#ifdef GLOBAL_SINGLETON_REFERENCES
-extern FSMultiverse& Cosmos;
-#endif
 
 #endif

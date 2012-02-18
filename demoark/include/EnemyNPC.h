@@ -5,7 +5,7 @@
 
 class CEnemyNPC : public CEnemy {
 public:
-    CEnemyNPC(FSMessageHandler * pmhParent=NULL);
+    CEnemyNPC(CTestAGameInterface& game);
     virtual ~CEnemyNPC();
 
     virtual void draw(FSPoint& offset);

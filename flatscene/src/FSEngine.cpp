@@ -109,7 +109,7 @@ int FSEngine::loop() {
         return FRACASO;
     }
 
-    auto self = shared_from_this();
+    auto self = this;
 
     FSLibrary::I()._impl->setActualEngine(self);
     
@@ -126,7 +126,7 @@ int FSEngine::loop() {
             SDL_PollEvent(&event)==1) {
 
             if(event.type==SDL_QUIT) {
-                FSLibrary::I().getLibrary().SendMessage(FSLibrary::I().MSGID_Exit);
+                FSLibrary::I().exit();
                 break;
             }
 
@@ -165,19 +165,14 @@ int FSEngine::drawFrame() {
 }
 
 
-int FSEngine::onIdle()
-{
+int FSEngine::onIdle() {
     return EXITO;
 }
 
 
-int FSEngine::onExit()
-{
+int FSEngine::onExit() {
     int ret = EXITO;
 
-    //TODO comprobar valor de vuelta de las siguientes 2 funciones.
-
-    FSMultiverse::I().clear();
     FSWriter::I().erase();
 
     initialized = false;

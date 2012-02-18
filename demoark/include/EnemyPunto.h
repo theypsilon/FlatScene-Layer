@@ -6,7 +6,7 @@
 
 class CEnemyPunto : public CEnemy {
 public:
-    CEnemyPunto(FSMessageHandler * pmhParent=NULL);
+    CEnemyPunto(CTestAGameInterface& game);
     virtual ~CEnemyPunto();
 
     void init(std::list<std::string>& activationIds,int x, int y,int z);

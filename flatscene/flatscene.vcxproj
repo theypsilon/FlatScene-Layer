@@ -88,7 +88,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\*.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp" />
+    <ClCompile Include="src\FSActor.cpp" />
+    <ClCompile Include="src\FSCamera.cpp" />
+    <ClCompile Include="src\FSCanvas.cpp" />
+    <ClCompile Include="src\FSColor.cpp" />
+    <ClCompile Include="src\FSEngine.cpp" />
+    <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSLibrary.cpp" />
+    <ClCompile Include="src\FSMultiverse.cpp" />
+    <ClCompile Include="src\FSScreen.cpp" />
+    <ClCompile Include="src\FSScreenReload.cpp" />
+    <ClCompile Include="src\FSSprite.cpp" />
+    <ClCompile Include="src\FSSpriteSet.cpp" />
+    <ClCompile Include="src\FSText.cpp" />
+    <ClCompile Include="src\FSTextBox.cpp" />
+    <ClCompile Include="src\FSTime.cpp" />
+    <ClCompile Include="src\FSUniverse.cpp" />
+    <ClCompile Include="src\FSWriter.cpp" />
     <ClCompile Include="src\tinyxml\*.cpp" />
   </ItemGroup>
   <ItemGroup>

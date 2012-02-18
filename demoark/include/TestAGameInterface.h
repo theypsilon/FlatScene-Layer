@@ -2,22 +2,15 @@
 #define __TESTAGAMEINTERFACE_H__
 
 #include "FSEngine.h"
-#include "FSMessageHandler.h"
 
 #include "FSdefinitions.h"
-#include "FSScreen.h"
-#include "ActionMove.h"
-#include "ActionFight.h"
-#include "Player.h"
-#include "Enemy.h"
 #include "ScrollCamera.h"
 #include "FSMultiverse.h"
-#include "FSImages.h"
  
-#include "TileBG.h"
 #include <vector>
 #include <map>
 #include <list>
+#include <functional>
 
 typedef struct{
     Uint8 player;
@@ -34,17 +27,13 @@ typedef struct
 
 typedef std::vector<FSCamera*> CameraCollection;
 
-/*
-    ==CTestAGameInterface==
-    CEngine componEnt test.
-*/
-class CTestAGameInterface : public FSEngine, public FSMessageHandler {
+class CPlayer;
+class CEnemy;
+
+class CTestAGameInterface : public FSEngine {
 public:
-    //sprite set
     FSSpriteset* m_pSpriteset;
-    //current position
     FSPoint m_ptCurrent;
-    //new position
     FSPoint m_ptNext;
 #ifdef EVENTOS_RAPIDO
     KeySDLAlias PlayerKeyAlias[NUM_SDLKEY];
@@ -55,18 +44,17 @@ public:
 
     CameraCollection cams;
 
+    FSMultiverse Cosmos;
+
+    std::list< std::function<void()>> endTasks;
+
 public:
-    //constructor
-    CTestAGameInterface(FSMessageHandler * pmhParent=nullptr);
-    //destructor
+    CTestAGameInterface();
     virtual ~CTestAGameInterface();
-    //initialization
     virtual int onInit()=0;
-    //idle behavior
     virtual int drawFrame();
 
     virtual int onIdle();
-    //activadores, desactivadores
     virtual int loop();
     virtual void deselect();
 
@@ -80,17 +68,9 @@ public:
     virtual void updatePlayerKeyAlias(int n, CPlayer* pyer, int key);
 #endif
 
-    virtual void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
-
-#ifdef MENSAJES_MSGIDS
-    virtual int SendMessage(Uint32 MsgID,MSGPARM Parm1=NULL,MSGPARM Parm2=NULL);
-#endif
-
-    //message ids
-
-    static Uint32 MSGID_ChangeMap;
-    static Uint32 MSGID_DeleteMap;
-    static Uint32 MSGID_KillEnemy;
+    virtual void changeMap(CActorScrollMap& actor,int direction);
+    virtual void deleteMap(FSUniverse* map);
+    virtual void killEnemy(FSActor* victim, FSActor* murder, FSUniverse* map);
 
     //TODO provisional
 
