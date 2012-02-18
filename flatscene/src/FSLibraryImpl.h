@@ -26,9 +26,9 @@ struct FSLibrary::LibraryImpl {
 
     std::string toStringErrorGL(GLenum e);
 
-    static bool orderEngine(std::unique_ptr<FSEngine>&,std::unique_ptr<FSEngine>&);
-
     static void onExit();
+
+    void sort(std::vector<std::unique_ptr<FSEngine>>& v);
 };
 
 #endif

@@ -29,15 +29,15 @@ target_link_libraries ( flatscene
 	${OPENGL_LIBRARY}
 )
 
-file ( GLOB NSRCS Itemology/*.cpp )
-file ( GLOB NHDRS Itemology/*.h )
+file ( GLOB NSRCS itemology/*.cpp )
+file ( GLOB NHDRS itemology/*.h )
 
-add_executable ( itemology ${NSRCS} ${NHDRS} )
+add_executable ( item ${NSRCS} )
 
 include_directories ( ./flatscene/include/ )
-include_directories ( ./Itemology/ )
+include_directories ( ./itemology/ )
 
-target_link_libraries ( itemology 
+target_link_libraries ( item 
 	flatscene
 )
 

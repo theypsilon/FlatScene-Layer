@@ -1,5 +1,4 @@
 #include "IFirstEngine.h"
-#include "GenericAlgorithms.h"
 
 IFirstEngine::IFirstEngine() {
 
@@ -83,13 +82,14 @@ int IFirstEngine::onIdle()	{
 	if (!mainactor)
 		return FRACASO;
 
-	setIfTrue(move[i_up],mainactor->place.y,LambdaInc(-6));
-	setIfTrue(move[i_down],mainactor->place.y,LambdaInc(6));
-	setIfTrue(move[i_left],mainactor->place.x,LambdaInc(-6));
-	setIfTrue(move[i_right],mainactor->place.x,LambdaInc(6));
+    if (move[i_up])    mainactor->place.y += -6;
+    if (move[i_down])  mainactor->place.y += +6;
+    if (move[i_left])  mainactor->place.x += -6;
+    if (move[i_right]) mainactor->place.x += +6;
 
-	setIfTrue(mainactor->place.x,cams[0]->getArea()->x + cams[0]->getArea()->w / 2 +32,LambdaLess);
-	setIfTrue(mainactor->place.y,cams[0]->getArea()->y + cams[0]->getArea()->h / 2 +32,LambdaLess);
+
+	//setIfTrue(mainactor->place.x,cams[0]->getArea()->x + cams[0]->getArea()->w / 2 +32,LambdaLess);
+	//setIfTrue(mainactor->place.y,cams[0]->getArea()->y + cams[0]->getArea()->h / 2 +32,LambdaLess);
 
 	return EXITO;
 

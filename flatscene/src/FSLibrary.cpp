@@ -19,6 +19,13 @@
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onInit(); _impl->setActualEngine(eaux); }
 #define KILLENGINE(A); EXITENGINE(A); if (A) { delete A; A=NULL; }
 
+void FSLibrary::LibraryImpl::sort(std::vector<std::unique_ptr<FSEngine>>& v) {
+    typedef const std::unique_ptr<FSEngine>& pEngine;
+    std::sort(v.begin(),v.end(),[](pEngine p1, pEngine p2) {
+        return (p1->priority > p2->priority);
+    });
+}
+
 void FSLibrary::LibraryImpl::setActualEngine(FSEngine* newEngineActive) {
     actualEngine = newEngineActive;
 }
@@ -131,12 +138,9 @@ std::unique_ptr<FSEngine> FSLibrary::processEngine(std::unique_ptr<FSEngine>&& e
 void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
     _impl->setActualEngine(nullptr);
 
-    typedef decltype(veng[0])& pEngine;
-    typedef const pEngine cpEngine;
+    typedef std::unique_ptr<FSEngine> pEngine;
 
-    std::sort(veng.begin(),veng.end(),[](cpEngine e1,cpEngine e2) {
-        return (e1->priority > e2->priority);
-    });
+    _impl->sort(veng);
 
     for (auto it = veng.begin(), et = veng.end(); 
         it != et && getActualEngine() == nullptr; ++it) {
@@ -220,9 +224,7 @@ void FSLibrary::restart() {
                 engine->onExit();
         }
 
-        std::sort((*_impl).engineIn.begin(),(*_impl).engineIn.end(),
-            FSLibrary::LibraryImpl::orderEngine
-        );
+        _impl->sort((*_impl).engineIn);
 
         _impl->setActualEngine((*_impl).engineIn.front().get());
         (*_impl).engineIn.front()->done = true;
@@ -286,9 +288,7 @@ void FSLibrary::changeEngine() {
     (*_impl).endTasks.push_back([&](){
         _impl->setActualEngine(nullptr);
 
-        std::sort((*_impl).engineIn.begin(),(*_impl).engineIn.end(),
-            FSLibrary::LibraryImpl::orderEngine
-        );
+        _impl->sort((*_impl).engineIn);
 
         for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
             it != jt && getActualEngine()==nullptr;
@@ -452,12 +452,6 @@ bool FSLibrary::inDebug() {
 }
 
 #endif
-
-bool FSLibrary::LibraryImpl::orderEngine(std::unique_ptr<FSEngine>& x, std::unique_ptr<FSEngine>& y) {
-
-    return ((x->priority)<(y->priority));
-
-}
 
 #ifdef GLOBAL_SINGLETON_REFERENCES
 FSLibrary& FSLib = FSLibrary::I();

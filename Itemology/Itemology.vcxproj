@@ -87,7 +87,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GenericAlgorithms.h" />
     <ClInclude Include="IDebug.h" />
     <ClInclude Include="IFirstEngine.h" />
     <ClInclude Include="IScrollCamera.h" />
