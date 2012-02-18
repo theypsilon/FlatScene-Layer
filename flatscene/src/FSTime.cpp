@@ -4,100 +4,45 @@
 #include "FSLibrary.h"
 
 
-FSTime::FSTime() : actTime(NULL), admin(NULL), all(false), allMsInterval(16) {
+FSTime::FSTime() {
 #ifdef MENSAJES_FPS
-        fps=0;
-        auxTimer=0;
+        _fps=0;
+        _auxTimer=0;
 #endif
 }
 
-FSTime::~FSTime() {
-}
+FSTime::~FSTime() {}
 
 unsigned int FSTime::getTick() const {
-
-    if (admin != FSLibrary::I().getActualEngine()) {
-        admin = FSLibrary::I().getActualEngine();
-        actTime = & fc[admin];
-    }
-
-    return actTime->frameCount;
+    return _ticks;
 }
 
-unsigned int FSTime::setInterval(unsigned int msNew, bool all) {
-
-    if (!all && admin != FSLibrary::I().getActualEngine()) {
-        admin = FSLibrary::I().getActualEngine();
-        actTime = & fc[admin];
-    }
-
-    int aux=0;
-
-    if (all) {
-        FSTime::all = true;
-        aux = allMsInterval;
-        allMsInterval = msNew;
-    } else {
-        FSTime::all = false;
-        aux = actTime->msInterval;
-        actTime->msInterval = msNew;
-    }
-
+unsigned int FSTime::setInterval(unsigned int msInterval) {
+    auto aux = _msInterval;
+    _msInterval = msInterval;
     return aux;
 }
 
-unsigned int FSTime::setFPS(unsigned int fpsNew, bool all) {
-
-    int aux = setInterval(1000 / fpsNew, all);
-
-    if (aux == FRACASO)
-        return FRACASO;
-
+unsigned int FSTime::setFPS(unsigned int fpsInterval) {
+    auto aux = setInterval(1000 / fpsInterval);
     return (1000 / aux);
 }
 
 int  FSTime::nextFrame() {
-
     int ret = EXITO;
 
-    if (admin != FSLibrary::I().getActualEngine()) {
-        admin = FSLibrary::I().getActualEngine();
-        actTime = & fc[admin];
+    while ((_msLast + _msInterval) > SDL_GetTicks()) {
+        SDL_Delay(1);
     }
-
-    if ( FSScreen::I().render() == FRACASO )
-        return FRACASO;
-
-    if (all) {
-
-        while ((actTime->msLast + allMsInterval) > SDL_GetTicks()) {
-            SDL_Delay(1);
-        }
-        actTime->msLast = SDL_GetTicks();
-        actTime->frameCount++;
-
-    } else {
-
-        while ((actTime->msLast + actTime->msInterval) > SDL_GetTicks()) {
-            SDL_Delay(1);
-        }
-        actTime->msLast = SDL_GetTicks();
-        actTime->frameCount++;
-
-    }
+    _msLast = SDL_GetTicks();
+    _ticks++;
 
 #ifdef MENSAJES_FPS
-    fps++;
-
-    if (SDL_GetTicks() > auxTimer + 1000) {
-        auxTimer=SDL_GetTicks();
-
-        if (adminText.find(FSLibrary::I().getActualEngine())!=adminText.end())
-            FSWriter::I().erase(adminText[FSLibrary::I().getActualEngine()]);
-
-        adminText[FSLibrary::I().getActualEngine()]=FSWriter::I().line(0,5,5,"FPS: %d ",fps);
-
-        fps=0;
+    _fps++;
+    if (SDL_GetTicks() > _auxTimer + 1000) {
+        _auxTimer=SDL_GetTicks();
+        FSWriter::I().erase(FSWriter::I().line(0,5,5,"FPS: %d ",_fps),true);
+        _fps=0;
     }
     
 #endif
@@ -105,8 +50,8 @@ int  FSTime::nextFrame() {
     return ret;
 }
 
-bool FSTime::isTimeForAll() const {
-    return all;
+void FSTime::reset(unsigned int tick) {
+    _ticks = tick;
 }
 
 // TODO : Liberar los espacios de memoria correspondiente a los engines cuando estos sean eliminados. 
