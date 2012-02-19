@@ -1,38 +1,10 @@
 #include "FSSprite.h"
 #include "FSScreen.h"
 
-FSSprite::FSSprite ( SCanvas pSurface, FSPoint* zerocpSource) : FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED) {
-
-    if (zerocpSource==NULL) 
-        cpoint =new FSPoint(0,0);
-    else
-        cpoint = zerocpSource;
-
-}
+FSSprite::FSSprite ( SCanvas pSurface, FSPoint zerocpSource) 
+: FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
 
 FSSprite::~FSSprite ( ) {
-
-    std::vector<RectArea*>::iterator iter ;
-    RectArea* area ;
-    while ( !areas.empty ( ) ) {
-        iter = areas.begin ( ) ;
-        area = *iter ;
-        RectArea::iterator iter2 ;
-        FSRectangle* rect;
-        while ( !area->empty() ) {
-            iter2 = area->begin();
-            rect = *iter2;
-            area->erase( iter2);
-            delete rect;
-        }
-
-        areas.erase (iter) ;
-        delete area ;
-    }
-    if ( cpoint != NULL ) {
-        delete cpoint;
-        cpoint = NULL;
-    }
 
     if (m_pSurface.sdl_surf) {
         SDL_FreeSurface(m_pSurface.sdl_surf);
@@ -45,44 +17,39 @@ FSSprite::~FSSprite ( ) {
     
 }
 
-FSCanvas* FSSprite::getImage ( ) {
-    return ( (FSCanvas*) this ) ;
-}
-
-void FSSprite::put (FSPoint& ptDst ,Uint8 flags) {
+void FSSprite::put (FSPoint ptDst ,Uint8 flags) const {
     if (flags & 0x001) {
-        ptDst.y -= cpoint->y;
-        ptDst.x -= getImage()->getWidth() - cpoint->x;
+        ptDst.y -= cpoint.y;
+        ptDst.x -= getWidth() - cpoint.x;
     } else {
-        ptDst.x -= cpoint->x;
-        ptDst.y -= cpoint->y;
+        ptDst.x -= cpoint.x;
+        ptDst.y -= cpoint.y;
     }
 
     FSCanvas::put(ptDst,flags);
 }
 //TODO
 
-void FSSprite::setName (const char *newName) {
+void FSSprite::setName (const std::string& newName) {
     name=newName;
 }
 
-std::string FSSprite::getName() {
+const std::string& FSSprite::getName() const {
     return name;
 }
 
-int FSSprite::addRect(unsigned int area,FSRectangle* rect) {
-    areas[area]->push_back(rect);
-    return (areas[area]->size()-1);
+int FSSprite::addRect(unsigned int area,FSRectangle rect) {
+    areas.at(area).push_back(rect);
+    return (areas.at(area).size()-1);
 }
 
-int FSSprite::addArea(RectArea* area) {
+int FSSprite::addArea(RectArea area) {
     areas.push_back(area);
     return (areas.size()-1);
 }
 
 
-RectArea* FSSprite::getArea (unsigned int n ) 
-{
+const RectArea& FSSprite::getArea (unsigned int n ) const {
 #ifdef VECTOR_COMP
     if ((n<0) || (n >= areas.size()))
         return NULL;
@@ -90,48 +57,36 @@ RectArea* FSSprite::getArea (unsigned int n )
     return (areas[n]) ;
 }
 
-FSRectangle* FSSprite::getRect (unsigned int n ,unsigned int m) 
-{
+const FSRectangle& FSSprite::getRect (unsigned int n ,unsigned int m) const {
 #ifdef VECTOR_COMP
     if ((n<0) || (n >= areas.size()) || (m<0) || (m >= areas[n]->size()))
         return NULL;
 #endif
-    return ((*areas[n])[m]) ;
+    return areas[n][m];
 }
 
-FSPoint* FSSprite::getCenter() {
+const FSPoint& FSSprite::getCenter() const {
     return cpoint;
 }
 
-void FSSprite::replaceCenter(FSPoint *c) {
-    delete cpoint;
+void FSSprite::replaceCenter(FSPoint c) {
     cpoint = c;
 }
 
-void FSSprite::replaceArea(unsigned int n,RectArea* area) {
+void FSSprite::replaceArea(unsigned int n,RectArea area) {
     if (n < areas.size()) {
-        RectArea::iterator iter2 ;
-        FSRectangle* rect;
-        while ( !areas[n]->empty() ) {
-            iter2 = areas[n]->begin();
-            rect = *iter2;
-            areas[n]->erase( iter2);
-            delete rect;
-        }
-        delete areas[n];
         areas[n]=area;
     }
 }
 
-void FSSprite::replaceRect(unsigned int area,unsigned int n,FSRectangle* rect) {
-    if ((area < areas.size()) && (n < areas[area]->size())) {
-        delete (*areas[area])[n];
-        (*areas[area])[n]=rect;
+void FSSprite::replaceRect(unsigned int area,unsigned int n,FSRectangle rect) {
+    if ((area < areas.size()) && (n < areas[area].size())) {
+        areas[area][n]=rect;
     }
 }
 
 
-int FSSprite::size() {
+int FSSprite::size() const {
     return (areas.size());
 }
 

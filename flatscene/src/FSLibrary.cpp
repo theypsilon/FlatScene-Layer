@@ -12,7 +12,7 @@
 #include "FSLibraryImpl.h"
 #include "FSScreenImpl.h"
 
-#include <exception>
+#include "FSException.h"
 #include <algorithm>
 
 #define EXITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onExit(); _impl->setActualEngine(eaux); }
@@ -158,8 +158,7 @@ void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
             (*it)->done = false;
 
         if (veng.empty()) {
-            FSLibrary::Error("There are no engines in queue!");
-            throw std::exception();
+            throw FSException("There are no engines in queue!");
         }
 
         _impl->setActualEngine(veng.front().get());
@@ -170,11 +169,11 @@ void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
 
     while (getActualEngine()) {
 
-        if (!getActualEngine()->isInitialized())
-            if (!getActualEngine()->onInit()) {
-                Error("Could not initialize new interface!");
-                throw std::exception();
-            }
+        if (!getActualEngine()->isInitialized()) {
+            getActualEngine()->onInit();
+            if (!getActualEngine()->isInitialized())
+                throw FSException("Could not initialize new interface!");
+        }
 
         getActualEngine()->loop();
 

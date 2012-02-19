@@ -1,4 +1,5 @@
 #include "IFirstEngine.h"
+#include "FSException.h"
 
 IFirstEngine::IFirstEngine() {
 
@@ -7,49 +8,41 @@ IFirstEngine::IFirstEngine() {
 	move[i_left] = false;
 	move[i_right] = false;
 
-	setEventHandler(SDL_KEYDOWN,&IFirstEngine::onKeyboard);
-	setEventHandler(SDL_KEYUP,&IFirstEngine::onKeyboard);
-
 }
 
-IFirstEngine::~IFirstEngine()	{
+IFirstEngine::~IFirstEngine()	{}
 
-	// TODO
-}
-
-void IFirstEngine::onKeyboard(SDL_Event* e) {
+void IFirstEngine::onEvent(SDL_Event& e) {
 
 	bool turn = true;
 
-	if (e->type == SDL_KEYUP)
+	if (e.type == SDL_KEYUP)
 		turn = false;
 
-	if ( e->key.keysym.sym == SDLK_LEFT )
+	if ( e.key.keysym.sym == SDLK_LEFT )
 		move[i_left] = turn;
 
-	if ( e->key.keysym.sym == SDLK_DOWN )
+	if ( e.key.keysym.sym == SDLK_DOWN )
 		move[i_down] = turn;
 
-	if ( e->key.keysym.sym == SDLK_UP )
+	if ( e.key.keysym.sym == SDLK_UP )
 		move[i_up] = turn;
 
-	if ( e->key.keysym.sym == SDLK_RIGHT )
+	if ( e.key.keysym.sym == SDLK_RIGHT )
 		move[i_right] = turn;
 
 }
 
-int IFirstEngine::drawFrame() {
+void IFirstEngine::drawFrame() {
 
 	for (auto i = cams.begin(); i != cams.end(); ++i) {
 		(*i)->render();
 	}
 
 	Write.render();
-
-	return EXITO;
 }
 
-int  IFirstEngine::onInit() {
+void  IFirstEngine::onInit() {
 
 	FSEngine::onInit();
 
@@ -70,17 +63,15 @@ int  IFirstEngine::onInit() {
 
 	printf("onInit : IScrollObjects %d \n",IScrollObject::getInstances());
 
-	return EXITO;
-
 }
 
 //idle. Main loop.
-int IFirstEngine::onIdle()	{
+void IFirstEngine::onIdle()	{
 
 	void (IFirstEngine::* fptr)(SDL_Event* e);
 
 	if (!mainactor)
-		return FRACASO;
+		throw FSException("no main actor",__LINE__);
 
     if (move[i_up])    mainactor->place.y += -6;
     if (move[i_down])  mainactor->place.y += +6;
@@ -90,12 +81,9 @@ int IFirstEngine::onIdle()	{
 
 	//setIfTrue(mainactor->place.x,cams[0]->getArea()->x + cams[0]->getArea()->w / 2 +32,LambdaLess);
 	//setIfTrue(mainactor->place.y,cams[0]->getArea()->y + cams[0]->getArea()->h / 2 +32,LambdaLess);
-
-	return EXITO;
-
 }
 
-int IFirstEngine::onExit() {
+void IFirstEngine::onExit() {
 
 	for (auto i = cams.begin(); i != cams.end(); ++i) {
 		auto level = dynamic_cast<IScrollLevel*>((*i)->getUniverse());
@@ -110,24 +98,13 @@ int IFirstEngine::onExit() {
 
 	cams.clear();
 
-	// TODO : Liberación de recursos no necesarios mientras no haya ejecución de 'onIdle'.
-
-	FSEngine::onExit();
-
-	return EXITO;
-
+    FSEngine::onExit();
 }
 
 void IFirstEngine::deselect() {
-	FSEngine::deselect();
-
-	// TODO : Siempre se debe llamar previamente al método de la clase base.
-
+    FSEngine::deselect();
 }
 
-int IFirstEngine::loop() {
-
-	// TODO : Siempre se debe llamar posteriormente al método de la clase base.
-
-	return FSEngine::loop();
+void IFirstEngine::loop() {
+    FSEngine::loop();
 }

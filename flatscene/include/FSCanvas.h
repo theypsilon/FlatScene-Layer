@@ -47,28 +47,28 @@ private:
 
     static inline Uint32 pow2 (Uint32 n);
 
-    std::list<std::function<void(void)>> initCallbackList;
-    std::list<std::function<void(void)>> endCallbackList;
+    mutable std::list<std::function<void(void)>> initCallbackList;
+    mutable std::list<std::function<void(void)>> endCallbackList;
 
 public:
 
-    SCanvas* getCanvas();
+    const SCanvas& getCanvas() const;
 
     // Funciona s�lo si hay SDL_Surface
-    Uint32 getPixel ( int x , int y ) ;
+    Uint32 getPixel ( int x , int y ) const;
 
-    int getWidth ( ) ;
-    int getHeight ( ) ;
+    int getWidth ( ) const;
+    int getHeight ( ) const;
 
     //render image
-    void put ( FSPoint& ptDst , Uint8 flags=0) ;
-    void put ( FSFloatPoint& ptDst , Uint8 flags=0) ;
+    void put ( const FSPoint& ptDst , Uint8 flags=0) const;
+    void put ( const FSFloatPoint& ptDst , Uint8 flags=0) const;
 
-    int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
-    int translate(float x, float y, float z);
-    int scale(float x, float y, float z);
-    int color(float red, float green, float blue, float alpha);
-    int color(FSColor* col,float alpha=1.0);
+    int rotate(float angle, float x=0.0, float y=0.0, float z=1.0) const;
+    int translate(float x, float y, float z) const;
+    int scale(float x, float y, float z) const;
+    int color(float red, float green, float blue, float alpha) const;
+    int color(FSColor* col,float alpha=1.0) const;
 };
 
 #endif

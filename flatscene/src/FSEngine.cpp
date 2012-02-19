@@ -6,6 +6,7 @@
 #include "FSLibraryImpl.h"
 #include "FSMultiverse.h"
 #include "FSWriter.h"
+#include "FSException.h"
 
 
 
@@ -22,91 +23,21 @@ bool FSEngine::isInitialized() {
     return initialized;
 }
 
-int FSEngine::onInit() {
-
+void FSEngine::onInit() {
     initialized = true;
-
-    return EXITO;
 }
 
-void FSEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
-
-    if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
-        ;//ret = NULL;
-    else {
-        //ret = this->eventHandlerRegister2[type];
-
-        if (eventHandler == NULL) {
-            this->eventHandlerRegister2.erase(eventHandlerRegister2.find(type));
-            //return ret;
-        }
+void FSEngine::onEvent(const SDL_Event& event) {
+    if(event.type==SDL_QUIT) {
+        FSLibrary::I().exit();
     }
-
-    this->eventHandlerRegister2[type] = eventHandler;
-
 }
-
-template <class T> void FSEngine::nocompila(void (T::*puntero)(void)) {
-
-    std::function<void ()> f;
-    
-    f = std::bind1st( std::mem_fun(puntero), (T*) this);
-
-    f();
-}
-/*
-template <class T>
-void CEngine::setEventHandler(Uint8 type,void (T::*eventHandler)(SDL_Event*)) {
-    boost::function<void (SDL_Event*)> f;
-
-    f = std::bind1st( mem_fun(eventHandler) , (T*)this);
-
-    boost::function<void (SDL_Event*)> ret;
-
-    printf("culo de mono\n");
-
-    if (this->eventHandlerRegister2.find(type) == this->eventHandlerRegister2.end())
-        ;//ret = NULL;
-    else {
-        ret = this->eventHandlerRegister2[type];
-
-        if (eventHandler == NULL) {
-            this->eventHandlerRegister2.erase(eventHandlerRegister2.find(type));
-            return;
-        }
-    }
-
-    this->eventHandlerRegister2[type] = f;
-}
-
-const void* CEngine::setEventHandler(Uint8 type,void (eventHandler)(SDL_Event*)) {
-
-    const void* ret;
-
-    if (this->eventHandlerRegister.find(type) == this->eventHandlerRegister.end())
-        ret = NULL;
-    else {
-        ret = this->eventHandlerRegister[type];
-
-        if (eventHandler == NULL) {
-            this->eventHandlerRegister.erase(eventHandlerRegister.find(type));
-            return ret;
-        }
-    }
-
-    this->eventHandlerRegister[type] = (const void*) eventHandler;
-
-    return ret;
-}*/
-
-
 
 //bucle principal
-int FSEngine::loop() {
+void FSEngine::loop() {
 
     if (!isInitialized()) {
-        FSLibrary::I().Error("Engine not inicialized");
-        return FRACASO;
+        throw FSException("Engine not inicialized", __LINE__);
     }
 
     auto self = this;
@@ -119,33 +50,13 @@ int FSEngine::loop() {
 
     while (FSLibrary::I().getActualEngine() == self) {
 
-        if(
-#ifdef DEBUGTEST
-            !FSLibrary::I().inDebug() &&
-#endif
-            SDL_PollEvent(&event)==1) {
-
-            if(event.type==SDL_QUIT) {
-                FSLibrary::I().exit();
-                break;
-            }
-
-            //si hay manejador de eventos registrado para este evento, lo ejecuta
-            if (eventHandlerRegister2.find(event.type)!=eventHandlerRegister2.end())
-                eventHandlerRegister2[event.type](&event);
-
+        if(SDL_PollEvent(&event)==1) {
+            onEvent(event);
         } else {
-
             onIdle();
-
             drawFrame();
-
-            Chrono.nextFrame();
         }
     }
-
-    return EXITO;
-
 }
 
 void FSEngine::deselect() {
@@ -154,28 +65,17 @@ void FSEngine::deselect() {
     FSLibrary::I()._impl->setActualEngine(NULL);
 }
 
-int FSEngine::drawFrame() {
-
+void FSEngine::drawFrame() {
     if (!isInitialized()) {
-        FSLibrary::I().Error("Motor not inicialized");
-        return FRACASO;
+        throw FSException("Motor not inicialized", __LINE__);
     }
-
-    return EXITO;
 }
 
 
-int FSEngine::onIdle() {
-    return EXITO;
-}
+void FSEngine::onIdle() {}
 
 
-int FSEngine::onExit() {
-    int ret = EXITO;
-
+void FSEngine::onExit() {
     FSWriter::I().erase();
-
     initialized = false;
-
-    return ret;
 }

@@ -7,12 +7,9 @@
 #include <exception>
 
 FSCanvas::FSCanvas( SCanvas pSurface ) 
-{
-    m_pSurface = pSurface;
-}
+: m_pSurface(pSurface) {}
 
-FSCanvas::~FSCanvas( ) 
-{
+FSCanvas::~FSCanvas( ) {
 
     if (m_pSurface.sdl_surf) {
         SDL_FreeSurface(m_pSurface.sdl_surf);
@@ -24,19 +21,17 @@ FSCanvas::~FSCanvas( )
     clearSurface();
 }
 
-void FSCanvas::clearSurface ( ) 
-{
+void FSCanvas::clearSurface ( ) {
     m_pSurface.bpp = m_pSurface.h = m_pSurface.h2 = m_pSurface.w = m_pSurface.w2 = m_pSurface.tex = 0;
     m_pSurface.sdl_surf = NULL;
 
 }
 
-SCanvas* FSCanvas::getCanvas() {
-    return &m_pSurface;
+const SCanvas& FSCanvas::getCanvas() const {
+    return m_pSurface;
 }
 
-Uint32 FSCanvas::getPixel ( int x , int y ) 
-{
+Uint32 FSCanvas::getPixel ( int x , int y ) const {
     SDL_Surface* surface= m_pSurface.sdl_surf;
     if (surface && surface->w > x && surface->h > y) {
         Uint32 color = 0 ;
@@ -50,16 +45,14 @@ Uint32 FSCanvas::getPixel ( int x , int y )
     }
 }
 
-int FSCanvas::getWidth () 
-{
+int FSCanvas::getWidth () const {
     return ( m_pSurface.w2 );
 }
 
-int FSCanvas::getHeight () 
-{
+int FSCanvas::getHeight () const {
     return ( m_pSurface.h2 ) ;
 }
-void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) {
+void FSCanvas::put ( const FSFloatPoint& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
 
     //PUSHMATRIX
@@ -157,7 +150,7 @@ void FSCanvas::put ( FSFloatPoint& ptDst, Uint8 flags) {
 
 #endif
 }
-void FSCanvas::put ( FSPoint& ptDst, Uint8 flags) {
+void FSCanvas::put ( const FSPoint& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
 
     //PUSHMATRIX
@@ -540,7 +533,7 @@ Uint32 FSCanvas::pow2 (Uint32 n) {
     return c;
 }
 
-int FSCanvas::rotate(float angle, float x, float y, float z) {
+int FSCanvas::rotate(float angle, float x, float y, float z) const {
 
     initCallbackList.push_back([=](){
         FSScreen::I().rotate(angle,x,y,z);
@@ -548,7 +541,7 @@ int FSCanvas::rotate(float angle, float x, float y, float z) {
 
     return EXITO;
 }
-int FSCanvas::translate(float x, float y, float z) {
+int FSCanvas::translate(float x, float y, float z) const {
 
     initCallbackList.push_back([=](){
         FSScreen::I().translate(x,y,z);
@@ -556,7 +549,7 @@ int FSCanvas::translate(float x, float y, float z) {
 
     return EXITO;
 }
-int FSCanvas::scale(float x, float y, float z) {
+int FSCanvas::scale(float x, float y, float z) const {
 
     initCallbackList.push_back([=](){
         FSScreen::I().scale(x,y,z);
@@ -565,7 +558,7 @@ int FSCanvas::scale(float x, float y, float z) {
     return EXITO;
 }
 
-int FSCanvas::color(float red, float green, float blue, float alpha) {
+int FSCanvas::color(float red, float green, float blue, float alpha) const {
 
     if (red > 1.0) red = 1.0;
     if (green > 1.0) green = 1.0;
@@ -588,6 +581,6 @@ int FSCanvas::color(float red, float green, float blue, float alpha) {
     return EXITO;
 }
 
-int FSCanvas::color(FSColor* col, float alpha) {
+int FSCanvas::color(FSColor* col, float alpha) const {
     return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
 }

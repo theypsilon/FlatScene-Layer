@@ -23,24 +23,24 @@ public:
 
 	// Opcional, pero invocado por la Libraría. Debe devolver 'true' para que la librería pueda tomar el motor como "Motor Activo" ( CLibrary::getActualEngine(); )
 	// En este método se pueden reservar recursos necesarios para la ejecución de lmotor.
-	int onInit();
+	void onInit();
 	
 	// Opcional, pero invocado por la Librería. En este método se pueden liberar recursos que eran necesarios para la ejecución de lmotor.
-	int onExit();
+	void onExit();
 
 	// Función necesaria para el procesamiento de Eventos por parte de este Motor.
-	int loop();
+	void loop();
 
 	// Rutina principal. Aquí se debe incluir la implementación principal del motor para actualizar su estado.
-	int onIdle();
+	void onIdle();
 
 	// Opcional. Pensado para resolver conflictos ante inesperadas conmutaciones entre diferentes Motores.
 	virtual void deselect();
 
 	// Rutina de renderización. Aquí deberían invocarse todas las rutina de renderización de los elementos controlados por el Motor.
-	int drawFrame();
+	void drawFrame();
 
-	void onKeyboard(SDL_Event* e);
+	void onEvent(SDL_Event& e);
 
 	/*
 	void onAPush();

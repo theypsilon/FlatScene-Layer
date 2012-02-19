@@ -2,8 +2,7 @@
 #define __SPRITESET_H__
 
 #include "FSSprite.h"
-#include "FSparserXML.h"
-#include <vector>
+#include <memory>
 
 typedef std::vector<FSSprite*> SpriteCollection;
 
@@ -15,48 +14,29 @@ typedef struct {
 } SpritesetInfo ;
 
 class FSSpriteset {
-private :
-
-    static Uint16 globalAuxiliar;
-    //Inicializa Spriteset con los contenidos del fichero de tipo gr�fico, cuyo nombre es obtenido por el constructor.
-    void loadChipset(std::string& c,Uint8 mode=ONLY_TEXTURE,std::string* cPrev=NULL);
-
-    void loadChipsetSplit(std::string grd,Uint8 mode=ONLY_TEXTURE);
-
-    std::string name;
-    //Contenedor de Sprites.
-    SpriteCollection m_vecSprites ;
-
-    Uint8 mode;
-
-    friend class FSImages;
-    //construct empty sprite set
-    FSSpriteset();
-    //constructor que inicializa la colecci�n con un fichero externo.
-    FSSpriteset(std::string c,Uint8 mode=ONLY_TEXTURE);
-
-    virtual ~FSSpriteset();
-
-    void add ( FSSprite* pspt ) ;
-    bool setName(std::string& name);
-    void remove ( FSSprite* pspt ) ;
-
-    friend class FSScreen;
-
 public:
 
-    bool has ( FSSprite* pspt ) ;
+    bool has ( FSSprite* pspt ) const;
 
-    int search ( FSSprite* pspt ) ;
+    int search ( FSSprite* pspt ) const;
 
     FSSprite* get ( unsigned int n ) const;
 
-    int size () ;
+    int size () const;
 
-    std::string getName();
+    const std::string& getName() const;
 
-    Uint8 getMode();
+    Uint8 getMode() const;
 
+private :
+    struct SpritesetImpl;
+    const std::unique_ptr<SpritesetImpl> _impl;
+
+    FSSpriteset(std::string c = "",Uint8 mode=ONLY_TEXTURE);
+    virtual ~FSSpriteset();
+
+    friend class FSScreen;
+    friend class FSImages;
 };
 
 typedef struct {
