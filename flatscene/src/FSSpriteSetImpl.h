@@ -777,7 +777,7 @@ struct FSSpriteset::SpritesetImpl {
         std::map<int,Area> globalareas;
     };
 
-    DataGRD loadFileGRD(const std::string& grd_str = "",SDL_Surface const * chipset = nullptr) {
+    DataGRD loadFileGRD(const std::string& grd_str = "",const SDL_Surface *const chipset = nullptr) {
         TiXmlDocument doc(grd_str.c_str());
         if (!doc.LoadFile()) {
             if (!chipset)
@@ -792,7 +792,6 @@ struct FSSpriteset::SpritesetImpl {
         DataGRD grd;
 
         TiXmlHandle input(doc.FirstChild()); 
-
         if (!input.Element()) throw FSException("no elements in grd file",__LINE__);
 
         auto& head = *input.Element();
@@ -817,19 +816,12 @@ struct FSSpriteset::SpritesetImpl {
     }
 
     bool isDefinedInOtherFile(const TiXmlElement& head) {
-        auto def = head.Attribute("defined-in");
-        if (def) {
-            return true;
-        }
-        return false;
+        return checkAttr(head,"defined-in","",false);
     }
 
     DataGRD getFromOtherFile(const TiXmlElement& head) {
-        auto def = head.Attribute("defined-in");
-        if (!def) {
-            throw FSException("there is no extern grd definition defined",__LINE__);
-        }
-        std::string grd_str(def);
+        ensureAttr(head,"defined-in","",false);
+        std::string grd_str(head.Attribute("defined-in"));
         return loadFileGRD(grd_str);
     }
 
