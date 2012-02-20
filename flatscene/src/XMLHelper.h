@@ -8,7 +8,7 @@
 namespace fs { namespace intern { namespace xml {
 
     bool checkAttr(const TiXmlElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
-        if (!name) throw FSException("no attribute name supplied",__LINE__);
+        if (!name) throw FSException("no attribute name supplied",__LINE__); //FIXME static_assert?
         auto attr = el.Attribute(name);
         if (!attr) return false;
         if (value && ( ( equals && strcmp(attr,value)!=0) || 
