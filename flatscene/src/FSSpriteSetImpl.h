@@ -2,11 +2,22 @@
 #define __FS_SPRITESET_IMPL__
 
 #include "FSSpriteSet.h"
+#include "FSException.h"
 #include "FSparserXML.h"
 #include "FSLibrary.h"
 #include "debugfuncs.h"
 
 #include <algorithm>
+#include <iostream>
+#include <limits>
+
+#ifdef max
+#undef max
+#endif
+
+#include "XMLHelper.h"
+
+using namespace fs::intern::xml;
 
 struct FSSpriteset::SpritesetImpl {
 
@@ -721,20 +732,149 @@ struct FSSpriteset::SpritesetImpl {
 
     }
 
-    void getnamefile() {
+    bool isValidBitmapExtension(const std::string& bitmap) {
+        return bitmap == ".png" || bitmap == ".bmp" || bitmap == ".jpg";
+    }
+
+    void getNameFile(const std::string& str, std::string& grd, std::string& bitmap) {
+
+        std::string tipefile;
+        std::string namefile;
+
+        auto res = str.end();
+        for(auto it=str.begin(), et=str.end(); it != et ; ++it)
+            if (*it == '.')
+                res = it;
+
+        if (res != str.end()) {
+            namefile = std::string(str.begin(),res);
+            tipefile = std::string(res,str.end());
+        } else {
+            namefile = str;
+            tipefile = ".png";
+        }
+
+        if (!isValidBitmapExtension(tipefile)) 
+            throw FSException("graphic bitmap format not valid");
+
+        grd = namefile + ".grd";
+        bitmap = namefile + tipefile;
 
     }
 
-    void loadfile() {
+    struct DataGRD {
+        std::vector<FSPoint> images;
+        int num_img;
+        int cellwidth;
+        int cellheight;
+        bool simple;
+        int sp_scale;
+        FSPoint globalcp;
+        struct Area {
+            bool relative;
+            std::vector<FSRectangle> rc;
+        };
+        std::map<int,Area> globalareas;
+    };
 
+    DataGRD loadFileGRD(const std::string& grd_str = "",SDL_Surface const * chipset = nullptr) {
+        TiXmlDocument doc(grd_str.c_str());
+        if (!doc.LoadFile()) {
+            if (!chipset)
+                throw FSException("no valid grd file, and no valid bitmap",__LINE__);
+            return fillGRDFromChipset(*chipset);
+        }
+
+        return fillGRDFromDocument(doc);
     }
 
-    void processheadelement() {
+    DataGRD fillGRDFromDocument(TiXmlDocument& doc) {
+        DataGRD grd;
 
+        TiXmlHandle input(doc.FirstChild()); 
+
+        if (!input.Element()) throw FSException("no elements in grd file",__LINE__);
+
+        auto& head = *input.Element();
+        if (isDefinedInOtherFile(head))
+            return getFromOtherFile(head);
+
+        processHeadElement(grd,head);
+        processGlobalValues(grd,input);
+
+        return grd;
     }
 
-    void processglobalstuff() {
+    DataGRD fillGRDFromChipset(const SDL_Surface& chipset) {
+        DataGRD grd;
+        grd.images.push_back(FSPoint());
 
+        auto& img = grd.images.front();
+        img.x = chipset.w;
+        img.y = chipset.h;
+
+        return grd;
+    }
+
+    bool isDefinedInOtherFile(const TiXmlElement& head) {
+        auto def = head.Attribute("defined-in");
+        if (def) {
+            return true;
+        }
+        return false;
+    }
+
+    DataGRD getFromOtherFile(const TiXmlElement& head) {
+        auto def = head.Attribute("defined-in");
+        if (!def) {
+            throw FSException("there is no extern grd definition defined",__LINE__);
+        }
+        std::string grd_str(def);
+        return loadFileGRD(grd_str);
+    }
+
+    void processHeadElement(DataGRD& grd, const TiXmlElement& head) {
+        grd.num_img = intFromAttr(head,"sprites");
+        grd.cellwidth = intFromAttr(head,"cellwidth");
+        grd.cellheight = intFromAttr(head,"cellheight");
+
+        if (checkAttr(head,"type","split"))
+            ; // @TODO return loadChipsetSplit(s_aux,mode);
+
+        grd.simple = checkAttr(head,"simple","true");
+        if (checkAttr(head,"sp-scale"))
+            grd.sp_scale = intFromAttr(head,"sp-scale");
+    }
+
+    void processGlobalValues(DataGRD& grd, const TiXmlHandle& doc) {
+        if (!grd.simple) {
+            
+            if (doc.FirstChildElement("globalcpoint").Element()) {
+                auto& el = *doc.FirstChildElement("globalcpoint").Element();
+                grd.globalcp.set( intFromAttr(el,"x",0,grd.cellwidth)  ,
+                                  intFromAttr(el,"y",0,grd.cellheight));
+            }
+
+            for (auto pArea = doc.FirstChildElement("globalareas").FirstChildElement("area").Element();
+                pArea ; pArea = pArea->NextSiblingElement()) {
+                    int id = intFromAttr(*pArea,"id",0,std::numeric_limits<int>::max());
+
+                    auto& area = grd.globalareas.at(id);
+                    area.relative = checkAttr(*pArea,"relative","true");
+
+                    for(auto pRect = pArea->FirstChildElement("rectangle"); pRect ; 
+                        pRect = pRect->NextSiblingElement() ) {
+                            FSRectangle rc;
+                            rc.x = intFromAttr(*pRect,"x1") * grd.sp_scale;
+                            rc.w = intFromAttr(*pRect,"x2") * grd.sp_scale;
+                            rc.y = intFromAttr(*pRect,"y1") * grd.sp_scale;
+                            rc.h = intFromAttr(*pRect,"y2") * grd.sp_scale;
+                            area.rc.push_back(std::move(rc));
+                    }
+
+            }
+
+        }
     }
 
     void createimages() {

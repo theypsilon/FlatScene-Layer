@@ -113,6 +113,8 @@
     <ClInclude Include="include\*.h" />
     <ClInclude Include="include\tinyxml\*.h" />
     <ClInclude Include="src\FSSpriteSetImpl.h" />
+    <ClInclude Include="src\GRDHelper.h" />
+    <ClInclude Include="src\XMLHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
