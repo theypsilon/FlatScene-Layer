@@ -51,7 +51,7 @@ namespace fs { namespace intern { namespace xml {
         T ret = valFromAttr<T>(el,name);
         if (ret < min || ret > max)
            throw FSException(std::string(typeid(ret).name())+" '"+name+"' not in range",__LINE__);
-        return ret
+        return ret;
     }
 
 }}}
