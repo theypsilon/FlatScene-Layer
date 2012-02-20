@@ -9,11 +9,6 @@
 
 #include <algorithm>
 #include <iostream>
-#include <limits>
-
-#ifdef max
-#undef max
-#endif
 
 #include "XMLHelper.h"
 
@@ -764,11 +759,11 @@ struct FSSpriteset::SpritesetImpl {
 
     struct DataGRD {
         std::vector<FSPoint> images;
-        int num_img;
-        int cellwidth;
-        int cellheight;
+        unsigned int num_img;
+        unsigned int cellwidth;
+        unsigned int cellheight;
         bool simple;
-        int sp_scale;
+        double sp_scale;
         FSPoint globalcp;
         struct Area {
             bool relative;
@@ -826,16 +821,18 @@ struct FSSpriteset::SpritesetImpl {
     }
 
     void processHeadElement(DataGRD& grd, const TiXmlElement& head) {
-        grd.num_img = intFromAttr(head,"sprites");
-        grd.cellwidth = intFromAttr(head,"cellwidth");
-        grd.cellheight = intFromAttr(head,"cellheight");
+        grd.num_img    = numFromAttr<decltype(grd.num_img)   >(head,"sprites");
+        grd.cellwidth  = numFromAttr<decltype(grd.cellwidth) >(head,"cellwidth");
+        grd.cellheight = numFromAttr<decltype(grd.cellheight)>(head,"cellheight");
 
         if (checkAttr(head,"type","split"))
             ; // @TODO return loadChipsetSplit(s_aux,mode);
 
         grd.simple = checkAttr(head,"simple","true");
         if (checkAttr(head,"sp-scale"))
-            grd.sp_scale = intFromAttr(head,"sp-scale");
+            grd.sp_scale = numFromAttr<decltype(grd.sp_scale)>(head,"sp-scale");
+        else
+            grd.sp_scale = 1.0;
     }
 
     void processGlobalValues(DataGRD& grd, const TiXmlHandle& doc) {
@@ -844,13 +841,13 @@ struct FSSpriteset::SpritesetImpl {
             
         if (doc.FirstChildElement("globalcpoint").Element()) {
             auto& el = *doc.FirstChildElement("globalcpoint").Element();
-            grd.globalcp.set( intFromAttr(el,"x",0,grd.cellwidth)  ,
-                              intFromAttr(el,"y",0,grd.cellheight));
+            grd.globalcp.set( numFromAttr<decltype(grd.globalcp.x)>(el,"x",0,grd.cellwidth)  ,
+                              numFromAttr<decltype(grd.globalcp.y)>(el,"y",0,grd.cellheight));
         }
 
         for (auto pArea = doc.FirstChildElement("globalareas").FirstChildElement("area").Element();
             pArea ; pArea = pArea->NextSiblingElement()) {
-                int id = intFromAttr(*pArea,"id",0,std::numeric_limits<int>::max());
+                int id = numFromAttr(*pArea,"id",0);
 
                 auto& area = grd.globalareas.at(id);
                 area.relative = checkAttr(*pArea,"relative","true");
@@ -858,10 +855,10 @@ struct FSSpriteset::SpritesetImpl {
                 for(auto pRect = pArea->FirstChildElement("rectangle"); pRect ; 
                     pRect = pRect->NextSiblingElement() ) {
                         FSRectangle rc;
-                        rc.x = intFromAttr(*pRect,"x1") * grd.sp_scale;
-                        rc.w = intFromAttr(*pRect,"x2") * grd.sp_scale;
-                        rc.y = intFromAttr(*pRect,"y1") * grd.sp_scale;
-                        rc.h = intFromAttr(*pRect,"y2") * grd.sp_scale;
+                        rc.x = (int) intFromAttr(*pRect,"x1") * grd.sp_scale;
+                        rc.w = (int) intFromAttr(*pRect,"x2") * grd.sp_scale;
+                        rc.y = (int) intFromAttr(*pRect,"y1") * grd.sp_scale;
+                        rc.h = (int) intFromAttr(*pRect,"y2") * grd.sp_scale;
                         area.rc.push_back(std::move(rc));
                 }
 

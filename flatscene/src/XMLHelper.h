@@ -4,6 +4,10 @@
 #include "FSException.h"
 #include "FSparserXML.h"
 #include <string>
+#ifdef max
+#undef max
+#endif
+#include <limits>
 
 namespace fs { namespace intern { namespace xml {
 
@@ -30,13 +34,6 @@ namespace fs { namespace intern { namespace xml {
         return ret;
     }
 
-    int intFromAttr(const TiXmlElement& el,const char *const name,int min, int max) {
-        int ret = intFromAttr(el,name);
-        if (ret < min || ret > max) 
-            throw FSException(std::string("int '")+name+"' not in range",__LINE__);
-        return ret;
-    }
-
     template<typename T> 
     T valFromAttr(const TiXmlElement& el,const std::string& name) {
         ensureAttr(el,name.c_str());
@@ -47,7 +44,8 @@ namespace fs { namespace intern { namespace xml {
     }
 
     template<typename T> 
-    T numFromAttr(const TiXmlElement& el,const std::string& name,T min, T max) {
+    T numFromAttr(const TiXmlElement& el,const std::string& name,
+            T min=std::numeric_limits<T>::min(), T max=std::numeric_limits<T>::max()) {
         T ret = valFromAttr<T>(el,name);
         if (ret < min || ret > max)
            throw FSException(std::string(typeid(ret).name())+" '"+name+"' not in range",__LINE__);

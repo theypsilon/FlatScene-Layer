@@ -38,11 +38,11 @@ struct FSRect {
     void setW(T nw) { w = nw; }
     void setH(T nh) { h = nh; }
 
-    inline operator SDL_Rect() {
+    inline operator SDL_Rect() const {
         return SDL_Rect(x,y,w,h);
     }
 
-    inline operator FSPoint() {
+    inline operator FSPoint() const {
         return FSPoint(x,y);
     }
 
@@ -55,22 +55,22 @@ struct FSRect {
     }
 
     template <class U>
-    inline bool intersect(const U& rc) {
+    inline bool intersect(const U& rc) const {
         return (x > rc.w) || (y > rc.h) || (w < rc.x) || (h < rc.y) ?
                 false : true;
     }
 
-    inline bool contains(T cx, T cy) {
+    inline bool contains(T cx, T cy) const {
         return (cx > x) && (cx < w) && (cy > y) && (cy < h);
     }
 
     template <class U>
-    inline bool contains(const U& rc) {
+    inline bool contains(const U& rc) const {
         return contains(rc.x,rc.y) && contains(rc.w,rc.h);
     }
 };
 
-typedef FSRect<Sint16> FSRectangle;
+typedef FSRect<int> FSRectangle;
 
 /**
  * FSRelRect, Rectangle class with relative coordinates
