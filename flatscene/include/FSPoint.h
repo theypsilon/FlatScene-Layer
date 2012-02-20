@@ -28,7 +28,7 @@ struct FS2DPoint {
     }
 
     template <class U>
-    T distance(const U& pt) {
+    T distance(const U& pt) const {
         T d_x = pt.x > x ? pt.x - x : x - pt.x;
         T d_y = pt.y > y ? pt.y - y : y - pt.y;
 
