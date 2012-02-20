@@ -26,20 +26,31 @@ namespace fs { namespace intern { namespace xml {
                 (name?name:"nullptr")+"' with value '"+ (value?value:"nullptr")+"' equals="+(equals?"true":"false"));
     }
 
+    void processBadResult(int cod,const std::string& attr,const std::type_info& type) {
+        switch(cod) {
+            case TIXML_NO_ATTRIBUTE: 
+                throw FSException("Attribute '"+attr+"' doesn't exist",__LINE__); 
+            break; case TIXML_WRONG_TYPE:                
+                throw FSException("Attribute '"+attr+"' is not a "+type.name(),__LINE__); 
+            break; default: 
+                throw FSException("Attribute '"+attr+"' unknown "+type.name(),__LINE__); 
+            break;
+        }
+    }
+
     int intFromAttr(const TiXmlElement& el,const char *const name) {
-        ensureAttr(el,name);
-        int ret;
-        if (el.QueryIntAttribute(name,&ret)!=TIXML_SUCCESS)
-            throw FSException(std::string("attribute '")+name+"' invalid int",__LINE__);
+        int ret, cod = el.QueryIntAttribute(name,&ret);
+        if (cod != TIXML_SUCCESS)
+            processBadResult(cod,name,typeid(ret));
         return ret;
     }
 
     template<typename T> 
     T valFromAttr(const TiXmlElement& el,const std::string& name) {
-        ensureAttr(el,name.c_str());
         T ret;
-        if (el.QueryValueAttribute(name,&ret)!=TIXML_SUCCESS)
-            throw FSException(std::string("attribute '")+name+"' invalid "+typeid(ret).name(),__LINE__);
+        int cod = el.QueryValueAttribute(name,&ret);
+        if (cod != TIXML_SUCCESS)
+            processBadResult(cod,name,typeid(ret));
         return ret;
     }
 
@@ -48,7 +59,7 @@ namespace fs { namespace intern { namespace xml {
             T min=std::numeric_limits<T>::min(), T max=std::numeric_limits<T>::max()) {
         T ret = valFromAttr<T>(el,name);
         if (ret < min || ret > max)
-           throw FSException(std::string(typeid(ret).name())+" '"+name+"' not in range",__LINE__);
+           throw FSException("attribute '"+name+"' not in "+typeid(ret).name()+" range",__LINE__);
         return ret;
     }
 
