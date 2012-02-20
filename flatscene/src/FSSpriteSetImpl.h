@@ -847,32 +847,31 @@ struct FSSpriteset::SpritesetImpl {
     }
 
     void processGlobalValues(DataGRD& grd, const TiXmlHandle& doc) {
-        if (!grd.simple) {
+        if (grd.simple)
+            return;
             
-            if (doc.FirstChildElement("globalcpoint").Element()) {
-                auto& el = *doc.FirstChildElement("globalcpoint").Element();
-                grd.globalcp.set( intFromAttr(el,"x",0,grd.cellwidth)  ,
-                                  intFromAttr(el,"y",0,grd.cellheight));
-            }
+        if (doc.FirstChildElement("globalcpoint").Element()) {
+            auto& el = *doc.FirstChildElement("globalcpoint").Element();
+            grd.globalcp.set( intFromAttr(el,"x",0,grd.cellwidth)  ,
+                              intFromAttr(el,"y",0,grd.cellheight));
+        }
 
-            for (auto pArea = doc.FirstChildElement("globalareas").FirstChildElement("area").Element();
-                pArea ; pArea = pArea->NextSiblingElement()) {
-                    int id = intFromAttr(*pArea,"id",0,std::numeric_limits<int>::max());
+        for (auto pArea = doc.FirstChildElement("globalareas").FirstChildElement("area").Element();
+            pArea ; pArea = pArea->NextSiblingElement()) {
+                int id = intFromAttr(*pArea,"id",0,std::numeric_limits<int>::max());
 
-                    auto& area = grd.globalareas.at(id);
-                    area.relative = checkAttr(*pArea,"relative","true");
+                auto& area = grd.globalareas.at(id);
+                area.relative = checkAttr(*pArea,"relative","true");
 
-                    for(auto pRect = pArea->FirstChildElement("rectangle"); pRect ; 
-                        pRect = pRect->NextSiblingElement() ) {
-                            FSRectangle rc;
-                            rc.x = intFromAttr(*pRect,"x1") * grd.sp_scale;
-                            rc.w = intFromAttr(*pRect,"x2") * grd.sp_scale;
-                            rc.y = intFromAttr(*pRect,"y1") * grd.sp_scale;
-                            rc.h = intFromAttr(*pRect,"y2") * grd.sp_scale;
-                            area.rc.push_back(std::move(rc));
-                    }
-
-            }
+                for(auto pRect = pArea->FirstChildElement("rectangle"); pRect ; 
+                    pRect = pRect->NextSiblingElement() ) {
+                        FSRectangle rc;
+                        rc.x = intFromAttr(*pRect,"x1") * grd.sp_scale;
+                        rc.w = intFromAttr(*pRect,"x2") * grd.sp_scale;
+                        rc.y = intFromAttr(*pRect,"y1") * grd.sp_scale;
+                        rc.h = intFromAttr(*pRect,"y2") * grd.sp_scale;
+                        area.rc.push_back(std::move(rc));
+                }
 
         }
     }
