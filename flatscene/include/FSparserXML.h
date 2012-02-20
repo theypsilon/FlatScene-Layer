@@ -2,7 +2,7 @@
 
 #define __PARSER_XML_LIBRARY__
 
-//#define TIXML_USE_STL
+#define TIXML_USE_STL
 #include "tinyxml/tinyxml.h"
 #include "tinyxml/tinystr.h"
 

@@ -8,7 +8,7 @@
 namespace fs { namespace intern { namespace xml {
 
     bool checkAttr(const TiXmlElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
-        if (!name) throw FSException("no attribute name supplied",__LINE__); //FIXME static_assert?
+        if (!name || strcmp(name,"")==0) throw FSException("no attribute name supplied",__LINE__); //FIXME static_assert?
         auto attr = el.Attribute(name);
         if (!attr) return false;
         if (value && ( ( equals && strcmp(attr,value)!=0) || 
@@ -25,7 +25,8 @@ namespace fs { namespace intern { namespace xml {
     int intFromAttr(const TiXmlElement& el,const char *const name) {
         ensureAttr(el,name);
         int ret;
-        el.QueryIntAttribute(name,&ret);
+        if (el.QueryIntAttribute(name,&ret)!=TIXML_SUCCESS)
+            throw FSException(std::string("attribute '")+name+"' invalid int",__LINE__);
         return ret;
     }
 
@@ -34,6 +35,23 @@ namespace fs { namespace intern { namespace xml {
         if (ret < min || ret > max) 
             throw FSException(std::string("int '")+name+"' not in range",__LINE__);
         return ret;
+    }
+
+    template<typename T> 
+    T valFromAttr(const TiXmlElement& el,const std::string& name) {
+        ensureAttr(el,name.c_str());
+        T ret;
+        if (el.QueryValueAttribute(name,&ret)!=TIXML_SUCCESS)
+            throw FSException(std::string("attribute '")+name+"' invalid "+typeid(ret).name(),__LINE__);
+        return ret;
+    }
+
+    template<typename T> 
+    T numFromAttr(const TiXmlElement& el,const std::string& name,T min, T max) {
+        T ret = valFromAttr<T>(el,name);
+        if (ret < min || ret > max)
+           throw FSException(std::string(typeid(ret).name())+" '"+name+"' not in range",__LINE__);
+        return ret
     }
 
 }}}
