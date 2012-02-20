@@ -3,7 +3,7 @@
 
 #include "IDebug.h"
 
-#include "fsactor.h"
+#include "FSActor.h"
 
 class IScrollObject;
 

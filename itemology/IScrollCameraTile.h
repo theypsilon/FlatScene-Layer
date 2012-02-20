@@ -1,7 +1,7 @@
 #ifndef _I_SCROLL_CAMERA_TILE_
 #define _I_SCROLL_CAMERA_TILE_
 
-#include "iscrollcamera.h"
+#include "IScrollCamera.h"
 
 class IScrollCameraTile :
 	public FSCamera

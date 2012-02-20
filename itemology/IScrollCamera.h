@@ -1,7 +1,7 @@
 #ifndef _I_SCROLL_CAMERA_
 #define _I_SCROLL_CAMERA_
 
-#include "fslibrary.h"
+#include "FSLibrary.h"
 #include "IScrollLevel.h"
 
 class IScrollCamera :

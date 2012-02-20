@@ -1,5 +1,7 @@
 #pragma once
-#include "iscrollcamera.h"
+
+#include "IScrollCamera.h"
+
 class IScrollCameraObject :
 	public FSCamera
 {
