@@ -1,4 +1,5 @@
 #include "IDebug.h"
+#include "tinyxml/tinyxml.h"
 
 int func_fracaso(const char* file, int line) {
 

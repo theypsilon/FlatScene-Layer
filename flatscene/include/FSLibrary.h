@@ -16,8 +16,6 @@
 #include "FSUniverse.h"
 #include "FSActor.h"
 
-#include "FSparserXML.h"
-
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
 

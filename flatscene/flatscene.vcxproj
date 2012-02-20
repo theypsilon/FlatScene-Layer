@@ -110,8 +110,31 @@
     <ClCompile Include="src\tinyxml\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\*.h" />
+    <ClInclude Include="include\debugfuncs.h" />
+    <ClInclude Include="include\FSActor.h" />
+    <ClInclude Include="include\FSCamera.h" />
+    <ClInclude Include="include\FSCanvas.h" />
+    <ClInclude Include="include\FSColor.h" />
+    <ClInclude Include="include\FSCoordinate.h" />
+    <ClInclude Include="include\FSdefinitions.h" />
+    <ClInclude Include="include\FSEngine.h" />
+    <ClInclude Include="include\FSException.h" />
+    <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSLibrary.h" />
+    <ClInclude Include="include\FSMessageHandler.h" />
+    <ClInclude Include="include\FSMultiverse.h" />
+    <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSPoint.h" />
+    <ClInclude Include="include\FSRectangle.h" />
+    <ClInclude Include="include\FSScreen.h" />
+    <ClInclude Include="include\FSSingleton.h" />
+    <ClInclude Include="include\FSSprite.h" />
+    <ClInclude Include="include\FSSpriteSet.h" />
+    <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSUniverse.h" />
+    <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\tinyxml\*.h" />
+    <ClInclude Include="src\FSparserXML.h" />
     <ClInclude Include="src\FSSpriteSetImpl.h" />
     <ClInclude Include="src\GRDHelper.h" />
     <ClInclude Include="src\XMLHelper.h" />

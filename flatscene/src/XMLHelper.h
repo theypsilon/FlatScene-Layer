@@ -4,8 +4,9 @@
 #include "FSException.h"
 #include "FSparserXML.h"
 #include <string>
-#ifdef max
+#if defined(_MSC_VER)
 #undef max
+#undef min
 #endif
 #include <limits>
 

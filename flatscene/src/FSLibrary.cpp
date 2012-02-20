@@ -11,6 +11,7 @@
 
 #include "FSLibraryImpl.h"
 #include "FSScreenImpl.h"
+#include "FSparserXML.h"
 
 #include "FSException.h"
 #include <algorithm>
