@@ -765,7 +765,7 @@ struct FSSpriteset::SpritesetImpl {
 
     struct DataGRD {
         struct Area {
-            bool relative;
+            bool rel;
             std::vector<FSRectangle> rc;
         };
         struct Sprite {
@@ -807,6 +807,8 @@ struct FSSpriteset::SpritesetImpl {
             return getFromOtherFile(head);
 
         processHeadElement(grd,head);
+        if (grd.simple) 
+            return grd;
         processGlobalValues(grd,input);
         processSpriteValues(grd,input);
 
@@ -824,17 +826,20 @@ struct FSSpriteset::SpritesetImpl {
         return grd;
     }
 
-    void fillAreasFromElement(const TiXmlElement* pArea, std::map<int,DataGRD::Area>& areas) {
+    template <typename PointType> void fillAreasFromElement(const TiXmlElement* pArea, 
+        std::map<int,DataGRD::Area>& areas, const PointType& cp, double scale        ) {
         for ( ; pArea ; pArea = pArea->NextSiblingElement()) {
             int id = numFromAttr(*pArea,"id",0);
-
             auto& area = areas.at(id);
-            area.relative = checkAttr(*pArea,"relative","true");
-            for (auto pRect = pArea->FirstChildElement("rectangle"); pRect; pRect = pRect->NextSiblingElement())
-                area.rc.push_back(((int) (intFromAttr(*pRect,"x1") ) ,
-                                   (int) (intFromAttr(*pRect,"y1") ) ,
-                                   (int) (intFromAttr(*pRect,"x2") ) ,
-                                   (int) (intFromAttr(*pRect,"y2"))));
+
+            area.rel = checkAttr(*pArea,"relative","true");
+            for (auto pRect = pArea->FirstChildElement("rectangle"); 
+                 pRect; pRect = pRect->NextSiblingElement() )
+                    area.rc.push_back
+                    (((int)(scale * (intFromAttr(*pRect,"x1") + (area.rel? cp.x : 0)) ) ,
+                      (int)(scale * (intFromAttr(*pRect,"y1") + (area.rel? cp.y : 0)) ) ,
+                      (int)(scale * (intFromAttr(*pRect,"x2") + (area.rel? cp.x : 0)) ) ,
+                      (int)(scale * (intFromAttr(*pRect,"y2") + (area.rel? cp.y : 0)))));
         }
     }
 
@@ -864,9 +869,6 @@ struct FSSpriteset::SpritesetImpl {
     }
 
     void processGlobalValues(DataGRD& grd, const TiXmlHandle& doc) {
-        if (grd.simple)
-            return;
-            
         if (auto el = doc.FirstChildElement("globalcpoint").Element()) {
             grd.globalcp.set( numFromAttr<decltype(grd.globalcp.x)>(*el,"x",0,grd.cellwidth)  ,
                               numFromAttr<decltype(grd.globalcp.y)>(*el,"y",0,grd.cellheight));
@@ -875,7 +877,7 @@ struct FSSpriteset::SpritesetImpl {
         }
 
         fillAreasFromElement( doc.FirstChildElement("globalareas").FirstChildElement("area").ToElement(),
-                              grd.globalareas                                                          );
+                              grd.globalareas, grd.globalcp, grd.sp_scale                              );
     }
 
     void processSpriteValues(DataGRD& grd, const TiXmlHandle& doc) {
@@ -883,8 +885,9 @@ struct FSSpriteset::SpritesetImpl {
             pImg ; pImg = pImg->NextSiblingElement()) {
             
             DataGRD::Sprite spt; const auto& img = *pImg;
-            spt.name = checkAttr(img,"name","",false) ? valFromAttr<std::string>(img,"name") : "noname" ;
-            spt.dim.set( numFromAttr<decltype(spt.dim.x)>(img,"width",0,grd.cellwidth)   ,
+            spt.name = checkAttr(img,"name","",false) ? 
+                valFromAttr<std::string>(img,"name") : "noname" ;
+            spt.dim.set( numFromAttr<decltype(spt.dim.x)>(img,"width",0,grd.cellwidth  ) ,
                          numFromAttr<decltype(spt.dim.y)>(img,"height",0,grd.cellheight));
 
             spt.cp.set( grd.globalcp.x, grd.globalcp.y );
@@ -894,7 +897,7 @@ struct FSSpriteset::SpritesetImpl {
             } else if (spt.cp.x > spt.dim.x || spt.cp.y > spt.dim.y)
                 throw FSException("the global cp is not valid due to image sizes",__LINE__);
             
-            fillAreasFromElement(img.FirstChildElement("area"), spt.areas);
+            fillAreasFromElement(img.FirstChildElement("area"), spt.areas, spt.cp, grd.sp_scale);
         }
     }
 
