@@ -4,10 +4,12 @@
 #include "FSException.h"
 #include "FSparserXML.h"
 #include <string>
+
 #if defined(_MSC_VER)
-#undef max
-#undef min
+    #undef max
+    #undef min
 #endif
+
 #include <limits>
 
 namespace fs { namespace intern { namespace xml {
@@ -42,7 +44,7 @@ namespace fs { namespace intern { namespace xml {
     int intFromAttr(const TiXmlElement& el,const char *const name) {
         int ret, cod = el.QueryIntAttribute(name,&ret);
         if (cod != TIXML_SUCCESS)
-            processBadResult(cod,name,typeid(ret));
+            processBadResult(cod,name,typeid(int));
         return ret;
     }
 
@@ -51,7 +53,7 @@ namespace fs { namespace intern { namespace xml {
         T ret;
         int cod = el.QueryValueAttribute(name,&ret);
         if (cod != TIXML_SUCCESS)
-            processBadResult(cod,name,typeid(ret));
+            processBadResult(cod,name,typeid(T));
         return ret;
     }
 
@@ -60,7 +62,7 @@ namespace fs { namespace intern { namespace xml {
             T min=std::numeric_limits<T>::min(), T max=std::numeric_limits<T>::max()) {
         T ret = valFromAttr<T>(el,name);
         if (ret < min || ret > max)
-           throw FSException("attribute '"+name+"' not in "+typeid(ret).name()+" range",__LINE__);
+           throw FSException("attribute '"+name+"' not in "+typeid(T).name()+" range",__LINE__);
         return ret;
     }
 

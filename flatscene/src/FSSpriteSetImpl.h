@@ -77,6 +77,7 @@ struct FSSpriteset::SpritesetImpl {
 
     void loadChipset(std::string& c,Uint8 mode=ONLY_TEXTURE,std::string* cPrev=NULL) {
 
+
         int num_img=0;
         int ancho=0;
         int alto=0;
@@ -136,6 +137,11 @@ struct FSSpriteset::SpritesetImpl {
         }
     
         s_aux+=".grd";
+
+        SDL_Surface chipTest;
+        chipTest.w = 640;
+        loadFileGRD(s_aux,chipTest);
+        exit(0);
 
         #ifdef LOG_SPRITESET
             if (cPrev == NULL)
@@ -762,6 +768,7 @@ struct FSSpriteset::SpritesetImpl {
         unsigned int num_img;
         unsigned int cellwidth;
         unsigned int cellheight;
+        unsigned int columns;
         bool simple;
         double sp_scale;
         FSPoint globalcp;
@@ -772,18 +779,15 @@ struct FSSpriteset::SpritesetImpl {
         std::map<int,Area> globalareas;
     };
 
-    DataGRD loadFileGRD(const std::string& grd_str = "",const SDL_Surface *const chipset = nullptr) {
+    DataGRD loadFileGRD(const std::string& grd_str, const SDL_Surface& chipset) {
         TiXmlDocument doc(grd_str.c_str());
         if (!doc.LoadFile()) {
-            if (!chipset)
-                throw FSException("no valid grd file, and no valid bitmap",__LINE__);
-            return fillGRDFromChipset(*chipset);
+            return fillGRDFromChipset(chipset);
         }
-
-        return fillGRDFromDocument(doc);
+        return fillGRDFromDocument(doc,chipset);
     }
 
-    DataGRD fillGRDFromDocument(TiXmlDocument& doc) {
+    DataGRD fillGRDFromDocument(TiXmlDocument& doc,const SDL_Surface& chipset) {
         DataGRD grd;
 
         TiXmlHandle input(doc.FirstChild()); 
@@ -791,10 +795,11 @@ struct FSSpriteset::SpritesetImpl {
 
         auto& head = *input.Element();
         if (isDefinedInOtherFile(head))
-            return getFromOtherFile(head);
+            return getFromOtherFile(head,chipset);
 
-        processHeadElement(grd,head);
+        processHeadElement(grd,head,chipset);
         processGlobalValues(grd,input);
+        processSpriteValues(grd,input);
 
         return grd;
     }
@@ -814,16 +819,23 @@ struct FSSpriteset::SpritesetImpl {
         return checkAttr(head,"defined-in","",false);
     }
 
-    DataGRD getFromOtherFile(const TiXmlElement& head) {
+    DataGRD getFromOtherFile(const TiXmlElement& head,const SDL_Surface& chipset) {
         ensureAttr(head,"defined-in","",false);
         std::string grd_str(head.Attribute("defined-in"));
-        return loadFileGRD(grd_str);
+        return loadFileGRD(grd_str,chipset);
     }
 
-    void processHeadElement(DataGRD& grd, const TiXmlElement& head) {
+    void processHeadElement(DataGRD& grd, const TiXmlElement& head, const SDL_Surface& chipset) {
         grd.num_img    = numFromAttr<decltype(grd.num_img)   >(head,"sprites");
         grd.cellwidth  = numFromAttr<decltype(grd.cellwidth) >(head,"cellwidth");
         grd.cellheight = numFromAttr<decltype(grd.cellheight)>(head,"cellheight");
+
+        grd.columns = chipset.w / grd.cellwidth;
+        if (grd.columns <= 0) {
+            std::stringstream ss;
+            ss << "spriteset columns" << chipset.w << "/" << grd.cellwidth << " <= 0";
+            throw FSException(ss.str(),__LINE__);
+        }
 
         if (checkAttr(head,"type","split"))
             ; // @TODO return loadChipsetSplit(s_aux,mode);
@@ -855,12 +867,19 @@ struct FSSpriteset::SpritesetImpl {
                 for(auto pRect = pArea->FirstChildElement("rectangle"); pRect ; 
                     pRect = pRect->NextSiblingElement() ) {
                         FSRectangle rc;
-                        rc.x = (int) intFromAttr(*pRect,"x1") * grd.sp_scale;
-                        rc.w = (int) intFromAttr(*pRect,"x2") * grd.sp_scale;
-                        rc.y = (int) intFromAttr(*pRect,"y1") * grd.sp_scale;
-                        rc.h = (int) intFromAttr(*pRect,"y2") * grd.sp_scale;
+                        rc.x = (int) (intFromAttr(*pRect,"x1") * grd.sp_scale);
+                        rc.w = (int) (intFromAttr(*pRect,"x2") * grd.sp_scale);
+                        rc.y = (int) (intFromAttr(*pRect,"y1") * grd.sp_scale);
+                        rc.h = (int) (intFromAttr(*pRect,"y2") * grd.sp_scale);
                         area.rc.push_back(std::move(rc));
                 }
+
+        }
+    }
+
+    void processSpriteValues(DataGRD& grd, const TiXmlHandle& doc) {
+        for (auto pImg = doc.FirstChildElement("img").ToElement(); 
+            pImg ; pImg = pImg->NextSiblingElement()) {
 
         }
     }
