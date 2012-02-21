@@ -838,6 +838,7 @@ struct FSSpriteset::SpritesetImpl {
                       (int)(scale * (intFromAttr(*pRect,"y1") + (rel? cp.y : 0)) ) ,
                       (int)(scale * (intFromAttr(*pRect,"x2") + (rel? cp.x : 0)) ) ,
                       (int)(scale * (intFromAttr(*pRect,"y2") + (rel? cp.y : 0)))));
+
             areas[id] = std::move(area);
         }
     }
@@ -910,11 +911,8 @@ struct FSSpriteset::SpritesetImpl {
                 std::for_each(ar.second.begin(),ar.second.end(),[&](decltype(ar.second.at(0))& rc) {
                     if (rc.x < 0 || rc.y < 0 || rc.w > img.dim.x || rc.h > img.dim.y)
                         throw FSException("areas not defined within the sprite domain",__LINE__);
-
-                    std::cout << rc.x << rc.y << rc.w << rc.w << std::endl;
                 });
             });
-            std::cout << img.name << std::endl << img.cp.x << img.cp.y << std::endl;
         });
     }
 
