@@ -398,7 +398,7 @@ struct FSSpriteset::SpritesetImpl {
 
             //SDL_BlitSurface(chipset,&rect,sdl_surf,0);
 
-            blitcopy(chipset,&rect,sdl_surf,NULL);
+            blitcopy(*chipset,&rect,sdl_surf,NULL);
 
             //countalpha(sdl_surf);
 
@@ -923,7 +923,33 @@ struct FSSpriteset::SpritesetImpl {
         });
     }
 
-    void createimages() {
+    void loadSprites(DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
+        unsigned int columns = chipset.w / grd.cellwidth;
+        if (columns <= 0 || chipset.w % grd.cellwidth != 0)
+            throw FSException("the grd doesn't fit with the chipset",__LINE__);
+
+        SDL_Rect src = {0,0,0,0};
+        std::for_each(grd.images.begin(),grd.images.end(),[&](decltype(grd.images.at(0))& img) {
+            auto surf = SDL_CreateRGBSurface(chipset.flags | SDL_SRCALPHA,
+                                             img.dim.x,img.dim.y,
+                                             chipset.format->BitsPerPixel,
+                                             chipset.format->Rmask,chipset.format->Gmask,
+                                             chipset.format->Bmask,chipset.format->Amask);
+
+            SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
+            blitcopy(chipset,&src,surf,nullptr);
+
+            if (grd.sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {{
+                    auto temp = FSCanvas::scaleSurface(surf,grd.sp_scale);
+                    SDL_FreeSurface(surf);
+                    surf=temp;
+                }
+                SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);        // Reasignamos los formatos.
+            }
+
+            FSSprite spt(FSCanvas::toSCanvas(surf,mode),img.cp);
+            spt.areas = std::move(img.areas);
+        });
 
     }
 

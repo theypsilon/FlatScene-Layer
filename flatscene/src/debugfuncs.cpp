@@ -131,8 +131,10 @@ int fillAlphaValues(Uint8* values, SDL_Surface* surface) {
     return FRACASO;
 }
 
-int blitcopy(SDL_Surface* src, SDL_Rect* srcrect,SDL_Surface* surface,SDL_Rect* rect) {
+int blitcopy(const SDL_Surface& ref_src, SDL_Rect* srcrect,SDL_Surface* surface,SDL_Rect* rect) {
     int ancho = 0, alto = 0, srcx = 0, srcy = 0, dstx = 0, dsty = 0;
+
+    SDL_Surface* src = const_cast<SDL_Surface*>(std::addressof(ref_src));
 
     if (src == NULL || surface == NULL)
         return FRACASO;
