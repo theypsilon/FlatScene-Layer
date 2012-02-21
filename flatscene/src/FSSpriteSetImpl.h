@@ -832,8 +832,8 @@ struct FSSpriteset::SpritesetImpl {
             area.relative = checkAttr(*pArea,"relative","true");
             for (auto pRect = pArea->FirstChildElement("rectangle"); pRect; pRect = pRect->NextSiblingElement())
                 area.rc.push_back(((int) (intFromAttr(*pRect,"x1") ) ,
-                                   (int) (intFromAttr(*pRect,"x2") ) ,
                                    (int) (intFromAttr(*pRect,"y1") ) ,
+                                   (int) (intFromAttr(*pRect,"x2") ) ,
                                    (int) (intFromAttr(*pRect,"y2"))));
         }
     }
