@@ -765,20 +765,25 @@ struct FSSpriteset::SpritesetImpl {
 
     struct DataGRD {
         typedef std::vector<FSRectangle> Area;
+        typedef FS2DPoint<unsigned int> CPoint;
+        typedef FS2DPoint<unsigned int> DimPoint;
         struct Sprite {
             std::string name;
-            FSPoint dim;
-            FSPoint cp;
+            DimPoint dim;
+            CPoint cp;
             std::map<int,Area> areas;
+            std::map<int,bool> a_isRel;
         };
+
         std::vector<Sprite> images;
         unsigned int num_img;
         unsigned int cellwidth;
         unsigned int cellheight;
         bool simple;
         double sp_scale;
-        FSPoint globalcp;
+        CPoint globalcp;
         std::map<int,Area> globalareas;
+        std::map<int,bool> ga_isRel;
     };
 
     DataGRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset = nullptr) {
@@ -804,8 +809,8 @@ struct FSSpriteset::SpritesetImpl {
             return getFromOtherFile(head);
 
         processHeadElement(grd,head);
-        ///if (grd.simple) 
-         //   return grd;
+        if (grd.simple) 
+            return grd;
 
         processGlobalValues(grd,input);
         processSpriteValues(grd,input);
@@ -824,8 +829,9 @@ struct FSSpriteset::SpritesetImpl {
         return grd;
     }
 
-    template <typename PointType> void fillAreasFromElement(const TiXmlElement* pArea, 
-        std::map<int,DataGRD::Area>& areas, const PointType& cp, double scale        ) {
+    template <typename PointType> 
+    void fillAreasFromElement(const TiXmlElement* pArea, std::map<int,DataGRD::Area>& areas, 
+                              const PointType& cp, double scale, std::map<int,bool>& rel_m ) {
         for ( ; pArea ; pArea = pArea->NextSiblingElement()) {
             int id = numFromAttr(*pArea,"id",0);
             std::remove_reference<decltype(areas.at(0))>::type area;
@@ -840,6 +846,7 @@ struct FSSpriteset::SpritesetImpl {
                       (int)(scale * (intFromAttr(*pRect,"y2") + (rel? cp.y : 0)))));
 
             areas[id] = std::move(area);
+            rel_m[id] = rel;
         }
     }
 
@@ -877,7 +884,7 @@ struct FSSpriteset::SpritesetImpl {
         }
 
         fillAreasFromElement( doc.FirstChildElement("globalareas").FirstChildElement("area").ToElement(),
-                              grd.globalareas, grd.globalcp, grd.sp_scale                              );
+                              grd.globalareas, grd.globalcp, grd.sp_scale, grd.ga_isRel                );
     }
 
     void processSpriteValues(DataGRD& grd, const TiXmlHandle& doc) {
@@ -897,7 +904,7 @@ struct FSSpriteset::SpritesetImpl {
             } else if (spt.cp.x > spt.dim.x || spt.cp.y > spt.dim.y)
                 throw FSException("the global cp is not valid due to image sizes",__LINE__);
             
-            fillAreasFromElement(img.FirstChildElement("area"), spt.areas, spt.cp, grd.sp_scale);
+            fillAreasFromElement(img.FirstChildElement("area"), spt.areas, spt.cp, grd.sp_scale, spt.a_isRel);
             grd.images.push_back(std::move(spt));
         }
     }
