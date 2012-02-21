@@ -764,10 +764,7 @@ struct FSSpriteset::SpritesetImpl {
     }
 
     struct DataGRD {
-        struct Area {
-            bool rel;
-            std::vector<FSRectangle> rc;
-        };
+        typedef std::vector<FSRectangle> Area;
         struct Sprite {
             std::string name;
             FSPoint dim;
@@ -778,7 +775,6 @@ struct FSSpriteset::SpritesetImpl {
         unsigned int num_img;
         unsigned int cellwidth;
         unsigned int cellheight;
-        unsigned int columns;
         bool simple;
         double sp_scale;
         FSPoint globalcp;
@@ -800,29 +796,31 @@ struct FSSpriteset::SpritesetImpl {
         DataGRD grd;
 
         TiXmlHandle input(doc.FirstChild()); 
-        if (!input.Element()) throw FSException("no elements in grd file",__LINE__);
+        if (!input.ToElement()) 
+            throw FSException("no elements in grd file",__LINE__);
 
         auto& head = *input.Element();
         if (isDefinedInOtherFile(head))
             return getFromOtherFile(head);
 
         processHeadElement(grd,head);
-        if (grd.simple) 
-            return grd;
+        ///if (grd.simple) 
+         //   return grd;
+
         processGlobalValues(grd,input);
         processSpriteValues(grd,input);
 
+        ensureConsistentValues(grd);
         return grd;
     }
 
     DataGRD fillGRDFromChipset(const SDL_Surface& chipset) {
         DataGRD grd;
-        grd.images.push_back(DataGRD::Sprite());
-
-        auto& img = grd.images.front();
-        img.dim.x = chipset.w;
-        img.dim.y = chipset.h;
-
+        grd.sp_scale = 1.0;
+        grd.num_img = 1;
+        grd.simple = true;
+        grd.cellwidth  = chipset.w;
+        grd.cellheight = chipset.h;
         return grd;
     }
 
@@ -830,16 +828,17 @@ struct FSSpriteset::SpritesetImpl {
         std::map<int,DataGRD::Area>& areas, const PointType& cp, double scale        ) {
         for ( ; pArea ; pArea = pArea->NextSiblingElement()) {
             int id = numFromAttr(*pArea,"id",0);
-            auto& area = areas.at(id);
+            std::remove_reference<decltype(areas.at(0))>::type area;
 
-            area.rel = checkAttr(*pArea,"relative","true");
+            bool rel = checkAttr(*pArea,"relative","true");
             for (auto pRect = pArea->FirstChildElement("rectangle"); 
                  pRect; pRect = pRect->NextSiblingElement() )
-                    area.rc.push_back
-                    (((int)(scale * (intFromAttr(*pRect,"x1") + (area.rel? cp.x : 0)) ) ,
-                      (int)(scale * (intFromAttr(*pRect,"y1") + (area.rel? cp.y : 0)) ) ,
-                      (int)(scale * (intFromAttr(*pRect,"x2") + (area.rel? cp.x : 0)) ) ,
-                      (int)(scale * (intFromAttr(*pRect,"y2") + (area.rel? cp.y : 0)))));
+                    area.push_back
+                    (((int)(scale * (intFromAttr(*pRect,"x1") + (rel? cp.x : 0)) ) ,
+                      (int)(scale * (intFromAttr(*pRect,"y1") + (rel? cp.y : 0)) ) ,
+                      (int)(scale * (intFromAttr(*pRect,"x2") + (rel? cp.x : 0)) ) ,
+                      (int)(scale * (intFromAttr(*pRect,"y2") + (rel? cp.y : 0)))));
+            areas[id] = std::move(area);
         }
     }
 
@@ -863,7 +862,7 @@ struct FSSpriteset::SpritesetImpl {
 
         grd.simple = checkAttr(head,"simple","true");
         if (checkAttr(head,"sp-scale"))
-            grd.sp_scale = numFromAttr<decltype(grd.sp_scale)>(head,"sp-scale");
+            grd.sp_scale = numFromAttr<decltype(grd.sp_scale)>(head,"sp-scale", 0.01, 100);
         else
             grd.sp_scale = 1.0;
     }
@@ -898,7 +897,25 @@ struct FSSpriteset::SpritesetImpl {
                 throw FSException("the global cp is not valid due to image sizes",__LINE__);
             
             fillAreasFromElement(img.FirstChildElement("area"), spt.areas, spt.cp, grd.sp_scale);
+            grd.images.push_back(std::move(spt));
         }
+    }
+    
+    void ensureConsistentValues(const DataGRD& grd) {
+        if (grd.simple) return;
+        if (grd.num_img != grd.images.size())
+            throw FSException("image count doesn't match in grd file",__LINE__);
+        std::for_each(grd.images.begin(),grd.images.end(),[&](decltype(grd.images.at(0))& img) {
+            std::for_each(img.areas.begin(),img.areas.end(),[&](decltype(*img.areas.end())& ar) {
+                std::for_each(ar.second.begin(),ar.second.end(),[&](decltype(ar.second.at(0))& rc) {
+                    if (rc.x < 0 || rc.y < 0 || rc.w > img.dim.x || rc.h > img.dim.y)
+                        throw FSException("areas not defined within the sprite domain",__LINE__);
+
+                    std::cout << rc.x << rc.y << rc.w << rc.w << std::endl;
+                });
+            });
+            std::cout << img.name << std::endl << img.cp.x << img.cp.y << std::endl;
+        });
     }
 
     void createimages() {
