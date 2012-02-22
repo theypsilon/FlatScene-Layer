@@ -37,7 +37,4 @@ struct FS2DPoint {
 
 };
 
-typedef FS2DPoint<int> FSPoint;
-typedef FS2DPoint<float> FSFloatPoint;
-
 #endif

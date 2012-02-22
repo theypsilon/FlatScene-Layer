@@ -2,9 +2,9 @@
 #define __COLOR_H__
 
 #include "SDL.h"
+#include "FSTypes.h"
 
-class FSColor  
-{
+class FSColor {
 private:
     SDL_Color m_Color;
 public:

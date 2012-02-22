@@ -95,10 +95,10 @@ void FSCanvas::put ( const FSFloatPoint& ptDst, Uint8 flags) const {
         glPushMatrix();
         glBindTexture(GL_TEXTURE_2D, m_pSurface.tex);
 
-        glTranslatef((float)ptDst.x,(float)ptDst.y,0);
+        glTranslatef((Float)ptDst.x,(Float)ptDst.y,0);
 
-        float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
-        float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
+        Float relW = (Float)m_pSurface.w2/(Float)m_pSurface.w;
+        Float relH = (Float)m_pSurface.h2/(Float)m_pSurface.h;
 
         #ifdef TEXTURE_BASE_SCALE
                 glScalef((1.0/TEXTURE_BASE_SCALE ),(1.0/TEXTURE_BASE_SCALE ),0.0);
@@ -191,10 +191,10 @@ void FSCanvas::put ( const FSPoint& ptDst, Uint8 flags) const {
         glPushMatrix();
         glBindTexture(GL_TEXTURE_2D, m_pSurface.tex);
 
-        glTranslatef((float)ptDst.x,(float)ptDst.y,0);
+        glTranslatef((Float)ptDst.x,(Float)ptDst.y,0);
 
-        float relW = (float)m_pSurface.w2/(float)m_pSurface.w;
-        float relH = (float)m_pSurface.h2/(float)m_pSurface.h;
+        Float relW = (Float)m_pSurface.w2/(Float)m_pSurface.w;
+        Float relH = (Float)m_pSurface.h2/(Float)m_pSurface.h;
 
         #ifdef TEXTURE_BASE_SCALE
                 glScalef((1.0/TEXTURE_BASE_SCALE ),(1.0/TEXTURE_BASE_SCALE ),0.0);
@@ -533,7 +533,7 @@ Uint32 FSCanvas::pow2 (Uint32 n) {
     return c;
 }
 
-int FSCanvas::rotate(float angle, float x, float y, float z) const {
+int FSCanvas::rotate(Float angle, Float x, Float y, Float z) const {
 
     initCallbackList.push_back([=](){
         FSScreen::I().rotate(angle,x,y,z);
@@ -541,7 +541,7 @@ int FSCanvas::rotate(float angle, float x, float y, float z) const {
 
     return EXITO;
 }
-int FSCanvas::translate(float x, float y, float z) const {
+int FSCanvas::translate(Float x, Float y, Float z) const {
 
     initCallbackList.push_back([=](){
         FSScreen::I().translate(x,y,z);
@@ -549,7 +549,7 @@ int FSCanvas::translate(float x, float y, float z) const {
 
     return EXITO;
 }
-int FSCanvas::scale(float x, float y, float z) const {
+int FSCanvas::scale(Float x, Float y, Float z) const {
 
     initCallbackList.push_back([=](){
         FSScreen::I().scale(x,y,z);
@@ -558,7 +558,7 @@ int FSCanvas::scale(float x, float y, float z) const {
     return EXITO;
 }
 
-int FSCanvas::color(float red, float green, float blue, float alpha) const {
+int FSCanvas::color(Float red, Float green, Float blue, Float alpha) const {
 
     if (red > 1.0) red = 1.0;
     if (green > 1.0) green = 1.0;
@@ -581,6 +581,6 @@ int FSCanvas::color(float red, float green, float blue, float alpha) const {
     return EXITO;
 }
 
-int FSCanvas::color(FSColor* col, float alpha) const {
-    return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
+int FSCanvas::color(FSColor* col, Float alpha) const {
+    return color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
 }

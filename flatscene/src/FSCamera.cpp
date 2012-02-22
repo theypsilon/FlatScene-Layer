@@ -109,10 +109,10 @@ int FSCamera::refresh() {
     return EXITO;
 }
 
-int FSCamera::locateRenderScene( FSRectangle* areaSc, float zoom ) {
+int FSCamera::locateRenderScene( FSRectangle* areaSc, Float zoom ) {
     return locateRenderScene(areaSc->getX(),areaSc->getY(),areaSc->getW(),areaSc->getH(),zoom);
 }
-int FSCamera::locateRenderScene( float posx, float posy, float width, float height, float zoom ) {
+int FSCamera::locateRenderScene( Float posx, Float posy, Float width, Float height, Float zoom ) {
 
     if (width == 0 || height == 0) {
         posx = area->getX();
@@ -139,7 +139,7 @@ int FSCamera::locateRenderScene( float posx, float posy, float width, float heig
 
     return EXITO;
 }
-int FSCamera::rotate(float angle, float x, float y, float z) {
+int FSCamera::rotate(Float angle, Float x, Float y, Float z) {
 
     if (rendering) {
         FSScreen::I().pushMatrix();
@@ -159,7 +159,7 @@ int FSCamera::rotate(float angle, float x, float y, float z) {
 
     return EXITO;
 }
-int FSCamera::translate(float x, float y, float z) {
+int FSCamera::translate(Float x, Float y, Float z) {
 
     if (rendering) {
         FSScreen::I().pushMatrix();
@@ -179,7 +179,7 @@ int FSCamera::translate(float x, float y, float z) {
 
     return EXITO;
 }
-int FSCamera::scale(float x, float y, float z) {
+int FSCamera::scale(Float x, Float y, Float z) {
 
     if (rendering) {
         FSScreen::I().pushMatrix();
@@ -199,7 +199,7 @@ int FSCamera::scale(float x, float y, float z) {
 
     return EXITO;
 }
-int FSCamera::color(float red, float green, float blue, float alpha) {
+int FSCamera::color(Float red, Float green, Float blue, Float alpha) {
 
     if (red > 1.0) red = 1.0;
     if (green > 1.0) green = 1.0;
@@ -225,8 +225,8 @@ int FSCamera::color(float red, float green, float blue, float alpha) {
 
     return EXITO;
 }
-int FSCamera::color(FSColor* col, float alpha) {
-    return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,alpha);
+int FSCamera::color(FSColor* col, Float alpha) {
+    return color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
 }
 
 int FSCamera::reubicate(FSRectangle* nArea) {

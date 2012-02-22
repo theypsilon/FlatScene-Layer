@@ -4,12 +4,6 @@
 #include "FSException.h"
 #include "FSparserXML.h"
 #include <string>
-
-#if defined(_MSC_VER)
-    #undef max
-    #undef min
-#endif
-
 #include <limits>
 
 namespace fs { namespace intern { namespace xml {

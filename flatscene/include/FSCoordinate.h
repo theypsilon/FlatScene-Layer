@@ -40,6 +40,4 @@ struct FS3DPoint : public FS2DPoint<T> {
     }
 };
 
-typedef FS3DPoint<int> FSCoordinate;
-
 #endif

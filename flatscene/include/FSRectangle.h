@@ -42,8 +42,8 @@ struct FSRect {
         return SDL_Rect(x,y,w,h);
     }
 
-    inline operator FSPoint() const {
-        return FSPoint(x,y);
+    inline operator FS2DPoint<T>() const {
+        return FS2DPoint<T>(x,y);
     }
 
     FSRect<T>& set (T nx,T ny,T nw,T nh) {
@@ -69,8 +69,6 @@ struct FSRect {
         return contains(rc.x,rc.y) && contains(rc.w,rc.h);
     }
 };
-
-typedef FSRect<int> FSRectangle;
 
 /**
  * FSRelRect, Rectangle class with relative coordinates

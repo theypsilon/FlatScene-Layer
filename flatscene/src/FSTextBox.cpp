@@ -14,8 +14,8 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
     std::string allText(text);
     Uint16 limite=xBox=Lim;
 
-    float currentX = (float) upleft.x+MARGEN;
-    float currentY = (float) upleft.y+MARGEN-2;
+    Float currentX = (Float) upleft.x+MARGEN;
+    Float currentY = (Float) upleft.y+MARGEN-2;
     currentY += TTF_FontAscent(fuente->fuente)/2 ;
 
     col.r=255;
@@ -55,23 +55,23 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
         if (newChar == ' ' ) {
             const char* caux = allText.c_str();
-            float cuenta = (float)advance;
+            Float cuenta = (Float)advance;
 
             for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
                 if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
                     FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
 
-                cuenta += (float)minx;
+                cuenta += (Float)minx;
 
             }
 
             if ((currentX + cuenta - x)>= (limite - MARGEN)) {
-                currentX = (float) upleft.x + MARGEN;
-                currentY += (float)TTF_FontLineSkip(fuente->fuente);
+                currentX = (Float) upleft.x + MARGEN;
+                currentY += (Float)TTF_FontLineSkip(fuente->fuente);
             } else {
                 maxStep++;
-                currentX += (float)advance;
+                currentX += (Float)advance;
                 SChar newT;
 
                 newT.p=NULL;
@@ -80,15 +80,15 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
             }
 
         } else if (newChar == '\n') {
-            currentX = (float) upleft.x + MARGEN;
-            currentY += (float)TTF_FontLineSkip(fuente->fuente);
+            currentX = (Float) upleft.x + MARGEN;
+            currentY += (Float)TTF_FontLineSkip(fuente->fuente);
         } else {
             maxStep++;
 
             SChar newT;
 
-            newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
-            currentX += (float)advance;
+            newT.p = new FSFloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
+            currentX += (Float)advance;
 
             if (fuente->render.find(newChar)==fuente->render.end()) {
                 fuente->render[newChar] = new FSCanvas(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
@@ -101,9 +101,9 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
     }
 
-     currentY -= (float)y;
+     currentY -= (Float)y;
 
-     currentY += (float)TTF_FontLineSkip(fuente->fuente);
+     currentY += (Float)TTF_FontLineSkip(fuente->fuente);
 
     yBox = (Uint8) currentY;
 

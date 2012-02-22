@@ -2,7 +2,8 @@
 #define __IMAGE_H__
 
 #ifdef WIN32
-#include <windows.h>
+    #define NOMINMAX
+    #include <windows.h>
 #endif
 
 #include "GL/gl.h"          // Librer�a OpenGL32
@@ -10,8 +11,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "FSdefinitions.h"
-#include "FSRectangle.h"
-#include "FSPoint.h"
+#include "FSTypes.h"
 #include "FSColor.h"
 #include <string>
 #include <list>
@@ -64,11 +64,11 @@ public:
     void put ( const FSPoint& ptDst , Uint8 flags=0) const;
     void put ( const FSFloatPoint& ptDst , Uint8 flags=0) const;
 
-    int rotate(float angle, float x=0.0, float y=0.0, float z=1.0) const;
-    int translate(float x, float y, float z) const;
-    int scale(float x, float y, float z) const;
-    int color(float red, float green, float blue, float alpha) const;
-    int color(FSColor* col,float alpha=1.0) const;
+    int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
+    int translate(Float x, Float y, Float z) const;
+    int scale(Float x, Float y, Float z) const;
+    int color(Float red, Float green, Float blue, Float alpha) const;
+    int color(FSColor* col,Float alpha=1.0) const;
 };
 
 #endif

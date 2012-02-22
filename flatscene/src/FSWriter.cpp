@@ -278,8 +278,8 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 
         std::string allText(buffer);
 
-        float currentX = (float) x;
-        float currentY = (float) y + (float)TTF_FontAscent(t->Line->fuente->fuente) -3;
+        Float currentX = (Float) x;
+        Float currentY = (Float) y + (Float)TTF_FontAscent(t->Line->fuente->fuente) -3;
 
         size_t length = allText.length();
 
@@ -312,14 +312,14 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
             TTF_GlyphMetrics(t->Line->fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance);
 
             if (newChar == '\n') {
-                currentX = (float) x;
-                currentY += (float)TTF_FontLineSkip(t->Line->fuente->fuente);
+                currentX = (Float) x;
+                currentY += (Float)TTF_FontLineSkip(t->Line->fuente->fuente);
             } else {
 
                 WriterImpl::SChar newT;
 
-                newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
-                currentX += (float)advance;
+                newT.p = new FSFloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
+                currentX += (Float)advance;
 
                 if (t->Line->fuente->render.find(newChar)==t->Line->fuente->render.end()) {
                     SDL_Color fg;
@@ -484,7 +484,7 @@ int FSWriter::inBox(const char* file, int index) {
 }
 
 
-int FSWriter::color(int text,float red, float green, float blue, float alpha, TypeColorTBox boxflags, bool persistent) {
+int FSWriter::color(int text,Float red, Float green, Float blue, Float alpha, TypeColorTBox boxflags, bool persistent) {
 #ifdef TEXT_OPERATIVE
     if (_impl->admin != FSLibrary::I().getActualEngine())
         _impl->setAdmin(FSLibrary::I().getActualEngine());
@@ -524,13 +524,13 @@ int FSWriter::color(int text,float red, float green, float blue, float alpha, Ty
 
 }
 
-int FSWriter::color(int text,FSColor* col, float alpha, TypeColorTBox boxflags, bool persistent) {
+int FSWriter::color(int text,FSColor* col, Float alpha, TypeColorTBox boxflags, bool persistent) {
 
-    return color(text,((float)col->getR())/255.0f,((float)col->getG())/255.0f,((float)col->getB())/255.0f,alpha,boxflags,persistent);
+    return color(text,((Float)col->getR())/255.0f,((Float)col->getG())/255.0f,((Float)col->getB())/255.0f,alpha,boxflags,persistent);
 
 }
 
-int FSWriter::locateRenderScene ( float posx, float posy, float width, float height, float zoom) {
+int FSWriter::locateRenderScene ( Float posx, Float posy, Float width, Float height, Float zoom) {
 
     if ( width == 0.0 || height == 0.0) {
         FSLibrary::I().Error("Width/Height invalid value");
@@ -554,7 +554,7 @@ int FSWriter::render() {
 
 
     if ( _impl->width == 0.0 || _impl->height == 0.0)
-        FSScreen::I().locateRenderScene(0,0,(float)FSScreen::I().getWidth(),(float)FSScreen::I().getHeight(),0); //
+        FSScreen::I().locateRenderScene(0,0,(Float)FSScreen::I().getWidth(),(Float)FSScreen::I().getHeight(),0); //
     else
         FSScreen::I().locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
 

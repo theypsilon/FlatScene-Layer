@@ -131,6 +131,7 @@
     <ClInclude Include="include\FSSprite.h" />
     <ClInclude Include="include\FSSpriteSet.h" />
     <ClInclude Include="include\FSTime.h" />
+    <ClInclude Include="include\FSTypes.h" />
     <ClInclude Include="include\FSUniverse.h" />
     <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\tinyxml\*.h" />

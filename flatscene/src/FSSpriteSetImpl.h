@@ -266,7 +266,7 @@ struct FSSpriteset::SpritesetImpl {
 
         Uint32 columnas = chipset->w / ancho;       // Calculamos el n�mero de columnas del spriteset.
 
-        if (    (((float)columnas) - (((float)chipset->w)/((float)ancho))) != 0.00 || (     ((float)(chipset->h / alto))    -  (((float)chipset->h)/((float)alto))      )!=0.00 )   {
+        if (    (((Float)columnas) - (((Float)chipset->w)/((Float)ancho))) != 0.00 || (     ((Float)(chipset->h / alto))    -  (((Float)chipset->h)/((Float)alto))      )!=0.00 )   {
             return FSLibrary::I().Error(("Estructura defectuosa del archivo: "+s_aux+"\nEl tama�o de la imagen debe ser m�ltiplo exacto de las celdas.").c_str());
         }
 
@@ -913,7 +913,8 @@ struct FSSpriteset::SpritesetImpl {
         std::for_each(grd.images.begin(),grd.images.end(),[&](decltype(grd.images.at(0))& img) {
             std::for_each(img.areas.begin(),img.areas.end(),[&](decltype(*img.areas.end())& ar) {
                 std::for_each(ar.second.begin(),ar.second.end(),[&](decltype(ar.second.at(0))& rc) {
-                    if (rc.x < 0 || rc.y < 0 || rc.w > img.dim.x || rc.h > img.dim.y)
+                    if (rc.x < 0 || rc.y < 0 || 
+                        rc.w > (decltype(rc.w))img.dim.x || rc.h > (decltype(rc.h))img.dim.y)
                         throw FSException("areas not defined within the sprite domain",__LINE__);
                 });
             });
@@ -936,8 +937,8 @@ struct FSSpriteset::SpritesetImpl {
             SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
             blitcopy(chipset,&src,surf,nullptr);
 
-            if (grd.sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {{
-                    auto temp = FSCanvas::scaleSurface(surf,grd.sp_scale);
+            if (grd.sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
+                if (auto temp = FSCanvas::scaleSurface(surf,(int)grd.sp_scale)) {
                     SDL_FreeSurface(surf);
                     surf=temp;
                 }

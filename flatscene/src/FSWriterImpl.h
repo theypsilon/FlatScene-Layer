@@ -22,11 +22,11 @@ struct FSWriter::WriterImpl {
     std::list<int> lastIndexFontAdded;
     int fontSize;
 
-    float posx;
-    float posy;
-    float width;
-    float height;
-    float zoom;
+    Float posx;
+    Float posy;
+    Float width;
+    Float height;
+    Float zoom;
 
     FSEngine* setAdmin(FSEngine* newAdmin);
 
@@ -83,7 +83,7 @@ struct FSWriter::WriterImpl {
     };
 
     struct SEffectText {
-        GLfloat red,green,blue,alpha;
+        Float red,green,blue,alpha;
         TypeColorTBox boxflags;
         bool persistent;
     };

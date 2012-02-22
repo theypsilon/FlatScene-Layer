@@ -23,8 +23,8 @@ FSCamera(target,area) , tiles(tiles){
 		pix_w = uni->getTileW();
 		pix_h = uni->getTileH();
 
-		float aux_w=floor(((float)area->getW())/((float)pix_w)/1.0 + 0.9);
-		float aux_h=floor(((float)area->getH())/((float)pix_h)/1.0 + 0.9);
+		Float aux_w=floor(((Float)area->getW())/((Float)pix_w)/1.0 + 0.9);
+		Float aux_h=floor(((Float)area->getH())/((Float)pix_h)/1.0 + 0.9);
 
 		tam_w=  ((int)aux_w)+1;
 		tam_h= ((int)aux_h)+1;

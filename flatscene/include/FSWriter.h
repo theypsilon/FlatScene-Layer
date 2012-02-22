@@ -7,7 +7,7 @@
 #include <list>
 #include "FSSprite.h"
 #include "FSColor.h"
-#include "FSPoint.h"
+#include "FSTypes.h"
 #include "FSdefinitions.h"
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
@@ -47,10 +47,10 @@ public:
     int erase(int text=ALL_TEXT,bool nextframe=false);
 
 
-    int locateRenderScene ( float posx=0.0, float posy=0.0, float width=0.0, float height=0.0, float zoom = 1.0) ;
+    int locateRenderScene ( Float posx=0.0, Float posy=0.0, Float width=0.0, Float height=0.0, Float zoom = 1.0) ;
 
-    int color(int text,float red, float green, float blue, float alpha, TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
-    int color(int text,FSColor* col, float alpha,TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
+    int color(int text,Float red, Float green, Float blue, Float alpha, TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
+    int color(int text,FSColor* col, Float alpha,TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
 
 
     int render();

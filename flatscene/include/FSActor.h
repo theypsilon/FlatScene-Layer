@@ -2,7 +2,7 @@
 #define __ACTOR_H__
 
 #include "FSMessageHandler.h"
-#include "FSCoordinate.h"
+#include "FSTypes.h"
 #include "FSSprite.h"
 #include <string>
 #include <map>
