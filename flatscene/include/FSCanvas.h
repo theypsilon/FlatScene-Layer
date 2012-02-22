@@ -30,7 +30,8 @@ class FSCanvas {
 private:
     SCanvas m_pSurface ;
 
-    FSCanvas( SCanvas pSurface ) ;
+    FSCanvas( SCanvas pSurface = SCanvas()) ;
+    FSCanvas( FSCanvas&& pSurface ) ;
     virtual ~FSCanvas( ) ;
 
     void clearSurface () ;

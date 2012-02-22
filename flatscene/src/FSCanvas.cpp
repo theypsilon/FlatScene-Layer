@@ -9,6 +9,14 @@
 FSCanvas::FSCanvas( SCanvas pSurface ) 
 : m_pSurface(pSurface) {}
 
+FSCanvas::FSCanvas( FSCanvas&& pSurface ) {
+    std::swap(pSurface.endCallbackList,     endCallbackList);
+    std::swap(pSurface.initCallbackList,    initCallbackList);
+    std::swap(pSurface.m_pSurface,          m_pSurface);
+    pSurface.m_pSurface.sdl_surf = nullptr;
+    pSurface.m_pSurface.h = pSurface.m_pSurface.w = 0;
+}
+
 FSCanvas::~FSCanvas( ) {
 
     if (m_pSurface.sdl_surf) {

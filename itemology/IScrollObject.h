@@ -36,7 +36,7 @@ public:
 	//	}
 	//
 	// Sólo definir si se desea hacer una operación diferente
-	FSSprite* getSprite();
+	const FSSprite* getSprite();
 
 	// Método pensado para ser invocado en CEngine::onIdle.
 	// Deberá actualizar el estado del CActor cuando sea necesario.

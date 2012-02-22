@@ -12,15 +12,7 @@ const std::string& FSSpriteset::getName() const {
     return _impl->getName();
 }
 
-bool FSSpriteset::has ( FSSprite* pspt ) const {
-    return _impl->has(pspt) ;
-}
-
-int FSSpriteset::search( FSSprite* pspt ) const {
-    return _impl->search(pspt);
-}
-
-FSSprite* FSSpriteset::get ( unsigned int n ) const {
+const FSSprite* FSSpriteset::get ( unsigned int n ) const {
     return _impl->get(n);
 }
 

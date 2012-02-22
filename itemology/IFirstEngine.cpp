@@ -40,6 +40,9 @@ void IFirstEngine::drawFrame() {
 	}
 
 	Write.render();
+
+    FSScreen::I().render();
+
 }
 
 void  IFirstEngine::onInit() {
@@ -78,7 +81,7 @@ void IFirstEngine::onIdle()	{
     if (move[i_left])  mainactor->place.x += -6;
     if (move[i_right]) mainactor->place.x += +6;
 
-
+    
 	//setIfTrue(mainactor->place.x,cams[0]->getArea()->x + cams[0]->getArea()->w / 2 +32,LambdaLess);
 	//setIfTrue(mainactor->place.y,cams[0]->getArea()->y + cams[0]->getArea()->h / 2 +32,LambdaLess);
 }

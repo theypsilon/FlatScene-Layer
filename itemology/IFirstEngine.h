@@ -4,6 +4,7 @@
 #include <FSLibrary.h>
 
 #include "IScrollCamera.h"
+#include "FSTime.h"
 
 class IFirstEngine :
 	public FSEngine
@@ -14,6 +15,8 @@ private:
 	IScrollObject* mainactor;
 
     FSMultiverse CMultiverse;
+
+    FSTime Chrono;
 public:
 	// Constructor del Motor.
 	IFirstEngine();

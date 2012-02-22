@@ -29,7 +29,7 @@ public:
     virtual ~FSActor();
 
     int setSprite(int file,int graph);
-    virtual FSSprite* getSprite();
+    virtual const FSSprite* getSprite();
 
     virtual int move();
 

@@ -30,7 +30,7 @@ int FSActor::setSprite(int file,int graph) {
     return EXITO;
 }
 
-FSSprite* FSActor::getSprite() {
+const FSSprite* FSActor::getSprite() {
     return FSImages::I().get(file)->get(graph);
 }
 

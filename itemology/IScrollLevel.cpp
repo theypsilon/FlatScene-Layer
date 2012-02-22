@@ -357,7 +357,7 @@ Uint32 IScrollLevel::getPixel(int x, int y,int z) {
 		
 		if (tile_pisado>0) {
 			tile_pisado--;
-			FSSprite* canv=Img.get(durezaSet+ durtile.fileDur)->get(tile_pisado);
+			auto canv=Img.get(durezaSet+ durtile.fileDur)->get(tile_pisado);
 
 			int flags =  durtile.flags;
 

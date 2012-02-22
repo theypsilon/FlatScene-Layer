@@ -27,19 +27,18 @@ private:
     FSPoint cpoint;
     Areas areas;
 
-    //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
-    FSSprite ( SCanvas pSurface = SCanvas(), FSPoint zerocpSource = FSPoint(0,0)) ;
-
-    FSSprite (FSSprite&& sprite);
-    //destruye el sprite.
-    virtual ~FSSprite ( ) ;
-
     friend class FSSpriteset;
     friend class FSScreen;
 
     SpriteOpaque opaque;
 
 public:
+    //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
+    FSSprite ( SCanvas pSurface = SCanvas(), FSPoint zerocpSource = FSPoint(0,0)) ;
+
+    FSSprite (FSSprite&& sprite);
+    //destruye el sprite.
+    virtual ~FSSprite ( ) ;
     //asigna nombre
     void setName(const std::string& newName);
     //devuelve nombre

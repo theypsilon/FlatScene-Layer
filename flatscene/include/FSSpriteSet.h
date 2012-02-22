@@ -4,8 +4,6 @@
 #include "FSSprite.h"
 #include <memory>
 
-typedef std::vector<FSSprite*> SpriteCollection;
-
 typedef struct { 
     std::string name; 
     Uint8 mode; 
@@ -16,11 +14,7 @@ typedef struct {
 class FSSpriteset {
 public:
 
-    bool has ( FSSprite* pspt ) const;
-
-    int search ( FSSprite* pspt ) const;
-
-    FSSprite* get ( unsigned int n ) const;
+    const FSSprite* get ( unsigned int n ) const;
 
     int size () const;
 
@@ -38,14 +32,5 @@ private :
     friend class FSScreen;
     friend class FSImages;
 };
-
-typedef struct {
-    Sint16 x, y,w, h;
-} SDL_Rect_Signed;
-
-typedef struct { 
-    bool relative ; 
-    std::vector<SDL_Rect_Signed> v; 
-} RectsInfo;
 
 #endif

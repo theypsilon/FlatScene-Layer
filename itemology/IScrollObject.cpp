@@ -45,9 +45,9 @@ int IScrollObject::setUniverse(FSUniverse* m) {
 	// CActor::setUniverse(m) realiza la asignación : inUniverse=m;
 }
 
-FSSprite* IScrollObject::getSprite() {
+const FSSprite* IScrollObject::getSprite() {
 
-	FSSprite* spt = FSActor::getSprite();
+	auto spt = FSActor::getSprite();
 
 	// TODO
 
