@@ -142,7 +142,7 @@ struct FSSpriteset::SpritesetImpl {
         chipTest.w = 640;
         loadFileGRD(s_aux,&chipTest);
         exit(0);
-
+/*
         #ifdef LOG_SPRITESET
             if (cPrev == NULL)
                 printf("\nSpriteset %s\n",c.c_str());
@@ -261,9 +261,8 @@ struct FSSpriteset::SpritesetImpl {
 
         SDL_Surface* sdl_surf = NULL;
 
-        /*SDL_PixelFormat* f = chipset->format;
-        printf("bpp:%d Amask:%X alpha:%d colorkey:%d Rmask:%X Gmask:%X Bmask:%X\n",f->BitsPerPixel,f->Amask,f->alpha,f->colorkey,f->Rmask,f->Gmask,f->Bmask);
-        */
+        //SDL_PixelFormat* f = chipset->format;
+        //printf("bpp:%d Amask:%X alpha:%d colorkey:%d Rmask:%X Gmask:%X Bmask:%X\n",f->BitsPerPixel,f->Amask,f->alpha,f->colorkey,f->Rmask,f->Gmask,f->Bmask);
 
         Uint32 columnas = chipset->w / ancho;       // Calculamos el n�mero de columnas del spriteset.
 
@@ -461,8 +460,8 @@ struct FSSpriteset::SpritesetImpl {
                             rc.y -= m_pSprite->getCenter().getY();
                             rc.h -= m_pSprite->getCenter().getY();
                         }
-
-                        if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) || */(rc.w<rc.x) || (rc.h<rc.y))
+                        if (rc.w < rc.x || rc.h < rc.y)
+                        //if ((rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) || (rc.w<rc.x) || (rc.h<rc.y))
                             FSLibrary::I().Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rect�ngulo de la imagen "+iinfo.name+" conflictivos.").c_str());
 
                         rArea.push_back(FSRectangle(rc.x *sp_scale,rc.y *sp_scale,rc.w *sp_scale,rc.h *sp_scale)); // Finalmente creamos con ellas un rectangulo y lo a�adimos al area actual.
@@ -481,7 +480,7 @@ struct FSSpriteset::SpritesetImpl {
                             rc.y -= m_pSprite->getCenter().getY();
                             rc.h -= m_pSprite->getCenter().getY();
                         }
-                        if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) ||*/ (rc.w<rc.x) || (rc.h<rc.y))
+                        //if ((rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) ||// (rc.w<rc.x) || (rc.h<rc.y))
                             FSLibrary::I().Error(("Estructura defectuosa del archivo: "+s_aux+"\nValores en un rect�ngulo global aplicado la imagen "+iinfo.name+" conflictivos.").c_str());
 
                         rArea.push_back(FSRectangle(rc.x*sp_scale,rc.y*sp_scale,rc.w*sp_scale,rc.h*sp_scale)); // Finalmente creamos con ellas un rectangulo y lo a�adimos al area actual.
@@ -504,14 +503,14 @@ struct FSSpriteset::SpritesetImpl {
 
             if (!simple)
                 img=img->NextSiblingElement("img"); // Si no es simple, buscamos la siguiente etiqueta imagen.
-        }
+        }*/
         SDL_FreeSurface(chipset);
         chipset=NULL;
 
     }
 
     void loadChipsetSplit(std::string grd,Uint8 mode=ONLY_TEXTURE) {
-
+/*
         int num_img=0;
         int ancho=0;
         int alto=0;
@@ -690,7 +689,6 @@ struct FSSpriteset::SpritesetImpl {
                             rc.h -= m_pSprite->getCenter().getY();
                         }
 
-                        if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) || */(rc.w<rc.x) || (rc.h<rc.y))
                             FSLibrary::I().Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rect�ngulo de la imagen "+iinfo.name+" conflictivos.").c_str());
 
                         rArea.push_back(FSRectangle(rc.x *sp_scale,rc.y *sp_scale,rc.w *sp_scale,rc.h *sp_scale)); // Finalmente creamos con ellas un rectangulo y lo a�adimos al area actual.
@@ -709,7 +707,6 @@ struct FSSpriteset::SpritesetImpl {
                             rc.y -= m_pSprite->getCenter().getY();
                             rc.h -= m_pSprite->getCenter().getY();
                         }
-                        if (/*(rc.x < 0) || (rc.x > iinfo.w) || (rc.y < 0) || (rc.y > iinfo.w) || (rc.w < 0) || (rc.w > iinfo.h) || (rc.h < 0) || (rc.h > iinfo.h) ||*/ (rc.w<rc.x) || (rc.h<rc.y))
                             FSLibrary::I().Error(("Estructura defectuosa del archivo: "+grd+"\nValores en un rect�ngulo global aplicado la imagen "+iinfo.name+" conflictivos.").c_str());
 
                         rArea.push_back(FSRectangle(rc.x*sp_scale,rc.y*sp_scale,rc.w*sp_scale,rc.h*sp_scale)); // Finalmente creamos con ellas un rectangulo y lo a�adimos al area actual.
@@ -730,7 +727,7 @@ struct FSSpriteset::SpritesetImpl {
 
             elmnt = elmnt->NextSiblingElement("img");   // Si no es simple, buscamos la siguiente etiqueta imagen.
         }
-
+        */
     }
 
     bool isValidBitmapExtension(const std::string& bitmap) {
