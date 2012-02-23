@@ -49,7 +49,7 @@ public:
         return I();
     }
 
-    FSEngine* getActualEngine();
+    const FSEngine *const getActualEngine();
 
     int addEngine(std::unique_ptr<FSEngine> engine,int priority);
 

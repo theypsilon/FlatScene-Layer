@@ -28,7 +28,7 @@ struct FSWriter::WriterImpl {
     Float height;
     Float zoom;
 
-    FSEngine* setAdmin(FSEngine* newAdmin);
+    FSEngine* setAdmin(const FSEngine *const constAdmin);
 
     struct SChar {
         Uint16 glyph;

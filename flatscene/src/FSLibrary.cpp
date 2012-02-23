@@ -31,7 +31,7 @@ void FSLibrary::LibraryImpl::setActualEngine(FSEngine* newEngineActive) {
     actualEngine = newEngineActive;
 }
 
-FSEngine* FSLibrary::getActualEngine() {
+const FSEngine *const FSLibrary::getActualEngine() {
     return _impl->actualEngine;
 }
 
@@ -168,15 +168,15 @@ void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
 
     // Ejecuci�n del CEngine seleccionado
 
-    while (getActualEngine()) {
+    while (auto actualEngine = (*_impl).actualEngine) {
 
-        if (!getActualEngine()->isInitialized()) {
-            getActualEngine()->onInit();
-            if (!getActualEngine()->isInitialized())
+        if (!actualEngine->isInitialized()) {
+            actualEngine->onInit();
+            if (!actualEngine->isInitialized())
                 throw FSException("Could not initialize new interface!");
         }
 
-        getActualEngine()->loop();
+        actualEngine->loop();
 
         for (auto it = _impl->endTasks.begin(); it != _impl->endTasks.end(); ++it) {
             (*it)();
@@ -318,7 +318,7 @@ void FSLibrary::killEngine(FSEngine* engine) {
     (*_impl).endTasks.push_back([&](){
         if (engine != 0) {
 
-            FSEngine* act = getActualEngine(); // Lo salvamos para recuperarlo al final.
+            FSEngine* act = (*_impl).actualEngine; // Lo salvamos para recuperarlo al final.
             std::unique_ptr<FSEngine> find = nullptr;
 
             for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it) {

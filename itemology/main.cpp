@@ -9,9 +9,11 @@ int main (int argc, char* argv[]) {
 
     cout << "Starting main" << endl;
 
-    FSLib.startLibrary(640,480,32,false,false);
+    FSLib.startLibrary(640,480,32,false);
 
-    FSLib.processEngine(unique_ptr<IFirstEngine>(new IFirstEngine()));
+    auto engine = unique_ptr<IFirstEngine>(new IFirstEngine);
+
+    FSLib.processEngine(move(engine));
 
     cout << "Ending main" << endl;
 

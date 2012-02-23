@@ -3,9 +3,10 @@
 #include "FSparserXML.h"
 #include "FSScreenImpl.h"
 
-FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
+FSEngine* FSWriter::WriterImpl::setAdmin(const FSEngine *const constAdmin) {
 
     auto ret = admin;
+    auto newAdmin = const_cast<FSEngine*>(constAdmin);
 
 #ifdef TEXT_OPERATIVE
 
