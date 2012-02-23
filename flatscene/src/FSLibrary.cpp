@@ -129,11 +129,11 @@ FSLibrary::~FSLibrary() {
     delete _impl;
 }
 
-std::unique_ptr<FSEngine> FSLibrary::processEngine(std::unique_ptr<FSEngine>&& eng) {
+std::vector<std::unique_ptr<FSEngine>> FSLibrary::processEngine(std::unique_ptr<FSEngine>&& eng) {
     std::vector<std::unique_ptr<FSEngine>> veng;
     veng.push_back(std::move(eng));
     processEngine(veng);
-    return nullptr;
+    return veng;
 }
 
 void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
@@ -184,14 +184,14 @@ void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
     }
 }
 
-int FSLibrary::processEngines() {
-
+std::vector<std::unique_ptr<FSEngine>> FSLibrary::processEngines() {
     processEngine((*_impl).engineIn);
-
-    return EXITO;
+    std::vector<std::unique_ptr<FSEngine>> veng;
+    std::swap((*_impl).engineIn,veng);
+    return veng;
 }
 
-int FSLibrary::addEngine(std::unique_ptr<FSEngine>&& engine,int priority) {
+int FSLibrary::addEngine(std::unique_ptr<FSEngine> engine,int priority) {
 
     if (engine == nullptr)
         return FRACASO;

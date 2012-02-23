@@ -40,9 +40,9 @@ public:
 
     int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
-    int processEngines();
+    std::vector<std::unique_ptr<FSEngine>> processEngines();
     void processEngine(std::vector<std::unique_ptr<FSEngine>>& veng);
-    std::unique_ptr<FSEngine> processEngine(std::unique_ptr<FSEngine>&& eng);
+    std::vector<std::unique_ptr<FSEngine>> processEngine(std::unique_ptr<FSEngine>&& eng);
 
 
     inline FSLibrary& getLibrary() {
@@ -51,7 +51,7 @@ public:
 
     FSEngine* getActualEngine();
 
-    int addEngine(std::unique_ptr<FSEngine>&& engine,int priority);
+    int addEngine(std::unique_ptr<FSEngine> engine,int priority);
 
     void exit();
     void restart();
