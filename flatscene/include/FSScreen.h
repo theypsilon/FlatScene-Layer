@@ -11,8 +11,6 @@
 
 #define RENDER_TEXTURE_STANDARD 0x00000001
 
-typedef std::list<SpritesetInfo> GraphicResources;
-
 enum TypeRendeProjection {
     TRP_ORTHO,
     TRP_PERSPECTIVE

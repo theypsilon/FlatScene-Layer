@@ -4,13 +4,6 @@
 #include "FSSprite.h"
 #include <memory>
 
-typedef struct { 
-    std::string name; 
-    Uint8 mode; 
-    int times;
-    int number;
-} SpritesetInfo ;
-
 class FSSpriteset {
 public:
 

@@ -3,6 +3,15 @@
 
 #include "FSScreen.h"
 
+typedef struct { 
+    std::string name; 
+    Uint8 mode; 
+    int times;
+    int number;
+} SpritesetInfo ;
+
+typedef std::list<SpritesetInfo> GraphicResources;
+
 struct FSScreen::ScreenImpl {
 
     SDL_Surface* m_SDL_Surface;
