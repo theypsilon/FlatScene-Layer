@@ -43,7 +43,6 @@ private:
     friend class FSImages;
     friend class FSScreen;
 
-    static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
     static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
     static inline Uint32 pow2 (Uint32 n);
@@ -52,6 +51,7 @@ private:
     mutable std::list<std::function<void(void)>> endCallbackList;
 
 public:
+    static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
 
     const SCanvas& getCanvas() const;
 
