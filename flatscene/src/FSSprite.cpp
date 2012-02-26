@@ -8,10 +8,10 @@ FSSprite::FSSprite ( SCanvas pSurface, FSPoint zerocpSource)
 : FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
 
 FSSprite::FSSprite(FSSprite&& spt) : FSCanvas(std::move(spt)) {
-    std::swap(spt.areas,            areas);
-    std::swap(spt.name,             name);
-    std::swap(spt.cpoint,           cpoint);
-    std::swap(spt.opaque,           opaque);
+    areas = std::move(spt.areas);
+    name = std::move(spt.name);
+    cpoint = std::move(spt.cpoint);
+    opaque = spt.opaque;
 }
 
 FSSprite::~FSSprite ( ) {
