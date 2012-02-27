@@ -291,6 +291,9 @@ struct FSSpriteset::SpritesetImpl {
                                              chipset.format->Rmask, chipset.format->Gmask,
                                              chipset.format->Bmask, chipset.format->Amask);
 
+            src.w = src.x + img.dim.x;
+            src.h = src.y + img.dim.y;
+
             SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
             blitcopy(chipset,&src,surf,nullptr);
 
@@ -308,13 +311,13 @@ struct FSSpriteset::SpritesetImpl {
 
             m_vecSprites.push_back(std::move(spt));
 
-            if (src.w += grd.cellwidth > chipset.w) {
+            src.x += grd.cellwidth;
+            if (src.x + grd.cellwidth > chipset.w) {
                 src.x = 0;
                 src.y += grd.cellheight;
-                if (src.h += grd.cellwidth > chipset.h)
+                if (src.y + grd.cellheight > chipset.h)
                     throw FSException("the grd doesn't fit with the chipset",__LINE__);
-            } else
-                src.x += grd.cellwidth;
+            }
         });
     }
 };

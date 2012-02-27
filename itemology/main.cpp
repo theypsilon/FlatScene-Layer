@@ -19,7 +19,7 @@ int main (int argc, char* argv[]) {
     FSSprite chipset(FSCanvas::toSCanvas(surf,WITH_SDL_SURFACE),pt);
 
     int index = Img.add("resources/tilp",WITH_SDL_SURFACE);
-    auto& spt = *Img.get(index)->get(0);
+    auto& spt = *Img.get(index)->get(4);
     for (int timer = SDL_GetTicks() ; timer + 4000 > SDL_GetTicks();) {
             FSDraw.projectionMode(TRP_PERSPECTIVE,1600);
             FSDraw.locateRenderScene(0,0,640,480);
