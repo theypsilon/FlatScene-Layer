@@ -2,7 +2,7 @@
 #define __ACTOR_H__
 
 #include "FSMessageHandler.h"
-#include "FSCoordinate.h"
+#include "FSTypes.h"
 #include "FSSprite.h"
 #include <string>
 #include <map>
@@ -15,8 +15,7 @@ class FSUniverse;
 
 typedef std::list<FSActor*> ActorCollection;
 
-class FSActor : public FSMessageHandler
-{
+class FSActor {
 private:
     std::string creature;
     FSUniverse* inUniverse;
@@ -26,11 +25,11 @@ public:
     int graph;
     Uint8 flags;
 
-    FSActor(const char* creature,FSMessageHandler * pmhParent=NULL);
+    FSActor(const char* creature);
     virtual ~FSActor();
 
     int setSprite(int file,int graph);
-    virtual FSSprite* getSprite();
+    virtual const FSSprite* getSprite();
 
     virtual int move();
 

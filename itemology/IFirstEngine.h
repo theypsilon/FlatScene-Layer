@@ -1,0 +1,85 @@
+#ifndef __I_FIRST_ENGINE__
+#define __I_FIRST_ENGINE__
+
+#include <FSLibrary.h>
+
+#include "IScrollCamera.h"
+#include "FSTime.h"
+
+class IFirstEngine :
+	public FSEngine
+{
+private:
+	std::vector<IScrollCamera*> cams;
+
+	IScrollObject* mainactor;
+
+    FSMultiverse CMultiverse;
+
+    FSTime Chrono;
+public:
+	// Constructor del Motor.
+	IFirstEngine();
+	
+	// Destructor, ahí deberemos liberar todos los recursos.
+	virtual ~IFirstEngine();
+
+	// Opcional, pero invocado por la Libraría. Debe devolver 'true' para que la librería pueda tomar el motor como "Motor Activo" ( CLibrary::getActualEngine(); )
+	// En este método se pueden reservar recursos necesarios para la ejecución de lmotor.
+	void onInit();
+	
+	// Opcional, pero invocado por la Librería. En este método se pueden liberar recursos que eran necesarios para la ejecución de lmotor.
+	void onExit();
+
+	// Función necesaria para el procesamiento de Eventos por parte de este Motor.
+	void loop();
+
+	// Rutina principal. Aquí se debe incluir la implementación principal del motor para actualizar su estado.
+	void onIdle();
+
+	// Opcional. Pensado para resolver conflictos ante inesperadas conmutaciones entre diferentes Motores.
+	virtual void deselect();
+
+	// Rutina de renderización. Aquí deberían invocarse todas las rutina de renderización de los elementos controlados por el Motor.
+	void drawFrame();
+
+	void onEvent(SDL_Event& e);
+
+	/*
+	void onAPush();
+	void onBPush();
+	void onCPush();
+	void onDPush();
+	void onEPush();
+	void onFPush();
+
+	void onARelease();
+	void onBRelease();
+	void onCRelease();
+	void onDRelease();
+	void onERelease();
+	void onFRelease();
+
+	void onMoveLPush();
+	void onMoveRPush();
+	void onMoveUPush();
+	void onMoveDPush();
+
+	void onMoveLRelease();
+	void onMoveRRelease();
+	void onMoveURelease();
+	void onMoveDRelease();*/
+
+	enum moving_key {
+		i_up,
+		i_down,
+		i_right,
+		i_left,
+		i_count
+	};
+
+	bool move[i_count];
+
+};
+
+#endif

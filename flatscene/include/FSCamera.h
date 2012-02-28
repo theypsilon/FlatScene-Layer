@@ -4,14 +4,14 @@
 #include "FSMessageHandler.h"
 #include "FSActor.h"
  
-#include "FSRectangle.h"
+#include "FSTypes.h"
 #include "FSCanvas.h"
 #include "FSMultiverse.h"
 #include "FSScreen.h"
 #include <vector>
 #include <string>
 
-class FSCamera : public FSMessageHandler {
+class FSCamera {
 protected:
     int x,y;
     FSActor* target;
@@ -25,7 +25,7 @@ protected:
 
 public:
     
-    FSCamera(FSActor* target,FSRectangle* area,FSMessageHandler * pmhParent=NULL);
+    FSCamera(FSActor* target,FSRectangle* area);
     virtual ~FSCamera();
     virtual int loadUniverse();
     virtual FSUniverse* getUniverse();
@@ -43,14 +43,14 @@ public:
     int render();
     virtual int reubicate(FSRectangle* nArea);
 
-    int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
-    int translate(float x, float y, float z);
-    int scale(float x, float y, float z);
-    int color(float red, float green, float blue, float alpha);
-    int color(FSColor* col,float alpha=1.0);
+    int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0);
+    int translate(Float x, Float y, Float z);
+    int scale(Float x, Float y, Float z);
+    int color(Float red, Float green, Float blue, Float alpha);
+    int color(FSColor* col,Float alpha=1.0);
     
-    int locateRenderScene ( float posx=0, float posy=0, float width=0, float height=0, float zoom = 1.0);
-    int locateRenderScene ( FSRectangle* areaSc, float zoom = 1.0);
+    int locateRenderScene ( Float posx=0, Float posy=0, Float width=0, Float height=0, Float zoom = 1.0);
+    int locateRenderScene ( FSRectangle* areaSc, Float zoom = 1.0);
 
 #ifdef MENSAJES_MSGIDS
     int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);

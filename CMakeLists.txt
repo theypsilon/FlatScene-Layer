@@ -29,15 +29,15 @@ target_link_libraries ( flatscene
 	${OPENGL_LIBRARY}
 )
 
-file ( GLOB NSRCS demoark/src/*.cpp )
-file ( GLOB NHDRS demoark/include/*.h )
+file ( GLOB NSRCS itemology/*.cpp )
+file ( GLOB NHDRS itemology/*.h )
 
-add_executable ( testdemoark ${NSRCS} ${NHDRS} )
+add_executable ( item ${NSRCS} )
 
 include_directories ( ./flatscene/include/ )
-include_directories ( ./demoark/include/ )
+include_directories ( ./itemology/ )
 
-target_link_libraries ( testdemoark 
+target_link_libraries ( item 
 	flatscene
 )
 

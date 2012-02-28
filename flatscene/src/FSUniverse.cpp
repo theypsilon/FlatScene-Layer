@@ -2,14 +2,10 @@
 #include "FSLibrary.h"
 #include "FSMultiverseImpl.h"
 
-FSUniverse::FSUniverse(std::string name) : FSMessageHandler(NULL), name(name) , loaded(false), numCameras(0), slot(255) {
-
-}
+FSUniverse::FSUniverse(std::string name) 
+: name(name) , loaded(false), numCameras(0), slot(255) {}
 
 FSUniverse::~FSUniverse() {
-    if (!FSMultiverse::I()._impl->working) {
-        FSLibrary::I().Error("Solo se puede destruir el Universo a traves del Multiverso.",TE_controlViolation);
-    }
     ActorCollection::iterator it ;
     FSActor* a ;
     while ( !actor.empty ( ) )
@@ -79,10 +75,6 @@ ActorCollection::iterator FSUniverse::actorEnd() {
 }
 
 bool FSUniverse::isLoaded() {
-    if (!FSMultiverse::I()._impl->working && slot == 255) {
-        FSLibrary::I().Error("No se ha inicializado este mapa, a traves del Multiverso. Inutilizable.");
-        return false;
-    }
     return loaded;
 }
 

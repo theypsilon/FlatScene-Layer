@@ -2,6 +2,7 @@
 #define __TIME_H__
 
 #include <map>
+#include <memory>
 #include "SDL.h"
 #include "FSdefinitions.h"
 
@@ -9,37 +10,24 @@ class FSEngine;
 
 class FSTime {
 private:
-    struct STimeData {
-        unsigned int msInterval;
-        unsigned int msLast;
-        unsigned int frameCount;
 
-        STimeData() : msInterval(16), msLast(0), frameCount(0) {
-        };
-    };
-
-    mutable std::map<FSEngine*,STimeData> fc;
+    unsigned int _msInterval;
+    unsigned int _msLast;
+    unsigned int _ticks;
 
 #ifdef MENSAJES_FPS
-    unsigned int fps;
-    unsigned int auxTimer;
-    std::map<FSEngine*,int> adminText;
+    unsigned int _fps;
+    unsigned int _auxTimer;
 #endif
 
-    mutable STimeData* actTime;
-    mutable FSEngine* admin;
-
-    bool all;
-    unsigned int allMsInterval;
 public:
     FSTime();
     ~FSTime();
-    unsigned int setInterval(unsigned int msNew, bool all=false);
-    unsigned int setFPS(unsigned int fpsNew, bool all=false);
+    unsigned int setInterval(unsigned int msInterval );
+    unsigned int setFPS(unsigned int fpsInterval );
     int nextFrame();
     unsigned int getTick() const;
-
-    bool isTimeForAll() const;
+    void reset(unsigned int tick = 0);
 };
 
 extern FSTime Chrono;

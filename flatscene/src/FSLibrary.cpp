@@ -11,27 +11,31 @@
 
 #include "FSLibraryImpl.h"
 #include "FSScreenImpl.h"
+#include "FSparserXML.h"
+
+#include "FSException.h"
+#include <algorithm>
 
 #define EXITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onExit(); _impl->setActualEngine(eaux); }
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onInit(); _impl->setActualEngine(eaux); }
 #define KILLENGINE(A); EXITENGINE(A); if (A) { delete A; A=NULL; }
 
-Uint32 FSLibrary::MSGID_Exit=FSMessageHandler::getNextMSGID();
-Uint32 FSLibrary::MSGID_Restart=FSMessageHandler::getNextMSGID();
-Uint32 FSLibrary::MSGID_RunEngine=FSMessageHandler::getNextMSGID();
-Uint32 FSLibrary::MSGID_ReloadEngine=FSMessageHandler::getNextMSGID();
-Uint32 FSLibrary::MSGID_ChangeEngine=FSMessageHandler::getNextMSGID();
-Uint32 FSLibrary::MSGID_KillEngine=FSMessageHandler::getNextMSGID();
+void FSLibrary::LibraryImpl::sort(std::vector<std::unique_ptr<FSEngine>>& v) {
+    typedef const std::unique_ptr<FSEngine>& pEngine;
+    std::sort(v.begin(),v.end(),[](pEngine p1, pEngine p2) {
+        return (p1->priority > p2->priority);
+    });
+}
 
-void FSLibrary::LibraryImpl::setActualEngine(FSEngine *newEngineActive) {
+void FSLibrary::LibraryImpl::setActualEngine(FSEngine* newEngineActive) {
     actualEngine = newEngineActive;
 }
 
-FSEngine* FSLibrary::getActualEngine() {
+const FSEngine *const FSLibrary::getActualEngine() {
     return _impl->actualEngine;
 }
 
-FSLibrary::FSLibrary(): FSMessageHandler(NULL), _impl(new LibraryImpl) {
+FSLibrary::FSLibrary(): _impl(new LibraryImpl) {
 #ifdef IN_FILE_ERROR
     (*_impl).errorsInSession = false;
 #endif
@@ -40,7 +44,7 @@ FSLibrary::FSLibrary(): FSMessageHandler(NULL), _impl(new LibraryImpl) {
     (*_impl).debugticks=Chrono.getTick();
 #endif
 
-    (*_impl).actualEngine = NULL;
+    (*_impl).actualEngine = nullptr;
 
     if(SDL_Init(SDL_INIT_TIMER)==-1)
     {
@@ -104,36 +108,11 @@ int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen,
 }
 
 void FSLibrary::LibraryImpl::onExit() {
+
     LibraryImpl* _impl = FSLibrary::I()._impl;
-    while( !(*_impl).engineIn.empty() ) {
+    (*_impl).engineIn.clear();
 
-        FSEngine * engine = *(*_impl).engineIn.begin();
-
-        (*_impl).engineOut.remove(engine);
-
-        _impl->setActualEngine(engine);
-        if (engine->isInitialized())
-            engine->onExit();
-
-        (*_impl).engineIn.erase((*_impl).engineIn.begin());
-
-        delete engine;
-    }
-
-    while( !(*_impl).engineOut.empty() ) {
-
-        FSEngine * engine = *(*_impl).engineOut.begin();
-
-        _impl->setActualEngine(engine);
-        if (engine->isInitialized())
-            engine->onExit();
-
-        (*_impl).engineOut.erase((*_impl).engineOut.begin());
-
-        delete engine;
-    }
-
-    _impl->setActualEngine(NULL);
+    _impl->setActualEngine(nullptr);
 
 #ifdef IN_FILE_ERROR
     if ((*_impl).errorsInSession) {
@@ -150,102 +129,104 @@ FSLibrary::~FSLibrary() {
     delete _impl;
 }
 
-int FSLibrary::processEngines() {
+std::vector<std::unique_ptr<FSEngine>> FSLibrary::processEngine(std::unique_ptr<FSEngine>&& eng) {
+    std::vector<std::unique_ptr<FSEngine>> veng;
+    veng.push_back(std::move(eng));
+    processEngine(veng);
+    return veng;
+}
 
-    _impl->setActualEngine(NULL);
+void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
+    _impl->setActualEngine(nullptr);
 
-    // Selecci�n del CEngine a ejecutar entre el Conjunto de CEngine.
+    typedef std::unique_ptr<FSEngine> pEngine;
 
-    (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
+    _impl->sort(veng);
 
-    for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
-        it != jt && getActualEngine()==NULL;
-        ++it) {
+    for (auto it = veng.begin(), et = veng.end(); 
+        it != et && getActualEngine() == nullptr; ++it) {
 
-        if (!(*it)->done) {
-            (*it)->done = true;
-            _impl->setActualEngine(*it);
+        FSEngine& eng = **it;
+        if (!eng.done) {
+            eng.done = true;
+            _impl->setActualEngine(it->get());
         }
-
     }
 
+    if (getActualEngine() == nullptr) {
 
-    if (getActualEngine() == NULL) {
-
-        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
+        for (auto it = veng.begin(), et = veng.end(); it != et; ++it)
             (*it)->done = false;
 
-        if ((*_impl).engineIn.empty()) {
-            FSLibrary::Error("There are no engines in queue!");
-            return FRACASO;
+        if (veng.empty()) {
+            throw FSException("There are no engines in queue!");
         }
 
-        _impl->setActualEngine((*_impl).engineIn.front());
-        (*_impl).engineIn.front()->done=true;
+        _impl->setActualEngine(veng.front().get());
+        veng.front()->done=true;
     }
 
     // Ejecuci�n del CEngine seleccionado
 
-    while (getActualEngine()) {
+    while (auto actualEngine = (*_impl).actualEngine) {
 
-        if (!getActualEngine()->isInitialized())
-            if (!getActualEngine()->onInit()) {
-                Error("Could not initialize new interface!");
-                return(-1);
-            }
+        if (!actualEngine->isInitialized()) {
+            actualEngine->onInit();
+            if (!actualEngine->isInitialized())
+                throw FSException("Could not initialize new interface!");
+        }
 
-        getActualEngine()->loop();
+        actualEngine->loop();
 
-        readMessages();
+        for (auto it = _impl->endTasks.begin(); it != _impl->endTasks.end(); ++it) {
+            (*it)();
+        }
     }
-
-    return EXITO;
 }
 
-int FSLibrary::addEngine(FSEngine* engine,int priority) {
+std::vector<std::unique_ptr<FSEngine>> FSLibrary::processEngines() {
+    processEngine((*_impl).engineIn);
+    std::vector<std::unique_ptr<FSEngine>> veng;
+    std::swap((*_impl).engineIn,veng);
+    return veng;
+}
 
-    if (engine == NULL)
+int FSLibrary::addEngine(std::unique_ptr<FSEngine> engine,int priority) {
+
+    if (engine == nullptr)
         return FRACASO;
 
     engine->priority = priority;
-    (*_impl).engineIn.push_back(engine);
+    (*_impl).engineIn.push_back(std::move(engine));
 
     return EXITO;
 }
 
-int FSLibrary::onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2) {
+void FSLibrary::exit() {
+    if ((*_impl).actualEngine)
+        (*_impl).actualEngine->deselect();
 
-    if ( MsgID >= MSGID_Exit && MsgID <= MSGID_KillEngine ) {
-
-        if ((*_impl).actualEngine)
-            (*_impl).actualEngine->deselect();
-
-        bufferMessages.push_back(new FSMessage(MsgID,Parm1,Parm2));
-
-        return EXITO;
-
-    }   else return(FSMessageHandler::onMessage(MsgID,Parm1,Parm2));
+    (*_impl).endTasks.push_back([&](){
+        _impl->setActualEngine(nullptr);
+    });
 }
 
-void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
+void FSLibrary::restart() {
+    if ((*_impl).actualEngine)
+        (*_impl).actualEngine->deselect();
 
-    if (MsgID==MSGID_Exit) {
-
-        _impl->setActualEngine(NULL);
-
-    } else if (MsgID==MSGID_Restart) {
-
-        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it) {
-            FSEngine* engine = *it;
-            _impl->setActualEngine(engine);
+    (*_impl).endTasks.push_back([&](){
+        for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it) {
+            std::unique_ptr<FSEngine>& engine = *it;
+            _impl->setActualEngine(engine.get());
             engine->done = false;
             if (engine->isInitialized())
                 engine->onExit();
         }
 
-        (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
+        _impl->sort((*_impl).engineIn);
 
-        _impl->setActualEngine((*_impl).engineIn.front());
+        _impl->setActualEngine((*_impl).engineIn.front().get());
         (*_impl).engineIn.front()->done = true;
 
         FSWriter::I().clear();
@@ -258,102 +239,97 @@ void FSLibrary::pendingMessage(Uint32 MsgID, MSGPARM Parm1, MSGPARM Parm2) {
 #endif
 
 #ifdef LOG_SISTEMA
-    printf("Se ha reiniciado la aplicacion.\n\n");
+        printf("Se ha reiniciado la aplicacion.\n\n");
 #endif
+    });
+}
 
-    } else if (MsgID==MSGID_RunEngine) {
+void FSLibrary::runEngine(FSEngine* engine) {
+    if ((*_impl).actualEngine)
+        (*_impl).actualEngine->deselect();
 
-        FSEngine* engine = (FSEngine*)Parm1;
-
-        if (dynamic_cast<FSEngine*>(engine)) {
-
-            bool find = false;
-
-            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
-                find = find || engine == *it;
-
-            for (std::list<FSEngine*>::iterator it = (*_impl).engineOut.begin(), jt = (*_impl).engineOut.end();it!=jt;++it)
-                find = find || engine == *it;
-
-            if (!engine) {
-                (*_impl).engineOut.push_back(engine);
-            }
-
+    (*_impl).endTasks.push_back([&](){
+        if (engine != nullptr)
             _impl->setActualEngine(engine);
+    });
+}
 
-        }
+void FSLibrary::reloadEngine(FSEngine* engine) {
+    if ((*_impl).actualEngine)
+        (*_impl).actualEngine->deselect();
 
-    } else if (MsgID==MSGID_ReloadEngine) {
+    (*_impl).endTasks.push_back([&](){
+        if (engine != 0) {
 
-        FSEngine* engine = (FSEngine*) Parm1;
+            FSEngine* find = nullptr;
 
-        if (dynamic_cast<FSEngine*>(engine)) {
+            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
+                if (engine == it->get())
+                    find = engine;
 
-            _impl->setActualEngine(engine);
+            if (find == nullptr)
+                if (engine == _impl->actualEngine)
+                    find = engine;
+
+            _impl->setActualEngine(find);
 
             FSWriter::I().erase();
 
             if ((*_impl).actualEngine && (*_impl).actualEngine->isInitialized())
                 (*_impl).actualEngine->onExit();
         }
+    });
+}
 
-    } else if (MsgID==MSGID_ChangeEngine) {
+void FSLibrary::changeEngine() {
+    if ((*_impl).actualEngine)
+        (*_impl).actualEngine->deselect();
 
+    (*_impl).endTasks.push_back([&](){
+        _impl->setActualEngine(nullptr);
 
-        _impl->setActualEngine(NULL);
+        _impl->sort((*_impl).engineIn);
 
-        (*_impl).engineIn.sort(FSLibrary::LibraryImpl::orderEngine);
-
-        for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
-            it != jt && getActualEngine()==NULL;
+        for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();
+            it != jt && getActualEngine()==nullptr;
             ++it) {
 
             if (!(*it)->done) {
                 (*it)->done = true;
-                _impl->setActualEngine(*it);
+                _impl->setActualEngine(it->get());
             }
 
         }
 
-        if (getActualEngine() == NULL) {
-            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
+        if (getActualEngine() == nullptr) {
+            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it)
                 (*it)->done = false;
 
-            _impl->setActualEngine((*_impl).engineIn.front());
+            _impl->setActualEngine((*_impl).engineIn.front().get());
             (*_impl).engineIn.front()->done=true;
         }
+    });
+}
 
-    } else if (MsgID==MSGID_KillEngine) {
+void FSLibrary::killEngine(FSEngine* engine) {
+    if ((*_impl).actualEngine)
+        (*_impl).actualEngine->deselect();
 
-        FSEngine* engine = (FSEngine*)Parm1;
+    (*_impl).endTasks.push_back([&](){
+        if (engine != 0) {
 
-        if (dynamic_cast<FSEngine*>(engine)) {
+            FSEngine* act = (*_impl).actualEngine; // Lo salvamos para recuperarlo al final.
+            std::unique_ptr<FSEngine> find = nullptr;
 
-            FSEngine* act = getActualEngine(); // Lo salvamos para recuperarlo al final.
-
-            _impl->setActualEngine(engine); // Ponemos este engine de actual, por si pudiera haber conflictos a la hora de matarlo con el gestor del Multiverso y Im�genes.
-
-            for (std::list<FSEngine*>::iterator it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it)
-                if (engine == *it) {
+            for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it) {
+                if (engine == it->get()) {
+                    find = std::move(*it);
                     (*_impl).engineIn.erase(it);
                     break;
                 }
-
-            if (engine->isInitialized())
-                engine->onExit();
-
-            delete engine;
-
-            _impl->setActualEngine(act); // Recuperamos el engine actual.
-
-            if ((*_impl).actualEngine == engine)
-                _impl->setActualEngine(NULL);
-
-            engine = NULL;
-
+            }
         }
-
-    }
+    });
 }
 
 void FSLibrary::Error (const char* c,TypeError e) {
@@ -414,6 +390,7 @@ void FSLibrary::Error (std::string s,TypeError e) {
     }
 #endif
 }
+
 void FSLibrary::Error (char* c,TypeError e) {
     Error(std::string(c),e);
 }
@@ -475,12 +452,6 @@ bool FSLibrary::inDebug() {
 }
 
 #endif
-
-bool FSLibrary::LibraryImpl::orderEngine(FSEngine* x, FSEngine* y) {
-
-    return ((x->priority)<(y->priority));
-
-}
 
 #ifdef GLOBAL_SINGLETON_REFERENCES
 FSLibrary& FSLib = FSLibrary::I();

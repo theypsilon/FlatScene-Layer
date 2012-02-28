@@ -11,8 +11,6 @@
 
 #define RENDER_TEXTURE_STANDARD 0x00000001
 
-typedef std::list<SpritesetInfo> GraphicResources;
-
 enum TypeRendeProjection {
     TRP_ORTHO,
     TRP_PERSPECTIVE
@@ -23,27 +21,27 @@ class FSScreen : private FSNoncopyable, public FSSingleton<FSScreen> {
 public:
     //constructor
     int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
-    int start ( int width , int height , int bpp , float scalex, float scaley,bool fullscreen, bool doublebuff=true ) ;
+    int start ( int width , int height , int bpp , Float scalex, Float scaley,bool fullscreen, bool doublebuff=true ) ;
 
     int render();
 
     int clear ( ) ;
 
-    int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
-    int translate(float x, float y, float z);
-    int scale(float x, float y, float z);
-    int color(float red, float green, float blue, float alpha);
-    int color(FSColor* col,float alpha=1.0);
-    int projectionMode(TypeRendeProjection trp, float zMax=400.0);
+    int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0);
+    int translate(Float x, Float y, Float z);
+    int scale(Float x, Float y, Float z);
+    int color(Float red, Float green, Float blue, Float alpha);
+    int color(FSColor* col,Float alpha=1.0);
+    int projectionMode(TypeRendeProjection trp, Float zMax=400.0);
 
     int pushMatrix();
     int popMatrix();
 
-    int locateRenderScene ( float posx=0.0, float posy=0.0, float width=0.0, float height=0.0, float zoom = 1.0) ;
+    int locateRenderScene ( Float posx=0.0, Float posy=0.0, Float width=0.0, Float height=0.0, Float zoom = 1.0) ;
 
     Uint8 getBpp();
 
-    int changeScreen( int width , int height , int bpp ,  float scalex=1.0, float scaley=1.0, bool fullscreen = false) ;
+    int changeScreen( int width , int height , int bpp ,  Float scalex=1.0, Float scaley=1.0, bool fullscreen = false) ;
 
     int ToggleFullscreen ();
 
@@ -57,7 +55,7 @@ public:
 
     bool isFullscreen();
 
-    float getR(),getG(),getB(),getA();
+    Float getR(),getG(),getB(),getA();
 
 private:
     struct ScreenImpl;

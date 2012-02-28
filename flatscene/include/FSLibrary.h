@@ -4,8 +4,6 @@
 
 //include message handler(base class)
 
-#include "FSMessageHandler.h"
-
 #include "FSScreen.h"
 #include "FSEngine.h"
 
@@ -18,11 +16,10 @@
 #include "FSUniverse.h"
 #include "FSActor.h"
 
-#include <stdlib.h>
-#include "FSparserXML.h"
-
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
+
+#include <memory>
 
 enum TypeError {
     TE_standard,
@@ -35,37 +32,33 @@ enum TypeError {
 };
 
 
-class FSLibrary : public FSMessageHandler, private FSNoncopyable, public FSSingleton<FSLibrary> {
+class FSLibrary : private FSNoncopyable, public FSSingleton<FSLibrary> {
     friend class FSSingleton<FSLibrary>;
-
-protected:
-
-    int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
-    void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
-
 public:
 
     int startLibrary(bool xmlconfig);
 
     int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
-    int processEngines();
+    std::vector<std::unique_ptr<FSEngine>> processEngines();
+    void processEngine(std::vector<std::unique_ptr<FSEngine>>& veng);
+    std::vector<std::unique_ptr<FSEngine>> processEngine(std::unique_ptr<FSEngine>&& eng);
 
 
     inline FSLibrary& getLibrary() {
         return I();
     }
 
-    FSEngine* getActualEngine();
+    const FSEngine *const getActualEngine();
 
-    int addEngine(FSEngine* engine,int priority);
+    int addEngine(std::unique_ptr<FSEngine> engine,int priority);
 
-    static Uint32 MSGID_Exit;
-    static Uint32 MSGID_Restart;
-    static Uint32 MSGID_RunEngine;
-    static Uint32 MSGID_ReloadEngine;
-    static Uint32 MSGID_ChangeEngine;
-    static Uint32 MSGID_KillEngine;
+    void exit();
+    void restart();
+    void runEngine(FSEngine* engine);
+    void reloadEngine(FSEngine* engine);
+    void changeEngine();
+    void killEngine(FSEngine* engine);
 
     void Error (const char*,TypeError e=TE_standard);
     void Error (std::string,TypeError e=TE_standard);

@@ -1,0 +1,18 @@
+<Map width="48" height="20" layers="1" tileWidth="32" tileHeight="32" name="mapa3">
+    <Music>
+        <Midi name="soehoraces" />
+    </Music>
+    <TileGraphs>
+        <Spriteset name="resources/til1" />
+    </TileGraphs>
+    <TileCollisions>
+        <Spriteset name="resources/dur1" />
+    </TileCollisions>
+    <LayerList>
+        <Layer type="lower" floor="0" />
+    </LayerList>
+    <GateList>
+        <Gate target="mapa2" x1="0" x2="250" y1="101" y2="250" z="0" target-x="150" target-y="150" target-z="0" />
+        <Gate target="mapa3" x1="0" x2="250" y1="0" y2="100" z="0" target-x="150" target-y="550" target-z="0" />
+    </GateList>
+</Map>

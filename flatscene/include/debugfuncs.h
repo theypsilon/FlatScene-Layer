@@ -8,6 +8,6 @@ void setalpha ( SDL_Surface* pSurface , int x , int y , Uint8 value);
 
 void countalpha(SDL_Surface* surface);
 
-int blitcopy(SDL_Surface* src, SDL_Rect* srcrect,SDL_Surface* surface,SDL_Rect* rect);
+int blitcopy(const SDL_Surface& ref_src, SDL_Rect* srcrect,SDL_Surface* surface,SDL_Rect* rect);
 
 void setpixel ( SDL_Surface* pSurface , int x , int y , Uint32 pixel);

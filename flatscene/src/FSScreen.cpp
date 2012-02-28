@@ -90,7 +90,7 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
 
 }
 
-int FSScreen::start(int width, int height, int bpp, float scalex, float scaley, bool fullscreen, bool doublebuff)
+int FSScreen::start(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen, bool doublebuff)
 { 
 
     if (_impl->m_SDL_Surface) {
@@ -217,26 +217,26 @@ int FSScreen::clear ( )
     return EXITO;
 }
 
-float FSScreen::getA() {
+Float FSScreen::getA() {
     return _impl->alpha;
 }
 
-float FSScreen::getR() {
+Float FSScreen::getR() {
     return _impl->red;
 }
 
-float FSScreen::getG() {
+Float FSScreen::getG() {
     return _impl->green;
 }
 
-float FSScreen::getB() {
+Float FSScreen::getB() {
     return _impl->blue;
 }
 
-int FSScreen::locateRenderScene(float posx, float posy, float width, float height,float zoom) {
+int FSScreen::locateRenderScene(Float posx, Float posy, Float width, Float height,Float zoom) {
 
-    (width <= 0.0f)?  width  = FSScreen::I()._impl->m_Width  : 0 ;
-    (height <= 0.0f)? height = FSScreen::I()._impl->m_Height : 0 ;
+    (width <= 0.0f)?  width  = FSScreen::I()._impl->m_Width  : 0.0f ;
+    (height <= 0.0f)? height = FSScreen::I()._impl->m_Height : 0.0f ;
 
     ScreenImpl::SRenderLocation* rr = new ScreenImpl::SRenderLocation;
     rr->posx = posx;
@@ -255,7 +255,7 @@ int FSScreen::locateRenderScene(float posx, float posy, float width, float heigh
 
 }
 
-int FSScreen::rotate(float angle, float x, float y, float z) {
+int FSScreen::rotate(Float angle, Float x, Float y, Float z) {
 
     ScreenImpl::SRenderRotation* rr = new ScreenImpl::SRenderRotation;
     rr->angle = angle;
@@ -272,7 +272,7 @@ int FSScreen::rotate(float angle, float x, float y, float z) {
     return EXITO;
 }
 
-int FSScreen::translate(float x, float y, float z) {
+int FSScreen::translate(Float x, Float y, Float z) {
 
     ScreenImpl::SRenderTranslation* rr = new ScreenImpl::SRenderTranslation;
     rr->x = x;
@@ -288,7 +288,7 @@ int FSScreen::translate(float x, float y, float z) {
     return EXITO;
 }
 
-int FSScreen::scale(float x, float y, float z) {
+int FSScreen::scale(Float x, Float y, Float z) {
     
     ScreenImpl::SRenderScalation* rr = new ScreenImpl::SRenderScalation;
     rr->x = x;
@@ -304,7 +304,7 @@ int FSScreen::scale(float x, float y, float z) {
     return EXITO;
 }
 
-int FSScreen::color(float red, float green, float blue, float alpha) {
+int FSScreen::color(Float red, Float green, Float blue, Float alpha) {
 
     ScreenImpl::SRenderColor* rr = new ScreenImpl::SRenderColor;
 
@@ -322,13 +322,13 @@ int FSScreen::color(float red, float green, float blue, float alpha) {
     return EXITO;
 }
 
-int FSScreen::color(FSColor* col, float alpha) {
+int FSScreen::color(FSColor* col, Float alpha) {
 
-    return color(((float)col->getR())/255.0,((float)col->getG())/255.0,((float)col->getB())/255.0,_impl->alpha);
+    return color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,_impl->alpha);
 
 }
 
-int FSScreen::projectionMode(TypeRendeProjection trp, float zMax) {
+int FSScreen::projectionMode(TypeRendeProjection trp, Float zMax) {
 
     if (_impl->rendering) {
         FSLibrary::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
@@ -428,7 +428,7 @@ bool FSScreen::isFullscreen() {
     return _impl->m_FullScreen;
 }
 
-int FSScreen::changeScreen(int width, int height, int bpp, float scalex, float scaley, bool fullscreen) {
+int FSScreen::changeScreen(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen) {
     if (!_impl->m_SDL_Surface) {
         FSLibrary::I().Error("Video context not inicialized");
         return FRACASO;
@@ -524,7 +524,7 @@ void FSScreen::ScreenImpl::SRenderLocation::operator()() {
 
     } else {
 
-        static const float& m_maxZ = FSScreen::I()._impl->m_maxZ;
+        static const Float& m_maxZ = FSScreen::I()._impl->m_maxZ;
 
         //Opción de perspectiva 1
         gluPerspective(90.0f,width/height,1.0,m_maxZ);

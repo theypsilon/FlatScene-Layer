@@ -3,9 +3,10 @@
 #include "FSparserXML.h"
 #include "FSScreenImpl.h"
 
-FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
+FSEngine* FSWriter::WriterImpl::setAdmin(const FSEngine *const constAdmin) {
 
-    FSEngine* ret = admin;
+    auto ret = admin;
+    auto newAdmin = const_cast<FSEngine*>(constAdmin);
 
 #ifdef TEXT_OPERATIVE
 
@@ -27,7 +28,7 @@ FSEngine* FSWriter::WriterImpl::setAdmin(FSEngine* newAdmin) {
 }
 
 FSWriter::FSWriter() : _impl(new WriterImpl) {
-    _impl->admin = (FSEngine*) 0xFFFFFFFF;
+    _impl->admin = nullptr;
     _impl->data = NULL;
     _impl->fontSize = 20;
 
@@ -44,14 +45,14 @@ FSWriter::FSWriter() : _impl(new WriterImpl) {
 
     atexit(TTF_Quit);
 
-    _impl->setAdmin(NULL);
+    _impl->setAdmin(nullptr);
 }
 
 FSWriter::~FSWriter() {
     clear();
 
-    if (_impl->session.find(NULL)!=_impl->session.end())
-        delete _impl->session[NULL];
+    if (_impl->session.find(nullptr)!=_impl->session.end())
+        delete _impl->session[nullptr];
 
     _impl->session.clear();
     delete _impl;
@@ -99,7 +100,7 @@ int FSWriter::searchFont(int idtext) {
 
     TTF_Font* ret = NULL;
 
-    for (std::map<FSEngine*,WriterImpl::SData*>::iterator kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
+    for (auto kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
         if (kt->second->Texts.find(idtext) != kt->second->Texts.end()) {
             WriterImpl::FSText* t = kt->second->Texts[idtext];
 
@@ -278,8 +279,8 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 
         std::string allText(buffer);
 
-        float currentX = (float) x;
-        float currentY = (float) y + (float)TTF_FontAscent(t->Line->fuente->fuente) -3;
+        Float currentX = (Float) x;
+        Float currentY = (Float) y + (Float)TTF_FontAscent(t->Line->fuente->fuente) -3;
 
         size_t length = allText.length();
 
@@ -312,14 +313,14 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
             TTF_GlyphMetrics(t->Line->fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance);
 
             if (newChar == '\n') {
-                currentX = (float) x;
-                currentY += (float)TTF_FontLineSkip(t->Line->fuente->fuente);
+                currentX = (Float) x;
+                currentY += (Float)TTF_FontLineSkip(t->Line->fuente->fuente);
             } else {
 
                 WriterImpl::SChar newT;
 
-                newT.p = new FSFloatPoint(currentX+(float)minx,currentY-(float)maxy);
-                currentX += (float)advance;
+                newT.p = new FSFloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
+                currentX += (Float)advance;
 
                 if (t->Line->fuente->render.find(newChar)==t->Line->fuente->render.end()) {
                     SDL_Color fg;
@@ -484,7 +485,7 @@ int FSWriter::inBox(const char* file, int index) {
 }
 
 
-int FSWriter::color(int text,float red, float green, float blue, float alpha, TypeColorTBox boxflags, bool persistent) {
+int FSWriter::color(int text,Float red, Float green, Float blue, Float alpha, TypeColorTBox boxflags, bool persistent) {
 #ifdef TEXT_OPERATIVE
     if (_impl->admin != FSLibrary::I().getActualEngine())
         _impl->setAdmin(FSLibrary::I().getActualEngine());
@@ -524,13 +525,13 @@ int FSWriter::color(int text,float red, float green, float blue, float alpha, Ty
 
 }
 
-int FSWriter::color(int text,FSColor* col, float alpha, TypeColorTBox boxflags, bool persistent) {
+int FSWriter::color(int text,FSColor* col, Float alpha, TypeColorTBox boxflags, bool persistent) {
 
-    return color(text,((float)col->getR())/255.0f,((float)col->getG())/255.0f,((float)col->getB())/255.0f,alpha,boxflags,persistent);
+    return color(text,((Float)col->getR())/255.0f,((Float)col->getG())/255.0f,((Float)col->getB())/255.0f,alpha,boxflags,persistent);
 
 }
 
-int FSWriter::locateRenderScene ( float posx, float posy, float width, float height, float zoom) {
+int FSWriter::locateRenderScene ( Float posx, Float posy, Float width, Float height, Float zoom) {
 
     if ( width == 0.0 || height == 0.0) {
         FSLibrary::I().Error("Width/Height invalid value");
@@ -554,7 +555,7 @@ int FSWriter::render() {
 
 
     if ( _impl->width == 0.0 || _impl->height == 0.0)
-        FSScreen::I().locateRenderScene(0,0,(float)FSScreen::I().getWidth(),(float)FSScreen::I().getHeight(),0); //
+        FSScreen::I().locateRenderScene(0,0,(Float)FSScreen::I().getWidth(),(Float)FSScreen::I().getHeight(),0); //
     else
         FSScreen::I().locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
 
@@ -600,7 +601,7 @@ int FSWriter::render() {
 
     }
 
-    if (_impl->session.find(NULL)!=_impl->session.end()) {
+    if (_impl->session.find(nullptr)!=_impl->session.end()) {
         for (std::map<int,WriterImpl::FSText*>::iterator it=_impl->session.begin()->second->Texts.begin(),kt=_impl->session.begin()->second->Texts.end();it!=kt;++it) {
             if (it->second->Type() == TT_LINE && it->second->Line) {
                 WriterImpl::SLineText* l = it->second->Line;
@@ -632,13 +633,13 @@ int FSWriter::render() {
 void FSWriter::clear() {
 #ifdef TEXT_OPERATIVE
     while (!_impl->session.empty()) {
-        std::map<FSEngine*,WriterImpl::SData*>::iterator it= _impl->session.begin();
+        auto it= _impl->session.begin();
         _impl->setAdmin(it->first);
 
         while (!_impl->data->Texts.empty()) {
-            std::map<int,WriterImpl::FSText*>::iterator it=_impl->data->Texts.begin();
-            delete it->second;
-            _impl->data->Texts.erase(it);
+            auto jt=_impl->data->Texts.begin();
+            delete jt->second;
+            _impl->data->Texts.erase(jt);
         }
 
         while (!_impl->data->lastIndexTextAdded.empty())
@@ -648,17 +649,17 @@ void FSWriter::clear() {
         _impl->session.erase(_impl->session.find(_impl->admin));
     }
 
-    _impl->admin=(FSEngine*)0xFFFFFFFF;
+    _impl->admin=nullptr;
     _impl->data=NULL;
 
-    _impl->setAdmin(NULL);
+    _impl->setAdmin(nullptr);
 
     while (!_impl->Fonts.empty()) {
-        std::map<int,WriterImpl::SFont*>::iterator it = _impl->Fonts.begin();
+        auto it = _impl->Fonts.begin();
         TTF_CloseFont(it->second->fuente);
         std::map<Uint16,FSCanvas*>& chars = it->second->render;
         while (!chars.empty()) {
-            std::map<Uint16,FSCanvas*>::iterator jt = chars.begin();
+            auto jt = chars.begin();
             FSScreen::I()._impl->imageToDelete.push_back(jt->second); // delete jt->second;
             chars.erase(jt);
         }
@@ -666,7 +667,7 @@ void FSWriter::clear() {
         _impl->Fonts.erase(it);
     }
     while (!_impl->countFonts.empty()) {
-        std::map<WriterImpl::SFont*,int>::iterator it = _impl->countFonts.begin();
+        auto it = _impl->countFonts.begin();
         _impl->countFonts.erase(it);
     }
     while (!_impl->lastIndexFontAdded.empty())

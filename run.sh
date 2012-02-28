@@ -1,7 +1,7 @@
 #!/bin/bash
 
-pushd demoark
+pushd itemology
 
-../testdemoark
+../item
 
 popd

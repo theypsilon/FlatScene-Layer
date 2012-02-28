@@ -5,17 +5,17 @@
 
 void FSScreen::ScreenImpl::deleteResources() {
     
-    for (std::list<FSSpriteset*>::iterator it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
+    for (auto it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
         delete (*it);
 
     spritesetToDelete.clear();
     
-    for (std::list<FSSprite*>::iterator it = spriteToDelete.begin(), jt = spriteToDelete.end() ; it!=jt;++it)
+    for (auto it = spriteToDelete.begin(), jt = spriteToDelete.end() ; it!=jt;++it)
         delete (*it);
 
     spriteToDelete.clear();
 
-    for (std::list<FSCanvas*>::iterator it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
+    for (auto it = imageToDelete.begin(), jt = imageToDelete.end() ; it!=jt;++it)
         delete (*it);
 
     imageToDelete.clear();
@@ -37,7 +37,7 @@ void FSScreen::ScreenImpl::saveResources(GraphicResources &info) {
 
     img.clear();
 
-    for (std::map<int,FSWriter::WriterImpl::SFont*>::iterator it=writer._impl->Fonts.begin();it!=writer._impl->Fonts.end();++it) {
+    for (auto it=writer._impl->Fonts.begin();it!=writer._impl->Fonts.end();++it) {
         std::map<Uint16,FSCanvas*>& chars = it->second->render;
         for (std::map<Uint16,FSCanvas*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
             imageToDelete.push_back(jt->second); // delete
@@ -45,9 +45,9 @@ void FSScreen::ScreenImpl::saveResources(GraphicResources &info) {
         }
     }
 
-    for (std::map<FSEngine*,FSWriter::WriterImpl::SData*>::iterator it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
+    for (auto it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
         std::map<int,FSWriter::WriterImpl::FSText*>& auxBoxs = it->second->Texts;
-        for (std::map<int,FSWriter::WriterImpl::FSText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
+        for (auto jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
             if (jt->second->Type() == TT_BOX && jt->second->Box)
                 jt->second->Box->deleteBox();
         }
@@ -62,9 +62,9 @@ void FSScreen::ScreenImpl::reloadResources(GraphicResources &info) {
     FSImages& img = FSImages::I();
     FSWriter& writer = FSWriter::I();
     
-    for (std::map<int,FSWriter::WriterImpl::SFont*>::iterator it=writer._impl->Fonts.begin();it!=writer._impl->Fonts.end();++it) {
+    for (auto it=writer._impl->Fonts.begin();it!=writer._impl->Fonts.end();++it) {
         std::map<Uint16,FSCanvas*>& chars = it->second->render;
-        for (std::map<Uint16,FSCanvas*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
+        for (auto jt=chars.begin();jt!=chars.end();++jt) {
             if (!jt->second) {
                 jt->second = new FSSprite(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,writer._impl->data->fgcolor)));
             } else {
@@ -73,7 +73,7 @@ void FSScreen::ScreenImpl::reloadResources(GraphicResources &info) {
         }
     }
 
-    for (std::map<FSEngine*,FSWriter::WriterImpl::SData*>::iterator it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
+    for (auto it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
         std::map<int,FSWriter::WriterImpl::FSText*>& auxBoxs = it->second->Texts;
         for (std::map<int,FSWriter::WriterImpl::FSText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
             if (jt->second->Type() == TT_BOX && jt->second->Box)

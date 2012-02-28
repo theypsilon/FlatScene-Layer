@@ -1,6 +1,0 @@
-#include "TestA0GameInterface.h"
-#include "TestA1GameInterface.h"
-#include "TestA2GameInterface.h"
-#include "TestA3GameInterface.h"
-#include "TestBGameInterface.h"
-#include "TestOSDesktopInterface.h"

@@ -31,7 +31,7 @@ struct FS3DPoint : public FS2DPoint<T> {
     }
     
     template <class U>
-    T distance ( const U& coord ) {
+    T distance ( const U& coord ) const {
         T d_x = coord.x > x ?   coord.x - x :   x - coord.x;
         T d_y = coord.y > y ?   coord.y - y :   y - coord.y;
         T d_z = coord.z > z ?   coord.z - z :   z - coord.z;
@@ -39,7 +39,5 @@ struct FS3DPoint : public FS2DPoint<T> {
         return (d_x*d_x + d_z*d_z + d_y*d_y);
     }
 };
-
-typedef FS3DPoint<int> FSCoordinate;
 
 #endif

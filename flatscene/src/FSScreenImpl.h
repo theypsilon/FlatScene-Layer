@@ -3,6 +3,15 @@
 
 #include "FSScreen.h"
 
+typedef struct { 
+    std::string name; 
+    Uint8 mode; 
+    int times;
+    int number;
+} SpritesetInfo ;
+
+typedef std::list<SpritesetInfo> GraphicResources;
+
 struct FSScreen::ScreenImpl {
 
     SDL_Surface* m_SDL_Surface;
@@ -10,7 +19,7 @@ struct FSScreen::ScreenImpl {
     bool rendering;
     TypeRendeProjection trp;
 
-    float m_maxZ;
+    Float m_maxZ;
 
     bool m_FullScreen,m_Doublebuff;
 
@@ -32,51 +41,51 @@ struct FSScreen::ScreenImpl {
     void reloadResources(GraphicResources& info);
 
 
-    float red,green,blue,alpha;
+    Float red,green,blue,alpha;
 
     int beginRenderMode(Uint32 flags);
     int endRenderMode(Uint32 flags);
 
     struct SRenderLocation : SRender { // LOCATE
-        float posx;
-        float posy;
-        float width;
-        float height;
-        float zoom;
+        Float posx;
+        Float posy;
+        Float width;
+        Float height;
+        Float zoom;
 
         void operator()();
     };
 
     struct SRenderTranslation : SRender { // TRANSLATE && SCALATION
-        float x;
-        float y;
-        float z;
+        Float x;
+        Float y;
+        Float z;
 
         void operator()();
     };
 
     struct SRenderScalation : SRender { // TRANSLATE && SCALATION
-        float x;
-        float y;
-        float z;
+        Float x;
+        Float y;
+        Float z;
 
         void operator()();
     };
 
     struct SRenderRotation : SRender { // ROTATION
-        float angle;
-        float x;
-        float y;
-        float z;
+        Float angle;
+        Float x;
+        Float y;
+        Float z;
 
         void operator()();
     };
 
     struct SRenderColor : SRender { // ROTATION
-        float red;
-        float green;
-        float blue;
-        float alpha;
+        Float red;
+        Float green;
+        Float blue;
+        Float alpha;
 
         void operator()();
     };
@@ -95,8 +104,8 @@ struct FSScreen::ScreenImpl {
 
                 glBindTexture(GL_TEXTURE_2D, canvas.tex);
 
-                float relW = (float)canvas.w2/(float)canvas.w;
-                float relH = (float)canvas.h2/(float)canvas.h;
+                Float relW = (Float)canvas.w2/(Float)canvas.w;
+                Float relH = (Float)canvas.h2/(Float)canvas.h;
 
                 //glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
 

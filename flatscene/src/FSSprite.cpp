@@ -1,38 +1,20 @@
 #include "FSSprite.h"
 #include "FSScreen.h"
+#include "FSException.h"
+#include <limits>
+#include <sstream>
 
-FSSprite::FSSprite ( SCanvas pSurface, FSPoint* zerocpSource) : FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED) {
+FSSprite::FSSprite ( SCanvas pSurface, FSPoint zerocpSource) 
+: FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
 
-    if (zerocpSource==NULL) 
-        cpoint =new FSPoint(0,0);
-    else
-        cpoint = zerocpSource;
-
+FSSprite::FSSprite(FSSprite&& spt) : FSCanvas(std::move(spt)) {
+    areas = std::move(spt.areas);
+    name = std::move(spt.name);
+    cpoint = std::move(spt.cpoint);
+    opaque = spt.opaque;
 }
 
 FSSprite::~FSSprite ( ) {
-
-    std::vector<RectArea*>::iterator iter ;
-    RectArea* area ;
-    while ( !areas.empty ( ) ) {
-        iter = areas.begin ( ) ;
-        area = *iter ;
-        RectArea::iterator iter2 ;
-        FSRectangle* rect;
-        while ( !area->empty() ) {
-            iter2 = area->begin();
-            rect = *iter2;
-            area->erase( iter2);
-            delete rect;
-        }
-
-        areas.erase (iter) ;
-        delete area ;
-    }
-    if ( cpoint != NULL ) {
-        delete cpoint;
-        cpoint = NULL;
-    }
 
     if (m_pSurface.sdl_surf) {
         SDL_FreeSurface(m_pSurface.sdl_surf);
@@ -45,94 +27,62 @@ FSSprite::~FSSprite ( ) {
     
 }
 
-FSCanvas* FSSprite::getImage ( ) {
-    return ( (FSCanvas*) this ) ;
-}
-
-void FSSprite::put (FSPoint& ptDst ,Uint8 flags) {
+void FSSprite::put (FSPoint ptDst ,Uint8 flags) const {
     if (flags & 0x001) {
-        ptDst.y -= cpoint->y;
-        ptDst.x -= getImage()->getWidth() - cpoint->x;
+        ptDst.y -= cpoint.y;
+        ptDst.x -= getWidth() - cpoint.x;
     } else {
-        ptDst.x -= cpoint->x;
-        ptDst.y -= cpoint->y;
+        ptDst.x -= cpoint.x;
+        ptDst.y -= cpoint.y;
     }
 
     FSCanvas::put(ptDst,flags);
 }
 //TODO
 
-void FSSprite::setName (const char *newName) {
+void FSSprite::setName (const std::string& newName) {
     name=newName;
 }
 
-std::string FSSprite::getName() {
+const std::string& FSSprite::getName() const {
     return name;
 }
 
-int FSSprite::addRect(unsigned int area,FSRectangle* rect) {
-    areas[area]->push_back(rect);
-    return (areas[area]->size()-1);
+FSSprite::IndexArea FSSprite::addArea(RectArea area) {
+    for (IndexArea index = std::numeric_limits<IndexArea>::min(); index < std::numeric_limits<IndexArea>::max(); index++) {
+        if (areas.find(index) == areas.end()) {
+            areas[index] = area;
+            return index;
+        }
+    }
+    throw FSException("no index available for new area",__LINE__);
 }
 
-int FSSprite::addArea(RectArea* area) {
-    areas.push_back(area);
-    return (areas.size()-1);
+
+const FSSprite::RectArea& FSSprite::getArea (IndexArea index) const {
+    std::remove_const<decltype(areas.find(index))>::type it = areas.find(index);
+    if (it != areas.end())
+        return it->second;
+    std::stringstream ss;
+    ss << "no area with the index '" << index << "' has been found";
+    throw FSException(ss.str(),__LINE__);
 }
 
-
-RectArea* FSSprite::getArea (unsigned int n ) 
-{
-#ifdef VECTOR_COMP
-    if ((n<0) || (n >= areas.size()))
-        return NULL;
-#endif
-    return (areas[n]) ;
-}
-
-FSRectangle* FSSprite::getRect (unsigned int n ,unsigned int m) 
-{
-#ifdef VECTOR_COMP
-    if ((n<0) || (n >= areas.size()) || (m<0) || (m >= areas[n]->size()))
-        return NULL;
-#endif
-    return ((*areas[n])[m]) ;
-}
-
-FSPoint* FSSprite::getCenter() {
+const FSPoint& FSSprite::getCenter() const {
     return cpoint;
 }
 
-void FSSprite::replaceCenter(FSPoint *c) {
-    delete cpoint;
+void FSSprite::replaceCenter(FSPoint c) {
     cpoint = c;
 }
 
-void FSSprite::replaceArea(unsigned int n,RectArea* area) {
-    if (n < areas.size()) {
-        RectArea::iterator iter2 ;
-        FSRectangle* rect;
-        while ( !areas[n]->empty() ) {
-            iter2 = areas[n]->begin();
-            rect = *iter2;
-            areas[n]->erase( iter2);
-            delete rect;
-        }
-        delete areas[n];
-        areas[n]=area;
-    }
+void FSSprite::replaceArea(IndexArea index,RectArea area) {
+    auto old = const_cast<std::remove_const<decltype(this->getArea(index))>::type>(this->getArea(index));
+    std::swap(old,area);
 }
 
-void FSSprite::replaceRect(unsigned int area,unsigned int n,FSRectangle* rect) {
-    if ((area < areas.size()) && (n < areas[area]->size())) {
-        delete (*areas[area])[n];
-        (*areas[area])[n]=rect;
-    }
-}
-
-
-int FSSprite::size() {
-    return (areas.size());
+int FSSprite::size() const {
+    return areas.size();
 }
 
 SpriteOpaque FSSprite::isOpaque() {

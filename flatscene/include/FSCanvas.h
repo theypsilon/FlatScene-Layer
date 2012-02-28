@@ -2,7 +2,8 @@
 #define __IMAGE_H__
 
 #ifdef WIN32
-#include <windows.h>
+    #define NOMINMAX
+    #include <windows.h>
 #endif
 
 #include "GL/gl.h"          // Librer�a OpenGL32
@@ -10,8 +11,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "FSdefinitions.h"
-#include "FSRectangle.h"
-#include "FSPoint.h"
+#include "FSTypes.h"
 #include "FSColor.h"
 #include <string>
 #include <list>
@@ -30,7 +30,8 @@ class FSCanvas {
 private:
     SCanvas m_pSurface ;
 
-    FSCanvas( SCanvas pSurface ) ;
+    FSCanvas( SCanvas pSurface = SCanvas()) ;
+    FSCanvas( FSCanvas&& pSurface ) ;
     virtual ~FSCanvas( ) ;
 
     void clearSurface () ;
@@ -42,33 +43,33 @@ private:
     friend class FSImages;
     friend class FSScreen;
 
-    static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
     static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
     static inline Uint32 pow2 (Uint32 n);
 
-    std::list<std::function<void(void)>> initCallbackList;
-    std::list<std::function<void(void)>> endCallbackList;
+    mutable std::list<std::function<void(void)>> initCallbackList;
+    mutable std::list<std::function<void(void)>> endCallbackList;
 
 public:
+    static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
 
-    SCanvas* getCanvas();
+    const SCanvas& getCanvas() const;
 
     // Funciona s�lo si hay SDL_Surface
-    Uint32 getPixel ( int x , int y ) ;
+    Uint32 getPixel ( int x , int y ) const;
 
-    int getWidth ( ) ;
-    int getHeight ( ) ;
+    int getWidth ( ) const;
+    int getHeight ( ) const;
 
     //render image
-    void put ( FSPoint& ptDst , Uint8 flags=0) ;
-    void put ( FSFloatPoint& ptDst , Uint8 flags=0) ;
+    void put ( const FSPoint& ptDst , Uint8 flags=0) const;
+    void put ( const FSFloatPoint& ptDst , Uint8 flags=0) const;
 
-    int rotate(float angle, float x=0.0, float y=0.0, float z=1.0);
-    int translate(float x, float y, float z);
-    int scale(float x, float y, float z);
-    int color(float red, float green, float blue, float alpha);
-    int color(FSColor* col,float alpha=1.0);
+    int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
+    int translate(Float x, Float y, Float z) const;
+    int scale(Float x, Float y, Float z) const;
+    int color(Float red, Float green, Float blue, Float alpha) const;
+    int color(FSColor* col,Float alpha=1.0) const;
 };
 
 #endif

@@ -7,15 +7,15 @@ struct FSLibrary::LibraryImpl {
     FSEngine* actualEngine;
 
     // Lista de motores a�adidas por el usuario
-    std::list<FSEngine*> engineIn;
-    // Lista de motores ejecutados por orden del usuario sin ser a�adidos (mediante mensajeria).
-    std::list<FSEngine*> engineOut;
+    std::vector<std::unique_ptr<FSEngine>> engineIn;
 
 #ifdef IN_FILE_ERROR
     bool errorsInSession;
 #endif
 
     std::list<std::string> errors;
+
+    std::list<std::function<void()>> endTasks;
 
 #ifdef DEBUGTEST
     bool debugging;
@@ -24,14 +24,11 @@ struct FSLibrary::LibraryImpl {
 
     void setActualEngine(FSEngine* newEngineActive);
 
-    int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
-    void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
-
     std::string toStringErrorGL(GLenum e);
 
-    static bool orderEngine(FSEngine*,FSEngine*);
-
     static void onExit();
+
+    void sort(std::vector<std::unique_ptr<FSEngine>>& v);
 };
 
 #endif

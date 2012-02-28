@@ -2,14 +2,9 @@
 #include "FSLibrary.h"
 #include "FSUniverse.h"
 
-FSActor::FSActor(const char* creature,FSMessageHandler * pmhParent) : 
-file(0), graph(0), flags(0), inUniverse(NULL), creature(creature), 
-    FSMessageHandler(pmhParent) {
-    
-}
-FSActor::~FSActor() {
-
-}
+FSActor::FSActor(const char* creature) 
+: file(0), graph(0), flags(0), inUniverse(NULL), creature(creature) {}
+FSActor::~FSActor() {}
 
 int FSActor::move() {
     return EXITO;
@@ -35,7 +30,7 @@ int FSActor::setSprite(int file,int graph) {
     return EXITO;
 }
 
-FSSprite* FSActor::getSprite() {
+const FSSprite* FSActor::getSprite() {
     return FSImages::I().get(file)->get(graph);
 }
 
