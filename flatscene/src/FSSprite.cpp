@@ -4,7 +4,10 @@
 #include <limits>
 #include <sstream>
 
-FSSprite::FSSprite ( SCanvas pSurface, FSPoint zerocpSource) 
+FSSprite::FSSprite ( const SCanvas& pSurface, FSPoint zerocpSource) 
+: FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
+
+FSSprite::FSSprite ( const FSCanvas& pSurface, FSPoint zerocpSource) 
 : FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
 
 FSSprite::FSSprite(FSSprite&& spt) : FSCanvas(std::move(spt)) {
@@ -12,19 +15,6 @@ FSSprite::FSSprite(FSSprite&& spt) : FSCanvas(std::move(spt)) {
     name = std::move(spt.name);
     cpoint = std::move(spt.cpoint);
     opaque = spt.opaque;
-}
-
-FSSprite::~FSSprite ( ) {
-
-    if (m_pSurface.sdl_surf) {
-        SDL_FreeSurface(m_pSurface.sdl_surf);
-    }
-
-    if (m_pSurface.h != 0 || m_pSurface.w !=0)
-        glDeleteTextures( 1, &(m_pSurface.tex) );
-
-    clearSurface();
-    
 }
 
 void FSSprite::put (FSPoint ptDst ,Uint8 flags) const {
@@ -89,13 +79,13 @@ SpriteOpaque FSSprite::isOpaque() {
     if (opaque != SPRITE_OPAQUE_NOT_CHEQUED)
         return opaque;
 
-    if (m_pSurface.sdl_surf == NULL)
+    if (sdl_surf == NULL)
         return opaque;
 
     opaque = SPRITE_OPAQUE;
 
-    for (int x = 0; x < m_pSurface.sdl_surf->w && opaque == SPRITE_OPAQUE; x++ )
-        for (int y = 0; y < m_pSurface.sdl_surf->h && opaque == SPRITE_OPAQUE; y++ ) {
+    for (int x = 0; x < sdl_surf->w && opaque == SPRITE_OPAQUE; x++ )
+        for (int y = 0; y < sdl_surf->h && opaque == SPRITE_OPAQUE; y++ ) {
             Uint32 pixel = getPixel(x,y);
             if ((pixel & 0xFF000000) != 0xFF000000)
                 opaque = SPRITE_TRANSPARENT;

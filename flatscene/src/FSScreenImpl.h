@@ -90,69 +90,17 @@ struct FSScreen::ScreenImpl {
         void operator()();
     };
 
-    template <class PointType>
     struct SRenderCanvas : SRender {
-        SCanvas canvas;
-        PointType ptDst;
+        Float relW, relH;
+        int w2, h2;
+        GLuint tex;
         Uint8 flags;
 
-        SRenderCanvas<PointType>(SCanvas canvas, PointType ptDst, Uint8 flags)
-        : canvas(canvas), ptDst(ptDst), flags(flags) {}
+        SRenderCanvas(const FSCanvas& canvas, Uint8 flags)
+        : relW((Float)(canvas.w2/canvas.w)), relH((Float)(canvas.h2/canvas.h)),
+        w2(canvas.w2), h2(canvas.h2), tex(canvas.tex), flags(flags) {}
 
-        void operator()() {
-            if (canvas.h != 0 || canvas.w !=0 ) {
-
-                glBindTexture(GL_TEXTURE_2D, canvas.tex);
-
-                Float relW = (Float)canvas.w2/(Float)canvas.w;
-                Float relH = (Float)canvas.h2/(Float)canvas.h;
-
-                //glScalef((1.0/m_ScaleX ),(1.0/m_ScaleY ),0.0);
-
-                glBegin(GL_QUADS);
-                    if (flags == 0) {
-                        glTexCoord2f(0.0f, relH);
-                        glVertex2f(0, canvas.h2);
-                        glTexCoord2f(relW, relH);
-                        glVertex2f(canvas.w2, canvas.h2);
-                        glTexCoord2f(relW, 0.0f);
-                        glVertex2f(canvas.w2, 0);
-                        glTexCoord2f(0.0f, 0.0f);
-                        glVertex2f(0,0);
-                    } else if (flags == 1) {
-
-                        glTexCoord2f(relW, relH);
-                        glVertex2f(0, canvas.h2);
-                        glTexCoord2f(0.0f, relH);
-                        glVertex2f(canvas.w2, canvas.h2);
-                        glTexCoord2f(0.0f, 0.0f);
-                        glVertex2f(canvas.w2, 0);
-                        glTexCoord2f(relW, 0.0f);
-                        glVertex2f(0,0);
-                    } else if (flags==2) {
-                        glTexCoord2f(0.0f, 0.0f);
-                        glVertex2f(0, canvas.h2);
-                        glTexCoord2f(relW, 0.0f);
-                        glVertex2f(canvas.w2, canvas.h2);
-                        glTexCoord2f(relW, relH);
-                        glVertex2f(canvas.w2, 0);
-                        glTexCoord2f(0.0f, relH);
-                        glVertex2f(0,0);
-                    } else  {
-                        glTexCoord2f(relW, 0.0f);
-                        glVertex2f(0, canvas.h2);
-                        glTexCoord2f(0.0f, 0.0f);
-                        glVertex2f(canvas.w2, canvas.h2);
-                        glTexCoord2f(0.0f, relH);
-                        glVertex2f(canvas.w2, 0);
-                        glTexCoord2f(relW, relH);
-                        glVertex2f(0,0);
-                    }
-                glEnd();
-
-            }
-            delete this;
-        };
+        void operator()();
     };
 
 

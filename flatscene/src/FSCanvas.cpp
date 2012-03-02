@@ -6,46 +6,68 @@
 
 #include <exception>
 
-FSCanvas::FSCanvas( SCanvas pSurface ) 
-: m_pSurface(pSurface) {}
+FSCanvas::FSCanvas() {}
+
+FSCanvas::FSCanvas( const FSCanvas& canvas )
+: bpp(canvas.bpp)
+, h(canvas.h)
+, h2(canvas.h2)
+, w(canvas.w)
+, w2(canvas.w2)
+, tex(canvas.tex)
+, sdl_surf(canvas.sdl_surf)
+{}
+
+FSCanvas::FSCanvas( const SCanvas& canvas )
+: bpp(canvas.bpp)
+, h(canvas.h)
+, h2(canvas.h2)
+, w(canvas.w)
+, w2(canvas.w2)
+, tex(canvas.tex)
+, sdl_surf(canvas.sdl_surf)
+{}
 
 FSCanvas::FSCanvas( FSCanvas&& pSurface ) {
     endCallbackList = std::move(pSurface.endCallbackList);
     initCallbackList = std::move(pSurface.initCallbackList);
-    m_pSurface = pSurface.m_pSurface;
+
+    bpp = pSurface.bpp;
+    h = pSurface.h;
+    h2 = pSurface.h2;
+    w = pSurface.w;
+    w2 = pSurface.w2;
+    tex = pSurface.tex;
+    sdl_surf = pSurface.sdl_surf;
+
     pSurface.clearSurface();
 }
 
 FSCanvas::~FSCanvas( ) {
 
-    if (m_pSurface.sdl_surf) {
-        SDL_FreeSurface(m_pSurface.sdl_surf);
+    if (sdl_surf) {
+        SDL_FreeSurface(sdl_surf);
     }
 
-    if (m_pSurface.h != 0 || m_pSurface.w !=0)
-        glDeleteTextures( 1, &(m_pSurface.tex) );
+    if (h != 0 || w !=0)
+        glDeleteTextures( 1, &tex );
 
     clearSurface();
 }
 
 void FSCanvas::clearSurface ( ) {
-    m_pSurface.bpp = m_pSurface.h = m_pSurface.h2 = m_pSurface.w = m_pSurface.w2 = m_pSurface.tex = 0;
-    m_pSurface.sdl_surf = NULL;
+    bpp = h = h2 = w = w2 = tex = 0;
+    sdl_surf = nullptr;
 
-}
-
-const SCanvas& FSCanvas::getCanvas() const {
-    return m_pSurface;
 }
 
 Uint32 FSCanvas::getPixel ( int x , int y ) const {
-    SDL_Surface* surface= m_pSurface.sdl_surf;
-    if (surface && surface->w > x && surface->h > y) {
+    if (sdl_surf && sdl_surf->w > x && sdl_surf->h > y) {
         Uint32 color = 0 ;
-        int position = y * surface->pitch + surface->format->BytesPerPixel * x ;
-        char* buffer = ( char* ) surface->pixels ;
+        int position = y * sdl_surf->pitch + sdl_surf->format->BytesPerPixel * x ;
+        char* buffer = ( char* ) sdl_surf->pixels ;
         buffer += position ;
-        memcpy ( &color , buffer , surface->format->BytesPerPixel ) ;
+        memcpy ( &color , buffer , sdl_surf->format->BytesPerPixel ) ;
         return ( color ) ;
     } else {
         return 0;
@@ -53,11 +75,11 @@ Uint32 FSCanvas::getPixel ( int x , int y ) const {
 }
 
 int FSCanvas::getWidth () const {
-    return ( m_pSurface.w2 );
+    return ( w2 );
 }
 
 int FSCanvas::getHeight () const {
-    return ( m_pSurface.h2 ) ;
+    return ( h2 ) ;
 }
 void FSCanvas::put ( const FSFloatPoint& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
@@ -81,7 +103,7 @@ void FSCanvas::put ( const FSFloatPoint& ptDst, Uint8 flags) const {
     // PAINT FLOATCANVAS
 
     FSScreen::I()._impl->graphicMaterial.push_back(
-        new FSScreen::ScreenImpl::SRenderCanvas<FSFloatPoint>(m_pSurface,ptDst,flags)
+        new FSScreen::ScreenImpl::SRenderCanvas(*this,flags)
     );
 
     // USER DEFINED EFFECTS OUT
@@ -177,7 +199,7 @@ void FSCanvas::put ( const FSPoint& ptDst, Uint8 flags) const {
     // PAINT FLOATCANVAS
 
     FSScreen::I()._impl->graphicMaterial.push_back(
-        new FSScreen::ScreenImpl::SRenderCanvas<FSPoint>(m_pSurface,ptDst,flags)
+        new FSScreen::ScreenImpl::SRenderCanvas(*this,flags)
     );
 
     // USER DEFINED EFFECTS OUT

@@ -578,3 +578,56 @@ void FSScreen::ScreenImpl::SRenderPushMatrix::operator()() {
 void FSScreen::ScreenImpl::SRenderPopMatrix::operator()() {
     glPopMatrix();
 }
+
+void FSScreen::ScreenImpl::SRenderCanvas::operator()() {
+    glBindTexture(GL_TEXTURE_2D, tex);
+
+    glBegin(GL_QUADS);
+    switch(flags) {
+        case 0:
+            glTexCoord2f(0.0f, relH);
+            glVertex2f(0, h2);
+            glTexCoord2f(relW, relH);
+            glVertex2f(w2, h2);
+            glTexCoord2f(relW, 0.0f);
+            glVertex2f(w2, 0);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex2f(0,0);
+            break;
+        case 1:
+            glTexCoord2f(relW, relH);
+            glVertex2f(0, h2);
+            glTexCoord2f(0.0f, relH);
+            glVertex2f(w2, h2);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex2f(w2, 0);
+            glTexCoord2f(relW, 0.0f);
+            glVertex2f(0,0);
+            break;
+        case 2:
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex2f(0, h2);
+            glTexCoord2f(relW, 0.0f);
+            glVertex2f(w2, h2);
+            glTexCoord2f(relW, relH);
+            glVertex2f(w2, 0);
+            glTexCoord2f(0.0f, relH);
+            glVertex2f(0,0);
+            break;
+        case 3:
+            glTexCoord2f(relW, 0.0f);
+            glVertex2f(0, h2);
+            glTexCoord2f(0.0f, 0.0f);
+            glVertex2f(w2, h2);
+            glTexCoord2f(0.0f, relH);
+            glVertex2f(w2, 0);
+            glTexCoord2f(relW, relH);
+            glVertex2f(0,0);
+            break;
+        default:
+            break;
+    }
+    glEnd();
+
+    delete this;
+}

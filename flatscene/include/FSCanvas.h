@@ -28,11 +28,17 @@ typedef struct {
 
 class FSCanvas {
 private:
-    SCanvas m_pSurface ;
+    GLuint tex;
+    Uint32 w, h;                /* Read-only */
+    int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
+    Uint8 bpp;
+    SDL_Surface* sdl_surf; // NULL or not null, thats the question.
 
-    FSCanvas( SCanvas pSurface = SCanvas()) ;
+    FSCanvas() ;
+    FSCanvas( const FSCanvas& canvas ) ;
+    FSCanvas( const SCanvas& canvas ) ;
     FSCanvas( FSCanvas&& pSurface ) ;
-    virtual ~FSCanvas( ) ;
+    
 
     void clearSurface () ;
 
@@ -50,10 +56,11 @@ private:
     mutable std::list<std::function<void(void)>> initCallbackList;
     mutable std::list<std::function<void(void)>> endCallbackList;
 
+protected:
+    ~FSCanvas( ) ;
+
 public:
     static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
-
-    const SCanvas& getCanvas() const;
 
     // Funciona s�lo si hay SDL_Surface
     Uint32 getPixel ( int x , int y ) const;
