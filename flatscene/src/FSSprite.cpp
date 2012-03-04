@@ -7,8 +7,8 @@
 FSSprite::FSSprite ( const SCanvas& pSurface, FSPoint zerocpSource) 
 : FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
 
-FSSprite::FSSprite ( const FSCanvas& pSurface, FSPoint zerocpSource) 
-: FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
+FSSprite::FSSprite ( FSCanvas pSurface, FSPoint zerocpSource) 
+: FSCanvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
 
 FSSprite::FSSprite(FSSprite&& spt) : FSCanvas(std::move(spt)) {
     areas = std::move(spt.areas);

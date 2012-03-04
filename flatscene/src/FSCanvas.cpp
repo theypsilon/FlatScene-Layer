@@ -8,16 +8,6 @@
 
 FSCanvas::FSCanvas() {}
 
-FSCanvas::FSCanvas( const FSCanvas& canvas )
-: bpp(canvas.bpp)
-, h(canvas.h)
-, h2(canvas.h2)
-, w(canvas.w)
-, w2(canvas.w2)
-, tex(canvas.tex)
-, sdl_surf(canvas.sdl_surf)
-{}
-
 FSCanvas::FSCanvas( const SCanvas& canvas )
 : bpp(canvas.bpp)
 , h(canvas.h)
@@ -333,20 +323,20 @@ SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
     return ret;
 }
 
-SCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
+FSCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
     if (pow2(mode) != mode)
         FSLibrary::I().Error("CCanvas::LoadIMG -> modo erroneo.");
 
-    SCanvas pSurface;
+    FSCanvas pSurface;
 
     SDL_Surface* image;
     SDL_Rect area;
 
-    if (surface == NULL) {
+    if (surface == nullptr) {
         FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
         pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
-        pSurface.sdl_surf = NULL;
+        pSurface.sdl_surf = nullptr;
         return pSurface;
     }
     

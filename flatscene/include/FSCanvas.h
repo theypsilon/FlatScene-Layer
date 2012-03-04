@@ -34,8 +34,9 @@ private:
     Uint8 bpp;
     SDL_Surface* sdl_surf; // NULL or not null, thats the question.
 
+    FSCanvas ( const FSCanvas& ); //undefined
+
     FSCanvas() ;
-    FSCanvas( const FSCanvas& canvas ) ;
     FSCanvas( const SCanvas& canvas ) ;
     FSCanvas( FSCanvas&& pSurface ) ;
     
@@ -60,7 +61,7 @@ protected:
     ~FSCanvas( ) ;
 
 public:
-    static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+    static FSCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
 
     // Funciona s�lo si hay SDL_Surface
     Uint32 getPixel ( int x , int y ) const;
