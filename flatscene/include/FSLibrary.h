@@ -16,6 +16,7 @@
 #include "FSUniverse.h"
 #include "FSActor.h"
 
+#include "FSPimpl.h"
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
 
@@ -80,7 +81,7 @@ private:
     virtual ~FSLibrary();
 
     struct LibraryImpl;
-    LibraryImpl* _impl;
+    FSPimpl<LibraryImpl> _impl;
 
     friend class FSEngine;
 };

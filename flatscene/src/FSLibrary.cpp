@@ -35,7 +35,7 @@ const FSEngine *const FSLibrary::getActualEngine() {
     return _impl->actualEngine;
 }
 
-FSLibrary::FSLibrary(): _impl(new LibraryImpl) {
+FSLibrary::FSLibrary() {
 #ifdef IN_FILE_ERROR
     (*_impl).errorsInSession = false;
 #endif
@@ -109,7 +109,7 @@ int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen,
 
 void FSLibrary::LibraryImpl::onExit() {
 
-    LibraryImpl* _impl = FSLibrary::I()._impl;
+    auto& _impl = FSLibrary::I()._impl;
     (*_impl).engineIn.clear();
 
     _impl->setActualEngine(nullptr);
@@ -125,9 +125,7 @@ void FSLibrary::LibraryImpl::onExit() {
 #endif
 }
 
-FSLibrary::~FSLibrary() {
-    delete _impl;
-}
+FSLibrary::~FSLibrary() {}
 
 std::vector<std::unique_ptr<FSEngine>> FSLibrary::processEngine(std::unique_ptr<FSEngine>&& eng) {
     std::vector<std::unique_ptr<FSEngine>> veng;

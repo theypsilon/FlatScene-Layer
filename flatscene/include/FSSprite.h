@@ -4,6 +4,7 @@
 #include "FSCanvas.h"
 #include <string>
 #include <vector>
+#include <memory>
 
 
 
@@ -20,6 +21,7 @@ class FSSprite : public FSCanvas {
     typedef int IndexArea;
     typedef std::map<IndexArea,RectArea> Areas;
 private:
+
     FSSprite ( const FSSprite& ); //undefined
     //Nombre
     std::string name;
@@ -35,9 +37,10 @@ private:
 public:
     //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
     FSSprite ( const SCanvas& pSurface = SCanvas(), FSPoint zerocpSource = FSPoint(0,0)) ;
-    FSSprite ( FSCanvas pSurface = FSCanvas(), FSPoint zerocpSource = FSPoint(0,0)) ;
+    FSSprite ( const FSCanvas& pSurface = FSCanvas(), FSPoint zerocpSource = FSPoint(0,0)) ;
 
     FSSprite (FSSprite&& sprite);
+    ~FSSprite();
     //asigna nombre
     void setName(const std::string& newName);
     //devuelve nombre
@@ -63,7 +66,9 @@ public:
 
     //renderiza el gr�fico.
     void put ( FSPoint ptDst , Uint8 flags=0) const;
-
+private:
+    struct SpriteImpl;
+    const std::unique_ptr<SpriteImpl> _impl;
 };
 
 #endif

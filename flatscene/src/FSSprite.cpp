@@ -1,21 +1,25 @@
-#include "FSSprite.h"
+#include "FSSpriteImpl.h"
 #include "FSScreen.h"
 #include "FSException.h"
 #include <limits>
 #include <sstream>
 
 FSSprite::FSSprite ( const SCanvas& pSurface, FSPoint zerocpSource) 
-: FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
+: FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
+, _impl(new SpriteImpl) {}
 
-FSSprite::FSSprite ( FSCanvas pSurface, FSPoint zerocpSource) 
-: FSCanvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
+FSSprite::FSSprite ( const FSCanvas& pSurface, FSPoint zerocpSource) 
+: FSCanvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
+, _impl(new SpriteImpl) {}
 
-FSSprite::FSSprite(FSSprite&& spt) : FSCanvas(std::move(spt)) {
-    areas = std::move(spt.areas);
-    name = std::move(spt.name);
-    cpoint = std::move(spt.cpoint);
-    opaque = spt.opaque;
-}
+FSSprite::FSSprite(FSSprite&& spt) 
+: FSCanvas(std::move(spt))
+, areas(std::move(spt.areas))
+, name(std::move(spt.name))
+, cpoint(std::move(spt.cpoint))
+, opaque(spt.opaque) {}
+
+FSSprite::~FSSprite() {}
 
 void FSSprite::put (FSPoint ptDst ,Uint8 flags) const {
     if (flags & 0x001) {

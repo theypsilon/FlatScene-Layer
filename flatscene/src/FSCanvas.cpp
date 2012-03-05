@@ -18,26 +18,23 @@ FSCanvas::FSCanvas( const SCanvas& canvas )
 , sdl_surf(canvas.sdl_surf)
 {}
 
-FSCanvas::FSCanvas( FSCanvas&& pSurface ) {
-    endCallbackList = std::move(pSurface.endCallbackList);
-    initCallbackList = std::move(pSurface.initCallbackList);
-
-    bpp = pSurface.bpp;
-    h = pSurface.h;
-    h2 = pSurface.h2;
-    w = pSurface.w;
-    w2 = pSurface.w2;
-    tex = pSurface.tex;
-    sdl_surf = pSurface.sdl_surf;
-
+FSCanvas::FSCanvas( FSCanvas&& pSurface ) 
+: endCallbackList(std::move(pSurface.endCallbackList))
+, initCallbackList(std::move(pSurface.initCallbackList)) 
+, bpp(pSurface.bpp)
+, h(pSurface.h)
+, h2(pSurface.h2)
+, w(pSurface.w)
+, w2(pSurface.w2)
+, tex(pSurface.tex)
+, sdl_surf(pSurface.sdl_surf) {
     pSurface.clearSurface();
 }
 
 FSCanvas::~FSCanvas( ) {
 
-    if (sdl_surf) {
+    if (sdl_surf) 
         SDL_FreeSurface(sdl_surf);
-    }
 
     if (h != 0 || w !=0)
         glDeleteTextures( 1, &tex );
@@ -48,7 +45,6 @@ FSCanvas::~FSCanvas( ) {
 void FSCanvas::clearSurface ( ) {
     bpp = h = h2 = w = w2 = tex = 0;
     sdl_surf = nullptr;
-
 }
 
 Uint32 FSCanvas::getPixel ( int x , int y ) const {
