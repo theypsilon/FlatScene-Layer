@@ -446,6 +446,9 @@
     <ClCompile Include="src\tinyxml\tinyxml.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\FSException.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
     <ClCompile Include="src\tinyxml\tinystr.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>

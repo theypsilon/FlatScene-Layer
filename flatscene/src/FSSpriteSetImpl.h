@@ -327,7 +327,6 @@ struct Spriteset::SpritesetImpl {
             Sprite&& spt = Canvas::createCanvas<Sprite>(surf,mode);
 
             //Sprite spt(Canvas::toSCanvas(surf,mode),img.cp);
-            spt.areas = std::move(img.areas);
             spt.name = std::move(img.name);
 
             m_vecSprites.push_back(std::move(spt));

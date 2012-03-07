@@ -9,5 +9,4 @@ namespace flatscene {
     struct Sprite::SpriteImpl {};
 
 } // flatscene
-
 #endif

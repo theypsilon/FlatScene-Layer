@@ -1,7 +1,7 @@
 #ifndef __I_FIRST_ENGINE__
 #define __I_FIRST_ENGINE__
 
-#include <FSLibrary.h>
+#include "FSLibrary.h"
 
 #include "IScrollCamera.h"
 #include "FSTime.h"
