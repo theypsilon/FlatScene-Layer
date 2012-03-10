@@ -62,7 +62,7 @@ protected:
 
 public:
     static FSCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
-
+    template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode, GLint filter=GL_NEAREST);
     // Funciona s�lo si hay SDL_Surface
     Uint32 getPixel ( int x , int y ) const;
 

@@ -1,7 +1,7 @@
 #ifndef __FS_CANVAS_FACTORY__
 #define __FS_CANVAS_FACTORY__
 
-#include "FSLibraryImpl.h"
+#include "FSLibrary.h"
 #include "FSCanvas.h"
 
 template <class T> T FSCanvas::createCanvas(SDL_Surface* surface, Uint8 mode, GLint filter) {
@@ -21,7 +21,7 @@ template <class T> T FSCanvas::createCanvas(SDL_Surface* surface, Uint8 mode, GL
             FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
             pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
             pSurface.sdl_surf = nullptr;
-            return pSurface;
+            return newCanvas;
         }
     
         pSurface.w2 = surface->w;
@@ -58,7 +58,7 @@ template <class T> T FSCanvas::createCanvas(SDL_Surface* surface, Uint8 mode, GL
             #endif
             if (image == NULL) {
                 FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
-                return pSurface;
+                return newCanvas;
             }
 
 

@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include "XMLHelper.h"
+#include "CanvasFactory.h"
 
 using namespace fs::intern::xml;
 
@@ -305,7 +306,9 @@ struct FSSpriteset::SpritesetImpl {
                 SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);        // Reasignamos los formatos.
             }
 
-            FSSprite spt(FSCanvas::toSCanvas(surf,mode),img.cp);
+            FSSprite&& spt = FSCanvas::createCanvas<FSSprite>(surf,mode);
+
+            //FSSprite spt(FSCanvas::toSCanvas(surf,mode),img.cp);
             spt.areas = std::move(img.areas);
             spt.name = std::move(img.name);
 

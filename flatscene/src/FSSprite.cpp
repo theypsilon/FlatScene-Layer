@@ -4,6 +4,8 @@
 #include <limits>
 #include <sstream>
 
+FSSprite::FSSprite() {}
+
 FSSprite::FSSprite ( const SCanvas& pSurface, FSPoint zerocpSource) 
 : FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
 //, _impl(new SpriteImpl) 
