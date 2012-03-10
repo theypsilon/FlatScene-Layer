@@ -6,11 +6,13 @@
 
 FSSprite::FSSprite ( const SCanvas& pSurface, FSPoint zerocpSource) 
 : FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
-, _impl(new SpriteImpl) {}
+//, _impl(new SpriteImpl) 
+{}
 
-FSSprite::FSSprite ( const FSCanvas& pSurface, FSPoint zerocpSource) 
+FSSprite::FSSprite ( FSCanvas&& pSurface, FSPoint zerocpSource) 
 : FSCanvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
-, _impl(new SpriteImpl) {}
+//, _impl(new SpriteImpl) 
+{}
 
 FSSprite::FSSprite(FSSprite&& spt) 
 : FSCanvas(std::move(spt))

@@ -309,7 +309,7 @@ struct FSSpriteset::SpritesetImpl {
             spt.areas = std::move(img.areas);
             spt.name = std::move(img.name);
 
-            //m_vecSprites.push_back(std::move(spt));
+            m_vecSprites.push_back(std::move(spt));
 
             src.x += grd.cellwidth;
             if (src.x + grd.cellwidth > chipset.w) {

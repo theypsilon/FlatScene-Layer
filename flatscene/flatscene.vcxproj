@@ -138,6 +138,7 @@
     <ClInclude Include="include\FSUniverse.h" />
     <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\tinyxml\*.h" />
+    <ClInclude Include="src\CanvasFactory.h" />
     <ClInclude Include="src\FSparserXML.h" />
     <ClInclude Include="src\FSSpriteSetImpl.h" />
     <ClInclude Include="src\GRDHelper.h" />

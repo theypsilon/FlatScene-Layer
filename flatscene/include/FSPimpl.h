@@ -9,10 +9,10 @@ private:
     std::unique_ptr<T> m;
 public:
     FSPimpl() : m(new T) {}
-
+    /*
     template<typename ...Args> FSPimpl(Args&&... args)
             : m(new T(std::forward(args)...)) {}
-
+            */
     ~FSPimpl() {}
 
     T* operator->() {

@@ -34,7 +34,7 @@ private:
     Uint8 bpp;
     SDL_Surface* sdl_surf; // NULL or not null, thats the question.
 
-    FSCanvas ( const FSCanvas& ); //undefined
+    //FSCanvas ( const FSCanvas& ); //undefined
 
     FSCanvas() ;
     FSCanvas( const SCanvas& canvas ) ;

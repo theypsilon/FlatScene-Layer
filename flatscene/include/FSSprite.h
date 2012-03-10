@@ -22,7 +22,7 @@ class FSSprite : public FSCanvas {
     typedef std::map<IndexArea,RectArea> Areas;
 private:
 
-    FSSprite ( const FSSprite& ); //undefined
+    //FSSprite ( const FSSprite& ); //undefined
     //Nombre
     std::string name;
     //Lista de Control points
@@ -37,7 +37,7 @@ private:
 public:
     //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
     FSSprite ( const SCanvas& pSurface = SCanvas(), FSPoint zerocpSource = FSPoint(0,0)) ;
-    FSSprite ( const FSCanvas& pSurface = FSCanvas(), FSPoint zerocpSource = FSPoint(0,0)) ;
+    FSSprite ( FSCanvas&& pSurface = FSCanvas(), FSPoint zerocpSource = FSPoint(0,0)) ;
 
     FSSprite (FSSprite&& sprite);
     ~FSSprite();
@@ -68,7 +68,7 @@ public:
     void put ( FSPoint ptDst , Uint8 flags=0) const;
 private:
     struct SpriteImpl;
-    const std::unique_ptr<SpriteImpl> _impl;
+    //const std::unique_ptr<SpriteImpl> _impl;
 };
 
 #endif
