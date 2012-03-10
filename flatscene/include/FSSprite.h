@@ -22,7 +22,7 @@ class FSSprite : public FSCanvas {
     typedef std::map<IndexArea,RectArea> Areas;
 private:
 
-    //FSSprite ( const FSSprite& ); //undefined
+    FSSprite ( const FSSprite& ); //undefined
     //Nombre
     std::string name;
     //Lista de Control points
