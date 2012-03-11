@@ -43,6 +43,7 @@ public:
 
 
     int line(int fuente,int x,int y,const char* text,...);
+    void lineOnce(int fuente, int x,int y, const char* text,...);
     int inBox(const char* file, int index);
 
     int erase(int text=ALL_TEXT,bool nextframe=false);

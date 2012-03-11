@@ -228,7 +228,6 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
         vsprintf (buffer, text, lista);
 
         va_end (lista);
-        #define _crt_va_end(ap)      ( ap = (va_list)0 )
 
         if (!_impl->data->lastIndexTextAdded.empty()) {
             ret = _impl->data->lastIndexTextAdded.back();
@@ -318,6 +317,19 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 #endif
     return ret;
 
+}
+
+void FSWriter::lineOnce(int fuente, int x,int y, const char* text,...) {
+
+    va_list lista;
+    char buffer [1024];
+
+    va_start (lista, text);
+    vsprintf (buffer, text, lista);
+
+    va_end (lista);
+
+    erase(line(fuente,x,y,buffer),true);
 }
 
 int FSWriter::erase(int text,bool nextframe) {

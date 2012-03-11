@@ -33,7 +33,7 @@ void IFirstEngine::onEvent(SDL_Event& e) {
 	if ( e.key.keysym.sym == SDLK_RIGHT )
 		move[i_right] = turn;
 
-     Write.erase(Write.line(0,10,10,"This is text!"),true);
+     Write.lineOnce(0,10,10,"This is text!");
 
 }
 
