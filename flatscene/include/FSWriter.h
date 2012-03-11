@@ -11,6 +11,7 @@
 #include "FSdefinitions.h"
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
+#include "FSPimpl.h"
 
 enum TypeText {
     TT_LINE,
@@ -61,7 +62,7 @@ private:
     ~FSWriter();
 
     struct WriterImpl;
-    WriterImpl* _impl;
+    FSPimpl<WriterImpl> _impl;
     
     friend class FSScreen;
 };

@@ -38,7 +38,6 @@ public:
     //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
 
     FSSprite ();
-    FSSprite ( const SCanvas& pSurface , FSPoint zerocpSource = FSPoint(0,0)) ;
     FSSprite ( FSCanvas&& pSurface, FSPoint zerocpSource = FSPoint(0,0)) ;
 
     FSSprite (FSSprite&& sprite);

@@ -38,7 +38,7 @@ private:
 
     FSCanvas() ;
     FSCanvas( const SCanvas& canvas ) ;
-    FSCanvas( FSCanvas&& pSurface ) ;
+    
     
 
     void clearSurface () ;
@@ -57,12 +57,14 @@ private:
     mutable std::list<std::function<void(void)>> initCallbackList;
     mutable std::list<std::function<void(void)>> endCallbackList;
 
-protected:
+public:
     ~FSCanvas( ) ;
 
 public:
+    FSCanvas( FSCanvas&& pSurface ) ;
+
     static FSCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
-    template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode, GLint filter=GL_NEAREST);
+    template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
     // Funciona s�lo si hay SDL_Surface
     Uint32 getPixel ( int x , int y ) const;
 

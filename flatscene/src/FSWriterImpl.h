@@ -2,6 +2,7 @@
 #define __WRITE_IMPL_H__
 
 #include "FSWriter.h"
+#include "FSException.h"
 #include <memory>
 
 class FSEngine;
@@ -11,13 +12,13 @@ struct FSWriter::WriterImpl {
     struct SFont;
     struct SEffectText;
 
-    std::map<FSEngine*,SData*> session;
+    std::map<FSEngine*,SData> session;
 
     SData* data;
     FSEngine* admin;
 
 
-    std::map<int,SFont*> Fonts;
+    std::map<int,SFont> Fonts;
     std::map<SFont*,int> countFonts;
     std::list<int> lastIndexFontAdded;
     int fontSize;
@@ -36,10 +37,32 @@ struct FSWriter::WriterImpl {
     };
 
     struct SFont {
-        std::string cadena;
-        TTF_Font* fuente;
-        std::map<Uint16,FSCanvas*> render;
-        unsigned int size;
+        const std::string cadena;
+        TTF_Font * fuente;
+        std::map<Uint16,FSCanvas> render;
+        const unsigned int size;
+
+        SFont(std::string cad, unsigned int sz) 
+            : fuente(TTF_OpenFont((cad+".ttf").c_str(),sz)) 
+            , cadena(cad)
+            , size(sz)
+            , render()
+        {
+            if (fuente == nullptr) throw FSException("No se ha cargado la fuente: "+cad+".ttf",__LINE__);
+        }
+
+        SFont(SFont&& fnt)
+            : fuente(fnt.fuente)
+            , cadena(std::move(fnt.cadena))
+            , size(fnt.size)
+            , render(std::move(fnt.render))
+        {
+            fnt.fuente = nullptr;
+        }
+
+        ~SFont() {
+            if (fuente) TTF_CloseFont(fuente);
+        }
     };
 
     struct SLineText{
@@ -113,6 +136,8 @@ struct FSWriter::WriterImpl {
         std::list<int> deleteTextBuffer;
 
         SDL_Color fgcolor;
+
+        SData() { fgcolor.r = fgcolor.b = fgcolor.g = 255; }
     };
 };
 

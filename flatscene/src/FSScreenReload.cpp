@@ -37,16 +37,12 @@ void FSScreen::ScreenImpl::saveResources(GraphicResources &info) {
 
     img.clear();
 
-    for (auto it=writer._impl->Fonts.begin();it!=writer._impl->Fonts.end();++it) {
-        std::map<Uint16,FSCanvas*>& chars = it->second->render;
-        for (std::map<Uint16,FSCanvas*>::iterator jt=chars.begin();jt!=chars.end();++jt) {
-            imageToDelete.push_back(jt->second); // delete
-            jt->second = NULL;
-        }
+    for (auto it = writer._impl->Fonts.begin() ; it!=writer._impl->Fonts.end() ; ++it) {
+        it->second.render.clear();
     }
 
     for (auto it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
-        std::map<int,FSWriter::WriterImpl::FSText*>& auxBoxs = it->second->Texts;
+        auto& auxBoxs = it->second.Texts;
         for (auto jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
             if (jt->second->Type() == TT_BOX && jt->second->Box)
                 jt->second->Box->deleteBox();
@@ -61,20 +57,9 @@ void FSScreen::ScreenImpl::reloadResources(GraphicResources &info) {
 
     FSImages& img = FSImages::I();
     FSWriter& writer = FSWriter::I();
-    
-    for (auto it=writer._impl->Fonts.begin();it!=writer._impl->Fonts.end();++it) {
-        std::map<Uint16,FSCanvas*>& chars = it->second->render;
-        for (auto jt=chars.begin();jt!=chars.end();++jt) {
-            if (!jt->second) {
-                jt->second = new FSSprite(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(it->second->fuente,jt->first,writer._impl->data->fgcolor)));
-            } else {
-                return FSLibrary::I().Error("No se puede recargar el recurso glyph porque no había sido descargado anteriormente.");
-            }
-        }
-    }
 
     for (auto it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
-        std::map<int,FSWriter::WriterImpl::FSText*>& auxBoxs = it->second->Texts;
+        std::map<int,FSWriter::WriterImpl::FSText*>& auxBoxs = it->second.Texts;
         for (std::map<int,FSWriter::WriterImpl::FSText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
             if (jt->second->Type() == TT_BOX && jt->second->Box)
                 jt->second->Box->createBox();
