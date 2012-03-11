@@ -142,7 +142,7 @@ int FSWriter::loadFont(const char* fuente) {
     } 
 
     auto font_ttf = std::addressof(_impl->Fonts.at(ret));
-    _impl->countFonts.at(font_ttf)++;
+    _impl->countFonts[font_ttf]++;
 #endif
 
     return ret;
