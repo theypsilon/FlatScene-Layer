@@ -114,6 +114,7 @@ struct FSWriter::WriterImpl {
     class FSText {
     private:
         TypeText type;
+        FSText(const FSText&);
     public:
         union {
             SLineText* Line;
@@ -124,6 +125,7 @@ struct FSWriter::WriterImpl {
 
         FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next);
         FSText();
+        FSText(FSText&& mv);
         ~FSText();
         TypeText Type() const;
     };
