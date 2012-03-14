@@ -44,8 +44,8 @@ void FSScreen::ScreenImpl::saveResources(GraphicResources &info) {
     for (auto it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
         auto& auxBoxs = it->second.Texts;
         for (auto jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
-            if (jt->second->Type() == TT_BOX && jt->second->Box)
-                jt->second->Box->deleteBox();
+            if (jt->second.Type() == TT_BOX && jt->second.Box)
+                jt->second.Box->deleteBox();
         }
     }
 
@@ -59,10 +59,10 @@ void FSScreen::ScreenImpl::reloadResources(GraphicResources &info) {
     FSWriter& writer = FSWriter::I();
 
     for (auto it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
-        std::map<int,FSWriter::WriterImpl::FSText*>& auxBoxs = it->second.Texts;
-        for (std::map<int,FSWriter::WriterImpl::FSText*>::iterator jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
-            if (jt->second->Type() == TT_BOX && jt->second->Box)
-                jt->second->Box->createBox();
+        auto& auxBoxs = it->second.Texts;
+        for (auto jt = it->second.Texts.begin() ; jt != it->second.Texts.end() ; ++jt ) {
+            if (jt->second.Type() == TT_BOX && jt->second.Box)
+                jt->second.Box->createBox();
         }
     }
 

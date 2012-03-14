@@ -24,7 +24,7 @@ FSWriter::WriterImpl::FSText::FSText(FSText&& mv)
 FSWriter::WriterImpl::FSText::~FSText() {
     if (fx) {
         delete fx;
-        fx=NULL;
+        fx = nullptr;
     }
 
     if (type == TT_BOX) {

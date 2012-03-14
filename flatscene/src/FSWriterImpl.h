@@ -114,7 +114,6 @@ struct FSWriter::WriterImpl {
     class FSText {
     private:
         TypeText type;
-        FSText(const FSText&);
     public:
         union {
             SLineText* Line;
@@ -131,7 +130,7 @@ struct FSWriter::WriterImpl {
     };
 
     struct SData {
-        std::map<int,FSText*> Texts;
+        std::map<int,FSText> Texts;
 
         std::list<int> lastIndexTextAdded;
 
@@ -140,6 +139,16 @@ struct FSWriter::WriterImpl {
         SDL_Color fgcolor;
 
         SData() { fgcolor.r = fgcolor.b = fgcolor.g = 255; }
+
+        SData(SData&& sd) 
+            : Texts(std::move(sd.Texts))
+            , lastIndexTextAdded(std::move(sd.lastIndexTextAdded))
+            , deleteTextBuffer(std::move(sd.deleteTextBuffer))
+        {
+            fgcolor.r = sd.fgcolor.r;
+            fgcolor.g = sd.fgcolor.g;
+            fgcolor.b = sd.fgcolor.b;
+        }
     };
 };
 

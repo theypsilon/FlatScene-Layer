@@ -94,14 +94,14 @@ int FSWriter::searchFont(int idtext) {
 
     for (auto kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
         if (kt->second.Texts.find(idtext) != kt->second.Texts.end()) {
-            WriterImpl::FSText* t = kt->second.Texts[idtext];
+            WriterImpl::FSText& t = kt->second.Texts.at(idtext);
 
-            switch (t->Type()) {
+            switch (t.Type()) {
                 case TT_LINE :
-                    ret = t->Line->fuente->fuente;
+                    ret = t.Line->fuente->fuente;
                     break;
                 case TT_BOX :
-                    ret = t->Box->fuente->fuente;
+                    ret = t.Box->fuente->fuente;
                     break;
             }
         }
@@ -241,15 +241,18 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
             }
         }
 
+        _impl->data->Texts.insert(std::make_pair(
+            std::move(ret),
+            std::move(WriterImpl::FSText())
+        ));
 
-
-        WriterImpl::FSText* t = _impl->data->Texts[ret] = new WriterImpl::FSText;
-        t->Line->fuente = std::addressof(_impl->Fonts.find(fuente)->second);
+        WriterImpl::FSText& t = _impl->data->Texts.at(ret);
+        t.Line->fuente = std::addressof(_impl->Fonts.find(fuente)->second);
 
         std::string allText(buffer);
 
         Float currentX = (Float) x;
-        Float currentY = (Float) y + (Float)TTF_FontAscent(t->Line->fuente->fuente) -3;
+        Float currentY = (Float) y + (Float)TTF_FontAscent(t.Line->fuente->fuente) -3;
 
         size_t length = allText.length();
 
@@ -279,11 +282,11 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 
             int minx,maxy,advance;
 
-            TTF_GlyphMetrics(t->Line->fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance);
+            TTF_GlyphMetrics(t.Line->fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance);
 
             if (newChar == '\n') {
                 currentX = (Float) x;
-                currentY += (Float)TTF_FontLineSkip(t->Line->fuente->fuente);
+                currentY += (Float)TTF_FontLineSkip(t.Line->fuente->fuente);
             } else {
 
                 WriterImpl::SChar newT;
@@ -291,15 +294,15 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
                 newT.p = new FSFloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
                 currentX += (Float)advance;
 
-                if (t->Line->fuente->render.find(newChar)==t->Line->fuente->render.end()) {
+                if (t.Line->fuente->render.find(newChar)==t.Line->fuente->render.end()) {
                     SDL_Color fg;
                     fg.b=0xFF;
                     fg.g=0xFF;
                     fg.r=0xFF;
 
-                    FSCanvas&& spt = FSCanvas::createCanvas<FSCanvas>(TTF_RenderGlyph_Blended(t->Line->fuente->fuente,newChar,fg));
+                    FSCanvas&& spt = FSCanvas::createCanvas<FSCanvas>(TTF_RenderGlyph_Blended(t.Line->fuente->fuente,newChar,fg));
 
-                    t->Line->fuente->render.insert(std::make_pair<Uint16,FSCanvas>(
+                    t.Line->fuente->render.insert(std::make_pair<Uint16,FSCanvas>(
                         std::move(newChar),
                         std::move(spt)
                     ));
@@ -307,7 +310,7 @@ int FSWriter::line(int fuente, int x,int y, const char* text,...) {
 
                 newT.glyph=newChar;
 
-                t->Line->letra.push_back(newT);
+                t.Line->letra.push_back(newT);
             }
 
         }
@@ -337,8 +340,8 @@ int FSWriter::erase(int text,bool nextframe) {
 
     if (_impl->admin != FSLibrary::I().getActualEngine())
         _impl->setAdmin(FSLibrary::I().getActualEngine());
-
-    if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
+    auto textIter = _impl->data->Texts.find(text);
+    if (textIter!=_impl->data->Texts.end()) {
 
         if (nextframe) {
 
@@ -346,36 +349,16 @@ int FSWriter::erase(int text,bool nextframe) {
 
         } else {
 
-            WriterImpl::FSText* t = _impl->data->Texts[text];
-
-            if (t->Type() == TT_LINE && t->fx) {
-                delete t->fx;
-                t->fx = NULL;
-            }
-
-            delete t;
+            _impl->data->Texts.erase(textIter);
             _impl->data->lastIndexTextAdded.push_back(text);
-            _impl->data->Texts.erase(_impl->data->Texts.find(text));
-
 
         }
 
     }   else if (text==ALL_TEXT) {
 
-            while (!_impl->data->Texts.empty()) {
-                std::map<int,WriterImpl::FSText*>::iterator it=_impl->data->Texts.begin();
+        _impl->data->Texts.clear();
+        _impl->data->lastIndexTextAdded.clear();
 
-                if (it->second->Type() == TT_LINE && it->second->fx) {
-                    delete it->second->fx;
-                    it->second->fx=NULL;
-                }
-
-                delete it->second;
-                _impl->data->Texts.erase(it);
-            }
-
-        while (!_impl->data->lastIndexTextAdded.empty())
-            _impl->data->lastIndexTextAdded.pop_back();
     }
 
 #endif
@@ -460,15 +443,18 @@ int FSWriter::inBox(const char* file, int index) {
                 }
             }
 
-            _impl->data->Texts[ret] = new WriterImpl::FSText(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next);
+            _impl->data->Texts.insert(std::make_pair(
+                std::move(ret),
+                std::move(WriterImpl::FSText(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next))
+             ));
 
             //data->Boxs.push_back(new CTextBox(file,textNode->Attribute("msg"),x,y,w,ttf_fnt,next));
 
         } else {
-            FSLibrary::I().Error("Texto no encontrado");
+            throw FSException("Text not found",__LINE__);
         }
     } else {
-        FSLibrary::I().Error("Los cuadros de texto deben crearse bajo el dominio de un manejador de eventos");
+        throw FSException("No admin detected for handling this textbox",__LINE__);
     }
 #endif
     return ret;
@@ -482,7 +468,7 @@ int FSWriter::color(int text,Float red, Float green, Float blue, Float alpha, Ty
 
     if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
     
-            WriterImpl::FSText* t = _impl->data->Texts[text];
+            WriterImpl::FSText* t = & _impl->data->Texts.at(text);
 
             WriterImpl::SEffectText* fx = new WriterImpl::SEffectText;
 
@@ -505,8 +491,7 @@ int FSWriter::color(int text,Float red, Float green, Float blue, Float alpha, Ty
 
     } else {
 
-        FSLibrary::I().Error("Text not found");
-        return FRACASO;
+        throw FSException("Text not found",__LINE__);
 
     }
 #endif
@@ -550,14 +535,14 @@ int FSWriter::render() {
         FSScreen::I().locateRenderScene(_impl->posx,_impl->posy,_impl->width,_impl->height,_impl->zoom);
 
 
-    std::map<int,WriterImpl::FSText*> deleteText;
+    std::vector<int> deleteText;
 
-    for (std::map<int,WriterImpl::FSText*>::iterator it=_impl->data->Texts.begin(),kt=_impl->data->Texts.end();it!=kt;++it) {
+    for (auto it=_impl->data->Texts.begin(),kt=_impl->data->Texts.end();it!=kt;++it) {
 
-        WriterImpl::SEffectText* fx = it->second->fx;
+        WriterImpl::SEffectText* fx = it->second.fx;
 
-        if (it->second->Type() == TT_LINE) {
-            WriterImpl::SLineText* l = it->second->Line;
+        if (it->second.Type() == TT_LINE) {
+            WriterImpl::SLineText* l = it->second.Line;
             for (auto jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt) {
                 auto glyphit = l->fuente->render.find(jt->glyph);
                 if (glyphit == l->fuente->render.end()) {
@@ -576,23 +561,22 @@ int FSWriter::render() {
 
             if (fx && !fx->persistent) {
                 delete fx;
-                it->second->fx = NULL;
+                it->second.fx = nullptr;
             }
-        }   else    if (it->second->Type() == TT_BOX) {
-            WriterImpl::FSTextBox* b = it->second->Box;
+        } else if (it->second.Type() == TT_BOX) {
+            WriterImpl::FSTextBox* b = it->second.Box;
             if (b->update()==-1)
-                deleteText[it->first]=it->second;
+                deleteText.push_back(it->first);
         }
     }
 
-    for (std::map<int,WriterImpl::FSText*>::iterator it=deleteText.begin(),kt=deleteText.end();it!=kt;++it) {
+    for (auto it=deleteText.begin(),kt=deleteText.end();it!=kt;++it) {
 
-        int aux = it->second->Box->finish();
+        int aux = _impl->data->Texts.at(*it).Box->finish();
         if (aux != -1) {
-            _impl->data->Texts[it->first]=_impl->data->Texts[aux];
-            _impl->data->Texts[aux]=it->second;
+            std::swap(_impl->data->Texts.at(*it),_impl->data->Texts.at(aux));
         } else {
-            aux = it->first;
+            aux = *it;
         }
 
         erase(aux);
@@ -601,9 +585,9 @@ int FSWriter::render() {
     auto noadmin = _impl->session.find(nullptr);
     if (noadmin != _impl->session.end()) {
         for (auto it = noadmin->second.Texts.begin(), kt= noadmin->second.Texts.end(); it!=kt;++it) {
-            if (it->second->Type() == TT_LINE && it->second->Line) {
-                WriterImpl::SLineText* l = it->second->Line;
-                WriterImpl::SEffectText* fx = it->second->fx;
+            if (it->second.Type() == TT_LINE && it->second.Line) {
+                WriterImpl::SLineText* l = it->second.Line;
+                WriterImpl::SEffectText* fx = it->second.fx;
                 for (std::list<WriterImpl::SChar>::iterator jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt)  {
                     if (fx)
                         l->fuente->render.at(jt->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
@@ -613,7 +597,7 @@ int FSWriter::render() {
 
                 if (fx) {
                     delete fx;
-                    it->second->fx = nullptr;
+                    it->second.fx = nullptr;
                 }
             }
         }
@@ -634,21 +618,14 @@ void FSWriter::clear() {
         auto it= _impl->session.begin();
         _impl->setAdmin(it->first);
 
-        while (!_impl->data->Texts.empty()) {
-            auto jt=_impl->data->Texts.begin();
-            delete jt->second;
-            _impl->data->Texts.erase(jt);
-        }
+        _impl->data->Texts.clear();
+        _impl->data->lastIndexTextAdded.clear();
 
-        while (!_impl->data->lastIndexTextAdded.empty())
-            _impl->data->lastIndexTextAdded.pop_back();
-
-        delete _impl->data;
         _impl->session.erase(_impl->session.find(_impl->admin));
     }
 
     _impl->admin=nullptr;
-    _impl->data=NULL;
+    _impl->data=nullptr;
 
     _impl->setAdmin(nullptr);
 
