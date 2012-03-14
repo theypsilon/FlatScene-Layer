@@ -6,30 +6,34 @@
 #include "SDL.h"
 #include "FSdefinitions.h"
 
-class FSEngine;
+namespace {
 
-class FSTime {
-private:
+    class FSEngine;
 
-    unsigned int _msInterval;
-    unsigned int _msLast;
-    unsigned int _ticks;
+    class FSTime {
+    private:
 
-#ifdef MENSAJES_FPS
-    unsigned int _fps;
-    unsigned int _auxTimer;
-#endif
+        unsigned int _msInterval;
+        unsigned int _msLast;
+        unsigned int _ticks;
 
-public:
-    FSTime();
-    ~FSTime();
-    unsigned int setInterval(unsigned int msInterval );
-    unsigned int setFPS(unsigned int fpsInterval );
-    int nextFrame();
-    unsigned int getTick() const;
-    void reset(unsigned int tick = 0);
-};
+    #ifdef MENSAJES_FPS
+        unsigned int _fps;
+        unsigned int _auxTimer;
+    #endif
 
-extern FSTime Chrono;
+    public:
+        FSTime();
+        ~FSTime();
+        unsigned int setInterval(unsigned int msInterval );
+        unsigned int setFPS(unsigned int fpsInterval );
+        int nextFrame();
+        unsigned int getTick() const;
+        void reset(unsigned int tick = 0);
+    };
+
+    extern FSTime Chrono;
+
+} // flatscene
 
 #endif

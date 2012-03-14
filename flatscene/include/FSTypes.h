@@ -4,13 +4,17 @@
 #include "FSCoordinate.h"
 #include "FSRectangle.h"
 
-typedef double Float;
+namespace flatscene {
 
-typedef FS2DPoint<int> FSPoint;
-typedef FS2DPoint<Float> FSFloatPoint;
+    typedef double Float;
 
-typedef FS3DPoint<int> FSCoordinate;
+    typedef FS2DPoint<int> FSPoint;
+    typedef FS2DPoint<Float> FSFloatPoint;
 
-typedef FSRect<int> FSRectangle;
+    typedef FS3DPoint<int> FSCoordinate;
+
+    typedef FSRect<int> FSRectangle;
+
+} // flatscene
 
 #endif

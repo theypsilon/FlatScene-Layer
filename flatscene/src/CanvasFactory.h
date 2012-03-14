@@ -4,8 +4,10 @@
 #include "FSLibrary.h"
 #include "FSCanvas.h"
 
-template <class T> T FSCanvas::createCanvas(SDL_Surface* surface, Uint8 mode, GLint filter) {
-    static_assert(/*std::is_trivially_constructible<T>::value && */std::is_base_of<FSCanvas,T>::value,"Bad Canvas type");
+namespace flatscene {
+
+    template <class T> T FSCanvas::createCanvas(SDL_Surface* surface, Uint8 mode, GLint filter) {
+        static_assert(/*std::is_trivially_constructible<T>::value && */std::is_base_of<FSCanvas,T>::value,"Bad Canvas type");
 
         T newCanvas;
 
@@ -226,5 +228,7 @@ template <class T> T FSCanvas::createCanvas(SDL_Surface* surface, Uint8 mode, GL
 
         return newCanvas;
     }
+
+} // flatscene
 
 #endif

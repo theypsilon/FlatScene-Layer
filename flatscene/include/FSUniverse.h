@@ -7,41 +7,45 @@
 #include <list>
 #include <string>
 
-class FSMultiverse;
+namespace flatscene {
 
-class FSUniverse {
-private:
-    Uint8 numCameras;
+    class FSMultiverse;
 
-protected:
-    bool loaded;
-    std::string name;
-    Uint8 slot;
+    class FSUniverse {
+    private:
+        Uint8 numCameras;
 
-    virtual ~FSUniverse();
-    FSUniverse(std::string name);
+    protected:
+        bool loaded;
+        std::string name;
+        Uint8 slot;
 
-    friend class FSMultiverse;
+        virtual ~FSUniverse();
+        FSUniverse(std::string name);
 
-    ActorCollection actor; 
-public:
-    virtual void load();
-    virtual void unload();
-    bool isLoaded();
-    virtual std::string& getName();
-    virtual int changeUniverse(std::string name, Uint8 slot);
+        friend class FSMultiverse;
 
-    virtual int incActor(FSActor* act);
-    virtual int decActor(FSActor* act);
-    virtual ActorCollection::iterator actorBegin();
-    virtual ActorCollection::iterator actorEnd();
-    virtual void incCameras();
-    virtual void decCameras();
-    virtual Uint32 numActors();
-    virtual Uint8 camaras();
+        ActorCollection actor; 
+    public:
+        virtual void load();
+        virtual void unload();
+        bool isLoaded();
+        virtual std::string& getName();
+        virtual int changeUniverse(std::string name, Uint8 slot);
 
-    virtual bool operator == (FSUniverse& uni);
-    virtual bool equal (FSUniverse* uni);
-};
+        virtual int incActor(FSActor* act);
+        virtual int decActor(FSActor* act);
+        virtual ActorCollection::iterator actorBegin();
+        virtual ActorCollection::iterator actorEnd();
+        virtual void incCameras();
+        virtual void decCameras();
+        virtual Uint32 numActors();
+        virtual Uint8 camaras();
+
+        virtual bool operator == (FSUniverse& uni);
+        virtual bool equal (FSUniverse* uni);
+    };
+
+} // flatscene
 
 #endif

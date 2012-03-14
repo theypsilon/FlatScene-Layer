@@ -3,6 +3,8 @@
 
 #include "FSImages.h"
 
+using namespace flatscene;
+
 struct FSImages::ImagesImpl {
     SpritesetCollection set;
     SpritesetCount count;

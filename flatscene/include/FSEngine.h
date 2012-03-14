@@ -6,30 +6,34 @@
 #include <functional>
 #include <memory>
 
-class FSLibrary;
+namespace flatscene {
 
-class FSEngine : public std::enable_shared_from_this<FSEngine> {
-    friend class FSLibrary;
-    bool initialized;
-protected:
-    int priority;
+    class FSLibrary;
 
-    virtual void onEvent(const SDL_Event& event);
-    virtual void onInit();
-    virtual void onExit();
-    virtual void loop();
-    virtual void onIdle();
-    virtual void deselect();
+    class FSEngine : public std::enable_shared_from_this<FSEngine> {
+        friend class FSLibrary;
+        bool initialized;
+    protected:
+        int priority;
 
-public:
-    bool done;
+        virtual void onEvent(const SDL_Event& event);
+        virtual void onInit();
+        virtual void onExit();
+        virtual void loop();
+        virtual void onIdle();
+        virtual void deselect();
 
-    FSEngine();
-    virtual ~FSEngine();
+    public:
+        bool done;
 
-    bool isInitialized();
+        FSEngine();
+        virtual ~FSEngine();
 
-    virtual void drawFrame();
-};
+        bool isInitialized();
+
+        virtual void drawFrame();
+    };
+
+} // flatscene
 
 #endif //#ifndef __EVENTHANDLER_H__

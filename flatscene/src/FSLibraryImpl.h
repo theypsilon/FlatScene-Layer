@@ -3,6 +3,8 @@
 
 #include "FSLibrary.h"
 
+using namespace flatscene;
+
 struct FSLibrary::LibraryImpl {
     FSEngine* actualEngine;
 

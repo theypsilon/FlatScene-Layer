@@ -9,37 +9,41 @@
 #include <vector>
 #include <deque>
 
-class FSActor;
-class CRutinaColision;
-class FSUniverse;
+namespace flatscene {
 
-typedef std::list<FSActor*> ActorCollection;
+    class FSActor;
+    class CRutinaColision;
+    class FSUniverse;
 
-class FSActor {
-private:
-    std::string creature;
-    FSUniverse* inUniverse;
-public:
+    typedef std::list<FSActor*> ActorCollection;
 
-    int file;
-    int graph;
-    Uint8 flags;
+    class FSActor {
+    private:
+        std::string creature;
+        FSUniverse* inUniverse;
+    public:
 
-    FSActor(const char* creature);
-    virtual ~FSActor();
+        int file;
+        int graph;
+        Uint8 flags;
 
-    int setSprite(int file,int graph);
-    virtual const FSSprite* getSprite();
+        FSActor(const char* creature);
+        virtual ~FSActor();
 
-    virtual int move();
+        int setSprite(int file,int graph);
+        virtual const FSSprite* getSprite();
 
-    virtual std::string getCreature();
-    FSUniverse* getUniverse();
-    virtual int setUniverse(FSUniverse* m);
-    FSPoint renderPoint;
+        virtual int move();
 
-    virtual FSActor* clone();
+        virtual std::string getCreature();
+        FSUniverse* getUniverse();
+        virtual int setUniverse(FSUniverse* m);
+        FSPoint renderPoint;
 
-};
+        virtual FSActor* clone();
+
+    };
+
+} // flatscene
 
 #endif

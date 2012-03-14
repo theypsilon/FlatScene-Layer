@@ -5,6 +5,8 @@
 
 #include "FSActor.h"
 
+using namespace flatscene;
+
 class IScrollObject;
 
 typedef std::list<IScrollObject*> IScrollObjectCollection;

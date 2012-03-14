@@ -6,6 +6,8 @@
 
 #include <exception>
 
+using namespace flatscene;
+
 FSCanvas::FSCanvas() {}
 
 FSCanvas::FSCanvas( const SCanvas& canvas )

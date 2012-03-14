@@ -18,68 +18,72 @@
 #include <functional>
 #include <map>
 
-typedef struct {
-    GLuint tex;
-    Uint32 w, h;                /* Read-only */
-    int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
-    Uint8 bpp;
-    SDL_Surface* sdl_surf; // NULL or not null, thats the question.
-}SCanvas;
+namespace flatscene {
 
-class FSCanvas {
-private:
-    GLuint tex;
-    Uint32 w, h;                /* Read-only */
-    int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
-    Uint8 bpp;
-    SDL_Surface* sdl_surf; // NULL or not null, thats the question.
+    typedef struct {
+        GLuint tex;
+        Uint32 w, h;                /* Read-only */
+        int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
+        Uint8 bpp;
+        SDL_Surface* sdl_surf; // NULL or not null, thats the question.
+    }SCanvas;
 
-    FSCanvas ( const FSCanvas& ); //undefined
+    class FSCanvas {
+    private:
+        GLuint tex;
+        Uint32 w, h;                /* Read-only */
+        int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
+        Uint8 bpp;
+        SDL_Surface* sdl_surf; // NULL or not null, thats the question.
 
-    FSCanvas() ;
-    FSCanvas( const SCanvas& canvas ) ;
+        FSCanvas ( const FSCanvas& ); //undefined
+
+        FSCanvas() ;
+        FSCanvas( const SCanvas& canvas ) ;
     
     
 
-    void clearSurface () ;
+        void clearSurface () ;
 
-    friend class FSTextBox;
-    friend class FSSprite;
-    friend class FSSpriteset;
-    friend class FSWriter;
-    friend class FSImages;
-    friend class FSScreen;
+        friend class FSTextBox;
+        friend class FSSprite;
+        friend class FSSpriteset;
+        friend class FSWriter;
+        friend class FSImages;
+        friend class FSScreen;
 
-    static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
+        static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
-    static inline Uint32 pow2 (Uint32 n);
+        static inline Uint32 pow2 (Uint32 n);
 
-    mutable std::list<std::function<void(void)>> initCallbackList;
-    mutable std::list<std::function<void(void)>> endCallbackList;
+        mutable std::list<std::function<void(void)>> initCallbackList;
+        mutable std::list<std::function<void(void)>> endCallbackList;
 
-public:
-    ~FSCanvas( ) ;
+    public:
+        ~FSCanvas( ) ;
 
-public:
-    FSCanvas( FSCanvas&& pSurface ) ;
+    public:
+        FSCanvas( FSCanvas&& pSurface ) ;
 
-    static FSCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
-    template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
-    // Funciona s�lo si hay SDL_Surface
-    Uint32 getPixel ( int x , int y ) const;
+        static FSCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+        template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+        // Funciona s�lo si hay SDL_Surface
+        Uint32 getPixel ( int x , int y ) const;
 
-    int getWidth ( ) const;
-    int getHeight ( ) const;
+        int getWidth ( ) const;
+        int getHeight ( ) const;
 
-    //render image
-    void put ( const FSPoint& ptDst , Uint8 flags=0) const;
-    void put ( const FSFloatPoint& ptDst , Uint8 flags=0) const;
+        //render image
+        void put ( const FSPoint& ptDst , Uint8 flags=0) const;
+        void put ( const FSFloatPoint& ptDst , Uint8 flags=0) const;
 
-    int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
-    int translate(Float x, Float y, Float z) const;
-    int scale(Float x, Float y, Float z) const;
-    int color(Float red, Float green, Float blue, Float alpha) const;
-    int color(FSColor* col,Float alpha=1.0) const;
-};
+        int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
+        int translate(Float x, Float y, Float z) const;
+        int scale(Float x, Float y, Float z) const;
+        int color(Float red, Float green, Float blue, Float alpha) const;
+        int color(FSColor* col,Float alpha=1.0) const;
+    };
+
+} // flatscene
 
 #endif

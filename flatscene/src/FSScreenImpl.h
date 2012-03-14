@@ -3,6 +3,8 @@
 
 #include "FSScreen.h"
 
+using namespace flatscene;
+
 typedef struct { 
     std::string name; 
     Uint8 mode; 

@@ -13,7 +13,8 @@
 #include "XMLHelper.h"
 #include "CanvasFactory.h"
 
-using namespace fs::intern::xml;
+using namespace flatscene;
+using namespace flatscene::intern::xml;
 
 struct FSSpriteset::SpritesetImpl {
 

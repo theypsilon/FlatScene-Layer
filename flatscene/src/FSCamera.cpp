@@ -2,6 +2,8 @@
 #include "FSScreenImpl.h"
 #include "FSLibrary.h"
 
+using namespace flatscene;
+
 FSCamera::FSCamera(FSActor* target, FSRectangle* area)
 : uni(NULL), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}
 

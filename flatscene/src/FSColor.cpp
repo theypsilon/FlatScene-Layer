@@ -1,4 +1,7 @@
 #include "FSColor.h"
+
+using namespace flatscene;
+
 //standard constructor
 FSColor::FSColor(Uint8 r,Uint8 g,Uint8 b)
 {

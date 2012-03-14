@@ -1,7 +1,3 @@
-// Library.cpp: implementation of the CLibrary class.
-//
-//////////////////////////////////////////////////////////////////////
-
 #ifdef WIN32
 #ifdef VISUAL_LEAKS
     #include "vld.h"

@@ -8,7 +8,7 @@
 #include "FSWriter.h"
 #include "FSException.h"
 
-
+using namespace flatscene;
 
 FSEngine::FSEngine() {
     initialized = false;

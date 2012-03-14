@@ -1,5 +1,7 @@
 #include "FSException.h"
 
+using namespace flatscene;
+
 struct FSException::ExceptionImpl {
     std::string description;
 

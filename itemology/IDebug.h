@@ -3,6 +3,8 @@
 
 #include "FSLibrary.h"
 
+using namespace flatscene;
+
 int func_fracaso(const char* file, int line);
 
 #define AVOID_FRACASO

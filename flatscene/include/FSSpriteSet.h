@@ -4,26 +4,30 @@
 #include "FSSprite.h"
 #include <memory>
 
-class FSSpriteset {
-public:
+namespace flatscene {
 
-    const FSSprite* get ( unsigned int n ) const;
+    class FSSpriteset {
+    public:
 
-    int size () const;
+        const FSSprite* get ( unsigned int n ) const;
 
-    const std::string& getName() const;
+        int size () const;
 
-    Uint8 getMode() const;
+        const std::string& getName() const;
 
-private :
-    struct SpritesetImpl;
-    const std::unique_ptr<SpritesetImpl> _impl;
+        Uint8 getMode() const;
 
-    FSSpriteset(std::string c = "",Uint8 mode=ONLY_TEXTURE);
-    virtual ~FSSpriteset();
+    private :
+        struct SpritesetImpl;
+        const std::unique_ptr<SpritesetImpl> _impl;
 
-    friend class FSScreen;
-    friend class FSImages;
-};
+        FSSpriteset(std::string c = "",Uint8 mode=ONLY_TEXTURE);
+        virtual ~FSSpriteset();
+
+        friend class FSScreen;
+        friend class FSImages;
+    };
+
+} // flatscene
 
 #endif
