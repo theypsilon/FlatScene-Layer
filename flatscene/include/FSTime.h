@@ -6,7 +6,7 @@
 #include "SDL.h"
 #include "FSdefinitions.h"
 
-namespace {
+namespace flatscene {
 
     class FSEngine;
 

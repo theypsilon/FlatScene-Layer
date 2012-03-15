@@ -16,6 +16,8 @@
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onInit(); _impl->setActualEngine(eaux); }
 #define KILLENGINE(A); EXITENGINE(A); if (A) { delete A; A=NULL; }
 
+namespace flatscene {
+
 void FSLibrary::LibraryImpl::sort(std::vector<std::unique_ptr<FSEngine>>& v) {
     typedef const std::unique_ptr<FSEngine>& pEngine;
     std::sort(v.begin(),v.end(),[](pEngine p1, pEngine p2) {
@@ -450,3 +452,5 @@ bool FSLibrary::inDebug() {
 #ifdef GLOBAL_SINGLETON_REFERENCES
 FSLibrary& FSLib = FSLibrary::I();
 #endif
+
+} // flatscene

@@ -3,7 +3,7 @@
 #include "FSScreen.h"
 #include "FSLibrary.h"
 
-using namespace flatscene;
+namespace flatscene {
 
 FSTime::FSTime() {
 #ifdef MENSAJES_FPS
@@ -59,3 +59,5 @@ void FSTime::reset(unsigned int tick) {
 //              No es prioritario porque la creaci�n y destrucci�n de engines durante la ejecuci�n deber�a ser m�nima, y la memoria reservada es muy peque�a.
 
 FSTime Chrono;
+
+} // flatscene

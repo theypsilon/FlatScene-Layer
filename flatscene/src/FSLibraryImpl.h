@@ -3,7 +3,7 @@
 
 #include "FSLibrary.h"
 
-using namespace flatscene;
+namespace flatscene {
 
 struct FSLibrary::LibraryImpl {
     FSEngine* actualEngine;
@@ -32,5 +32,7 @@ struct FSLibrary::LibraryImpl {
 
     void sort(std::vector<std::unique_ptr<FSEngine>>& v);
 };
+
+} // flatscene
 
 #endif

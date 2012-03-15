@@ -3,7 +3,7 @@
 
 #include "FSScreen.h"
 
-using namespace flatscene;
+namespace flatscene {
 
 typedef struct { 
     std::string name; 
@@ -115,5 +115,7 @@ struct FSScreen::ScreenImpl {
     };
 
 };
+
+} // flatscene
 
 #endif

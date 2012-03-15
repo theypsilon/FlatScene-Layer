@@ -27,8 +27,8 @@ namespace flatscene {
         Uint8& G();
         Uint8& B();
 
-        operator SDL_Color();
-        operator SDL_Color*();
+        explicit operator SDL_Color();
+        explicit operator SDL_Color*();
 
         FSColor& operator=(FSColor& Color);
         FSColor& operator+=(FSColor& Color);

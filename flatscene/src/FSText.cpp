@@ -1,5 +1,7 @@
 #include "FSWriterImpl.h"
 
+namespace flatscene {
+
 FSWriter::WriterImpl::FSText::FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) 
     : fx(nullptr)
     , Box(new FSTextBox(file,text,x,y,Lim,ttf_fnt,next))
@@ -44,3 +46,5 @@ FSWriter::WriterImpl::FSText::~FSText() {
 TypeText FSWriter::WriterImpl::FSText::Type() const {
     return type;
 }
+
+} // flatscene

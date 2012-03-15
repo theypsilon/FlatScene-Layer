@@ -4,6 +4,8 @@
 #include <limits>
 #include <sstream>
 
+namespace flatscene {
+
 FSSprite::FSSprite() {}
 
 FSSprite::FSSprite ( FSCanvas&& pSurface, FSPoint zerocpSource) 
@@ -97,3 +99,5 @@ SpriteOpaque FSSprite::isOpaque() {
 
     return opaque;
 }
+
+} // flatscene

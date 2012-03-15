@@ -2,6 +2,8 @@
 #include "FSImagesImpl.h"
 #include "FSScreenImpl.h"
 
+namespace flatscene {
+
 FSImages::FSImages() : _impl(new ImagesImpl) {}
 
 FSImages::~FSImages() {
@@ -115,3 +117,5 @@ int FSImages::getCount(Uint32 n) {
 #ifdef GLOBAL_SINGLETON_REFERENCES
 FSImages& Img = FSImages::I();
 #endif
+
+} // flatscene

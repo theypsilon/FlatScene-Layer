@@ -5,7 +5,7 @@
 #include "FSException.h"
 #include <memory>
 
-using namespace flatscene;
+namespace flatscene {
 
 class FSEngine;
 
@@ -153,5 +153,7 @@ struct FSWriter::WriterImpl {
         }
     };
 };
+
+} // flatscene
 
 #endif

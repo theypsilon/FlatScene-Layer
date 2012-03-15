@@ -7,6 +7,8 @@
 
 #define MARGEN 20
 
+namespace flatscene {
+
 FSWriter::WriterImpl::FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) :
 file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
 timer(Chrono.getTick()), step(0), maxStep(0)    {
@@ -222,3 +224,5 @@ FSWriter::WriterImpl::SLineText::~SLineText() {
         }
     }
 }
+
+} // flatscene

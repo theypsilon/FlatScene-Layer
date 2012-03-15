@@ -2,7 +2,7 @@
 #include "FSLibrary.h"
 #include "FSMultiverseImpl.h"
 
-using namespace flatscene;
+namespace flatscene {
 
 FSUniverse::FSUniverse(std::string name) 
 : name(name) , loaded(false), numCameras(0), slot(255) {}
@@ -115,3 +115,5 @@ bool FSUniverse::operator ==(FSUniverse &uni) {
 bool FSUniverse::equal(FSUniverse *uni) {
     return (this->getName()==uni->getName());
 }
+
+} // flatscene

@@ -2,6 +2,8 @@
 #include "FSLibrary.h"
 #include "FSEngine.h"
 
+namespace flatscene {
+
 FSScreen::FSScreen() : _impl(new ScreenImpl) {
     _impl->m_SDL_Surface=NULL;
 
@@ -631,3 +633,5 @@ void FSScreen::ScreenImpl::SRenderCanvas::operator()() {
 
     delete this;
 }
+
+} // flatscene

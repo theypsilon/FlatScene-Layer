@@ -3,7 +3,7 @@
 
 #include "FSImages.h"
 
-using namespace flatscene;
+namespace flatscene {
 
 struct FSImages::ImagesImpl {
     SpritesetCollection set;
@@ -11,5 +11,7 @@ struct FSImages::ImagesImpl {
 
     std::stack<int> lastIndexAdded;
 };
+
+} // flatscene
 
 #endif

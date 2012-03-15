@@ -4,8 +4,10 @@
 #include "FSSprite.h"
 #include "FSException.h"
 
-using namespace flatscene;
+namespace flatscene {
 
-struct FSSprite::SpriteImpl {};
+    struct FSSprite::SpriteImpl {};
+
+} // flatscene
 
 #endif

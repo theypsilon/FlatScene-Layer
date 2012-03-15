@@ -7,6 +7,8 @@
 
 #include <algorithm>
 
+namespace flatscene {
+
 FSEngine* FSWriter::WriterImpl::setAdmin(const FSEngine *const constAdmin) {
 
     auto ret = admin;
@@ -548,7 +550,7 @@ int FSWriter::render() {
                 if (glyphit == l->fuente->render.end()) {
                     l->fuente->render.insert(std::make_pair<Uint16,FSCanvas>(
                         std::move(jt->glyph),
-                        FSCanvas::createCanvas<FSCanvas>(TTF_RenderGlyph_Blended(l->fuente->fuente,jt->glyph,FSColor::White()))
+                        FSCanvas::createCanvas<FSCanvas>(TTF_RenderGlyph_Blended(l->fuente->fuente,jt->glyph,(SDL_Color)FSColor::White()))
                     ));
                 }
 
@@ -639,3 +641,5 @@ void FSWriter::clear() {
 #ifdef GLOBAL_SINGLETON_REFERENCES
 FSWriter& Write = FSWriter::I();
 #endif
+
+} // flatscene

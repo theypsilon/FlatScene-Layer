@@ -8,7 +8,7 @@
 #include "FSWriter.h"
 #include "FSException.h"
 
-using namespace flatscene;
+namespace flatscene {
 
 FSEngine::FSEngine() {
     initialized = false;
@@ -79,3 +79,5 @@ void FSEngine::onExit() {
     FSWriter::I().erase();
     initialized = false;
 }
+
+} // flatscene

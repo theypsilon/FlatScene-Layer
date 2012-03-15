@@ -3,6 +3,8 @@
 #include "FSImagesImpl.h"
 #include "FSScreenImpl.h"
 
+namespace flatscene {
+
 void FSScreen::ScreenImpl::deleteResources() {
     
     for (auto it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
@@ -77,3 +79,5 @@ void FSScreen::ScreenImpl::reloadResources(GraphicResources &info) {
         img._impl->count[img.get(it->number)]=it->times;
     }
 }
+
+} // flatscene

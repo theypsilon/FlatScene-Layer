@@ -2,7 +2,7 @@
 #include "FSLibrary.h"
 #include "FSUniverse.h"
 
-using namespace flatscene;
+namespace flatscene {
 
 FSActor::FSActor(const char* creature) 
 : file(0), graph(0), flags(0), inUniverse(NULL), creature(creature) {}
@@ -40,3 +40,5 @@ FSActor* FSActor::clone() {
     FSLibrary::I().Error("CActor no implementa un metodo de clonaci�n por defecto.");
     return NULL;
 }
+
+} // flatscene

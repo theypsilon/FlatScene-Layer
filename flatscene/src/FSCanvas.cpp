@@ -6,7 +6,7 @@
 
 #include <exception>
 
-using namespace flatscene;
+namespace flatscene {
 
 FSCanvas::FSCanvas() {}
 
@@ -601,3 +601,5 @@ int FSCanvas::color(Float red, Float green, Float blue, Float alpha) const {
 int FSCanvas::color(FSColor* col, Float alpha) const {
     return color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
 }
+
+} // flatscene
