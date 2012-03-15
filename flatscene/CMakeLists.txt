@@ -13,7 +13,7 @@ if ( NOT SDL_FOUND )
 	message ( FATAL ERROR "SDL not found!" )	
 endif ( NOT SDL_FOUND )
 
-file ( GLOB SRCS src/*.cpp src/tinyxml/*.cpp )
+file ( GLOB_RECURSE SRCS src/*.cpp )
 file ( GLOB HDRS include/*.h include/tinyxml/*.h )
 
 include_directories( ${SDL_INCLUDE_DIR} )

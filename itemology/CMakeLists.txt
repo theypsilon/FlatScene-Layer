@@ -17,7 +17,7 @@ endif ( NOT SDL_FOUND )
 include_directories( ${SDL_INCLUDE_DIR} )
 include_directories( ${OPENGL_INCLUDE_DIR} )
 
-file ( GLOB NSRCS *.cpp )
+file ( GLOB_RECURSE NSRCS *.cpp )
 file ( GLOB NHDRS *.h )
 
 add_executable ( item ${NSRCS} )
