@@ -96,7 +96,7 @@ namespace flatscene {
 } // flatscene
 
 #ifndef FS_AVOID_ALIAS
-namespace fs = flatscene;
+namespace FS = flatscene;
 #endif
 
 #endif //#ifndef __APPLICATION_H__
