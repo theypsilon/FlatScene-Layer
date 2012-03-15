@@ -2,6 +2,6 @@
 
 pushd itemology
 
-../item
+./item
 
 popd
