@@ -1,5 +1,6 @@
-PROJECT ( flatscene_solution )
+project ( flatscene_solution )
 
-CMAKE_MINIMUM_REQUIRED ( VERSION 2.6 )
+cmake_minimum_required ( VERSION 2.6 )
+
 add_subdirectory(flatscene)
 add_subdirectory(itemology)

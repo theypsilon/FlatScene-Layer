@@ -1,13 +1,13 @@
-PROJECT ( itemology )
+project ( itemology )
 
-CMAKE_MINIMUM_REQUIRED ( VERSION 2.6 )
+cmake_minimum_required ( VERSION 2.6 )
 set (CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x")
 
-FIND_PACKAGE ( OpenGL )
+find_package ( OpenGL )
 
-FIND_PACKAGE ( SDL REQUIRED )
-FIND_PACKAGE ( SDL_image REQUIRED )
-FIND_PACKAGE ( SDL_ttf REQUIRED )
+find_package ( SDL REQUIRED )
+find_package ( SDL_image REQUIRED )
+find_package ( SDL_ttf REQUIRED )
 
 if ( NOT SDL_FOUND )
 	message ( FATAL ERROR "SDL not found!" )	
