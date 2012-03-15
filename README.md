@@ -1,25 +1,9 @@
 #FlatScene
 
-**FlatScene** is a high abstraction layer designed to create *2D interactive applications* in a rapid and easy way. This library uses **OpenGL** to render 2D graphics supporting *hardware acceleration*, and **SDL** to manipulate I/O events. 
+**FlatScene** library is a high abstraction layer designed to create *2D interactive applications* in a rapid and easy way. This library uses **OpenGL** to render 2D graphics supporting *hardware acceleration*, and **SDL** to manipulate I/O events. 
 
-Actually, the library is ready for use in **C++**. It benefits from the *portability* inherited from **SDL** and **OpenGL**, thus allowing to the user the managing of *multiplattform projects* without so much concerns.
+The library is meant to be written in modern **C++**, using some of the new features from the recent standard **C++11**. It benefits as well from the *portability* inherited from **SDL** and **OpenGL**, thus allows to the user a way of handling *multiplattform projects* without so much concerns.
 
-#DemoArk
+#Itemology
 
-This is a **test application** created to show the features of **FlatScene**.
-
-In this demo, input keys are :
-
-* **ESC** : Simple option *menu*. You got here an option for leaving the demo.
-
-* **F1** : Swap between *tests*.
-* **F2** : *Restart* current test.
-* **F3** : Swap *fullscreen mode* - *window mode*.
-
-* **SPACE** : *Pause*.
-
-* **Arrow keys** : *Walking*.
-
-* Into first test, press **u** to stress *change map* test.
-
-* Into double cam test, press **a** to kill the grey enemies.
+This will be a **test game** created to show the features of **FlatScene**. Unfortunately, it isn't playable already since its develop status is still quite green.
