@@ -14,7 +14,7 @@ if ( NOT SDL_FOUND )
 endif ( NOT SDL_FOUND )
 
 file ( GLOB_RECURSE SRCS src/*.cpp )
-file ( GLOB HDRS include/*.h include/tinyxml/*.h )
+file ( GLOB HDRS include/*.h )
 
 include_directories( ${SDL_INCLUDE_DIR} )
 include_directories( ${OPENGL_INCLUDE_DIR} )
