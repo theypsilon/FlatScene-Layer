@@ -3,42 +3,42 @@
 
 #include "Universe.h"
 
-class CUniverseTemplate : public FSUniverse {
+class CUniverseTemplate : public Universe {
 private:
 
 	// TODO : funciones y variables privadas
 
 public:
 
-	// TODO : variables y funciones públicas adicionales
+	// TODO : variables y funciones pï¿½blicas adicionales
 
-	// Constructor. La cadena name es el descriptor del Universo. Para la gestión de Universos, debería usarse el objeto global CMultiverse.
-	// Cuando se crea un Universo, debería añadirse su instancia inmediatamente a CMultiverse mediante CMultiverse.add(CUniverse*)
+	// Constructor. La cadena name es el descriptor del Universo. Para la gestiï¿½n de Universos, deberï¿½a usarse el objeto global CMultiverse.
+	// Cuando se crea un Universo, deberï¿½a aï¿½adirse su instancia inmediatamente a CMultiverse mediante CMultiverse.add(CUniverse*)
 	CUniverseTemplate(string name);
 
-	// Destructor, ahí deberemos liberar los recursos. Si queremos que sólo pueda invocarse a través de CMultiverse, 
-	// se recomienda mover el destructor a la sección 'private', y seguidamente añadir la línea "friend class CControlMultiverse;".
+	// Destructor, ahï¿½ deberemos liberar los recursos. Si queremos que sï¿½lo pueda invocarse a travï¿½s de CMultiverse, 
+	// se recomienda mover el destructor a la secciï¿½n 'private', y seguidamente aï¿½adir la lï¿½nea "friend class CControlMultiverse;".
 	virtual ~CUniverseTemplate();
 
-	// Opcional. Método dedicado para la inicialización de los recursos del universo.
+	// Opcional. Mï¿½todo dedicado para la inicializaciï¿½n de los recursos del universo.
 	void load();
 
-	// Opcional. Método dedicado para la finalización de los recursos del universo.
+	// Opcional. Mï¿½todo dedicado para la finalizaciï¿½n de los recursos del universo.
 	void unload();
 
-	// Opcional. Método que sustituya las características de este Universo por las de otro compatible a través de un nuevo descriptor.
+	// Opcional. Mï¿½todo que sustituya las caracterï¿½sticas de este Universo por las de otro compatible a travï¿½s de un nuevo descriptor.
 	int changeUniverse(string name, Uint8 slot);
 
-	// Opcional. Método para notificación de la entrada de un CActor.
-	int incActor(FSActor* act);
+	// Opcional. Mï¿½todo para notificaciï¿½n de la entrada de un CActor.
+	int incActor(Actor* act);
 
-	// Opcional. Método para notificación de la salida de un CActor.
-	int decActor(FSActor* act);
+	// Opcional. Mï¿½todo para notificaciï¿½n de la salida de un CActor.
+	int decActor(Actor* act);
 
-	// Opcional. Método para notificación de la entrada de una CCamera.
+	// Opcional. Mï¿½todo para notificaciï¿½n de la entrada de una CCamera.
 	void incCameras();
 
-	// Opcional. Método para notificación de la salida de una CCamera.
+	// Opcional. Mï¿½todo para notificaciï¿½n de la salida de una CCamera.
 	void decCameras();
 
 };

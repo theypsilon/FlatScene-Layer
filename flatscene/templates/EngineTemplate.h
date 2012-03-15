@@ -3,48 +3,48 @@
 
 #include "Engine.h"
 
-class CEngineTemplate : public FSEngine
+class CEngineTemplate : public Engine
 {
 public:
 
 	// Constructor del Motor.
-	CEngineTemplate(FSMessageHandler* pmhParent=NULL);
+	CEngineTemplate(MessageHandler* pmhParent=NULL);
 	
-	// Destructor, ahí deberemos liberar todos los recursos.
+	// Destructor, ahï¿½ deberemos liberar todos los recursos.
 	virtual ~CEngineTemplate();
 
-	// Opcional, pero invocado por la Libraría. Debe devolver 'true' para que la librería pueda tomar el motor como "Motor Activo" ( CLibrary::getActualEngine(); )
-	// En este método se pueden reservar recursos necesarios para la ejecución de lmotor.
+	// Opcional, pero invocado por la Librarï¿½a. Debe devolver 'true' para que la librerï¿½a pueda tomar el motor como "Motor Activo" ( CLibrary::getActualEngine(); )
+	// En este mï¿½todo se pueden reservar recursos necesarios para la ejecuciï¿½n de lmotor.
 	int onInit();
 	
-	// Opcional, pero invocado por la Librería. En este método se pueden liberar recursos que eran necesarios para la ejecución de lmotor.
+	// Opcional, pero invocado por la Librerï¿½a. En este mï¿½todo se pueden liberar recursos que eran necesarios para la ejecuciï¿½n de lmotor.
 	int onExit();
 
-	// Función necesaria para el procesamiento de Eventos por parte de este Motor.
+	// Funciï¿½n necesaria para el procesamiento de Eventos por parte de este Motor.
 	int loop();
 
-	// Rutina principal. Aquí se debe incluir la implementación principal del motor para actualizar su estado.
+	// Rutina principal. Aquï¿½ se debe incluir la implementaciï¿½n principal del motor para actualizar su estado.
 	int onIdle();
 
 	// Opcional. Pensado para resolver conflictos ante inesperadas conmutaciones entre diferentes Motores.
 	virtual void deselect();
 
-	// Rutina de renderización. Aquí deberían invocarse todas las rutina de renderización de los elementos controlados por el Motor.
+	// Rutina de renderizaciï¿½n. Aquï¿½ deberï¿½an invocarse todas las rutina de renderizaciï¿½n de los elementos controlados por el Motor.
 	int drawFrame();
 
 
 
-	// A continuación, se definen 2 métodos hereados de la clase CMessageHandler.
+	// A continuaciï¿½n, se definen 2 mï¿½todos hereados de la clase CMessageHandler.
 	
-	// Dichos métodos también están presentes en CActor, CUniverse y CCamera.
+	// Dichos mï¿½todos tambiï¿½n estï¿½n presentes en CActor, CUniverse y CCamera.
 
-	// Pueden ser redefinidos para gestionar mensajería en el objeto actual.
+	// Pueden ser redefinidos para gestionar mensajerï¿½a en el objeto actual.
 
 
-	// Este método gestiona los mensajes en el instante que se llama a "SendMessage", método definido en CMessageHandler.
+	// Este mï¿½todo gestiona los mensajes en el instante que se llama a "SendMessage", mï¿½todo definido en CMessageHandler.
 	 int onMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 
-	 // Este método gestiona los mensajes no instantáneos. Se leen los mensajes tras llamar al método "readMessages" definido en CMessageHandler.
+	 // Este mï¿½todo gestiona los mensajes no instantï¿½neos. Se leen los mensajes tras llamar al mï¿½todo "readMessages" definido en CMessageHandler.
 	 void pendingMessage(Uint32 MsgID,MSGPARM Parm1,MSGPARM Parm2);
 };
 

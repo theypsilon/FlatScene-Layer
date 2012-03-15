@@ -6,15 +6,15 @@
 namespace flatscene {
 
     template <class T=int>
-    struct FS2DPoint {
+    struct Point2D {
         T x ;
         T y ;
 
-        FS2DPoint ( T x = 0 , T y  = 0 ) 
+        Point2D ( T x = 0 , T y  = 0 ) 
         : x(x), y(y) {}
 
         template <class U>
-        FS2DPoint ( const U& pt )
+        Point2D ( const U& pt )
         : x(pt.x), y(pt.y) {}
 
         inline T getX() const { return x; }
@@ -23,7 +23,7 @@ namespace flatscene {
         void setX(T nx) { x = nx; }
         void setY(T ny) { y = ny; }
 
-        FS2DPoint& set(T nx,T ny) {
+        Point2D& set(T nx,T ny) {
             x = nx;
             y = ny;
             return *this;

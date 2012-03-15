@@ -9,7 +9,7 @@
 namespace flatscene { namespace intern { namespace xml {
 
     bool checkAttr(const TiXmlElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
-        if (!name || strcmp(name,"")==0) throw FSException("no attribute name supplied",__LINE__); //FIXME static_assert?
+        if (!name || strcmp(name,"")==0) throw Exception("no attribute name supplied",__LINE__); //FIXME static_assert?
         auto attr = el.Attribute(name);
         if (!attr) return false;
         if (value && ( ( equals && strcmp(attr,value)!=0) || 
@@ -19,18 +19,18 @@ namespace flatscene { namespace intern { namespace xml {
     }
 
     void ensureAttr(const TiXmlElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
-        if (!checkAttr(el,name,value,equals))  throw FSException( std::string("invalid attribute '")+
+        if (!checkAttr(el,name,value,equals))  throw Exception( std::string("invalid attribute '")+
                 (name?name:"nullptr")+"' with value '"+ (value?value:"nullptr")+"' equals="+(equals?"true":"false"));
     }
 
     void processBadResult(int cod,const std::string& attr,const std::type_info& type) {
         switch(cod) {
             case TIXML_NO_ATTRIBUTE: 
-                throw FSException("Attribute '"+attr+"' doesn't exist",__LINE__); 
+                throw Exception("Attribute '"+attr+"' doesn't exist",__LINE__); 
             break; case TIXML_WRONG_TYPE:                
-                throw FSException("Attribute '"+attr+"' is not a "+type.name(),__LINE__); 
+                throw Exception("Attribute '"+attr+"' is not a "+type.name(),__LINE__); 
             break; default: 
-                throw FSException("Attribute '"+attr+"' unknown "+type.name(),__LINE__); 
+                throw Exception("Attribute '"+attr+"' unknown "+type.name(),__LINE__); 
             break;
         }
     }
@@ -56,7 +56,7 @@ namespace flatscene { namespace intern { namespace xml {
             T min=std::numeric_limits<T>::min(), T max=std::numeric_limits<T>::max()) {
         T ret = valFromAttr<T>(el,name);
         if (ret < min || ret > max)
-           throw FSException("attribute '"+name+"' not in "+typeid(T).name()+" range",__LINE__);
+           throw Exception("attribute '"+name+"' not in "+typeid(T).name()+" range",__LINE__);
         return ret;
     }
 

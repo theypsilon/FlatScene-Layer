@@ -26,8 +26,8 @@ namespace flatscene {
         TCTB_BOX
     };
 
-    class FSWriter : private FSNoncopyable, public FSSingleton<FSWriter> {
-        friend class FSSingleton<FSWriter>;
+    class Writer : private Noncopyable, public Singleton<Writer> {
+        friend class Singleton<Writer>;
     public:
         int setfontSize(int newSize);
 
@@ -54,24 +54,24 @@ namespace flatscene {
         int locateRenderScene ( Float posx=0.0, Float posy=0.0, Float width=0.0, Float height=0.0, Float zoom = 1.0) ;
 
         int color(int text,Float red, Float green, Float blue, Float alpha, TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
-        int color(int text,FSColor* col, Float alpha,TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
+        int color(int text,Color* col, Float alpha,TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
 
 
         int render();
 
         void clear();
     private:
-        FSWriter();
-        ~FSWriter();
+        Writer();
+        ~Writer();
 
         struct WriterImpl;
-        FSPimpl<WriterImpl> _impl;
+        Pimpl<WriterImpl> _impl;
     
-        friend class FSScreen;
+        friend class Screen;
     };
 
     #ifdef GLOBAL_SINGLETON_REFERENCES
-    extern FSWriter& Write;
+    extern Writer& Write;
     #endif
 
 } // flatscene

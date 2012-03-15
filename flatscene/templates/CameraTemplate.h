@@ -3,37 +3,37 @@
 
 #include "Camera.h"
 
-class CCameraTemplate : public FSCamera {
+class CCameraTemplate : public Camera {
 private:
 
 	// TODO : funciones y variables privadas
 
 public:
 
-	// TODO : variables y funciones públicas adicionales
+	// TODO : variables y funciones pï¿½blicas adicionales
 
-	// Constructor, se recomienda que se establezcan los siguientes parámetros.
+	// Constructor, se recomienda que se establezcan los siguientes parï¿½metros.
 	// Pueden ser necesarios para inicializar la clase base.
-	CCameraTemplate(FSActor* target,FSRectangle* area,FSMessageHandler* pmhParent=NULL);
+	CCameraTemplate(Actor* target,Rectangle* area,MessageHandler* pmhParent=NULL);
 
-	// Destructor, ahí deberemos liberar los recursos
+	// Destructor, ahï¿½ deberemos liberar los recursos
 	virtual ~CCameraTemplate();
 
-	// Opcional. Este método está pensado para usarse cada vez que se enfoca un Universo por primera vez.
+	// Opcional. Este mï¿½todo estï¿½ pensado para usarse cada vez que se enfoca un Universo por primera vez.
 	int loadUniverse();
 	
-	// Opcional. Este método está pensado para usarse cuando la cámara deja de usar un Universo.
+	// Opcional. Este mï¿½todo estï¿½ pensado para usarse cuando la cï¿½mara deja de usar un Universo.
 	int unloadUniverse();
 
-	// Opcional. Este método está pensado para recargar los recursos gráficos provenientes del Universo si fuera necesario.
+	// Opcional. Este mï¿½todo estï¿½ pensado para recargar los recursos grï¿½ficos provenientes del Universo si fuera necesario.
 	int resyncUniverse();
-	// La implementación por defecto de los 3 métodos anteriores simplemente devuelve ÉXITO.
+	// La implementaciï¿½n por defecto de los 3 mï¿½todos anteriores simplemente devuelve ï¿½XITO.
 
-	// Opcional. Fija el objetivo de la cámara. La implementación por defecto está comentada
-	// junto al resto de la implementación de la clase.
-	int setTarget(FSActor* newTarget);
+	// Opcional. Fija el objetivo de la cï¿½mara. La implementaciï¿½n por defecto estï¿½ comentada
+	// junto al resto de la implementaciï¿½n de la clase.
+	int setTarget(Actor* newTarget);
 
-	// Método que se llama desde el método de la clase base "render". Se debe encargar de actualizar los elementos gráficos.
+	// Mï¿½todo que se llama desde el mï¿½todo de la clase base "render". Se debe encargar de actualizar los elementos grï¿½ficos.
 	int refresh();
 
 };

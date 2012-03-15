@@ -8,10 +8,10 @@
 
 namespace flatscene {
 
-    class FSLibrary;
+    class Library;
 
-    class FSEngine : public std::enable_shared_from_this<FSEngine> {
-        friend class FSLibrary;
+    class Engine : public std::enable_shared_from_this<Engine> {
+        friend class Library;
         bool initialized;
     protected:
         int priority;
@@ -26,8 +26,8 @@ namespace flatscene {
     public:
         bool done;
 
-        FSEngine();
-        virtual ~FSEngine();
+        Engine();
+        virtual ~Engine();
 
         bool isInitialized();
 

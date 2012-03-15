@@ -7,17 +7,17 @@
 
 namespace flatscene {
 
-class FSEngine;
+class Engine;
 
-struct FSWriter::WriterImpl {
+struct Writer::WriterImpl {
     struct SData;
     struct SFont;
     struct SEffectText;
 
-    std::map<FSEngine*,SData> session;
+    std::map<Engine*,SData> session;
 
     SData* data;
-    FSEngine* admin;
+    Engine* admin;
 
 
     std::map<int,SFont> Fonts;
@@ -31,17 +31,17 @@ struct FSWriter::WriterImpl {
     Float height;
     Float zoom;
 
-    FSEngine* setAdmin(const FSEngine *const constAdmin);
+    Engine* setAdmin(const Engine *const constAdmin);
 
     struct SChar {
         Uint16 glyph;
-        FSFloatPoint* p;
+        FloatPoint* p;
     };
 
     struct SFont {
         const std::string cadena;
         TTF_Font * fuente;
-        std::map<Uint16,FSCanvas> render;
+        std::map<Uint16,Canvas> render;
         const unsigned int size;
 
         SFont(std::string cad, unsigned int sz) 
@@ -50,7 +50,7 @@ struct FSWriter::WriterImpl {
             , size(sz)
             , render()
         {
-            if (fuente == nullptr) throw FSException("No se ha cargado la fuente: "+cad+".ttf",__LINE__);
+            if (fuente == nullptr) throw Exception("No se ha cargado la fuente: "+cad+".ttf",__LINE__);
         }
 
         SFont(SFont&& fnt)
@@ -80,14 +80,14 @@ struct FSWriter::WriterImpl {
         int next;
 
         std::list<SChar> charInDisplay;
-        FSPoint upleft;
+        Point upleft;
 
         SEffectText* fx;
 
         unsigned int timer;
         SDL_Color col;
 
-        FSCanvas* box;
+        Canvas* box;
         Uint8 xBox;
         Uint8 yBox;
 

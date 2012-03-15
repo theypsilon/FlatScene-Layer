@@ -7,7 +7,7 @@
 namespace flatscene {
 
     /**
-     * FSRect, Rectangle class with absolute coordinates
+     * Rect, Rectangle class with absolute coordinates
      *
      * (6,1).__
      *      |  |
@@ -16,18 +16,18 @@ namespace flatscene {
      *
      */
     template <class T>
-    struct FSRect {
+    struct Rect {
         T x,y,w,h;
 
-        FSRect (T x=0, T y=0, T w=0, T h=0)
+        Rect (T x=0, T y=0, T w=0, T h=0)
         : x(x), y(y), w(w), h(h) {}
 
         template <class U>
-        FSRect (const U& rc)
+        Rect (const U& rc)
         : x((T)rc.x), y((T)rc.y), w((T)rc.w), h((T)rc.h) {}
 
         template <class U1,class U2>
-        FSRect (const U1& p1,const U2& p2)
+        Rect (const U1& p1,const U2& p2)
         : x((T)p1.x), y((T)p1.y), w((T)p2.x), h((T)p2.y) {}
 
         inline T getX() const { return x; }
@@ -44,11 +44,11 @@ namespace flatscene {
             return SDL_Rect(x,y,w,h);
         }
 
-        inline operator FS2DPoint<T>() const {
-            return FS2DPoint<T>(x,y);
+        inline operator Point2D<T>() const {
+            return Point2D<T>(x,y);
         }
 
-        FSRect<T>& set (T nx,T ny,T nw,T nh) {
+        Rect<T>& set (T nx,T ny,T nw,T nh) {
             x=nx;
             y=ny;
             w=nw;
@@ -83,17 +83,17 @@ namespace flatscene {
      */
     /*
     template <class T>
-    struct FSRelRect : FSRect<T> {
-        using FSRect<T>::x;
-        using FSRect<T>::w;
-        using FSRect<T>::h;
-        using FSRect<T>::y;
+    struct FSRelRect : Rect<T> {
+        using Rect<T>::x;
+        using Rect<T>::w;
+        using Rect<T>::h;
+        using Rect<T>::y;
 
-        FSRelRect(const FSRect<T>& rc)
-        : FSRect<T>(rc.x,rc.y,rc.w - x,rc.h - y) {}
+        FSRelRect(const Rect<T>& rc)
+        : Rect<T>(rc.x,rc.y,rc.w - x,rc.h - y) {}
 
-        inline operator FSRect<T>() {
-            return FSRect<T>(x,y,x+w,y+h);
+        inline operator Rect<T>() {
+            return Rect<T>(x,y,x+w,y+h);
         }
 
         template <class U>

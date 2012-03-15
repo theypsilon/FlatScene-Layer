@@ -3,7 +3,7 @@
 
 namespace flatscene {
 
-    class FSMessageHandler  {};
+    class MessageHandler  {};
 
 } // flatscene
 

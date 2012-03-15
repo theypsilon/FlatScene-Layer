@@ -2,19 +2,19 @@
 
 namespace flatscene {
 
-FSWriter::WriterImpl::FSText::FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) 
+Writer::WriterImpl::FSText::FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) 
     : fx(nullptr)
     , Box(new FSTextBox(file,text,x,y,Lim,ttf_fnt,next))
     , type(TT_BOX)
 {}
 
-FSWriter::WriterImpl::FSText::FSText() 
+Writer::WriterImpl::FSText::FSText() 
     : fx(nullptr)
     , Line(new SLineText)
     , type(TT_LINE)
 {}
 
-FSWriter::WriterImpl::FSText::FSText(FSText&& mv)
+Writer::WriterImpl::FSText::FSText(FSText&& mv)
     : fx(mv.fx)
     , Line(mv.Line)
     , type(mv.type)
@@ -23,7 +23,7 @@ FSWriter::WriterImpl::FSText::FSText(FSText&& mv)
     mv.Line = nullptr;
 }
 
-FSWriter::WriterImpl::FSText::~FSText() {
+Writer::WriterImpl::FSText::~FSText() {
     if (fx) {
         delete fx;
         fx = nullptr;
@@ -43,7 +43,7 @@ FSWriter::WriterImpl::FSText::~FSText() {
 
 }
 
-TypeText FSWriter::WriterImpl::FSText::Type() const {
+TypeText Writer::WriterImpl::FSText::Type() const {
     return type;
 }
 

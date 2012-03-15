@@ -4,21 +4,21 @@
 
 namespace flatscene {
 
-FSCamera::FSCamera(FSActor* target, FSRectangle* area)
+Camera::Camera(Actor* target, Rectangle* area)
 : uni(NULL), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}
 
-FSCamera::~FSCamera() {
+Camera::~Camera() {
     delete area;
 }
 
-FSUniverse* FSCamera::getUniverse() {
+Universe* Camera::getUniverse() {
     return uni;
 }
 
-int FSCamera::loadUniverse() {
+int Camera::loadUniverse() {
 
     if (uni != NULL) {
-        FSLibrary::I().Error("Universe already loaded");
+        Library::I().Error("Universe already loaded");
         return FRACASO;
     }
 
@@ -26,9 +26,9 @@ int FSCamera::loadUniverse() {
     return EXITO;
 }
 
-int FSCamera::unloadUniverse() {
+int Camera::unloadUniverse() {
     if (uni == NULL) {
-        FSLibrary::I().Error("No Universe in focus");
+        Library::I().Error("No Universe in focus");
         return FRACASO;
     }
 
@@ -40,7 +40,7 @@ int FSCamera::unloadUniverse() {
 
 }
 
-int FSCamera::resyncUniverse() {
+int Camera::resyncUniverse() {
 
     if (unloadUniverse() == EXITO)
         return loadUniverse();
@@ -48,23 +48,23 @@ int FSCamera::resyncUniverse() {
         return FRACASO;
 }
 
-bool FSCamera::isOpened() {
+bool Camera::isOpened() {
     return (uni!=NULL);
 }
 
-int& FSCamera::CX() {
+int& Camera::CX() {
     return x;
 }
-int& FSCamera::CY() {
+int& Camera::CY() {
     return y;
 }
-FSActor* FSCamera::Target() {
+Actor* Camera::Target() {
     return target;
 }
 
-int FSCamera::setTarget(FSActor* newTarget) {
+int Camera::setTarget(Actor* newTarget) {
     if (newTarget == this->target) {
-        FSLibrary::I().Error("Actor objetivo ya establecido");
+        Library::I().Error("Actor objetivo ya establecido");
         return FRACASO;
     }
 
@@ -80,11 +80,11 @@ int FSCamera::setTarget(FSActor* newTarget) {
     return EXITO;
 }
 
-FSRectangle* FSCamera::getArea() {
+Rectangle* Camera::getArea() {
     return area;
 }
 
-int FSCamera::render() {
+int Camera::render() {
 
     rendering = true;
 
@@ -107,14 +107,14 @@ int FSCamera::render() {
     return ret;
 }
 
-int FSCamera::refresh() {
+int Camera::refresh() {
     return EXITO;
 }
 
-int FSCamera::locateRenderScene( FSRectangle* areaSc, Float zoom ) {
+int Camera::locateRenderScene( Rectangle* areaSc, Float zoom ) {
     return locateRenderScene(areaSc->getX(),areaSc->getY(),areaSc->getW(),areaSc->getH(),zoom);
 }
-int FSCamera::locateRenderScene( Float posx, Float posy, Float width, Float height, Float zoom ) {
+int Camera::locateRenderScene( Float posx, Float posy, Float width, Float height, Float zoom ) {
 
     if (width == 0 || height == 0) {
         posx = area->getX();
@@ -124,84 +124,84 @@ int FSCamera::locateRenderScene( Float posx, Float posy, Float width, Float heig
     }
 
     if (rendering) {
-        FSScreen::I().pushMatrix();
-        FSScreen::I().locateRenderScene(posx,posy,width,height,zoom);
+        Screen::I().pushMatrix();
+        Screen::I().locateRenderScene(posx,posy,width,height,zoom);
     } else {
         initRenderList.push_back([](){
-            FSScreen::I().pushMatrix();
+            Screen::I().pushMatrix();
         });
         initRenderList.push_back([=](){
-            FSScreen::I().locateRenderScene(posx,posy,width,height,zoom);
+            Screen::I().locateRenderScene(posx,posy,width,height,zoom);
         });
     }
 
     endRenderList.push_front([](){
-        FSScreen::I().popMatrix();
+        Screen::I().popMatrix();
     });
 
     return EXITO;
 }
-int FSCamera::rotate(Float angle, Float x, Float y, Float z) {
+int Camera::rotate(Float angle, Float x, Float y, Float z) {
 
     if (rendering) {
-        FSScreen::I().pushMatrix();
-        FSScreen::I().rotate(angle,x,y,z);
+        Screen::I().pushMatrix();
+        Screen::I().rotate(angle,x,y,z);
     } else {
         initRenderList.push_back([](){
-            FSScreen::I().pushMatrix();
+            Screen::I().pushMatrix();
         });
         initRenderList.push_back([=](){
-            FSScreen::I().rotate(angle,x,y,z);
+            Screen::I().rotate(angle,x,y,z);
         });
     }
 
     endRenderList.push_front([](){
-        FSScreen::I().popMatrix();
+        Screen::I().popMatrix();
     });
 
     return EXITO;
 }
-int FSCamera::translate(Float x, Float y, Float z) {
+int Camera::translate(Float x, Float y, Float z) {
 
     if (rendering) {
-        FSScreen::I().pushMatrix();
-        FSScreen::I().translate(x,y,z);
+        Screen::I().pushMatrix();
+        Screen::I().translate(x,y,z);
     } else {
         initRenderList.push_back([](){
-            FSScreen::I().pushMatrix();
+            Screen::I().pushMatrix();
         });
         initRenderList.push_back([=](){
-            FSScreen::I().translate(x,y,z);
+            Screen::I().translate(x,y,z);
         });
     }
 
     endRenderList.push_front([](){
-        FSScreen::I().popMatrix();
+        Screen::I().popMatrix();
     });
 
     return EXITO;
 }
-int FSCamera::scale(Float x, Float y, Float z) {
+int Camera::scale(Float x, Float y, Float z) {
 
     if (rendering) {
-        FSScreen::I().pushMatrix();
-        FSScreen::I().scale(x,y,z);
+        Screen::I().pushMatrix();
+        Screen::I().scale(x,y,z);
     } else {
         initRenderList.push_back([](){
-            FSScreen::I().pushMatrix();
+            Screen::I().pushMatrix();
         });
         initRenderList.push_back([=](){
-            FSScreen::I().scale(x,y,z);
+            Screen::I().scale(x,y,z);
         });
     }
 
     endRenderList.push_front([](){
-        FSScreen::I().popMatrix();
+        Screen::I().popMatrix();
     });
 
     return EXITO;
 }
-int FSCamera::color(Float red, Float green, Float blue, Float alpha) {
+int Camera::color(Float red, Float green, Float blue, Float alpha) {
 
     if (red > 1.0) red = 1.0;
     if (green > 1.0) green = 1.0;
@@ -209,31 +209,31 @@ int FSCamera::color(Float red, Float green, Float blue, Float alpha) {
     if (alpha > 1.0) alpha = 1.0;
 
     if (rendering) {
-        FSScreen::I().color(red,green,blue,alpha);
+        Screen::I().color(red,green,blue,alpha);
     } else {
         initRenderList.push_back([=](){
-            FSScreen::I().color(red,green,blue,alpha);
+            Screen::I().color(red,green,blue,alpha);
         });
     }
 
-    red = FSScreen::I()._impl->red;//2.0 - red;
-    green = FSScreen::I()._impl->green;//2.0 - green;
-    blue = FSScreen::I()._impl->blue;//2.0 - blue;
-    alpha =  FSScreen::I()._impl->alpha;//2.0 - alpha;
+    red = Screen::I()._impl->red;//2.0 - red;
+    green = Screen::I()._impl->green;//2.0 - green;
+    blue = Screen::I()._impl->blue;//2.0 - blue;
+    alpha =  Screen::I()._impl->alpha;//2.0 - alpha;
 
     endRenderList.push_front([=](){
-        FSScreen::I().color(red,green,blue,alpha);
+        Screen::I().color(red,green,blue,alpha);
     });
 
     return EXITO;
 }
-int FSCamera::color(FSColor* col, Float alpha) {
+int Camera::color(Color* col, Float alpha) {
     return color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
 }
 
-int FSCamera::reubicate(FSRectangle* nArea) {
+int Camera::reubicate(Rectangle* nArea) {
     if (area == nArea) {
-        FSLibrary::I().Error("Area ya establecida");
+        Library::I().Error("Area ya establecida");
         return FRACASO;
     }
 
@@ -245,9 +245,9 @@ int FSCamera::reubicate(FSRectangle* nArea) {
 }
 
 #ifdef MENSAJES_MSGIDS
-int FSCamera::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
+int Camera::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
     printf("Camera %d.%d :: ",area->getX(),area->getY());
-    return FSMessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
+    return MessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
 }
 #endif
 

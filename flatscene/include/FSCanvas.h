@@ -28,7 +28,7 @@ namespace flatscene {
         SDL_Surface* sdl_surf; // NULL or not null, thats the question.
     }SCanvas;
 
-    class FSCanvas {
+    class Canvas {
     private:
         GLuint tex;
         Uint32 w, h;                /* Read-only */
@@ -36,21 +36,21 @@ namespace flatscene {
         Uint8 bpp;
         SDL_Surface* sdl_surf; // NULL or not null, thats the question.
 
-        FSCanvas ( const FSCanvas& ); //undefined
+        Canvas ( const Canvas& ); //undefined
 
-        FSCanvas() ;
-        FSCanvas( const SCanvas& canvas ) ;
+        Canvas() ;
+        Canvas( const SCanvas& canvas ) ;
     
     
 
         void clearSurface () ;
 
         friend class FSTextBox;
-        friend class FSSprite;
-        friend class FSSpriteset;
-        friend class FSWriter;
-        friend class FSImages;
-        friend class FSScreen;
+        friend class Sprite;
+        friend class Spriteset;
+        friend class Writer;
+        friend class Images;
+        friend class Screen;
 
         static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
@@ -60,12 +60,12 @@ namespace flatscene {
         mutable std::list<std::function<void(void)>> endCallbackList;
 
     public:
-        ~FSCanvas( ) ;
+        ~Canvas( ) ;
 
     public:
-        FSCanvas( FSCanvas&& pSurface ) ;
+        Canvas( Canvas&& pSurface ) ;
 
-        static FSCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+        static Canvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
         template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
         // Funciona s�lo si hay SDL_Surface
         Uint32 getPixel ( int x , int y ) const;
@@ -74,14 +74,14 @@ namespace flatscene {
         int getHeight ( ) const;
 
         //render image
-        void put ( const FSPoint& ptDst , Uint8 flags=0) const;
-        void put ( const FSFloatPoint& ptDst , Uint8 flags=0) const;
+        void put ( const Point& ptDst , Uint8 flags=0) const;
+        void put ( const FloatPoint& ptDst , Uint8 flags=0) const;
 
         int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
         int translate(Float x, Float y, Float z) const;
         int scale(Float x, Float y, Float z) const;
         int color(Float red, Float green, Float blue, Float alpha) const;
-        int color(FSColor* col,Float alpha=1.0) const;
+        int color(Color* col,Float alpha=1.0) const;
     };
 
 } // flatscene

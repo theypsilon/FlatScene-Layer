@@ -1,11 +1,11 @@
 #include "IScrollCameraObject.h"
 
 
-IScrollCameraObject::IScrollCameraObject( IScrollObjectCollection*** objects,FSActor* target,FSRectangle* area) 
-: FSCamera(target,area) , objects(objects) {
+IScrollCameraObject::IScrollCameraObject( IScrollObjectCollection*** objects,Actor* target,Rectangle* area) 
+: Camera(target,area) , objects(objects) {
 
 	if (!objects)
-		FSLib.Error("Mala definición de objectos");
+		FSLib.Error("Mala definiciï¿½n de objectos");
 }
 
 

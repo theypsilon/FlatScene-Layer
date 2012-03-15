@@ -8,9 +8,9 @@
 
 namespace flatscene {
 
-FSCanvas::FSCanvas() {}
+Canvas::Canvas() {}
 
-FSCanvas::FSCanvas( const SCanvas& canvas )
+Canvas::Canvas( const SCanvas& canvas )
 : bpp(canvas.bpp)
 , h(canvas.h)
 , h2(canvas.h2)
@@ -20,7 +20,7 @@ FSCanvas::FSCanvas( const SCanvas& canvas )
 , sdl_surf(canvas.sdl_surf)
 {}
 
-FSCanvas::FSCanvas( FSCanvas&& pSurface ) 
+Canvas::Canvas( Canvas&& pSurface ) 
 : endCallbackList(std::move(pSurface.endCallbackList))
 , initCallbackList(std::move(pSurface.initCallbackList)) 
 , bpp(pSurface.bpp)
@@ -33,7 +33,7 @@ FSCanvas::FSCanvas( FSCanvas&& pSurface )
     pSurface.clearSurface();
 }
 
-FSCanvas::~FSCanvas( ) {
+Canvas::~Canvas( ) {
 
     if (sdl_surf) 
         SDL_FreeSurface(sdl_surf);
@@ -44,12 +44,12 @@ FSCanvas::~FSCanvas( ) {
     clearSurface();
 }
 
-void FSCanvas::clearSurface ( ) {
+void Canvas::clearSurface ( ) {
     bpp = h = h2 = w = w2 = tex = 0;
     sdl_surf = nullptr;
 }
 
-Uint32 FSCanvas::getPixel ( int x , int y ) const {
+Uint32 Canvas::getPixel ( int x , int y ) const {
     if (sdl_surf && sdl_surf->w > x && sdl_surf->h > y) {
         Uint32 color = 0 ;
         int position = y * sdl_surf->pitch + sdl_surf->format->BytesPerPixel * x ;
@@ -62,23 +62,23 @@ Uint32 FSCanvas::getPixel ( int x , int y ) const {
     }
 }
 
-int FSCanvas::getWidth () const {
+int Canvas::getWidth () const {
     return ( w2 );
 }
 
-int FSCanvas::getHeight () const {
+int Canvas::getHeight () const {
     return ( h2 ) ;
 }
-void FSCanvas::put ( const FSFloatPoint& ptDst, Uint8 flags) const {
+void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
 
     //PUSHMATRIX
 
-    FSScreen::I().pushMatrix();
+    Screen::I().pushMatrix();
 
     //TRANSLATE
 
-    FSScreen::I().translate(ptDst.x,ptDst.y,0);
+    Screen::I().translate(ptDst.x,ptDst.y,0);
 
     // USER DEFINED EFFECTS IN
 
@@ -90,8 +90,8 @@ void FSCanvas::put ( const FSFloatPoint& ptDst, Uint8 flags) const {
 
     // PAINT FLOATCANVAS
 
-    FSScreen::I()._impl->graphicMaterial.push_back(
-        new FSScreen::ScreenImpl::SRenderCanvas(*this,flags)
+    Screen::I()._impl->graphicMaterial.push_back(
+        new Screen::ScreenImpl::SRenderCanvas(*this,flags)
     );
 
     // USER DEFINED EFFECTS OUT
@@ -104,7 +104,7 @@ void FSCanvas::put ( const FSFloatPoint& ptDst, Uint8 flags) const {
 
     // POPMATRIX
 
-    FSScreen::I().popMatrix();
+    Screen::I().popMatrix();
 
 #else
 
@@ -167,16 +167,16 @@ void FSCanvas::put ( const FSFloatPoint& ptDst, Uint8 flags) const {
 
 #endif
 }
-void FSCanvas::put ( const FSPoint& ptDst, Uint8 flags) const {
+void Canvas::put ( const Point& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
 
     //PUSHMATRIX
 
-    FSScreen::I().pushMatrix();
+    Screen::I().pushMatrix();
 
     //TRANSLATE
 
-    FSScreen::I().translate(ptDst.x,ptDst.y,0);
+    Screen::I().translate(ptDst.x,ptDst.y,0);
 
     // USER DEFINED EFFECTS IN
 
@@ -186,8 +186,8 @@ void FSCanvas::put ( const FSPoint& ptDst, Uint8 flags) const {
 
     // PAINT FLOATCANVAS
 
-    FSScreen::I()._impl->graphicMaterial.push_back(
-        new FSScreen::ScreenImpl::SRenderCanvas(*this,flags)
+    Screen::I()._impl->graphicMaterial.push_back(
+        new Screen::ScreenImpl::SRenderCanvas(*this,flags)
     );
 
     // USER DEFINED EFFECTS OUT
@@ -200,7 +200,7 @@ void FSCanvas::put ( const FSPoint& ptDst, Uint8 flags) const {
 
     // POPMATRIX
 
-    FSScreen::I().popMatrix();
+    Screen::I().popMatrix();
 
 #else
 
@@ -264,7 +264,7 @@ void FSCanvas::put ( const FSPoint& ptDst, Uint8 flags) const {
 #endif
 }
 
-SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
+SDL_Surface* Canvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 
     SDL_Surface* ret = NULL;
 
@@ -282,7 +282,7 @@ SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
         ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,0,0,0,0);
 
     else {
-        FSLibrary::I().Error("depth mode not valid",TE_SDL_NOMSG);
+        Library::I().Error("depth mode not valid",TE_SDL_NOMSG);
         return ret;
 
     }
@@ -321,18 +321,18 @@ SDL_Surface* FSCanvas::scaleSurface( SDL_Surface* s_surf, int factor) {
     return ret;
 }
 
-FSCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
+Canvas Canvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
     if (pow2(mode) != mode)
-        FSLibrary::I().Error("CCanvas::LoadIMG -> modo erroneo.");
+        Library::I().Error("CCanvas::LoadIMG -> modo erroneo.");
 
-    FSCanvas pSurface;
+    Canvas pSurface;
 
     SDL_Surface* image;
     SDL_Rect area;
 
     if (surface == nullptr) {
-        FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
+        Library::I().Error("CCanvas::LoadIMG -> image Null.");
         pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
         pSurface.sdl_surf = nullptr;
         return pSurface;
@@ -371,7 +371,7 @@ FSCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
                   0x000000ff);
         #endif
         if (image == NULL) {
-            FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
+            Library::I().Error("CCanvas::LoadIMG -> image Null.");
             return pSurface;
         }
 
@@ -542,7 +542,7 @@ FSCanvas FSCanvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 }
 
 
-Uint32 FSCanvas::pow2 (Uint32 n) {
+Uint32 Canvas::pow2 (Uint32 n) {
     Uint32 c=1;
     while (c < n) 
         c<<=1;
@@ -550,32 +550,32 @@ Uint32 FSCanvas::pow2 (Uint32 n) {
     return c;
 }
 
-int FSCanvas::rotate(Float angle, Float x, Float y, Float z) const {
+int Canvas::rotate(Float angle, Float x, Float y, Float z) const {
 
     initCallbackList.push_back([=](){
-        FSScreen::I().rotate(angle,x,y,z);
+        Screen::I().rotate(angle,x,y,z);
     });
 
     return EXITO;
 }
-int FSCanvas::translate(Float x, Float y, Float z) const {
+int Canvas::translate(Float x, Float y, Float z) const {
 
     initCallbackList.push_back([=](){
-        FSScreen::I().translate(x,y,z);
+        Screen::I().translate(x,y,z);
     });
 
     return EXITO;
 }
-int FSCanvas::scale(Float x, Float y, Float z) const {
+int Canvas::scale(Float x, Float y, Float z) const {
 
     initCallbackList.push_back([=](){
-        FSScreen::I().scale(x,y,z);
+        Screen::I().scale(x,y,z);
     });
 
     return EXITO;
 }
 
-int FSCanvas::color(Float red, Float green, Float blue, Float alpha) const {
+int Canvas::color(Float red, Float green, Float blue, Float alpha) const {
 
     if (red > 1.0) red = 1.0;
     if (green > 1.0) green = 1.0;
@@ -583,22 +583,22 @@ int FSCanvas::color(Float red, Float green, Float blue, Float alpha) const {
     if (alpha > 1.0) alpha = 1.0;
 
     initCallbackList.push_back([=](){
-        FSScreen::I().color(red,green,blue,alpha);
+        Screen::I().color(red,green,blue,alpha);
     });
 
-    red = FSScreen::I()._impl->red;//2.0 - red;
-    green = FSScreen::I()._impl->green;//2.0 - green;
-    blue = FSScreen::I()._impl->blue;//2.0 - blue;
-    alpha =  FSScreen::I()._impl->alpha;//2.0 - alpha;
+    red = Screen::I()._impl->red;//2.0 - red;
+    green = Screen::I()._impl->green;//2.0 - green;
+    blue = Screen::I()._impl->blue;//2.0 - blue;
+    alpha =  Screen::I()._impl->alpha;//2.0 - alpha;
 
     endCallbackList.push_back([=](){
-        FSScreen::I().color(red,green,blue,alpha);
+        Screen::I().color(red,green,blue,alpha);
     });
 
     return EXITO;
 }
 
-int FSCanvas::color(FSColor* col, Float alpha) const {
+int Canvas::color(Color* col, Float alpha) const {
     return color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
 }
 

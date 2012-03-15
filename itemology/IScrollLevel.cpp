@@ -3,7 +3,7 @@
 #include "IDebug.h"
 
 
-IScrollLevel::IScrollLevel(std::string name) : FSUniverse(name) {
+IScrollLevel::IScrollLevel(std::string name) : Universe(name) {
 #ifdef LOG_MAPAS
 	printf("Creando mapa '%s'...\n",name.c_str());
 #endif
@@ -298,7 +298,7 @@ void IScrollLevel::unload() {
 	loaded=false;
 }
 
-int IScrollLevel::incActor(FSActor* act) {
+int IScrollLevel::incActor(Actor* act) {
 	IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
 	if (actscroll && act->getUniverse()==NULL) {
@@ -317,12 +317,12 @@ int IScrollLevel::incActor(FSActor* act) {
 		}
 		return EXITO;
 	} else {
-		FSLib.Error((std::string("Se ha añadido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
+		FSLib.Error((std::string("Se ha aï¿½adido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
 		return FRACASO;
 	}
 }
 
-int IScrollLevel::decActor(FSActor* act) {
+int IScrollLevel::decActor(Actor* act) {
 	IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
 	for (auto i=actor.begin();i!=actor.end();++i) {

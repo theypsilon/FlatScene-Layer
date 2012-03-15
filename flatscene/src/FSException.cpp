@@ -2,7 +2,7 @@
 
 namespace flatscene {
 
-struct FSException::ExceptionImpl {
+struct Exception::ExceptionImpl {
     std::string description;
 
     ExceptionImpl(std::string describe, int line = -1)
@@ -16,15 +16,15 @@ struct FSException::ExceptionImpl {
     }
 };
 
-FSException::FSException(std::string describe, int line) 
+Exception::Exception(std::string describe, int line) 
 : _impl( new ExceptionImpl(describe,line) ) {}
 
-FSException::FSException(const FSException& e) 
+Exception::Exception(const Exception& e) 
 : _impl( new ExceptionImpl(*e._impl) ) {}
 
-FSException::~FSException() throw() {}
+Exception::~Exception() throw() {}
 
-const char* FSException::what() const throw() {
+const char* Exception::what() const throw() {
     return _impl->what();
 }
 

@@ -45,13 +45,13 @@ void IFirstEngine::drawFrame() {
 
 	Write.render();
 
-    FSScreen::I().render();
+    Screen::I().render();
 
 }
 
 void  IFirstEngine::onInit() {
 
-	FSEngine::onInit();
+	Engine::onInit();
 
 
 	IScrollLevel* level = new IScrollLevel("resources/mapa1");
@@ -66,7 +66,7 @@ void  IFirstEngine::onInit() {
 
 	level->incActor(mainactor);
 
-	cams.push_back( new IScrollCamera(mainactor,new FSRectangle(0,0,320,240)) );
+	cams.push_back( new IScrollCamera(mainactor,new Rectangle(0,0,320,240)) );
 
 	printf("onInit : IScrollObjects %d \n",IScrollObject::getInstances());
 
@@ -78,7 +78,7 @@ void IFirstEngine::onIdle()	{
 	void (IFirstEngine::* fptr)(SDL_Event* e);
 
 	if (!mainactor)
-		throw FSException("no main actor",__LINE__);
+		throw Exception("no main actor",__LINE__);
 
     if (move[i_up])    mainactor->place.y += -6;
     if (move[i_down])  mainactor->place.y += +6;
@@ -105,13 +105,13 @@ void IFirstEngine::onExit() {
 
 	cams.clear();
 
-    FSEngine::onExit();
+    Engine::onExit();
 }
 
 void IFirstEngine::deselect() {
-    FSEngine::deselect();
+    Engine::deselect();
 }
 
 void IFirstEngine::loop() {
-    FSEngine::loop();
+    Engine::loop();
 }

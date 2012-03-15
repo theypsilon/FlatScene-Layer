@@ -9,9 +9,9 @@
 
 namespace flatscene {
 
-    class FSMultiverse;
+    class Multiverse;
 
-    class FSUniverse {
+    class Universe {
     private:
         Uint8 numCameras;
 
@@ -20,10 +20,10 @@ namespace flatscene {
         std::string name;
         Uint8 slot;
 
-        virtual ~FSUniverse();
-        FSUniverse(std::string name);
+        virtual ~Universe();
+        Universe(std::string name);
 
-        friend class FSMultiverse;
+        friend class Multiverse;
 
         ActorCollection actor; 
     public:
@@ -33,8 +33,8 @@ namespace flatscene {
         virtual std::string& getName();
         virtual int changeUniverse(std::string name, Uint8 slot);
 
-        virtual int incActor(FSActor* act);
-        virtual int decActor(FSActor* act);
+        virtual int incActor(Actor* act);
+        virtual int decActor(Actor* act);
         virtual ActorCollection::iterator actorBegin();
         virtual ActorCollection::iterator actorEnd();
         virtual void incCameras();
@@ -42,8 +42,8 @@ namespace flatscene {
         virtual Uint32 numActors();
         virtual Uint8 camaras();
 
-        virtual bool operator == (FSUniverse& uni);
-        virtual bool equal (FSUniverse* uni);
+        virtual bool operator == (Universe& uni);
+        virtual bool equal (Universe* uni);
     };
 
 } // flatscene

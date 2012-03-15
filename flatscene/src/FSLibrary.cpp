@@ -18,22 +18,22 @@
 
 namespace flatscene {
 
-void FSLibrary::LibraryImpl::sort(std::vector<std::unique_ptr<FSEngine>>& v) {
-    typedef const std::unique_ptr<FSEngine>& pEngine;
+void Library::LibraryImpl::sort(std::vector<std::unique_ptr<Engine>>& v) {
+    typedef const std::unique_ptr<Engine>& pEngine;
     std::sort(v.begin(),v.end(),[](pEngine p1, pEngine p2) {
         return (p1->priority > p2->priority);
     });
 }
 
-void FSLibrary::LibraryImpl::setActualEngine(FSEngine* newEngineActive) {
+void Library::LibraryImpl::setActualEngine(Engine* newEngineActive) {
     actualEngine = newEngineActive;
 }
 
-const FSEngine *const FSLibrary::getActualEngine() {
+const Engine *const Library::getActualEngine() {
     return _impl->actualEngine;
 }
 
-FSLibrary::FSLibrary() {
+Library::Library() {
 #ifdef IN_FILE_ERROR
     (*_impl).errorsInSession = false;
 #endif
@@ -56,7 +56,7 @@ FSLibrary::FSLibrary() {
 
 }
 
-int FSLibrary::startLibrary(bool xmlconfig) {
+int Library::startLibrary(bool xmlconfig) {
 
     if (xmlconfig) {
 
@@ -94,20 +94,20 @@ int FSLibrary::startLibrary(bool xmlconfig) {
 
         srand(rand());
 
-        return FSScreen::I().start(res_x,res_y,bpp,fullscreen,doublebuff);
+        return Screen::I().start(res_x,res_y,bpp,fullscreen,doublebuff);
 
     }
 
     return EXITO;
 }
 
-int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
-    return FSScreen::I().start(width,height,bpp,fullscreen,doublebuff);
+int Library::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
+    return Screen::I().start(width,height,bpp,fullscreen,doublebuff);
 }
 
-void FSLibrary::LibraryImpl::onExit() {
+void Library::LibraryImpl::onExit() {
 
-    auto& _impl = FSLibrary::I()._impl;
+    auto& _impl = Library::I()._impl;
     (*_impl).engineIn.clear();
 
     _impl->setActualEngine(nullptr);
@@ -123,26 +123,26 @@ void FSLibrary::LibraryImpl::onExit() {
 #endif
 }
 
-FSLibrary::~FSLibrary() {}
+Library::~Library() {}
 
-std::vector<std::unique_ptr<FSEngine>> FSLibrary::processEngine(std::unique_ptr<FSEngine>&& eng) {
-    std::vector<std::unique_ptr<FSEngine>> veng;
+std::vector<std::unique_ptr<Engine>> Library::processEngine(std::unique_ptr<Engine>&& eng) {
+    std::vector<std::unique_ptr<Engine>> veng;
     veng.push_back(std::move(eng));
     processEngine(veng);
     return veng;
 }
 
-void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
+void Library::processEngine(std::vector<std::unique_ptr<Engine>>& veng) {
     _impl->setActualEngine(nullptr);
 
-    typedef std::unique_ptr<FSEngine> pEngine;
+    typedef std::unique_ptr<Engine> pEngine;
 
     _impl->sort(veng);
 
     for (auto it = veng.begin(), et = veng.end(); 
         it != et && getActualEngine() == nullptr; ++it) {
 
-        FSEngine& eng = **it;
+        Engine& eng = **it;
         if (!eng.done) {
             eng.done = true;
             _impl->setActualEngine(it->get());
@@ -155,7 +155,7 @@ void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
             (*it)->done = false;
 
         if (veng.empty()) {
-            throw FSException("There are no engines in queue!");
+            throw Exception("There are no engines in queue!");
         }
 
         _impl->setActualEngine(veng.front().get());
@@ -169,7 +169,7 @@ void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
         if (!actualEngine->isInitialized()) {
             actualEngine->onInit();
             if (!actualEngine->isInitialized())
-                throw FSException("Could not initialize new interface!");
+                throw Exception("Could not initialize new interface!");
         }
 
         actualEngine->loop();
@@ -180,14 +180,14 @@ void FSLibrary::processEngine(std::vector<std::unique_ptr<FSEngine>>& veng) {
     }
 }
 
-std::vector<std::unique_ptr<FSEngine>> FSLibrary::processEngines() {
+std::vector<std::unique_ptr<Engine>> Library::processEngines() {
     processEngine((*_impl).engineIn);
-    std::vector<std::unique_ptr<FSEngine>> veng;
+    std::vector<std::unique_ptr<Engine>> veng;
     std::swap((*_impl).engineIn,veng);
     return veng;
 }
 
-int FSLibrary::addEngine(std::unique_ptr<FSEngine> engine,int priority) {
+int Library::addEngine(std::unique_ptr<Engine> engine,int priority) {
 
     if (engine == nullptr)
         return FRACASO;
@@ -198,7 +198,7 @@ int FSLibrary::addEngine(std::unique_ptr<FSEngine> engine,int priority) {
     return EXITO;
 }
 
-void FSLibrary::exit() {
+void Library::exit() {
     if ((*_impl).actualEngine)
         (*_impl).actualEngine->deselect();
 
@@ -207,13 +207,13 @@ void FSLibrary::exit() {
     });
 }
 
-void FSLibrary::restart() {
+void Library::restart() {
     if ((*_impl).actualEngine)
         (*_impl).actualEngine->deselect();
 
     (*_impl).endTasks.push_back([&](){
         for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();    it != jt;   ++it) {
-            std::unique_ptr<FSEngine>& engine = *it;
+            std::unique_ptr<Engine>& engine = *it;
             _impl->setActualEngine(engine.get());
             engine->done = false;
             if (engine->isInitialized())
@@ -225,8 +225,8 @@ void FSLibrary::restart() {
         _impl->setActualEngine((*_impl).engineIn.front().get());
         (*_impl).engineIn.front()->done = true;
 
-        FSWriter::I().clear();
-        FSWriter::I().loadFont("tahoma");
+        Writer::I().clear();
+        Writer::I().loadFont("tahoma");
 
 #ifdef WIN32
         system("CLS");
@@ -240,7 +240,7 @@ void FSLibrary::restart() {
     });
 }
 
-void FSLibrary::runEngine(FSEngine* engine) {
+void Library::runEngine(Engine* engine) {
     if ((*_impl).actualEngine)
         (*_impl).actualEngine->deselect();
 
@@ -250,14 +250,14 @@ void FSLibrary::runEngine(FSEngine* engine) {
     });
 }
 
-void FSLibrary::reloadEngine(FSEngine* engine) {
+void Library::reloadEngine(Engine* engine) {
     if ((*_impl).actualEngine)
         (*_impl).actualEngine->deselect();
 
     (*_impl).endTasks.push_back([&](){
         if (engine != 0) {
 
-            FSEngine* find = nullptr;
+            Engine* find = nullptr;
 
             for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end();it!=jt;++it)
                 if (engine == it->get())
@@ -269,7 +269,7 @@ void FSLibrary::reloadEngine(FSEngine* engine) {
 
             _impl->setActualEngine(find);
 
-            FSWriter::I().erase();
+            Writer::I().erase();
 
             if ((*_impl).actualEngine && (*_impl).actualEngine->isInitialized())
                 (*_impl).actualEngine->onExit();
@@ -277,7 +277,7 @@ void FSLibrary::reloadEngine(FSEngine* engine) {
     });
 }
 
-void FSLibrary::changeEngine() {
+void Library::changeEngine() {
     if ((*_impl).actualEngine)
         (*_impl).actualEngine->deselect();
 
@@ -307,15 +307,15 @@ void FSLibrary::changeEngine() {
     });
 }
 
-void FSLibrary::killEngine(FSEngine* engine) {
+void Library::killEngine(Engine* engine) {
     if ((*_impl).actualEngine)
         (*_impl).actualEngine->deselect();
 
     (*_impl).endTasks.push_back([&](){
         if (engine != 0) {
 
-            FSEngine* act = (*_impl).actualEngine; // Lo salvamos para recuperarlo al final.
-            std::unique_ptr<FSEngine> find = nullptr;
+            Engine* act = (*_impl).actualEngine; // Lo salvamos para recuperarlo al final.
+            std::unique_ptr<Engine> find = nullptr;
 
             for (auto it = (*_impl).engineIn.begin(), jt = (*_impl).engineIn.end(); it!=jt; ++it) {
                 if (engine == it->get()) {
@@ -328,11 +328,11 @@ void FSLibrary::killEngine(FSEngine* engine) {
     });
 }
 
-void FSLibrary::Error (const char* c,TypeError e) {
+void Library::Error (const char* c,TypeError e) {
     Error(std::string(c),e);
 }
 
-void FSLibrary::Error (std::string s,TypeError e) {
+void Library::Error (std::string s,TypeError e) {
 
     if (s == "")
         s = "empty";
@@ -387,11 +387,11 @@ void FSLibrary::Error (std::string s,TypeError e) {
 #endif
 }
 
-void FSLibrary::Error (char* c,TypeError e) {
+void Library::Error (char* c,TypeError e) {
     Error(std::string(c),e);
 }
 
-std::string FSLibrary::LibraryImpl::toStringErrorGL(GLenum e) {
+std::string Library::LibraryImpl::toStringErrorGL(GLenum e) {
     std::string s ="";
 
     switch (e) {
@@ -407,14 +407,14 @@ std::string FSLibrary::LibraryImpl::toStringErrorGL(GLenum e) {
     return s;
 }
 
-std::string FSLibrary::readLastError() {
+std::string Library::readLastError() {
     if ((*_impl).errors.empty())
         return SINERROR;
     else
         return (*_impl).errors.back();
 }
 
-std::string FSLibrary::popError() {
+std::string Library::popError() {
     if ((*_impl).errors.empty())
         return SINERROR;
     else {
@@ -426,7 +426,7 @@ std::string FSLibrary::popError() {
 
 #ifdef DEBUGTEST
 
-void FSLibrary::debug(bool startdebug,const char* warning) {
+void Library::debug(bool startdebug,const char* warning) {
     if (startdebug) {
         if (!(*_impl).debugging) {
             debugticks=Chrono.getTick();
@@ -438,7 +438,7 @@ void FSLibrary::debug(bool startdebug,const char* warning) {
     }
 }
 
-bool FSLibrary::inDebug() {
+bool Library::inDebug() {
     if ((*_impl).debugging)
         if (Chrono.getTick() > debugticks + DEBUGTESTTICKS) {
             fprintf(stderr,"\n** (-) La aplicacion ha salido del estado de debug **\n");
@@ -450,7 +450,7 @@ bool FSLibrary::inDebug() {
 #endif
 
 #ifdef GLOBAL_SINGLETON_REFERENCES
-FSLibrary& FSLib = FSLibrary::I();
+Library& FSLib = Library::I();
 #endif
 
 } // flatscene

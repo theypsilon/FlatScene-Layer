@@ -14,7 +14,7 @@ typedef struct {
 
 typedef std::list<SpritesetInfo> GraphicResources;
 
-struct FSScreen::ScreenImpl {
+struct Screen::ScreenImpl {
 
     SDL_Surface* m_SDL_Surface;
 
@@ -33,9 +33,9 @@ struct FSScreen::ScreenImpl {
 
     std::list<SRender*> graphicMaterial;
 
-    std::list<FSSprite*> spriteToDelete;
-    std::list<FSSpriteset*> spritesetToDelete;
-    std::list<FSCanvas*> imageToDelete;
+    std::list<Sprite*> spriteToDelete;
+    std::list<Spriteset*> spritesetToDelete;
+    std::list<Canvas*> imageToDelete;
 
     void deleteResources();
 
@@ -98,7 +98,7 @@ struct FSScreen::ScreenImpl {
         GLuint tex;
         Uint8 flags;
 
-        SRenderCanvas(const FSCanvas& canvas, Uint8 flags)
+        SRenderCanvas(const Canvas& canvas, Uint8 flags)
         : relW((Float)(canvas.w2/canvas.w)), relH((Float)(canvas.h2/canvas.h)),
         w2(canvas.w2), h2(canvas.h2), tex(canvas.tex), flags(flags) {}
 

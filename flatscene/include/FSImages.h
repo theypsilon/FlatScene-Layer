@@ -10,31 +10,31 @@
 
 namespace flatscene {
 
-    typedef std::map<int,FSSpriteset*> SpritesetCollection;
-    typedef std::map<FSSpriteset*,int> SpritesetCount;
+    typedef std::map<int,Spriteset*> SpritesetCollection;
+    typedef std::map<Spriteset*,int> SpritesetCount;
 
-    class FSImages : private FSNoncopyable, public FSSingleton<FSImages> {
-        friend class FSSingleton<FSImages>;
+    class Images : private Noncopyable, public Singleton<Images> {
+        friend class Singleton<Images>;
     public:
         int add(const char* name,Uint8 mode=ONLY_TEXTURE);
         int remove(Uint32 n);
-        FSSpriteset* get(Uint32 n);
+        Spriteset* get(Uint32 n);
         int size();
         int search(const char* name);
-        int search(FSSpriteset* object);
+        int search(Spriteset* object);
         void clear();
         int getCount(Uint32 n);
     private:
-        FSImages();
-        ~FSImages();
+        Images();
+        ~Images();
 
         struct ImagesImpl;
         ImagesImpl* _impl;
-        friend class FSScreen;
+        friend class Screen;
     };
 
     #ifdef GLOBAL_SINGLETON_REFERENCES
-    extern FSImages& Img;
+    extern Images& Img;
     #endif
 
 } // flatscene

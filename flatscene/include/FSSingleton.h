@@ -4,7 +4,7 @@
 namespace flatscene {
 
     template <class T>
-    class FSSingleton {
+    class Singleton {
         public:
             static T& I() {
                 static T instance;

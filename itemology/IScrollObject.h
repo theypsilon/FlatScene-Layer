@@ -12,7 +12,7 @@ class IScrollObject;
 typedef std::list<IScrollObject*> IScrollObjectCollection;
 
 class IScrollObject :
-	public FSActor
+	public Actor
 {
 private:
 	IScrollObjectCollection* placeInMA;
@@ -22,39 +22,39 @@ private:
 	static int instances;
 public:
 
-	FSCoordinate place;
-	// TODO : variables y funciones públicas adicionales
+	Coordinate place;
+	// TODO : variables y funciones pï¿½blicas adicionales
 
-	// Constructor con clase menajera como parámetro de entrada 
+	// Constructor con clase menajera como parï¿½metro de entrada 
 	IScrollObject();
 
-	// Destructor, ahí deberemos liberar los recursos
+	// Destructor, ahï¿½ deberemos liberar los recursos
 	~IScrollObject();
 
-	// Devuelve un CSprite. Definición opcional. Ya tiene la siguiente implementación :
+	// Devuelve un CSprite. Definiciï¿½n opcional. Ya tiene la siguiente implementaciï¿½n :
 	//
 	//	CSprite* CActor::getSprite() {
 	//		return CImg.get(file)->get(graph);
 	//	}
 	//
-	// Sólo definir si se desea hacer una operación diferente
-	const FSSprite* getSprite();
+	// Sï¿½lo definir si se desea hacer una operaciï¿½n diferente
+	const Sprite* getSprite();
 
-	// Método pensado para ser invocado en CEngine::onIdle.
-	// Deberá actualizar el estado del CActor cuando sea necesario.
+	// Mï¿½todo pensado para ser invocado en CEngine::onIdle.
+	// Deberï¿½ actualizar el estado del CActor cuando sea necesario.
 	int move();
 
-	// Opcional. Debería devolver una cadena que identificara de algún modo al actor.
-	// Su implementación por defecto devuelve la cadena "criature" que debemos introducir 
-	// en la implementación del Constructor (ver en la parte de implementación).
+	// Opcional. Deberï¿½a devolver una cadena que identificara de algï¿½n modo al actor.
+	// Su implementaciï¿½n por defecto devuelve la cadena "criature" que debemos introducir 
+	// en la implementaciï¿½n del Constructor (ver en la parte de implementaciï¿½n).
 	std::string getCreature();
 	
-	// Opcional. Su implementación por defecto es una simple asignación a la variable miembro CUniverse* inUniverse.
-	int setUniverse(FSUniverse* m);
+	// Opcional. Su implementaciï¿½n por defecto es una simple asignaciï¿½n a la variable miembro CUniverse* inUniverse.
+	int setUniverse(Universe* m);
 
-	// Opcional. Por si se quiere implementar una función que facilite la inicialización de muchos actores dle mismo tipo.
-	// Si no se le da una implementación y el método es invocado, devuelve NULL y registra un error.
-	virtual FSActor* clone();
+	// Opcional. Por si se quiere implementar una funciï¿½n que facilite la inicializaciï¿½n de muchos actores dle mismo tipo.
+	// Si no se le da una implementaciï¿½n y el mï¿½todo es invocado, devuelve NULL y registra un error.
+	virtual Actor* clone();
 
 
 	static int getInstances() { return instances; };

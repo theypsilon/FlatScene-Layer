@@ -5,9 +5,9 @@
 #include "IDebug.h"
 
 
-IScrollCamera::IScrollCamera(FSActor* target, FSRectangle* area) :
-// Se ha de llamar a la clase Base para una correcta inicialización
-FSCamera(target,area), centro(new FSPoint(area->getW()/2,area->getH()/2)), objetive("objetivo") {
+IScrollCamera::IScrollCamera(Actor* target, Rectangle* area) :
+// Se ha de llamar a la clase Base para una correcta inicializaciï¿½n
+Camera(target,area), centro(new Point(area->getW()/2,area->getH()/2)), objetive("objetivo") {
 	intraMargenX=intraMargenY=0;
 	loadUniverse();
 }
@@ -63,7 +63,7 @@ int IScrollCamera::unloadUniverse() {
 
 int IScrollCamera::resyncUniverse() {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO	
+	/*		IMPLEMENTACIï¿½N POR DEFECTO	
 	/*
 	if (unloadUniverse() == EXITO)
 		return loadUniverse();
@@ -76,9 +76,9 @@ int IScrollCamera::resyncUniverse() {
 	return EXITO;
 }
 
-int IScrollCamera::setTarget(FSActor* newTarget) {
+int IScrollCamera::setTarget(Actor* newTarget) {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO */
+	/*		IMPLEMENTACIï¿½N POR DEFECTO */
 	
 	/*if (newTarget == this->target) {
 		CLibrary::Error("Actor objetivo ya establecido");
@@ -92,7 +92,7 @@ int IScrollCamera::setTarget(FSActor* newTarget) {
 		this->target=newTarget;
 	}
 
-	CX()=CY()=-1000; // Truco usado para forzar una recalibración de las coordenadas de la cámara en su primer uso.
+	CX()=CY()=-1000; // Truco usado para forzar una recalibraciï¿½n de las coordenadas de la cï¿½mara en su primer uso.
 	*/
 
 	// TODO
@@ -119,7 +119,7 @@ int IScrollCamera::refresh() {
 		
 		if ( CX() < centro->getX() + map->getTileW()) { // La camara no enfoca los bordes del map.
 			CX() = centro->getX()+ map->getTileW();
-		} else 	if ( CX() > map->getW()*map->getTileW() - area->getW() + centro->getX() - map->getTileW()) { // Quizás sería más apropiado restarle adicionalmente 1 unidad a los margenes exteriores del map (derecha y abajo).
+		} else 	if ( CX() > map->getW()*map->getTileW() - area->getW() + centro->getX() - map->getTileW()) { // Quizï¿½s serï¿½a mï¿½s apropiado restarle adicionalmente 1 unidad a los margenes exteriores del map (derecha y abajo).
 			CX() = map->getW()*map->getTileW() - area->getW() + centro->getX() - map->getTileW() ;
 		}
 	}

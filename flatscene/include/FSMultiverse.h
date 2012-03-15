@@ -11,26 +11,26 @@
 
 namespace flatscene {
 
-    class FSEngine;
+    class Engine;
 
-    typedef  std::list<FSUniverse*> UniverseCollection;
+    typedef  std::list<Universe*> UniverseCollection;
 
-    class FSMultiverse : private FSNoncopyable {
+    class Multiverse : private Noncopyable {
     public:
-        FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
-        FSUniverse* universeNamed(std::string uniName,Uint8 slot=0);
-        FSUniverse* universeNamed(const char* uniName,Uint8 slot=0);
-        void erase(FSUniverse* uniKilled);
+        Universe* add(Universe* uni,Uint8 slot=0);
+        Universe* universeNamed(std::string uniName,Uint8 slot=0);
+        Universe* universeNamed(const char* uniName,Uint8 slot=0);
+        void erase(Universe* uniKilled);
         void clear();
         int size();
 
         UniverseCollection::iterator begin();
         UniverseCollection::iterator end();
 
-        FSMultiverse();
-        ~FSMultiverse();
+        Multiverse();
+        ~Multiverse();
     private:
-        friend class FSUniverse;
+        friend class Universe;
         struct MultiverseImpl;
         MultiverseImpl* _impl;
     };

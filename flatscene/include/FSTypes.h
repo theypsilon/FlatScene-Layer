@@ -8,12 +8,12 @@ namespace flatscene {
 
     typedef double Float;
 
-    typedef FS2DPoint<int> FSPoint;
-    typedef FS2DPoint<Float> FSFloatPoint;
+    typedef Point2D<int> Point;
+    typedef Point2D<Float> FloatPoint;
 
-    typedef FS3DPoint<int> FSCoordinate;
+    typedef Point3D<int> Coordinate;
 
-    typedef FSRect<int> FSRectangle;
+    typedef Rect<int> Rectangle;
 
 } // flatscene
 

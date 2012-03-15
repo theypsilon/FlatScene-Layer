@@ -5,7 +5,7 @@
 
 namespace flatscene {
 
-struct FSImages::ImagesImpl {
+struct Images::ImagesImpl {
     SpritesetCollection set;
     SpritesetCount count;
 

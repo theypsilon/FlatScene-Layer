@@ -35,33 +35,33 @@ namespace flatscene {
     };
 
 
-    class FSLibrary : private FSNoncopyable, public FSSingleton<FSLibrary> {
-        friend class FSSingleton<FSLibrary>;
+    class Library : private Noncopyable, public Singleton<Library> {
+        friend class Singleton<Library>;
     public:
 
         int startLibrary(bool xmlconfig);
 
         int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
-        std::vector<std::unique_ptr<FSEngine>> processEngines();
-        void processEngine(std::vector<std::unique_ptr<FSEngine>>& veng);
-        std::vector<std::unique_ptr<FSEngine>> processEngine(std::unique_ptr<FSEngine>&& eng);
+        std::vector<std::unique_ptr<Engine>> processEngines();
+        void processEngine(std::vector<std::unique_ptr<Engine>>& veng);
+        std::vector<std::unique_ptr<Engine>> processEngine(std::unique_ptr<Engine>&& eng);
 
 
-        inline FSLibrary& getLibrary() {
+        inline Library& getLibrary() {
             return I();
         }
 
-        const FSEngine *const getActualEngine();
+        const Engine *const getActualEngine();
 
-        int addEngine(std::unique_ptr<FSEngine> engine,int priority);
+        int addEngine(std::unique_ptr<Engine> engine,int priority);
 
         void exit();
         void restart();
-        void runEngine(FSEngine* engine);
-        void reloadEngine(FSEngine* engine);
+        void runEngine(Engine* engine);
+        void reloadEngine(Engine* engine);
         void changeEngine();
-        void killEngine(FSEngine* engine);
+        void killEngine(Engine* engine);
 
         void Error (const char*,TypeError e=TE_standard);
         void Error (std::string,TypeError e=TE_standard);
@@ -79,16 +79,16 @@ namespace flatscene {
 
 
     private:
-        FSLibrary();
-        virtual ~FSLibrary();
+        Library();
+        virtual ~Library();
 
         struct LibraryImpl;
-        FSPimpl<LibraryImpl> _impl;
+        Pimpl<LibraryImpl> _impl;
 
-        friend class FSEngine;
+        friend class Engine;
     };
     #ifdef GLOBAL_SINGLETON_REFERENCES
-    extern FSLibrary& FSLib;
+    extern Library& FSLib;
     #endif
 
     #define SINERROR "|-| No error"
@@ -96,7 +96,7 @@ namespace flatscene {
 } // flatscene
 
 #ifndef FS_AVOID_ALIAS
-namespace fs = flatscene;
+namespace FS = flatscene;
 #endif
 
 #endif //#ifndef __APPLICATION_H__

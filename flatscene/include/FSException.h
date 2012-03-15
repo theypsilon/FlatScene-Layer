@@ -7,13 +7,13 @@
 
 namespace flatscene {
 
-    class FSException : public std::exception {
+    class Exception : public std::exception {
         struct ExceptionImpl;
         const std::unique_ptr<ExceptionImpl> _impl;
     public:
-        FSException(std::string describe, int line = -1);
-        FSException(const FSException&);
-        virtual ~FSException() throw();
+        Exception(std::string describe, int line = -1);
+        Exception(const Exception&);
+        virtual ~Exception() throw();
         virtual const char* what() const throw();
     };
 
