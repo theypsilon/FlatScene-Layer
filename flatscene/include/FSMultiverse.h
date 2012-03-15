@@ -9,28 +9,32 @@
 #include <string>
 #include <memory>
 
-class FSEngine;
+namespace flatscene {
 
-typedef  std::list<FSUniverse*> UniverseCollection;
+    class FSEngine;
 
-class FSMultiverse : private FSNoncopyable {
-public:
-    FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
-    FSUniverse* universeNamed(std::string uniName,Uint8 slot=0);
-    FSUniverse* universeNamed(const char* uniName,Uint8 slot=0);
-    void erase(FSUniverse* uniKilled);
-    void clear();
-    int size();
+    typedef  std::list<FSUniverse*> UniverseCollection;
 
-    UniverseCollection::iterator begin();
-    UniverseCollection::iterator end();
+    class FSMultiverse : private FSNoncopyable {
+    public:
+        FSUniverse* add(FSUniverse* uni,Uint8 slot=0);
+        FSUniverse* universeNamed(std::string uniName,Uint8 slot=0);
+        FSUniverse* universeNamed(const char* uniName,Uint8 slot=0);
+        void erase(FSUniverse* uniKilled);
+        void clear();
+        int size();
 
-    FSMultiverse();
-    ~FSMultiverse();
-private:
-    friend class FSUniverse;
-    struct MultiverseImpl;
-    MultiverseImpl* _impl;
-};
+        UniverseCollection::iterator begin();
+        UniverseCollection::iterator end();
+
+        FSMultiverse();
+        ~FSMultiverse();
+    private:
+        friend class FSUniverse;
+        struct MultiverseImpl;
+        MultiverseImpl* _impl;
+    };
+
+} // flatscene
 
 #endif

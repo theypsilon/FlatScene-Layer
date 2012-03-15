@@ -7,6 +7,8 @@
 
 #define MARGEN 20
 
+namespace flatscene {
+
 FSWriter::WriterImpl::FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) :
 file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
 timer(Chrono.getTick()), step(0), maxStep(0)    {
@@ -90,10 +92,6 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
             newT.p = new FSFloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
             currentX += (Float)advance;
 
-            if (fuente->render.find(newChar)==fuente->render.end()) {
-                fuente->render[newChar] = new FSCanvas(FSCanvas::toSCanvas(TTF_RenderGlyph_Blended(fuente->fuente,newChar,col)));
-            }
-
             newT.glyph=newChar;
 
             charInDisplay.push_back(newT);
@@ -160,8 +158,8 @@ int FSWriter::WriterImpl::FSTextBox::update() {
     for (std::list<SChar>::iterator it=charInDisplay.begin(), et=charInDisplay.end();it!=et && i<step;++it) {
         if (it->p) {
             if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
-                fuente->render[it->glyph]->color(fx->red,fx->green,fx->blue,fx->alpha);
-            fuente->render[it->glyph]->put(*it->p);
+                fuente->render.at(it->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
+            fuente->render.at(it->glyph).put(*it->p);
         }
         i++;
     }
@@ -226,3 +224,5 @@ FSWriter::WriterImpl::SLineText::~SLineText() {
         }
     }
 }
+
+} // flatscene

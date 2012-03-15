@@ -3,10 +3,14 @@
 
 #include "FSMultiverse.h"
 
+namespace flatscene {
+
 struct FSMultiverse::MultiverseImpl {
     UniverseCollection unis;
 
     bool working;
 };
+
+} // flatscene
 
 #endif

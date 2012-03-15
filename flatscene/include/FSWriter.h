@@ -11,63 +11,69 @@
 #include "FSdefinitions.h"
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
+#include "FSPimpl.h"
 
-enum TypeText {
-    TT_LINE,
-    TT_BOX
-};
+namespace flatscene {
 
-enum TypeColorTBox {
-    TCTB_ALL,
-    TCTB_TEXT,
-    TCTB_BOX
-};
+    enum TypeText {
+        TT_LINE,
+        TT_BOX
+    };
 
-class FSWriter : private FSNoncopyable, public FSSingleton<FSWriter> {
-    friend class FSSingleton<FSWriter>;
-public:
-    int setfontSize(int newSize);
+    enum TypeColorTBox {
+        TCTB_ALL,
+        TCTB_TEXT,
+        TCTB_BOX
+    };
 
-    int searchFont(const char* name,int withSize);
-    int searchFont(const char* name);
-    int searchFont(TTF_Font* fnt);
-    int searchFont(int idtext);
+    class FSWriter : private FSNoncopyable, public FSSingleton<FSWriter> {
+        friend class FSSingleton<FSWriter>;
+    public:
+        int setfontSize(int newSize);
 
-    int loadFont(const char* fuente,int withSize);
-    int loadFont(const char* fuente);
+        int searchFont(const char* name,int withSize);
+        int searchFont(const char* name);
+        int searchFont(TTF_Font* fnt);
+        int searchFont(int idtext);
 
-    int unloadFont(const char* fuente,int withSize);
-    int unloadFont(const char* fuente);
-    int unloadFont(int fuente);
+        int loadFont(const char* fuente,int withSize);
+        int loadFont(const char* fuente);
 
-
-    int line(int fuente,int x,int y,const char* text,...);
-    int inBox(const char* file, int index);
-
-    int erase(int text=ALL_TEXT,bool nextframe=false);
+        int unloadFont(const char* fuente,int withSize);
+        int unloadFont(const char* fuente);
+        int unloadFont(int fuente);
 
 
-    int locateRenderScene ( Float posx=0.0, Float posy=0.0, Float width=0.0, Float height=0.0, Float zoom = 1.0) ;
+        int line(int fuente,int x,int y,const char* text,...);
+        void lineOnce(int fuente, int x,int y, const char* text,...);
+        int inBox(const char* file, int index);
 
-    int color(int text,Float red, Float green, Float blue, Float alpha, TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
-    int color(int text,FSColor* col, Float alpha,TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
+        int erase(int text=ALL_TEXT,bool nextframe=false);
 
 
-    int render();
+        int locateRenderScene ( Float posx=0.0, Float posy=0.0, Float width=0.0, Float height=0.0, Float zoom = 1.0) ;
 
-    void clear();
-private:
-    FSWriter();
-    ~FSWriter();
+        int color(int text,Float red, Float green, Float blue, Float alpha, TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
+        int color(int text,FSColor* col, Float alpha,TypeColorTBox boxflags=TCTB_BOX, bool persistent=false);
 
-    struct WriterImpl;
-    WriterImpl* _impl;
+
+        int render();
+
+        void clear();
+    private:
+        FSWriter();
+        ~FSWriter();
+
+        struct WriterImpl;
+        FSPimpl<WriterImpl> _impl;
     
-    friend class FSScreen;
-};
+        friend class FSScreen;
+    };
 
-#ifdef GLOBAL_SINGLETON_REFERENCES
-extern FSWriter& Write;
-#endif
+    #ifdef GLOBAL_SINGLETON_REFERENCES
+    extern FSWriter& Write;
+    #endif
+
+} // flatscene
 
 #endif

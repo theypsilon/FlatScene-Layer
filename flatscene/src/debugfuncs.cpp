@@ -1,5 +1,7 @@
 #include "debugfuncs.h"
 
+namespace flatscene {
+
 void countalpha(SDL_Surface* surface) {
     int numalpha = 0;
     int numsolid = 0;
@@ -275,3 +277,5 @@ void setpixel ( SDL_Surface* pSurface , int x , int y , Uint32 pixel) {
         SDL_UnlockSurface(pSurface);
 
 }
+
+} // flatscene

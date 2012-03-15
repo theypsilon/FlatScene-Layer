@@ -6,6 +6,8 @@
 #include "IScrollCamera.h"
 #include "FSTime.h"
 
+using namespace flatscene;
+
 class IFirstEngine :
 	public FSEngine
 {

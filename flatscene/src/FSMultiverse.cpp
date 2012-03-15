@@ -1,6 +1,8 @@
 #include "FSMultiverseImpl.h"
 #include "FSLibrary.h"
 
+namespace flatscene {
+
 FSMultiverse::FSMultiverse() : _impl(new MultiverseImpl) {
     _impl->working = false;
 }
@@ -112,3 +114,5 @@ UniverseCollection::iterator FSMultiverse::begin() {
 UniverseCollection::iterator FSMultiverse::end() {
     return (*_impl).unis.end();
 }
+
+} // flatscene

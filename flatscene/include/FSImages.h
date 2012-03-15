@@ -8,31 +8,35 @@
 #include <string>
 #include <map>
 
-typedef std::map<int,FSSpriteset*> SpritesetCollection;
-typedef std::map<FSSpriteset*,int> SpritesetCount;
+namespace flatscene {
 
-class FSImages : private FSNoncopyable, public FSSingleton<FSImages> {
-    friend class FSSingleton<FSImages>;
-public:
-    int add(const char* name,Uint8 mode=ONLY_TEXTURE);
-    int remove(Uint32 n);
-    FSSpriteset* get(Uint32 n);
-    int size();
-    int search(const char* name);
-    int search(FSSpriteset* object);
-    void clear();
-    int getCount(Uint32 n);
-private:
-    FSImages();
-    ~FSImages();
+    typedef std::map<int,FSSpriteset*> SpritesetCollection;
+    typedef std::map<FSSpriteset*,int> SpritesetCount;
 
-    struct ImagesImpl;
-    ImagesImpl* _impl;
-    friend class FSScreen;
-};
+    class FSImages : private FSNoncopyable, public FSSingleton<FSImages> {
+        friend class FSSingleton<FSImages>;
+    public:
+        int add(const char* name,Uint8 mode=ONLY_TEXTURE);
+        int remove(Uint32 n);
+        FSSpriteset* get(Uint32 n);
+        int size();
+        int search(const char* name);
+        int search(FSSpriteset* object);
+        void clear();
+        int getCount(Uint32 n);
+    private:
+        FSImages();
+        ~FSImages();
 
-#ifdef GLOBAL_SINGLETON_REFERENCES
-extern FSImages& Img;
-#endif
+        struct ImagesImpl;
+        ImagesImpl* _impl;
+        friend class FSScreen;
+    };
+
+    #ifdef GLOBAL_SINGLETON_REFERENCES
+    extern FSImages& Img;
+    #endif
+
+} // flatscene
 
 #endif

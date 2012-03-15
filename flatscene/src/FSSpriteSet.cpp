@@ -1,21 +1,26 @@
 #include "FSSpriteSetImpl.h"
 
-FSSpriteset::FSSpriteset(std::string c, Uint8 mode) 
-: _impl (new SpritesetImpl(c,mode)) {}
-FSSpriteset::~FSSpriteset() {}
+namespace flatscene {
 
-Uint8 FSSpriteset::getMode() const {
-    return _impl->getMode();
-}
+    FSSpriteset::FSSpriteset(std::string c, Uint8 mode) 
+        : _impl (new SpritesetImpl(c,mode)) {}
 
-const std::string& FSSpriteset::getName() const {
-    return _impl->getName();
-}
+    FSSpriteset::~FSSpriteset() {}
 
-const FSSprite* FSSpriteset::get ( unsigned int n ) const {
-    return _impl->get(n);
-}
+    Uint8 FSSpriteset::getMode() const {
+        return _impl->getMode();
+    }
 
-int FSSpriteset::size() const {
-    return _impl->size();
-}
+    const std::string& FSSpriteset::getName() const {
+        return _impl->getName();
+    }
+
+    const FSSprite* FSSpriteset::get ( unsigned int n ) const {
+        return _impl->get(n);
+    }
+
+    int FSSpriteset::size() const {
+        return _impl->size();
+    }
+
+} // flatscene

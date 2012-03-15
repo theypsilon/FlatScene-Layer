@@ -1,5 +1,7 @@
 #include "FSException.h"
 
+namespace flatscene {
+
 struct FSException::ExceptionImpl {
     std::string description;
 
@@ -25,3 +27,5 @@ FSException::~FSException() throw() {}
 const char* FSException::what() const throw() {
     return _impl->what();
 }
+
+} // flatscene

@@ -1,7 +1,3 @@
-// Library.cpp: implementation of the CLibrary class.
-//
-//////////////////////////////////////////////////////////////////////
-
 #ifdef WIN32
 #ifdef VISUAL_LEAKS
     #include "vld.h"
@@ -20,6 +16,8 @@
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onInit(); _impl->setActualEngine(eaux); }
 #define KILLENGINE(A); EXITENGINE(A); if (A) { delete A; A=NULL; }
 
+namespace flatscene {
+
 void FSLibrary::LibraryImpl::sort(std::vector<std::unique_ptr<FSEngine>>& v) {
     typedef const std::unique_ptr<FSEngine>& pEngine;
     std::sort(v.begin(),v.end(),[](pEngine p1, pEngine p2) {
@@ -35,7 +33,7 @@ const FSEngine *const FSLibrary::getActualEngine() {
     return _impl->actualEngine;
 }
 
-FSLibrary::FSLibrary(): _impl(new LibraryImpl) {
+FSLibrary::FSLibrary() {
 #ifdef IN_FILE_ERROR
     (*_impl).errorsInSession = false;
 #endif
@@ -109,7 +107,7 @@ int FSLibrary::startLibrary( int width , int height , int bpp , bool fullscreen,
 
 void FSLibrary::LibraryImpl::onExit() {
 
-    LibraryImpl* _impl = FSLibrary::I()._impl;
+    auto& _impl = FSLibrary::I()._impl;
     (*_impl).engineIn.clear();
 
     _impl->setActualEngine(nullptr);
@@ -125,9 +123,7 @@ void FSLibrary::LibraryImpl::onExit() {
 #endif
 }
 
-FSLibrary::~FSLibrary() {
-    delete _impl;
-}
+FSLibrary::~FSLibrary() {}
 
 std::vector<std::unique_ptr<FSEngine>> FSLibrary::processEngine(std::unique_ptr<FSEngine>&& eng) {
     std::vector<std::unique_ptr<FSEngine>> veng;
@@ -456,3 +452,5 @@ bool FSLibrary::inDebug() {
 #ifdef GLOBAL_SINGLETON_REFERENCES
 FSLibrary& FSLib = FSLibrary::I();
 #endif
+
+} // flatscene

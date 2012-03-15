@@ -6,7 +6,7 @@
 #include <string>
 #include <limits>
 
-namespace fs { namespace intern { namespace xml {
+namespace flatscene { namespace intern { namespace xml {
 
     bool checkAttr(const TiXmlElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
         if (!name || strcmp(name,"")==0) throw FSException("no attribute name supplied",__LINE__); //FIXME static_assert?

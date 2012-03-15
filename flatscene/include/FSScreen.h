@@ -9,74 +9,77 @@
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
 
-#define RENDER_TEXTURE_STANDARD 0x00000001
+namespace flatscene {
 
-enum TypeRendeProjection {
-    TRP_ORTHO,
-    TRP_PERSPECTIVE
-};
+    #define RENDER_TEXTURE_STANDARD 0x00000001
 
-class FSScreen : private FSNoncopyable, public FSSingleton<FSScreen> {
-    friend class FSSingleton<FSScreen>;
-public:
-    //constructor
-    int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
-    int start ( int width , int height , int bpp , Float scalex, Float scaley,bool fullscreen, bool doublebuff=true ) ;
+    enum TypeRendeProjection {
+        TRP_ORTHO,
+        TRP_PERSPECTIVE
+    };
 
-    int render();
+    class FSScreen : private FSNoncopyable, public FSSingleton<FSScreen> {
+        friend class FSSingleton<FSScreen>;
+    public:
+        //constructor
+        int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
+        int start ( int width , int height , int bpp , Float scalex, Float scaley,bool fullscreen, bool doublebuff=true ) ;
 
-    int clear ( ) ;
+        int render();
 
-    int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0);
-    int translate(Float x, Float y, Float z);
-    int scale(Float x, Float y, Float z);
-    int color(Float red, Float green, Float blue, Float alpha);
-    int color(FSColor* col,Float alpha=1.0);
-    int projectionMode(TypeRendeProjection trp, Float zMax=400.0);
+        int clear ( ) ;
 
-    int pushMatrix();
-    int popMatrix();
+        int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0);
+        int translate(Float x, Float y, Float z);
+        int scale(Float x, Float y, Float z);
+        int color(Float red, Float green, Float blue, Float alpha);
+        int color(FSColor* col,Float alpha=1.0);
+        int projectionMode(TypeRendeProjection trp, Float zMax=400.0);
 
-    int locateRenderScene ( Float posx=0.0, Float posy=0.0, Float width=0.0, Float height=0.0, Float zoom = 1.0) ;
+        int pushMatrix();
+        int popMatrix();
 
-    Uint8 getBpp();
+        int locateRenderScene ( Float posx=0.0, Float posy=0.0, Float width=0.0, Float height=0.0, Float zoom = 1.0) ;
 
-    int changeScreen( int width , int height , int bpp ,  Float scalex=1.0, Float scaley=1.0, bool fullscreen = false) ;
+        Uint8 getBpp();
 
-    int ToggleFullscreen ();
+        int changeScreen( int width , int height , int bpp ,  Float scalex=1.0, Float scaley=1.0, bool fullscreen = false) ;
 
-    int setDoublebuffer (bool doublebuff);
-    //destructor
-    int quit();
+        int ToggleFullscreen ();
 
-    int getWidth();
+        int setDoublebuffer (bool doublebuff);
+        //destructor
+        int quit();
 
-    int getHeight();
+        int getWidth();
 
-    bool isFullscreen();
+        int getHeight();
 
-    Float getR(),getG(),getB(),getA();
+        bool isFullscreen();
 
-private:
-    struct ScreenImpl;
-    ScreenImpl* _impl;
+        Float getR(),getG(),getB(),getA();
 
-    FSScreen();
-    virtual ~FSScreen();
+    private:
+        struct ScreenImpl;
+        ScreenImpl* _impl;
 
-    friend class FSCamera;
+        FSScreen();
+        virtual ~FSScreen();
 
-    friend class FSSpriteset;
-    friend class FSSprite;
-    friend class FSCanvas;
+        friend class FSCamera;
 
-    friend class FSImages;
-    friend class FSWriter;
-    friend class FSTextBox;
-};
-#ifdef GLOBAL_SINGLETON_REFERENCES
-extern FSScreen& FSDraw;
-#endif
+        friend class FSSpriteset;
+        friend class FSSprite;
+        friend class FSCanvas;
 
+        friend class FSImages;
+        friend class FSWriter;
+        friend class FSTextBox;
+    };
+    #ifdef GLOBAL_SINGLETON_REFERENCES
+    extern FSScreen& FSDraw;
+    #endif
+
+} // flatscene
 
 #endif 

@@ -1,4 +1,7 @@
 #include "FSColor.h"
+
+namespace flatscene {
+
 //standard constructor
 FSColor::FSColor(Uint8 r,Uint8 g,Uint8 b)
 {
@@ -553,3 +556,4 @@ bool operator!=(FSColor& Color1,FSColor& Color2)
     return(!(Color1==Color2));
 }
 
+} // flatscene

@@ -3,41 +3,45 @@
 
 #include "FSPoint.h"
 
-template <class T>
-struct FS3DPoint : public FS2DPoint<T> {
-    using FS2DPoint<T>::x;
-    using FS2DPoint<T>::y;
+namespace flatscene {
 
-    T z;
+    template <class T>
+    struct FS3DPoint : public FS2DPoint<T> {
+        using FS2DPoint<T>::x;
+        using FS2DPoint<T>::y;
 
-    FS3DPoint(T x=0,T y=0,T z=0)
-    : FS2DPoint<T>::FS2DPoint(x,y), z(z) {}
+        T z;
 
-    template <class U>
-    FS3DPoint(const U& coord) {
-        x = coord.x;
-        y = coord.y;
-        z = coord.z;
-    }
+        FS3DPoint(T x=0,T y=0,T z=0)
+        : FS2DPoint<T>::FS2DPoint(x,y), z(z) {}
 
-    inline T getZ() const { return z; }
-    void setZ(T nz) { z = nz; }
+        template <class U>
+        FS3DPoint(const U& coord) {
+            x = coord.x;
+            y = coord.y;
+            z = coord.z;
+        }
 
-    FS3DPoint<T>& set(T nx,T ny,T nz) {
-        x = nx;
-        y = ny;
-        z = nz;
-        return *this;
-    }
+        inline T getZ() const { return z; }
+        void setZ(T nz) { z = nz; }
+
+        FS3DPoint<T>& set(T nx,T ny,T nz) {
+            x = nx;
+            y = ny;
+            z = nz;
+            return *this;
+        }
     
-    template <class U>
-    T distance ( const U& coord ) const {
-        T d_x = coord.x > x ?   coord.x - x :   x - coord.x;
-        T d_y = coord.y > y ?   coord.y - y :   y - coord.y;
-        T d_z = coord.z > z ?   coord.z - z :   z - coord.z;
+        template <class U>
+        T distance ( const U& coord ) const {
+            T d_x = coord.x > x ?   coord.x - x :   x - coord.x;
+            T d_y = coord.y > y ?   coord.y - y :   y - coord.y;
+            T d_z = coord.z > z ?   coord.z - z :   z - coord.z;
 
-        return (d_x*d_x + d_z*d_z + d_y*d_y);
-    }
-};
+            return (d_x*d_x + d_z*d_z + d_y*d_y);
+        }
+    };
+
+} // flatscene
 
 #endif

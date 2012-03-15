@@ -8,6 +8,8 @@ IFirstEngine::IFirstEngine() {
 	move[i_left] = false;
 	move[i_right] = false;
 
+    Write.loadFont("resources/tahoma");
+
 }
 
 IFirstEngine::~IFirstEngine()	{}
@@ -30,6 +32,8 @@ void IFirstEngine::onEvent(SDL_Event& e) {
 
 	if ( e.key.keysym.sym == SDLK_RIGHT )
 		move[i_right] = turn;
+
+     Write.lineOnce(0,10,10,"This is text!");
 
 }
 

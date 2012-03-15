@@ -1,31 +1,27 @@
-#include "FSSprite.h"
+#include "FSSpriteImpl.h"
 #include "FSScreen.h"
 #include "FSException.h"
 #include <limits>
 #include <sstream>
 
-FSSprite::FSSprite ( SCanvas pSurface, FSPoint zerocpSource) 
-: FSCanvas(pSurface), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource) {}
+namespace flatscene {
 
-FSSprite::FSSprite(FSSprite&& spt) : FSCanvas(std::move(spt)) {
-    areas = std::move(spt.areas);
-    name = std::move(spt.name);
-    cpoint = std::move(spt.cpoint);
-    opaque = spt.opaque;
-}
+FSSprite::FSSprite() {}
 
-FSSprite::~FSSprite ( ) {
+FSSprite::FSSprite ( FSCanvas&& pSurface, FSPoint zerocpSource) 
+    : FSCanvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
+    //, _impl(new SpriteImpl) 
+{}
 
-    if (m_pSurface.sdl_surf) {
-        SDL_FreeSurface(m_pSurface.sdl_surf);
-    }
+FSSprite::FSSprite(FSSprite&& spt) 
+    : FSCanvas(std::move(spt))
+    , areas(std::move(spt.areas))
+    , name(std::move(spt.name))
+    , cpoint(std::move(spt.cpoint))
+    , opaque(spt.opaque) 
+{}
 
-    if (m_pSurface.h != 0 || m_pSurface.w !=0)
-        glDeleteTextures( 1, &(m_pSurface.tex) );
-
-    clearSurface();
-    
-}
+FSSprite::~FSSprite() {}
 
 void FSSprite::put (FSPoint ptDst ,Uint8 flags) const {
     if (flags & 0x001) {
@@ -89,13 +85,13 @@ SpriteOpaque FSSprite::isOpaque() {
     if (opaque != SPRITE_OPAQUE_NOT_CHEQUED)
         return opaque;
 
-    if (m_pSurface.sdl_surf == NULL)
+    if (sdl_surf == NULL)
         return opaque;
 
     opaque = SPRITE_OPAQUE;
 
-    for (int x = 0; x < m_pSurface.sdl_surf->w && opaque == SPRITE_OPAQUE; x++ )
-        for (int y = 0; y < m_pSurface.sdl_surf->h && opaque == SPRITE_OPAQUE; y++ ) {
+    for (int x = 0; x < sdl_surf->w && opaque == SPRITE_OPAQUE; x++ )
+        for (int y = 0; y < sdl_surf->h && opaque == SPRITE_OPAQUE; y++ ) {
             Uint32 pixel = getPixel(x,y);
             if ((pixel & 0xFF000000) != 0xFF000000)
                 opaque = SPRITE_TRANSPARENT;
@@ -103,3 +99,5 @@ SpriteOpaque FSSprite::isOpaque() {
 
     return opaque;
 }
+
+} // flatscene

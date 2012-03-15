@@ -3,11 +3,15 @@
 
 #include "FSImages.h"
 
+namespace flatscene {
+
 struct FSImages::ImagesImpl {
     SpritesetCollection set;
     SpritesetCount count;
 
     std::stack<int> lastIndexAdded;
 };
+
+} // flatscene
 
 #endif

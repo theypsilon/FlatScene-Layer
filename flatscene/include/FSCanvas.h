@@ -18,58 +18,72 @@
 #include <functional>
 #include <map>
 
-typedef struct {
-    GLuint tex;
-    Uint32 w, h;                /* Read-only */
-    int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
-    Uint8 bpp;
-    SDL_Surface* sdl_surf; // NULL or not null, thats the question.
-}SCanvas;
+namespace flatscene {
 
-class FSCanvas {
-private:
-    SCanvas m_pSurface ;
+    typedef struct {
+        GLuint tex;
+        Uint32 w, h;                /* Read-only */
+        int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
+        Uint8 bpp;
+        SDL_Surface* sdl_surf; // NULL or not null, thats the question.
+    }SCanvas;
 
-    FSCanvas( SCanvas pSurface = SCanvas()) ;
-    FSCanvas( FSCanvas&& pSurface ) ;
-    virtual ~FSCanvas( ) ;
+    class FSCanvas {
+    private:
+        GLuint tex;
+        Uint32 w, h;                /* Read-only */
+        int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
+        Uint8 bpp;
+        SDL_Surface* sdl_surf; // NULL or not null, thats the question.
 
-    void clearSurface () ;
+        FSCanvas ( const FSCanvas& ); //undefined
 
-    friend class FSTextBox;
-    friend class FSSprite;
-    friend class FSSpriteset;
-    friend class FSWriter;
-    friend class FSImages;
-    friend class FSScreen;
+        FSCanvas() ;
+        FSCanvas( const SCanvas& canvas ) ;
+    
+    
 
-    static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
+        void clearSurface () ;
 
-    static inline Uint32 pow2 (Uint32 n);
+        friend class FSTextBox;
+        friend class FSSprite;
+        friend class FSSpriteset;
+        friend class FSWriter;
+        friend class FSImages;
+        friend class FSScreen;
 
-    mutable std::list<std::function<void(void)>> initCallbackList;
-    mutable std::list<std::function<void(void)>> endCallbackList;
+        static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
-public:
-    static SCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+        static inline Uint32 pow2 (Uint32 n);
 
-    const SCanvas& getCanvas() const;
+        mutable std::list<std::function<void(void)>> initCallbackList;
+        mutable std::list<std::function<void(void)>> endCallbackList;
 
-    // Funciona s�lo si hay SDL_Surface
-    Uint32 getPixel ( int x , int y ) const;
+    public:
+        ~FSCanvas( ) ;
 
-    int getWidth ( ) const;
-    int getHeight ( ) const;
+    public:
+        FSCanvas( FSCanvas&& pSurface ) ;
 
-    //render image
-    void put ( const FSPoint& ptDst , Uint8 flags=0) const;
-    void put ( const FSFloatPoint& ptDst , Uint8 flags=0) const;
+        static FSCanvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+        template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+        // Funciona s�lo si hay SDL_Surface
+        Uint32 getPixel ( int x , int y ) const;
 
-    int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
-    int translate(Float x, Float y, Float z) const;
-    int scale(Float x, Float y, Float z) const;
-    int color(Float red, Float green, Float blue, Float alpha) const;
-    int color(FSColor* col,Float alpha=1.0) const;
-};
+        int getWidth ( ) const;
+        int getHeight ( ) const;
+
+        //render image
+        void put ( const FSPoint& ptDst , Uint8 flags=0) const;
+        void put ( const FSFloatPoint& ptDst , Uint8 flags=0) const;
+
+        int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
+        int translate(Float x, Float y, Float z) const;
+        int scale(Float x, Float y, Float z) const;
+        int color(Float red, Float green, Float blue, Float alpha) const;
+        int color(FSColor* col,Float alpha=1.0) const;
+    };
+
+} // flatscene
 
 #endif
