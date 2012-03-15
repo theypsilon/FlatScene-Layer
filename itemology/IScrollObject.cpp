@@ -3,7 +3,7 @@
 int IScrollObject::instances = 0;
 
 IScrollObject::IScrollObject() 
-: placeInMA(NULL), FSActor("IScrollObject") {
+: placeInMA(NULL), Actor("IScrollObject") {
 
 	instances++;
 
@@ -31,31 +31,31 @@ std::string IScrollObject::getCreature() {
 
 	// TODO
 
-	return FSActor::getCreature();
+	return Actor::getCreature();
 
 	// CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }
 
-int IScrollObject::setUniverse(FSUniverse* m) {
+int IScrollObject::setUniverse(Universe* m) {
 
 	// TODO
 
-	return FSActor::setUniverse(m);
+	return Actor::setUniverse(m);
 
-	// CActor::setUniverse(m) realiza la asignación : inUniverse=m;
+	// CActor::setUniverse(m) realiza la asignaciï¿½n : inUniverse=m;
 }
 
-const FSSprite* IScrollObject::getSprite() {
+const Sprite* IScrollObject::getSprite() {
 
-	auto spt = FSActor::getSprite();
+	auto spt = Actor::getSprite();
 
 	// TODO
 
 	return spt;
 }
 
-FSActor* IScrollObject::clone() {
-	FSActor* act;
+Actor* IScrollObject::clone() {
+	Actor* act;
 
 	// TODO
 

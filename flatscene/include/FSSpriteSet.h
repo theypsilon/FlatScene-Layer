@@ -6,10 +6,10 @@
 
 namespace flatscene {
 
-    class FSSpriteset {
+    class Spriteset {
     public:
 
-        const FSSprite* get ( unsigned int n ) const;
+        const Sprite* get ( unsigned int n ) const;
 
         int size () const;
 
@@ -21,11 +21,11 @@ namespace flatscene {
         struct SpritesetImpl;
         const std::unique_ptr<SpritesetImpl> _impl;
 
-        FSSpriteset(std::string c = "",Uint8 mode=ONLY_TEXTURE);
-        virtual ~FSSpriteset();
+        Spriteset(std::string c = "",Uint8 mode=ONLY_TEXTURE);
+        virtual ~Spriteset();
 
-        friend class FSScreen;
-        friend class FSImages;
+        friend class Screen;
+        friend class Images;
     };
 
 } // flatscene

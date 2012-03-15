@@ -6,7 +6,7 @@
 
 namespace flatscene {
 
-    struct FSSprite::SpriteImpl {};
+    struct Sprite::SpriteImpl {};
 
 } // flatscene
 

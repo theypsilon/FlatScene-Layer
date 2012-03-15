@@ -6,14 +6,14 @@
 
 namespace flatscene {
 
-    class FSColor {
+    class Color {
     private:
-        SDL_Color m_Color;
+        SDL_Color m_color;
     public:
 
-        FSColor(Uint8 r=0,Uint8 g=0,Uint8 b=0);
-        FSColor(const FSColor& Color);
-        virtual ~FSColor();
+        Color(Uint8 r=0,Uint8 g=0,Uint8 b=0);
+        Color(const Color& Color);
+        virtual ~Color();
 
         Uint8 getR() const;
         Uint8 getG() const;
@@ -30,57 +30,57 @@ namespace flatscene {
         explicit operator SDL_Color();
         explicit operator SDL_Color*();
 
-        FSColor& operator=(FSColor& Color);
-        FSColor& operator+=(FSColor& Color);
-        FSColor& operator-=(FSColor& Color);
-        FSColor& operator*=(FSColor& Color);
-        FSColor& operator*=(int Multiplier);
-        FSColor& operator/=(int Divisor);
-        FSColor& operator|=(FSColor& Color);
-        FSColor& operator&=(FSColor& Color);
-        FSColor& operator^=(FSColor& Color);
+        Color& operator=(Color& Color);
+        Color& operator+=(Color& Color);
+        Color& operator-=(Color& Color);
+        Color& operator*=(Color& Color);
+        Color& operator*=(int Multiplier);
+        Color& operator/=(int Divisor);
+        Color& operator|=(Color& Color);
+        Color& operator&=(Color& Color);
+        Color& operator^=(Color& Color);
 
-        static FSColor Red(Uint8 shade=255);
-        static FSColor Green(Uint8 shade=255);
-        static FSColor Blue(Uint8 shade=255);
+        static Color Red(Uint8 shade=255);
+        static Color Green(Uint8 shade=255);
+        static Color Blue(Uint8 shade=255);
 
-        static FSColor Yellow(Uint8 shade=255);
-        static FSColor Cyan(Uint8 shade=255);
-        static FSColor Magenta(Uint8 shade=255);
+        static Color Yellow(Uint8 shade=255);
+        static Color Cyan(Uint8 shade=255);
+        static Color Magenta(Uint8 shade=255);
 
-        static FSColor DarkRed(Uint8 shade=128);
-        static FSColor DarkGreen(Uint8 shade=128);
-        static FSColor DarkBlue(Uint8 shade=128);
-        static FSColor DarkYellow(Uint8 shade=128);
-        static FSColor DarkCyan(Uint8 shade=128);
-        static FSColor DarkMagenta(Uint8 shade=128);
+        static Color DarkRed(Uint8 shade=128);
+        static Color DarkGreen(Uint8 shade=128);
+        static Color DarkBlue(Uint8 shade=128);
+        static Color DarkYellow(Uint8 shade=128);
+        static Color DarkCyan(Uint8 shade=128);
+        static Color DarkMagenta(Uint8 shade=128);
 
-        static FSColor LightRed(Uint8 gray=128,Uint8 shade=255);
-        static FSColor LightGreen(Uint8 gray=128,Uint8 shade=255);
-        static FSColor LightBlue(Uint8 gray=128,Uint8 shade=255);
-        static FSColor LightYellow(Uint8 gray=128,Uint8 shade=255);
-        static FSColor LightCyan(Uint8 gray=128,Uint8 shade=255);
-        static FSColor LightMagenta(Uint8 gray=128,Uint8 shade=255);
+        static Color LightRed(Uint8 gray=128,Uint8 shade=255);
+        static Color LightGreen(Uint8 gray=128,Uint8 shade=255);
+        static Color LightBlue(Uint8 gray=128,Uint8 shade=255);
+        static Color LightYellow(Uint8 gray=128,Uint8 shade=255);
+        static Color LightCyan(Uint8 gray=128,Uint8 shade=255);
+        static Color LightMagenta(Uint8 gray=128,Uint8 shade=255);
 
-        static FSColor White(Uint8 shade=255);
-        static FSColor LightGray(Uint8 shade=192);
-        static FSColor DarkGray(Uint8 shade=128);
-        static FSColor Black(Uint8 shade=0);
+        static Color White(Uint8 shade=255);
+        static Color LightGray(Uint8 shade=192);
+        static Color DarkGray(Uint8 shade=128);
+        static Color Black(Uint8 shade=0);
     };
 
-    FSColor operator+(FSColor& Color1,FSColor& Color2);
-    FSColor operator-(FSColor& Color1,FSColor& Color2);
-    FSColor operator*(FSColor& Color1,FSColor& Color2);
-    FSColor operator*(FSColor& Color,int Multiplier);
-    FSColor operator/(FSColor& Color,int Divisor);
+    Color operator+(Color& Color1,Color& Color2);
+    Color operator-(Color& Color1,Color& Color2);
+    Color operator*(Color& Color1,Color& Color2);
+    Color operator*(Color& Color,int Multiplier);
+    Color operator/(Color& Color,int Divisor);
 
-    FSColor operator|(FSColor& Color1,FSColor& Color2);
-    FSColor operator&(FSColor& Color1,FSColor& Color2);
-    FSColor operator^(FSColor& Color1,FSColor& Color2);
-    FSColor operator~(FSColor& Color);
+    Color operator|(Color& Color1,Color& Color2);
+    Color operator&(Color& Color1,Color& Color2);
+    Color operator^(Color& Color1,Color& Color2);
+    Color operator~(Color& Color);
 
-    bool operator==(FSColor& Color1,FSColor& Color2);
-    bool operator!=(FSColor& Color1,FSColor& Color2);
+    bool operator==(Color& Color1,Color& Color2);
+    bool operator!=(Color& Color1,Color& Color2);
 
 } // flatscene
 

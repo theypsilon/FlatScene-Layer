@@ -5,11 +5,11 @@
 
 namespace flatscene {
 
-struct FSLibrary::LibraryImpl {
-    FSEngine* actualEngine;
+struct Library::LibraryImpl {
+    Engine* actualEngine;
 
     // Lista de motores a�adidas por el usuario
-    std::vector<std::unique_ptr<FSEngine>> engineIn;
+    std::vector<std::unique_ptr<Engine>> engineIn;
 
 #ifdef IN_FILE_ERROR
     bool errorsInSession;
@@ -24,13 +24,13 @@ struct FSLibrary::LibraryImpl {
     int debugticks;
 #endif
 
-    void setActualEngine(FSEngine* newEngineActive);
+    void setActualEngine(Engine* newEngineActive);
 
     std::string toStringErrorGL(GLenum e);
 
     static void onExit();
 
-    void sort(std::vector<std::unique_ptr<FSEngine>>& v);
+    void sort(std::vector<std::unique_ptr<Engine>>& v);
 };
 
 } // flatscene

@@ -17,9 +17,9 @@ namespace flatscene {
 
     using namespace intern::xml;
 
-    struct FSSpriteset::SpritesetImpl {
+    struct Spriteset::SpritesetImpl {
 
-        typedef std::vector<FSSprite> SpriteCollection;
+        typedef std::vector<Sprite> SpriteCollection;
 
         unsigned int globalAuxiliar;
 
@@ -48,11 +48,11 @@ namespace flatscene {
             return false;
         }
 
-        void add ( FSSprite pspt ) {
+        void add ( Sprite pspt ) {
             //m_vecSprites.push_back ( pspt ) ;
         }
 
-        const FSSprite* get ( unsigned int n ) const {
+        const Sprite* get ( unsigned int n ) const {
             if ( n < m_vecSprites.size()) {
                 return &m_vecSprites.at(n);
             } else {
@@ -70,7 +70,7 @@ namespace flatscene {
 
             auto chipset = IMG_Load(chipset_str.c_str());
             if (!chipset)
-                throw FSException("chipset couldn't load");
+                throw Exception("chipset couldn't load");
 
             auto grd = loadFileGRD(grd_str,chipset);
 
@@ -102,7 +102,7 @@ namespace flatscene {
             }
 
             if (!isValidBitmapExtension(tipefile)) 
-                throw FSException("graphic bitmap format not valid");
+                throw Exception("graphic bitmap format not valid");
 
             grd = namefile + ".grd";
             bitmap = namefile + tipefile;
@@ -110,9 +110,9 @@ namespace flatscene {
         }
 
         struct DataGRD {
-            typedef std::vector<FSRectangle> Area;
-            typedef FS2DPoint<unsigned int> CPoint;
-            typedef FS2DPoint<unsigned int> DimPoint;
+            typedef std::vector<Rectangle> Area;
+            typedef Point2D<unsigned int> CPoint;
+            typedef Point2D<unsigned int> DimPoint;
             struct Sprite {
                 std::string name;
                 DimPoint dim;
@@ -136,7 +136,7 @@ namespace flatscene {
             TiXmlDocument doc(grd_str.c_str());
             if (!doc.LoadFile()) {
                 if (!chipset) 
-                    throw FSException("grd file invalid and bitmap invalid",__LINE__);
+                    throw Exception("grd file invalid and bitmap invalid",__LINE__);
 
                 return fillGRDFromChipset(*chipset);
             }
@@ -148,7 +148,7 @@ namespace flatscene {
 
             TiXmlHandle input(doc.FirstChild()); 
             if (!input.ToElement()) 
-                throw FSException("no elements in grd file",__LINE__);
+                throw Exception("no elements in grd file",__LINE__);
 
             auto& head = *input.Element();
             if (isDefinedInOtherFile(head))
@@ -202,7 +202,7 @@ namespace flatscene {
 
         DataGRD getFromOtherFile(const TiXmlElement& head) {
             if (++globalAuxiliar > 100) 
-                throw FSException("infinite cycle between grd files",__LINE__);
+                throw Exception("infinite cycle between grd files",__LINE__);
             ensureAttr(head,"defined-in","",false);
             std::string grd_str(head.Attribute("defined-in"));
             return loadFileGRD(grd_str);
@@ -250,7 +250,7 @@ namespace flatscene {
                     spt.cp.x += numFromAttr<decltype(spt.cp.x)>(*el,"x",0, spt.dim.x - grd.globalcp.x );
                     spt.cp.y += numFromAttr<decltype(spt.cp.y)>(*el,"y",0, spt.dim.x - grd.globalcp.y );
                 } else if (spt.cp.x > spt.dim.x || spt.cp.y > spt.dim.y)
-                    throw FSException("the global cp is not valid due to image sizes",__LINE__);
+                    throw Exception("the global cp is not valid due to image sizes",__LINE__);
                 
                 fillAreasFromElement(img.FirstChildElement("area"), spt.areas, spt.cp, grd.sp_scale, spt.a_isRel);
                 grd.images.push_back(std::move(spt));
@@ -260,13 +260,13 @@ namespace flatscene {
         void ensureConsistentValues(const DataGRD& grd) {
             if (grd.simple) return;
             if (grd.num_img != grd.images.size())
-                throw FSException("image count doesn't match in grd file",__LINE__);
+                throw Exception("image count doesn't match in grd file",__LINE__);
             std::for_each(grd.images.begin(),grd.images.end(),[&](decltype(grd.images.at(0))& img) {
                 std::for_each(img.areas.begin(),img.areas.end(),[&](decltype(*img.areas.end())& ar) {
                     std::for_each(ar.second.begin(),ar.second.end(),[&](decltype(ar.second.at(0))& rc) {
                         if (rc.x < 0 || rc.y < 0 || 
                             rc.w > (decltype(rc.w))img.dim.x || rc.h > (decltype(rc.h))img.dim.y)
-                                throw FSException("areas not defined within the sprite domain",__LINE__);
+                                throw Exception("areas not defined within the sprite domain",__LINE__);
                     });
                 });
             });
@@ -275,7 +275,7 @@ namespace flatscene {
         void loadSprites(DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
             unsigned int columns = chipset.w / grd.cellwidth;
             if (columns <= 0 || chipset.w % grd.cellwidth != 0)
-                throw FSException("the grd doesn't fit with the chipset",__LINE__);
+                throw Exception("the grd doesn't fit with the chipset",__LINE__);
 
             if (grd.simple) {
                 DataGRD::Sprite spt;
@@ -301,16 +301,16 @@ namespace flatscene {
                 blitcopy(chipset,&src,surf,nullptr);
 
                 if (grd.sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
-                    if (auto temp = FSCanvas::scaleSurface(surf,(int)grd.sp_scale)) {
+                    if (auto temp = Canvas::scaleSurface(surf,(int)grd.sp_scale)) {
                         SDL_FreeSurface(surf);
                         surf=temp;
                     }
                     SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);        // Reasignamos los formatos.
                 }
 
-                FSSprite&& spt = FSCanvas::createCanvas<FSSprite>(surf,mode);
+                Sprite&& spt = Canvas::createCanvas<Sprite>(surf,mode);
 
-                //FSSprite spt(FSCanvas::toSCanvas(surf,mode),img.cp);
+                //Sprite spt(Canvas::toSCanvas(surf,mode),img.cp);
                 spt.areas = std::move(img.areas);
                 spt.name = std::move(img.name);
 
@@ -321,7 +321,7 @@ namespace flatscene {
                     src.x = 0;
                     src.y += grd.cellheight;
                     if (src.y + grd.cellheight > chipset.h)
-                        throw FSException("the grd doesn't fit with the chipset",__LINE__);
+                        throw Exception("the grd doesn't fit with the chipset",__LINE__);
                 }
             });
         }

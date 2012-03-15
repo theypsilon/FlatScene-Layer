@@ -13,12 +13,12 @@
 
 namespace flatscene {
 
-    class FSCamera {
+    class Camera {
     protected:
         int x,y;
-        FSActor* target;
-        FSUniverse* uni;
-        FSRectangle* area;
+        Actor* target;
+        Universe* uni;
+        Rectangle* area;
 
         bool rendering;
 
@@ -27,32 +27,32 @@ namespace flatscene {
 
     public:
     
-        FSCamera(FSActor* target,FSRectangle* area);
-        virtual ~FSCamera();
+        Camera(Actor* target,Rectangle* area);
+        virtual ~Camera();
         virtual int loadUniverse();
-        virtual FSUniverse* getUniverse();
+        virtual Universe* getUniverse();
         virtual int unloadUniverse();
         virtual int resyncUniverse();
         virtual bool isOpened();
 
         int& CX();
         int& CY();
-        FSActor* Target();
-        virtual int setTarget(FSActor* newTarget);
-        FSRectangle* getArea();
+        Actor* Target();
+        virtual int setTarget(Actor* newTarget);
+        Rectangle* getArea();
 
         virtual int refresh();
         int render();
-        virtual int reubicate(FSRectangle* nArea);
+        virtual int reubicate(Rectangle* nArea);
 
         int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0);
         int translate(Float x, Float y, Float z);
         int scale(Float x, Float y, Float z);
         int color(Float red, Float green, Float blue, Float alpha);
-        int color(FSColor* col,Float alpha=1.0);
+        int color(Color* col,Float alpha=1.0);
     
         int locateRenderScene ( Float posx=0, Float posy=0, Float width=0, Float height=0, Float zoom = 1.0);
-        int locateRenderScene ( FSRectangle* areaSc, Float zoom = 1.0);
+        int locateRenderScene ( Rectangle* areaSc, Float zoom = 1.0);
 
         #ifdef MENSAJES_MSGIDS
         int SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);

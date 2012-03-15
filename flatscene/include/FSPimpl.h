@@ -6,16 +6,16 @@
 namespace flatscene {
 
     template <class T>
-    class FSPimpl {
+    class Pimpl {
     private:
         std::unique_ptr<T> m;
     public:
-        FSPimpl() : m(new T) {}
+        Pimpl() : m(new T) {}
         /*
-        template<typename ...Args> FSPimpl(Args&&... args)
+        template<typename ...Args> Pimpl(Args&&... args)
                 : m(new T(std::forward(args)...)) {}
                 */
-        ~FSPimpl() {}
+        ~Pimpl() {}
 
         T* operator->() {
             return m.get();

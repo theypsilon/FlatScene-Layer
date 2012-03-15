@@ -4,12 +4,12 @@
 
 namespace flatscene {
 
-FSUniverse::FSUniverse(std::string name) 
+Universe::Universe(std::string name) 
 : name(name) , loaded(false), numCameras(0), slot(255) {}
 
-FSUniverse::~FSUniverse() {
+Universe::~Universe() {
     ActorCollection::iterator it ;
-    FSActor* a ;
+    Actor* a ;
     while ( !actor.empty ( ) )
     {
         it = actor.begin ( ) ;
@@ -19,41 +19,41 @@ FSUniverse::~FSUniverse() {
     }
 }
 
-void FSUniverse::load() {
+void Universe::load() {
     loaded=true;
 }
 
-void FSUniverse::unload() {
+void Universe::unload() {
     loaded=false;
 }
 
-std::string& FSUniverse::getName() {
+std::string& Universe::getName() {
     return name;
 }
 
-int FSUniverse::incActor(FSActor* act) {
+int Universe::incActor(Actor* act) {
 
     if (!act) {
-        FSLibrary::I().Error("Puntero a CActor nulo");
+        Library::I().Error("Puntero a CActor nulo");
         return FRACASO;
     }
 
-    FSUniverse* u = act->getUniverse();
+    Universe* u = act->getUniverse();
 
     if (u) 
         for (ActorCollection::iterator it = u->actorBegin(), jt = u->actorEnd();it!=jt;++it)
             if (act == *it) {
-                FSLibrary::I().Error("Actor actualmente incluido en otro Universe");
+                Library::I().Error("Actor actualmente incluido en otro Universe");
                 return FRACASO;
             }
 
     return EXITO;
 }
 
-int FSUniverse::decActor(FSActor* act) {
+int Universe::decActor(Actor* act) {
 
     if (!act) {
-        FSLibrary::I().Error("Puntero a CActor nulo");
+        Library::I().Error("Puntero a CActor nulo");
         return FRACASO;
     }
 
@@ -64,23 +64,23 @@ int FSUniverse::decActor(FSActor* act) {
             return EXITO;
         }
 
-    FSLibrary::I().Error("Actor actualmente no incluido en este Universe");
+    Library::I().Error("Actor actualmente no incluido en este Universe");
     return FRACASO;
 }
 
-ActorCollection::iterator FSUniverse::actorBegin() {
+ActorCollection::iterator Universe::actorBegin() {
     return actor.begin();
 }
 
-ActorCollection::iterator FSUniverse::actorEnd() {
+ActorCollection::iterator Universe::actorEnd() {
     return actor.end();
 }
 
-bool FSUniverse::isLoaded() {
+bool Universe::isLoaded() {
     return loaded;
 }
 
-int FSUniverse::changeUniverse(std::string newName,Uint8 slot) {
+int Universe::changeUniverse(std::string newName,Uint8 slot) {
     if (!isLoaded()) {
         name=newName;
         this->slot = slot;
@@ -89,30 +89,30 @@ int FSUniverse::changeUniverse(std::string newName,Uint8 slot) {
         return -1;
 }
 
-void FSUniverse::incCameras() {
+void Universe::incCameras() {
     numCameras++;
 }
 
-void FSUniverse::decCameras() {
+void Universe::decCameras() {
     numCameras--;
     if (numCameras==0)
         if (isLoaded())
             unload();
 }
 
-Uint32 FSUniverse::numActors() {
+Uint32 Universe::numActors() {
     return actor.size();
 }
 
-Uint8 FSUniverse::camaras() {
+Uint8 Universe::camaras() {
     return numCameras;
 }
 
-bool FSUniverse::operator ==(FSUniverse &uni) {
+bool Universe::operator ==(Universe &uni) {
     return (this->getName()==uni.getName());
 }
 
-bool FSUniverse::equal(FSUniverse *uni) {
+bool Universe::equal(Universe *uni) {
     return (this->getName()==uni->getName());
 }
 

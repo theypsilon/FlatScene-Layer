@@ -4,40 +4,40 @@
 
 namespace flatscene {
 
-FSActor::FSActor(const char* creature) 
+Actor::Actor(const char* creature) 
 : file(0), graph(0), flags(0), inUniverse(NULL), creature(creature) {}
-FSActor::~FSActor() {}
+Actor::~Actor() {}
 
-int FSActor::move() {
+int Actor::move() {
     return EXITO;
 }
 
-FSUniverse* FSActor::getUniverse() {
+Universe* Actor::getUniverse() {
     return inUniverse;
 }
-std::string FSActor::getCreature() {
+std::string Actor::getCreature() {
     return creature;
 }
 
-int FSActor::setUniverse(FSUniverse* m) {
+int Actor::setUniverse(Universe* m) {
     inUniverse=m;
 
     return EXITO;
 }
 
-int FSActor::setSprite(int file,int graph) {
+int Actor::setSprite(int file,int graph) {
     this->file = file;
     this->graph = graph;
 
     return EXITO;
 }
 
-const FSSprite* FSActor::getSprite() {
-    return FSImages::I().get(file)->get(graph);
+const Sprite* Actor::getSprite() {
+    return Images::I().get(file)->get(graph);
 }
 
-FSActor* FSActor::clone() {
-    FSLibrary::I().Error("CActor no implementa un metodo de clonaci�n por defecto.");
+Actor* Actor::clone() {
+    Library::I().Error("CActor no implementa un metodo de clonaci�n por defecto.");
     return NULL;
 }
 

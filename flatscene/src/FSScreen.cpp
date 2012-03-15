@@ -4,7 +4,7 @@
 
 namespace flatscene {
 
-FSScreen::FSScreen() : _impl(new ScreenImpl) {
+Screen::Screen() : _impl(new ScreenImpl) {
     _impl->m_SDL_Surface=NULL;
 
     _impl->m_FullScreen=false;
@@ -24,20 +24,20 @@ FSScreen::FSScreen() : _impl(new ScreenImpl) {
     _impl->blue =1.0f;
 }
 
-FSScreen::~FSScreen() {
+Screen::~Screen() {
     delete _impl;
 }
 
-int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
+int Screen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
 { 
 
     if (_impl->m_SDL_Surface) {
-        FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n");
+        Library::I().Error("Video ya inicializado, orden imposible 'start'\n");
         return FRACASO;
     }
 
     if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-        FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+        Library::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
         return FRACASO;
     }
 #ifdef LOG_SISTEMA
@@ -65,7 +65,7 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
         flags |= SDL_FULLSCREEN;
 
     if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-        FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+        Library::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
         return FRACASO;
     }
 
@@ -92,16 +92,16 @@ int FSScreen::start(int width, int height, int bpp, bool fullscreen, bool double
 
 }
 
-int FSScreen::start(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen, bool doublebuff)
+int Screen::start(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen, bool doublebuff)
 { 
 
     if (_impl->m_SDL_Surface) {
-        FSLibrary::I().Error("Video ya inicializado, orden imposible 'start'\n");
+        Library::I().Error("Video ya inicializado, orden imposible 'start'\n");
         return FRACASO;
     }
 
     if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-        FSLibrary::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
+        Library::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
         return FRACASO;
     }
 #ifdef LOG_SISTEMA
@@ -129,7 +129,7 @@ int FSScreen::start(int width, int height, int bpp, Float scalex, Float scaley, 
         flags |= SDL_FULLSCREEN;
 
     if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-        FSLibrary::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
+        Library::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
         return FRACASO;
     }
 
@@ -155,10 +155,10 @@ int FSScreen::start(int width, int height, int bpp, Float scalex, Float scaley, 
 
 }
 
-int FSScreen::render() 
+int Screen::render() 
 {
     if (!_impl->m_SDL_Surface) {
-        FSLibrary::I().Error("Video context not inicialized");
+        Library::I().Error("Video context not inicialized");
         return false;
     }
 
@@ -193,10 +193,10 @@ int FSScreen::render()
     return EXITO;
 }
 
-int FSScreen::clear ( ) 
+int Screen::clear ( ) 
 {
     if (!_impl->m_SDL_Surface) {
-        FSLibrary::I().Error("Video context not inicialized");
+        Library::I().Error("Video context not inicialized");
         return FRACASO;
     }
 
@@ -219,26 +219,26 @@ int FSScreen::clear ( )
     return EXITO;
 }
 
-Float FSScreen::getA() {
+Float Screen::getA() {
     return _impl->alpha;
 }
 
-Float FSScreen::getR() {
+Float Screen::getR() {
     return _impl->red;
 }
 
-Float FSScreen::getG() {
+Float Screen::getG() {
     return _impl->green;
 }
 
-Float FSScreen::getB() {
+Float Screen::getB() {
     return _impl->blue;
 }
 
-int FSScreen::locateRenderScene(Float posx, Float posy, Float width, Float height,Float zoom) {
+int Screen::locateRenderScene(Float posx, Float posy, Float width, Float height,Float zoom) {
 
-    (width <= 0.0f)?  width  = FSScreen::I()._impl->m_Width  : 0.0f ;
-    (height <= 0.0f)? height = FSScreen::I()._impl->m_Height : 0.0f ;
+    (width <= 0.0f)?  width  = Screen::I()._impl->m_Width  : 0.0f ;
+    (height <= 0.0f)? height = Screen::I()._impl->m_Height : 0.0f ;
 
     ScreenImpl::SRenderLocation* rr = new ScreenImpl::SRenderLocation;
     rr->posx = posx;
@@ -257,7 +257,7 @@ int FSScreen::locateRenderScene(Float posx, Float posy, Float width, Float heigh
 
 }
 
-int FSScreen::rotate(Float angle, Float x, Float y, Float z) {
+int Screen::rotate(Float angle, Float x, Float y, Float z) {
 
     ScreenImpl::SRenderRotation* rr = new ScreenImpl::SRenderRotation;
     rr->angle = angle;
@@ -274,7 +274,7 @@ int FSScreen::rotate(Float angle, Float x, Float y, Float z) {
     return EXITO;
 }
 
-int FSScreen::translate(Float x, Float y, Float z) {
+int Screen::translate(Float x, Float y, Float z) {
 
     ScreenImpl::SRenderTranslation* rr = new ScreenImpl::SRenderTranslation;
     rr->x = x;
@@ -290,7 +290,7 @@ int FSScreen::translate(Float x, Float y, Float z) {
     return EXITO;
 }
 
-int FSScreen::scale(Float x, Float y, Float z) {
+int Screen::scale(Float x, Float y, Float z) {
     
     ScreenImpl::SRenderScalation* rr = new ScreenImpl::SRenderScalation;
     rr->x = x;
@@ -306,7 +306,7 @@ int FSScreen::scale(Float x, Float y, Float z) {
     return EXITO;
 }
 
-int FSScreen::color(Float red, Float green, Float blue, Float alpha) {
+int Screen::color(Float red, Float green, Float blue, Float alpha) {
 
     ScreenImpl::SRenderColor* rr = new ScreenImpl::SRenderColor;
 
@@ -324,16 +324,16 @@ int FSScreen::color(Float red, Float green, Float blue, Float alpha) {
     return EXITO;
 }
 
-int FSScreen::color(FSColor* col, Float alpha) {
+int Screen::color(Color* col, Float alpha) {
 
     return color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,_impl->alpha);
 
 }
 
-int FSScreen::projectionMode(TypeRendeProjection trp, Float zMax) {
+int Screen::projectionMode(TypeRendeProjection trp, Float zMax) {
 
     if (_impl->rendering) {
-        FSLibrary::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
+        Library::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
         return FRACASO;
     }
 
@@ -344,7 +344,7 @@ int FSScreen::projectionMode(TypeRendeProjection trp, Float zMax) {
 
 }
 
-int FSScreen::pushMatrix() {
+int Screen::pushMatrix() {
     static ScreenImpl::SRenderPushMatrix rr;
 #ifdef MAINRENDERLOOP
     _impl->graphicMaterial.push_back(static_cast<ScreenImpl::SRender*>(&rr));
@@ -356,7 +356,7 @@ int FSScreen::pushMatrix() {
 
 }
 
-int FSScreen::popMatrix() {
+int Screen::popMatrix() {
     static ScreenImpl::SRenderPopMatrix rr;
 #ifdef MAINRENDERLOOP
     _impl->graphicMaterial.push_back(static_cast<ScreenImpl::SRender*>(&rr));
@@ -368,9 +368,9 @@ int FSScreen::popMatrix() {
 
 }
 
-int FSScreen::ScreenImpl::beginRenderMode(Uint32 flags) {
+int Screen::ScreenImpl::beginRenderMode(Uint32 flags) {
     if (!m_SDL_Surface) {
-        FSLibrary::I().Error("Video context not inicialized");
+        Library::I().Error("Video context not inicialized");
         return FRACASO;
     }
     
@@ -384,9 +384,9 @@ int FSScreen::ScreenImpl::beginRenderMode(Uint32 flags) {
     return EXITO;
 }
 
-int FSScreen::ScreenImpl::endRenderMode(Uint32 flags) {
+int Screen::ScreenImpl::endRenderMode(Uint32 flags) {
     if (!m_SDL_Surface) {
-        FSLibrary::I().Error("Video context not inicialized");
+        Library::I().Error("Video context not inicialized");
         return FRACASO;
     }
 
@@ -400,10 +400,10 @@ int FSScreen::ScreenImpl::endRenderMode(Uint32 flags) {
 }
 
 
-int FSScreen::quit()
+int Screen::quit()
 {
     if (!_impl->m_SDL_Surface) {
-        FSLibrary::I().Error("Video context not inicialized");
+        Library::I().Error("Video context not inicialized");
         return FRACASO;
     }
 
@@ -414,25 +414,25 @@ int FSScreen::quit()
     return EXITO;
 }
 
-Uint8 FSScreen::getBpp() {
+Uint8 Screen::getBpp() {
     return _impl->m_Bpp;
 }
 
-int FSScreen::getWidth() {
+int Screen::getWidth() {
     return _impl->m_Width;
 }
 
-int FSScreen::getHeight() {
+int Screen::getHeight() {
     return _impl->m_Height;
 }
 
-bool FSScreen::isFullscreen() {
+bool Screen::isFullscreen() {
     return _impl->m_FullScreen;
 }
 
-int FSScreen::changeScreen(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen) {
+int Screen::changeScreen(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen) {
     if (!_impl->m_SDL_Surface) {
-        FSLibrary::I().Error("Video context not inicialized");
+        Library::I().Error("Video context not inicialized");
         return FRACASO;
     }
     
@@ -454,10 +454,10 @@ int FSScreen::changeScreen(int width, int height, int bpp, Float scalex, Float s
     
 }
 
-int FSScreen::ToggleFullscreen() {
+int Screen::ToggleFullscreen() {
 
     if (!_impl->m_SDL_Surface) {
-        FSLibrary::I().Error("Video context not inicialized");
+        Library::I().Error("Video context not inicialized");
         return FRACASO;
     }
 
@@ -480,10 +480,10 @@ int FSScreen::ToggleFullscreen() {
 
 }
 
-int FSScreen::setDoublebuffer(bool doublebuff) {
+int Screen::setDoublebuffer(bool doublebuff) {
 
     if (!_impl->m_SDL_Surface) {
-        FSLibrary::I().Error("Video context not inicialized");
+        Library::I().Error("Video context not inicialized");
         return FRACASO;
     }
 
@@ -506,16 +506,16 @@ int FSScreen::setDoublebuffer(bool doublebuff) {
 }
 
 #ifdef GLOBAL_SINGLETON_REFERENCES
-FSScreen& FSDraw = FSScreen::I();
+Screen& FSDraw = Screen::I();
 #endif
 
-void FSScreen::ScreenImpl::SRenderLocation::operator()() {
+void Screen::ScreenImpl::SRenderLocation::operator()() {
     //glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
     glViewport(posx,posy,width,height);
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
 
-    static const TypeRendeProjection& trp = FSScreen::I()._impl->trp;
+    static const TypeRendeProjection& trp = Screen::I()._impl->trp;
 
     if (trp == TRP_ORTHO) {
 
@@ -526,7 +526,7 @@ void FSScreen::ScreenImpl::SRenderLocation::operator()() {
 
     } else {
 
-        static const Float& m_maxZ = FSScreen::I()._impl->m_maxZ;
+        static const Float& m_maxZ = Screen::I()._impl->m_maxZ;
 
         //Opción de perspectiva 1
         gluPerspective(90.0f,width/height,1.0,m_maxZ);
@@ -552,36 +552,36 @@ void FSScreen::ScreenImpl::SRenderLocation::operator()() {
     delete this;
 }
 
-void FSScreen::ScreenImpl::SRenderTranslation::operator()() {
+void Screen::ScreenImpl::SRenderTranslation::operator()() {
     glTranslatef(x,y,z);
     delete this;
 }
 
-void FSScreen::ScreenImpl::SRenderScalation::operator()() {
+void Screen::ScreenImpl::SRenderScalation::operator()() {
     glScalef(x,y,z);
     delete this;
 }
 
-void FSScreen::ScreenImpl::SRenderRotation::operator()() {
+void Screen::ScreenImpl::SRenderRotation::operator()() {
     glRotatef(angle,x,y,z);
     delete this;
 }
 
-void FSScreen::ScreenImpl::SRenderColor::operator()() {
+void Screen::ScreenImpl::SRenderColor::operator()() {
     glColor4f(red,green,blue,alpha);
     delete this;
 }
 
-void FSScreen::ScreenImpl::SRenderPushMatrix::operator()() {
+void Screen::ScreenImpl::SRenderPushMatrix::operator()() {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
 }
 
-void FSScreen::ScreenImpl::SRenderPopMatrix::operator()() {
+void Screen::ScreenImpl::SRenderPopMatrix::operator()() {
     glPopMatrix();
 }
 
-void FSScreen::ScreenImpl::SRenderCanvas::operator()() {
+void Screen::ScreenImpl::SRenderCanvas::operator()() {
     glBindTexture(GL_TEXTURE_2D, tex);
 
     glBegin(GL_QUADS);

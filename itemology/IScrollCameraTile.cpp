@@ -1,18 +1,18 @@
 #include "IScrollCameraTile.h"
 
 
-IScrollCameraTile::IScrollCameraTile(TileBG** tiles, FSActor* target,FSRectangle* area) :
-// Se ha de llamar a la clase Base para una correcta inicialización
-FSCamera(target,area) , tiles(tiles){
+IScrollCameraTile::IScrollCameraTile(TileBG** tiles, Actor* target,Rectangle* area) :
+// Se ha de llamar a la clase Base para una correcta inicializaciï¿½n
+Camera(target,area) , tiles(tiles){
 
 	if (!tiles) 
-		FSLib.Error("CameraTile : Mala definición de tiles");
+		FSLib.Error("CameraTile : Mala definiciï¿½n de tiles");
 
 	IScrollLevel * uni = dynamic_cast<IScrollLevel*>(target->getUniverse());
 
 	if (!uni) {
 
-		FSLib.Error("CameraTile : Mala definición del nivel");
+		FSLib.Error("CameraTile : Mala definiciï¿½n del nivel");
 		tileset = -1;
 
 	} else {
@@ -45,7 +45,7 @@ int IScrollCameraTile::refresh() {
 	if (tileset == -1)
 		return FRACASO;
 
-	FSPoint p;
+	Point p;
 
 	int actor_x = target->renderPoint.x;
 	int actor_y = target->renderPoint.y;

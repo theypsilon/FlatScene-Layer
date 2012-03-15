@@ -9,40 +9,40 @@
 using namespace flatscene;
 
 class IFirstEngine :
-	public FSEngine
+	public Engine
 {
 private:
 	std::vector<IScrollCamera*> cams;
 
 	IScrollObject* mainactor;
 
-    FSMultiverse CMultiverse;
+    Multiverse CMultiverse;
 
-    FSTime Chrono;
+    Time Chrono;
 public:
 	// Constructor del Motor.
 	IFirstEngine();
 	
-	// Destructor, ahí deberemos liberar todos los recursos.
+	// Destructor, ahï¿½ deberemos liberar todos los recursos.
 	virtual ~IFirstEngine();
 
-	// Opcional, pero invocado por la Libraría. Debe devolver 'true' para que la librería pueda tomar el motor como "Motor Activo" ( CLibrary::getActualEngine(); )
-	// En este método se pueden reservar recursos necesarios para la ejecución de lmotor.
+	// Opcional, pero invocado por la Librarï¿½a. Debe devolver 'true' para que la librerï¿½a pueda tomar el motor como "Motor Activo" ( CLibrary::getActualEngine(); )
+	// En este mï¿½todo se pueden reservar recursos necesarios para la ejecuciï¿½n de lmotor.
 	void onInit();
 	
-	// Opcional, pero invocado por la Librería. En este método se pueden liberar recursos que eran necesarios para la ejecución de lmotor.
+	// Opcional, pero invocado por la Librerï¿½a. En este mï¿½todo se pueden liberar recursos que eran necesarios para la ejecuciï¿½n de lmotor.
 	void onExit();
 
-	// Función necesaria para el procesamiento de Eventos por parte de este Motor.
+	// Funciï¿½n necesaria para el procesamiento de Eventos por parte de este Motor.
 	void loop();
 
-	// Rutina principal. Aquí se debe incluir la implementación principal del motor para actualizar su estado.
+	// Rutina principal. Aquï¿½ se debe incluir la implementaciï¿½n principal del motor para actualizar su estado.
 	void onIdle();
 
 	// Opcional. Pensado para resolver conflictos ante inesperadas conmutaciones entre diferentes Motores.
 	virtual void deselect();
 
-	// Rutina de renderización. Aquí deberían invocarse todas las rutina de renderización de los elementos controlados por el Motor.
+	// Rutina de renderizaciï¿½n. Aquï¿½ deberï¿½an invocarse todas las rutina de renderizaciï¿½n de los elementos controlados por el Motor.
 	void drawFrame();
 
 	void onEvent(SDL_Event& e);

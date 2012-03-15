@@ -6,21 +6,21 @@
 
 namespace flatscene {
 
-    template <class T> T FSCanvas::createCanvas(SDL_Surface* surface, Uint8 mode, GLint filter) {
-        static_assert(/*std::is_trivially_constructible<T>::value && */std::is_base_of<FSCanvas,T>::value,"Bad Canvas type");
+    template <class T> T Canvas::createCanvas(SDL_Surface* surface, Uint8 mode, GLint filter) {
+        static_assert(/*std::is_trivially_constructible<T>::value && */std::is_base_of<Canvas,T>::value,"Bad Canvas type");
 
         T newCanvas;
 
         if (pow2(mode) != mode)
-            FSLibrary::I().Error("CCanvas::LoadIMG -> modo erroneo.");
+            Library::I().Error("CCanvas::LoadIMG -> modo erroneo.");
 
-        FSCanvas& pSurface = static_cast<T&>(newCanvas);
+        Canvas& pSurface = static_cast<T&>(newCanvas);
 
         SDL_Surface* image;
         SDL_Rect area;
 
         if (surface == nullptr) {
-            FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
+            Library::I().Error("CCanvas::LoadIMG -> image Null.");
             pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
             pSurface.sdl_surf = nullptr;
             return newCanvas;
@@ -59,7 +59,7 @@ namespace flatscene {
                       0x000000ff);
             #endif
             if (image == NULL) {
-                FSLibrary::I().Error("CCanvas::LoadIMG -> image Null.");
+                Library::I().Error("CCanvas::LoadIMG -> image Null.");
                 return newCanvas;
             }
 

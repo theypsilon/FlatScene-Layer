@@ -37,9 +37,9 @@ int CUniverseTemplate::changeUniverse(string name,Uint8 slot) {
 
 }
 
-int CUniverseTemplate::incActor(FSActor* act) {
+int CUniverseTemplate::incActor(Actor* act) {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO		*/
+	/*		IMPLEMENTACIï¿½N POR DEFECTO		*/
 
 	/*if (!act) {
 		CLibrary::Error("Puntero a CActor nulo");
@@ -60,9 +60,9 @@ int CUniverseTemplate::incActor(FSActor* act) {
 	return EXITO;
 }
 
-int CUniverseTemplate::decActor(FSActor* act) {
+int CUniverseTemplate::decActor(Actor* act) {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO		*/
+	/*		IMPLEMENTACIï¿½N POR DEFECTO		*/
 
 	/*if (!act) {
 		CLibrary::Error("Puntero a CActor nulo");
@@ -94,7 +94,7 @@ void CUniverseTemplate::incCameras() {
 
 void CUniverseTemplate::decCameras() {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO		*/
+	/*		IMPLEMENTACIï¿½N POR DEFECTO		*/
 
 	/*numCameras--;
 	if (numCameras==0)

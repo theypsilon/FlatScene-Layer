@@ -3,13 +3,13 @@
 
 namespace flatscene {
 
-    class FSNoncopyable {
+    class Noncopyable {
         protected:
-            FSNoncopyable(){}
-            ~FSNoncopyable(){}
+            Noncopyable(){}
+            ~Noncopyable(){}
         private:
-            FSNoncopyable(const FSNoncopyable&);
-            const FSNoncopyable& operator=(const FSNoncopyable&);
+            Noncopyable(const Noncopyable&);
+            const Noncopyable& operator=(const Noncopyable&);
     };
 
 } // flatscene

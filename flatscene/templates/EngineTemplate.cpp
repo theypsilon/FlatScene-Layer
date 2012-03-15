@@ -1,6 +1,6 @@
 #include "EngineTemplate.h"
 
-CEngineTemplate::CEngineTemplate(FSMessageHandler* pmhParent) : FSEngine(pmhParent)	{
+CEngineTemplate::CEngineTemplate(MessageHandler* pmhParent) : Engine(pmhParent)	{
 
 	// TODO
 }
@@ -24,7 +24,7 @@ int CEngineTemplate::drawFrame() {
 
 	}
 
-	FSWriter::I().refresh();*/
+	Writer::I().refresh();*/
 
 	return EXITO;
 }
@@ -55,7 +55,7 @@ int CEngineTemplate::onExit() {
 }
 
 void CEngineTemplate::deselect() {
-	FSEngine::deselect();
+	Engine::deselect();
 
 	// TODO : Siempre se debe llamar previamente al m�todo de la clase base.
 
@@ -65,7 +65,7 @@ int CEngineTemplate::loop() {
 
 	// TODO : Siempre se debe llamar posteriormente al m�todo de la clase base.
 
-	return FSEngine::loop();
+	return Engine::loop();
 }
 
 	 

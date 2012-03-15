@@ -5,7 +5,7 @@
 
 namespace flatscene {
 
-void FSScreen::ScreenImpl::deleteResources() {
+void Screen::ScreenImpl::deleteResources() {
     
     for (auto it = spritesetToDelete.begin(), jt = spritesetToDelete.end() ; it!=jt;++it)
         delete (*it);
@@ -23,10 +23,10 @@ void FSScreen::ScreenImpl::deleteResources() {
     imageToDelete.clear();
 }
 
-void FSScreen::ScreenImpl::saveResources(GraphicResources &info) {
+void Screen::ScreenImpl::saveResources(GraphicResources &info) {
 
-    FSImages& img = FSImages::I();
-    FSWriter& writer = FSWriter::I();
+    Images& img = Images::I();
+    Writer& writer = Writer::I();
     
     for (SpritesetCollection::iterator it=img._impl->set.begin(),kt=img._impl->set.end();it!=kt;++it)   {
         SpritesetInfo aux;
@@ -55,10 +55,10 @@ void FSScreen::ScreenImpl::saveResources(GraphicResources &info) {
 
 }
 
-void FSScreen::ScreenImpl::reloadResources(GraphicResources &info) {
+void Screen::ScreenImpl::reloadResources(GraphicResources &info) {
 
-    FSImages& img = FSImages::I();
-    FSWriter& writer = FSWriter::I();
+    Images& img = Images::I();
+    Writer& writer = Writer::I();
 
 
     for (auto& data : writer._impl->session)

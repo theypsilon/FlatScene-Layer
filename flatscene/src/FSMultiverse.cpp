@@ -3,22 +3,22 @@
 
 namespace flatscene {
 
-FSMultiverse::FSMultiverse() : _impl(new MultiverseImpl) {
+Multiverse::Multiverse() : _impl(new MultiverseImpl) {
     _impl->working = false;
 }
 
-FSMultiverse::~FSMultiverse() {
+Multiverse::~Multiverse() {
     clear();
 
     delete _impl;
 }
 
-FSUniverse* FSMultiverse::add(FSUniverse* uni,Uint8 slot) {
+Universe* Multiverse::add(Universe* uni,Uint8 slot) {
 
     if (!uni || slot == 255) {
-        if (!uni) FSLibrary::I().Error("No se puede realizar dicha operaci�n si no se indica un nombre correcto.");
-        else if (slot == 255) FSLibrary::I().Error("Slot limit exceded. 255 no es posible.");
-        else FSLibrary::I().Error("Error desconocido.");
+        if (!uni) Library::I().Error("No se puede realizar dicha operaci�n si no se indica un nombre correcto.");
+        else if (slot == 255) Library::I().Error("Slot limit exceded. 255 no es posible.");
+        else Library::I().Error("Error desconocido.");
 
         if (uni) {
             (*_impl).working = true;
@@ -30,7 +30,7 @@ FSUniverse* FSMultiverse::add(FSUniverse* uni,Uint8 slot) {
     }
 
     std::string& stName = uni->getName();
-    FSUniverse* uniDev = universeNamed(stName,slot);
+    Universe* uniDev = universeNamed(stName,slot);
     if (uniDev==nullptr) {
         uniDev = uni;
         uni->slot = slot;
@@ -44,19 +44,19 @@ FSUniverse* FSMultiverse::add(FSUniverse* uni,Uint8 slot) {
     return uniDev;
 }
 
-FSUniverse* FSMultiverse::universeNamed(const char* uniName,Uint8 slot) {
+Universe* Multiverse::universeNamed(const char* uniName,Uint8 slot) {
     if (uniName)    {
         std::string cad(uniName);
         return universeNamed(cad,slot);
     } else {
-        FSLibrary::I().Error("No se ha indicado un nombre para el universo.");
+        Library::I().Error("No se ha indicado un nombre para el universo.");
         return NULL;
     }
 }
 
 
-FSUniverse* FSMultiverse::universeNamed(std::string uniName,Uint8 slot) {
-    FSUniverse* uniDev=NULL;
+Universe* Multiverse::universeNamed(std::string uniName,Uint8 slot) {
+    Universe* uniDev=NULL;
     for (auto it=(*_impl).unis.begin(),et=(*_impl).unis.end();it!=et;++it)  {
         if ((*it)->getName()==uniName && (*it)->slot == slot) {
             uniDev = (*it);
@@ -66,14 +66,14 @@ FSUniverse* FSMultiverse::universeNamed(std::string uniName,Uint8 slot) {
     return uniDev;
 }
 
-int FSMultiverse::size() {
+int Multiverse::size() {
     return (*_impl).unis.size();
 }
 
-void FSMultiverse::erase(FSUniverse *mapKilled) {
+void Multiverse::erase(Universe *mapKilled) {
 
     if (!mapKilled) {
-        FSLibrary::I().Error("No se puede borrar el universo porque no es v�lido.");
+        Library::I().Error("No se puede borrar el universo porque no es v�lido.");
         return;
     }
 
@@ -95,11 +95,11 @@ void FSMultiverse::erase(FSUniverse *mapKilled) {
 
 }
 
-void FSMultiverse::clear() {
+void Multiverse::clear() {
     UniverseCollection::iterator it ;
     while ( !(*_impl).unis.empty() ) {
         it = (*_impl).unis.begin();
-        FSUniverse* m = *it;
+        Universe* m = *it;
         (*_impl).unis.erase( it );
         (*_impl).working=true;
         delete m;
@@ -107,11 +107,11 @@ void FSMultiverse::clear() {
     }
 }
 
-UniverseCollection::iterator FSMultiverse::begin() {
+UniverseCollection::iterator Multiverse::begin() {
     return (*_impl).unis.begin();
 }
 
-UniverseCollection::iterator FSMultiverse::end() {
+UniverseCollection::iterator Multiverse::end() {
     return (*_impl).unis.end();
 }
 

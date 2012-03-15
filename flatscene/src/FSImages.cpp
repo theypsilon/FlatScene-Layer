@@ -4,23 +4,23 @@
 
 namespace flatscene {
 
-FSImages::FSImages() : _impl(new ImagesImpl) {}
+Images::Images() : _impl(new ImagesImpl) {}
 
-FSImages::~FSImages() {
+Images::~Images() {
     clear();
     delete _impl;
 }
 
-void FSImages::clear() {
+void Images::clear() {
     SpritesetCollection::iterator iter ;
-    FSSpriteset* pspt ;
+    Spriteset* pspt ;
     while ( !(*_impl).set.empty ( ) )
     {
         iter = (*_impl).set.begin ( ) ;
         pspt = iter->second ;
         (*_impl).set.erase ( iter ) ;
         if (SDL_GetVideoSurface())
-            FSScreen::I()._impl->spritesetToDelete.push_back(pspt); // delete sptset;
+            Screen::I()._impl->spritesetToDelete.push_back(pspt); // delete sptset;
         else
             delete pspt;
     }
@@ -30,8 +30,8 @@ void FSImages::clear() {
     }
 }
 
-int FSImages::add(const char* name,Uint8 mode) {
-    FSSpriteset* sptset;
+int Images::add(const char* name,Uint8 mode) {
+    Spriteset* sptset;
 
     int ret=search(name);
     if (ret <0) {
@@ -43,7 +43,7 @@ int FSImages::add(const char* name,Uint8 mode) {
                 if ((*_impl).set.find(i)==(*_impl).set.end())
                     ret = i;
 
-        sptset=new FSSpriteset(name,mode);
+        sptset=new Spriteset(name,mode);
         (*_impl).set[ret]=sptset;
     } else {
         sptset=(*_impl).set[ret];
@@ -52,21 +52,21 @@ int FSImages::add(const char* name,Uint8 mode) {
     return ret;
 }
 
-int FSImages::remove(Uint32 n) {
+int Images::remove(Uint32 n) {
     if ((*_impl).set.find(n)!=(*_impl).set.end()) {
-        FSSpriteset* sptset = (*_impl).set[n];
+        Spriteset* sptset = (*_impl).set[n];
         int c=--(*_impl).count[sptset];
         if (c < 1)  {
             if (c==0) {
                 if (SDL_GetVideoSurface())
-                    FSScreen::I()._impl->spritesetToDelete.push_back(sptset); // delete sptset;
+                    Screen::I()._impl->spritesetToDelete.push_back(sptset); // delete sptset;
                 else
                     delete sptset;
                 (*_impl).set.erase((*_impl).set.find(n));
                 (*_impl).count.erase((*_impl).count.find(sptset));
                 (*_impl).lastIndexAdded.push(n);
             } else {
-                FSLibrary::I().Error("Cantidad de Spriteset violada.",TE_controlViolation);
+                Library::I().Error("Cantidad de Spriteset violada.",TE_controlViolation);
                 return FRACASO;
             }
         }
@@ -74,12 +74,12 @@ int FSImages::remove(Uint32 n) {
         return EXITO;
     }
 
-    FSLibrary::I().Error("No existe el Spriteset que se pretende eliminar.",TE_controlViolation);
+    Library::I().Error("No existe el Spriteset que se pretende eliminar.",TE_controlViolation);
     return FRACASO;
 
 }
 
-int FSImages::search(const char* name) {
+int Images::search(const char* name) {
     for (SpritesetCollection::iterator it = (*_impl).set.begin();it!=(*_impl).set.end();++it) {
         if (strcmp(it->second->getName().c_str(),name)==0) {
             return it->first;
@@ -88,7 +88,7 @@ int FSImages::search(const char* name) {
     return FRACASO;
 }
 
-int FSImages::search(FSSpriteset* object) {
+int Images::search(Spriteset* object) {
     for (SpritesetCollection::iterator it = (*_impl).set.begin();it!=(*_impl).set.end();++it) {
         if (it->second==object) {
             return it->first;
@@ -97,25 +97,25 @@ int FSImages::search(FSSpriteset* object) {
     return FRACASO;
 }
 
-FSSpriteset* FSImages::get(Uint32 n) {
+Spriteset* Images::get(Uint32 n) {
     if ((*_impl).set.find(n)!=(*_impl).set.end())
         return (*_impl).set[n];
     else
         return NULL;
 }
 
-int FSImages::size() {
+int Images::size() {
     return ((*_impl).set.size());
 }
 
-int FSImages::getCount(Uint32 n) {
+int Images::getCount(Uint32 n) {
     Uint32 ret = 0;
     if ((*_impl).count.find(get(n))!=(*_impl).count.end())
         ret = (*_impl).count[get(n)];
     return ret;
 }
 #ifdef GLOBAL_SINGLETON_REFERENCES
-FSImages& Img = FSImages::I();
+Images& Img = Images::I();
 #endif
 
 } // flatscene

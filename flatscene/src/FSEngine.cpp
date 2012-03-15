@@ -10,45 +10,45 @@
 
 namespace flatscene {
 
-FSEngine::FSEngine() {
+Engine::Engine() {
     initialized = false;
     priority = 100;
     done = true;
 }
 
 
-FSEngine::~FSEngine() {}
+Engine::~Engine() {}
 
-bool FSEngine::isInitialized() {
+bool Engine::isInitialized() {
     return initialized;
 }
 
-void FSEngine::onInit() {
+void Engine::onInit() {
     initialized = true;
 }
 
-void FSEngine::onEvent(const SDL_Event& event) {
+void Engine::onEvent(const SDL_Event& event) {
     if(event.type==SDL_QUIT) {
-        FSLibrary::I().exit();
+        Library::I().exit();
     }
 }
 
 //bucle principal
-void FSEngine::loop() {
+void Engine::loop() {
 
     if (!isInitialized()) {
-        throw FSException("Engine not inicialized", __LINE__);
+        throw Exception("Engine not inicialized", __LINE__);
     }
 
     auto self = this;
 
-    FSLibrary::I()._impl->setActualEngine(self);
+    Library::I()._impl->setActualEngine(self);
     
     SDL_Event event;
 
     while (SDL_PollEvent(&event)==1);
 
-    while (FSLibrary::I().getActualEngine() == self) {
+    while (Library::I().getActualEngine() == self) {
 
         if(SDL_PollEvent(&event)==1) {
             onEvent(event);
@@ -59,24 +59,24 @@ void FSEngine::loop() {
     }
 }
 
-void FSEngine::deselect() {
+void Engine::deselect() {
     SDL_Event event;
     while (SDL_PollEvent(&event)==1) { }
-    FSLibrary::I()._impl->setActualEngine(NULL);
+    Library::I()._impl->setActualEngine(NULL);
 }
 
-void FSEngine::drawFrame() {
+void Engine::drawFrame() {
     if (!isInitialized()) {
-        throw FSException("Motor not inicialized", __LINE__);
+        throw Exception("Motor not inicialized", __LINE__);
     }
 }
 
 
-void FSEngine::onIdle() {}
+void Engine::onIdle() {}
 
 
-void FSEngine::onExit() {
-    FSWriter::I().erase();
+void Engine::onExit() {
+    Writer::I().erase();
     initialized = false;
 }
 

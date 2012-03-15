@@ -18,8 +18,8 @@ namespace flatscene {
         TRP_PERSPECTIVE
     };
 
-    class FSScreen : private FSNoncopyable, public FSSingleton<FSScreen> {
-        friend class FSSingleton<FSScreen>;
+    class Screen : private Noncopyable, public Singleton<Screen> {
+        friend class Singleton<Screen>;
     public:
         //constructor
         int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
@@ -33,7 +33,7 @@ namespace flatscene {
         int translate(Float x, Float y, Float z);
         int scale(Float x, Float y, Float z);
         int color(Float red, Float green, Float blue, Float alpha);
-        int color(FSColor* col,Float alpha=1.0);
+        int color(Color* col,Float alpha=1.0);
         int projectionMode(TypeRendeProjection trp, Float zMax=400.0);
 
         int pushMatrix();
@@ -63,21 +63,21 @@ namespace flatscene {
         struct ScreenImpl;
         ScreenImpl* _impl;
 
-        FSScreen();
-        virtual ~FSScreen();
+        Screen();
+        virtual ~Screen();
 
-        friend class FSCamera;
+        friend class Camera;
 
-        friend class FSSpriteset;
-        friend class FSSprite;
-        friend class FSCanvas;
+        friend class Spriteset;
+        friend class Sprite;
+        friend class Canvas;
 
-        friend class FSImages;
-        friend class FSWriter;
+        friend class Images;
+        friend class Writer;
         friend class FSTextBox;
     };
     #ifdef GLOBAL_SINGLETON_REFERENCES
-    extern FSScreen& FSDraw;
+    extern Screen& FSDraw;
     #endif
 
 } // flatscene

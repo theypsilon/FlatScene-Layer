@@ -16,32 +16,32 @@ namespace flatscene {
     };
 
     //CSprite--abstracts Image+Control Point.
-    class FSSprite : public FSCanvas {
-        typedef std::vector<FSRectangle> RectArea;
+    class Sprite : public Canvas {
+        typedef std::vector<Rectangle> RectArea;
         typedef int IndexArea;
         typedef std::map<IndexArea,RectArea> Areas;
     private:
 
-        FSSprite ( const FSSprite& ); //undefined
+        Sprite ( const Sprite& ); //undefined
         //Nombre
         std::string name;
         //Lista de Control points
-        FSPoint cpoint;
+        Point cpoint;
         Areas areas;
 
-        friend class FSSpriteset;
-        friend class FSScreen;
+        friend class Spriteset;
+        friend class Screen;
 
         SpriteOpaque opaque;
 
     public:
         //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
 
-        FSSprite ();
-        FSSprite ( FSCanvas&& pSurface, FSPoint zerocpSource = FSPoint(0,0)) ;
+        Sprite ();
+        Sprite ( Canvas&& pSurface, Point zerocpSource = Point(0,0)) ;
 
-        FSSprite (FSSprite&& sprite);
-        ~FSSprite();
+        Sprite (Sprite&& sprite);
+        ~Sprite();
         //asigna nombre
         void setName(const std::string& newName);
         //devuelve nombre
@@ -51,9 +51,9 @@ namespace flatscene {
         //devuelve el en�simo punto de control dentro del array de puntos de control.
         const RectArea& getArea(IndexArea index) const;
 
-        const FSPoint& getCenter() const;
+        const Point& getCenter() const;
 
-        void replaceCenter(FSPoint c);
+        void replaceCenter(Point c);
         //a�ade al final de la lista el punto cpSource
         IndexArea addArea(RectArea area);
 
@@ -66,7 +66,7 @@ namespace flatscene {
         SpriteOpaque isOpaque();
 
         //renderiza el gr�fico.
-        void put ( FSPoint ptDst , Uint8 flags=0) const;
+        void put ( Point ptDst , Uint8 flags=0) const;
     private:
         struct SpriteImpl;
         //const std::unique_ptr<SpriteImpl> _impl;

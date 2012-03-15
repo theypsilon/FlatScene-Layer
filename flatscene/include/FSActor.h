@@ -11,36 +11,36 @@
 
 namespace flatscene {
 
-    class FSActor;
+    class Actor;
     class CRutinaColision;
-    class FSUniverse;
+    class Universe;
 
-    typedef std::list<FSActor*> ActorCollection;
+    typedef std::list<Actor*> ActorCollection;
 
-    class FSActor {
+    class Actor {
     private:
         std::string creature;
-        FSUniverse* inUniverse;
+        Universe* inUniverse;
     public:
 
         int file;
         int graph;
         Uint8 flags;
 
-        FSActor(const char* creature);
-        virtual ~FSActor();
+        Actor(const char* creature);
+        virtual ~Actor();
 
         int setSprite(int file,int graph);
-        virtual const FSSprite* getSprite();
+        virtual const Sprite* getSprite();
 
         virtual int move();
 
         virtual std::string getCreature();
-        FSUniverse* getUniverse();
-        virtual int setUniverse(FSUniverse* m);
-        FSPoint renderPoint;
+        Universe* getUniverse();
+        virtual int setUniverse(Universe* m);
+        Point renderPoint;
 
-        virtual FSActor* clone();
+        virtual Actor* clone();
 
     };
 

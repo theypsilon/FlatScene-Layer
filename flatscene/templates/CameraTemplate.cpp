@@ -3,8 +3,8 @@
 
 // Library.h es necesario para el manejo de errores.
 
-CCameraTemplate::CCameraTemplate(FSActor* target, FSRectangle* area,FSMessageHandler* pmhParent) :
-// Se ha de llamar a la clase Base para una correcta inicialización
+CCameraTemplate::CCameraTemplate(Actor* target, Rectangle* area,MessageHandler* pmhParent) :
+// Se ha de llamar a la clase Base para una correcta inicializaciï¿½n
 CCamera(target,area,pmhParent) {
 	
 	// TODO
@@ -43,7 +43,7 @@ int CCameraTemplate::unloadUniverse() {
 
 int CCameraTemplate::resyncUniverse() {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO	
+	/*		IMPLEMENTACIï¿½N POR DEFECTO	
 	/*
 	if (unloadUniverse() == EXITO)
 		return loadUniverse();
@@ -56,9 +56,9 @@ int CCameraTemplate::resyncUniverse() {
 	return EXITO;
 }
 
-int CCameraTemplate::setTarget(FSActor* newTarget) {
+int CCameraTemplate::setTarget(Actor* newTarget) {
 
-	/*		IMPLEMENTACIÓN POR DEFECTO */
+	/*		IMPLEMENTACIï¿½N POR DEFECTO */
 	
 	/*if (newTarget == this->target) {
 		CLibrary::Error("Actor objetivo ya establecido");
@@ -72,7 +72,7 @@ int CCameraTemplate::setTarget(FSActor* newTarget) {
 		this->target=newTarget;
 	}
 
-	CX()=CY()=-1000; // Truco usado para forzar una recalibración de las coordenadas de la cámara en su primer uso.
+	CX()=CY()=-1000; // Truco usado para forzar una recalibraciï¿½n de las coordenadas de la cï¿½mara en su primer uso.
 	*/
 
 	// TODO
@@ -82,7 +82,7 @@ int CCameraTemplate::setTarget(FSActor* newTarget) {
 
 int CCameraTemplate::refresh() {
 
-	// TODO : Aquí debería ir las rutinas que invocan el proceso de renderización de cada elemento dentro del contexto de la cámara.
+	// TODO : Aquï¿½ deberï¿½a ir las rutinas que invocan el proceso de renderizaciï¿½n de cada elemento dentro del contexto de la cï¿½mara.
 
 	return EXITO;
 }

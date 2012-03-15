@@ -34,7 +34,7 @@ typedef struct{
 
 
 class IScrollLevel :
-	public FSUniverse
+	public Universe
 {
 private:
 
@@ -49,7 +49,7 @@ private:
 	// Primer tileset del mapa :
 	Uint32 tileSet;
 	Uint32 durezaSet;
-	// Úlitmo tileset del mapa :
+	// ï¿½litmo tileset del mapa :
 	Uint32 lastTileset;
 	Uint32 lastDurezaset;
 
@@ -77,8 +77,8 @@ public:
 	virtual void load();
 	virtual void unload();
 
-	virtual int incActor(FSActor* act);
-	virtual int decActor(FSActor* act);
+	virtual int incActor(Actor* act);
+	virtual int decActor(Actor* act);
 	
 	virtual Uint32 getPixel(int x, int y, int z);
 

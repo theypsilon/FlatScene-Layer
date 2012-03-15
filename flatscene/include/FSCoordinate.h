@@ -6,17 +6,17 @@
 namespace flatscene {
 
     template <class T>
-    struct FS3DPoint : public FS2DPoint<T> {
-        using FS2DPoint<T>::x;
-        using FS2DPoint<T>::y;
+    struct Point3D : public Point2D<T> {
+        using Point2D<T>::x;
+        using Point2D<T>::y;
 
         T z;
 
-        FS3DPoint(T x=0,T y=0,T z=0)
-        : FS2DPoint<T>::FS2DPoint(x,y), z(z) {}
+        Point3D(T x=0,T y=0,T z=0)
+        : Point2D<T>::Point2D(x,y), z(z) {}
 
         template <class U>
-        FS3DPoint(const U& coord) {
+        Point3D(const U& coord) {
             x = coord.x;
             y = coord.y;
             z = coord.z;
@@ -25,7 +25,7 @@ namespace flatscene {
         inline T getZ() const { return z; }
         void setZ(T nz) { z = nz; }
 
-        FS3DPoint<T>& set(T nx,T ny,T nz) {
+        Point3D<T>& set(T nx,T ny,T nz) {
             x = nx;
             y = ny;
             z = nz;

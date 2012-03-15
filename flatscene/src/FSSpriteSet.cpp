@@ -2,24 +2,24 @@
 
 namespace flatscene {
 
-    FSSpriteset::FSSpriteset(std::string c, Uint8 mode) 
+    Spriteset::Spriteset(std::string c, Uint8 mode) 
         : _impl (new SpritesetImpl(c,mode)) {}
 
-    FSSpriteset::~FSSpriteset() {}
+    Spriteset::~Spriteset() {}
 
-    Uint8 FSSpriteset::getMode() const {
+    Uint8 Spriteset::getMode() const {
         return _impl->getMode();
     }
 
-    const std::string& FSSpriteset::getName() const {
+    const std::string& Spriteset::getName() const {
         return _impl->getName();
     }
 
-    const FSSprite* FSSpriteset::get ( unsigned int n ) const {
+    const Sprite* Spriteset::get ( unsigned int n ) const {
         return _impl->get(n);
     }
 
-    int FSSpriteset::size() const {
+    int Spriteset::size() const {
         return _impl->size();
     }
 

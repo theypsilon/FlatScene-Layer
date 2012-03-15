@@ -1,10 +1,10 @@
 #ifndef __CACTOR_TEMPLATE__
 #define __CACTOR_TEMPLATE__
 
-#include "Actor.h"
+#include "FSActor.h"
 
 
-class CActorTemplate : public FSActor
+class CActorTemplate : public Actor
 {
 private:
 
@@ -15,7 +15,7 @@ public:
 	// TODO : variables y funciones p�blicas adicionales
 
 	// Constructor con clase menajera como par�metro de entrada 
-	CActorTemplate(FSMessageHandler* pmhParent=NULL);
+	CActorTemplate(MessageHandler* pmhParent=NULL);
 
 	// Destructor, ah� deberemos liberar los recursos
 	~CActorTemplate();
@@ -23,11 +23,11 @@ public:
 	// Devuelve un CSprite. Definici�n opcional. Ya tiene la siguiente implementaci�n :
 	//
 	//	CSprite* CActor::getSprite() {
-	//		return FSImages::I().get(file)->get(graph);
+	//		return Images::I().get(file)->get(graph);
 	//	}
 	//
 	// S�lo definir si se desea hacer una operaci�n diferente
-	FSSprite* getSprite();
+	Sprite* getSprite();
 
 	// M�todo pensado para ser invocado en CEngine::onIdle.
 	// Deber� actualizar el estado del CActor cuando sea necesario.
@@ -39,11 +39,11 @@ public:
 	string getCreature();
 	
 	// Opcional. Su implementaci�n por defecto es una simple asignaci�n a la variable miembro CUniverse* inUniverse.
-	int setUniverse(FSUniverse* m);
+	int setUniverse(Universe* m);
 
 	// Opcional. Por si se quiere implementar una funci�n que facilite la inicializaci�n de muchos actores dle mismo tipo.
 	// Si no se le da una implementaci�n y el m�todo es invocado, devuelve NULL y registra un error.
-	virtual FSActor* clone();
+	virtual Actor* clone();
 
 };
 

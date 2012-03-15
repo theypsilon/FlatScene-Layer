@@ -8,9 +8,9 @@
 
 namespace flatscene {
 
-    class FSEngine;
+    class Engine;
 
-    class FSTime {
+    class Time {
     private:
 
         unsigned int _msInterval;
@@ -23,8 +23,8 @@ namespace flatscene {
     #endif
 
     public:
-        FSTime();
-        ~FSTime();
+        Time();
+        ~Time();
         unsigned int setInterval(unsigned int msInterval );
         unsigned int setFPS(unsigned int fpsInterval );
         int nextFrame();
@@ -32,7 +32,7 @@ namespace flatscene {
         void reset(unsigned int tick = 0);
     };
 
-    extern FSTime Chrono;
+    extern Time Chrono;
 
 } // flatscene
 

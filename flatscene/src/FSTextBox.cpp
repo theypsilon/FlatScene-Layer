@@ -9,7 +9,7 @@
 
 namespace flatscene {
 
-FSWriter::WriterImpl::FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) :
+Writer::WriterImpl::FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) :
 file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
 timer(Chrono.getTick()), step(0), maxStep(0)    {
 
@@ -53,7 +53,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
         int minx,maxy,advance;
 
         if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance)== -1)
-            FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
+            Library::I().Error("TTF_GlyphMetrics fallo.");
 
         if (newChar == ' ' ) {
             const char* caux = allText.c_str();
@@ -62,7 +62,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
             for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
                 if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
-                    FSLibrary::I().Error("TTF_GlyphMetrics fallo.");
+                    Library::I().Error("TTF_GlyphMetrics fallo.");
 
                 cuenta += (Float)minx;
 
@@ -89,7 +89,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
             SChar newT;
 
-            newT.p = new FSFloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
+            newT.p = new FloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
             currentX += (Float)advance;
 
             newT.glyph=newChar;
@@ -109,7 +109,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
 }
 
-FSWriter::WriterImpl::FSTextBox::~FSTextBox() {
+Writer::WriterImpl::FSTextBox::~FSTextBox() {
     deleteBox();
 
     if (fx)
@@ -125,10 +125,10 @@ FSWriter::WriterImpl::FSTextBox::~FSTextBox() {
         charInDisplay.erase(it);
     }
 
-    FSWriter::I().unloadFont(FSWriter::I().searchFont(fuente->fuente));
+    Writer::I().unloadFont(Writer::I().searchFont(fuente->fuente));
 }
 
-int FSWriter::WriterImpl::FSTextBox::update() {
+int Writer::WriterImpl::FSTextBox::update() {
 
     if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_BOX )) {
         box->color(fx->red,fx->green,fx->blue,fx->alpha);
@@ -173,39 +173,39 @@ int FSWriter::WriterImpl::FSTextBox::update() {
 
 }
 
-void FSWriter::WriterImpl::FSTextBox::deleteBox() {
+void Writer::WriterImpl::FSTextBox::deleteBox() {
     if (box)
-        FSScreen::I()._impl->imageToDelete.push_back(box); // delete box;
+        Screen::I()._impl->imageToDelete.push_back(box); // delete box;
     box=NULL;
 }
 
 
 
-void FSWriter::WriterImpl::FSTextBox::createBox() {
+void Writer::WriterImpl::FSTextBox::createBox() {
     if (box) {
-        FSLibrary::I().Error("Ya existe el fondo de la caja que se pretende crear.");
+        Library::I().Error("Ya existe el fondo de la caja que se pretende crear.");
         return;
     }
 
     SDL_Surface *surface, *aux_surf;
 
-    aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,FSScreen::I().getBpp(),0,0,255,0);
-    if (!aux_surf)  FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
+    aux_surf = SDL_CreateRGBSurface(0,xBox,yBox,Screen::I().getBpp(),0,0,255,0);
+    if (!aux_surf)  Library::I().Error("No se ha creado bien la superficie para la TextBox.");
     surface = SDL_DisplayFormat(aux_surf);
-    if (!surface)   FSLibrary::I().Error("No se ha creado bien la superficie para la TextBox.");
+    if (!surface)   Library::I().Error("No se ha creado bien la superficie para la TextBox.");
     SDL_FreeSurface(aux_surf);
     SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
 
-    box = new FSCanvas(FSCanvas::toSCanvas(surface));
+    box = new Canvas(Canvas::toSCanvas(surface));
 }
 
-int FSWriter::WriterImpl::FSTextBox::finish() {
+int Writer::WriterImpl::FSTextBox::finish() {
     int ret = -1;
     if (next!=-1) {
 
-        ret = FSWriter::I().inBox(file.c_str(),next);
+        ret = Writer::I().inBox(file.c_str(),next);
         if (fx && fx->persistent) {
-            FSWriter::I().color(ret,fx->red,fx->green,fx->blue,fx->alpha,fx->boxflags,true);
+            Writer::I().color(ret,fx->red,fx->green,fx->blue,fx->alpha,fx->boxflags,true);
         }
         if (ret == -1) {
             ; // ODOT : Quitar el error de la cola.
@@ -216,7 +216,7 @@ int FSWriter::WriterImpl::FSTextBox::finish() {
     return ret;
 }
 
-FSWriter::WriterImpl::SLineText::~SLineText() {
+Writer::WriterImpl::SLineText::~SLineText() {
     for (std::list<SChar>::iterator it=letra.begin(),kt=letra.end();it!=kt;++it) {
         if (it->p) {
             delete it->p;

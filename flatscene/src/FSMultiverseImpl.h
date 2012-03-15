@@ -5,7 +5,7 @@
 
 namespace flatscene {
 
-struct FSMultiverse::MultiverseImpl {
+struct Multiverse::MultiverseImpl {
     UniverseCollection unis;
 
     bool working;
