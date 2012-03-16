@@ -69,7 +69,7 @@ namespace flatscene {
         void put ( Point ptDst , Uint8 flags=0) const;
     private:
         struct SpriteImpl;
-        //const std::unique_ptr<SpriteImpl> _impl;
+        Pimpl<SpriteImpl> _impl;
     };
 
 } // flatscene

@@ -1,4 +1,4 @@
-#include "FSCanvas.h"
+#include "FSCanvasImpl.h"
 #include "FSLibrary.h"
 #include "FSScreenImpl.h"
 

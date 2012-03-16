@@ -10,7 +10,6 @@ Sprite::Sprite() {}
 
 Sprite::Sprite ( Canvas&& pSurface, Point zerocpSource) 
     : Canvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
-    //, _impl(new SpriteImpl) 
 {}
 
 Sprite::Sprite(Sprite&& spt) 
