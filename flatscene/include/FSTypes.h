@@ -7,6 +7,7 @@
 namespace flatscene {
 
     typedef double Float;
+    typedef unsigned char Byte;
 
     typedef Point2D<int> Point;
     typedef Point2D<Float> FloatPoint;

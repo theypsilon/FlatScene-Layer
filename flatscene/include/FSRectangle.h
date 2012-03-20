@@ -1,7 +1,6 @@
 #ifndef __RECTANGLE_H__
 #define __RECTANGLE_H__
 
-#include "SDL.h"
 #include "FSPoint.h"
 
 namespace flatscene {
@@ -39,10 +38,6 @@ namespace flatscene {
         void setY(T ny) { y = ny; }
         void setW(T nw) { w = nw; }
         void setH(T nh) { h = nh; }
-
-        inline operator SDL_Rect() const {
-            return SDL_Rect(x,y,w,h);
-        }
 
         inline operator Point2D<T>() const {
             return Point2D<T>(x,y);
