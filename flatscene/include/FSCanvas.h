@@ -33,22 +33,10 @@ namespace flatscene {
     class Canvas {
     private:
         struct CanvasImpl;
-        Pimpl<CanvasImpl> _impl;
-
-        GLuint tex;
-        Uint32 w, h;                /* Read-only */
-        int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
-        Uint8 bpp;
-        SDL_Surface* sdl_surf; // NULL or not null, thats the question.
+        std::unique_ptr<CanvasImpl> _impl;
 
         Canvas ( const Canvas& ); //undefined
-
         Canvas() ;
-        Canvas( const SCanvas& canvas ) ;
-    
-    
-
-        void clearSurface () ;
 
         friend class FSTextBox;
         friend class Sprite;
@@ -60,9 +48,6 @@ namespace flatscene {
         static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
         static inline Uint32 pow2 (Uint32 n);
-
-        mutable std::list<std::function<void(void)>> initCallbackList;
-        mutable std::list<std::function<void(void)>> endCallbackList;
 
     public:
         ~Canvas( ) ;

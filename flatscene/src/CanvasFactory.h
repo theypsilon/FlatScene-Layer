@@ -2,7 +2,7 @@
 #define __FS_CANVAS_FACTORY__
 
 #include "FSLibrary.h"
-#include "FSCanvas.h"
+#include "FSCanvasImpl.h"
 
 namespace flatscene {
 
@@ -14,7 +14,7 @@ namespace flatscene {
         if (pow2(mode) != mode)
             Library::I().Error("CCanvas::LoadIMG -> modo erroneo.");
 
-        Canvas& pSurface = static_cast<T&>(newCanvas);
+        CanvasImpl& pSurface = (static_cast<Canvas&>(newCanvas))._impl.operator*();
 
         SDL_Surface* image;
         SDL_Rect area;

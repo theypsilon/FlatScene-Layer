@@ -12,7 +12,6 @@
 
 #include "XMLHelper.h"
 #include "CanvasFactory.h"
-#include "FSCanvasImpl.h"
 #include "FSSpriteImpl.h"
 
 namespace flatscene {

@@ -2,6 +2,7 @@
 #define __FS_SCREEN_IMPL__
 
 #include "FSScreen.h"
+#include "FSCanvasImpl.h"
 
 namespace flatscene {
 
@@ -98,7 +99,7 @@ struct Screen::ScreenImpl {
         GLuint tex;
         Uint8 flags;
 
-        SRenderCanvas(const Canvas& canvas, Uint8 flags)
+        SRenderCanvas(const Canvas::CanvasImpl& canvas, Uint8 flags)
         : relW((Float)(canvas.w2/canvas.w)), relH((Float)(canvas.h2/canvas.h)),
         w2(canvas.w2), h2(canvas.h2), tex(canvas.tex), flags(flags) {}
 

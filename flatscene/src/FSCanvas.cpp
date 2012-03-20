@@ -4,52 +4,22 @@
 
 #include "debugfuncs.h"
 
-#include <exception>
+#include "FSException.h"
 
 namespace flatscene {
 
-Canvas::Canvas() {}
-
-Canvas::Canvas( const SCanvas& canvas )
-: bpp(canvas.bpp)
-, h(canvas.h)
-, h2(canvas.h2)
-, w(canvas.w)
-, w2(canvas.w2)
-, tex(canvas.tex)
-, sdl_surf(canvas.sdl_surf)
+Canvas::Canvas() 
+    : _impl(new CanvasImpl)
 {}
 
 Canvas::Canvas( Canvas&& pSurface ) 
-: endCallbackList(std::move(pSurface.endCallbackList))
-, initCallbackList(std::move(pSurface.initCallbackList)) 
-, bpp(pSurface.bpp)
-, h(pSurface.h)
-, h2(pSurface.h2)
-, w(pSurface.w)
-, w2(pSurface.w2)
-, tex(pSurface.tex)
-, sdl_surf(pSurface.sdl_surf) {
-    pSurface.clearSurface();
+    : _impl(std::move(pSurface._impl)){
 }
 
-Canvas::~Canvas( ) {
-
-    if (sdl_surf) 
-        SDL_FreeSurface(sdl_surf);
-
-    if (h != 0 || w !=0)
-        glDeleteTextures( 1, &tex );
-
-    clearSurface();
-}
-
-void Canvas::clearSurface ( ) {
-    bpp = h = h2 = w = w2 = tex = 0;
-    sdl_surf = nullptr;
-}
+Canvas::~Canvas( ) {}
 
 Uint32 Canvas::getPixel ( int x , int y ) const {
+    SDL_Surface* sdl_surf = _impl->sdl_surf;
     if (sdl_surf && sdl_surf->w > x && sdl_surf->h > y) {
         Uint32 color = 0 ;
         int position = y * sdl_surf->pitch + sdl_surf->format->BytesPerPixel * x ;
@@ -63,14 +33,17 @@ Uint32 Canvas::getPixel ( int x , int y ) const {
 }
 
 int Canvas::getWidth () const {
-    return ( w2 );
+    return ( _impl->w2 );
 }
 
 int Canvas::getHeight () const {
-    return ( h2 ) ;
+    return ( _impl->h2 ) ;
 }
 void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
+
+    auto& initCallbackList = _impl->initCallbackList;
+    auto& endCallbackList = _impl->endCallbackList;
 
     //PUSHMATRIX
 
@@ -91,7 +64,7 @@ void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
     // PAINT FLOATCANVAS
 
     Screen::I()._impl->graphicMaterial.push_back(
-        new Screen::ScreenImpl::SRenderCanvas(*this,flags)
+        new Screen::ScreenImpl::SRenderCanvas(*this->_impl,flags)
     );
 
     // USER DEFINED EFFECTS OUT
@@ -170,6 +143,9 @@ void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 void Canvas::put ( const Point& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
 
+    auto& initCallbackList = _impl->initCallbackList;
+    auto& endCallbackList = _impl->endCallbackList;
+
     //PUSHMATRIX
 
     Screen::I().pushMatrix();
@@ -187,7 +163,7 @@ void Canvas::put ( const Point& ptDst, Uint8 flags) const {
     // PAINT FLOATCANVAS
 
     Screen::I()._impl->graphicMaterial.push_back(
-        new Screen::ScreenImpl::SRenderCanvas(*this,flags)
+        new Screen::ScreenImpl::SRenderCanvas(*this->_impl,flags)
     );
 
     // USER DEFINED EFFECTS OUT
@@ -324,19 +300,16 @@ SDL_Surface* Canvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 Canvas Canvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
     if (pow2(mode) != mode)
-        Library::I().Error("CCanvas::LoadIMG -> modo erroneo.");
+        throw Exception("CCanvas::LoadIMG -> modo erroneo.",__LINE__);
 
-    Canvas pSurface;
+    Canvas retSurface;
+    CanvasImpl& pSurface = *retSurface._impl;
 
     SDL_Surface* image;
     SDL_Rect area;
 
-    if (surface == nullptr) {
-        Library::I().Error("CCanvas::LoadIMG -> image Null.");
-        pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
-        pSurface.sdl_surf = nullptr;
-        return pSurface;
-    }
+    if (surface == nullptr)
+        throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
     
     pSurface.w2 = surface->w;
     pSurface.h2 = surface->h;
@@ -370,11 +343,8 @@ Canvas Canvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
                   0x0000ff00,
                   0x000000ff);
         #endif
-        if (image == NULL) {
-            Library::I().Error("CCanvas::LoadIMG -> image Null.");
-            return pSurface;
-        }
-
+        if (image == NULL)
+            throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
 
         saved_flags = surface->flags&(SDL_SRCALPHA|SDL_RLEACCELOK);
         saved_alpha = surface->format->alpha;
@@ -538,7 +508,7 @@ Canvas Canvas::toSCanvas( SDL_Surface* surface, Uint8 mode, GLint filter) {
 
     pSurface.sdl_surf=surface;
 
-    return pSurface;
+    return retSurface;
 }
 
 
@@ -552,7 +522,7 @@ Uint32 Canvas::pow2 (Uint32 n) {
 
 int Canvas::rotate(Float angle, Float x, Float y, Float z) const {
 
-    initCallbackList.push_back([=](){
+    _impl->initCallbackList.push_back([=](){
         Screen::I().rotate(angle,x,y,z);
     });
 
@@ -560,7 +530,7 @@ int Canvas::rotate(Float angle, Float x, Float y, Float z) const {
 }
 int Canvas::translate(Float x, Float y, Float z) const {
 
-    initCallbackList.push_back([=](){
+    _impl->initCallbackList.push_back([=](){
         Screen::I().translate(x,y,z);
     });
 
@@ -568,7 +538,7 @@ int Canvas::translate(Float x, Float y, Float z) const {
 }
 int Canvas::scale(Float x, Float y, Float z) const {
 
-    initCallbackList.push_back([=](){
+    _impl->initCallbackList.push_back([=](){
         Screen::I().scale(x,y,z);
     });
 
@@ -582,7 +552,7 @@ int Canvas::color(Float red, Float green, Float blue, Float alpha) const {
     if (blue > 1.0) blue = 1.0;
     if (alpha > 1.0) alpha = 1.0;
 
-    initCallbackList.push_back([=](){
+    _impl->initCallbackList.push_back([=](){
         Screen::I().color(red,green,blue,alpha);
     });
 
@@ -591,7 +561,7 @@ int Canvas::color(Float red, Float green, Float blue, Float alpha) const {
     blue = Screen::I()._impl->blue;//2.0 - blue;
     alpha =  Screen::I()._impl->alpha;//2.0 - alpha;
 
-    endCallbackList.push_back([=](){
+    _impl->endCallbackList.push_back([=](){
         Screen::I().color(red,green,blue,alpha);
     });
 
