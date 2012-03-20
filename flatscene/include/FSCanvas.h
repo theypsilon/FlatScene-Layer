@@ -6,10 +6,6 @@
     #include <windows.h>
 #endif
 
-#include "GL/gl.h"          // Librer�a OpenGL32
-#include "GL/glu.h"
-#include "SDL.h"
-#include "SDL_image.h"
 #include "FSdefinitions.h"
 #include "FSTypes.h"
 #include "FSColor.h"
@@ -22,13 +18,10 @@
 
 namespace flatscene {
 
-    typedef struct {
-        GLuint tex;
-        Uint32 w, h;                /* Read-only */
-        int w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
-        Uint8 bpp;
-        SDL_Surface* sdl_surf; // NULL or not null, thats the question.
-    }SCanvas;
+    enum GraphicFilter {
+        NEAREST,
+        LINEAR
+    };
 
     class Canvas {
     private:
@@ -47,16 +40,13 @@ namespace flatscene {
 
         static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
 
-        static inline Uint32 pow2 (Uint32 n);
-
     public:
         ~Canvas( ) ;
 
     public:
         Canvas( Canvas&& pSurface ) ;
 
-        static Canvas toSCanvas ( SDL_Surface* , Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
-        template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GLint filter=GL_NEAREST);
+        template <class T=Canvas> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GraphicFilter filter=NEAREST);
         // Funciona s�lo si hay SDL_Surface
         Uint32 getPixel ( int x , int y ) const;
 

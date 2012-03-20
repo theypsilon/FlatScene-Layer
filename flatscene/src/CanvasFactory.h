@@ -6,25 +6,29 @@
 
 namespace flatscene {
 
-    template <class T> T Canvas::createCanvas(SDL_Surface* surface, Uint8 mode, GLint filter) {
+    template <class T> T Canvas::createCanvas(SDL_Surface* surface, Uint8 mode, GraphicFilter filter) {
         static_assert(/*std::is_trivially_constructible<T>::value && */std::is_base_of<Canvas,T>::value,"Bad Canvas type");
+
+        auto pow2 = [](unsigned int n) {
+            unsigned int c=1;
+            while (c < n) 
+                c<<=1;
+
+            return c;
+        };
 
         T newCanvas;
 
         if (pow2(mode) != mode)
-            Library::I().Error("CCanvas::LoadIMG -> modo erroneo.");
+            throw Exception("CCanvas::LoadIMG -> modo erroneo.",__LINE__);
 
-        CanvasImpl& pSurface = (static_cast<Canvas&>(newCanvas))._impl.operator*();
+        CanvasImpl& pSurface = * static_cast<Canvas&>(newCanvas)._impl;
 
         SDL_Surface* image;
         SDL_Rect area;
 
-        if (surface == nullptr) {
-            Library::I().Error("CCanvas::LoadIMG -> image Null.");
-            pSurface.w = pSurface.h = pSurface.bpp = pSurface.w2 = pSurface.h2 = pSurface.tex = 0;
-            pSurface.sdl_surf = nullptr;
-            return newCanvas;
-        }
+        if (surface == nullptr)
+            throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
     
         pSurface.w2 = surface->w;
         pSurface.h2 = surface->h;
@@ -58,10 +62,8 @@ namespace flatscene {
                       0x0000ff00,
                       0x000000ff);
             #endif
-            if (image == NULL) {
-                Library::I().Error("CCanvas::LoadIMG -> image Null.");
-                return newCanvas;
-            }
+            if (image == NULL)
+                throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
 
 
             saved_flags = surface->flags&(SDL_SRCALPHA|SDL_RLEACCELOK);
@@ -182,13 +184,9 @@ namespace flatscene {
 
             // Bind the texture object
             glBindTexture( GL_TEXTURE_2D,pSurface.tex );
-        
-            // Set the texture's stretching properties
-            if (filter != GL_NEAREST || filter != GL_LINEAR)
-                filter = GL_NEAREST;
 
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter);
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter);
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST);
             glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
             glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
         

@@ -196,7 +196,7 @@ void Writer::WriterImpl::FSTextBox::createBox() {
     SDL_FreeSurface(aux_surf);
     SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
 
-    box = new Canvas(Canvas::toSCanvas(surface));
+    box = new Canvas(Canvas::createCanvas(surface));
 }
 
 int Writer::WriterImpl::FSTextBox::finish() {

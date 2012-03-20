@@ -1,6 +1,11 @@
 #ifndef __FS_CANVAS_IMPL__
 #define __FS_CANVAS_IMPL__
 
+#include "GL/gl.h"          // Librer�a OpenGL32
+#include "GL/glu.h"
+#include "SDL.h"
+#include "SDL_image.h"
+
 #include "FSCanvas.h"
 
 namespace flatscene {
