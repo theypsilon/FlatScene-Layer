@@ -47,12 +47,12 @@ namespace flatscene {
         static Color Cyan(Byte shade=255);
         static Color Magenta(Byte shade=255);
 
-        static Color DarkRed(Byte shade=128)        { return Red(shade) }
-        static Color DarkGreen(Byte shade=128)      { return Green(shade) }
-        static Color DarkBlue(Byte shade=128)       { return Blue(shade) }
-        static Color DarkYellow(Byte shade=128)     { return Yellow(shade) }
-        static Color DarkCyan(Byte shade=128)       { return Cyan(shade) }
-        static Color DarkMagenta(Byte shade=128)    { return Magenta(shade) }
+        static Color DarkRed(Byte shade=128)        { return Red(shade); }
+        static Color DarkGreen(Byte shade=128)      { return Green(shade); }
+        static Color DarkBlue(Byte shade=128)       { return Blue(shade); }
+        static Color DarkYellow(Byte shade=128)     { return Yellow(shade); }
+        static Color DarkCyan(Byte shade=128)       { return Cyan(shade); }
+        static Color DarkMagenta(Byte shade=128)    { return Magenta(shade); }
 
         static Color LightRed(Byte gray=128,Byte shade=255);
         static Color LightGreen(Byte gray=128,Byte shade=255);

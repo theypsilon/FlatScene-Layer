@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jose/git/FlatScene-Layer
+CMAKE_SOURCE_DIR = /home/elegido/git/FlatScene-Layer
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jose/git/FlatScene-Layer
+CMAKE_BINARY_DIR = /home/elegido/git/FlatScene-Layer
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -66,14 +66,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/jose/git/FlatScene-Layer && $(CMAKE_COMMAND) -E cmake_progress_start /home/jose/git/FlatScene-Layer/CMakeFiles /home/jose/git/FlatScene-Layer/flatscene/CMakeFiles/progress.marks
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jose/git/FlatScene-Layer/CMakeFiles 0
+	cd /home/elegido/git/FlatScene-Layer && $(CMAKE_COMMAND) -E cmake_progress_start /home/elegido/git/FlatScene-Layer/CMakeFiles /home/elegido/git/FlatScene-Layer/flatscene/CMakeFiles/progress.marks
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/elegido/git/FlatScene-Layer/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/clean
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/clean
 .PHONY : clean
 
 # The main clean target
@@ -82,22 +82,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/preinstall
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/preinstall
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/jose/git/FlatScene-Layer && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/elegido/git/FlatScene-Layer && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 flatscene/CMakeFiles/flatscene.dir/rule:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/CMakeFiles/flatscene.dir/rule
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f CMakeFiles/Makefile2 flatscene/CMakeFiles/flatscene.dir/rule
 .PHONY : flatscene/CMakeFiles/flatscene.dir/rule
 
 # Convenience name for target.
@@ -106,7 +106,7 @@ flatscene: flatscene/CMakeFiles/flatscene.dir/rule
 
 # fast build rule for target.
 flatscene/fast:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/build
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/build
 .PHONY : flatscene/fast
 
 src/FSActor.o: src/FSActor.cpp.o
@@ -114,7 +114,7 @@ src/FSActor.o: src/FSActor.cpp.o
 
 # target to build an object file
 src/FSActor.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSActor.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSActor.cpp.o
 .PHONY : src/FSActor.cpp.o
 
 src/FSActor.i: src/FSActor.cpp.i
@@ -122,7 +122,7 @@ src/FSActor.i: src/FSActor.cpp.i
 
 # target to preprocess a source file
 src/FSActor.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSActor.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSActor.cpp.i
 .PHONY : src/FSActor.cpp.i
 
 src/FSActor.s: src/FSActor.cpp.s
@@ -130,7 +130,7 @@ src/FSActor.s: src/FSActor.cpp.s
 
 # target to generate assembly for a file
 src/FSActor.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSActor.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSActor.cpp.s
 .PHONY : src/FSActor.cpp.s
 
 src/FSCamera.o: src/FSCamera.cpp.o
@@ -138,7 +138,7 @@ src/FSCamera.o: src/FSCamera.cpp.o
 
 # target to build an object file
 src/FSCamera.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCamera.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCamera.cpp.o
 .PHONY : src/FSCamera.cpp.o
 
 src/FSCamera.i: src/FSCamera.cpp.i
@@ -146,7 +146,7 @@ src/FSCamera.i: src/FSCamera.cpp.i
 
 # target to preprocess a source file
 src/FSCamera.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCamera.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCamera.cpp.i
 .PHONY : src/FSCamera.cpp.i
 
 src/FSCamera.s: src/FSCamera.cpp.s
@@ -154,7 +154,7 @@ src/FSCamera.s: src/FSCamera.cpp.s
 
 # target to generate assembly for a file
 src/FSCamera.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCamera.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCamera.cpp.s
 .PHONY : src/FSCamera.cpp.s
 
 src/FSCanvas.o: src/FSCanvas.cpp.o
@@ -162,7 +162,7 @@ src/FSCanvas.o: src/FSCanvas.cpp.o
 
 # target to build an object file
 src/FSCanvas.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCanvas.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCanvas.cpp.o
 .PHONY : src/FSCanvas.cpp.o
 
 src/FSCanvas.i: src/FSCanvas.cpp.i
@@ -170,7 +170,7 @@ src/FSCanvas.i: src/FSCanvas.cpp.i
 
 # target to preprocess a source file
 src/FSCanvas.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCanvas.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCanvas.cpp.i
 .PHONY : src/FSCanvas.cpp.i
 
 src/FSCanvas.s: src/FSCanvas.cpp.s
@@ -178,7 +178,7 @@ src/FSCanvas.s: src/FSCanvas.cpp.s
 
 # target to generate assembly for a file
 src/FSCanvas.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCanvas.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSCanvas.cpp.s
 .PHONY : src/FSCanvas.cpp.s
 
 src/FSColor.o: src/FSColor.cpp.o
@@ -186,7 +186,7 @@ src/FSColor.o: src/FSColor.cpp.o
 
 # target to build an object file
 src/FSColor.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSColor.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSColor.cpp.o
 .PHONY : src/FSColor.cpp.o
 
 src/FSColor.i: src/FSColor.cpp.i
@@ -194,7 +194,7 @@ src/FSColor.i: src/FSColor.cpp.i
 
 # target to preprocess a source file
 src/FSColor.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSColor.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSColor.cpp.i
 .PHONY : src/FSColor.cpp.i
 
 src/FSColor.s: src/FSColor.cpp.s
@@ -202,7 +202,7 @@ src/FSColor.s: src/FSColor.cpp.s
 
 # target to generate assembly for a file
 src/FSColor.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSColor.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSColor.cpp.s
 .PHONY : src/FSColor.cpp.s
 
 src/FSEngine.o: src/FSEngine.cpp.o
@@ -210,7 +210,7 @@ src/FSEngine.o: src/FSEngine.cpp.o
 
 # target to build an object file
 src/FSEngine.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSEngine.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSEngine.cpp.o
 .PHONY : src/FSEngine.cpp.o
 
 src/FSEngine.i: src/FSEngine.cpp.i
@@ -218,7 +218,7 @@ src/FSEngine.i: src/FSEngine.cpp.i
 
 # target to preprocess a source file
 src/FSEngine.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSEngine.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSEngine.cpp.i
 .PHONY : src/FSEngine.cpp.i
 
 src/FSEngine.s: src/FSEngine.cpp.s
@@ -226,7 +226,7 @@ src/FSEngine.s: src/FSEngine.cpp.s
 
 # target to generate assembly for a file
 src/FSEngine.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSEngine.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSEngine.cpp.s
 .PHONY : src/FSEngine.cpp.s
 
 src/FSException.o: src/FSException.cpp.o
@@ -234,7 +234,7 @@ src/FSException.o: src/FSException.cpp.o
 
 # target to build an object file
 src/FSException.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSException.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSException.cpp.o
 .PHONY : src/FSException.cpp.o
 
 src/FSException.i: src/FSException.cpp.i
@@ -242,7 +242,7 @@ src/FSException.i: src/FSException.cpp.i
 
 # target to preprocess a source file
 src/FSException.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSException.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSException.cpp.i
 .PHONY : src/FSException.cpp.i
 
 src/FSException.s: src/FSException.cpp.s
@@ -250,7 +250,7 @@ src/FSException.s: src/FSException.cpp.s
 
 # target to generate assembly for a file
 src/FSException.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSException.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSException.cpp.s
 .PHONY : src/FSException.cpp.s
 
 src/FSImages.o: src/FSImages.cpp.o
@@ -258,7 +258,7 @@ src/FSImages.o: src/FSImages.cpp.o
 
 # target to build an object file
 src/FSImages.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSImages.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSImages.cpp.o
 .PHONY : src/FSImages.cpp.o
 
 src/FSImages.i: src/FSImages.cpp.i
@@ -266,7 +266,7 @@ src/FSImages.i: src/FSImages.cpp.i
 
 # target to preprocess a source file
 src/FSImages.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSImages.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSImages.cpp.i
 .PHONY : src/FSImages.cpp.i
 
 src/FSImages.s: src/FSImages.cpp.s
@@ -274,7 +274,7 @@ src/FSImages.s: src/FSImages.cpp.s
 
 # target to generate assembly for a file
 src/FSImages.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSImages.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSImages.cpp.s
 .PHONY : src/FSImages.cpp.s
 
 src/FSLibrary.o: src/FSLibrary.cpp.o
@@ -282,7 +282,7 @@ src/FSLibrary.o: src/FSLibrary.cpp.o
 
 # target to build an object file
 src/FSLibrary.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSLibrary.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSLibrary.cpp.o
 .PHONY : src/FSLibrary.cpp.o
 
 src/FSLibrary.i: src/FSLibrary.cpp.i
@@ -290,7 +290,7 @@ src/FSLibrary.i: src/FSLibrary.cpp.i
 
 # target to preprocess a source file
 src/FSLibrary.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSLibrary.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSLibrary.cpp.i
 .PHONY : src/FSLibrary.cpp.i
 
 src/FSLibrary.s: src/FSLibrary.cpp.s
@@ -298,7 +298,7 @@ src/FSLibrary.s: src/FSLibrary.cpp.s
 
 # target to generate assembly for a file
 src/FSLibrary.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSLibrary.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSLibrary.cpp.s
 .PHONY : src/FSLibrary.cpp.s
 
 src/FSMultiverse.o: src/FSMultiverse.cpp.o
@@ -306,7 +306,7 @@ src/FSMultiverse.o: src/FSMultiverse.cpp.o
 
 # target to build an object file
 src/FSMultiverse.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSMultiverse.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSMultiverse.cpp.o
 .PHONY : src/FSMultiverse.cpp.o
 
 src/FSMultiverse.i: src/FSMultiverse.cpp.i
@@ -314,7 +314,7 @@ src/FSMultiverse.i: src/FSMultiverse.cpp.i
 
 # target to preprocess a source file
 src/FSMultiverse.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSMultiverse.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSMultiverse.cpp.i
 .PHONY : src/FSMultiverse.cpp.i
 
 src/FSMultiverse.s: src/FSMultiverse.cpp.s
@@ -322,7 +322,7 @@ src/FSMultiverse.s: src/FSMultiverse.cpp.s
 
 # target to generate assembly for a file
 src/FSMultiverse.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSMultiverse.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSMultiverse.cpp.s
 .PHONY : src/FSMultiverse.cpp.s
 
 src/FSScreen.o: src/FSScreen.cpp.o
@@ -330,7 +330,7 @@ src/FSScreen.o: src/FSScreen.cpp.o
 
 # target to build an object file
 src/FSScreen.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreen.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreen.cpp.o
 .PHONY : src/FSScreen.cpp.o
 
 src/FSScreen.i: src/FSScreen.cpp.i
@@ -338,7 +338,7 @@ src/FSScreen.i: src/FSScreen.cpp.i
 
 # target to preprocess a source file
 src/FSScreen.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreen.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreen.cpp.i
 .PHONY : src/FSScreen.cpp.i
 
 src/FSScreen.s: src/FSScreen.cpp.s
@@ -346,7 +346,7 @@ src/FSScreen.s: src/FSScreen.cpp.s
 
 # target to generate assembly for a file
 src/FSScreen.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreen.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreen.cpp.s
 .PHONY : src/FSScreen.cpp.s
 
 src/FSScreenReload.o: src/FSScreenReload.cpp.o
@@ -354,7 +354,7 @@ src/FSScreenReload.o: src/FSScreenReload.cpp.o
 
 # target to build an object file
 src/FSScreenReload.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreenReload.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreenReload.cpp.o
 .PHONY : src/FSScreenReload.cpp.o
 
 src/FSScreenReload.i: src/FSScreenReload.cpp.i
@@ -362,7 +362,7 @@ src/FSScreenReload.i: src/FSScreenReload.cpp.i
 
 # target to preprocess a source file
 src/FSScreenReload.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreenReload.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreenReload.cpp.i
 .PHONY : src/FSScreenReload.cpp.i
 
 src/FSScreenReload.s: src/FSScreenReload.cpp.s
@@ -370,7 +370,7 @@ src/FSScreenReload.s: src/FSScreenReload.cpp.s
 
 # target to generate assembly for a file
 src/FSScreenReload.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreenReload.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSScreenReload.cpp.s
 .PHONY : src/FSScreenReload.cpp.s
 
 src/FSSprite.o: src/FSSprite.cpp.o
@@ -378,7 +378,7 @@ src/FSSprite.o: src/FSSprite.cpp.o
 
 # target to build an object file
 src/FSSprite.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSprite.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSprite.cpp.o
 .PHONY : src/FSSprite.cpp.o
 
 src/FSSprite.i: src/FSSprite.cpp.i
@@ -386,7 +386,7 @@ src/FSSprite.i: src/FSSprite.cpp.i
 
 # target to preprocess a source file
 src/FSSprite.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSprite.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSprite.cpp.i
 .PHONY : src/FSSprite.cpp.i
 
 src/FSSprite.s: src/FSSprite.cpp.s
@@ -394,7 +394,7 @@ src/FSSprite.s: src/FSSprite.cpp.s
 
 # target to generate assembly for a file
 src/FSSprite.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSprite.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSprite.cpp.s
 .PHONY : src/FSSprite.cpp.s
 
 src/FSSpriteSet.o: src/FSSpriteSet.cpp.o
@@ -402,7 +402,7 @@ src/FSSpriteSet.o: src/FSSpriteSet.cpp.o
 
 # target to build an object file
 src/FSSpriteSet.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSpriteSet.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSpriteSet.cpp.o
 .PHONY : src/FSSpriteSet.cpp.o
 
 src/FSSpriteSet.i: src/FSSpriteSet.cpp.i
@@ -410,7 +410,7 @@ src/FSSpriteSet.i: src/FSSpriteSet.cpp.i
 
 # target to preprocess a source file
 src/FSSpriteSet.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSpriteSet.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSpriteSet.cpp.i
 .PHONY : src/FSSpriteSet.cpp.i
 
 src/FSSpriteSet.s: src/FSSpriteSet.cpp.s
@@ -418,7 +418,7 @@ src/FSSpriteSet.s: src/FSSpriteSet.cpp.s
 
 # target to generate assembly for a file
 src/FSSpriteSet.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSpriteSet.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSSpriteSet.cpp.s
 .PHONY : src/FSSpriteSet.cpp.s
 
 src/FSText.o: src/FSText.cpp.o
@@ -426,7 +426,7 @@ src/FSText.o: src/FSText.cpp.o
 
 # target to build an object file
 src/FSText.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSText.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSText.cpp.o
 .PHONY : src/FSText.cpp.o
 
 src/FSText.i: src/FSText.cpp.i
@@ -434,7 +434,7 @@ src/FSText.i: src/FSText.cpp.i
 
 # target to preprocess a source file
 src/FSText.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSText.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSText.cpp.i
 .PHONY : src/FSText.cpp.i
 
 src/FSText.s: src/FSText.cpp.s
@@ -442,7 +442,7 @@ src/FSText.s: src/FSText.cpp.s
 
 # target to generate assembly for a file
 src/FSText.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSText.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSText.cpp.s
 .PHONY : src/FSText.cpp.s
 
 src/FSTextBox.o: src/FSTextBox.cpp.o
@@ -450,7 +450,7 @@ src/FSTextBox.o: src/FSTextBox.cpp.o
 
 # target to build an object file
 src/FSTextBox.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTextBox.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTextBox.cpp.o
 .PHONY : src/FSTextBox.cpp.o
 
 src/FSTextBox.i: src/FSTextBox.cpp.i
@@ -458,7 +458,7 @@ src/FSTextBox.i: src/FSTextBox.cpp.i
 
 # target to preprocess a source file
 src/FSTextBox.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTextBox.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTextBox.cpp.i
 .PHONY : src/FSTextBox.cpp.i
 
 src/FSTextBox.s: src/FSTextBox.cpp.s
@@ -466,7 +466,7 @@ src/FSTextBox.s: src/FSTextBox.cpp.s
 
 # target to generate assembly for a file
 src/FSTextBox.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTextBox.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTextBox.cpp.s
 .PHONY : src/FSTextBox.cpp.s
 
 src/FSTime.o: src/FSTime.cpp.o
@@ -474,7 +474,7 @@ src/FSTime.o: src/FSTime.cpp.o
 
 # target to build an object file
 src/FSTime.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTime.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTime.cpp.o
 .PHONY : src/FSTime.cpp.o
 
 src/FSTime.i: src/FSTime.cpp.i
@@ -482,7 +482,7 @@ src/FSTime.i: src/FSTime.cpp.i
 
 # target to preprocess a source file
 src/FSTime.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTime.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTime.cpp.i
 .PHONY : src/FSTime.cpp.i
 
 src/FSTime.s: src/FSTime.cpp.s
@@ -490,7 +490,7 @@ src/FSTime.s: src/FSTime.cpp.s
 
 # target to generate assembly for a file
 src/FSTime.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTime.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSTime.cpp.s
 .PHONY : src/FSTime.cpp.s
 
 src/FSUniverse.o: src/FSUniverse.cpp.o
@@ -498,7 +498,7 @@ src/FSUniverse.o: src/FSUniverse.cpp.o
 
 # target to build an object file
 src/FSUniverse.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSUniverse.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSUniverse.cpp.o
 .PHONY : src/FSUniverse.cpp.o
 
 src/FSUniverse.i: src/FSUniverse.cpp.i
@@ -506,7 +506,7 @@ src/FSUniverse.i: src/FSUniverse.cpp.i
 
 # target to preprocess a source file
 src/FSUniverse.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSUniverse.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSUniverse.cpp.i
 .PHONY : src/FSUniverse.cpp.i
 
 src/FSUniverse.s: src/FSUniverse.cpp.s
@@ -514,7 +514,7 @@ src/FSUniverse.s: src/FSUniverse.cpp.s
 
 # target to generate assembly for a file
 src/FSUniverse.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSUniverse.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSUniverse.cpp.s
 .PHONY : src/FSUniverse.cpp.s
 
 src/FSWriter.o: src/FSWriter.cpp.o
@@ -522,7 +522,7 @@ src/FSWriter.o: src/FSWriter.cpp.o
 
 # target to build an object file
 src/FSWriter.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSWriter.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSWriter.cpp.o
 .PHONY : src/FSWriter.cpp.o
 
 src/FSWriter.i: src/FSWriter.cpp.i
@@ -530,7 +530,7 @@ src/FSWriter.i: src/FSWriter.cpp.i
 
 # target to preprocess a source file
 src/FSWriter.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSWriter.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSWriter.cpp.i
 .PHONY : src/FSWriter.cpp.i
 
 src/FSWriter.s: src/FSWriter.cpp.s
@@ -538,7 +538,7 @@ src/FSWriter.s: src/FSWriter.cpp.s
 
 # target to generate assembly for a file
 src/FSWriter.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSWriter.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/FSWriter.cpp.s
 .PHONY : src/FSWriter.cpp.s
 
 src/debugfuncs.o: src/debugfuncs.cpp.o
@@ -546,7 +546,7 @@ src/debugfuncs.o: src/debugfuncs.cpp.o
 
 # target to build an object file
 src/debugfuncs.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/debugfuncs.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/debugfuncs.cpp.o
 .PHONY : src/debugfuncs.cpp.o
 
 src/debugfuncs.i: src/debugfuncs.cpp.i
@@ -554,7 +554,7 @@ src/debugfuncs.i: src/debugfuncs.cpp.i
 
 # target to preprocess a source file
 src/debugfuncs.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/debugfuncs.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/debugfuncs.cpp.i
 .PHONY : src/debugfuncs.cpp.i
 
 src/debugfuncs.s: src/debugfuncs.cpp.s
@@ -562,7 +562,7 @@ src/debugfuncs.s: src/debugfuncs.cpp.s
 
 # target to generate assembly for a file
 src/debugfuncs.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/debugfuncs.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/debugfuncs.cpp.s
 .PHONY : src/debugfuncs.cpp.s
 
 src/tinyxml/tinystr.o: src/tinyxml/tinystr.cpp.o
@@ -570,7 +570,7 @@ src/tinyxml/tinystr.o: src/tinyxml/tinystr.cpp.o
 
 # target to build an object file
 src/tinyxml/tinystr.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinystr.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinystr.cpp.o
 .PHONY : src/tinyxml/tinystr.cpp.o
 
 src/tinyxml/tinystr.i: src/tinyxml/tinystr.cpp.i
@@ -578,7 +578,7 @@ src/tinyxml/tinystr.i: src/tinyxml/tinystr.cpp.i
 
 # target to preprocess a source file
 src/tinyxml/tinystr.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinystr.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinystr.cpp.i
 .PHONY : src/tinyxml/tinystr.cpp.i
 
 src/tinyxml/tinystr.s: src/tinyxml/tinystr.cpp.s
@@ -586,7 +586,7 @@ src/tinyxml/tinystr.s: src/tinyxml/tinystr.cpp.s
 
 # target to generate assembly for a file
 src/tinyxml/tinystr.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinystr.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinystr.cpp.s
 .PHONY : src/tinyxml/tinystr.cpp.s
 
 src/tinyxml/tinyxml.o: src/tinyxml/tinyxml.cpp.o
@@ -594,7 +594,7 @@ src/tinyxml/tinyxml.o: src/tinyxml/tinyxml.cpp.o
 
 # target to build an object file
 src/tinyxml/tinyxml.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxml.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxml.cpp.o
 .PHONY : src/tinyxml/tinyxml.cpp.o
 
 src/tinyxml/tinyxml.i: src/tinyxml/tinyxml.cpp.i
@@ -602,7 +602,7 @@ src/tinyxml/tinyxml.i: src/tinyxml/tinyxml.cpp.i
 
 # target to preprocess a source file
 src/tinyxml/tinyxml.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxml.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxml.cpp.i
 .PHONY : src/tinyxml/tinyxml.cpp.i
 
 src/tinyxml/tinyxml.s: src/tinyxml/tinyxml.cpp.s
@@ -610,7 +610,7 @@ src/tinyxml/tinyxml.s: src/tinyxml/tinyxml.cpp.s
 
 # target to generate assembly for a file
 src/tinyxml/tinyxml.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxml.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxml.cpp.s
 .PHONY : src/tinyxml/tinyxml.cpp.s
 
 src/tinyxml/tinyxmlerror.o: src/tinyxml/tinyxmlerror.cpp.o
@@ -618,7 +618,7 @@ src/tinyxml/tinyxmlerror.o: src/tinyxml/tinyxmlerror.cpp.o
 
 # target to build an object file
 src/tinyxml/tinyxmlerror.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlerror.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlerror.cpp.o
 .PHONY : src/tinyxml/tinyxmlerror.cpp.o
 
 src/tinyxml/tinyxmlerror.i: src/tinyxml/tinyxmlerror.cpp.i
@@ -626,7 +626,7 @@ src/tinyxml/tinyxmlerror.i: src/tinyxml/tinyxmlerror.cpp.i
 
 # target to preprocess a source file
 src/tinyxml/tinyxmlerror.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlerror.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlerror.cpp.i
 .PHONY : src/tinyxml/tinyxmlerror.cpp.i
 
 src/tinyxml/tinyxmlerror.s: src/tinyxml/tinyxmlerror.cpp.s
@@ -634,7 +634,7 @@ src/tinyxml/tinyxmlerror.s: src/tinyxml/tinyxmlerror.cpp.s
 
 # target to generate assembly for a file
 src/tinyxml/tinyxmlerror.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlerror.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlerror.cpp.s
 .PHONY : src/tinyxml/tinyxmlerror.cpp.s
 
 src/tinyxml/tinyxmlparser.o: src/tinyxml/tinyxmlparser.cpp.o
@@ -642,7 +642,7 @@ src/tinyxml/tinyxmlparser.o: src/tinyxml/tinyxmlparser.cpp.o
 
 # target to build an object file
 src/tinyxml/tinyxmlparser.cpp.o:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlparser.cpp.o
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlparser.cpp.o
 .PHONY : src/tinyxml/tinyxmlparser.cpp.o
 
 src/tinyxml/tinyxmlparser.i: src/tinyxml/tinyxmlparser.cpp.i
@@ -650,7 +650,7 @@ src/tinyxml/tinyxmlparser.i: src/tinyxml/tinyxmlparser.cpp.i
 
 # target to preprocess a source file
 src/tinyxml/tinyxmlparser.cpp.i:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlparser.cpp.i
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlparser.cpp.i
 .PHONY : src/tinyxml/tinyxmlparser.cpp.i
 
 src/tinyxml/tinyxmlparser.s: src/tinyxml/tinyxmlparser.cpp.s
@@ -658,7 +658,7 @@ src/tinyxml/tinyxmlparser.s: src/tinyxml/tinyxmlparser.cpp.s
 
 # target to generate assembly for a file
 src/tinyxml/tinyxmlparser.cpp.s:
-	cd /home/jose/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlparser.cpp.s
+	cd /home/elegido/git/FlatScene-Layer && $(MAKE) -f flatscene/CMakeFiles/flatscene.dir/build.make flatscene/CMakeFiles/flatscene.dir/src/tinyxml/tinyxmlparser.cpp.s
 .PHONY : src/tinyxml/tinyxmlparser.cpp.s
 
 # Help Target
@@ -750,6 +750,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/jose/git/FlatScene-Layer && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/elegido/git/FlatScene-Layer && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
