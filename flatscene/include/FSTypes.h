@@ -4,6 +4,8 @@
 #include "FSCoordinate.h"
 #include "FSRectangle.h"
 
+#include "SDL.h"
+
 namespace flatscene {
 
     typedef double Float;

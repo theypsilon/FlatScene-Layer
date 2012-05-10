@@ -27,7 +27,7 @@ Byte& Color::G() { return(mg); }
 Byte& Color::B() { return(mb); }
 Byte& Color::A() { return(ma); }
 
-Color& Color::operator=(Color& color) {
+Color& Color::operator=(const Color& color) {
     setR(color.getR());
     setG(color.getG());
     setB(color.getB());
@@ -35,7 +35,7 @@ Color& Color::operator=(Color& color) {
     return(*this);
 }
 
-Color& Color::operator+=(Color& color) {
+Color& Color::operator+=(const Color& color) {
 
     int temp;
 
@@ -54,7 +54,7 @@ Color& Color::operator+=(Color& color) {
     return(*this);
 }
 
-Color& Color::operator-=(Color& color) {
+Color& Color::operator-=(const Color& color) {
 
     int temp;
 
@@ -73,7 +73,7 @@ Color& Color::operator-=(Color& color) {
     return(*this);
 }
 
-Color& Color::operator*=(Color& color) {
+Color& Color::operator*=(const Color& color) {
 
     int temp;
 
@@ -120,7 +120,7 @@ Color& Color::operator/=(int divisor) {
     return(*this);
 }
 
-Color& Color::operator|=(Color& color) {
+Color& Color::operator|=(const Color& color) {
 
     setR(getR()|color.getR());
     setG(getG()|color.getG());
@@ -129,7 +129,7 @@ Color& Color::operator|=(Color& color) {
     return(*this);
 }
 
-Color& Color::operator&=(Color& color) {
+Color& Color::operator&=(const Color& color) {
 
     setR(getR()&color.getR());
     setG(getG()&color.getG());
@@ -138,7 +138,7 @@ Color& Color::operator&=(Color& color) {
     return(*this);
 }
 
-Color& Color::operator^=(Color& color) {
+Color& Color::operator^=(const Color& color) {
 
     setR(getR()^color.getR());
     setG(getG()^color.getG());
@@ -162,10 +162,10 @@ Color Color::LightYellow(Byte gray,Byte shade)  { return (Yellow(shade)|White(gr
 Color Color::LightCyan(Byte gray,Byte shade)    { return (Cyan(shade)|White(gray)); }
 Color Color::LightMagenta(Byte gray,Byte shade) { return (Magenta(shade)|White(gray)); }
 
-Color Color::White()                { return(Color(shade,shade,shade)); }
-Color Color::LightGray(Byte shade)  { return(White(shade)); }
+Color Color::White(Byte shade)                { return(Color(shade,shade,shade)); }
+Color Color::Gray(Byte shade)  { return(White(shade)); }
 Color Color::DarkGray(Byte shade)   { return(White(shade)); }
-Color Color::Black()                { return(White(shade)); }
+Color Color::Black(Byte shade)                { return(White(shade)); }
 
 
 Color operator+(Color& color1,Color& color2) {
@@ -224,15 +224,8 @@ Color operator/(Color& color,int divisor) {
 }
 
 
-Color operator|(Color& color1,Color& color2) {
-
-    Color color3;
-
-    color3=color1;
-
-    color3|=color2;
-
-    return(color3);
+Color operator|(Color color1,const Color& color2) {
+    return(color1|=color2);
 }
 
 Color operator&(Color& color1,Color& color2) {

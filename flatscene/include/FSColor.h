@@ -11,7 +11,7 @@ namespace flatscene {
     public:
 
         Color(Byte r=0,Byte g=0,Byte b=0, Byte a=0);
-        Color(const Color& Color);
+        Color(const Color& color);
         virtual ~Color();
 
         Byte getR() const;
@@ -29,15 +29,15 @@ namespace flatscene {
         Byte& B();
         Byte& A();
 
-        Color& operator=(Color& Color);
-        Color& operator+=(Color& Color);
-        Color& operator-=(Color& Color);
-        Color& operator*=(Color& Color);
+        Color& operator=(const Color& color);
+        Color& operator+=(const Color& color);
+        Color& operator-=(const Color& color);
+        Color& operator*=(const Color& color);
         Color& operator*=(int Multiplier);
         Color& operator/=(int Divisor);
-        Color& operator|=(Color& Color);
-        Color& operator&=(Color& Color);
-        Color& operator^=(Color& Color);
+        Color& operator|=(const Color& color);
+        Color& operator&=(const Color& color);
+        Color& operator^=(const Color& color);
 
         static Color Red(Byte shade=255);
         static Color Green(Byte shade=255);
@@ -67,19 +67,19 @@ namespace flatscene {
         static Color Black(Byte shade=0);
     };
 
-    Color operator+(Color& Color1,Color& Color2);
-    Color operator-(Color& Color1,Color& Color2);
-    Color operator*(Color& Color1,Color& Color2);
-    Color operator*(Color& Color,int Multiplier);
-    Color operator/(Color& Color,int Divisor);
+    Color operator+(Color& color1,Color& color2);
+    Color operator-(Color& color1,Color& color2);
+    Color operator*(Color& color1,Color& color2);
+    Color operator*(Color& color,int Multiplier);
+    Color operator/(Color& color,int Divisor);
 
-    Color operator|(Color& Color1,Color& Color2);
-    Color operator&(Color& Color1,Color& Color2);
-    Color operator^(Color& Color1,Color& Color2);
-    Color operator~(Color& Color);
+    Color operator|(Color color1,const Color& color2);
+    Color operator&(Color& color1,Color& color2);
+    Color operator^(Color& color1,Color& color2);
+    Color operator~(Color& color);
 
-    bool operator==(Color& Color1,Color& Color2);
-    bool operator!=(Color& Color1,Color& Color2);
+    bool operator==(Color& color1,Color& color2);
+    bool operator!=(Color& color1,Color& color2);
 
 } // flatscene
 
