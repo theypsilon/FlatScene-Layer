@@ -67,19 +67,19 @@ namespace flatscene {
         static Color Black(Byte shade=0);
     };
 
-    Color operator+(Color& color1,Color& color2);
-    Color operator-(Color& color1,Color& color2);
-    Color operator*(Color& color1,Color& color2);
-    Color operator*(Color& color,int Multiplier);
-    Color operator/(Color& color,int Divisor);
+    Color operator+(Color color1,const Color& color2);
+    Color operator-(Color color1,const Color& color2);
+    Color operator*(Color color1,const Color& color2);
+    Color operator*(Color color,int Multiplier);
+    Color operator/(Color color,int Divisor);
 
     Color operator|(Color color1,const Color& color2);
-    Color operator&(Color& color1,Color& color2);
-    Color operator^(Color& color1,Color& color2);
-    Color operator~(Color& color);
+    Color operator&(Color color1,const Color& color2);
+    Color operator^(Color color1,const Color& color2);
+    Color operator~(Color color);
 
-    bool operator==(Color& color1,Color& color2);
-    bool operator!=(Color& color1,Color& color2);
+    bool operator==(const Color& color1,const Color& color2);
+    bool operator!=(const Color& color1,const Color& color2);
 
 } // flatscene
 

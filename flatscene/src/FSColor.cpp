@@ -147,13 +147,13 @@ Color& Color::operator^=(const Color& color) {
     return(*this);
 }
 
-Color Color::Red(Byte shade)        { return(Color(shade,0,0)); }
-Color Color::Green(Byte shade)      { return(Color(0,shade,0)); }
-Color Color::Blue(Byte shade)       { return(Color(0,0,shade)); }
+Color Color::Red(Byte shade)        { return (Color(shade,0,0)); }
+Color Color::Green(Byte shade)      { return (Color(0,shade,0)); }
+Color Color::Blue(Byte shade)       { return (Color(0,0,shade)); }
 
-Color Color::Yellow(Byte shade)     { return(Red(shade)|Green(shade)); }
-Color Color::Cyan(Byte shade)       { return(Green(shade)|Blue(shade)); }
-Color Color::Magenta(Byte shade)    { return(Red(shade)|Blue(shade)); }
+Color Color::Yellow(Byte shade)     { return (Red(shade)|Green(shade)); }
+Color Color::Cyan(Byte shade)       { return (Green(shade)|Blue(shade)); }
+Color Color::Magenta(Byte shade)    { return (Red(shade)|Blue(shade)); }
 
 Color Color::LightRed(Byte gray,Byte shade)     { return (Red(shade)|White(gray)); }
 Color Color::LightGreen(Byte gray,Byte shade)   { return (Green(shade)|White(gray)); }
@@ -162,112 +162,26 @@ Color Color::LightYellow(Byte gray,Byte shade)  { return (Yellow(shade)|White(gr
 Color Color::LightCyan(Byte gray,Byte shade)    { return (Cyan(shade)|White(gray)); }
 Color Color::LightMagenta(Byte gray,Byte shade) { return (Magenta(shade)|White(gray)); }
 
-Color Color::White(Byte shade)                { return(Color(shade,shade,shade)); }
-Color Color::Gray(Byte shade)  { return(White(shade)); }
-Color Color::DarkGray(Byte shade)   { return(White(shade)); }
-Color Color::Black(Byte shade)                { return(White(shade)); }
+Color Color::White(Byte shade)      { return (Color(shade,shade,shade)); }
+Color Color::Gray(Byte shade)       { return (White(shade)); }
+Color Color::DarkGray(Byte shade)   { return (White(shade)); }
+Color Color::Black(Byte shade)      { return (White(shade)); }
 
 
-Color operator+(Color& color1,Color& color2) {
+Color operator+(Color color1,const Color& color2) { return color1+=color2; }
+Color operator-(Color color1,const Color& color2) { return color1-=color2; }
+Color operator*(Color color1,const Color& color2) { return color1*=color2; }
+Color operator*(Color color,int multiplier)       { return color*=multiplier; }
+Color operator/(Color color,int divisor)          { return color/=divisor; }
+Color operator|(Color color1,const Color& color2) { return color1|=color2; }
+Color operator&(Color color1,const Color& color2) { return color1&=color2; }
+Color operator^(Color color1,const Color& color2) { return color^=color2; }
+Color operator~(Color color)                      { return color^=Color(255,255,255); }
 
-    Color color3;
-
-    color3=color1;
-
-    color3+=color2;
-
-    return(color3);
-}
-
-Color operator-(Color& color1,Color& color2) {
-
-    Color color3;
-
-    color3=color1;
-
-    color3-=color2;
-
-    return(color3);
-}
-
-Color operator*(Color& color1,Color& color2) {
-
-    Color color3;
-
-    color3=color1;
-
-    color3*=color2;
-
-    return(color3);
-}
-
-Color operator*(Color& color,int multiplier) {
-
-    Color color3;
-
-    color3=color;
-
-    color3*=multiplier;
-
-    return(color3);
-}
-
-Color operator/(Color& color,int divisor) {
-
-    Color color3;
-
-    color3=color;
-
-    color3/=divisor;
-
-    return(color3);
-}
-
-
-Color operator|(Color color1,const Color& color2) {
-    return(color1|=color2);
-}
-
-Color operator&(Color& color1,Color& color2) {
-
-    Color color3;
-
-    color3=color1;
-
-    color3&=color2;
-
-    return(color3);
-}
-
-Color operator^(Color& color1,Color& color2) {
-
-    Color color3;
-
-    color3=color1;
-
-    color3^=color2;
-
-    return(color3);
-}
-
-Color operator~(Color& color) {
-
-    Color color3;
-
-    color3=color;
-
-    Color color2(255,255,255);
-    color3^=color2;
-
-    return(color3);
-}
-
-bool operator==(Color& color1,Color& color2) {
+bool operator==(const Color& color1,const Color& color2) {
     return(color1.getR()==color2.getR()&&color1.getG()==color2.getG()&&color1.getB()==color2.getB());
 }
 
-bool operator!=(Color& color1,Color& color2) {
-    return(!(color1==color2));
-}
+bool operator!=(const Color& color1,const Color& color2) { return !(color1==color2); }
 
 } // flatscene
