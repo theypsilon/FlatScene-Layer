@@ -46,7 +46,7 @@ namespace flatscene {
     public:
         Canvas( Canvas&& pSurface ) ;
 
-        template <class T=Canvas> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GraphicFilter filter=NEAREST);
+        template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GraphicFilter filter=NEAREST);
         // Funciona s�lo si hay SDL_Surface
         Uint32 getPixel ( int x , int y ) const;
 
