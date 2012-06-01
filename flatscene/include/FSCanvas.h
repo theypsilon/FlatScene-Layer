@@ -1,11 +1,6 @@
 #ifndef __IMAGE_H__
 #define __IMAGE_H__
 
-#ifdef WIN32
-    #define NOMINMAX
-    #include <windows.h>
-#endif
-
 #include "FSdefinitions.h"
 #include "FSTypes.h"
 #include "FSColor.h"

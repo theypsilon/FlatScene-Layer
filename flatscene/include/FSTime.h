@@ -3,7 +3,6 @@
 
 #include <map>
 #include <memory>
-#include "SDL.h"
 #include "FSdefinitions.h"
 
 namespace flatscene {

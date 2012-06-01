@@ -1,6 +1,7 @@
 #ifndef ___DEFINITIONS____
 #define ___DEFINITIONS____
 
+#include "FSIncludes.h"
 
 //OPENGL 1.2
 

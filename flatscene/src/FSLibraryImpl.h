@@ -3,9 +3,6 @@
 
 #include "FSLibrary.h"
 
-#include "GL/gl.h"
-#include "GL/glu.h"
-
 namespace flatscene {
 
 struct Library::LibraryImpl {

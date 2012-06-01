@@ -8,7 +8,7 @@ class IScrollCameraObject :
 private:
 	IScrollObjectCollection*** objects;
 public:
-	IScrollCameraObject(IScrollObjectCollection*** objects,Actor* target,Rectangle* area);
+	IScrollCameraObject(IScrollObjectCollection*** objects,Actor* target,flatscene::Rectangle* area);
 	~IScrollCameraObject(void);
 
 	int refresh();

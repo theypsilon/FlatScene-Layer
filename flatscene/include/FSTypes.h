@@ -1,10 +1,10 @@
 #ifndef __FS_TYPES__
 #define __FS_TYPES__
 
+#include "FSIncludes.h"
+
 #include "FSCoordinate.h"
 #include "FSRectangle.h"
-
-#include "SDL.h"
 
 namespace flatscene {
 

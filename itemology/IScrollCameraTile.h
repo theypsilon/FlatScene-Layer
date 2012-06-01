@@ -19,7 +19,7 @@ private:
 	TileBG** tiles;
 	int tileset;
 public:
-	IScrollCameraTile(TileBG** tiles,Actor* target,Rectangle* area);
+	IScrollCameraTile(TileBG** tiles,Actor* target,flatscene::Rectangle* area);
 	~IScrollCameraTile(void);
 
 	int refresh();

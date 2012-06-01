@@ -1,7 +1,7 @@
 #include "IScrollCameraObject.h"
 
 
-IScrollCameraObject::IScrollCameraObject( IScrollObjectCollection*** objects,Actor* target,Rectangle* area) 
+IScrollCameraObject::IScrollCameraObject( IScrollObjectCollection*** objects,Actor* target,flatscene::Rectangle* area) 
 : Camera(target,area) , objects(objects) {
 
 	if (!objects)

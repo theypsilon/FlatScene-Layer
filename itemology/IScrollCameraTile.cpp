@@ -1,7 +1,7 @@
 #include "IScrollCameraTile.h"
 
 
-IScrollCameraTile::IScrollCameraTile(TileBG** tiles, Actor* target,Rectangle* area) :
+IScrollCameraTile::IScrollCameraTile(TileBG** tiles, Actor* target,flatscene::Rectangle* area) :
 // Se ha de llamar a la clase Base para una correcta inicializaci�n
 Camera(target,area) , tiles(tiles){
 
