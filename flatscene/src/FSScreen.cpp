@@ -1,6 +1,7 @@
 #include "FSScreenImpl.h"
 #include "FSLibrary.h"
 #include "FSEngine.h"
+#include "glAdapter.h"
 
 namespace flatscene {
 
@@ -511,7 +512,7 @@ Screen& FSDraw = Screen::I();
 
 void Screen::ScreenImpl::SRenderLocation::operator()() {
     //glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
-    glViewport(posx,posy,width,height);
+    glViewport((int)posx,(int)posy,(int)width,(int)height);
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
 
@@ -530,8 +531,8 @@ void Screen::ScreenImpl::SRenderLocation::operator()() {
 
         //Opción de perspectiva 1
         gluPerspective(90.0f,width/height,1.0,m_maxZ);
-        glTranslatef(-width/2,height/2,-240.0);
-        glRotatef(180.0,1.0,0.0,0.0);
+        glTranslate(-width/2,height/2,-240.0);
+        glRotate(180.0,1.0,0.0,0.0);
 
         //Opción de perspectiva 2
         //gluPerspective(60.0f,width/height,1.0,400.0);
@@ -553,22 +554,22 @@ void Screen::ScreenImpl::SRenderLocation::operator()() {
 }
 
 void Screen::ScreenImpl::SRenderTranslation::operator()() {
-    glTranslatef(x,y,z);
+    glTranslate(x,y,z);
     delete this;
 }
 
 void Screen::ScreenImpl::SRenderScalation::operator()() {
-    glScalef(x,y,z);
+    glScale(x,y,z);
     delete this;
 }
 
 void Screen::ScreenImpl::SRenderRotation::operator()() {
-    glRotatef(angle,x,y,z);
+    glRotate(angle,x,y,z);
     delete this;
 }
 
 void Screen::ScreenImpl::SRenderColor::operator()() {
-    glColor4f(red,green,blue,alpha);
+    glColor4(red,green,blue,alpha);
     delete this;
 }
 
@@ -587,44 +588,44 @@ void Screen::ScreenImpl::SRenderCanvas::operator()() {
     glBegin(GL_QUADS);
     switch(flags) {
         case 0:
-            glTexCoord2f(0.0f, relH);
-            glVertex2f(0, h2);
-            glTexCoord2f(relW, relH);
-            glVertex2f(w2, h2);
-            glTexCoord2f(relW, 0.0f);
-            glVertex2f(w2, 0);
-            glTexCoord2f(0.0f, 0.0f);
-            glVertex2f(0,0);
+            glTexCoord2(0.0f, relH);
+            glVertex2(0, h2);
+            glTexCoord2(relW, relH);
+            glVertex2(w2, h2);
+            glTexCoord2(relW, 0.0f);
+            glVertex2(w2, 0);
+            glTexCoord2(0.0f, 0.0f);
+            glVertex2(0,0);
             break;
         case 1:
-            glTexCoord2f(relW, relH);
-            glVertex2f(0, h2);
-            glTexCoord2f(0.0f, relH);
-            glVertex2f(w2, h2);
-            glTexCoord2f(0.0f, 0.0f);
-            glVertex2f(w2, 0);
-            glTexCoord2f(relW, 0.0f);
-            glVertex2f(0,0);
+            glTexCoord2(relW, relH);
+            glVertex2(0, h2);
+            glTexCoord2(0.0f, relH);
+            glVertex2(w2, h2);
+            glTexCoord2(0.0f, 0.0f);
+            glVertex2(w2, 0);
+            glTexCoord2(relW, 0.0f);
+            glVertex2(0,0);
             break;
         case 2:
-            glTexCoord2f(0.0f, 0.0f);
-            glVertex2f(0, h2);
-            glTexCoord2f(relW, 0.0f);
-            glVertex2f(w2, h2);
-            glTexCoord2f(relW, relH);
-            glVertex2f(w2, 0);
-            glTexCoord2f(0.0f, relH);
-            glVertex2f(0,0);
+            glTexCoord2(0.0f, 0.0f);
+            glVertex2(0, h2);
+            glTexCoord2(relW, 0.0f);
+            glVertex2(w2, h2);
+            glTexCoord2(relW, relH);
+            glVertex2(w2, 0);
+            glTexCoord2(0.0f, relH);
+            glVertex2(0,0);
             break;
         case 3:
-            glTexCoord2f(relW, 0.0f);
-            glVertex2f(0, h2);
-            glTexCoord2f(0.0f, 0.0f);
-            glVertex2f(w2, h2);
-            glTexCoord2f(0.0f, relH);
-            glVertex2f(w2, 0);
-            glTexCoord2f(relW, relH);
-            glVertex2f(0,0);
+            glTexCoord2(relW, 0.0f);
+            glVertex2(0, h2);
+            glTexCoord2(0.0f, 0.0f);
+            glVertex2(w2, h2);
+            glTexCoord2(0.0f, relH);
+            glVertex2(w2, 0);
+            glTexCoord2(relW, relH);
+            glVertex2(0,0);
             break;
         default:
             break;

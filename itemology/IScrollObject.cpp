@@ -3,61 +3,61 @@
 int IScrollObject::instances = 0;
 
 IScrollObject::IScrollObject() 
-: placeInMA(NULL), Actor("IScrollObject") {
+    : placeInMA(NULL), Actor("IScrollObject") {
 
-	instances++;
+        instances++;
 
-	place.set(0,0,0);
+        place.set(0,0,0);
 
-	// TODO
-	
+        // TODO
+
 }
 IScrollObject::~IScrollObject() {
 
-	instances--;
+    instances--;
 
-	// TODO
+    // TODO
 
 }
 
 int IScrollObject::move() {
 
-	// TODO
+    // TODO
 
-	return EXITO;
+    return EXITO;
 }
 
 std::string IScrollObject::getCreature() {
 
-	// TODO
+    // TODO
 
-	return Actor::getCreature();
+    return Actor::getCreature();
 
-	// CActor::getCreature() accede al valor que hemos configurado en el Constructor.
+    // CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }
 
 int IScrollObject::setUniverse(Universe* m) {
 
-	// TODO
+    // TODO
 
-	return Actor::setUniverse(m);
+    return Actor::setUniverse(m);
 
-	// CActor::setUniverse(m) realiza la asignaci�n : inUniverse=m;
+    // CActor::setUniverse(m) realiza la asignaci�n : inUniverse=m;
 }
 
 const Sprite* IScrollObject::getSprite() {
 
-	auto spt = Actor::getSprite();
+    auto spt = Actor::getSprite();
 
-	// TODO
+    // TODO
 
-	return spt;
+    return spt;
 }
 
 Actor* IScrollObject::clone() {
-	Actor* act;
+    Actor* act;
 
-	// TODO
+    // TODO
 
-	return act;
+    return act;
 }

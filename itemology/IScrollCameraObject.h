@@ -3,14 +3,14 @@
 #include "IScrollCamera.h"
 
 class IScrollCameraObject :
-	public Camera
+    public Camera
 {
 private:
-	IScrollObjectCollection*** objects;
+    IScrollObjectCollection*** objects;
 public:
-	IScrollCameraObject(IScrollObjectCollection*** objects,Actor* target,flatscene::Rectangle* area);
-	~IScrollCameraObject(void);
+    IScrollCameraObject(IScrollObjectCollection*** objects,Actor* target,flatscene::Rectangle* area);
+    ~IScrollCameraObject(void);
 
-	int refresh();
+    int refresh();
 };
 

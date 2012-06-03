@@ -2,10 +2,10 @@
 
 
 IScrollCameraObject::IScrollCameraObject( IScrollObjectCollection*** objects,Actor* target,flatscene::Rectangle* area) 
-: Camera(target,area) , objects(objects) {
+    : Camera(target,area) , objects(objects) {
 
-	if (!objects)
-		FSLib.Error("Mala definici�n de objectos");
+        if (!objects)
+            FSLib.Error("Mala definici�n de objectos");
 }
 
 
@@ -18,6 +18,6 @@ int IScrollCameraObject::refresh() {
 
 
 
-	return EXITO; 
+    return EXITO; 
 
 }

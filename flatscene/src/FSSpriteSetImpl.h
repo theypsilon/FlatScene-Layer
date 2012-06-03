@@ -214,8 +214,8 @@ namespace flatscene {
             grd.cellwidth  = numFromAttr<decltype(grd.cellwidth) >(head,"cellwidth");
             grd.cellheight = numFromAttr<decltype(grd.cellheight)>(head,"cellheight");
 
-            if (checkAttr(head,"type","split"))
-                ; // @TODO return loadChipsetSplit(s_aux,mode);
+            //if (checkAttr(head,"type","split"))
+            //    ; // @TODO return loadChipsetSplit(s_aux,mode);
 
             grd.simple = checkAttr(head,"simple","true");
             if (checkAttr(head,"sp-scale"))
@@ -318,10 +318,10 @@ namespace flatscene {
                 m_vecSprites.push_back(std::move(spt));
 
                 src.x += grd.cellwidth;
-                if (src.x + grd.cellwidth > chipset.w) {
+                if (src.x + grd.cellwidth > (unsigned int) chipset.w) {
                     src.x = 0;
                     src.y += grd.cellheight;
-                    if (src.y + grd.cellheight > chipset.h)
+                    if (src.y + grd.cellheight > (unsigned int) chipset.h)
                         throw Exception("the grd doesn't fit with the chipset",__LINE__);
                 }
             });

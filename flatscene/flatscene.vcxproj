@@ -123,10 +123,12 @@
     <ClInclude Include="include\FSEngine.h" />
     <ClInclude Include="include\FSException.h" />
     <ClInclude Include="include\FSImages.h" />
+    <ClInclude Include="include\FSIncludes.h" />
     <ClInclude Include="include\FSLibrary.h" />
     <ClInclude Include="include\FSMessageHandler.h" />
     <ClInclude Include="include\FSMultiverse.h" />
     <ClInclude Include="include\FSNoncopyable.h" />
+    <ClInclude Include="include\FSPimpl.h" />
     <ClInclude Include="include\FSPoint.h" />
     <ClInclude Include="include\FSRectangle.h" />
     <ClInclude Include="include\FSScreen.h" />
@@ -141,6 +143,7 @@
     <ClInclude Include="src\CanvasFactory.h" />
     <ClInclude Include="src\FSparserXML.h" />
     <ClInclude Include="src\FSSpriteSetImpl.h" />
+    <ClInclude Include="src\glAdapter.h" />
     <ClInclude Include="src\GRDHelper.h" />
     <ClInclude Include="src\tinyxml\tinystr.h" />
     <ClInclude Include="src\tinyxml\tinyxml.h" />

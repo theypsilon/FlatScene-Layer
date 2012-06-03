@@ -134,7 +134,7 @@ int Writer::loadFont(const char* fuente) {
             ret=_impl->lastIndexFontAdded.back();
             _impl->lastIndexFontAdded.pop_back();
         } else 
-            for (unsigned int i=0 ; ret < 0 ; i++)
+            for (int i=0 ; ret < 0 ; i++)
                 if (_impl->Fonts.find(i)==_impl->Fonts.end()) 
                     ret = (i > std::numeric_limits<int>::max())? throw Exception("So many fonts",__LINE__) : i;
         _impl->Fonts.insert(std::pair<int,WriterImpl::SFont>(
@@ -227,8 +227,11 @@ int Writer::line(int fuente, int x,int y, const char* text,...) {
         char buffer [1024];
 
         va_start (lista, text);
+#ifdef _MSC_VER
+        vsprintf_s (buffer, text, lista);
+#else
         vsprintf (buffer, text, lista);
-
+#endif
         va_end (lista);
 
         if (!_impl->data->lastIndexTextAdded.empty()) {
@@ -330,8 +333,11 @@ void Writer::lineOnce(int fuente, int x,int y, const char* text,...) {
     char buffer [1024];
 
     va_start (lista, text);
+#ifdef _MSC_VER
+    vsprintf_s (buffer, text, lista);
+#else
     vsprintf (buffer, text, lista);
-
+#endif
     va_end (lista);
 
     erase(line(fuente,x,y,buffer),true);

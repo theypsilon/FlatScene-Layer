@@ -9,78 +9,78 @@
 using namespace flatscene;
 
 class IFirstEngine :
-	public Engine
+    public Engine
 {
 private:
-	std::vector<IScrollCamera*> cams;
+    std::vector<IScrollCamera*> cams;
 
-	IScrollObject* mainactor;
+    IScrollObject* mainactor;
 
     Multiverse CMultiverse;
 
     Time Chrono;
 public:
-	// Constructor del Motor.
-	IFirstEngine();
-	
-	// Destructor, ah� deberemos liberar todos los recursos.
-	virtual ~IFirstEngine();
+    // Constructor del Motor.
+    IFirstEngine();
 
-	// Opcional, pero invocado por la Librar�a. Debe devolver 'true' para que la librer�a pueda tomar el motor como "Motor Activo" ( CLibrary::getActualEngine(); )
-	// En este m�todo se pueden reservar recursos necesarios para la ejecuci�n de lmotor.
-	void onInit();
-	
-	// Opcional, pero invocado por la Librer�a. En este m�todo se pueden liberar recursos que eran necesarios para la ejecuci�n de lmotor.
-	void onExit();
+    // Destructor, ah� deberemos liberar todos los recursos.
+    virtual ~IFirstEngine();
 
-	// Funci�n necesaria para el procesamiento de Eventos por parte de este Motor.
-	void loop();
+    // Opcional, pero invocado por la Librar�a. Debe devolver 'true' para que la librer�a pueda tomar el motor como "Motor Activo" ( CLibrary::getActualEngine(); )
+    // En este m�todo se pueden reservar recursos necesarios para la ejecuci�n de lmotor.
+    void onInit();
 
-	// Rutina principal. Aqu� se debe incluir la implementaci�n principal del motor para actualizar su estado.
-	void onIdle();
+    // Opcional, pero invocado por la Librer�a. En este m�todo se pueden liberar recursos que eran necesarios para la ejecuci�n de lmotor.
+    void onExit();
 
-	// Opcional. Pensado para resolver conflictos ante inesperadas conmutaciones entre diferentes Motores.
-	virtual void deselect();
+    // Funci�n necesaria para el procesamiento de Eventos por parte de este Motor.
+    void loop();
 
-	// Rutina de renderizaci�n. Aqu� deber�an invocarse todas las rutina de renderizaci�n de los elementos controlados por el Motor.
-	void drawFrame();
+    // Rutina principal. Aqu� se debe incluir la implementaci�n principal del motor para actualizar su estado.
+    void onIdle();
 
-	void onEvent(SDL_Event& e);
+    // Opcional. Pensado para resolver conflictos ante inesperadas conmutaciones entre diferentes Motores.
+    virtual void deselect();
 
-	/*
-	void onAPush();
-	void onBPush();
-	void onCPush();
-	void onDPush();
-	void onEPush();
-	void onFPush();
+    // Rutina de renderizaci�n. Aqu� deber�an invocarse todas las rutina de renderizaci�n de los elementos controlados por el Motor.
+    void drawFrame();
 
-	void onARelease();
-	void onBRelease();
-	void onCRelease();
-	void onDRelease();
-	void onERelease();
-	void onFRelease();
+    void onEvent(SDL_Event& e);
 
-	void onMoveLPush();
-	void onMoveRPush();
-	void onMoveUPush();
-	void onMoveDPush();
+    /*
+    void onAPush();
+    void onBPush();
+    void onCPush();
+    void onDPush();
+    void onEPush();
+    void onFPush();
 
-	void onMoveLRelease();
-	void onMoveRRelease();
-	void onMoveURelease();
-	void onMoveDRelease();*/
+    void onARelease();
+    void onBRelease();
+    void onCRelease();
+    void onDRelease();
+    void onERelease();
+    void onFRelease();
 
-	enum moving_key {
-		i_up,
-		i_down,
-		i_right,
-		i_left,
-		i_count
-	};
+    void onMoveLPush();
+    void onMoveRPush();
+    void onMoveUPush();
+    void onMoveDPush();
 
-	bool move[i_count];
+    void onMoveLRelease();
+    void onMoveRRelease();
+    void onMoveURelease();
+    void onMoveDRelease();*/
+
+    enum moving_key {
+        i_up,
+        i_down,
+        i_right,
+        i_left,
+        i_count
+    };
+
+    bool move[i_count];
 
 };
 
