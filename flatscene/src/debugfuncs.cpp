@@ -138,10 +138,10 @@ int blitcopy(const SDL_Surface& ref_src, SDL_Rect* srcrect,SDL_Surface* surface,
 
     SDL_Surface* src = const_cast<SDL_Surface*>(std::addressof(ref_src));
 
-    if (src == NULL || surface == NULL)
+    if (src == nullptr || surface == nullptr)
         return FRACASO;
 
-    if (srcrect == NULL && rect == NULL) {
+    if (srcrect == nullptr && rect == nullptr) {
         if (src->w > surface->w)
             ancho = surface->w;
         else
@@ -154,7 +154,7 @@ int blitcopy(const SDL_Surface& ref_src, SDL_Rect* srcrect,SDL_Surface* surface,
 
         dstx = dsty = srcx = srcy = 0;
 
-    } else if (srcrect == NULL) {
+    } else if (srcrect == nullptr) {
         if (src->w > rect->w)
             ancho = rect->w;
         else
@@ -169,7 +169,7 @@ int blitcopy(const SDL_Surface& ref_src, SDL_Rect* srcrect,SDL_Surface* surface,
         dstx = rect->x;
         dsty = rect->y;
 
-    } else if (rect == NULL) {
+    } else if (rect == nullptr) {
         if (srcrect->w > surface->w)
             ancho = surface->w;
         else

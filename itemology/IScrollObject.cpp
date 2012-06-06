@@ -55,7 +55,7 @@ const Sprite* IScrollObject::getSprite() {
 }
 
 Actor* IScrollObject::clone() {
-    Actor* act;
+    Actor* act = nullptr;
 
     // TODO
 
