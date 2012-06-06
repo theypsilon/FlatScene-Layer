@@ -30,8 +30,8 @@ struct Spriteset::SpritesetImpl {
     }
 
     SpriteCollection m_vecSprites ;
-    std::string name;
-    Uint8 mode;
+    std::string      name;
+    Uint8            mode;
 
     Uint8 getMode() {
         return mode;
@@ -45,7 +45,7 @@ struct Spriteset::SpritesetImpl {
         if (this->name=="") {
             this->name=name;
             return true;
-        }
+        }º
         return false;
     }
 
