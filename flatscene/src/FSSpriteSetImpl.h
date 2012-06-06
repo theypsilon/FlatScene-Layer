@@ -45,7 +45,7 @@ struct Spriteset::SpritesetImpl {
         if (this->name=="") {
             this->name=name;
             return true;
-        }º
+        }
         return false;
     }
 

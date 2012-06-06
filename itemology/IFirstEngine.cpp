@@ -75,8 +75,6 @@ void  IFirstEngine::onInit() {
     
     cams.push_back( new IScrollCamera(mainactor,new flatscene::Rectangle(0,0,320,240)) );
     
-    printf("onInit : IScrollObjects %d \n",IScrollObject::getInstances());
-    
 }
 
 //idle. Main loop.
