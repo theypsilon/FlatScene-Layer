@@ -141,8 +141,15 @@
     <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\tinyxml\*.h" />
     <ClInclude Include="src\CanvasFactory.h" />
+    <ClInclude Include="src\FSCanvasImpl.h" />
+    <ClInclude Include="src\FSImagesImpl.h" />
+    <ClInclude Include="src\FSLibraryImpl.h" />
+    <ClInclude Include="src\FSMultiverseImpl.h" />
     <ClInclude Include="src\FSparserXML.h" />
+    <ClInclude Include="src\FSScreenImpl.h" />
+    <ClInclude Include="src\FSSpriteImpl.h" />
     <ClInclude Include="src\FSSpriteSetImpl.h" />
+    <ClInclude Include="src\FSWriterImpl.h" />
     <ClInclude Include="src\glAdapter.h" />
     <ClInclude Include="src\GRDHelper.h" />
     <ClInclude Include="src\tinyxml\tinystr.h" />
