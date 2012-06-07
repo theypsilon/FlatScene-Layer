@@ -19,7 +19,7 @@ void IFirstEngine::onEvent(const SDL_Event& e) {
 
     Engine::onEvent(e);
 
-    if ( SDLK_LEFT == e.key.keysym.sym ) {
+    if ( SDLK_ESCAPE == e.key.keysym.sym ) {
         Library::I().exit();
     }
     
