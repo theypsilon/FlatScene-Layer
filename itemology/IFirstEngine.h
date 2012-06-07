@@ -45,7 +45,7 @@ public:
     // Rutina de renderizaci�n. Aqu� deber�an invocarse todas las rutina de renderizaci�n de los elementos controlados por el Motor.
     void drawFrame();
 
-    void onEvent(SDL_Event& e);
+    void onEvent(const SDL_Event& e);
 
     /*
     void onAPush();
