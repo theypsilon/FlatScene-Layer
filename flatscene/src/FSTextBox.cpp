@@ -76,8 +76,6 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
                 currentX += (Float)advance;
                 SChar newT;
 
-                newT.p=NULL;
-
                 charInDisplay.push_back(newT);
             }
 
@@ -89,7 +87,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
             SChar newT;
 
-            newT.p = new FloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
+            newT.p.set(currentX+(Float)minx,currentY-(Float)maxy);
             currentX += (Float)advance;
 
             newT.glyph=newChar;
@@ -114,16 +112,7 @@ Writer::WriterImpl::FSTextBox::~FSTextBox() {
 
     if (fx)
         delete fx;
-    fx = NULL;
-
-    while (!charInDisplay.empty()) {
-        std::list<SChar>::iterator it=charInDisplay.begin();
-        if (it->p) {
-            delete it->p;
-        }
-        it->p=NULL;
-        charInDisplay.erase(it);
-    }
+    fx = nullptr;
 
     Writer::I().unloadFont(Writer::I().searchFont(fuente->fuente));
 }
@@ -143,24 +132,15 @@ int Writer::WriterImpl::FSTextBox::update() {
         step++;
 
     } else if ( Chrono.getTick() > timer + 100) {
-        while (!charInDisplay.empty()) {
-            std::list<SChar>::iterator it=charInDisplay.begin();
-            if (it->p) {
-                delete it->p;
-            }
-            it->p=NULL;
-            charInDisplay.erase(it);
-        }
+        charInDisplay.clear();
         return -1;
     }
 
     unsigned int i=0;
     for (std::list<SChar>::iterator it=charInDisplay.begin(), et=charInDisplay.end();it!=et && i<step;++it) {
-        if (it->p) {
-            if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
-                fuente->render.at(it->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
-            fuente->render.at(it->glyph).put(*it->p);
-        }
+        if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
+            fuente->render.at(it->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
+        fuente->render.at(it->glyph).put(it->p);
         i++;
     }
 
@@ -216,13 +196,6 @@ int Writer::WriterImpl::FSTextBox::finish() {
     return ret;
 }
 
-Writer::WriterImpl::SLineText::~SLineText() {
-    for (std::list<SChar>::iterator it=letra.begin(),kt=letra.end();it!=kt;++it) {
-        if (it->p) {
-            delete it->p;
-            it->p=NULL;
-        }
-    }
-}
+Writer::WriterImpl::SLineText::~SLineText() {}
 
 } // flatscene

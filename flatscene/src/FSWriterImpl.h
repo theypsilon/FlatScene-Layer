@@ -35,7 +35,7 @@ struct Writer::WriterImpl {
 
     struct SChar {
         Uint16 glyph;
-        FloatPoint* p;
+        FloatPoint p;
     };
 
     struct SFont {
@@ -156,4 +156,4 @@ struct Writer::WriterImpl {
 
 } // flatscene
 
-#endif
+#endif  

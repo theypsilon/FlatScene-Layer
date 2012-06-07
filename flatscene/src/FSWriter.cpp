@@ -287,7 +287,7 @@ int Writer::line(int fuente, int x,int y, const char* text,...) {
 
             int minx,maxy,advance;
 
-            TTF_GlyphMetrics(t.Line->fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance);
+            TTF_GlyphMetrics(t.Line->fuente->fuente,newChar,&minx,nullptr,nullptr,&maxy,&advance);
 
             if (newChar == '\n') {
                 currentX = (Float) x;
@@ -296,7 +296,7 @@ int Writer::line(int fuente, int x,int y, const char* text,...) {
 
                 WriterImpl::SChar newT;
 
-                newT.p = new FloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
+                newT.p.set(currentX+(Float)minx,currentY-(Float)maxy);
                 currentX += (Float)advance;
 
                 if (t.Line->fuente->render.find(newChar)==t.Line->fuente->render.end()) {
@@ -564,7 +564,7 @@ int Writer::render() {
                     l->fuente->render.at(jt->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
                 }
 
-                l->fuente->render.at(jt->glyph).put(*jt->p);
+                l->fuente->render.at(jt->glyph).put(jt->p);
             }
 
             if (fx && !fx->persistent) {
@@ -600,7 +600,7 @@ int Writer::render() {
                     if (fx)
                         l->fuente->render.at(jt->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
 
-                    l->fuente->render.at(jt->glyph).put(*jt->p);
+                    l->fuente->render.at(jt->glyph).put(jt->p);
                 }
 
                 if (fx) {
