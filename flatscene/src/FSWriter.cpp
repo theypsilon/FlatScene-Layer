@@ -96,16 +96,7 @@ int Writer::searchFont(int idtext) {
 
     for (auto kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
         if (kt->second.Texts.find(idtext) != kt->second.Texts.end()) {
-            WriterImpl::FSText& t = kt->second.Texts.at(idtext);
-
-            switch (t.Type()) {
-                case TT_LINE :
-                    ret = t.Line->fuente->fuente;
-                    break;
-                case TT_BOX :
-                    ret = t.Box->fuente->fuente;
-                    break;
-            }
+            ret = kt->second.Texts.at(idtext).Object->fuente->fuente;
         }
 
     }
@@ -251,13 +242,13 @@ int Writer::line(int fuente, int x,int y, const char* text,...) {
             std::move(WriterImpl::FSText())
         ));
 
-        WriterImpl::FSText& t = _impl->data->Texts.at(ret);
-        t.Line->fuente = std::addressof(_impl->Fonts.find(fuente)->second);
+        auto& line = static_cast<WriterImpl::SLineText&>(*_impl->data->Texts.at(ret).Object);
+        line.fuente = std::addressof(_impl->Fonts.find(fuente)->second);
 
         std::string allText(buffer);
 
         Float currentX = (Float) x;
-        Float currentY = (Float) y + (Float)TTF_FontAscent(t.Line->fuente->fuente) -3;
+        Float currentY = (Float) y + (Float)TTF_FontAscent(line.fuente->fuente) -3;
 
         size_t length = allText.length();
 
@@ -287,11 +278,11 @@ int Writer::line(int fuente, int x,int y, const char* text,...) {
 
             int minx,maxy,advance;
 
-            TTF_GlyphMetrics(t.Line->fuente->fuente,newChar,&minx,nullptr,nullptr,&maxy,&advance);
+            TTF_GlyphMetrics(line.fuente->fuente,newChar,&minx,nullptr,nullptr,&maxy,&advance);
 
             if (newChar == '\n') {
                 currentX = (Float) x;
-                currentY += (Float)TTF_FontLineSkip(t.Line->fuente->fuente);
+                currentY += (Float)TTF_FontLineSkip(line.fuente->fuente);
             } else {
 
                 WriterImpl::SChar newT;
@@ -299,15 +290,15 @@ int Writer::line(int fuente, int x,int y, const char* text,...) {
                 newT.p.set(currentX+(Float)minx,currentY-(Float)maxy);
                 currentX += (Float)advance;
 
-                if (t.Line->fuente->render.find(newChar)==t.Line->fuente->render.end()) {
+                if (line.fuente->render.find(newChar)==line.fuente->render.end()) {
                     SDL_Color fg;
                     fg.b=0xFF;
                     fg.g=0xFF;
                     fg.r=0xFF;
 
-                    Canvas&& spt = Canvas::createCanvas<Canvas>(TTF_RenderGlyph_Blended(t.Line->fuente->fuente,newChar,fg));
+                    Canvas&& spt = Canvas::createCanvas<Canvas>(TTF_RenderGlyph_Blended(line.fuente->fuente,newChar,fg));
 
-                    t.Line->fuente->render.insert(std::make_pair<Uint16,Canvas>(
+                    line.fuente->render.insert(std::make_pair<Uint16,Canvas>(
                         std::move(newChar),
                         std::move(spt)
                     ));
@@ -315,7 +306,7 @@ int Writer::line(int fuente, int x,int y, const char* text,...) {
 
                 newT.glyph=newChar;
 
-                t.Line->letra.push_back(newT);
+                line.letra.push_back(newT);
             }
 
         }
@@ -477,8 +468,15 @@ int Writer::color(int text,Float red, Float green, Float blue, Float alpha, Type
     if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
     
             WriterImpl::FSText& t = _impl->data->Texts.at(text);
+
+            if (dynamic_cast<WriterImpl::FSTextBox*>(t.Object.get())) {
+                ;
+            }
             
-            auto& fx = TT_BOX == t.Type()? t.Box->fx : t.fx;
+            auto& fx = dynamic_cast<WriterImpl::FSTextBox*>(t.Object.get())
+                ? dynamic_cast<WriterImpl::FSTextBox*>(t.Object.get())->fx 
+                : t.fx;
+
             fx.reset(new WriterImpl::SEffectText);
 
             fx->alpha = alpha;
@@ -542,37 +540,35 @@ int Writer::render() {
 
         auto& fx = it->second.fx;
 
-        if (it->second.Type() == TT_LINE) {
-            WriterImpl::SLineText& l = *it->second.Line;
-            for (auto jt=l.letra.begin(),ht=l.letra.end();jt!=ht;++jt) {
-                auto glyphit = l.fuente->render.find(jt->glyph);
-                if (glyphit == l.fuente->render.end()) {
-                    l.fuente->render.insert(std::make_pair<Uint16,Canvas>(
+        if (auto* l = dynamic_cast<WriterImpl::SLineText*>(it->second.Object.get())) {
+            for (auto jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt) {
+                auto glyphit = l->fuente->render.find(jt->glyph);
+                if (glyphit == l->fuente->render.end()) {
+                    l->fuente->render.insert(std::make_pair<Uint16,Canvas>(
                         std::move(jt->glyph),
-                        Canvas::createCanvas<Canvas>(TTF_RenderGlyph_Blended(l.fuente->fuente,jt->glyph,(SDL_Color)Color::White()))
+                        Canvas::createCanvas<Canvas>(TTF_RenderGlyph_Blended(l->fuente->fuente,jt->glyph,(SDL_Color)Color::White()))
                     ));
                 }
 
                 if (fx) {
-                    l.fuente->render.at(jt->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
+                    l->fuente->render.at(jt->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
                 }
 
-                l.fuente->render.at(jt->glyph).put(jt->p);
+                l->fuente->render.at(jt->glyph).put(jt->p);
             }
 
             if (fx && !fx->persistent) {
                 it->second.fx.reset(nullptr);
             }
-        } else if (it->second.Type() == TT_BOX) {
-            WriterImpl::FSTextBox* b = it->second.Box;
+        } else if (auto* b = dynamic_cast<WriterImpl::FSTextBox*>(it->second.Object.get())) {
             if (b->update()==-1)
                 deleteText.push_back(it->first);
         }
     }
-
+    
     for (auto it=deleteText.begin(),kt=deleteText.end();it!=kt;++it) {
-
-        int aux = _impl->data->Texts.at(*it).Box->finish();
+        auto& box = static_cast<WriterImpl::FSTextBox&>(*_impl->data->Texts.at(*it).Object);
+        int aux = box.finish();
         if (aux != -1) {
             std::swap(_impl->data->Texts.at(*it),_impl->data->Texts.at(aux));
         } else {
@@ -585,8 +581,7 @@ int Writer::render() {
     auto noadmin = _impl->session.find(nullptr);
     if (noadmin != _impl->session.end()) {
         for (auto it = noadmin->second.Texts.begin(), kt= noadmin->second.Texts.end(); it!=kt;++it) {
-            if (it->second.Type() == TT_LINE && it->second.Line) {
-                WriterImpl::SLineText* l = it->second.Line;
+            if (auto* l = dynamic_cast<WriterImpl::SLineText*>(it->second.Object.get())) {
                 auto& fx = it->second.fx;
                 for (std::list<WriterImpl::SChar>::iterator jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt)  {
                     if (fx)

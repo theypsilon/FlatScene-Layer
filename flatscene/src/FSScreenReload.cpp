@@ -46,8 +46,8 @@ void Screen::ScreenImpl::saveResources(GraphicResources &info) {
     for (auto it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
         auto& auxBoxs = it->second.Texts;
         for (auto jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
-            if (jt->second.Type() == TT_BOX && jt->second.Box)
-                jt->second.Box->deleteBox();
+            if (auto* box = dynamic_cast<Writer::WriterImpl::FSTextBox*>(jt->second.Object.get()))
+                box->deleteBox();
         }
     }
 
@@ -63,8 +63,8 @@ void Screen::ScreenImpl::reloadResources(GraphicResources &info) {
 
     for (auto& data : writer._impl->session)
         for (auto& text : data.second.Texts)
-            if (text.second.Type() == TT_BOX && text.second.Box)
-                text.second.Box->createBox();
+            if (auto* box = dynamic_cast<Writer::WriterImpl::FSTextBox*>(text.second.Object.get()))
+                box->createBox();
 
     int number = 0;
     int aux = -1;
