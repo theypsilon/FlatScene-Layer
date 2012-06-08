@@ -113,36 +113,36 @@ Color& Color::operator^=(const Color& color) {
     return *this;
 }
 
-Color Color::Red(Byte shade)        { return Color(shade,0,0); }
-Color Color::Green(Byte shade)      { return Color(0,shade,0); }
-Color Color::Blue(Byte shade)       { return Color(0,0,shade); }
+const Color Color::Red(Byte shade)        { return Color(shade,0,0); }
+const Color Color::Green(Byte shade)      { return Color(0,shade,0); }
+const Color Color::Blue(Byte shade)       { return Color(0,0,shade); }
 
-Color Color::Yellow(Byte shade)     { return Red(shade)   |Green(shade); }
-Color Color::Cyan(Byte shade)       { return Green(shade) |Blue(shade); }
-Color Color::Magenta(Byte shade)    { return Red(shade)   |Blue(shade); }
+const Color Color::Yellow(Byte shade)     { return Red(shade)   |Green(shade); }
+const Color Color::Cyan(Byte shade)       { return Green(shade) |Blue(shade); }
+const Color Color::Magenta(Byte shade)    { return Red(shade)   |Blue(shade); }
 
-Color Color::LightRed(Byte gray,Byte shade)     { return Red(shade)     | White(gray); }
-Color Color::LightGreen(Byte gray,Byte shade)   { return Green(shade)   | White(gray); }
-Color Color::LightBlue(Byte gray,Byte shade)    { return Blue(shade)    | White(gray); }
-Color Color::LightYellow(Byte gray,Byte shade)  { return Yellow(shade)  | White(gray); }
-Color Color::LightCyan(Byte gray,Byte shade)    { return Cyan(shade)    | White(gray); }
-Color Color::LightMagenta(Byte gray,Byte shade) { return Magenta(shade) | White(gray); }
+const Color Color::LightRed(Byte gray,Byte shade)     { return Red(shade)     | White(gray); }
+const Color Color::LightGreen(Byte gray,Byte shade)   { return Green(shade)   | White(gray); }
+const Color Color::LightBlue(Byte gray,Byte shade)    { return Blue(shade)    | White(gray); }
+const Color Color::LightYellow(Byte gray,Byte shade)  { return Yellow(shade)  | White(gray); }
+const Color Color::LightCyan(Byte gray,Byte shade)    { return Cyan(shade)    | White(gray); }
+const Color Color::LightMagenta(Byte gray,Byte shade) { return Magenta(shade) | White(gray); }
 
-Color Color::White(Byte shade)      { return Color(shade,shade,shade); }
-Color Color::Gray(Byte shade)       { return White(shade); }
-Color Color::DarkGray(Byte shade)   { return White(shade); }
-Color Color::Black(Byte shade)      { return White(shade); }
+const Color Color::White(Byte shade)      { return Color(shade,shade,shade); }
+const Color Color::Gray(Byte shade)       { return White(shade); }
+const Color Color::DarkGray(Byte shade)   { return White(shade); }
+const Color Color::Black(Byte shade)      { return White(shade); }
 
 
-Color operator+(Color color1,const Color& color2) { return color1 += color2; }
-Color operator-(Color color1,const Color& color2) { return color1 -= color2; }
-Color operator*(Color color1,const Color& color2) { return color1 *= color2; }
-Color operator*(Color color,int multiplier)       { return color  *= multiplier; }
-Color operator/(Color color,int divisor)          { return color  /= divisor; }
-Color operator|(Color color1,const Color& color2) { return color1 |= color2; }
-Color operator&(Color color1,const Color& color2) { return color1 &= color2; }
-Color operator^(Color color1,const Color& color2) { return color1 ^= color2; }
-Color operator~(Color color)                      { return color  ^= Color(255,255,255); }
+const Color operator+(Color color1,const Color& color2) { return color1 += color2; }
+const Color operator-(Color color1,const Color& color2) { return color1 -= color2; }
+const Color operator*(Color color1,const Color& color2) { return color1 *= color2; }
+const Color operator*(Color color,int multiplier)       { return color  *= multiplier; }
+const Color operator/(Color color,int divisor)          { return color  /= divisor; }
+const Color operator|(Color color1,const Color& color2) { return color1 |= color2; }
+const Color operator&(Color color1,const Color& color2) { return color1 &= color2; }
+const Color operator^(Color color1,const Color& color2) { return color1 ^= color2; }
+const Color operator~(Color color)                      { return color  ^= Color(255,255,255); }
 
 bool operator!=(const Color& color1,const Color& color2) { return !(color1==color2); }
 bool operator==(const Color& color1,const Color& color2) {
