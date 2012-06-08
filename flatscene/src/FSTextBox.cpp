@@ -52,7 +52,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
         int minx,maxy,advance;
 
-        if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance)== -1)
+        if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,nullptr,nullptr,&maxy,&advance)== -1)
             Library::I().Error("TTF_GlyphMetrics fallo.");
 
         if (newChar == ' ' ) {
@@ -150,7 +150,7 @@ int Writer::WriterImpl::FSTextBox::update() {
 void Writer::WriterImpl::FSTextBox::deleteBox() {
     if (box)
         Screen::I()._impl->imageToDelete.push_back(box); // delete box;
-    box=NULL;
+    box=nullptr ;
 }
 
 
@@ -168,7 +168,7 @@ void Writer::WriterImpl::FSTextBox::createBox() {
     surface = SDL_DisplayFormat(aux_surf);
     if (!surface)   Library::I().Error("No se ha creado bien la superficie para la TextBox.");
     SDL_FreeSurface(aux_surf);
-    SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
+    SDL_FillRect(surface,nullptr,SDL_MapRGB(surface->format,50,50,150));
 
     box = new Canvas(Canvas::createCanvas<Canvas>(surface));
 }
