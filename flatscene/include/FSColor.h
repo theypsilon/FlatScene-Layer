@@ -66,7 +66,7 @@ namespace flatscene {
         static const Color DarkGray(Byte shade=128);
         static const Color Black(Byte shade=0);
 
-        operator SDL_Color() {
+        operator const SDL_Color() const {
             SDL_Color ret;
             ret.r = mr;
             ret.g = mg;
