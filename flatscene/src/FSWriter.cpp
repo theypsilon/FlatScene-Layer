@@ -29,7 +29,7 @@ Engine* Writer::WriterImpl::setAdmin(const Engine *const constAdmin) {
 
 Writer::Writer() {
     _impl->admin = nullptr;
-    _impl->data = NULL;
+    _impl->data = nullptr;
     _impl->fontSize = 20;
 
     _impl->posx =
@@ -92,9 +92,9 @@ int Writer::searchFont(TTF_Font* fnt) {
 int Writer::searchFont(int idtext) {
 #ifdef TEXT_OPERATIVE
 
-    TTF_Font* ret = NULL;
+    TTF_Font* ret = nullptr;
 
-    for (auto kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==NULL;++kt) {
+    for (auto kt=_impl->session.begin(),lt =_impl->session.end();kt!=lt && ret==nullptr;++kt) {
         if (kt->second.Texts.find(idtext) != kt->second.Texts.end()) {
             ret = kt->second.Texts.at(idtext).Object->fuente->fuente;
         }

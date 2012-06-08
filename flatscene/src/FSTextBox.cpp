@@ -61,7 +61,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
             for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
-                if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
+                if (TTF_GlyphMetrics(fuente->fuente,caux[i],nullptr,nullptr,nullptr,nullptr,&minx) == -1)
                     Library::I().Error("TTF_GlyphMetrics fallo.");
 
                 cuenta += (Float)minx;
