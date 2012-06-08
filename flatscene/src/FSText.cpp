@@ -15,19 +15,14 @@ Writer::WriterImpl::FSText::FSText()
 {}
 
 Writer::WriterImpl::FSText::FSText(FSText&& mv)
-    : fx(mv.fx)
+    : fx(std::move(mv.fx))
     , Line(mv.Line)
     , type(mv.type)
 {
-    mv.fx = nullptr;
     mv.Line = nullptr;
 }
 
 Writer::WriterImpl::FSText::~FSText() {
-    if (fx) {
-        delete fx;
-        fx = nullptr;
-    }
 
     if (type == TT_BOX) {
         if (Box) {

@@ -476,9 +476,10 @@ int Writer::color(int text,Float red, Float green, Float blue, Float alpha, Type
 
     if (_impl->data->Texts.find(text)!=_impl->data->Texts.end()) {
     
-            WriterImpl::FSText* t = & _impl->data->Texts.at(text);
-
-            WriterImpl::SEffectText* fx = new WriterImpl::SEffectText;
+            WriterImpl::FSText& t = _impl->data->Texts.at(text);
+            
+            auto& fx = TT_BOX == t.Type()? t.Box->fx : t.fx;
+            fx.reset(new WriterImpl::SEffectText);
 
             fx->alpha = alpha;
             fx->blue = blue;
@@ -487,15 +488,7 @@ int Writer::color(int text,Float red, Float green, Float blue, Float alpha, Type
             fx->boxflags = boxflags;
             fx->persistent = persistent;
 
-            if (t->Type() == TT_BOX) {
-                if (t->Box->fx)
-                    delete t->Box->fx;
-                t->Box->fx = fx;
-            } else {
-                if (t->fx)
-                    delete t->fx;
-                t->fx = fx;
-            }
+            
 
     } else {
 
@@ -547,29 +540,28 @@ int Writer::render() {
 
     for (auto it=_impl->data->Texts.begin(),kt=_impl->data->Texts.end();it!=kt;++it) {
 
-        WriterImpl::SEffectText* fx = it->second.fx;
+        auto& fx = it->second.fx;
 
         if (it->second.Type() == TT_LINE) {
-            WriterImpl::SLineText* l = it->second.Line;
-            for (auto jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt) {
-                auto glyphit = l->fuente->render.find(jt->glyph);
-                if (glyphit == l->fuente->render.end()) {
-                    l->fuente->render.insert(std::make_pair<Uint16,Canvas>(
+            WriterImpl::SLineText& l = *it->second.Line;
+            for (auto jt=l.letra.begin(),ht=l.letra.end();jt!=ht;++jt) {
+                auto glyphit = l.fuente->render.find(jt->glyph);
+                if (glyphit == l.fuente->render.end()) {
+                    l.fuente->render.insert(std::make_pair<Uint16,Canvas>(
                         std::move(jt->glyph),
-                        Canvas::createCanvas<Canvas>(TTF_RenderGlyph_Blended(l->fuente->fuente,jt->glyph,(SDL_Color)Color::White()))
+                        Canvas::createCanvas<Canvas>(TTF_RenderGlyph_Blended(l.fuente->fuente,jt->glyph,(SDL_Color)Color::White()))
                     ));
                 }
 
                 if (fx) {
-                    l->fuente->render.at(jt->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
+                    l.fuente->render.at(jt->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
                 }
 
-                l->fuente->render.at(jt->glyph).put(jt->p);
+                l.fuente->render.at(jt->glyph).put(jt->p);
             }
 
             if (fx && !fx->persistent) {
-                delete fx;
-                it->second.fx = nullptr;
+                it->second.fx.reset(nullptr);
             }
         } else if (it->second.Type() == TT_BOX) {
             WriterImpl::FSTextBox* b = it->second.Box;
@@ -595,7 +587,7 @@ int Writer::render() {
         for (auto it = noadmin->second.Texts.begin(), kt= noadmin->second.Texts.end(); it!=kt;++it) {
             if (it->second.Type() == TT_LINE && it->second.Line) {
                 WriterImpl::SLineText* l = it->second.Line;
-                WriterImpl::SEffectText* fx = it->second.fx;
+                auto& fx = it->second.fx;
                 for (std::list<WriterImpl::SChar>::iterator jt=l->letra.begin(),ht=l->letra.end();jt!=ht;++jt)  {
                     if (fx)
                         l->fuente->render.at(jt->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
@@ -604,8 +596,7 @@ int Writer::render() {
                 }
 
                 if (fx) {
-                    delete fx;
-                    it->second.fx = nullptr;
+                    it->second.fx.reset(nullptr);
                 }
             }
         }

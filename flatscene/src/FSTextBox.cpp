@@ -10,7 +10,7 @@
 namespace flatscene {
 
 Writer::WriterImpl::FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) :
-file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
+file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(nullptr), box(nullptr),
 timer(Chrono.getTick()), step(0), maxStep(0)    {
 
     std::string allText(text);
@@ -109,11 +109,6 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
 Writer::WriterImpl::FSTextBox::~FSTextBox() {
     deleteBox();
-
-    if (fx)
-        delete fx;
-    fx = nullptr;
-
     Writer::I().unloadFont(Writer::I().searchFont(fuente->fuente));
 }
 
@@ -145,8 +140,7 @@ int Writer::WriterImpl::FSTextBox::update() {
     }
 
     if (fx && !fx->persistent) {
-        delete fx;
-        fx = NULL;
+        fx.reset(nullptr);
     }
 
     return 0;

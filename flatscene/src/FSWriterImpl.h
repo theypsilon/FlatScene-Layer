@@ -82,7 +82,7 @@ struct Writer::WriterImpl {
         std::list<SChar> charInDisplay;
         Point upleft;
 
-        SEffectText* fx;
+        std::unique_ptr<SEffectText> fx;
 
         unsigned int timer;
         SDL_Color col;
@@ -122,7 +122,7 @@ struct Writer::WriterImpl {
             FSTextBox* Box;
         };
 
-        SEffectText* fx;
+        std::unique_ptr<SEffectText> fx;
 
         FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next);
         FSText();
