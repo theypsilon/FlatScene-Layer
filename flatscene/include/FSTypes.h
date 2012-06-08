@@ -1,12 +1,15 @@
 #ifndef __FS_TYPES__
 #define __FS_TYPES__
 
+#include "FSIncludes.h"
+
 #include "FSCoordinate.h"
 #include "FSRectangle.h"
 
 namespace flatscene {
 
     typedef double Float;
+    typedef unsigned char Byte;
 
     typedef Point2D<int> Point;
     typedef Point2D<Float> FloatPoint;

@@ -10,7 +10,7 @@ Sprite::Sprite() {}
 
 Sprite::Sprite ( Canvas&& pSurface, Point zerocpSource) 
     : Canvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
-    //, _impl(new SpriteImpl) 
+    , _impl(new SpriteImpl)
 {}
 
 Sprite::Sprite(Sprite&& spt) 
@@ -19,6 +19,7 @@ Sprite::Sprite(Sprite&& spt)
     , name(std::move(spt.name))
     , cpoint(std::move(spt.cpoint))
     , opaque(spt.opaque) 
+    , _impl(std::move(spt._impl))
 {}
 
 Sprite::~Sprite() {}
@@ -82,7 +83,7 @@ int Sprite::size() const {
 }
 
 SpriteOpaque Sprite::isOpaque() {
-    if (opaque != SPRITE_OPAQUE_NOT_CHEQUED)
+    /*if (opaque != SPRITE_OPAQUE_NOT_CHEQUED)
         return opaque;
 
     if (sdl_surf == NULL)
@@ -96,7 +97,7 @@ SpriteOpaque Sprite::isOpaque() {
             if ((pixel & 0xFF000000) != 0xFF000000)
                 opaque = SPRITE_TRANSPARENT;
         }
-
+*/
     return opaque;
 }
 

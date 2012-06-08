@@ -5,6 +5,7 @@ testdemoark
 # CMake stuff
 
 Makefile
+flatscene/Makefile
 CMakeCache.txt
 CMakeFiles
 *.cmake
@@ -64,3 +65,4 @@ flatscene.sln
 flatscene.suo
 flatscene.v11.suo
 lib
+itemology/item

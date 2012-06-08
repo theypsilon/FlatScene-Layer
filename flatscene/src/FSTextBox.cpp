@@ -10,7 +10,7 @@
 namespace flatscene {
 
 Writer::WriterImpl::FSTextBox::FSTextBox(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) :
-file(file), fuente(ttf_fnt), next(next), upleft(x,y), fx(NULL), box(NULL),
+TextObject(ttf_fnt), file(file), next(next), upleft(x,y), fx(nullptr), box(nullptr),
 timer(Chrono.getTick()), step(0), maxStep(0)    {
 
     std::string allText(text);
@@ -52,7 +52,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
         int minx,maxy,advance;
 
-        if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,NULL,NULL,&maxy,&advance)== -1)
+        if (TTF_GlyphMetrics(fuente->fuente,newChar,&minx,nullptr,nullptr,&maxy,&advance)== -1)
             Library::I().Error("TTF_GlyphMetrics fallo.");
 
         if (newChar == ' ' ) {
@@ -61,7 +61,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
             for (int i=0;caux[i]!='\0' && caux[i]!=' ' && caux[i]!='\n';i++) {
 
-                if (TTF_GlyphMetrics(fuente->fuente,caux[i],NULL,NULL,NULL,NULL,&minx) == -1)
+                if (TTF_GlyphMetrics(fuente->fuente,caux[i],nullptr,nullptr,nullptr,nullptr,&minx) == -1)
                     Library::I().Error("TTF_GlyphMetrics fallo.");
 
                 cuenta += (Float)minx;
@@ -76,8 +76,6 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
                 currentX += (Float)advance;
                 SChar newT;
 
-                newT.p=NULL;
-
                 charInDisplay.push_back(newT);
             }
 
@@ -89,7 +87,7 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
             SChar newT;
 
-            newT.p = new FloatPoint(currentX+(Float)minx,currentY-(Float)maxy);
+            newT.p.set(currentX+(Float)minx,currentY-(Float)maxy);
             currentX += (Float)advance;
 
             newT.glyph=newChar;
@@ -111,20 +109,6 @@ timer(Chrono.getTick()), step(0), maxStep(0)    {
 
 Writer::WriterImpl::FSTextBox::~FSTextBox() {
     deleteBox();
-
-    if (fx)
-        delete fx;
-    fx = NULL;
-
-    while (!charInDisplay.empty()) {
-        std::list<SChar>::iterator it=charInDisplay.begin();
-        if (it->p) {
-            delete it->p;
-        }
-        it->p=NULL;
-        charInDisplay.erase(it);
-    }
-
     Writer::I().unloadFont(Writer::I().searchFont(fuente->fuente));
 }
 
@@ -143,30 +127,20 @@ int Writer::WriterImpl::FSTextBox::update() {
         step++;
 
     } else if ( Chrono.getTick() > timer + 100) {
-        while (!charInDisplay.empty()) {
-            std::list<SChar>::iterator it=charInDisplay.begin();
-            if (it->p) {
-                delete it->p;
-            }
-            it->p=NULL;
-            charInDisplay.erase(it);
-        }
+        charInDisplay.clear();
         return -1;
     }
 
     unsigned int i=0;
     for (std::list<SChar>::iterator it=charInDisplay.begin(), et=charInDisplay.end();it!=et && i<step;++it) {
-        if (it->p) {
-            if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
-                fuente->render.at(it->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
-            fuente->render.at(it->glyph).put(*it->p);
-        }
+        if (fx && ( fx->boxflags == TCTB_ALL || fx->boxflags == TCTB_TEXT ))
+            fuente->render.at(it->glyph).color(fx->red,fx->green,fx->blue,fx->alpha);
+        fuente->render.at(it->glyph).put(it->p);
         i++;
     }
 
     if (fx && !fx->persistent) {
-        delete fx;
-        fx = NULL;
+        fx.reset(nullptr);
     }
 
     return 0;
@@ -176,7 +150,7 @@ int Writer::WriterImpl::FSTextBox::update() {
 void Writer::WriterImpl::FSTextBox::deleteBox() {
     if (box)
         Screen::I()._impl->imageToDelete.push_back(box); // delete box;
-    box=NULL;
+    box=nullptr ;
 }
 
 
@@ -194,9 +168,9 @@ void Writer::WriterImpl::FSTextBox::createBox() {
     surface = SDL_DisplayFormat(aux_surf);
     if (!surface)   Library::I().Error("No se ha creado bien la superficie para la TextBox.");
     SDL_FreeSurface(aux_surf);
-    SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,50,50,150));
+    SDL_FillRect(surface,nullptr,SDL_MapRGB(surface->format,50,50,150));
 
-    box = new Canvas(Canvas::toSCanvas(surface));
+    box = new Canvas(Canvas::createCanvas<Canvas>(surface));
 }
 
 int Writer::WriterImpl::FSTextBox::finish() {
@@ -216,13 +190,6 @@ int Writer::WriterImpl::FSTextBox::finish() {
     return ret;
 }
 
-Writer::WriterImpl::SLineText::~SLineText() {
-    for (std::list<SChar>::iterator it=letra.begin(),kt=letra.end();it!=kt;++it) {
-        if (it->p) {
-            delete it->p;
-            it->p=NULL;
-        }
-    }
-}
+Writer::WriterImpl::SLineText::~SLineText() {}
 
 } // flatscene

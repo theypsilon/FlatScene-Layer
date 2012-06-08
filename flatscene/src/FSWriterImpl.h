@@ -35,7 +35,7 @@ struct Writer::WriterImpl {
 
     struct SChar {
         Uint16 glyph;
-        FloatPoint* p;
+        FloatPoint p;
     };
 
     struct SFont {
@@ -67,22 +67,27 @@ struct Writer::WriterImpl {
         }
     };
 
-    struct SLineText{
-        std::list<SChar> letra;
+    struct TextObject {
         SFont* fuente;
-
-        ~SLineText();
+        TextObject(SFont* fuente = nullptr) : fuente(fuente) {};
+        virtual ~TextObject() {};
     };
 
-    struct FSTextBox {
-        SFont* fuente;
+    struct SLineText : public TextObject {
+        std::list<SChar> letra;
+
+        virtual ~SLineText();
+    };
+
+    struct FSTextBox : public TextObject {
+        using TextObject::fuente;
         std::string file;
         int next;
 
         std::list<SChar> charInDisplay;
         Point upleft;
 
-        SEffectText* fx;
+        std::unique_ptr<SEffectText> fx;
 
         unsigned int timer;
         SDL_Color col;
@@ -117,12 +122,8 @@ struct Writer::WriterImpl {
     private:
         TypeText type;
     public:
-        union {
-            SLineText* Line;
-            FSTextBox* Box;
-        };
-
-        SEffectText* fx;
+        std::unique_ptr<TextObject> Object;
+        std::unique_ptr<SEffectText> fx;
 
         FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next);
         FSText();
@@ -156,4 +157,4 @@ struct Writer::WriterImpl {
 
 } // flatscene
 
-#endif
+#endif  

@@ -4,6 +4,8 @@
 
 //include message handler(base class)
 
+#include "FSIncludes.h"
+
 #include "FSScreen.h"
 #include "FSEngine.h"
 
