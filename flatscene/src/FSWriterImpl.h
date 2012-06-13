@@ -120,7 +120,6 @@ struct Writer::WriterImpl {
 
     class FSText {
     private:
-        TypeText type;
         FSText(const FSText&) {}
         FSText& operator=(const FSText&) { return *this; }
     public:
@@ -132,7 +131,6 @@ struct Writer::WriterImpl {
         FSText(FSText&& mv);
         FSText& operator=(FSText&& rhs);
         ~FSText();
-        TypeText Type() const;
     };
 
     struct SData {
