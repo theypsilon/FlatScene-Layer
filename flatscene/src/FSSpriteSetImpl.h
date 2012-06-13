@@ -1,5 +1,5 @@
-﻿#ifndef __FS_SPRITESET_IMPL__
-#define __FS_SPRITESET_IMPL__
+#ifndef FS_SPRITESET_IMPL__
+#define FS_SPRITESET_IMPL__
 
 #include "FSSpriteSet.h"
 #include "FSException.h"
@@ -344,4 +344,4 @@ struct Spriteset::SpritesetImpl {
 
 } // flatscene
 
-#endif // __FS_SPRITESET_IMPL__
+#endif // FS_SPRITESET_IMPL__

@@ -1,7 +1,7 @@
 #ifndef FS__COLLECTION_IMAGES_PRIVATE__
 #define FS__COLLECTION_IMAGES_PRIVATE__
 
-#include "FSSpriteSetImpl.h"
+#include "FSSpriteSet.h"
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
 #include <deque>
@@ -32,4 +32,4 @@ namespace flatscene {
 
 } // flatscene
 
-#endif
+#endif // FS__COLLECTION_IMAGES_PRIVATE__

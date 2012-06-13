@@ -1,5 +1,5 @@
-#ifndef __SPRITESET_H__
-#define __SPRITESET_H__
+#ifndef FS__SPRITESET_H__
+#define FS__SPRITESET_H__
 
 #include "FSSprite.h"
 #include <memory>
@@ -19,7 +19,7 @@ namespace flatscene {
 
     private :
         struct SpritesetImpl;
-        const std::unique_ptr<SpritesetImpl> _impl;
+        SpritesetImpl* const _impl;
 
         Spriteset(std::string c = "",Uint8 mode=ONLY_TEXTURE);
         virtual ~Spriteset();
@@ -31,4 +31,4 @@ namespace flatscene {
 
 } // flatscene
 
-#endif
+#endif // FS__SPRITESET_H__

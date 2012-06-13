@@ -1,6 +1,8 @@
-#include "FSLibrary.h"
 #include "FSImagesPrivate.h"
-#include "FSScreenImpl.h"
+#include "FSSpriteSetImpl.h"
+//#include "FSScreenImpl.h"
+
+#include <iostream>
 
 namespace flatscene {
 
@@ -26,7 +28,7 @@ Spriteset::SpritesetImpl* ImagesPrivate::add(const std::string& name,unsigned ch
     Spriteset::SpritesetImpl* sptset = search(name);
     if (nullptr == sptset) {
         sptset = new Spriteset::SpritesetImpl(name,mode);
-        count.at(sptset) = 0;
+        count.insert(std::make_pair(sptset,0));
     } else {
         count.at(sptset)++;
     }
@@ -49,7 +51,7 @@ void ImagesPrivate::remove(SpritesetImpl* sptset) {
 
 Spriteset::SpritesetImpl* ImagesPrivate::search(const std::string& name, unsigned char mode) const {
     for (auto& pair : count)
-        if (pair.first->getName() == name && pair.first->getMode() == mode)
+        if (pair.first->getName() == name && pair.first->getMode() == mode  )
             return pair.first;
 
     return nullptr;

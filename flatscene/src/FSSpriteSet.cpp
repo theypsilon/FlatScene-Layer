@@ -1,11 +1,14 @@
+#include "FSImagesPrivate.h"
 #include "FSSpriteSetImpl.h"
 
 namespace flatscene {
 
     Spriteset::Spriteset(std::string c, Uint8 mode) 
-        : _impl (new SpritesetImpl(c,mode)) {}
+        : _impl (ImagesPrivate::I().add(c,mode)) {}
 
-    Spriteset::~Spriteset() {}
+    Spriteset::~Spriteset() {
+        ImagesPrivate::I().remove(_impl);
+    }
 
     Uint8 Spriteset::getMode() const {
         return _impl->getMode();
