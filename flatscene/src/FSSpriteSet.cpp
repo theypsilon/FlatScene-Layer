@@ -21,7 +21,8 @@ namespace flatscene {
 
         auto temp = _impl;
         _impl = ImagesPrivate::I().add(rhs.getName(),rhs.getMode());
-        ImagesPrivate::I().remove(temp);
+        if (temp)
+            ImagesPrivate::I().remove(temp);
     }
 
     Spriteset& Spriteset::operator=(Spriteset&& rhs) {
