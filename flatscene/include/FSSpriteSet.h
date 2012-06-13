@@ -8,21 +8,20 @@ namespace flatscene {
 
     class Spriteset {
     public:
+        Spriteset(
+            std::string c    = "",
+            Uint8       mode = ONLY_TEXTURE
+        );
 
-        const Sprite* get ( unsigned int n ) const;
-
-        int size () const;
-
-        const std::string& getName() const;
-
-        Uint8 getMode() const;
-
+        const Sprite*           get    ( unsigned int n ) const;
+        int                     size   () const;
+        const std::string&      getName() const;
+        unsigned char           getMode() const;
+    protected:
+        ~Spriteset();
     private :
         struct SpritesetImpl;
-        SpritesetImpl* const _impl;
-
-        Spriteset(std::string c = "",Uint8 mode=ONLY_TEXTURE);
-        virtual ~Spriteset();
+        SpritesetImpl* const    _impl;
 
         friend class Screen;
         friend class Images;
