@@ -4,10 +4,34 @@
 namespace flatscene {
 
     Spriteset::Spriteset(std::string c, Uint8 mode) 
-        : _impl (ImagesPrivate::I().add(c,mode)) {}
+        : _impl (ImagesPrivate::I().add(c,mode))
+    {}
+
+    Spriteset::Spriteset(const Spriteset& rhs)
+        : _impl (ImagesPrivate::I().add(rhs.getName(),rhs.getMode()))
+    {}
+
+    Spriteset::Spriteset(Spriteset&& rhs) {
+        std::swap(rhs._impl,_impl);
+    }
+
+    Spriteset& Spriteset::operator=(const Spriteset& rhs) {
+        if (&rhs == this || (rhs.getName() == getName() && rhs.getMode() == getMode()))
+            return *this;
+
+        auto temp = _impl;
+        _impl = ImagesPrivate::I().add(rhs.getName(),rhs.getMode());
+        ImagesPrivate::I().remove(temp);
+    }
+
+    Spriteset& Spriteset::operator=(Spriteset&& rhs) {
+        std::swap(rhs._impl,_impl);
+        return *this;
+    }
 
     Spriteset::~Spriteset() {
-        ImagesPrivate::I().remove(_impl);
+        if (_impl)
+            ImagesPrivate::I().remove(_impl);
     }
 
     Uint8 Spriteset::getMode() const {

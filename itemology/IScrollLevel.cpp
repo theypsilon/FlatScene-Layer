@@ -74,22 +74,15 @@ void IScrollLevel::load() {
     tileSet = durezaSet = -1;
 
     for (node = input.FirstChildElement("TileGraphs").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
-        if (tileSet == -1) 
-            tileSet = lastTileset = Img.add(node->Attribute("name"));
-        else
-            lastTileset = Img.add(node->Attribute("name"));
+        _tilesets.push_back(Spriteset(node->Attribute("name")));
     }
 
     for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
-        if (durezaSet == -1)
-            durezaSet = lastDurezaset = Img.add(node->Attribute("name"),ONLY_SDL_SURFACE);
-        else
-            lastDurezaset = Img.add(node->Attribute("name"));
+        _collisionsets.push_back(Spriteset(node->Attribute("name"),ONLY_SDL_SURFACE));
     }
 
-    if (durezaSet == -1 || tileSet == -1) {
-        FSLib.Error("TileGraphs y/o TileCollisions defectuosos en el mapa");
-        return;
+    if (_collisionsets.empty() || _tilesets.empty()) {
+        throw Exception("collisionsets or tilesets empty");
     }
 
     LayerType.clear();
@@ -182,20 +175,33 @@ void IScrollLevel::load() {
         return;
     }
 
-    for (unsigned int i=0;i<numLayers;i++) {
+    {
+        TileBG tileData;
 
-        ITileAndDur tillayer;
-        tillayer.tile = new TileBG*[mapHeight];
-        tillayer.dur = false;
+        for (unsigned int i=0;i<numLayers;i++) {
 
-        for (unsigned int j=0;j<mapHeight;j++) {
-            tillayer.tile[j] = new TileBG[mapWidth];
-            for  (unsigned int k=0;k<mapWidth;k++) {
-                fread( & tillayer.tile[j][k],sizeof(TileBG),1,f_map);
+            ITileAndDur tillayer;
+            tillayer.tiles.resize(mapHeight);
+            tillayer.tile = new TileBG*[mapHeight];
+            tillayer.dur = false;
+
+            for (unsigned int j=0;j<mapHeight;j++) {
+                tillayer.tiles[j].reserve(mapWidth);
+                tillayer.tile[j] = new TileBG[mapWidth];
+                for  (unsigned int k=0;k<mapWidth;k++) {
+                    fread(&tileData, sizeof(TileBG),1,f_map);
+                    tillayer.tiles[j].push_back( Tile(
+                        *_tilesets[tileData.fileGraph].get(tileData.graph),
+                        (unsigned short) tileData.flags,
+                        *_collisionsets[tileData.fileDur].get(tileData.dur),
+                        (unsigned short) tileData.vacio
+                    ));
+                    tillayer.tile[j][k] = tileData;
+                }
             }
-        }
 
-        layerlvl.push_back(tillayer);
+            layerlvl.push_back(tillayer);
+        }
     }
 
     fread(&buffer,sizeof(char),4,f_map);

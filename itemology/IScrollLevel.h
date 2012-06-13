@@ -5,6 +5,25 @@
 
 #include "IScrollObject.h"
 
+struct Tile {
+
+    Tile(const Tile& tile)
+        : mtile(tile.mtile), mflags(tile.mflags), mcollision(tile.mcollision), mempty(tile.mempty)
+    {}
+
+    Tile& operator=(const Tile& rhs) {
+        return *this;
+    }
+
+    Tile(const Sprite& tile,unsigned short flags, const Sprite& collision, unsigned short empty)
+        : mtile(tile), mflags(flags), mcollision(collision), mempty(empty)
+    {}
+    const Sprite& mtile;
+    unsigned short mflags;
+    const Sprite& mcollision;
+    unsigned short mempty;
+};
+
 struct TileBG {
     Uint8 graph;
     Uint8 fileGraph;
@@ -15,7 +34,8 @@ struct TileBG {
 };
 
 struct ITileAndDur {
-    TileBG** tile;
+    std::vector<std::vector<Tile> > tiles;
+    TileBG ** tile;
     bool dur;
 };
 
@@ -55,6 +75,9 @@ private:
 
     std::string datosTile;
     std::string datosSong;
+
+    std::vector<Spriteset> _tilesets;
+    std::vector<Spriteset> _collisionsets;
 
     std::vector<ITileAndDur> layerlvl;
     std::vector<TileBG**> linktodur;

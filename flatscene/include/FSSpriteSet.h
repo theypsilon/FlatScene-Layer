@@ -12,16 +12,22 @@ namespace flatscene {
             std::string c    = "",
             Uint8       mode = ONLY_TEXTURE
         );
+        Spriteset(const Spriteset& rhs);
+        Spriteset(Spriteset&& rhs);
+
+        ~Spriteset();
+
+        Spriteset& operator=(const Spriteset& rhs);
+        Spriteset& operator=(Spriteset&& rhs);
 
         const Sprite*           get    ( unsigned int n ) const;
         int                     size   () const;
         const std::string&      getName() const;
         unsigned char           getMode() const;
-    protected:
-        ~Spriteset();
+
     private :
         struct SpritesetImpl;
-        SpritesetImpl* const    _impl;
+        SpritesetImpl*          _impl;
 
         friend class Screen;
         friend class Images;

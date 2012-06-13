@@ -18,6 +18,8 @@
 #include "FSUniverse.h"
 #include "FSActor.h"
 
+#include "FSException.h"
+
 #include "FSPimpl.h"
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
