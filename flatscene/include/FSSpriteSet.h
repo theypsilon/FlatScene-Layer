@@ -26,6 +26,7 @@ namespace flatscene {
 
         friend class Screen;
         friend class Images;
+        friend class ImagesPrivate;
     };
 
 } // flatscene
