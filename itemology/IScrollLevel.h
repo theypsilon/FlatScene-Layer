@@ -15,13 +15,14 @@ struct Tile {
         return *this;
     }
 
-    Tile(const Sprite& tile,unsigned short flags, const Sprite& collision, unsigned short empty)
+    Tile(const Sprite& tile,unsigned short flags, const Sprite* const collision, unsigned short empty)
         : mtile(tile), mflags(flags), mcollision(collision), mempty(empty)
     {}
-    const Sprite& mtile;
-    unsigned short mflags;
-    const Sprite& mcollision;
-    unsigned short mempty;
+
+    const Sprite&       mtile;
+    unsigned short      mflags;
+    const Sprite* const mcollision;
+    unsigned short      mempty;
 };
 
 struct TileBG {
@@ -80,7 +81,7 @@ private:
     std::vector<Spriteset> _collisionsets;
 
     std::vector<ITileAndDur> layerlvl;
-    std::vector<TileBG**> linktodur;
+    std::vector<const std::vector <std::vector<Tile> >*> _linktodur;
 
     std::vector<Uint32> LayerFloor;
     std::vector<Uint32> LayerType;
