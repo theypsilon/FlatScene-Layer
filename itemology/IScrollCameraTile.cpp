@@ -1,19 +1,16 @@
 #include "IScrollCameraTile.h"
 
 
-IScrollCameraTile::IScrollCameraTile(TileBG** tiles, Actor* target,flatscene::Rectangle* area) :
-    // Se ha de llamar a la clase Base para una correcta inicializaci�n
-    Camera(target,area) , tiles(tiles){
-
-        if (!tiles) 
-            FSLib.Error("CameraTile : Mala definici�n de tiles");
+IScrollCameraTile::IScrollCameraTile(
+    const std::vector<std::vector<Tile>>& tiles, Actor* target,flatscene::Rectangle* area
+)  // Se ha de llamar a la clase Base para una correcta inicializaci�n
+    : Camera(target,area) , tiles(tiles){
 
         IScrollLevel * uni = dynamic_cast<IScrollLevel*>(target->getUniverse());
 
         if (!uni) {
 
-            FSLib.Error("CameraTile : Mala definici�n del nivel");
-            tileset = -1;
+            throw Exception("CameraTile : Mala definici�n del nivel");
 
         } else {
 
@@ -29,8 +26,6 @@ IScrollCameraTile::IScrollCameraTile(TileBG** tiles, Actor* target,flatscene::Re
             tam_w=  ((int)aux_w)+1;
             tam_h= ((int)aux_h)+1;
 
-            tileset = uni->getTileset();
-
         }
 }
 
@@ -41,9 +36,6 @@ IScrollCameraTile::~IScrollCameraTile(void)
 
 
 int IScrollCameraTile::refresh() {
-
-    if (tileset == -1)
-        return FRACASO;
 
     Point p;
 
@@ -57,21 +49,20 @@ int IScrollCameraTile::refresh() {
 
     for (int i=0;i<tam_w;i++) {
         for (int j=0;j<tam_h;j++) {
-            TileBG ind =  tiles[(j+y)%tiles_h][(i+x)%tiles_w];
-            if (ind.graph>0) {
-                ind.graph--;
+            const Tile& ind =  tiles.at((j+y)%tiles_h).at((i+x)%tiles_w);
+            if (ind.mtile) {
                 p.x=i*pix_w;
                 p.y=j*pix_h;
 
-                if (ind.flags & 0x001) {
+                if (ind.mflags & 0x001) {
                     p.x+=pix_w;
                 }
 
-                if (ind.flags & 0x010) {
+                if (ind.mflags & 0x010) {
                     p.y+=pix_h;
                 }
 
-                Img.get(tileset+ind.fileGraph)->get(ind.graph)->put(p,(unsigned char) ind.flags);
+                ind.mtile->put(p,(unsigned char) ind.mflags);
             } 
         }
     }

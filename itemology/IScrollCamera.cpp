@@ -37,7 +37,7 @@ int IScrollCamera::loadUniverse() {
 
     for (auto it = suni->layerlvl.begin(); it != suni->layerlvl.end() ; ++it) {
 
-        layerset.push_back( new IScrollCameraTile(it->tile,&objetive,area));
+        layerset.push_back( new IScrollCameraTile(it->tiles,&objetive,area));
 
         if (it->dur && et != suni->MA.end()) {
             layerset.push_back( new IScrollCameraObject(*et,&objetive,area));

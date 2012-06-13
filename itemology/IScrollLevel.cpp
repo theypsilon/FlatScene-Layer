@@ -71,8 +71,6 @@ void IScrollLevel::load() {
         datosSong = node->Attribute("name");
     }
 
-    tileSet = durezaSet = -1;
-
     for (node = input.FirstChildElement("TileGraphs").FirstChildElement().ToElement();
          node && node->Attribute("name");   node = node->NextSiblingElement()) 
     {
@@ -195,7 +193,7 @@ void IScrollLevel::load() {
                 for  (unsigned int k=0;k<mapWidth;k++) {
                     fread(&tileData, sizeof(TileBG),1,f_map);
                     tillayer.tiles[j].push_back( Tile(
-                        *_tilesets[tileData.fileGraph].get(tileData.graph),
+                        tileData.graph > 0 ? _tilesets[tileData.fileGraph].get(tileData.graph -1) : nullptr,
                         (unsigned short) tileData.flags,
                         tileData.dur > 0 ? _collisionsets[tileData.fileDur].get(tileData.dur - 1) : nullptr,
                         (unsigned short) tileData.vacio
@@ -301,12 +299,6 @@ void IScrollLevel::unload() {
     LayerType.clear();
     LayerFloor.clear();
     Gates.clear();
-
-    for (int i=tileSet,j=lastTileset;i<=j;i++)
-        Img.remove(i);
-
-    for (int i=durezaSet,j=lastDurezaset;i<=j;i++)
-        Img.remove(i);
 
     loaded=false;
 }

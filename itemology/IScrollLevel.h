@@ -15,11 +15,11 @@ struct Tile {
         return *this;
     }
 
-    Tile(const Sprite& tile,unsigned short flags, const Sprite* const collision, unsigned short empty)
+    Tile(const Sprite* const tile,unsigned short flags, const Sprite* const collision, unsigned short empty)
         : mtile(tile), mflags(flags), mcollision(collision), mempty(empty)
     {}
 
-    const Sprite&       mtile;
+    const Sprite* const mtile;
     unsigned short      mflags;
     const Sprite* const mcollision;
     unsigned short      mempty;
@@ -67,13 +67,6 @@ private:
     Uint32 tileHeight;
     Uint32 tileWidth;
 
-    // Primer tileset del mapa :
-    Uint32 tileSet;
-    Uint32 durezaSet;
-    // �litmo tileset del mapa :
-    Uint32 lastTileset;
-    Uint32 lastDurezaset;
-
     std::string datosTile;
     std::string datosSong;
 
@@ -110,7 +103,8 @@ public:
     virtual Uint32 getH() { return mapHeight; };
     virtual Uint32 getTileW() { return tileWidth; };
     virtual Uint32 getTileH() { return tileHeight; };
-    virtual Uint32 getTileset() { return tileSet; };
+
+    const std::vector<Spriteset>& getTileset() { return _tilesets; };
 };
 
 #endif
