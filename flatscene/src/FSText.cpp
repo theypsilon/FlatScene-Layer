@@ -20,6 +20,13 @@ Writer::WriterImpl::FSText::FSText(FSText&& mv)
     , type(mv.type)
 {}
 
+Writer::WriterImpl::FSText& Writer::WriterImpl::FSText::operator=(FSText&& mv) {
+    fx = std::move(mv.fx);
+    Object = std::move(mv.Object);
+    type = std::move(mv.type);
+    return *this;
+}
+
 Writer::WriterImpl::FSText::~FSText() {}
 
 TypeText Writer::WriterImpl::FSText::Type() const {
