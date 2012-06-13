@@ -11,8 +11,8 @@ namespace flatscene {
         : _impl (ImagesPrivate::I().add(rhs.getName(),rhs.getMode()))
     {}
 
-    Spriteset::Spriteset(Spriteset&& rhs) {
-        std::swap(rhs._impl,_impl);
+    Spriteset::Spriteset(Spriteset&& rhs) : _impl(nullptr) {
+        swap(rhs);
     }
 
     Spriteset& Spriteset::operator=(const Spriteset& rhs) {
@@ -21,18 +21,33 @@ namespace flatscene {
 
         auto temp = _impl;
         _impl = ImagesPrivate::I().add(rhs.getName(),rhs.getMode());
-        if (temp)
-            ImagesPrivate::I().remove(temp);
+        doTheRemove(temp);
     }
 
     Spriteset& Spriteset::operator=(Spriteset&& rhs) {
-        std::swap(rhs._impl,_impl);
+        doTheRemove(_impl);
+        _impl = nullptr;
+        swap(rhs);
         return *this;
     }
 
     Spriteset::~Spriteset() {
-        if (_impl)
-            ImagesPrivate::I().remove(_impl);
+        doTheRemove(_impl);
+    }
+
+    void doTheRemove(Spriteset::SpritesetImpl* impl) {
+        if (impl)
+            ImagesPrivate::I().remove(impl);
+    }
+
+    void Spriteset::swap(Spriteset& rhs) {
+        auto temp = _impl;
+        _impl = rhs._impl;
+        rhs._impl = temp;
+    }
+
+    bool Spriteset::isNull() const {
+        return nullptr == _impl;
     }
 
     Uint8 Spriteset::getMode() const {

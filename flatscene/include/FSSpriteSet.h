@@ -19,6 +19,10 @@ namespace flatscene {
 
         Spriteset& operator=(const Spriteset& rhs);
         Spriteset& operator=(Spriteset&& rhs);
+        
+        void                    swap(Spriteset& rhs);
+        bool                    isNull () const; // Only may happen if the object has been moved to another
+        // Following methods yield Undefined Behavior when IsNull returns true, aka the object has been moved
 
         const Sprite*           get    ( unsigned int n ) const;
         int                     size   () const;
@@ -28,6 +32,7 @@ namespace flatscene {
     private :
         struct SpritesetImpl;
         SpritesetImpl*          _impl;
+        friend void             doTheRemove(SpritesetImpl* impl);
 
         friend class Screen;
         friend class Images;
