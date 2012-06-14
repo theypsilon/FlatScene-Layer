@@ -4,26 +4,7 @@
 #include "FSLibrary.h"
 
 #include "IScrollObject.h"
-
-struct Tile {
-
-    Tile(const Tile& tile)
-        : mtile(tile.mtile), mflags(tile.mflags), mcollision(tile.mcollision), mempty(tile.mempty)
-    {}
-
-    Tile& operator=(const Tile& rhs) {
-        return *this;
-    }
-
-    Tile(const Sprite* const tile,unsigned short flags, const Sprite* const collision, unsigned short empty)
-        : mtile(tile), mflags(flags), mcollision(collision), mempty(empty)
-    {}
-
-    const Sprite* const mtile;
-    unsigned short      mflags;
-    const Sprite* const mcollision;
-    unsigned short      mempty;
-};
+#include "Tile.h"
 
 struct TileBG {
     Uint8 graph;
@@ -36,7 +17,6 @@ struct TileBG {
 
 struct ITileAndDur {
     std::vector<std::vector<Tile> > tiles;
-    TileBG ** tile;
     bool dur;
 };
 
@@ -73,8 +53,10 @@ private:
     std::vector<Spriteset> _tilesets;
     std::vector<Spriteset> _collisionsets;
 
-    std::vector<ITileAndDur> layerlvl;
-    std::vector<const std::vector <std::vector<Tile> >*> _linktodur;
+    std::vector<ITileAndDur> _layerlvl;
+    std::vector<
+        std::vector<
+            std::vector<Tile>> const*> _linktodur;
 
     std::vector<Uint32> LayerFloor;
     std::vector<Uint32> LayerType;
@@ -83,7 +65,10 @@ private:
 
     std::vector<gate> Gates;
 
-    std::vector<IScrollObjectCollection***> MA;
+    std::vector<
+        std::vector<
+            std::vector<
+                std::list<IScrollObject*>>>> _MA;
 
     friend class IScrollCamera;
 

@@ -179,30 +179,24 @@ void IScrollLevel::load() {
 
     {
         TileBG tileData;
+        _layerlvl.resize(numLayers);
 
-        for (unsigned int i=0;i<numLayers;i++) {
+        for (auto& tillayer : _layerlvl) {
 
-            ITileAndDur tillayer;
             tillayer.tiles.resize(mapHeight);
-            tillayer.tile = new TileBG*[mapHeight];
             tillayer.dur = false;
 
-            for (unsigned int j=0;j<mapHeight;j++) {
-                tillayer.tiles[j].reserve(mapWidth);
-                tillayer.tile[j] = new TileBG[mapWidth];
-                for  (unsigned int k=0;k<mapWidth;k++) {
+            for (auto& tilsublayer : tillayer.tiles) {
+                tilsublayer.reserve(mapWidth);
+                for  (unsigned int k=0; k < mapWidth; k++) {
                     fread(&tileData, sizeof(TileBG),1,f_map);
-                    tillayer.tiles[j].push_back( Tile(
-                        tileData.graph > 0 ? _tilesets[tileData.fileGraph].get(tileData.graph -1) : nullptr,
-                        (unsigned short) tileData.flags,
-                        tileData.dur > 0 ? _collisionsets[tileData.fileDur].get(tileData.dur - 1) : nullptr,
-                        (unsigned short) tileData.vacio
+                    tilsublayer.push_back( Tile(
+                        tileData.graph > 0 ? _tilesets     [tileData.fileGraph].get(tileData.graph -1) : nullptr,
+                        tileData.dur   > 0 ? _collisionsets[tileData.fileDur  ].get(tileData.dur - 1 ) : nullptr,
+                        (unsigned short) tileData.flags
                     ));
-                    tillayer.tile[j][k] = tileData;
                 }
             }
-
-            layerlvl.push_back(tillayer);
         }
     }
 
@@ -219,48 +213,43 @@ void IScrollLevel::load() {
 
     for (unsigned int i= 0; i< numLayers; i++) {
 
-        layerlvl[i].dur = false;
+        _layerlvl[i].dur = false;
 
         for (unsigned int layer = LayerFloor[i]; (i < numLayers) && (LayerFloor[i] == layer); i++) {
-            if (layerlvl[i].dur)
+            if (_layerlvl[i].dur)
                 continue;
 
             if (LayerType[i] == 1) {
-                layerlvl[i].dur = true;
+                _layerlvl[i].dur = true;
 
-                _linktodur.push_back( &layerlvl[i].tiles );
+                _linktodur.push_back( &_layerlvl[i].tiles );
             }
         }
     }
 
-    MA.clear();
-
-    for (unsigned int z=0;z<=LayerFloor[numLayers-1];z++) {
-        MA.push_back( new IScrollObjectCollection**[mapWidth] );
-        for (unsigned int x=0;x<mapWidth;x++) {
-            MA[z][x] = new IScrollObjectCollection*[mapHeight];
-            for (unsigned int y=0;y<mapHeight;y++) {
-                MA[z][x][y]=new IScrollObjectCollection;
-            }
-        }
+    _MA.clear();
+    _MA.resize(LayerFloor[numLayers-1]);
+    for (unsigned int z = 0; z <= _MA.size(); z++) {
+        _MA[z].resize(mapWidth);
+        for (unsigned int x = 0; x < mapWidth; x++) {
+            _MA[z][x].resize(mapHeight);
+        }            
     }
 
-    for (auto it = actor.begin();it!=actor.end();++it) {
-        IScrollObject* actscroll = dynamic_cast<IScrollObject*>(*it);
-
+    for (auto& a : actor) {
+        IScrollObject* actscroll = dynamic_cast<IScrollObject*>(a);
         if (actscroll) {
             unsigned int MAz = actscroll->place.z,
-                MAx = actscroll->place.x / getTileW(),
-                MAy = actscroll->place.y / getTileH();
-            if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
-                actscroll->placeInMA = MA[MAz][MAx][MAy];
-                actscroll->placeInMA->push_back(actscroll);
+                         MAx = actscroll->place.x / getTileW(),
+                         MAy = actscroll->place.y / getTileH();
+            if (MAz <= _MA.size() && MAx < mapWidth && MAy < mapHeight) {
+                actscroll->_placeInMA = &_MA[MAz][MAx][MAy];
+                _MA[MAz][MAx][MAy].push_back(actscroll);
             } else {
-                actscroll->placeInMA = nullptr;
+                actscroll->_placeInMA = nullptr;
             }
         }
     }
-
 
     //	The map is ready.
 
@@ -274,27 +263,7 @@ void IScrollLevel::unload() {
     printf("Liberando mapa '%s'...\n",name.c_str());
 #endif
 
-    for (unsigned int z=0;z < MA.size();z++) {
-        for (unsigned int x=0;x<mapWidth;x++) {
-            for (unsigned int y=0;y<mapHeight;y++) {
-                delete MA[z][x][y];
-            }
-            delete MA[z][x];
-        }
-        delete MA[z];
-    }
-
-    MA.clear();
-
-    for (auto it = layerlvl.begin(); it != layerlvl.end() ; ++it) {
-        TileBG** tile = (*it).tile;
-        for (unsigned int j=0;j<mapHeight;j++) {
-            delete (tile[j]);
-        }
-        delete (tile);
-    }
-
-    layerlvl.clear();
+    _layerlvl.clear();
     _linktodur.clear();
     LayerType.clear();
     LayerFloor.clear();
@@ -306,18 +275,18 @@ void IScrollLevel::unload() {
 int IScrollLevel::incActor(Actor* act) {
     IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
-    if (actscroll && act->getUniverse()==NULL) {
+    if (actscroll && act->getUniverse()==nullptr) {
         act->setUniverse(this);
         actor.push_back(act);
         if (isLoaded()) {
-            unsigned int MAz = actscroll->place.x,
-                MAx = actscroll->place.x / getTileW(),
-                MAy = actscroll->place.y / getTileH();
-            if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
-                actscroll->placeInMA = MA[MAz][MAx][MAy];
-                actscroll->placeInMA->push_back(actscroll);
+            unsigned int MAz = actscroll->place.z,
+                         MAx = actscroll->place.x / getTileW(),
+                         MAy = actscroll->place.y / getTileH();
+            if (MAz <= _MA.size() && MAx < mapWidth && MAy < mapHeight) {
+                actscroll->_placeInMA = &_MA[MAz][MAx][MAy];
+                _MA[MAz][MAx][MAy].push_back(actscroll);
             } else {
-                actscroll->placeInMA = NULL;
+                actscroll->_placeInMA = nullptr;
             }
         }
         return EXITO;
@@ -334,9 +303,9 @@ int IScrollLevel::decActor(Actor* act) {
         if (act==*i) {
             actor.erase(i);
             if (isLoaded()) {
-                actscroll->placeInMA->remove(actscroll);
-                actscroll->setUniverse(NULL);
-                actscroll->placeInMA = NULL;
+                actscroll->_placeInMA->remove(actscroll);
+                actscroll->setUniverse(nullptr);
+                actscroll->_placeInMA = nullptr;
             }
             break;
         }
@@ -358,25 +327,25 @@ Uint32 IScrollLevel::getPixel(int x, int y,int z) {
     if (j>=0 && i>=0 && j<mapWidth && i<mapHeight) {
         const Tile& durtile = (*_linktodur[z])[i][j];
 
-        if (durtile.mcollision) {
+        if (durtile.getCollision()) {
 
-            x=x%(durtile.mcollision->getWidth());
-            y=y%(durtile.mcollision->getHeight());
+            x=x%(durtile.getCollision()->getWidth());
+            y=y%(durtile.getCollision()->getHeight());
 
             /*x=x%(durtile.mcollision->getWidth()*2);
             x/=2;
             y=y%(durtile.mcollision->getHeight()*2);
             y/=2;*/
 
-            if (durtile.mflags & 0x01) {
-                x = durtile.mcollision->getWidth() - x -1;
+            if (durtile.getFlags() & 0x01) {
+                x = durtile.getCollision()->getWidth() - x -1;
             } 
 
-            if (durtile.mflags > 1) {
-                y = durtile.mcollision->getHeight() - y -1;
+            if (durtile.getFlags() > 1) {
+                y = durtile.getCollision()->getHeight() - y -1;
             }
 
-            return durtile.mcollision->getPixel(x,y);
+            return durtile.getCollision()->getPixel(x,y);
 
         }
         return 0;

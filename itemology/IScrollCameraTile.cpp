@@ -50,19 +50,20 @@ int IScrollCameraTile::refresh() {
     for (int i=0;i<tam_w;i++) {
         for (int j=0;j<tam_h;j++) {
             const Tile& ind =  tiles.at((j+y)%tiles_h).at((i+x)%tiles_w);
-            if (ind.mtile) {
+            auto graph = ind.getGraph();
+            if (graph) {
                 p.x=i*pix_w;
                 p.y=j*pix_h;
 
-                if (ind.mflags & 0x001) {
+                if (ind.getFlags() & 0x001) {
                     p.x+=pix_w;
                 }
 
-                if (ind.mflags & 0x010) {
+                if (ind.getFlags() & 0x010) {
                     p.y+=pix_h;
                 }
 
-                ind.mtile->put(p,(unsigned char) ind.mflags);
+                graph->put(p,(unsigned char) ind.getFlags());
             } 
         }
     }

@@ -3,7 +3,7 @@
 int IScrollObject::instances = 0;
 
 IScrollObject::IScrollObject() 
-    : placeInMA(NULL), Actor("IScrollObject") {
+    : _placeInMA(nullptr), Actor("IScrollObject") {
 
         instances++;
 
