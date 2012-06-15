@@ -71,5 +71,8 @@
     <ClInclude Include="IndexedPointer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include=".\IndexHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

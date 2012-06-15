@@ -4,7 +4,9 @@
 #include "FSLibrary.h"
 
 #include "IScrollObject.h"
-#include "Tile.h"
+#include "SmallTile.h"
+
+typedef SmallTile Tile;
 
 struct TileBG {
     unsigned char   graph;

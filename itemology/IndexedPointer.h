@@ -5,6 +5,8 @@
 #include <deque>
 #include <limits>
 
+#include "IndexHandler.h"
+
 template <class IndexType, class PointerType>
 class IndexedPointer {
 
@@ -13,27 +15,12 @@ class IndexedPointer {
 
     static std::unordered_map<IndexType,PointerType*>   _pointerMapper;
     static std::unordered_map<PointerType*,IndexType>   _indexMapper;
-    static std::unordered_map<IndexType,IndexType>      _indexCounter;
-    static std::deque<IndexType>                        _indexFreeStack;
-
-    static IndexType _getNewIndex() {
-        if (_indexFreeStack.empty()) {
-            auto end = _pointerMapper.end();
-            for (IndexType index = IndexLimit::min(); index <= IndexLimit::max(); index++)
-                if (_pointerMapper.find(index) != end)
-                    return index;
-
-            return 0;//throw std::exception("too many indexed things by this IndexedPointer");
-        }
-        
-        IndexType index = _indexFreeStack.back();
-        _indexFreeStack.pop_back();
-        return index;
-    }
+    static IndexHandler<IndexType>                      _indexCounter;
 
     static IndexType _storePointer(PointerType* ptr) {
         auto indexIt    = _indexMapper.find(ptr);
-        IndexType index = (indexIt == _indexMapper.end())? _getNewIndex() : indexIt->second;
+        IndexType index = (indexIt == _indexMapper.end())?
+            _indexCounter.generateNew() : indexIt->second;
 
         _pointerMapper[index] = ptr;
         _indexMapper  [ptr  ] = index;
@@ -45,16 +32,13 @@ class IndexedPointer {
     }
 
     static void _increaseIndexCount(IndexType index) {
-        _indexCounter[index] ++;   
+        _indexCounter.add(index);
     }
 
     static void _releaseIndexCount(IndexType index) {
-        auto counter = _indexCounter[index]--;
-        if (0 == counter) {
+        if (_indexCounter.remove(index)) {
             _indexMapper.erase(_pointerMapper[index]);
             _pointerMapper.erase(index);
-            _indexCounter.erase(index);
-            _indexFreeStack.push_back(index);
         }
     }
 
@@ -119,19 +103,15 @@ void swap(IndexedPointer<IndexType,PointerType>& first, IndexedPointer<IndexType
 }
 
 template <typename IndexType, typename PointerType>
-std::unordered_map<IndexType,PointerType*>   
+std::unordered_map<IndexType,PointerType*>
 IndexedPointer<IndexType,PointerType>::_pointerMapper;
 
 template <typename IndexType, typename PointerType>
-std::unordered_map<PointerType*,IndexType>   
+std::unordered_map<PointerType*,IndexType>
 IndexedPointer<IndexType,PointerType>::_indexMapper;
 
 template <typename IndexType, typename PointerType>
-std::unordered_map<IndexType,IndexType>      
+IndexHandler<IndexType>
 IndexedPointer<IndexType,PointerType>::_indexCounter;
-
-template <typename IndexType, typename PointerType>
-std::deque<IndexType>                        
-IndexedPointer<IndexType,PointerType>::_indexFreeStack;
 
 #endif

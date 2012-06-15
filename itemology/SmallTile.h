@@ -26,9 +26,9 @@ public:
         : _graph(graph), _collision(collision), _flags(flags)
     {}
 
-    const flatscene::Sprite* const getGraph()     const { return _graph.get();     }
-    const flatscene::Sprite* const getCollision() const { return _collision.get(); }
-    unsigned short                 getFlags()     const { return _flags;           }
+    const flatscene::Sprite* const getGraph()     const { return _graph;     }
+    const flatscene::Sprite* const getCollision() const { return _collision; }
+    unsigned short                 getFlags()     const { return _flags;     }
 };
 
 #endif

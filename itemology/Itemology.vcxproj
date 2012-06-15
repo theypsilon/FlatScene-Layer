@@ -92,6 +92,7 @@
   <ItemGroup>
     <ClInclude Include="IDebug.h" />
     <ClInclude Include="IFirstEngine.h" />
+    <ClInclude Include=".\IndexHandler.h" />
     <ClInclude Include="IndexedPointer.h" />
     <ClInclude Include="IScrollCamera.h" />
     <ClInclude Include="IScrollCameraObject.h" />
