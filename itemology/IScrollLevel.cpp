@@ -228,8 +228,8 @@ void IScrollLevel::load() {
     }
 
     _MA.clear();
-    _MA.resize(LayerFloor[numLayers-1]);
-    for (unsigned int z = 0; z <= _MA.size(); z++) {
+    _MA.resize(LayerFloor[numLayers-1]); //FIXME ensure its this right, or it would be _MA.resize(LayerFloor[numLayers-1]+1);
+    for (unsigned int z = 0; z < _MA.size(); z++) {
         _MA[z].resize(mapWidth);
         for (unsigned int x = 0; x < mapWidth; x++) {
             _MA[z][x].resize(mapHeight);
@@ -242,7 +242,7 @@ void IScrollLevel::load() {
             unsigned int MAz = actscroll->place.z,
                          MAx = actscroll->place.x / getTileW(),
                          MAy = actscroll->place.y / getTileH();
-            if (MAz <= _MA.size() && MAx < mapWidth && MAy < mapHeight) {
+            if (MAz < _MA.size() && MAx < mapWidth && MAy < mapHeight) {
                 actscroll->_placeInMA = &_MA[MAz][MAx][MAy];
                 _MA[MAz][MAx][MAy].push_back(actscroll);
             } else {
@@ -282,7 +282,7 @@ int IScrollLevel::incActor(Actor* act) {
             unsigned int MAz = actscroll->place.z,
                          MAx = actscroll->place.x / getTileW(),
                          MAy = actscroll->place.y / getTileH();
-            if (MAz <= _MA.size() && MAx < mapWidth && MAy < mapHeight) {
+            if (MAz < _MA.size() && MAx < mapWidth && MAy < mapHeight) {
                 actscroll->_placeInMA = &_MA[MAz][MAx][MAy];
                 _MA[MAz][MAx][MAy].push_back(actscroll);
             } else {

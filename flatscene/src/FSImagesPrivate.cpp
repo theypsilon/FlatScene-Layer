@@ -28,7 +28,7 @@ Spriteset::SpritesetImpl* ImagesPrivate::add(const std::string& name,unsigned ch
     Spriteset::SpritesetImpl* sptset = search(name);
     if (nullptr == sptset) {
         sptset = new Spriteset::SpritesetImpl(name,mode);
-        count.insert(std::make_pair(sptset,0));
+        count.insert(std::make_pair(sptset,1));
     } else {
         count.at(sptset)++;
     }
