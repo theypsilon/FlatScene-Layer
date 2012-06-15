@@ -2,7 +2,7 @@
 #define I_INDEXED_POINTER_FS
 
 #include <unordered_map>
-#include <stack>
+#include <deque>
 #include <limits>
 
 template <class IndexType, class PointerType>
@@ -14,24 +14,26 @@ class IndexedPointer {
     static std::unordered_map<IndexType,PointerType*>   _pointerMapper;
     static std::unordered_map<PointerType*,IndexType>   _indexMapper;
     static std::unordered_map<IndexType,IndexType>      _indexCounter;
-    static std::stack<IndexType>                        _indexFreeStack;
+    static std::deque<IndexType>                        _indexFreeStack;
 
     static IndexType _getNewIndex() {
         if (_indexFreeStack.empty()) {
             auto end = _pointerMapper.end();
-            for (IndexType i = IndexLimit::min(); i <= IndexLimit::max(); i++)
-                if (_pointerMapper.find(i) != end)
-                    return i;
+            for (IndexType index = IndexLimit::min(); index <= IndexLimit::max(); index++)
+                if (_pointerMapper.find(index) != end)
+                    return index;
 
-            throw std::exception("too many indexed things by this IndexedPointer");
+            return 0;//throw std::exception("too many indexed things by this IndexedPointer");
         }
-
-        return _indexFreeStack.pop();
+        
+        IndexType index = _indexFreeStack.back();
+        _indexFreeStack.pop_back();
+        return index;
     }
 
     static IndexType _storePointer(PointerType* ptr) {
         auto indexIt    = _indexMapper.find(ptr);
-        IndexType index = indexIt == _indexMapper.end()? _getNewIndex() : *indexIt;
+        IndexType index = (indexIt == _indexMapper.end())? _getNewIndex() : indexIt->second;
 
         _pointerMapper[index] = ptr;
         _indexMapper  [ptr  ] = index;
@@ -51,7 +53,7 @@ class IndexedPointer {
             _indexMapper.erase(_pointerMapper[index]);
             _pointerMapper.erase(index);
             _indexCounter.erase(index);
-            _indexFreeStack.push(index);
+            _indexFreeStack.push_back(index);
         }
     }
 
@@ -87,17 +89,33 @@ public:
         _releaseIndexCount(_index);
     }
 
-    PointerType& operator*() {
+    PointerType& operator*() const {
         return *_getPointer(_index);
     }
 
-    PointerType& operator->() {
+    PointerType& operator->() const {
         return *_getPointer(_index);
     }
 
-    PointerType* get() {
+    PointerType* get() const {
         return _getPointer(_index);
     }
 };
+
+template <typename IndexType, typename PointerType>
+std::unordered_map<IndexType,PointerType*>   
+IndexedPointer<IndexType,PointerType>::_pointerMapper;
+
+template <typename IndexType, typename PointerType>
+std::unordered_map<PointerType*,IndexType>   
+IndexedPointer<IndexType,PointerType>::_indexMapper;
+
+template <typename IndexType, typename PointerType>
+std::unordered_map<IndexType,IndexType>      
+IndexedPointer<IndexType,PointerType>::_indexCounter;
+
+template <typename IndexType, typename PointerType>
+std::deque<IndexType>                        
+IndexedPointer<IndexType,PointerType>::_indexFreeStack;
 
 #endif
