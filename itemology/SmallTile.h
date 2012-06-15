@@ -2,7 +2,7 @@
 #define I_TILE_SMALL_FS
 
 #include "FSLibrary.h"
-#include "SmallPointer.h"
+#include "IndexedPointer.h"
 
 class SmallTile {
     typedef IndexedPointer<unsigned short, const flatscene::Sprite> SpritePointer;
