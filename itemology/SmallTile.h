@@ -2,24 +2,37 @@
 #define I_TILE_SMALL_FS
 
 #include "FSLibrary.h"
-#include <unordered_map>
-#include <vector>
-#include <limits>
-#include <algorithm>
-#include <cassert>
+#include "SmallPointer.h"
 
 class SmallTile {
+    typedef IndexedPointer<unsigned short, const flatscene::Sprite> SpritePointer;
+    
+    SpritePointer _graph;
+    SpritePointer _collision;
+    unsigned short      _flags;
+public:
+    SmallTile(const SmallTile& tile)
+        : _graph(tile._graph), _collision(tile._collision), _flags(tile._flags)
+    {}
 
-    typedef unsigned short                  IndexType;
-    typedef std::numeric_limits<IndexType>  IndexLimit;
-    typedef unsigned int                    DouleIndexType;
+    SmallTile& operator=(const SmallTile& rhs) {
+        _graph      = rhs._graph;
+        _collision  = rhs._collision;
+        _flags      = rhs._flags;
+        return *this;
+    }
 
-    static std::unordered_map<DouleIndexType,const void*> _pointerMapper;
-    static std::unordered_map<const void*,DouleIndexType> _indexMapper;
-    static std::vector<IndexType> _graphCount;
-    static std::vector<IndexType> _collisionCount;
+    SmallTile(const flatscene::Sprite* const graph, const flatscene::Sprite* const collision, unsigned short flags)
+        : _graph(graph), _collision(collision), _flags(flags)
+    {}
+
+    const flatscene::Sprite* const getGraph()     const { return _graph.get();     }
+    const flatscene::Sprite* const getCollision() const { return _collision.get(); }
+    unsigned short                 getFlags()     const { return _flags;           }
+};
 
 
+/*
     static IndexType _storeSprite(const flatscene::Sprite* spt, bool graph = true) {
         std::vector<IndexType>&
                             count = graph? _graphCount : _collisionCount;
@@ -95,7 +108,7 @@ public:
 
     unsigned short getFlags() const { 
         return _flags;     
-    }
+    }*/
 };
 
 #endif
