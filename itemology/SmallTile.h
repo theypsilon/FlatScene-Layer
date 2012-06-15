@@ -6,37 +6,42 @@
 #include <vector>
 #include <limits>
 #include <algorithm>
+#include <cassert>
 
 class SmallTile {
 
-    static std::unordered_map<unsigned int,const void*> _pointerMapper;
-    static std::vector<unsigned short> _graphCount;
-    static std::vector<unsigned short> _collisionCount;
+    typedef unsigned short                  IndexType;
+    typedef std::numeric_limits<IndexType>  IndexLimit;
+    typedef unsigned int                    DouleIndexType;
 
-    static unsigned int _storeSprite(const flatscene::Sprite* spt, bool graph = true) {
-        std::vector
-        <unsigned short>&   count = graph? _graphCount : _collisionCount;
-        unsigned char       shift = graph? 0 : 16;
-        unsigned int        index = count.size();
+    static std::unordered_map<DouleIndexType,const void*> _pointerMapper;
+    static std::unordered_map<const void*,DouleIndexType> _indexMapper;
+    static std::vector<IndexType> _graphCount;
+    static std::vector<IndexType> _collisionCount;
 
-        if (index >= std::numeric_limits<unsigned short>::max()) {
-            auto it = std::find(count.begin(),count.end(),[](unsigned short c){
-                return c == 0;
-            });
-            if (it == count.end()) {
-                ;
-            }
-            index = it - count.begin();
-            *it++;
-        } else {
+
+    static IndexType _storeSprite(const flatscene::Sprite* spt, bool graph = true) {
+        std::vector<IndexType>&
+                            count = graph? _graphCount : _collisionCount;
+        const void*         ptr   = reinterpret_cast<const void*>(spt);
+        unsigned char       shift = graph? 0 : sizeof(IndexType)*8;
+        const std::size_t   size  = count.size();
+        IndexType           index = _indexMapper.find(ptr) != _indexMapper.end()
+                            ? _indexMapper[ptr] >> shift   : size;
+
+        if (size == index) {
             count.push_back(1);
+        } else {
+            count[index]++;
         }
 
-        _pointerMapper[index << shift] = reinterpret_cast<const void*>(spt);
+        assert(count.size() <= IndexLimit::max());
+
+        _pointerMapper[index << shift] = ptr;
         return index;
     } 
 
-    static const flatscene::Sprite* _getSprite(unsigned int i, bool graph = true) {
+    static const flatscene::Sprite* _getSprite(DouleIndexType i, bool graph = true) {
         return reinterpret_cast<const flatscene::Sprite*>(_pointerMapper.at(graph ? i : i << 16));
     }
 
