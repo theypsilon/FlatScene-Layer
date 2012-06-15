@@ -35,6 +35,7 @@ void IFirstEngine::onEvent(const SDL_Event& e) {
         move[i_down] = turn;
     
     if ( e.key.keysym.sym == SDLK_UP )
+        move[i_up] = turn;
     
     if ( e.key.keysym.sym == SDLK_RIGHT )
         move[i_right] = turn;
