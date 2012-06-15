@@ -37,6 +37,7 @@ class IndexedPointer {
 
         _pointerMapper[index] = ptr;
         _indexMapper  [ptr  ] = index;
+        return index;
     }
 
     static PointerType* _getPointer(IndexType index) {
@@ -70,8 +71,8 @@ public:
         _increaseIndexCount(_index);
     }
 
-    IndexedPointer(const type& old)
-        : _index(old._index)
+    IndexedPointer(const type& rhs)
+        : _index(rhs._index)
     {
         _increaseIndexCount(_index);
     }
@@ -96,11 +97,26 @@ public:
     PointerType& operator->() const {
         return *_getPointer(_index);
     }
+    
+    operator PointerType*() const {
+        return _getPointer(_index);
+    }
 
     PointerType* get() const {
         return _getPointer(_index);
     }
+
+    void swap(IndexedPointer<IndexType,PointerType>& rhs) {
+        IndexType temp = _index;
+        _index = rhs._index;
+        rhs._index = temp;
+    }
 };
+
+template <class IndexType, class PointerType>
+void swap(IndexedPointer<IndexType,PointerType>& first, IndexedPointer<IndexType,PointerType>& second) {
+    first.swap(second);
+}
 
 template <typename IndexType, typename PointerType>
 std::unordered_map<IndexType,PointerType*>   
