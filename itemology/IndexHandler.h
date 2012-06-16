@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <deque>
 #include <limits>
+#include <cassert>
 
 template <typename IndexType, typename CounterType = unsigned int>
 class IndexHandler {
@@ -30,10 +31,15 @@ class IndexHandler {
 
 public:
 
+    static IndexType getInvalid() {
+        return IndexLimit::max();
+    }
+
     IndexHandler() : _nextIndex(IndexLimit::min()) {}
     ~IndexHandler() {}
 
     bool remove(IndexType index) {
+        assert(index != getInvalid());
         auto it = _findCountIterator(index);
 
         if(CounterLimit::min() == (-- it->second)) {
@@ -47,7 +53,7 @@ public:
     IndexType generateNew() {
         IndexType index;
         if (_freeStack.empty()) {
-            if (IndexLimit::min() == _nextIndex && _counters.find(_nextIndex) != _counters.end()) 
+            if (IndexLimit::max() == _nextIndex) 
                 throw Exception("no more indexes available");
 
             index = _nextIndex;
@@ -63,11 +69,13 @@ public:
     }
 
     void add(IndexType index) {
+        assert(index != getInvalid());
         auto it = _findCountIterator(index);
         it->second++;
     }
 
     CounterType getCount(IndexType index) {
+        assert(index != getInvalid());
         auto it = _findCountIterator(index);
         return it->second;
     }

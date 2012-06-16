@@ -2,10 +2,12 @@
 #define I_INDEXED_POINTER_FS
 
 #include <unordered_map>
+#include <map>
 #include <deque>
 #include <limits>
 
 #include "IndexHandler.h"
+
 
 template <class IndexType, class PointerType>
 class IndexedPointer {
@@ -17,33 +19,38 @@ class IndexedPointer {
     static std::unordered_map<PointerType*,IndexType>   _indexMapper;
     static IndexHandler<IndexType>                      _indexCounter;
 
-    static IndexType _storePointer(PointerType* ptr) {
-        auto indexIt    = _indexMapper.find(ptr);
-        IndexType index = (indexIt == _indexMapper.end())?
-            _indexCounter.generateNew() : indexIt->second;
+    IndexType _storePointer(PointerType* ptr) {
+        if (ptr) {
+            auto indexIt    = _indexMapper.find(ptr);
+            IndexType index = (indexIt == _indexMapper.end())?
+                _indexCounter.generateNew() : indexIt->second;
 
-        _pointerMapper[index] = ptr;
-        _indexMapper  [ptr  ] = index;
-        return index;
-    }
-
-    static PointerType* _getPointer(IndexType index) {
-        return _pointerMapper.at(index);
-    }
-
-    static void _increaseIndexCount(IndexType index) {
-        _indexCounter.add(index);
-    }
-
-    static void _releaseIndexCount(IndexType index) {
-        if (_indexCounter.remove(index)) {
-            _indexMapper.erase(_pointerMapper[index]);
-            _pointerMapper.erase(index);
+            _pointerMapper[index] = ptr;
+            _indexMapper  [ptr  ] = index;
+            return index;
+        } else {
+            return _indexCounter.getInvalid();
         }
     }
 
-    IndexedPointer(type&&);
-    type& operator=(type&&);
+    PointerType* _getPointer() const {
+        if (!operator bool()) {
+            throw Exception("this indexed pointer has been moved and now is empty");
+        }
+        return _pointerMapper.at(_index);
+    }
+
+    void _increaseIndexCount() {
+        if (operator bool())
+            _indexCounter.add(_index);
+    }
+
+    void _releaseIndexCount() {
+        if (operator bool() && _indexCounter.remove(_index)) {
+            _indexMapper.erase(_pointerMapper[_index]);
+            _pointerMapper.erase(_index);
+        }
+    }
 
     IndexType _index;
 
@@ -52,48 +59,74 @@ public:
     IndexedPointer(PointerType* ptr) 
         : _index(_storePointer(ptr)) 
     {
-        _increaseIndexCount(_index);
+        _increaseIndexCount();
     }
 
     IndexedPointer(const type& rhs)
         : _index(rhs._index)
     {
-        _increaseIndexCount(_index);
+        _increaseIndexCount();
+    }
+
+    IndexedPointer(type&& rhs) 
+        : _index(rhs._index) 
+    {
+        rhs._index = _indexCounter.getInvalid();
     }
 
     type& operator=(const type& rhs) {
         if (&rhs == this)
             return *this;
-        _releaseIndexCount(_index);
+
+        _releaseIndexCount();
         _index = rhs._index;
-        _increaseIndexCount(_index);
+        _increaseIndexCount();
+
+        return *this;
+    }
+
+    type& operator=(type&& rhs) {
+        if (&rhs == this)
+            return *this;
+
+        _index = rhs._index;
+        rhs._index = _indexCounter.getInvalid();
+
         return *this;
     }
 
     ~IndexedPointer() {
-        _releaseIndexCount(_index);
+        _releaseIndexCount();
     }
 
     PointerType& operator*() const {
-        return *_getPointer(_index);
+        return *_getPointer();
     }
 
     PointerType& operator->() const {
-        return *_getPointer(_index);
+        return *_getPointer();
     }
     
     operator PointerType*() const {
-        return _getPointer(_index);
+        return _getPointer();
     }
 
     PointerType* get() const {
-        return _getPointer(_index);
+        return _getPointer();
+    }
+
+    operator bool() const {
+        return _indexCounter.getInvalid() != _index;
     }
 
     void swap(IndexedPointer<IndexType,PointerType>& rhs) {
         IndexType temp = _index;
         _index = rhs._index;
         rhs._index = temp;
+    }
+
+    void reset(PointerType* ptr = nullptr) {
+        *this = type(ptr);
     }
 };
 
@@ -113,5 +146,56 @@ IndexedPointer<IndexType,PointerType>::_indexMapper;
 template <typename IndexType, typename PointerType>
 IndexHandler<IndexType>
 IndexedPointer<IndexType,PointerType>::_indexCounter;
+
+/*
+    class Index {
+        IndexType _index;
+
+        Index(IndexType&&);
+        IndexType& operator=(IndexType&&);
+
+        IndexType generate() {
+            return _indexCounter.generateNew();
+        }
+
+        void add() {
+            _indexCounter.add(_index);
+        }
+
+        void remove() {
+            _indexCounter.remove(_index);
+        }
+
+    public:
+
+        Index() : _index(generate()) {
+            add();
+        }
+        Index(IndexType index) : _index(index) {
+            add();
+        }
+        ~Index() {
+            remove();
+        }
+        Index(const Index& rhs) : _index(rhs._index) {
+            add();
+        }
+
+        IndexType& operator=(const Index& rhs) {
+            remove();
+            _index = rhs._index;
+            add();
+        }
+
+        operator IndexType() {
+            return _index;
+        }
+
+        IndexType getCount() {
+            return _indexCounter.getCount(_index);
+        }
+    };
+
+    */
 
 #endif
