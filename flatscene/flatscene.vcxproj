@@ -99,6 +99,7 @@
     <ClCompile Include="src\FSEngine.cpp" />
     <ClCompile Include="src\FSException.cpp" />
     <ClCompile Include="src\FSImages.cpp" />
+    <ClCompile Include="src\FSImagesPrivate.cpp" />
     <ClCompile Include="src\FSLibrary.cpp" />
     <ClCompile Include="src\FSMultiverse.cpp" />
     <ClCompile Include="src\FSScreen.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="src\FSUniverse.cpp" />
     <ClCompile Include="src\FSWriter.cpp" />
     <ClCompile Include="src\tinyxml\*.cpp" />
+    <ClCompile Include="src\XMLHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\debugfuncs.h" />
@@ -141,8 +143,16 @@
     <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\tinyxml\*.h" />
     <ClInclude Include="src\CanvasFactory.h" />
+    <ClInclude Include="src\FSCanvasImpl.h" />
+    <ClInclude Include="src\FSImagesImpl.h" />
+    <ClInclude Include="src\FSImagesPrivate.h" />
+    <ClInclude Include="src\FSLibraryImpl.h" />
+    <ClInclude Include="src\FSMultiverseImpl.h" />
     <ClInclude Include="src\FSparserXML.h" />
+    <ClInclude Include="src\FSScreenImpl.h" />
+    <ClInclude Include="src\FSSpriteImpl.h" />
     <ClInclude Include="src\FSSpriteSetImpl.h" />
+    <ClInclude Include="src\FSWriterImpl.h" />
     <ClInclude Include="src\glAdapter.h" />
     <ClInclude Include="src\GRDHelper.h" />
     <ClInclude Include="src\tinyxml\tinystr.h" />

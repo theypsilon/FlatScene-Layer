@@ -3,7 +3,7 @@
 int IScrollObject::instances = 0;
 
 IScrollObject::IScrollObject() 
-    : placeInMA(NULL), Actor("IScrollObject") {
+    : _placeInMA(nullptr), Actor("IScrollObject") {
 
         instances++;
 
@@ -55,7 +55,7 @@ const Sprite* IScrollObject::getSprite() {
 }
 
 Actor* IScrollObject::clone() {
-    Actor* act;
+    Actor* act = nullptr;
 
     // TODO
 

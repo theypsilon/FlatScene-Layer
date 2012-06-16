@@ -16,10 +16,9 @@ private:
     int tam_w;
     int tam_h;
 
-    TileBG** tiles;
-    int tileset;
+    const std::vector<std::vector<Tile>>& tiles;
 public:
-    IScrollCameraTile(TileBG** tiles,Actor* target,flatscene::Rectangle* area);
+    IScrollCameraTile(const std::vector<std::vector<Tile>>& tiles,Actor* target,flatscene::Rectangle* area);
     ~IScrollCameraTile(void);
 
     int refresh();

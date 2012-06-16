@@ -92,11 +92,15 @@
   <ItemGroup>
     <ClInclude Include="IDebug.h" />
     <ClInclude Include="IFirstEngine.h" />
+    <ClInclude Include=".\IndexHandler.h" />
+    <ClInclude Include="IndexedPointer.h" />
     <ClInclude Include="IScrollCamera.h" />
     <ClInclude Include="IScrollCameraObject.h" />
     <ClInclude Include="IScrollCameraTile.h" />
     <ClInclude Include="IScrollLevel.h" />
     <ClInclude Include="IScrollObject.h" />
+    <ClInclude Include="SmallTile.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

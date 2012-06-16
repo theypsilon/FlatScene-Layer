@@ -21,8 +21,6 @@ void IScrollLevel::load() {
     printf("Cargando mapa '%s'...\n",name.c_str());
 #endif
 
-    numGates=0;
-
     if (name.at(name.size()-4)=='.')
         name = name.substr(0,name.size()-4);
 
@@ -33,8 +31,7 @@ void IScrollLevel::load() {
     TiXmlDocument xmldoc((name+".xml").c_str());
 
     if (!xmldoc.LoadFile()) {
-        FSLib.Error("No se puede abrir el XML del mapa");
-        return;
+        throw Exception("No se puede abrir el XML del mapa");
     }
 
     TiXmlHandle input(xmldoc.FirstChildElement("Map"));
@@ -42,23 +39,24 @@ void IScrollLevel::load() {
     TiXmlElement* node = input.ToElement();
 
     if (!node) {
-        FSLib.Error("Estructura XML defectuosa del mapa");
-        return;
+        throw Exception("Estructura XML defectuosa del mapa");
     }
 
-    if (!node->Attribute("width") || !node->Attribute("height") || !node->Attribute("layers") || !node->Attribute("tileWidth") || !node->Attribute("tileHeight") || !node->Attribute("name")) {
-        FSLib.Error("Atributos XML defectuosos en el mapa");
-        return;
+    if (   !node->Attribute("width")        || !node->Attribute("height") 
+        || !node->Attribute("layers")       || !node->Attribute("name")
+        || !node->Attribute("tileWidth")    || !node->Attribute("tileHeight") ) 
+    {
+        throw Exception("Atributos XML defectuosos en el mapa");
     }
 
-    axml ( node->QueryIntAttribute("width",(int*)&mapWidth) );
-    axml ( node->QueryIntAttribute("height",(int*)&mapHeight) );
-    axml ( node->QueryIntAttribute("layers",(int*)&numLayers) );
+    axml ( node->QueryIntAttribute("width",(int*)&_mapWidth) );
+    axml ( node->QueryIntAttribute("height",(int*)&_mapHeight) );
+    axml ( node->QueryIntAttribute("layers",(int*)&_numLayers) );
 
-    axml ( node->QueryIntAttribute("tileWidth",(int*)&tileWidth) );
-    axml ( node->QueryIntAttribute("tileHeight",(int*)&tileHeight) );
+    axml ( node->QueryIntAttribute("tileWidth",(int*)&_tileWidth) );
+    axml ( node->QueryIntAttribute("tileHeight",(int*)&_tileHeight) );
 
-    datosTile=node->Attribute("name"); atxml(datosTile);
+    _datosTile=node->Attribute("name"); atxml(_datosTile);
 
     /*
     if (node->QueryIntAttribute("precission-plus",&aux) == TIXML_SUCCESS)
@@ -68,76 +66,75 @@ void IScrollLevel::load() {
 
     node = input.FirstChildElement("Music").FirstChildElement().ToElement();
     if (node && node->Attribute("name")) {
-        datosSong = node->Attribute("name");
+        _datosSong = node->Attribute("name");
     }
 
-    tileSet = durezaSet = -1;
-
-    for (node = input.FirstChildElement("TileGraphs").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
-        if (tileSet == -1) 
-            tileSet = lastTileset = Img.add(node->Attribute("name"));
-        else
-            lastTileset = Img.add(node->Attribute("name"));
+    for (node = input.FirstChildElement("TileGraphs").FirstChildElement().ToElement();
+         node && node->Attribute("name");   node = node->NextSiblingElement()) 
+    {
+        _tilesets.push_back(Spriteset(node->Attribute("name")));
     }
 
-    for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();node && node->Attribute("name");node = node->NextSiblingElement()) {
-        if (durezaSet == -1)
-            durezaSet = lastDurezaset = Img.add(node->Attribute("name"),ONLY_SDL_SURFACE);
-        else
-            lastDurezaset = Img.add(node->Attribute("name"));
+    for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();
+         node && node->Attribute("name");   node = node->NextSiblingElement()) 
+    {
+        _collisionsets.push_back(Spriteset(node->Attribute("name"),ONLY_SDL_SURFACE));
     }
 
-    if (durezaSet == -1 || tileSet == -1) {
-        FSLib.Error("TileGraphs y/o TileCollisions defectuosos en el mapa");
-        return;
+    if (_collisionsets.empty() || _tilesets.empty()) {
+        throw Exception("collisionsets or tilesets empty");
     }
 
-    LayerType.clear();
-    LayerFloor.clear();
+    _layerType.clear();
+    _layerFloor.clear();
 
     for (node = input.FirstChildElement("LayerList").FirstChildElement().ToElement();
-        node && node->Attribute("type") && node->Attribute("floor");
-        node = node->NextSiblingElement()) {
+         node && node->Attribute("type") && node->Attribute("floor");
+         node = node->NextSiblingElement()) 
+    {
+        const char* auxcad = node->Attribute("type");
 
-            const char* auxcad = node->Attribute("type");
+        int layertype;
 
-            int layertype;
+        if (strcmp(auxcad,"background")==0) {
+            layertype = 0;
+        } else if (strcmp(auxcad,"lower")==0) {
+            layertype = 1;
+        } else if (strcmp(auxcad,"upper")==0) {
+            layertype = 2;
+        } else {
+            throw Exception("LayerType invalidado cargando el mapa");
+            return;
+        }
 
-            if (strcmp(auxcad,"background")==0) {
-                layertype = 0;
-            } else if (strcmp(auxcad,"lower")==0) {
-                layertype = 1;
-            } else if (strcmp(auxcad,"upper")==0) {
-                layertype = 2;
-            } else {
-                FSLib.Error("LayerType invalidado cargando el mapa");
-                return;
-            }
+        _layerType.push_back(layertype);
 
-            LayerType.push_back(layertype);
+        int floorattr;
 
-            int floorattr;
-
-            axml( node->QueryIntAttribute("floor",&floorattr) );
-            LayerFloor.push_back( floorattr );
+        axml( node->QueryIntAttribute("floor",&floorattr) );
+        _layerFloor.push_back( floorattr );
     }
 
-    if (LayerType.size() != numLayers) {
-        FSLib.Error("Definicion de capas defectuosa en el mapa");
-        return;
+    if (_layerType.size() != getL()) {
+        throw Exception("Definicion de capas defectuosa en el mapa");
     }
 
+    _numGates=0;
     for (node = input.FirstChildElement("GateList").FirstChildElement().ToElement();
-        node && node->Attribute("target") && node->Attribute("x1") && node->Attribute("x2") && node->Attribute("y1") && node->Attribute("y2") && node->Attribute("z") && node->Attribute("target-x") && node->Attribute("target-y") && node->Attribute("target-z");
-        node = node->NextSiblingElement()) {
-
-            numGates++;
+        node && node->Attribute("target")   && node->Attribute("x1")        && node->Attribute("x2") 
+             && node->Attribute("y1")       && node->Attribute("y2")        && node->Attribute("z") 
+             && node->Attribute("target-x") && node->Attribute("target-y")  && node->Attribute("target-z");
+        node = node->NextSiblingElement()) 
+    {
+        _numGates++;
     }
 
-    Gates.clear();
+    _gates.clear();
 
-    for (node = input.FirstChildElement("GateList").FirstChildElement("Gate").ToElement();node;node = node->NextSiblingElement("Gate")) {
-        gate g;
+    for (node = input.FirstChildElement("GateList").FirstChildElement("Gate").ToElement();
+         node;  node = node->NextSiblingElement("Gate")) 
+    {
+        Gate g;
 
         g.destino = node->Attribute("target"); atxml( g.destino );
         axml ( node->QueryIntAttribute("x1",(int*) & (g.regionx1)) );
@@ -149,12 +146,11 @@ void IScrollLevel::load() {
         axml ( node->QueryIntAttribute("target-y",(int*) & (g.destino_scroll_y)) );
         axml ( node->QueryIntAttribute("target-z",(int*) & (g.destino_scroll_z)) );
 
-        Gates.push_back(g);
+        _gates.push_back(g);
     }
 
-    if (Gates.size()!=numGates) {
-        FSLib.Error("Definicion de gates defectuosa en el mapa");
-        return;
+    if (_gates.size()!=_numGates) {
+        throw Exception("Definicion de gates defectuosa en el mapa");
     }
 
     xmldoc.Clear();
@@ -169,8 +165,7 @@ void IScrollLevel::load() {
 #else
     if ((f_map=fopen((name+".dat").c_str(),"rb"))==NULL) {
 #endif
-        FSLib.Error(std::string("El mapa '\n")+name+"' no se encuentra.");
-        return;
+        throw Exception(std::string("El mapa '\n")+name+"' no se encuentra.");
     }
 
     char buffer[5]="";
@@ -178,31 +173,36 @@ void IScrollLevel::load() {
     fread(&buffer,sizeof(char),4,f_map);
 
     if (strcmp(buffer,"JMBM")!=0) {
-        FSLib.Error("Firma del mapa invalida");
-        return;
+        throw Exception("Firma del mapa invalida");
     }
 
-    for (unsigned int i=0;i<numLayers;i++) {
+    {
+        TileBG tileData;
+        _layerlvl.resize(getL());
 
-        ITileAndDur tillayer;
-        tillayer.tile = new TileBG*[mapHeight];
-        tillayer.dur = false;
+        for (auto& tillayer : _layerlvl) {
 
-        for (unsigned int j=0;j<mapHeight;j++) {
-            tillayer.tile[j] = new TileBG[mapWidth];
-            for  (unsigned int k=0;k<mapWidth;k++) {
-                fread( & tillayer.tile[j][k],sizeof(TileBG),1,f_map);
+            tillayer.tiles.resize(getH());
+            tillayer.dur = false;
+
+            for (auto& tilsublayer : tillayer.tiles) {
+                tilsublayer.reserve(getW());
+                for  (unsigned int k=0; k < getW(); k++) {
+                    fread(&tileData, sizeof(TileBG),1,f_map);
+                    tilsublayer.push_back( Tile(
+                        tileData.graph > 0 ? _tilesets     [tileData.fileGraph].get(tileData.graph -1) : nullptr,
+                        tileData.dur   > 0 ? _collisionsets[tileData.fileDur  ].get(tileData.dur - 1 ) : nullptr,
+                        (unsigned short) tileData.flags
+                    ));
+                }
             }
         }
-
-        layerlvl.push_back(tillayer);
     }
 
     fread(&buffer,sizeof(char),4,f_map);
 
     if (strcmp(buffer,"JMBM")!=0) {
-        FSLib.Error("Firma del mapa invalida");
-        return;
+        throw Exception("Firma del mapa invalida");
     }
 
     fclose(f_map);
@@ -210,50 +210,45 @@ void IScrollLevel::load() {
 
     // Generating Map structure
 
-    for (unsigned int i= 0; i< numLayers; i++) {
+    for (unsigned int i= 0; i< getL(); i++) {
 
-        layerlvl[i].dur = false;
+        _layerlvl[i].dur = false;
 
-        for (unsigned int layer = LayerFloor[i]; (i < numLayers) && (LayerFloor[i] == layer); i++) {
-            if (layerlvl[i].dur)
+        for (unsigned int layer = _layerFloor[i]; (i < getL()) && (_layerFloor[i] == layer); i++) {
+            if (_layerlvl[i].dur)
                 continue;
 
-            if (LayerType[i] == 1) {
-                layerlvl[i].dur = true;
+            if (_layerType[i] == 1) {
+                _layerlvl[i].dur = true;
 
-                linktodur.push_back( layerlvl[i].tile );
+                _linktodur.push_back( &_layerlvl[i].tiles );
             }
         }
     }
 
-    MA.clear();
-
-    for (unsigned int z=0;z<=LayerFloor[numLayers-1];z++) {
-        MA.push_back( new IScrollObjectCollection**[mapWidth] );
-        for (unsigned int x=0;x<mapWidth;x++) {
-            MA[z][x] = new IScrollObjectCollection*[mapHeight];
-            for (unsigned int y=0;y<mapHeight;y++) {
-                MA[z][x][y]=new IScrollObjectCollection;
-            }
-        }
+    _MA.clear();
+    _MA.resize(_layerFloor[getL()-1]); //FIXME ensure its this right, or it would be _MA.resize(LayerFloor[numLayers-1]+1);
+    for (unsigned int z = 0; z < _MA.size(); z++) {
+        _MA[z].resize(getW());
+        for (unsigned int x = 0; x < getW(); x++) {
+            _MA[z][x].resize(getH());
+        }            
     }
 
-    for (auto it = actor.begin();it!=actor.end();++it) {
-        IScrollObject* actscroll = dynamic_cast<IScrollObject*>(*it);
-
+    for (auto& a : actor) {
+        IScrollObject* actscroll = dynamic_cast<IScrollObject*>(a);
         if (actscroll) {
             unsigned int MAz = actscroll->place.z,
-                MAx = actscroll->place.x / getTileW(),
-                MAy = actscroll->place.y / getTileH();
-            if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
-                actscroll->placeInMA = MA[MAz][MAx][MAy];
-                actscroll->placeInMA->push_back(actscroll);
+                         MAx = actscroll->place.x / getTileW(),
+                         MAy = actscroll->place.y / getTileH();
+            if (MAz < _MA.size() && MAx < getW() && MAy < getH()) {
+                actscroll->_placeInMA = &_MA[MAz][MAx][MAy];
+                _MA[MAz][MAx][MAy].push_back(actscroll);
             } else {
-                actscroll->placeInMA = NULL;
+                actscroll->_placeInMA = nullptr;
             }
         }
     }
-
 
     //	The map is ready.
 
@@ -267,37 +262,11 @@ void IScrollLevel::unload() {
     printf("Liberando mapa '%s'...\n",name.c_str());
 #endif
 
-    for (unsigned int z=0;z < MA.size();z++) {
-        for (unsigned int x=0;x<mapWidth;x++) {
-            for (unsigned int y=0;y<mapHeight;y++) {
-                delete MA[z][x][y];
-            }
-            delete MA[z][x];
-        }
-        delete MA[z];
-    }
-
-    MA.clear();
-
-    for (auto it = layerlvl.begin(); it != layerlvl.end() ; ++it) {
-        TileBG** tile = (*it).tile;
-        for (unsigned int j=0;j<mapHeight;j++) {
-            delete (tile[j]);
-        }
-        delete (tile);
-    }
-
-    layerlvl.clear();
-    linktodur.clear();
-    LayerType.clear();
-    LayerFloor.clear();
-    Gates.clear();
-
-    for (int i=tileSet,j=lastTileset;i<=j;i++)
-        Img.remove(i);
-
-    for (int i=durezaSet,j=lastDurezaset;i<=j;i++)
-        Img.remove(i);
+    _layerlvl.clear();
+    _linktodur.clear();
+    _layerType.clear();
+    _layerFloor.clear();
+    _gates.clear();
 
     loaded=false;
 }
@@ -305,23 +274,23 @@ void IScrollLevel::unload() {
 int IScrollLevel::incActor(Actor* act) {
     IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
-    if (actscroll && act->getUniverse()==NULL) {
+    if (actscroll && act->getUniverse()==nullptr) {
         act->setUniverse(this);
         actor.push_back(act);
         if (isLoaded()) {
-            unsigned int MAz = actscroll->place.x,
-                MAx = actscroll->place.x / getTileW(),
-                MAy = actscroll->place.y / getTileH();
-            if (MAz >=0 && MAx >= 0 && MAy >= 0 && MAz <= LayerFloor[numLayers-1] && MAx < getW() && MAy < getH()) {
-                actscroll->placeInMA = MA[MAz][MAx][MAy];
-                actscroll->placeInMA->push_back(actscroll);
+            unsigned int MAz = actscroll->place.z,
+                         MAx = actscroll->place.x / getTileW(),
+                         MAy = actscroll->place.y / getTileH();
+            if (MAz < _MA.size() && MAx < getW() && MAy < getH()) {
+                actscroll->_placeInMA = &_MA[MAz][MAx][MAy];
+                _MA[MAz][MAx][MAy].push_back(actscroll);
             } else {
-                actscroll->placeInMA = NULL;
+                actscroll->_placeInMA = nullptr;
             }
         }
         return EXITO;
     } else {
-        FSLib.Error((std::string("Se ha a�adido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
+        throw Exception((std::string("Se ha a�adido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
         return FRACASO;
     }
 }
@@ -333,9 +302,9 @@ int IScrollLevel::decActor(Actor* act) {
         if (act==*i) {
             actor.erase(i);
             if (isLoaded()) {
-                actscroll->placeInMA->remove(actscroll);
-                actscroll->setUniverse(NULL);
-                actscroll->placeInMA = NULL;
+                actscroll->_placeInMA->remove(actscroll);
+                actscroll->setUniverse(nullptr);
+                actscroll->_placeInMA = nullptr;
             }
             break;
         }
@@ -352,36 +321,30 @@ int IScrollLevel::decActor(Actor* act) {
 }
 
 Uint32 IScrollLevel::getPixel(int x, int y,int z) {
-    unsigned int j=x/tileWidth,
-        i=y/tileHeight;
-    if (j>=0 && i>=0 && j<mapWidth && i<mapHeight) {
-        TileBG& durtile = linktodur[z][i][j];
+    unsigned int j=x / getTileW(),
+                 i=y / getTileH();
+    if (j >= 0 && i >= 0 && j < getW() && i < getH()) {
+        const Tile& durtile = (*_linktodur[z])[i][j];
 
-        int tile_pisado = durtile.dur;
+        if (durtile.getCollision()) {
 
-        if (tile_pisado>0) {
-            tile_pisado--;
-            auto canv=Img.get(durezaSet+ durtile.fileDur)->get(tile_pisado);
+            x=x%(durtile.getCollision()->getWidth());
+            y=y%(durtile.getCollision()->getHeight());
 
-            int flags =  durtile.flags;
-
-            x=x%(canv->getWidth());
-            y=y%(canv->getHeight());
-
-            /*x=x%(canv->getWidth()*2);
+            /*x=x%(durtile.mcollision->getWidth()*2);
             x/=2;
-            y=y%(canv->getHeight()*2);
+            y=y%(durtile.mcollision->getHeight()*2);
             y/=2;*/
 
-            if (flags & 0x01) {
-                x=canv->getWidth() - x -1;
+            if (durtile.getFlags() & 0x01) {
+                x = durtile.getCollision()->getWidth() - x -1;
             } 
 
-            if (flags > 1) {
-                y=canv->getHeight() - y -1;
-            }			
+            if (durtile.getFlags() > 1) {
+                y = durtile.getCollision()->getHeight() - y -1;
+            }
 
-            return (canv->getPixel(x,y));
+            return durtile.getCollision()->getPixel(x,y);
 
         }
         return 0;

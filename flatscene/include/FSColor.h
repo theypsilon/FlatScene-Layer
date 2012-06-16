@@ -39,34 +39,34 @@ namespace flatscene {
         Color& operator&=(const Color& color);
         Color& operator^=(const Color& color);
 
-        static Color Red(Byte shade=255);
-        static Color Green(Byte shade=255);
-        static Color Blue(Byte shade=255);
+        static const Color Red(Byte shade=255);
+        static const Color Green(Byte shade=255);
+        static const Color Blue(Byte shade=255);
 
-        static Color Yellow(Byte shade=255);
-        static Color Cyan(Byte shade=255);
-        static Color Magenta(Byte shade=255);
+        static const Color Yellow(Byte shade=255);
+        static const Color Cyan(Byte shade=255);
+        static const Color Magenta(Byte shade=255);
 
-        static Color DarkRed(Byte shade=128)        { return Red(shade); }
-        static Color DarkGreen(Byte shade=128)      { return Green(shade); }
-        static Color DarkBlue(Byte shade=128)       { return Blue(shade); }
-        static Color DarkYellow(Byte shade=128)     { return Yellow(shade); }
-        static Color DarkCyan(Byte shade=128)       { return Cyan(shade); }
-        static Color DarkMagenta(Byte shade=128)    { return Magenta(shade); }
+        static const Color DarkRed(Byte shade=128)        { return Red(shade); }
+        static const Color DarkGreen(Byte shade=128)      { return Green(shade); }
+        static const Color DarkBlue(Byte shade=128)       { return Blue(shade); }
+        static const Color DarkYellow(Byte shade=128)     { return Yellow(shade); }
+        static const Color DarkCyan(Byte shade=128)       { return Cyan(shade); }
+        static const Color DarkMagenta(Byte shade=128)    { return Magenta(shade); }
 
-        static Color LightRed(Byte gray=128,Byte shade=255);
-        static Color LightGreen(Byte gray=128,Byte shade=255);
-        static Color LightBlue(Byte gray=128,Byte shade=255);
-        static Color LightYellow(Byte gray=128,Byte shade=255);
-        static Color LightCyan(Byte gray=128,Byte shade=255);
-        static Color LightMagenta(Byte gray=128,Byte shade=255);
+        static const Color LightRed(Byte gray=128,Byte shade=255);
+        static const Color LightGreen(Byte gray=128,Byte shade=255);
+        static const Color LightBlue(Byte gray=128,Byte shade=255);
+        static const Color LightYellow(Byte gray=128,Byte shade=255);
+        static const Color LightCyan(Byte gray=128,Byte shade=255);
+        static const Color LightMagenta(Byte gray=128,Byte shade=255);
 
-        static Color White(Byte shade=255);
-        static Color Gray(Byte shade=192);
-        static Color DarkGray(Byte shade=128);
-        static Color Black(Byte shade=0);
+        static const Color White(Byte shade=255);
+        static const Color Gray(Byte shade=192);
+        static const Color DarkGray(Byte shade=128);
+        static const Color Black(Byte shade=0);
 
-        operator SDL_Color() {
+        operator const SDL_Color() const {
             SDL_Color ret;
             ret.r = mr;
             ret.g = mg;
@@ -76,16 +76,16 @@ namespace flatscene {
         }
     };
 
-    Color operator+(Color color1,const Color& color2);
-    Color operator-(Color color1,const Color& color2);
-    Color operator*(Color color1,const Color& color2);
-    Color operator*(Color color,int Multiplier);
-    Color operator/(Color color,int Divisor);
+    const Color operator+(Color color1,const Color& color2);
+    const Color operator-(Color color1,const Color& color2);
+    const Color operator*(Color color1,const Color& color2);
+    const Color operator*(Color color,int Multiplier);
+    const Color operator/(Color color,int Divisor);
 
-    Color operator|(Color color1,const Color& color2);
-    Color operator&(Color color1,const Color& color2);
-    Color operator^(Color color1,const Color& color2);
-    Color operator~(Color color);
+    const Color operator|(Color color1,const Color& color2);
+    const Color operator&(Color color1,const Color& color2);
+    const Color operator^(Color color1,const Color& color2);
+    const Color operator~(Color color);
 
     bool operator==(const Color& color1,const Color& color2);
     bool operator!=(const Color& color1,const Color& color2);

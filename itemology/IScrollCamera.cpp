@@ -33,13 +33,13 @@ int IScrollCamera::loadUniverse() {
 
     objetive.setUniverse(uni);
 
-    auto et = suni->MA.begin();
+    auto et = suni->_MA.begin();
 
-    for (auto it = suni->layerlvl.begin(); it != suni->layerlvl.end() ; ++it) {
+    for (auto it = suni->_layerlvl.begin(); it != suni->_layerlvl.end() ; ++it) {
 
-        layerset.push_back( new IScrollCameraTile(it->tile,&objetive,area));
+        layerset.push_back( new IScrollCameraTile(it->tiles,&objetive,area));
 
-        if (it->dur && et != suni->MA.end()) {
+        if (it->dur && et != suni->_MA.end()) {
             layerset.push_back( new IScrollCameraObject(*et,&objetive,area));
             ++et;
         }

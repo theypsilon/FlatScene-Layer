@@ -120,7 +120,8 @@ struct Writer::WriterImpl {
 
     class FSText {
     private:
-        TypeText type;
+        FSText(const FSText&) {}
+        FSText& operator=(const FSText&) { return *this; }
     public:
         std::unique_ptr<TextObject> Object;
         std::unique_ptr<SEffectText> fx;
@@ -128,8 +129,8 @@ struct Writer::WriterImpl {
         FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next);
         FSText();
         FSText(FSText&& mv);
+        FSText& operator=(FSText&& rhs);
         ~FSText();
-        TypeText Type() const;
     };
 
     struct SData {

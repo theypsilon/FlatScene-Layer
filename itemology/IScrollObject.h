@@ -9,13 +9,11 @@ using namespace flatscene;
 
 class IScrollObject;
 
-typedef std::list<IScrollObject*> IScrollObjectCollection;
-
 class IScrollObject :
     public Actor
 {
 private:
-    IScrollObjectCollection* placeInMA;
+    std::list<IScrollObject*>* _placeInMA;
 
     friend class IScrollLevel;
 
