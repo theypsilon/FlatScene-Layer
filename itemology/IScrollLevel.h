@@ -40,16 +40,16 @@ struct gate {
 class IScrollLevel : public Universe {
     friend class IScrollCamera;
 
-    unsigned int                    mapHeight;
-    unsigned int                    mapWidth;
-    unsigned int                    numLayers;
+    unsigned int                    _mapHeight;
+    unsigned int                    _mapWidth;
+    unsigned int                    _numLayers;
 
     // dimension de tiles.
-    unsigned int                    tileHeight;
-    unsigned int                    tileWidth;
+    unsigned int                    _tileHeight;
+    unsigned int                    _tileWidth;
 
-    std::string                     datosTile;
-    std::string                     datosSong;
+    std::string                     _datosTile;
+    std::string                     _datosSong;
 
     std::vector<Spriteset>          _tilesets;
     std::vector<Spriteset>          _collisionsets;
@@ -59,12 +59,12 @@ class IScrollLevel : public Universe {
     std::vector<
     std::vector<Tile>> const*>      _linktodur;
 
-    std::vector<Uint32>             LayerFloor;
-    std::vector<Uint32>             LayerType;
+    std::vector<unsigned int>       _LayerFloor;
+    std::vector<unsigned int>       _LayerType;
 
-    Uint32                          numGates;
+    Uint32                          _numGates;
 
-    std::vector<gate>               Gates;
+    std::vector<gate>               _Gates;
 
     std::vector<
     std::vector<
@@ -83,10 +83,11 @@ public:
 
     virtual unsigned int            getPixel(int x, int y, int z);
 
-    virtual unsigned int            getW() { return mapWidth; };
-    virtual unsigned int            getH() { return mapHeight; };
-    virtual unsigned int            getTileW() { return tileWidth; };
-    virtual unsigned int            getTileH() { return tileHeight; };
+    virtual unsigned int            getW() { return _mapWidth; };
+    virtual unsigned int            getH() { return _mapHeight; };
+    virtual unsigned int            getL() { return _numLayers; };
+    virtual unsigned int            getTileW() { return _tileWidth; };
+    virtual unsigned int            getTileH() { return _tileHeight; };
 
     const std::vector<Spriteset>&   getTileset() { return _tilesets; };
 };
