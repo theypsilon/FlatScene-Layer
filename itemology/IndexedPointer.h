@@ -35,7 +35,7 @@ class IndexedPointer {
 
     PointerType* _getPointer() const {
         if (!operator bool()) {
-            throw Exception("this indexed pointer has been moved and now is empty");
+            throw Exception("This indexed pointer has been moved and now is empty.");
         }
         return _pointerMapper.at(_index);
     }
