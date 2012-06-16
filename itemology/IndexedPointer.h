@@ -59,6 +59,7 @@ public:
     IndexedPointer(PointerType* ptr) 
         : _index(_storePointer(ptr)) 
     {
+        static_assert(std::is_convertible<IndexType,long long>::value,"Index type invalid for IndexedPointer.");
         _increaseIndexCount();
     }
 
@@ -146,56 +147,5 @@ IndexedPointer<IndexType,PointerType>::_indexMapper;
 template <typename IndexType, typename PointerType>
 IndexHandler<IndexType>
 IndexedPointer<IndexType,PointerType>::_indexCounter;
-
-/*
-    class Index {
-        IndexType _index;
-
-        Index(IndexType&&);
-        IndexType& operator=(IndexType&&);
-
-        IndexType generate() {
-            return _indexCounter.generateNew();
-        }
-
-        void add() {
-            _indexCounter.add(_index);
-        }
-
-        void remove() {
-            _indexCounter.remove(_index);
-        }
-
-    public:
-
-        Index() : _index(generate()) {
-            add();
-        }
-        Index(IndexType index) : _index(index) {
-            add();
-        }
-        ~Index() {
-            remove();
-        }
-        Index(const Index& rhs) : _index(rhs._index) {
-            add();
-        }
-
-        IndexType& operator=(const Index& rhs) {
-            remove();
-            _index = rhs._index;
-            add();
-        }
-
-        operator IndexType() {
-            return _index;
-        }
-
-        IndexType getCount() {
-            return _indexCounter.getCount(_index);
-        }
-    };
-
-    */
 
 #endif
