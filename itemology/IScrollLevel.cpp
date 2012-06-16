@@ -85,8 +85,8 @@ void IScrollLevel::load() {
         throw Exception("collisionsets or tilesets empty");
     }
 
-    _LayerType.clear();
-    _LayerFloor.clear();
+    _layerType.clear();
+    _layerFloor.clear();
 
     for (node = input.FirstChildElement("LayerList").FirstChildElement().ToElement();
          node && node->Attribute("type") && node->Attribute("floor");
@@ -107,15 +107,15 @@ void IScrollLevel::load() {
             return;
         }
 
-        _LayerType.push_back(layertype);
+        _layerType.push_back(layertype);
 
         int floorattr;
 
         axml( node->QueryIntAttribute("floor",&floorattr) );
-        _LayerFloor.push_back( floorattr );
+        _layerFloor.push_back( floorattr );
     }
 
-    if (_LayerType.size() != getL()) {
+    if (_layerType.size() != getL()) {
         throw Exception("Definicion de capas defectuosa en el mapa");
     }
 
@@ -129,12 +129,12 @@ void IScrollLevel::load() {
         _numGates++;
     }
 
-    _Gates.clear();
+    _gates.clear();
 
     for (node = input.FirstChildElement("GateList").FirstChildElement("Gate").ToElement();
          node;  node = node->NextSiblingElement("Gate")) 
     {
-        gate g;
+        Gate g;
 
         g.destino = node->Attribute("target"); atxml( g.destino );
         axml ( node->QueryIntAttribute("x1",(int*) & (g.regionx1)) );
@@ -146,10 +146,10 @@ void IScrollLevel::load() {
         axml ( node->QueryIntAttribute("target-y",(int*) & (g.destino_scroll_y)) );
         axml ( node->QueryIntAttribute("target-z",(int*) & (g.destino_scroll_z)) );
 
-        _Gates.push_back(g);
+        _gates.push_back(g);
     }
 
-    if (_Gates.size()!=_numGates) {
+    if (_gates.size()!=_numGates) {
         throw Exception("Definicion de gates defectuosa en el mapa");
     }
 
@@ -214,11 +214,11 @@ void IScrollLevel::load() {
 
         _layerlvl[i].dur = false;
 
-        for (unsigned int layer = _LayerFloor[i]; (i < getL()) && (_LayerFloor[i] == layer); i++) {
+        for (unsigned int layer = _layerFloor[i]; (i < getL()) && (_layerFloor[i] == layer); i++) {
             if (_layerlvl[i].dur)
                 continue;
 
-            if (_LayerType[i] == 1) {
+            if (_layerType[i] == 1) {
                 _layerlvl[i].dur = true;
 
                 _linktodur.push_back( &_layerlvl[i].tiles );
@@ -227,7 +227,7 @@ void IScrollLevel::load() {
     }
 
     _MA.clear();
-    _MA.resize(_LayerFloor[getL()-1]); //FIXME ensure its this right, or it would be _MA.resize(LayerFloor[numLayers-1]+1);
+    _MA.resize(_layerFloor[getL()-1]); //FIXME ensure its this right, or it would be _MA.resize(LayerFloor[numLayers-1]+1);
     for (unsigned int z = 0; z < _MA.size(); z++) {
         _MA[z].resize(getW());
         for (unsigned int x = 0; x < getW(); x++) {
@@ -264,9 +264,9 @@ void IScrollLevel::unload() {
 
     _layerlvl.clear();
     _linktodur.clear();
-    _LayerType.clear();
-    _LayerFloor.clear();
-    _Gates.clear();
+    _layerType.clear();
+    _layerFloor.clear();
+    _gates.clear();
 
     loaded=false;
 }

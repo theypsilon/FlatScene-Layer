@@ -21,7 +21,7 @@ struct ITileAndDur {
     bool                dur;
 };
 
-struct gate {
+struct Gate {
     std::string     destino;
     unsigned int    regionx1;
     unsigned int    regionx2;
@@ -57,12 +57,12 @@ class IScrollLevel : public Universe {
     std::vector<
     std::vector<Tile>> const*>      _linktodur;
 
-    std::vector<unsigned int>       _LayerFloor;
-    std::vector<unsigned int>       _LayerType;
+    std::vector<unsigned int>       _layerFloor;
+    std::vector<unsigned int>       _layerType;
 
-    Uint32                          _numGates;
+    unsigned int                    _numGates;
 
-    std::vector<gate>               _Gates;
+    std::vector<Gate>               _gates;
 
     std::vector<
     std::vector<
