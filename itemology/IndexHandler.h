@@ -54,7 +54,7 @@ public:
         IndexType index;
         if (_freeStack.empty()) {
             if (IndexLimit::max() == _nextIndex) 
-                throw Exception("no more indexes available");
+                throw Exception("No more indexes available.");
 
             index = _nextIndex;
             _nextIndex++;
