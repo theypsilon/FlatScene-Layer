@@ -1,5 +1,5 @@
-#ifndef I_INDEX_COUNTER_FS
-#define I_INDEX_COUNTER_FS
+#ifndef I_INDEX_HANDLER_FS
+#define I_INDEX_HANDLER_FS
 
 #include <unordered_map>
 #include <deque>
