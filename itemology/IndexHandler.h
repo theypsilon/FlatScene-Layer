@@ -24,7 +24,7 @@ class IndexHandler {
     auto _findCountIterator(IndexType index) -> decltype(_counters.end()) {
         auto it = _counters.find(index);
         if (_counters.end() == it)
-            throw flatscene::Exception(std::string("index '")+std::to_string(index)+"' not found");
+            throw flatscene::Exception(std::string("Index '")+std::to_string(index)+"' not found.");
 
         return it;
     }
