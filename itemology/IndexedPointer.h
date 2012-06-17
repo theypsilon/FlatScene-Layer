@@ -5,28 +5,37 @@
 #include <map>
 #include <deque>
 #include <limits>
+#include <algorithm>
 
 #include "IndexHandler.h"
 
 
-template <class IndexType, class PointerType>
+template <class IndexType, class PointerType, bool CreationBoost=true, int Instance=0>
 class IndexedPointer {
 
-    typedef std::numeric_limits<IndexType>  IndexLimit;
-    typedef IndexedPointer<IndexType,PointerType> type;
+    typedef IndexedPointer<IndexType,PointerType,CreationBoost,Instance>    Type;
+    typedef std::numeric_limits<IndexType>                                  IndexLimit;
 
-    static std::unordered_map<IndexType,PointerType*>   _pointerMapper;
-    static std::unordered_map<PointerType*,IndexType>   _indexMapper;
-    static IndexHandler<IndexType>                      _indexCounter;
+    static typename std::enable_if<CreationBoost,
+        std::unordered_map<PointerType*,IndexType> >::type  _indexMap;
+    static std::unordered_map<IndexType,PointerType*>       _ptrMap;
+    static IndexHandler<IndexType>                          _indexCounter;
 
     IndexType _storePointer(PointerType* ptr) {
         if (ptr) {
-            auto indexIt    = _indexMapper.find(ptr);
-            IndexType index = (indexIt == _indexMapper.end())?
-                _indexCounter.generateNew() : indexIt->second;
+            //static if (CreationBoost) { //@TODO Optimization for C++11 compilers
+            auto indexIt    = _indexMap.find(ptr);
+            //} else {
+            //auto indexIt    = std::find_if(_ptrMap.begin(),_ptrMap.end(),[&](const decltype(*_ptrMap.end())& value) {
+            //         return value.second == ptr; 
+            //});
+            //}
+            IndexType index = (indexIt == _indexMap.end())? _indexCounter.generateNew() : indexIt->second;
 
-            _pointerMapper[index] = ptr;
-            _indexMapper  [ptr  ] = index;
+            _ptrMap  [index] = ptr;
+            //static if (CreationBoost) {
+            _indexMap[ptr  ] = index;
+            //}
             return index;
         } else {
             return _indexCounter.getInvalid();
@@ -37,7 +46,7 @@ class IndexedPointer {
         if (!operator bool()) {
             throw Exception("This indexed pointer has been moved and now is empty.");
         }
-        return _pointerMapper.at(_index);
+        return _ptrMap.at(_index);
     }
 
     void _increaseIndexCount() {
@@ -47,8 +56,8 @@ class IndexedPointer {
 
     void _releaseIndexCount() {
         if (operator bool() && _indexCounter.remove(_index)) {
-            _indexMapper.erase(_pointerMapper[_index]);
-            _pointerMapper.erase(_index);
+            _indexMap.erase(_ptrMap[_index]);
+            _ptrMap.erase(_index);
         }
     }
 
@@ -63,19 +72,19 @@ public:
         _increaseIndexCount();
     }
 
-    IndexedPointer(const type& rhs)
+    IndexedPointer(const Type& rhs)
         : _index(rhs._index)
     {
         _increaseIndexCount();
     }
 
-    IndexedPointer(type&& rhs) 
+    IndexedPointer(Type&& rhs) 
         : _index(rhs._index) 
     {
         rhs._index = _indexCounter.getInvalid();
     }
 
-    type& operator=(const type& rhs) {
+    Type& operator=(const Type& rhs) {
         if (&rhs == this)
             return *this;
 
@@ -86,7 +95,7 @@ public:
         return *this;
     }
 
-    type& operator=(type&& rhs) {
+    Type& operator=(Type&& rhs) {
         if (&rhs == this)
             return *this;
 
@@ -120,7 +129,7 @@ public:
         return _indexCounter.getInvalid() != _index;
     }
 
-    void swap(IndexedPointer<IndexType,PointerType>& rhs) {
+    void swap(Type& rhs) {
         IndexType temp = _index;
         _index = rhs._index;
         rhs._index = temp;
@@ -131,21 +140,24 @@ public:
     }
 };
 
-template <class IndexType, class PointerType>
-void swap(IndexedPointer<IndexType,PointerType>& first, IndexedPointer<IndexType,PointerType>& second) {
+template <typename IndexType, typename PointerType,bool CreationBoost, int Instance>
+void swap(
+    IndexedPointer<IndexType,PointerType,CreationBoost,Instance>& first,
+    IndexedPointer<IndexType,PointerType,CreationBoost,Instance>& second)
+{
     first.swap(second);
 }
 
-template <typename IndexType, typename PointerType>
+template <typename IndexType, typename PointerType,bool CreationBoost, int Instance>
 std::unordered_map<IndexType,PointerType*>
-IndexedPointer<IndexType,PointerType>::_pointerMapper;
+IndexedPointer<IndexType,PointerType,CreationBoost,Instance>::_ptrMap;
 
-template <typename IndexType, typename PointerType>
+template <typename IndexType, typename PointerType,bool CreationBoost, int Instance>
 std::unordered_map<PointerType*,IndexType>
-IndexedPointer<IndexType,PointerType>::_indexMapper;
+IndexedPointer<IndexType,PointerType,CreationBoost,Instance>::_indexMap;
 
-template <typename IndexType, typename PointerType>
+template <typename IndexType, typename PointerType,bool CreationBoost, int Instance>
 IndexHandler<IndexType>
-IndexedPointer<IndexType,PointerType>::_indexCounter;
+IndexedPointer<IndexType,PointerType,CreationBoost,Instance>::_indexCounter;
 
 #endif
