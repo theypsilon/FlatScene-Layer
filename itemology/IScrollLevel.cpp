@@ -82,7 +82,7 @@ void IScrollLevel::load() {
     _layerFloor.clear();
 
     for (node = input.FirstChildElement("LayerList").FirstChildElement().ToElement();
-         node && node->Attribute("type") && node->Attribute("floor");
+         node && checkAttr(*node,"type") && checkAttr(*node,"floor");
          node = node->NextSiblingElement()) 
     {
         const std::string auxcad = valFromAttr<std::string>(*node,"type");
@@ -111,9 +111,9 @@ void IScrollLevel::load() {
 
     _numGates=0;
     for (node = input.FirstChildElement("GateList").FirstChildElement().ToElement();
-        node && node->Attribute("target")   && node->Attribute("x1")        && node->Attribute("x2") 
-             && node->Attribute("y1")       && node->Attribute("y2")        && node->Attribute("z") 
-             && node->Attribute("target-x") && node->Attribute("target-y")  && node->Attribute("target-z");
+        node && checkAttr(*node,"target")   && checkAttr(*node,"x1")        && checkAttr(*node,"x2") 
+             && checkAttr(*node,"y1")       && checkAttr(*node,"y2")        && checkAttr(*node,"z") 
+             && checkAttr(*node,"target-x") && checkAttr(*node,"target-y")  && checkAttr(*node,"target-z");
         node = node->NextSiblingElement()) 
     {
         _numGates++;
