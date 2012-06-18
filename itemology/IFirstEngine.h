@@ -1,10 +1,9 @@
 #ifndef __I_FIRST_ENGINE__
 #define __I_FIRST_ENGINE__
 
-#include "FSLibrary.h"
+#include "IInclude.h"
 
 #include "IScrollCamera.h"
-#include "FSTime.h"
 
 using namespace flatscene;
 

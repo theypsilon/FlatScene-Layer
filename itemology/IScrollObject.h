@@ -3,10 +3,6 @@
 
 #include "IDebug.h"
 
-#include "FSActor.h"
-
-using namespace flatscene;
-
 class IScrollObject;
 
 class IScrollObject :

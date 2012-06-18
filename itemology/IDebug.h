@@ -1,9 +1,7 @@
 #ifndef _I_DEBUG_
 #define _I_DEBUG_
 
-#include "FSLibrary.h"
-
-using namespace flatscene;
+#include "IInclude.h"
 
 int func_fracaso(const char* file, int line);
 

@@ -1,7 +1,7 @@
 #ifndef I_TILE_NORMAL_FS
 #define I_TILE_NORMAL_FS
 
-#include "FSLibrary.h"
+#include "IInclude.h"
 
 class Tile {
     const flatscene::Sprite* const _graph;
@@ -25,4 +25,4 @@ public:
     unsigned short                 getFlags()     const { return _flags;     }
 };
 
-#endif
+#endif // I_TILE_NORMAL_FS

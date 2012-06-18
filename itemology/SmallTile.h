@@ -1,11 +1,10 @@
 #ifndef I_TILE_SMALL_FS
 #define I_TILE_SMALL_FS
 
-#include "FSLibrary.h"
-#include "IndexedPointer.h"
+#include "IInclude.h"
 
 class SmallTile {
-    typedef util::IndexedPointer<unsigned short, const flatscene::Sprite> SpritePointer;
+    typedef U::IndexedPointer<unsigned short, const Sprite> SpritePointer;
     
     SpritePointer _graph;
     SpritePointer _collision;
@@ -22,12 +21,12 @@ public:
         return *this;
     }
 
-    SmallTile(const flatscene::Sprite* const graph, const flatscene::Sprite* const collision, unsigned short flags)
+    SmallTile(const Sprite* const graph, const Sprite* const collision, unsigned short flags)
         : _graph(graph), _collision(collision), _flags(flags)
     {}
 
-    const flatscene::Sprite* const getGraph()     const { return _graph;     }
-    const flatscene::Sprite* const getCollision() const { return _collision; }
+    const Sprite* const getGraph()     const { return _graph;     }
+    const Sprite* const getCollision() const { return _collision; }
     unsigned short                 getFlags()     const { return _flags;     }
 };
 
