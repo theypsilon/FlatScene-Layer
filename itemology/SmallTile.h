@@ -4,7 +4,7 @@
 #include "IInclude.h"
 
 class SmallTile {
-    typedef U::IndexedPointer<unsigned short, const Sprite> SpritePointer;
+    typedef FS::U::IndexedPointer<unsigned short, const Sprite> SpritePointer;
     
     SpritePointer   _graph;
     SpritePointer   _collision;
