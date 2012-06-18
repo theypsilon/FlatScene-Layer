@@ -16,7 +16,7 @@
 
 namespace flatscene {
 
-using namespace intern::xml;
+using namespace util::xml;
 
 struct Spriteset::SpritesetImpl {
 

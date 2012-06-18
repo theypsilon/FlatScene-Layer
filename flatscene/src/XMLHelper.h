@@ -6,7 +6,7 @@
 #include <string>
 #include <limits>
 
-namespace flatscene { namespace intern { namespace xml {
+namespace flatscene { namespace util { namespace xml {
 
     template <class XMLElement>
     bool checkAttr(const XMLElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
@@ -63,6 +63,6 @@ namespace flatscene { namespace intern { namespace xml {
         return ret;
     }
 
-}}} // namespace flatscene { namespace intern { namespace xml
+}}} // flatscene::util::xml
 
 #endif // FS_XML_HELPER__
