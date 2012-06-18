@@ -2429,7 +2429,7 @@
     <ClInclude Include="include\IndexHandler.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\XMLHelper.h">
+    <ClInclude Include=".\include\TinyXMLHelper.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

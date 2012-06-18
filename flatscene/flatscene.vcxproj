@@ -145,7 +145,7 @@
     <ClInclude Include="include\IndexedPointer.h" />
     <ClInclude Include="include\IndexHandler.h" />
     <ClInclude Include="include\tinyxml\*.h" />
-    <ClInclude Include="include\XMLHelper.h" />
+    <ClInclude Include=".\include\TinyXMLHelper.h" />
     <ClInclude Include="src\CanvasFactory.h" />
     <ClInclude Include="src\FSCanvasImpl.h" />
     <ClInclude Include="src\FSImagesImpl.h" />

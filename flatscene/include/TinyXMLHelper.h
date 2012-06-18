@@ -2,11 +2,9 @@
 #define FS_XML_HELPER__
 
 #include "FSException.h"
-#include "FSparserXML.h"
-#include <string>
 #include <limits>
 
-namespace flatscene { namespace util { namespace xml {
+namespace flatscene { namespace util { namespace xml { namespace tiny {
 
     template <class XMLElement>
     bool checkAttr(const XMLElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
@@ -67,6 +65,6 @@ namespace flatscene { namespace util { namespace xml {
         return ret;
     }
 
-}}} // flatscene::util::xml
+}}}} // flatscene::util::xml::tiny
 
 #endif // FS_XML_HELPER__

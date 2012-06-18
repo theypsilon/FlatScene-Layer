@@ -10,13 +10,13 @@
 #include <algorithm>
 #include <iostream>
 
-#include "XMLHelper.h"
+#include "TinyXMLHelper.h"
 #include "CanvasFactory.h"
 #include "FSSpriteImpl.h"
 
 namespace flatscene {
 
-using namespace util::xml;
+using namespace util::xml::tiny;
 
 struct Spriteset::SpritesetImpl {
 
