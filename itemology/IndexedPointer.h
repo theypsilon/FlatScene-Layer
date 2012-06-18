@@ -153,7 +153,7 @@ std::unordered_map<IndexType,PointerType*>
 IndexedPointer<IndexType,PointerType,CreationBoost,Instance>::_ptrMap;
 
 template <typename IndexType, typename PointerType,bool CreationBoost, int Instance>
-std::unordered_map<PointerType*,IndexType>
+typename std::enable_if<CreationBoost,std::unordered_map<PointerType*,IndexType> >::type
 IndexedPointer<IndexType,PointerType,CreationBoost,Instance>::_indexMap;
 
 template <typename IndexType, typename PointerType,bool CreationBoost, int Instance>
