@@ -1,5 +1,5 @@
-#ifndef __FS_INCLUDES__
-#define __FS_INCLUDES__
+#ifndef FS_INCLUDES__
+#define FS_INCLUDES__
 
 
 #include <SDL.h>
@@ -8,4 +8,4 @@
 #include <SDL_image.h>
 #undef main
 
-#endif // __FS_INCLUDES__
+#endif // FS_INCLUDES__

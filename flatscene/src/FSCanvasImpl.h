@@ -1,5 +1,5 @@
-#ifndef __FS_CANVAS_IMPL__
-#define __FS_CANVAS_IMPL__
+#ifndef FS_CANVAS_IMPL__
+#define FS_CANVAS_IMPL__
 
 #include "FSCanvas.h"
 

@@ -1,5 +1,5 @@
-#ifndef __FS_MESSAGEHANDLER_H__
-#define __FS_MESSAGEHANDLER_H__
+#ifndef FS_MESSAGEHANDLER_H__
+#define FS_MESSAGEHANDLER_H__
 
 namespace FlatScene {
 

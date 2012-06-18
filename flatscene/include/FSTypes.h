@@ -1,5 +1,5 @@
-#ifndef __FS_TYPES__
-#define __FS_TYPES__
+#ifndef FS_TYPES__
+#define FS_TYPES__
 
 #include "FSIncludes.h"
 

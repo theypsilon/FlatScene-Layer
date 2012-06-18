@@ -1,5 +1,5 @@
-#ifndef __FS_PIMPL__
-#define __FS_PIMPL__
+#ifndef FS_PIMPL__
+#define FS_PIMPL__
 
 #include <memory>
 

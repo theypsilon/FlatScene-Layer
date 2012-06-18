@@ -1,5 +1,5 @@
-#ifndef __FS_EXCEPTION__
-#define __FS_EXCEPTION__
+#ifndef FS_EXCEPTION__
+#define FS_EXCEPTION__
 
 #include <exception>
 #include <string>

@@ -1,5 +1,5 @@
-#ifndef __FS_NONCOPYABLE__
-#define __FS_NONCOPYABLE__
+#ifndef FS_NONCOPYABLE__
+#define FS_NONCOPYABLE__
 
 namespace FlatScene {
 

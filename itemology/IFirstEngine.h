@@ -1,5 +1,5 @@
-#ifndef __I_FIRST_ENGINE__
-#define __I_FIRST_ENGINE__
+#ifndef I_FIRST_ENGINE__
+#define I_FIRST_ENGINE__
 
 #include "IInclude.h"
 

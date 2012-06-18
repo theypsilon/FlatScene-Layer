@@ -1,5 +1,5 @@
-#ifndef __IMAGE_H__
-#define __IMAGE_H__
+#ifndef FS_IMAGE_H__
+#define FS_IMAGE_H__
 
 #include "FSdefinitions.h"
 #include "FSTypes.h"

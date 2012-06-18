@@ -1,5 +1,5 @@
-#ifndef __FS_LIBRARY_IMPL__
-#define __FS_LIBRARY_IMPL__
+#ifndef FS_LIBRARY_IMPL__
+#define FS_LIBRARY_IMPL__
 
 #include "FSLibrary.h"
 

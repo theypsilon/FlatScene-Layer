@@ -1,5 +1,5 @@
-#ifndef __FS_IMAGES_IMPL__
-#define __FS_IMAGES_IMPL__
+#ifndef FS_IMAGES_IMPL__
+#define FS_IMAGES_IMPL__
 
 #include "FSImages.h"
 
