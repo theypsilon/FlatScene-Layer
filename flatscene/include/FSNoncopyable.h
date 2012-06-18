@@ -1,7 +1,7 @@
 #ifndef FS_NONCOPYABLE__
 #define FS_NONCOPYABLE__
 
-namespace FlatScene {
+namespace FlatScene { namespace Util {
 
     class Noncopyable {
         protected:
@@ -21,8 +21,8 @@ namespace FlatScene {
             Nonmovable& operator=(Nonmovable&&);
     };
 
-    class Noncpmvable : private Noncopyable, private Nonmovable {};
+    class Noncpmvable : private Util::Noncopyable, private Nonmovable {};
 
-} // flatscene
+}} // FlatScene::Util
 
 #endif

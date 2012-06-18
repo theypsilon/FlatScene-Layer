@@ -10,7 +10,7 @@
 
 namespace FlatScene {
     
-    class ImagesPrivate : private Noncopyable, public Util::Singleton<ImagesPrivate> {
+    class ImagesPrivate : private Util::Noncopyable, public Util::Singleton<ImagesPrivate> {
         friend class Util::Singleton<ImagesPrivate>;
         typedef Spriteset::SpritesetImpl SpritesetImpl;
         typedef std::map<SpritesetImpl*,unsigned int> SpriteCounter;

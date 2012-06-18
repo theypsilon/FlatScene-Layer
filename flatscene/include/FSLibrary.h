@@ -39,7 +39,7 @@ namespace FlatScene {
     };
 
 
-    class Library : private Noncopyable, public Util::Singleton<Library> {
+    class Library : private Util::Noncopyable, public Util::Singleton<Library> {
         friend class Util::Singleton<Library>;
     public:
 

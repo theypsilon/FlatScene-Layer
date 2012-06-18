@@ -18,7 +18,7 @@ namespace FlatScene {
         TRP_PERSPECTIVE
     };
 
-    class Screen : private Noncopyable, public Util::Singleton<Screen> {
+    class Screen : private Util::Noncopyable, public Util::Singleton<Screen> {
         friend class Util::Singleton<Screen>;
     public:
         //constructor

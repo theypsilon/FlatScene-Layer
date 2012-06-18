@@ -13,7 +13,7 @@ namespace FlatScene {
     typedef std::map<int,Spriteset*> SpritesetCollection;
     typedef std::map<Spriteset*,int> SpritesetCount;
 
-    class Images : private Noncopyable, public Util::Singleton<Images> {
+    class Images : private Util::Noncopyable, public Util::Singleton<Images> {
         friend class Util::Singleton<Images>;
     public:
         int add(const char* name,Uint8 mode=ONLY_TEXTURE);

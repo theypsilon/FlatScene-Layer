@@ -5,8 +5,7 @@
 
 #include "IScrollCamera.h"
 
-class IFirstEngine :
-    public Engine
+class IFirstEngine : public Engine
 {
 private:
     std::vector<IScrollCamera*> cams;
