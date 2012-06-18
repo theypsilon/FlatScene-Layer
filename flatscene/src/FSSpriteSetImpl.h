@@ -14,9 +14,9 @@
 #include "CanvasFactory.h"
 #include "FSSpriteImpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
-using namespace util::xml::tiny;
+using namespace Util::xml::tiny;
 
 struct Spriteset::SpritesetImpl {
 

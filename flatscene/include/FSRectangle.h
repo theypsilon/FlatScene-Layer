@@ -3,7 +3,7 @@
 
 #include "FSPoint.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     /**
      * Rect, Rectangle class with absolute coordinates

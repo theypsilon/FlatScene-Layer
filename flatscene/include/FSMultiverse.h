@@ -9,7 +9,7 @@
 #include <string>
 #include <memory>
 
-namespace flatscene {
+namespace FlatScene {
 
     class Engine;
 

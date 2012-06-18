@@ -3,7 +3,7 @@
 #include "FSScreen.h"
 #include "FSLibrary.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Time::Time() {
 #ifdef MENSAJES_FPS

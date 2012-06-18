@@ -5,7 +5,7 @@
 #include "FSException.h"
 #include <memory>
 
-namespace flatscene {
+namespace FlatScene {
 
 class Engine;
 

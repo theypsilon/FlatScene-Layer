@@ -3,7 +3,7 @@
 
 #include "FSTypes.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     class Color {
     private:

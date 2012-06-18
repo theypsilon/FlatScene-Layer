@@ -12,7 +12,7 @@
 #include "FSNoncopyable.h"
 #include "FSPimpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     enum TypeText {
         TT_LINE,
@@ -25,8 +25,8 @@ namespace flatscene {
         TCTB_BOX
     };
 
-    class Writer : private Noncopyable, public util::Singleton<Writer> {
-        friend class util::Singleton<Writer>;
+    class Writer : private Noncopyable, public Util::Singleton<Writer> {
+        friend class Util::Singleton<Writer>;
     public:
         int setfontSize(int newSize);
 

@@ -73,7 +73,7 @@ void  IFirstEngine::onInit() {
     
     level->incActor(mainactor);
     
-    cams.push_back( new IScrollCamera(mainactor,new flatscene::Rectangle(0,0,320,240)) );
+    cams.push_back( new IScrollCamera(mainactor,new FlatScene::Rectangle(0,0,320,240)) );
     
 }
 

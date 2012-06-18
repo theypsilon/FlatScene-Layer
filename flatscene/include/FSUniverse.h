@@ -7,7 +7,7 @@
 #include <list>
 #include <string>
 
-namespace flatscene {
+namespace FlatScene {
 
     class Multiverse;
 

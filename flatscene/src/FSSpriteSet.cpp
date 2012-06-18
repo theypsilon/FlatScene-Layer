@@ -2,12 +2,12 @@
 #include "FSSpriteSetImpl.h"
 
 namespace std {
-    template<> void swap(flatscene::Spriteset& lhs, flatscene::Spriteset& rhs) {
+    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs) {
         lhs.swap(rhs);
     }
 } // std
 
-namespace flatscene {
+namespace FlatScene {
 
     Spriteset::Spriteset(std::string c, Uint8 mode) 
         : _impl (ImagesPrivate::I().add(c,mode))

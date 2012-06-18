@@ -9,7 +9,7 @@
 #include "FSSingleton.h"
 #include "FSNoncopyable.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     #define RENDER_TEXTURE_STANDARD 0x00000001
 
@@ -18,8 +18,8 @@ namespace flatscene {
         TRP_PERSPECTIVE
     };
 
-    class Screen : private Noncopyable, public util::Singleton<Screen> {
-        friend class util::Singleton<Screen>;
+    class Screen : private Noncopyable, public Util::Singleton<Screen> {
+        friend class Util::Singleton<Screen>;
     public:
         //constructor
         int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;

@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 
-namespace flatscene {
+namespace FlatScene {
 
     enum SpriteOpaque {
         SPRITE_OPAQUE_NOT_CHEQUED,

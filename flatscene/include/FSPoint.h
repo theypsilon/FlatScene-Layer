@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-namespace flatscene {
+namespace FlatScene {
 
     template <class T=int>
     struct Point2D {

@@ -6,7 +6,7 @@
 #include "FSCoordinate.h"
 #include "FSRectangle.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     typedef double Float;
     typedef unsigned char Byte;

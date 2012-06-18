@@ -7,7 +7,7 @@
 
 #include <algorithm>
 
-namespace flatscene {
+namespace FlatScene {
 
 Engine* Writer::WriterImpl::setAdmin(const Engine *const constAdmin) {
 

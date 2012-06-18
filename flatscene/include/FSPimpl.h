@@ -3,7 +3,7 @@
 
 #include <memory>
 
-namespace flatscene {
+namespace FlatScene {
 
     template <class T>
     class Pimpl {

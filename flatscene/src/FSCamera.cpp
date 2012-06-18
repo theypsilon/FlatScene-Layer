@@ -2,7 +2,7 @@
 #include "FSScreenImpl.h"
 #include "FSLibrary.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Camera::Camera(Actor* target, Rectangle* area)
 : uni(NULL), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}

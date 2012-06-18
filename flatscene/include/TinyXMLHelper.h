@@ -4,7 +4,7 @@
 #include "FSException.h"
 #include <limits>
 
-namespace flatscene { namespace util { namespace xml { namespace tiny {
+namespace FlatScene { namespace Util { namespace xml { namespace tiny {
 
     template <class XMLElement>
     bool checkAttr(const XMLElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
@@ -65,6 +65,6 @@ namespace flatscene { namespace util { namespace xml { namespace tiny {
         return ret;
     }
 
-}}}} // flatscene::util::xml::tiny
+}}}} // FlatScene::Util::xml::tiny
 
 #endif // FS_XML_HELPER__

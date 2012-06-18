@@ -3,7 +3,7 @@
 
 #include "FSPoint.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     template <class T>
     struct Point3D : public Point2D<T> {

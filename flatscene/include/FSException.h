@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-namespace flatscene {
+namespace FlatScene {
 
     class Exception : public std::exception {
         struct ExceptionImpl;

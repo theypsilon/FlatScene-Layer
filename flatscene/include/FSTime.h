@@ -5,7 +5,7 @@
 #include <memory>
 #include "FSdefinitions.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     class Engine;
 

@@ -3,7 +3,7 @@
 
 #include "FSCanvas.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     struct Canvas::CanvasImpl {
 

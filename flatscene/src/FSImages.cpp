@@ -2,7 +2,7 @@
 #include "FSImagesImpl.h"
 #include "FSScreenImpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Images::Images() : _impl(new ImagesImpl) {}
 

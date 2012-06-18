@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-namespace flatscene {
+namespace FlatScene {
 
 ImagesPrivate::ImagesPrivate() {}
 

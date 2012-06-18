@@ -3,7 +3,7 @@
 
 #include "FSImages.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 struct Images::ImagesImpl {
     SpritesetCollection set;

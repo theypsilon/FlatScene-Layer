@@ -3,7 +3,7 @@
 
 #include "FSMultiverse.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 struct Multiverse::MultiverseImpl {
     UniverseCollection unis;

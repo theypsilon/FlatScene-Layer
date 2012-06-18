@@ -5,8 +5,6 @@
 
 #include "IScrollCamera.h"
 
-using namespace flatscene;
-
 class IFirstEngine :
     public Engine
 {

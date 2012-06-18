@@ -1,6 +1,6 @@
 #include "FSIncludes.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     inline void glTranslate(Float x, Float y, Float z) {
         glTranslatef((GLfloat)x,(GLfloat)y,(GLfloat)z);

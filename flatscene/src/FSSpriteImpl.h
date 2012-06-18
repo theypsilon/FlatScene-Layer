@@ -4,7 +4,7 @@
 #include "FSSprite.h"
 #include "FSException.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     struct Sprite::SpriteImpl {};
 

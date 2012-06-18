@@ -8,7 +8,7 @@
 #include "FSWriter.h"
 #include "FSException.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Engine::Engine() {
     initialized = false;

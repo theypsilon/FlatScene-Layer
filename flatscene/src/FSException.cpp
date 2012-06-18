@@ -1,6 +1,6 @@
 #include "FSException.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 struct Exception::ExceptionImpl {
     std::string description;

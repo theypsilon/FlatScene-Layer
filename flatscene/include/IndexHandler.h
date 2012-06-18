@@ -6,7 +6,7 @@
 #include <limits>
 #include <cassert>
 
-namespace flatscene { namespace util {
+namespace FlatScene { namespace Util {
 
     template <typename IndexType, typename CounterType = unsigned int>
     class IndexHandler : public Noncpmvable {
@@ -21,7 +21,7 @@ namespace flatscene { namespace util {
         auto _findCountIterator(IndexType index) -> decltype(_counters.end()) {
             auto it = _counters.find(index);
             if (_counters.end() == it)
-                throw flatscene::Exception(std::string("Index '")+std::to_string(index)+"' not found.");
+                throw FlatScene::Exception(std::string("Index '")+std::to_string(index)+"' not found.");
 
             return it;
         }
@@ -88,6 +88,6 @@ namespace flatscene { namespace util {
         return index;
     }
 
-}} // flatscene::util
+}} // FlatScene::util
 
 #endif // I_INDEX_HANDLER_FS

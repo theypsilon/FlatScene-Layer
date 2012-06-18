@@ -3,7 +3,7 @@
 #include "FSEngine.h"
 #include "glAdapter.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Screen::Screen() : _impl(new ScreenImpl) {
     _impl->m_SDL_Surface=NULL;

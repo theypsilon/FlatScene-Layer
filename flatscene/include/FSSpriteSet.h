@@ -4,7 +4,7 @@
 #include "FSSprite.h"
 #include <memory>
 
-namespace flatscene {
+namespace FlatScene {
 
     class Spriteset {
     public:
@@ -42,7 +42,7 @@ namespace flatscene {
 } // flatscene
 
 namespace std {
-    template<> void swap(flatscene::Spriteset& lhs, flatscene::Spriteset& rhs);
+    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs);
 } // std
 
 #endif // FS__SPRITESET_H__

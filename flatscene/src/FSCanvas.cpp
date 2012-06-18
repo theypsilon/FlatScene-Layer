@@ -6,7 +6,7 @@
 
 #include "FSException.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Canvas::Canvas() 
     : _impl(new CanvasImpl)

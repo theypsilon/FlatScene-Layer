@@ -1,6 +1,6 @@
 #include "FSColor.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Color::Color(Byte r,Byte g,Byte b, Byte a)
     : mr(r), mg(g), mb(b), ma(a)

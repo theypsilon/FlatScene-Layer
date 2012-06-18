@@ -9,7 +9,7 @@
 #include <vector>
 #include <deque>
 
-namespace flatscene {
+namespace FlatScene {
 
     class Actor;
     class CRutinaColision;

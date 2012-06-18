@@ -4,7 +4,7 @@
 #include "FSScreen.h"
 #include "FSCanvasImpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 typedef struct { 
     std::string name; 

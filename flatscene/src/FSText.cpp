@@ -1,6 +1,6 @@
 #include "FSWriterImpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Writer::WriterImpl::FSText::FSText(const char* file,const char* text,int x,int y,int Lim,SFont* ttf_fnt,int next) 
     : fx(nullptr)

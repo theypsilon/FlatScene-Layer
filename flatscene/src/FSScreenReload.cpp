@@ -3,7 +3,7 @@
 #include "FSImagesImpl.h"
 #include "FSScreenImpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 void Screen::ScreenImpl::deleteResources() {
     

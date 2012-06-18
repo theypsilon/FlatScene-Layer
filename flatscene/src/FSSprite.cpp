@@ -4,7 +4,7 @@
 #include <limits>
 #include <sstream>
 
-namespace flatscene {
+namespace FlatScene {
 
 Sprite::Sprite() {}
 

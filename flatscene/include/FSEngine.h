@@ -6,7 +6,7 @@
 #include <functional>
 #include <memory>
 
-namespace flatscene {
+namespace FlatScene {
 
     class Library;
 

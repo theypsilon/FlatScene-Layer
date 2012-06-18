@@ -11,7 +11,7 @@
 
 #include "FSPimpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     enum GraphicFilter {
         NEAREST,

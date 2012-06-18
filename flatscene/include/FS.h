@@ -3,10 +3,10 @@
 
 #include "FlatScene.h"
 
-namespace FS = flatscene;
+namespace FS = FlatScene;
 
-namespace flatscene {
-    namespace U = util;
+namespace FlatScene {
+    namespace U = Util;
 } // fs;
 
 #endif // FS_INCLUDING_ALIAS

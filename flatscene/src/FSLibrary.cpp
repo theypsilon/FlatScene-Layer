@@ -16,7 +16,7 @@
 #define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onInit(); _impl->setActualEngine(eaux); }
 #define KILLENGINE(A); EXITENGINE(A); if (A) { delete A; A=NULL; }
 
-namespace flatscene {
+namespace FlatScene {
 
 void Library::LibraryImpl::sort(std::vector<std::unique_ptr<Engine>>& v) {
     typedef const std::unique_ptr<Engine>& pEngine;

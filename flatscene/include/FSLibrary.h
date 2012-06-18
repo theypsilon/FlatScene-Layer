@@ -26,7 +26,7 @@
 
 #include <memory>
 
-namespace flatscene {
+namespace FlatScene {
 
     enum TypeError {
         TE_standard,
@@ -39,8 +39,8 @@ namespace flatscene {
     };
 
 
-    class Library : private Noncopyable, public util::Singleton<Library> {
-        friend class util::Singleton<Library>;
+    class Library : private Noncopyable, public Util::Singleton<Library> {
+        friend class Util::Singleton<Library>;
     public:
 
         int startLibrary(bool xmlconfig);
@@ -98,9 +98,5 @@ namespace flatscene {
     #define SINERROR "|-| No error"
 
 } // flatscene
-
-#ifndef FS_AVOID_ALIAS
-namespace FS = flatscene;
-#endif
 
 #endif //#ifndef __APPLICATION_H__

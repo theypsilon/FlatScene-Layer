@@ -2,7 +2,7 @@
 #include "FSLibrary.h"
 #include "FSMultiverseImpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Universe::Universe(std::string name) 
 : name(name) , loaded(false), numCameras(0), slot(255) {}

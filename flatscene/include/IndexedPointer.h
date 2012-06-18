@@ -9,7 +9,7 @@
 
 #include "IndexHandler.h"
 
-namespace flatscene { namespace util {
+namespace FlatScene { namespace Util {
 
     template <class IndexType, class PointerType, bool CreationBoost=true, int Instance=0>
     class IndexedPointer {
@@ -162,6 +162,6 @@ namespace flatscene { namespace util {
     IndexHandler<IndexType>
     IndexedPointer<IndexType,PointerType,CreationBoost,Instance>::_indexCounter;
 
-}} // flatscene::util
+}} // FlatScene::util
 
 #endif // I_INDEXED_POINTER_FS

@@ -1,7 +1,7 @@
 #include "FSMultiverseImpl.h"
 #include "FSLibrary.h"
 
-namespace flatscene {
+namespace FlatScene {
 
 Multiverse::Multiverse() : _impl(new MultiverseImpl) {
     _impl->working = false;

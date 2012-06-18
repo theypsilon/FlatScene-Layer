@@ -1,6 +1,6 @@
 #include "FSLibrary.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     int getAlphaValues(Uint8* values,SDL_Surface* surface, SDL_Rect* rect);
     int fillAlphaValues(Uint8* values, SDL_Surface* surface);

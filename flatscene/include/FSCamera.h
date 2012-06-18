@@ -11,7 +11,7 @@
 #include <vector>
 #include <string>
 
-namespace flatscene {
+namespace FlatScene {
 
     class Camera {
     protected:
