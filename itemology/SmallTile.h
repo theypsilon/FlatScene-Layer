@@ -5,7 +5,7 @@
 #include "IndexedPointer.h"
 
 class SmallTile {
-    typedef IndexedPointer<unsigned short, const flatscene::Sprite> SpritePointer;
+    typedef util::IndexedPointer<unsigned short, const flatscene::Sprite> SpritePointer;
     
     SpritePointer _graph;
     SpritePointer _collision;

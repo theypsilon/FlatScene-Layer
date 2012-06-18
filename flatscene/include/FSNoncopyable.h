@@ -9,8 +9,19 @@ namespace flatscene {
             ~Noncopyable(){}
         private:
             Noncopyable(const Noncopyable&);
-            const Noncopyable& operator=(const Noncopyable&);
+            Noncopyable& operator=(const Noncopyable&);
     };
+
+    class Nonmovable {
+        protected:
+            Nonmovable(){}
+            ~Nonmovable(){}
+        private:
+            Nonmovable(Nonmovable&&);
+            Nonmovable& operator=(Nonmovable&&);
+    };
+
+    class Noncpmvable : private Noncopyable, private Nonmovable {};
 
 } // flatscene
 
