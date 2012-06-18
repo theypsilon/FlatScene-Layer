@@ -9,7 +9,7 @@
 namespace FlatScene { namespace Util {
 
     template <typename IndexType, typename CounterType = unsigned int>
-    class IndexHandler : public Noncpmvable {
+    class IndexHandler : public NonCpmvable {
         typedef IndexHandler<IndexType,CounterType> type;
         typedef std::numeric_limits<IndexType>      IndexLimit;
         typedef std::numeric_limits<CounterType>    CounterLimit;

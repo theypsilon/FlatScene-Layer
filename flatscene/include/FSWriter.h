@@ -25,7 +25,7 @@ namespace FlatScene {
         TCTB_BOX
     };
 
-    class Writer : private Util::Noncopyable, public Util::Singleton<Writer> {
+    class Writer : private Util::NonCpmvable, public Util::Singleton<Writer> {
         friend class Util::Singleton<Writer>;
     public:
         int setfontSize(int newSize);

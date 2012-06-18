@@ -3,25 +3,25 @@
 
 namespace FlatScene { namespace Util {
 
-    class Noncopyable {
+    class NonCopyable {
         protected:
-            Noncopyable(){}
-            ~Noncopyable(){}
+            NonCopyable(){}
+            ~NonCopyable(){}
         private:
-            Noncopyable(const Noncopyable&);
-            Noncopyable& operator=(const Noncopyable&);
+            NonCopyable(const NonCopyable&);
+            NonCopyable& operator=(const NonCopyable&);
     };
 
-    class Nonmovable {
+    class NonMovable {
         protected:
-            Nonmovable(){}
-            ~Nonmovable(){}
+            NonMovable(){}
+            ~NonMovable(){}
         private:
-            Nonmovable(Nonmovable&&);
-            Nonmovable& operator=(Nonmovable&&);
+            NonMovable(NonMovable&&);
+            NonMovable& operator=(NonMovable&&);
     };
 
-    class Noncpmvable : private Util::Noncopyable, private Nonmovable {};
+    class NonCpmvable : private NonCopyable, private NonMovable {};
 
 }} // FlatScene::Util
 

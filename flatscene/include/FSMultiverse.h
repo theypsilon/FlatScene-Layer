@@ -15,7 +15,7 @@ namespace FlatScene {
 
     typedef  std::list<Universe*> UniverseCollection;
 
-    class Multiverse : private Util::Noncopyable {
+    class Multiverse : private Util::NonCpmvable {
     public:
         Universe* add(Universe* uni,Uint8 slot=0);
         Universe* universeNamed(std::string uniName,Uint8 slot=0);
