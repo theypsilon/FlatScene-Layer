@@ -16,7 +16,7 @@
 
 namespace FlatScene {
 
-using namespace Util::xml::tiny;
+using namespace Util::XML::Tiny;
 
 struct Spriteset::SpritesetImpl {
 

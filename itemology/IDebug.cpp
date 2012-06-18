@@ -20,21 +20,7 @@ int func_fracaso(const char* file, int line) {
     return -1;
 }
 
-void assert_xml(int code,int line) {
-    if (code == TIXML_SUCCESS)
-        return;
-
-    std::string cad = "El atributo no existe. Line ";
-
-    if ( code == TIXML_WRONG_TYPE )
-        cad = "El atributo es de tipo inválido. Line ";
-
-    cad += line  ;
-
-    FSLib.Error("XML Error : "+cad,TE_controlViolation);
-}
-
 void assert_text(std::string cad,int line) {
     if (cad.empty() || cad == "")
-        FSLib.Error("XML Error : "+line,TE_controlViolation);
+        throw Exception("XML Error : "+line,TE_controlViolation);
 }

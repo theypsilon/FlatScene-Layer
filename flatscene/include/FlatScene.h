@@ -3,5 +3,6 @@
 
 #include "Library.h"
 #include "IndexedPointer.h"
+#include "TinyXMLHelper.h"
 
 #endif // FS_INCLUDING_MAIN

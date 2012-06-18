@@ -4,7 +4,7 @@
 #include "Exception.h"
 #include <limits>
 
-namespace FlatScene { namespace Util { namespace xml { namespace tiny {
+namespace FlatScene { namespace Util { namespace XML { namespace Tiny {
 
     template <class XMLElement>
     bool checkAttr(const XMLElement& el,const char *const name, const char *const value = nullptr, bool equals = true) {
@@ -47,8 +47,8 @@ namespace FlatScene { namespace Util { namespace xml { namespace tiny {
         return ret;
     }
 
-    template<typename T> 
-    T valFromAttr(const TiXmlElement& el,const std::string& name) {
+    template<typename T, class XMLElement> 
+    T valFromAttr(const XMLElement& el,const std::string& name) {
         T ret;
         int cod = el.QueryValueAttribute(name,&ret);
         if (cod != TIXML_SUCCESS)
@@ -56,8 +56,8 @@ namespace FlatScene { namespace Util { namespace xml { namespace tiny {
         return ret;
     }
 
-    template<typename T> 
-    T numFromAttr(const TiXmlElement& el,const std::string& name,
+    template<typename T, class XMLElement> 
+    T numFromAttr(const XMLElement& el,const std::string& name,
             T min=std::numeric_limits<T>::min(), T max=std::numeric_limits<T>::max()) {
         T ret = valFromAttr<T>(el,name);
         if (ret < min || ret > max)
