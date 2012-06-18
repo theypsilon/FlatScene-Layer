@@ -26,15 +26,19 @@ namespace flatscene { namespace util { namespace xml {
     }
 
     inline void processBadResult(int cod,const std::string& attr,const std::type_info& type) {
+#if defined(TINYXML_INCLUDED)
         switch(cod) {
-            case TIXML_NO_ATTRIBUTE: 
-                throw Exception("Attribute '"+attr+"' doesn't exist",__LINE__); 
-            break; case TIXML_WRONG_TYPE:                
-                throw Exception("Attribute '"+attr+"' is not a "+type.name(),__LINE__); 
-            break; default: 
-                throw Exception("Attribute '"+attr+"' unknown "+type.name(),__LINE__); 
+            case TIXML_NO_ATTRIBUTE:
+                throw Exception("Attribute '"+attr+"' doesn't exist",__LINE__);
+            break; case TIXML_WRONG_TYPE:
+                throw Exception("Attribute '"+attr+"' is not a "+type.name(),__LINE__);
+            break; default:
+                throw Exception("Attribute '"+attr+"' unknown "+type.name(),__LINE__);
             break;
         }
+#else
+#define TIXML_SUCCESS 0
+#endif
     }
 
     template <class XMLElement>
