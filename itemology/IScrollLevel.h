@@ -6,6 +6,8 @@
 #include "IScrollObject.h"
 #include "Tile.h"
 
+//typedef SmallTile Tile;
+
 struct TileBG {
     unsigned char   graph;
     unsigned char   fileGraph;

@@ -4,7 +4,7 @@
 #include "IInclude.h"
 
 class SmallTile {
-    typedef U::IndexedPointer<unsigned short, const Sprite> SpritePointer;
+    typedef IndexedPointer<unsigned short, const flatscene::Sprite> SpritePointer;
     
     SpritePointer _graph;
     SpritePointer _collision;
@@ -21,12 +21,12 @@ public:
         return *this;
     }
 
-    SmallTile(const Sprite* const graph, const Sprite* const collision, unsigned short flags)
+    SmallTile(const flatscene::Sprite* const graph, const flatscene::Sprite* const collision, unsigned short flags)
         : _graph(graph), _collision(collision), _flags(flags)
     {}
 
-    const Sprite* const getGraph()     const { return _graph;     }
-    const Sprite* const getCollision() const { return _collision; }
+    const flatscene::Sprite* const getGraph()     const { return _graph;     }
+    const flatscene::Sprite* const getCollision() const { return _collision; }
     unsigned short                 getFlags()     const { return _flags;     }
 };
 
