@@ -1,7 +1,7 @@
 #ifndef FS_XML_HELPER__
 #define FS_XML_HELPER__
 
-#include "FSException.h"
+#include "Exception.h"
 #include <limits>
 
 namespace FlatScene { namespace Util { namespace xml { namespace tiny {

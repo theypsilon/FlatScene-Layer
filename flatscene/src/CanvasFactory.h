@@ -1,8 +1,8 @@
 #ifndef FS_CANVAS_FACTORY__
 #define FS_CANVAS_FACTORY__
 
-#include "FSLibrary.h"
-#include "FSCanvasImpl.h"
+#include "Library.h"
+#include "CanvasImpl.h"
 
 namespace FlatScene {
 
