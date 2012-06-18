@@ -39,8 +39,8 @@ namespace flatscene {
     };
 
 
-    class Library : private Noncopyable, public Singleton<Library> {
-        friend class Singleton<Library>;
+    class Library : private Noncopyable, public util::Singleton<Library> {
+        friend class util::Singleton<Library>;
     public:
 
         int startLibrary(bool xmlconfig);

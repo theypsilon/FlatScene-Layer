@@ -18,8 +18,8 @@ namespace flatscene {
         TRP_PERSPECTIVE
     };
 
-    class Screen : private Noncopyable, public Singleton<Screen> {
-        friend class Singleton<Screen>;
+    class Screen : private Noncopyable, public util::Singleton<Screen> {
+        friend class util::Singleton<Screen>;
     public:
         //constructor
         int start ( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;

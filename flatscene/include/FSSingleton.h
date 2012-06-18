@@ -1,7 +1,7 @@
-#ifndef __FS_SINGLETON__
-#define __FS_SINGLETON__
+#ifndef FS_SINGLETON__
+#define FS_SINGLETON__
 
-namespace flatscene {
+namespace flatscene { namespace util {
 
     template <class T>
     class Singleton {
@@ -12,6 +12,6 @@ namespace flatscene {
             };
     };
 
-} // flatscene
+}} // flatscene::util
 
-#endif
+#endif // FS_SINGLETON__
