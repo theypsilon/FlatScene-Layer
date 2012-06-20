@@ -101,16 +101,12 @@
     <ClCompile Include=".\src\Images.cpp" />
     <ClCompile Include=".\src\ImagesPrivate.cpp" />
     <ClCompile Include=".\src\Library.cpp" />
-    <ClCompile Include=".\src\Multiverse.cpp" />
     <ClCompile Include=".\src\Screen.cpp" />
     <ClCompile Include=".\src\ScreenReload.cpp" />
     <ClCompile Include=".\src\Sprite.cpp" />
     <ClCompile Include=".\src\SpriteSet.cpp" />
-    <ClCompile Include=".\src\Text.cpp" />
-    <ClCompile Include=".\src\TextBox.cpp" />
     <ClCompile Include=".\src\Time.cpp" />
     <ClCompile Include=".\src\Universe.cpp" />
-    <ClCompile Include=".\src\Writer.cpp" />
     <ClCompile Include="src\tinyxml\*.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,8 +124,6 @@
     <ClInclude Include=".\include\Images.h" />
     <ClInclude Include=".\include\Includes.h" />
     <ClInclude Include=".\include\Library.h" />
-    <ClInclude Include=".\include\MessageHandler.h" />
-    <ClInclude Include=".\include\Multiverse.h" />
     <ClInclude Include=".\include\Noncopyable.h" />
     <ClInclude Include=".\include\Pimpl.h" />
     <ClInclude Include=".\include\Point.h" />
@@ -141,7 +135,6 @@
     <ClInclude Include=".\include\Time.h" />
     <ClInclude Include=".\include\Types.h" />
     <ClInclude Include=".\include\Universe.h" />
-    <ClInclude Include=".\include\Writer.h" />
     <ClInclude Include="include\IndexedPointer.h" />
     <ClInclude Include="include\IndexHandler.h" />
     <ClInclude Include="include\tinyxml\*.h" />
@@ -151,12 +144,10 @@
     <ClInclude Include=".\src\ImagesImpl.h" />
     <ClInclude Include=".\src\ImagesPrivate.h" />
     <ClInclude Include=".\src\LibraryImpl.h" />
-    <ClInclude Include=".\src\MultiverseImpl.h" />
     <ClInclude Include=".\src\parserXML.h" />
     <ClInclude Include=".\src\ScreenImpl.h" />
     <ClInclude Include=".\src\SpriteImpl.h" />
     <ClInclude Include=".\src\SpriteSetImpl.h" />
-    <ClInclude Include=".\src\WriterImpl.h" />
     <ClInclude Include="src\glAdapter.h" />
     <ClInclude Include="src\GRDHelper.h" />
     <ClInclude Include="src\tinyxml\tinystr.h" />
