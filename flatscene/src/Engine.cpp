@@ -4,8 +4,6 @@
 
 #include "Engine.h"
 #include "LibraryImpl.h"
-#include "Multiverse.h"
-#include "Writer.h"
 #include "Exception.h"
 
 namespace FlatScene {
@@ -76,7 +74,6 @@ void Engine::onIdle() {}
 
 
 void Engine::onExit() {
-    Writer::I().erase();
     initialized = false;
 }
 

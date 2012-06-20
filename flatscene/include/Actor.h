@@ -1,7 +1,6 @@
 #ifndef __ACTOR_H__
 #define __ACTOR_H__
 
-#include "MessageHandler.h"
 #include "Types.h"
 #include "Sprite.h"
 #include <string>

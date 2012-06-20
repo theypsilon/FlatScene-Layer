@@ -1,12 +1,10 @@
 #ifndef ___CAMERA___
 #define ___CAMERA___
 
-#include "MessageHandler.h"
 #include "Actor.h"
  
 #include "Types.h"
 #include "Canvas.h"
-#include "Multiverse.h"
 #include "Screen.h"
 #include <vector>
 #include <string>

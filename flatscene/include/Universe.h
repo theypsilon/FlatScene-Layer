@@ -2,7 +2,6 @@
 #define __UNIVERSE_H__
 
 #include <stdio.h>
-#include "MessageHandler.h"
 #include "Actor.h"
 #include <list>
 #include <string>

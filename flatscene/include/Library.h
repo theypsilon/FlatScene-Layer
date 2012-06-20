@@ -10,8 +10,6 @@
 #include "Engine.h"
 
 #include "Images.h"
-#include "Multiverse.h"
-#include "Writer.h"
 #include "Time.h"
 
 #include "Camera.h"

@@ -1,5 +1,4 @@
 #include "Time.h"
-#include "Writer.h"
 #include "Screen.h"
 #include "Library.h"
 
@@ -42,7 +41,7 @@ int  Time::nextFrame() {
     _fps++;
     if (SDL_GetTicks() > _auxTimer + 1000) {
         _auxTimer=SDL_GetTicks();
-        Writer::I().erase(Writer::I().line(0,5,5,"FPS: %d ",_fps),true);
+        //Writer::I().erase(Writer::I().line(0,5,5,"FPS: %d ",_fps),true);
         _fps=0;
     }
     

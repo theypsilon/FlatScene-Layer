@@ -4,6 +4,7 @@
 #include "IInclude.h"
 
 #include "IScrollCamera.h"
+#include "IScrollLevel.h"
 
 class IFirstEngine : public Engine
 {
@@ -12,7 +13,7 @@ private:
 
     IScrollObject* mainactor;
 
-    Multiverse CMultiverse;
+    std::unique_ptr<IScrollLevel> level;
 
     Time Chrono;
 public:

@@ -9,8 +9,6 @@ IFirstEngine::IFirstEngine() {
     move[i_left] = false;
     move[i_right] = false;
     
-    Write.loadFont("resources/tahoma");
-    
 }
 
 IFirstEngine::~IFirstEngine()	{}
@@ -40,8 +38,6 @@ void IFirstEngine::onEvent(const SDL_Event& e) {
     if ( e.key.keysym.sym == SDLK_RIGHT )
         move[i_right] = turn;
     
-    Write.lineOnce(0,10,10,"This is text!");
-    
 }
 
 void IFirstEngine::drawFrame() {
@@ -49,8 +45,6 @@ void IFirstEngine::drawFrame() {
     for (auto i = cams.begin(); i != cams.end(); ++i) {
         (*i)->render();
     }
-    
-    Write.render();
     
     Screen::I().render();
     
@@ -61,9 +55,7 @@ void  IFirstEngine::onInit() {
     Engine::onInit();
     
     
-    IScrollLevel* level = new IScrollLevel("resources/mapa1");
-    
-    CMultiverse.add(level);
+    level.reset( new IScrollLevel("resources/mapa1") );
     
     level->load();
     
@@ -100,10 +92,8 @@ void IFirstEngine::onIdle()	{
 void IFirstEngine::onExit() {
     
     for (auto i = cams.begin(); i != cams.end(); ++i) {
-        auto level = dynamic_cast<IScrollLevel*>((*i)->getUniverse());
         auto actor = dynamic_cast<IScrollObject*>((*i)->Target());
         delete *i;
-        if (level) CMultiverse.erase(level);
     }
     
     mainactor = NULL;

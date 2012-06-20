@@ -1,5 +1,4 @@
 #include "Library.h"
-#include "WriterImpl.h"
 #include "ImagesImpl.h"
 #include "ScreenImpl.h"
 
@@ -26,7 +25,6 @@ void Screen::ScreenImpl::deleteResources() {
 void Screen::ScreenImpl::saveResources(GraphicResources &info) {
 
     Images& img = Images::I();
-    Writer& writer = Writer::I();
     
     for (SpritesetCollection::iterator it=img._impl->set.begin(),kt=img._impl->set.end();it!=kt;++it)   {
         SpritesetInfo aux;
@@ -39,18 +37,6 @@ void Screen::ScreenImpl::saveResources(GraphicResources &info) {
 
     img.clear();
 
-    for (auto it = writer._impl->Fonts.begin() ; it!=writer._impl->Fonts.end() ; ++it) {
-        it->second.render.clear();
-    }
-
-    for (auto it=writer._impl->session.begin();it!=writer._impl->session.end();++it) {
-        auto& auxBoxs = it->second.Texts;
-        for (auto jt=auxBoxs.begin();jt!=auxBoxs.end();++jt) {
-            if (auto* box = dynamic_cast<Writer::WriterImpl::FSTextBox*>(jt->second.Object.get()))
-                box->deleteBox();
-        }
-    }
-
     deleteResources();
 
 }
@@ -58,13 +44,6 @@ void Screen::ScreenImpl::saveResources(GraphicResources &info) {
 void Screen::ScreenImpl::reloadResources(GraphicResources &info) {
 
     Images& img = Images::I();
-    Writer& writer = Writer::I();
-
-
-    for (auto& data : writer._impl->session)
-        for (auto& text : data.second.Texts)
-            if (auto* box = dynamic_cast<Writer::WriterImpl::FSTextBox*>(text.second.Object.get()))
-                box->createBox();
 
     int number = 0;
     int aux = -1;

@@ -225,9 +225,6 @@ void Library::restart() {
         _impl->setActualEngine((*_impl).engineIn.front().get());
         (*_impl).engineIn.front()->done = true;
 
-        Writer::I().clear();
-        Writer::I().loadFont("tahoma");
-
 #ifdef WIN32
         system("CLS");
 #else
@@ -268,8 +265,6 @@ void Library::reloadEngine(Engine* engine) {
                     find = engine;
 
             _impl->setActualEngine(find);
-
-            Writer::I().erase();
 
             if ((*_impl).actualEngine && (*_impl).actualEngine->isInitialized())
                 (*_impl).actualEngine->onExit();
