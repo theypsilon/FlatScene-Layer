@@ -1,10 +1,10 @@
-#ifndef __FS_CANVAS_FACTORY__
-#define __FS_CANVAS_FACTORY__
+#ifndef FS_CANVAS_FACTORY__
+#define FS_CANVAS_FACTORY__
 
-#include "FSLibrary.h"
-#include "FSCanvasImpl.h"
+#include "Library.h"
+#include "CanvasImpl.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     template <class T> T Canvas::createCanvas(SDL_Surface* surface, Uint8 mode, GraphicFilter filter) {
         static_assert(/*std::is_trivially_constructible<T>::value && */std::is_base_of<Canvas,T>::value,"Bad Canvas type");

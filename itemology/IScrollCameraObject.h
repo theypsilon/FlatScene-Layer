@@ -7,7 +7,7 @@ class IScrollCameraObject : public Camera {
             std::vector<
             std::list  <IScrollObject*>>>   ObjectCollection;
 public:
-    IScrollCameraObject (const ObjectCollection& objects,Actor* target,flatscene::Rectangle* area);
+    IScrollCameraObject (const ObjectCollection& objects,Actor* target,FlatScene::Rectangle* area);
     ~IScrollCameraObject();
 
     virtual int             refresh();

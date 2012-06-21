@@ -1,7 +1,6 @@
 #ifndef _I_SCROLL_CAMERA_
 #define _I_SCROLL_CAMERA_
 
-#include "FSLibrary.h"
 #include "IScrollLevel.h"
 
 class IScrollCamera :
@@ -23,7 +22,7 @@ public:
 
     // Constructor, se recomienda que se establezcan los siguientes par�metros.
     // Pueden ser necesarios para inicializar la clase base.
-    IScrollCamera(Actor* target,flatscene::Rectangle* area);
+    IScrollCamera(Actor* target,FlatScene::Rectangle* area);
 
     // Destructor, ah� deberemos liberar los recursos
     virtual ~IScrollCamera();

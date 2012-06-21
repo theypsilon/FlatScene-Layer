@@ -1,22 +1,19 @@
-#ifndef __I_FIRST_ENGINE__
-#define __I_FIRST_ENGINE__
+#ifndef I_FIRST_ENGINE__
+#define I_FIRST_ENGINE__
 
-#include "FSLibrary.h"
+#include "IInclude.h"
 
 #include "IScrollCamera.h"
-#include "FSTime.h"
+#include "IScrollLevel.h"
 
-using namespace flatscene;
-
-class IFirstEngine :
-    public Engine
+class IFirstEngine : public Engine
 {
 private:
     std::vector<IScrollCamera*> cams;
 
     IScrollObject* mainactor;
 
-    Multiverse CMultiverse;
+    std::unique_ptr<IScrollLevel> level;
 
     Time Chrono;
 public:
