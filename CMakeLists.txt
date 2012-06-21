@@ -1,6 +1,13 @@
-project ( flatscene_solution )
+cmake_minimum_required ( VERSION 2.6.4 FATAL_ERROR )
+project ( FLATSCENE C CXX )
 
-cmake_minimum_required ( VERSION 2.6 )
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake" ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake" ${CMAKE_MODULE_PATH})
 
-add_subdirectory(flatscene)
-add_subdirectory(itemology)
+include("${CMAKE_CURRENT_SOURCE_DIR}/CMake/HPHPFunctions.cmake")
+include(CheckFunctionExists)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/flatscene)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/itemology)
+
+
