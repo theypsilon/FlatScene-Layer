@@ -6,7 +6,8 @@
 namespace FlatScene {
 
 Actor::Actor(const char* creature) 
-: file(0), graph(0), flags(0), inUniverse(nullptr), creature(creature) {}
+    : file(0), graph(0), flags(0), inUniverse(nullptr), creature(creature) 
+{}
 
 Actor::~Actor() {}
 
