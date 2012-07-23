@@ -65,13 +65,6 @@ namespace FlatScene {
         void changeEngine();
         void killEngine(Engine* engine);
 
-        void Error (const char*,TypeError e=TE_standard);
-        void Error (std::string,TypeError e=TE_standard);
-        void Error (char*,TypeError e=TE_standard);
-
-        std::string readLastError();
-        std::string popError();
-
     #ifdef DEBUGTEST
 
         void debug(bool startdebug, const char* warning=NULL);

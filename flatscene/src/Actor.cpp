@@ -1,15 +1,16 @@
 #include "Actor.h"
-#include "Library.h"
+#include "Exception.h"
 #include "Universe.h"
+#include "SpriteSet.h"
 
 namespace FlatScene {
 
 Actor::Actor(const char* creature) 
-: file(0), graph(0), flags(0), inUniverse(NULL), creature(creature) {}
+: file(0), graph(0), flags(0), inUniverse(nullptr), creature(creature) {}
 Actor::~Actor() {}
 
 int Actor::move() {
-    return EXITO;
+    return 0;
 }
 
 Universe* Actor::getUniverse() {
@@ -22,23 +23,23 @@ std::string Actor::getCreature() {
 int Actor::setUniverse(Universe* m) {
     inUniverse=m;
 
-    return EXITO;
+    return 0;
 }
 
 int Actor::setSprite(int file,int graph) {
     this->file = file;
     this->graph = graph;
 
-    return EXITO;
+    return 0;
 }
 
 const Sprite* Actor::getSprite() {
-    return Images::I().get(file)->get(graph);
+    throw Exception("FIXME");
+    return nullptr;
 }
 
 Actor* Actor::clone() {
-    Library::I().Error("CActor no implementa un metodo de clonaci�n por defecto.");
-    return NULL;
+    throw Exception("CActor no implementa un metodo de clonaci�n por defecto.");
 }
 
 } // flatscene

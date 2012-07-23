@@ -44,13 +44,7 @@ Library::Library() {
 
     (*_impl).actualEngine = nullptr;
 
-    if(SDL_Init(SDL_INIT_TIMER)==-1)
-    {
-
-        Error("Failed to Init SDL:",TE_SDL_MSG);
-
-        return;
-    }
+    if(SDL_Init(SDL_INIT_TIMER)==-1) throw SDLException("Failed to Init SDL:");
 
     atexit(SDL_Quit);
 
@@ -68,26 +62,22 @@ int Library::startLibrary(bool xmlconfig) {
 
 
         TiXmlDocument xmldoc("config.xml");
-        if (xmldoc.LoadFile())  {
+        if (!xmldoc.LoadFile()) throw FileDoesntExistException("config.xml");
 
-            TiXmlHandle input(xmldoc.FirstChildElement("System")); TiXmlElement* node;
-            node = input.FirstChildElement("fullscreen").ToElement();
-            if (node) {
-                if (node->Attribute("option") && strcmp(node->Attribute("option"),"yes")==0)
-                    fullscreen = true;
-            }
-            node = input.FirstChildElement("mode").ToElement();
-            if (node) {
-                if (node->Attribute("width"))
-                    node->QueryIntAttribute("width",&res_x);
-                if (node->Attribute("height"))
-                    node->QueryIntAttribute("height",&res_y);
-                if (node->Attribute("bpp"))
-                    node->QueryIntAttribute("bpp",&bpp);
-            }
-
-        } else {
-            Error("config.xml",TE_fileExists);
+        TiXmlHandle input(xmldoc.FirstChildElement("System")); TiXmlElement* node;
+        node = input.FirstChildElement("fullscreen").ToElement();
+        if (node) {
+            if (node->Attribute("option") && strcmp(node->Attribute("option"),"yes")==0)
+                fullscreen = true;
+        }
+        node = input.FirstChildElement("mode").ToElement();
+        if (node) {
+            if (node->Attribute("width"))
+                node->QueryIntAttribute("width",&res_x);
+            if (node->Attribute("height"))
+                node->QueryIntAttribute("height",&res_y);
+            if (node->Attribute("bpp"))
+                node->QueryIntAttribute("bpp",&bpp);
         }
 
         bool doublebuff=true;
@@ -323,12 +313,7 @@ void Library::killEngine(Engine* engine) {
     });
 }
 
-void Library::Error (const char* c,TypeError e) {
-    Error(std::string(c),e);
-}
-
-void Library::Error (std::string s,TypeError e) {
-
+    /*
     if (s == "")
         s = "empty";
 
@@ -349,43 +334,6 @@ void Library::Error (std::string s,TypeError e) {
         s= "|-| OpenGLError -> "+_impl->toStringErrorGL(glGetError())+" +: "+s;
     }
 
-    (*_impl).errors.push_back(s);
-
-#ifdef INSTANT_PRINT_ERROR
-    s ="\n"+ s + "\n";
-    fprintf(stderr,"%s",s.c_str());
-#endif
-
-#ifdef IN_FILE_ERROR
-    if (getLibrary()) {
-
-        if (s.at(0)!='\n')
-            s ="\n"+ s + "\n";
-
-        FILE* f=fopen("error.log","a+");
-        if (!f) {
-            s+="\tAnd errors.log couldn't open to register this.\n";
-            fprintf(stderr,s.c_str());
-        } else {
-            fprintf(stderr,s.c_str());
-            if (!(*_impl).errorsInSession) {
-                s="Session with errors start"+s;
-                (*_impl).errorsInSession=true;
-            }
-            fprintf(f,s.c_str());
-            fclose(f);
-        }
-
-        SendMessage(MSGID_Exit);
-
-    }
-#endif
-}
-
-void Library::Error (char* c,TypeError e) {
-    Error(std::string(c),e);
-}
-
 std::string Library::LibraryImpl::toStringErrorGL(GLenum e) {
     std::string s ="";
 
@@ -400,24 +348,7 @@ std::string Library::LibraryImpl::toStringErrorGL(GLenum e) {
     }
 
     return s;
-}
-
-std::string Library::readLastError() {
-    if ((*_impl).errors.empty())
-        return SINERROR;
-    else
-        return (*_impl).errors.back();
-}
-
-std::string Library::popError() {
-    if ((*_impl).errors.empty())
-        return SINERROR;
-    else {
-        std::string ret = (*_impl).errors.back();
-        (*_impl).errors.pop_back();
-        return ret;
-    }
-}
+}*/
 
 #ifdef DEBUGTEST
 

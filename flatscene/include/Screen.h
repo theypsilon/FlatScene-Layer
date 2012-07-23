@@ -27,7 +27,7 @@ namespace FlatScene {
 
         int render();
 
-        int clear ( ) ;
+        int clear ();
 
         int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0);
         int translate(Float x, Float y, Float z);

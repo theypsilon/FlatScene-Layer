@@ -6,23 +6,23 @@
 namespace FlatScene {
 
 Screen::Screen() : _impl(new ScreenImpl) {
-    _impl->m_SDL_Surface=NULL;
+    _impl->m_SDL_Surface = nullptr;
 
-    _impl->m_FullScreen=false;
-    _impl->m_Doublebuff=true;
-    _impl->rendering=false;
-    _impl->m_maxZ=400.0f;
+    _impl->m_FullScreen  = false;
+    _impl->m_Doublebuff  = true;
+    _impl->rendering     = false;
+    _impl->m_maxZ        = 400.0f;
 
-    _impl->trp=TRP_PERSPECTIVE;
+    _impl->trp           = TRP_PERSPECTIVE;
 
-    _impl->m_Bpp=0;
-    _impl->m_Width=0;
-    _impl->m_Height=0;
+    _impl->m_Bpp         = 0;
+    _impl->m_Width       = 0;
+    _impl->m_Height      = 0;
 
-    _impl->alpha =1.0f;
-    _impl->red =1.0f;
-    _impl->green =1.0f;
-    _impl->blue =1.0f;
+    _impl->alpha         = 1.0f;
+    _impl->red           = 1.0f;
+    _impl->green         = 1.0f;
+    _impl->blue          = 1.0f;
 }
 
 Screen::~Screen() {
@@ -32,15 +32,10 @@ Screen::~Screen() {
 int Screen::start(int width, int height, int bpp, bool fullscreen, bool doublebuff)
 { 
 
-    if (_impl->m_SDL_Surface) {
-        Library::I().Error("Video ya inicializado, orden imposible 'start'\n");
-        return FRACASO;
-    }
+    if (_impl->m_SDL_Surface) throw Exception("Video ya inicializado, orden imposible 'start'\n");
 
-    if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-        Library::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
-        return FRACASO;
-    }
+    if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) throw SDLException("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ");
+
 #ifdef LOG_SISTEMA
     printf("Iniciando Video Mode...\n");
 #endif
@@ -65,10 +60,8 @@ int Screen::start(int width, int height, int bpp, bool fullscreen, bool doublebu
     if (fullscreen) 
         flags |= SDL_FULLSCREEN;
 
-    if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-        Library::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
-        return FRACASO;
-    }
+    if ((_impl->m_SDL_Surface = SDL_SetVideoMode ( width , height , bpp, flags)) == nullptr)
+        throw Exception("SDL_SetVideoMode ( width , height , bpp, flags) falla ");
 
     _impl->m_FullScreen=fullscreen;
     _impl->m_Doublebuff=doublebuff;
@@ -87,24 +80,18 @@ int Screen::start(int width, int height, int bpp, bool fullscreen, bool doublebu
     glClearColor(0,0,0,0);
 
     SDL_ShowCursor( 0 );
-    SDL_WM_SetCaption("biblioteca-opengl-2d",NULL);
+    SDL_WM_SetCaption("biblioteca-opengl-2d",nullptr);
 
     return EXITO;
 
 }
 
-int Screen::start(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen, bool doublebuff)
-{ 
+int Screen::start(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen, bool doublebuff) {
 
-    if (_impl->m_SDL_Surface) {
-        Library::I().Error("Video ya inicializado, orden imposible 'start'\n");
-        return FRACASO;
-    }
+    if (_impl->m_SDL_Surface) throw Exception("Video ya inicializado, orden imposible 'start'");
 
-    if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) {
-        Library::I().Error("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ",TE_SDL_MSG);
-        return FRACASO;
-    }
+    if (SDL_InitSubSystem(SDL_INIT_VIDEO) == -1) throw SDLException("SDL_InitSubSystem(SDL_INIT_VIDEO) falla ");
+
 #ifdef LOG_SISTEMA
     printf("Iniciando Video Mode...\n");
 #endif
@@ -129,10 +116,8 @@ int Screen::start(int width, int height, int bpp, Float scalex, Float scaley, bo
     if (fullscreen) 
         flags |= SDL_FULLSCREEN;
 
-    if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags))==NULL) {
-        Library::I().Error("SDL_SetVideoMode ( width , height , bpp, flags) falla : ",TE_SDL_MSG);
-        return FRACASO;
-    }
+    if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags)) == nullptr) {
+        throw SDLException("SDL_SetVideoMode ( width , height , bpp, flags) falla ");
 
     _impl->m_FullScreen=fullscreen;
     _impl->m_Doublebuff=doublebuff;
@@ -150,18 +135,15 @@ int Screen::start(int width, int height, int bpp, Float scalex, Float scaley, bo
     glClearColor(0,0,0,0);
 
     SDL_ShowCursor( 0 );
-    SDL_WM_SetCaption("biblioteca-opengl-2d",NULL);
+    SDL_WM_SetCaption("biblioteca-opengl-2d",nullptr);
 
     return EXITO;
 
 }
 
-int Screen::render() 
-{
-    if (!_impl->m_SDL_Surface) {
-        Library::I().Error("Video context not inicialized");
-        return false;
-    }
+int Screen::render() {
+
+    if (!_impl->m_SDL_Surface) throw Exception("Video context not inicialized");
 
 #ifdef MAINRENDERLOOP
 
@@ -196,10 +178,7 @@ int Screen::render()
 
 int Screen::clear ( ) 
 {
-    if (!_impl->m_SDL_Surface) {
-        Library::I().Error("Video context not inicialized");
-        return FRACASO;
-    }
+    if (!_impl->m_SDL_Surface) throw Exception("Video context not inicialized");
 
 #ifdef MAINRENDERLOOP
 
@@ -333,10 +312,8 @@ int Screen::color(Color* col, Float alpha) {
 
 int Screen::projectionMode(TypeRendeProjection trp, Float zMax) {
 
-    if (_impl->rendering) {
-        Library::I().Error("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
-        return FRACASO;
-    }
+    if (_impl->rendering) 
+        throw Exception("No se puede cambiar el modo de proyección mientras se está en fase de renderización");
 
     _impl->m_maxZ = zMax;
     _impl->trp = trp;
@@ -370,10 +347,7 @@ int Screen::popMatrix() {
 }
 
 int Screen::ScreenImpl::beginRenderMode(Uint32 flags) {
-    if (!m_SDL_Surface) {
-        Library::I().Error("Video context not inicialized");
-        return FRACASO;
-    }
+    if (!m_SDL_Surface) throw Exception("Video context not inicialized");
     
     if (flags & RENDER_TEXTURE_STANDARD) {
         glEnable(GL_COLOR_MATERIAL);
@@ -386,10 +360,7 @@ int Screen::ScreenImpl::beginRenderMode(Uint32 flags) {
 }
 
 int Screen::ScreenImpl::endRenderMode(Uint32 flags) {
-    if (!m_SDL_Surface) {
-        Library::I().Error("Video context not inicialized");
-        return FRACASO;
-    }
+    if (!m_SDL_Surface) throw Exception("Video context not inicialized");
 
     if (flags & RENDER_TEXTURE_STANDARD) {
         glDisable(GL_BLEND);
@@ -403,13 +374,10 @@ int Screen::ScreenImpl::endRenderMode(Uint32 flags) {
 
 int Screen::quit()
 {
-    if (!_impl->m_SDL_Surface) {
-        Library::I().Error("Video context not inicialized");
-        return FRACASO;
-    }
+    if (!_impl->m_SDL_Surface) throw Exception("Video context not inicialized");
 
     SDL_FreeSurface(_impl->m_SDL_Surface);
-    _impl->m_SDL_Surface=NULL;
+    _impl->m_SDL_Surface = nullptr;
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
     return EXITO;
@@ -432,11 +400,8 @@ bool Screen::isFullscreen() {
 }
 
 int Screen::changeScreen(int width, int height, int bpp, Float scalex, Float scaley, bool fullscreen) {
-    if (!_impl->m_SDL_Surface) {
-        Library::I().Error("Video context not inicialized");
-        return FRACASO;
-    }
-    
+
+    if (!_impl->m_SDL_Surface) throw Exception("Video context not inicialized");
 
     clear();
     
@@ -457,10 +422,7 @@ int Screen::changeScreen(int width, int height, int bpp, Float scalex, Float sca
 
 int Screen::ToggleFullscreen() {
 
-    if (!_impl->m_SDL_Surface) {
-        Library::I().Error("Video context not inicialized");
-        return FRACASO;
-    }
+    if (!_impl->m_SDL_Surface) throw Exception("Video context not inicialized");
 
     clear();
 
@@ -483,10 +445,7 @@ int Screen::ToggleFullscreen() {
 
 int Screen::setDoublebuffer(bool doublebuff) {
 
-    if (!_impl->m_SDL_Surface) {
-        Library::I().Error("Video context not inicialized");
-        return FRACASO;
-    }
+    if (!_impl->m_SDL_Surface) throw Exception("Video context not inicialized");
 
     if (doublebuff!=_impl->m_Doublebuff) {
         clear();

@@ -5,7 +5,7 @@
 namespace FlatScene {
 
 Camera::Camera(Actor* target, Rectangle* area)
-: uni(NULL), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}
+: uni(nullptr), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}
 
 Camera::~Camera() {
     delete area;
@@ -17,24 +17,16 @@ Universe* Camera::getUniverse() {
 
 int Camera::loadUniverse() {
 
-    if (uni != NULL) {
-        Library::I().Error("Universe already loaded");
-        return FRACASO;
-    }
-
+    if (uni != nullptr) throw Exception("Universe already loaded");
 
     return EXITO;
 }
 
 int Camera::unloadUniverse() {
-    if (uni == NULL) {
-        Library::I().Error("No Universe in focus");
-        return FRACASO;
-    }
-
+    if (uni == nullptr) throw Exception("No Universe in focus");
 
     uni->decCameras();
-    uni=NULL;
+    uni=nullptr;
 
     return EXITO;
 
@@ -49,7 +41,7 @@ int Camera::resyncUniverse() {
 }
 
 bool Camera::isOpened() {
-    return (uni!=NULL);
+    return (uni!=nullptr);
 }
 
 int& Camera::CX() {
@@ -63,10 +55,7 @@ Actor* Camera::Target() {
 }
 
 int Camera::setTarget(Actor* newTarget) {
-    if (newTarget == this->target) {
-        Library::I().Error("Actor objetivo ya establecido");
-        return FRACASO;
-    }
+    if (newTarget == this->target) throw Exception("Actor objetivo ya establecido");
 
     if (newTarget->getUniverse()!= this->target->getUniverse()) {
         this->target=newTarget;
@@ -232,10 +221,7 @@ int Camera::color(Color* col, Float alpha) {
 }
 
 int Camera::reubicate(Rectangle* nArea) {
-    if (area == nArea) {
-        Library::I().Error("Area ya establecida");
-        return FRACASO;
-    }
+    if (area == nArea) throw Exception("Area ya establecida");
 
     delete area;
     area=nArea;

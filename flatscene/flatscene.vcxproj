@@ -110,6 +110,7 @@
     <ClCompile Include="src\tinyxml\*.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Algorithm.h" />
     <ClInclude Include="include\debugfuncs.h" />
     <ClInclude Include="include\FlatScene.h" />
     <ClInclude Include="include\FS.h" />

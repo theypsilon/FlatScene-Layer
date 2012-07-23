@@ -1,6 +1,8 @@
 #include "Library.h"
 #include "ImagesImpl.h"
 #include "ScreenImpl.h"
+#include "Algorithm.h"
+#include <assert.h>
 
 namespace FlatScene {
 
@@ -12,11 +14,10 @@ Images::~Images() {
 }
 
 void Images::clear() {
-    SpritesetCollection::iterator iter ;
     Spriteset* pspt ;
-    while ( !(*_impl).set.empty ( ) )
-    {
-        iter = (*_impl).set.begin ( ) ;
+
+    while ( !(*_impl).set.empty () ) {
+        auto iter = begin((*_impl).set) ;
         pspt = iter->second ;
         (*_impl).set.erase ( iter ) ;
         if (SDL_GetVideoSurface())
@@ -53,66 +54,54 @@ int Images::add(const char* name,Uint8 mode) {
 }
 
 int Images::remove(Uint32 n) {
-    if ((*_impl).set.find(n)!=(*_impl).set.end()) {
-        Spriteset* sptset = (*_impl).set[n];
-        int c=--(*_impl).count[sptset];
-        if (c < 1)  {
-            if (c==0) {
-                if (SDL_GetVideoSurface())
-                    Screen::I()._impl->spritesetToDelete.push_back(sptset); // delete sptset;
-                else
-                    delete sptset;
-                (*_impl).set.erase((*_impl).set.find(n));
-                (*_impl).count.erase((*_impl).count.find(sptset));
-                (*_impl).lastIndexAdded.push(n);
-            } else {
-                Library::I().Error("Cantidad de Spriteset violada.",TE_controlViolation);
-                return FRACASO;
-            }
-        }
+    if ((*_impl).set.find(n) == (*_impl).set.end())
+        throw ControlViolationException("No existe el Spriteset que se pretende eliminar.");
 
-        return EXITO;
+    Spriteset* sptset = (*_impl).set[n];
+    int c = --(*_impl).count[sptset];
+
+    if (c < 1) {
+        assert(c != 0,"Cantidad de Spriteset violada.");
+
+        if (SDL_GetVideoSurface())
+            Screen::I()._impl->spritesetToDelete.push_back(sptset); // delete sptset;
+        else
+            delete sptset;
+        (*_impl).set.erase((*_impl).set.find(n));
+        (*_impl).count.erase((*_impl).count.find(sptset));
+        (*_impl).lastIndexAdded.push(n);
     }
 
-    Library::I().Error("No existe el Spriteset que se pretende eliminar.",TE_controlViolation);
-    return FRACASO;
+    return EXITO;
 
 }
 
 int Images::search(const char* name) {
-    for (SpritesetCollection::iterator it = (*_impl).set.begin();it!=(*_impl).set.end();++it) {
-        if (strcmp(it->second->getName().c_str(),name)==0) {
-            return it->first;
-        }
-    }
+    for (const auto& pair : (*_impl).set)
+        if (pair.second->getName() == name)
+            return pair.first;
+
     return FRACASO;
 }
 
 int Images::search(Spriteset* object) {
-    for (SpritesetCollection::iterator it = (*_impl).set.begin();it!=(*_impl).set.end();++it) {
-        if (it->second==object) {
-            return it->first;
-        }
-    }
+    for (const auto& pair : (*_impl).set)
+        if (pair.second == object)
+            return pair.first;
+
     return FRACASO;
 }
 
 Spriteset* Images::get(Uint32 n) {
-    if ((*_impl).set.find(n)!=(*_impl).set.end())
-        return (*_impl).set[n];
-    else
-        return NULL;
+    return find_assoc((*_impl).set,n,nullptr);
 }
 
 int Images::size() {
-    return ((*_impl).set.size());
+    return (*_impl).set.size();
 }
 
 int Images::getCount(Uint32 n) {
-    Uint32 ret = 0;
-    if ((*_impl).count.find(get(n))!=(*_impl).count.end())
-        ret = (*_impl).count[get(n)];
-    return ret;
+    return find_assoc((*_impl).count,n,0);
 }
 #ifdef GLOBAL_SINGLETON_REFERENCES
 Images& Img = Images::I();
