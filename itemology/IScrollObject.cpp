@@ -20,14 +20,13 @@ IScrollObject::~IScrollObject() {
 
 }
 
-int IScrollObject::move() {
+void IScrollObject::move() {
 
     // TODO
 
-    return EXITO;
 }
 
-std::string IScrollObject::getCreature() {
+const std::string& IScrollObject::getCreature() {
 
     // TODO
 
@@ -36,11 +35,11 @@ std::string IScrollObject::getCreature() {
     // CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }
 
-int IScrollObject::setUniverse(Universe* m) {
+void IScrollObject::setUniverse(Universe* m) {
 
     // TODO
 
-    return Actor::setUniverse(m);
+    Actor::setUniverse(m);
 
     // CActor::setUniverse(m) realiza la asignaci�n : inUniverse=m;
 }

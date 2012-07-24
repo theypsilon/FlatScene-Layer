@@ -29,14 +29,14 @@ namespace FlatScene {
         Actor(const char* creature);
         virtual ~Actor();
 
-        int setSprite(int file,int graph);
+        void setSprite(int file,int graph);
         virtual const Sprite* getSprite();
 
-        virtual int move();
+        virtual void move();
 
-        virtual std::string getCreature();
+        virtual const std::string& getCreature();
         Universe* getUniverse();
-        virtual int setUniverse(Universe* m);
+        virtual void setUniverse(Universe* m);
         Point renderPoint;
 
         virtual Actor* clone();

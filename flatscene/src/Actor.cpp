@@ -7,30 +7,25 @@ namespace FlatScene {
 
 Actor::Actor(const char* creature) 
 : file(0), graph(0), flags(0), inUniverse(nullptr), creature(creature) {}
+
 Actor::~Actor() {}
 
-int Actor::move() {
-    return 0;
-}
+void Actor::move() {}
 
 Universe* Actor::getUniverse() {
     return inUniverse;
 }
-std::string Actor::getCreature() {
+const std::string& Actor::getCreature() {
     return creature;
 }
 
-int Actor::setUniverse(Universe* m) {
+void Actor::setUniverse(Universe* m) {
     inUniverse=m;
-
-    return 0;
 }
 
-int Actor::setSprite(int file,int graph) {
+void Actor::setSprite(int file,int graph) {
     this->file = file;
     this->graph = graph;
-
-    return 0;
 }
 
 const Sprite* Actor::getSprite() {
