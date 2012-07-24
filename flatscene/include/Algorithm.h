@@ -24,7 +24,7 @@ namespace FlatScene {
     first(const Container& c) { return extract(*c.begin()); }
 
     template <typename Container>
-    typename Container::mapped_type 
+    inline typename Container::mapped_type 
     find_assoc(
         Container& container, 
         typename Container::key_type needle, 
@@ -39,7 +39,7 @@ namespace FlatScene {
     }
 
     template <class Container>
-    void call_to_all( const Container& container ) {
+    inline void call_to_all( const Container& container ) {
         for (const auto& callback : container) {
             callback();
         }
