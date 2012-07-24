@@ -12,10 +12,6 @@
 #include "Exception.h"
 #include <algorithm>
 
-#define EXITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onExit(); _impl->setActualEngine(eaux); }
-#define INITENGINE(A); if (A && dynamic_cast<CEngine*>(A)) if (A->isInitialized()) { CEngine* eaux = getActualEngine(); _impl->setActualEngine(A); A->onInit(); _impl->setActualEngine(eaux); }
-#define KILLENGINE(A); EXITENGINE(A); if (A) { delete A; A=NULL; }
-
 namespace FlatScene {
 
 void Library::LibraryImpl::sort(std::vector<std::unique_ptr<Engine>>& v) {
