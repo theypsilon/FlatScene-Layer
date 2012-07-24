@@ -6,6 +6,8 @@
 
 #include "Exception.h"
 
+#include "Algorithm.h"
+
 namespace FlatScene {
 
 Canvas::Canvas() 
@@ -52,10 +54,7 @@ void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 
     // USER DEFINED EFFECTS IN
 
-    for (const auto& callback : _impl->initCallbackList) {
-        callback();
-    }
-
+    call_to_all(_impl->initCallbackList);
     _impl->initCallbackList.clear();
 
     // PAINT FLOATCANVAS
@@ -66,10 +65,7 @@ void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 
     // USER DEFINED EFFECTS OUT
 
-    for (const auto& callback : _impl->endCallbackList) {
-        callback();
-    }
-     
+    call_to_all(_impl->endCallbackList); 
     _impl->endCallbackList.clear();
 
     // POPMATRIX
