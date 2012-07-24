@@ -53,10 +53,6 @@ namespace FlatScene {
         rhs._impl = temp;
     }
 
-    bool Spriteset::isNull() const {
-        return nullptr == _impl;
-    }
-
     Uint8 Spriteset::getMode() const {
         return _impl->getMode();
     }
