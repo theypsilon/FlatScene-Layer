@@ -116,7 +116,7 @@ int Screen::start(int width, int height, int bpp, Float scalex, Float scaley, bo
     if (fullscreen) 
         flags |= SDL_FULLSCREEN;
 
-    if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags)) == nullptr) {
+    if ((_impl->m_SDL_Surface= SDL_SetVideoMode ( width , height , bpp, flags)) == nullptr)
         throw SDLException("SDL_SetVideoMode ( width , height , bpp, flags) falla ");
 
     _impl->m_FullScreen=fullscreen;

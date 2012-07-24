@@ -42,9 +42,6 @@ int Canvas::getHeight () const {
 void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
 
-    auto& initCallbackList = _impl->initCallbackList;
-    auto& endCallbackList = _impl->endCallbackList;
-
     //PUSHMATRIX
 
     Screen::I().pushMatrix();
@@ -55,11 +52,11 @@ void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 
     // USER DEFINED EFFECTS IN
 
-    for (std::list<std::function<void()>>::const_iterator iri = initCallbackList.begin(),ire = initCallbackList.end(); iri != ire; ++iri) {
-        (*iri)();
+    for (const auto& callback : _impl->initCallbackList) {
+        callback();
     }
 
-    initCallbackList.clear();
+    _impl->initCallbackList.clear();
 
     // PAINT FLOATCANVAS
 
@@ -69,11 +66,11 @@ void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 
     // USER DEFINED EFFECTS OUT
 
-    for (std::list<std::function<void()>>::const_iterator iri = endCallbackList.begin(),ire = endCallbackList.end(); iri != ire; ++iri) {
-        (*iri)();
+    for (const auto& callback : _impl->endCallbackList) {
+        callback();
     }
      
-    endCallbackList.clear();
+    _impl->endCallbackList.clear();
 
     // POPMATRIX
 
@@ -143,9 +140,6 @@ void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
 void Canvas::put ( const Point& ptDst, Uint8 flags) const {
 #ifdef MAINRENDERLOOP
 
-    auto& initCallbackList = _impl->initCallbackList;
-    auto& endCallbackList = _impl->endCallbackList;
-
     //PUSHMATRIX
 
     Screen::I().pushMatrix();
@@ -156,9 +150,11 @@ void Canvas::put ( const Point& ptDst, Uint8 flags) const {
 
     // USER DEFINED EFFECTS IN
 
-    for (std::list<std::function<void()>>::const_iterator iri = initCallbackList.begin(),ire = initCallbackList.end(); iri != ire; ++iri) {
-        (*iri)();
+    for (const auto& callback : _impl->initCallbackList) {
+        callback();
     }
+
+    _impl->initCallbackList.clear();
 
     // PAINT FLOATCANVAS
 
@@ -168,11 +164,11 @@ void Canvas::put ( const Point& ptDst, Uint8 flags) const {
 
     // USER DEFINED EFFECTS OUT
 
-    for (std::list<std::function<void()>>::const_iterator iri = endCallbackList.begin(),ire = endCallbackList.end(); iri != ire; ++iri) {
-        (*iri)();
+    for (const auto& callback : _impl->endCallbackList) {
+        callback();
     }
 
-    endCallbackList.clear();
+    _impl->endCallbackList.clear();
 
     // POPMATRIX
 
@@ -250,18 +246,18 @@ SDL_Surface* Canvas::scaleSurface( SDL_Surface* s_surf, int factor) {
     Uint8 bpp = s_surf->format->BytesPerPixel;
 
     if (bpp == 4) // 32 bits
-
-        ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,s_surf->format->Rmask,s_surf->format->Gmask,s_surf->format->Bmask,s_surf->format->Amask);
-
+        ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,
+            s_surf->format->Rmask,s_surf->format->Gmask,
+            s_surf->format->Bmask,s_surf->format->Amask
+        );
     else if (bpp == 1) // 8 bits
+        ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,
+            0,0,0,0
+        );
+    else 
+        throw SDLException("depth mode not valid",TE_SDL_NOMSG);
 
-        ret = SDL_CreateRGBSurface(s_surf->flags,s_surf->w*factor,s_surf->h*factor,bpp*8,0,0,0,0);
-
-    else {
-        Library::I().Error("depth mode not valid",TE_SDL_NOMSG);
-        return ret;
-
-    }
+    
 
     char* newPixels = (char*) ret->pixels;
     char* oldPixels = (char*) s_surf->pixels;

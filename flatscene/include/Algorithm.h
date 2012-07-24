@@ -23,12 +23,17 @@ namespace FlatScene {
     typename result_of::extract< typename Container::value_type >::type
     first(const Container& c) { return extract(*c.begin()); }
 
-    template <typename Container, typename Key, typename Value>
-    Value find_assoc(Container& container, Key needle, Value default = Value()) {
+    template <typename Container>
+    typename Container::mapped_type 
+    find_assoc(
+        Container& container, 
+        typename Container::key_type needle, 
+        typename Container::mapped_type def
+    ) {
         auto it = container.find(needle);
 
         if (end(container) == it)
-            return default;
+            return def;
 
         return it->second;
     }

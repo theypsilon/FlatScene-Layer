@@ -61,7 +61,7 @@ int Images::remove(Uint32 n) {
     int c = --(*_impl).count[sptset];
 
     if (c < 1) {
-        assert(c != 0,"Cantidad de Spriteset violada.");
+        assert(c == 0); // "Cantidad de Spriteset violada."
 
         if (SDL_GetVideoSurface())
             Screen::I()._impl->spritesetToDelete.push_back(sptset); // delete sptset;
@@ -101,7 +101,7 @@ int Images::size() {
 }
 
 int Images::getCount(Uint32 n) {
-    return find_assoc((*_impl).count,n,0);
+    return find_assoc((*_impl).count,get(n),0);
 }
 #ifdef GLOBAL_SINGLETON_REFERENCES
 Images& Img = Images::I();
