@@ -1,11 +1,6 @@
 #include "CanvasImpl.h"
-#include "Library.h"
 #include "ScreenImpl.h"
-
-#include "debugfuncs.h"
-
 #include "Exception.h"
-
 #include "Algorithm.h"
 
 namespace FlatScene {
