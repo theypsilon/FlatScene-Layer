@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "ScreenImpl.h"
-#include "Library.h"
+#include "Universe.h"
+#include "Exception.h"
 #include "Algorithm.h"
 
 namespace FlatScene {
