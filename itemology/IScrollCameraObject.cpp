@@ -10,6 +10,5 @@ IScrollCameraObject::IScrollCameraObject(
 IScrollCameraObject::~IScrollCameraObject()
 {}
 
-int IScrollCameraObject::refresh() {
-    return EXITO; 
-}
+void IScrollCameraObject::refresh()
+{}

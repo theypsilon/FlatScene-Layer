@@ -30,12 +30,10 @@ IScrollCameraTile::IScrollCameraTile(
 }
 
 
-IScrollCameraTile::~IScrollCameraTile(void)
-{
-}
+IScrollCameraTile::~IScrollCameraTile() {}
 
 
-int IScrollCameraTile::refresh() {
+void IScrollCameraTile::refresh() {
 
     Point p;
 
@@ -67,7 +65,4 @@ int IScrollCameraTile::refresh() {
             } 
         }
     }
-
-    return EXITO; 
-
 }

@@ -21,7 +21,7 @@ public:
     IScrollCameraTile(const std::vector<std::vector<Tile>>& tiles,Actor* target,FlatScene::Rectangle* area);
     ~IScrollCameraTile(void);
 
-    int refresh();
+    virtual void refresh();
 };
 
 #endif

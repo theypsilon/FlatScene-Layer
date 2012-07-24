@@ -37,6 +37,13 @@ namespace FlatScene {
 
         return extract(*it);
     }
+
+    template <class Container>
+    void call_to_all( const Container& container ) {
+        for (const auto& callback : container) {
+            callback();
+        }
+    }
 } // FlatScene
 
 #endif // FS_ALGORITHM__
