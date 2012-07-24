@@ -255,7 +255,7 @@ SDL_Surface* Canvas::scaleSurface( SDL_Surface* s_surf, int factor) {
             0,0,0,0
         );
     else 
-        throw SDLException("depth mode not valid",TE_SDL_NOMSG);
+        throw SDLException("depth mode not valid");
 
     
 

@@ -313,43 +313,6 @@ void Library::killEngine(Engine* engine) {
     });
 }
 
-    /*
-    if (s == "")
-        s = "empty";
-
-    if (e==TE_fileExists) {
-        s="|-| ERROR : No existe tal fichero. +: "+s;
-    } else if (e==TE_standard) {
-        s="|-| ERROR : Standard -> "+s;
-    } else if (e==TE_controlViolation) {
-        s="|-| ERROR : Violanc�on del control de la librer�a. +: "+s;
-    } else if (e==TE_SDL_NOMSG) {
-        s="|-| SDLError unknown. +: "+s;
-    } else if (e==TE_SDL_MSG) {
-        s= "|-| SDLError -> "+std::string(SDL_GetError())+" +: "+s;
-        SDL_ClearError();
-    } else if (e==TE_OPENGL_NOMSG) {
-        s="|-| OpenGLError unknown. +: "+s;
-    } else if (e==TE_OPENGL_MSG) {
-        s= "|-| OpenGLError -> "+_impl->toStringErrorGL(glGetError())+" +: "+s;
-    }
-
-std::string Library::LibraryImpl::toStringErrorGL(GLenum e) {
-    std::string s ="";
-
-    switch (e) {
-        case GL_NO_ERROR : s+="GL_NO_ERROR : No error has been recorded.";
-        case GL_INVALID_ENUM : s+="GL_INVALID_ENUM : An unacceptable value is specified for an enumerated argument.";
-        case GL_INVALID_VALUE : s+="GL_INVALID_VALUE : A numeric argument is out of range.";
-        case GL_INVALID_OPERATION : s+= "GL_INVALID_OPERATION : The specified operation is not allowed in the current state.";
-        case GL_STACK_OVERFLOW : s+= "GL_STACK_OVERFLOW : This command would cause a stack overflow.";
-        case GL_STACK_UNDERFLOW : s+="GL_STACK_UNDERFLOW : This command would cause a stack underflow.";
-        case GL_OUT_OF_MEMORY : s+="GL_OUT_OF_MEMORY : There is not enough memory left to execute the command. ";
-    }
-
-    return s;
-}*/
-
 #ifdef DEBUGTEST
 
 void Library::debug(bool startdebug,const char* warning) {

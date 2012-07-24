@@ -35,7 +35,7 @@ namespace FlatScene {
         if (end(container) == it)
             return def;
 
-        return it->second;
+        return extract(*it);
     }
 } // FlatScene
 

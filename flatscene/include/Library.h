@@ -26,17 +26,6 @@
 
 namespace FlatScene {
 
-    enum TypeError {
-        TE_standard,
-        TE_fileExists,
-        TE_controlViolation,
-        TE_SDL_NOMSG,
-        TE_SDL_MSG,
-        TE_OPENGL_NOMSG,
-        TE_OPENGL_MSG
-    };
-
-
     class Library : private Util::NonCpmvable, public Util::Singleton<Library> {
         friend class Util::Singleton<Library>;
     public:
@@ -67,7 +56,7 @@ namespace FlatScene {
 
     #ifdef DEBUGTEST
 
-        void debug(bool startdebug, const char* warning=NULL);
+        void debug(bool startdebug, const char* warning=nullptr);
         bool inDebug();
 
     #endif
