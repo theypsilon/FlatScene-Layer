@@ -75,7 +75,7 @@ struct Spriteset::SpritesetImpl {
 
         auto grd = loadFileGRD(grd_str,chipset);
 
-        loadSprites(grd,*chipset,mode);
+        loadAllSprites(grd,*chipset,mode);
 
         SDL_FreeSurface(chipset);
     }
@@ -133,18 +133,24 @@ struct Spriteset::SpritesetImpl {
         std::map<int,bool>  ga_isRel;
     };
 
+    struct DocIsNotLoadedException {};
+
     DataGRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset = nullptr) {
-        TiXmlDocument doc(grd_str.c_str());
-        if (!doc.LoadFile()) {
+        try {
+            return fillGRDFromDocument(grd_str);
+        } catch(DocIsNotLoadedException& e) {
             if (!chipset) 
                 throw Exception("grd file invalid and bitmap invalid",__LINE__);
 
             return fillGRDFromChipset(*chipset);
         }
-        return fillGRDFromDocument(doc);
     }
 
-    DataGRD fillGRDFromDocument(TiXmlDocument& doc) {
+    DataGRD fillGRDFromDocument(const std::string& grd_str) {
+        TiXmlDocument doc(grd_str.c_str());
+        if (!doc.LoadFile())
+            throw DocIsNotLoadedException();
+
         DataGRD grd;
 
         TiXmlHandle input(doc.FirstChild()); 
@@ -274,20 +280,16 @@ struct Spriteset::SpritesetImpl {
         
     void ensureConsistentValues(const DataGRD& grd) {
         if (grd.simple) return;
+
         if (grd.num_img != grd.images.size())
             throw Exception("image count doesn't match in grd file",__LINE__);
-        std::for_each(grd.images.begin(),grd.images.end(),[&](decltype(grd.images.at(0))& img) {
-            std::for_each(img.areas.begin(),img.areas.end(),[&](decltype(*img.areas.end())& ar) {
-                std::for_each(ar.second.begin(),ar.second.end(),[&](decltype(ar.second.at(0))& rc) {
-                    if (rc.x < 0 || rc.y < 0 || 
-                        rc.w > (decltype(rc.w))img.dim.x || rc.h > (decltype(rc.h))img.dim.y)
-                            throw Exception("areas not defined within the sprite domain",__LINE__);
-                });
-            });
-        });
+
+        for (auto& img : grd.images) for (auto& ar : img.areas) for (auto& rc : ar.second)
+            if (rc.x < 0 || rc.y < 0 || rc.w > (decltype(rc.w))img.dim.x || rc.h > (decltype(rc.h))img.dim.y)
+                throw Exception("areas not defined within the sprite domain",__LINE__);
     }
 
-    void loadSprites(DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
+    void loadAllSprites(DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
         unsigned int columns = chipset.w / grd.cellwidth;
         if (columns <= 0 || chipset.w % grd.cellwidth != 0)
             throw Exception("the grd doesn't fit with the chipset",__LINE__);
@@ -302,31 +304,13 @@ struct Spriteset::SpritesetImpl {
         }
 
         SDL_Rect src = {0,0,0,0};
-        std::for_each(grd.images.begin(),grd.images.end(),[&](decltype(grd.images.at(0))& img) {
-            auto surf = SDL_CreateRGBSurface(chipset.flags | SDL_SRCALPHA,
-                                             img.dim.x, img.dim.y,
-                                             chipset.format->BitsPerPixel,
-                                             chipset.format->Rmask, chipset.format->Gmask,
-                                             chipset.format->Bmask, chipset.format->Amask);
+        for (auto& img : grd.images) {
 
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
-            blitcopy(chipset,&src,surf,nullptr);
+            Sprite spt = loadSprite(src,chipset,mode,grd.sp_scale);
 
-            if (grd.sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
-                if (auto temp = Canvas::scaleSurface(surf,(int)grd.sp_scale)) {
-                    SDL_FreeSurface(surf);
-                    surf=temp;
-                }
-                // Reasignamos los formatos.
-                SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);
-            }
-
-            Sprite&& spt = Canvas::createCanvas<Sprite>(surf,mode);
-
-            //Sprite spt(Canvas::toSCanvas(surf,mode),img.cp);
             spt.name = std::move(img.name);
 
             m_vecSprites.push_back(std::move(spt));
@@ -338,7 +322,33 @@ struct Spriteset::SpritesetImpl {
                 if (src.y + grd.cellheight > (unsigned int) chipset.h)
                     throw Exception("the grd doesn't fit with the chipset",__LINE__);
             }
-        });
+        }
+    }
+
+    Sprite loadSprite(const SDL_Rect& src, const SDL_Surface& chipset, unsigned char mode, double sp_scale) {
+        auto surf = SDL_CreateRGBSurface(chipset.flags | SDL_SRCALPHA,
+                                         src.w - src.x, src.h - src.y,
+                                         chipset.format->BitsPerPixel,
+                                         chipset.format->Rmask, chipset.format->Gmask,
+                                         chipset.format->Bmask, chipset.format->Amask);
+
+        SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
+        blitcopy(chipset,const_cast<SDL_Rect*>(&src),surf,nullptr);
+
+        if (sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
+            if (auto temp = Canvas::scaleSurface(surf,(int)sp_scale)) {
+                SDL_FreeSurface(surf);
+                surf=temp;
+            }
+            // Reasignamos los formatos.
+            SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);
+        }
+
+        Sprite spt = Canvas::createCanvas<Sprite>(surf,mode);
+
+        //Sprite spt(Canvas::toSCanvas(surf,mode),img.cp);
+
+        return spt;
     }
 };
 
