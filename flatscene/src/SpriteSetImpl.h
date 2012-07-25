@@ -22,10 +22,8 @@ struct Spriteset::SpritesetImpl {
 
     typedef std::vector<Sprite> SpriteCollection;
 
-    unsigned int globalAuxiliar;
-
     SpritesetImpl(std::string c, Uint8 mode) 
-        : globalAuxiliar(0), mode(mode), name(c) {
+        : mode(mode), name(c) {
             loadChipset(c,mode);
     }
 
@@ -146,20 +144,33 @@ struct Spriteset::SpritesetImpl {
         }
     }
 
-    DataGRD fillGRDFromDocument(const std::string& grd_str) {
-        TiXmlDocument doc(grd_str.c_str());
+    TiXmlHandle getHandlerFromDocument(const std::string& str) {
+        TiXmlDocument doc(str.c_str());
         if (!doc.LoadFile())
             throw DocIsNotLoadedException();
-
-        DataGRD grd;
 
         TiXmlHandle input(doc.FirstChild()); 
         if (!input.ToElement()) 
             throw Exception("no elements in grd file",__LINE__);
 
+        return input;
+    }
+
+    DataGRD fillGRDFromDocument(const std::string& grd_str) {
+        TiXmlDocument doc(grd_str.c_str());
+        if (!doc.LoadFile())
+            throw DocIsNotLoadedException();
+
+        TiXmlHandle input = getHandlerFromDocument(grd_str);
+
+        int i = 0;
+        while (isDefinedInOtherFile(*input.Element())) {
+            if (i++ > 100) throw Exception("infinite cycle between grd files",__LINE__);
+            input = getFromOtherFile(*input.Element());
+        }
+
         auto& head = *input.Element();
-        if (isDefinedInOtherFile(head))
-            return getFromOtherFile(head);
+        DataGRD grd;
 
         processHeadElement(grd,head);
         if (grd.simple) 
@@ -207,12 +218,10 @@ struct Spriteset::SpritesetImpl {
         return checkAttr(head,"defined-in","",false);
     }
 
-    DataGRD getFromOtherFile(const TiXmlElement& head) {
-        if (++globalAuxiliar > 100) 
-            throw Exception("infinite cycle between grd files",__LINE__);
+    TiXmlHandle getFromOtherFile(const TiXmlElement& head) {
         ensureAttr(head,"defined-in","",false);
         std::string grd_str(head.Attribute("defined-in"));
-        return loadFileGRD(grd_str);
+        return getHandlerFromDocument(grd_str);
     }
 
     void processHeadElement(DataGRD& grd, const TiXmlElement& head) {
