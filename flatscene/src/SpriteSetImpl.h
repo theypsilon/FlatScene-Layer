@@ -144,7 +144,7 @@ struct Spriteset::SpritesetImpl {
         }
     }
 
-    TiXmlHandle getHandlerFromDocument(const std::string& str) {
+    TiXmlDocument getWorkingDocument(const std::string& str) {
         TiXmlDocument doc(str.c_str());
         if (!doc.LoadFile())
             throw DocIsNotLoadedException();
@@ -153,23 +153,20 @@ struct Spriteset::SpritesetImpl {
         if (!input.ToElement()) 
             throw Exception("no elements in grd file",__LINE__);
 
-        return input;
+        return doc;
     }
 
     DataGRD fillGRDFromDocument(const std::string& grd_str) {
-        TiXmlDocument doc(grd_str.c_str());
-        if (!doc.LoadFile())
-            throw DocIsNotLoadedException();
-
-        TiXmlHandle input = getHandlerFromDocument(grd_str);
+        TiXmlDocument doc = getWorkingDocument(grd_str);
 
         int i = 0;
-        while (isDefinedInOtherFile(*input.Element())) {
+        while (isDefinedInOtherFile(*doc.FirstChild()->ToElement())) {
             if (i++ > 100) throw Exception("infinite cycle between grd files",__LINE__);
-            input = getFromOtherFile(*input.Element());
+            doc = getFromOtherFile(*doc.FirstChild()->ToElement());
         }
 
-        auto& head = *input.Element();
+        TiXmlHandle input(doc.FirstChild()); 
+        auto& head = *doc.FirstChild()->ToElement();
         DataGRD grd;
 
         processHeadElement(grd,head);
@@ -218,10 +215,10 @@ struct Spriteset::SpritesetImpl {
         return checkAttr(head,"defined-in","",false);
     }
 
-    TiXmlHandle getFromOtherFile(const TiXmlElement& head) {
+    TiXmlDocument getFromOtherFile(const TiXmlElement& head) {
         ensureAttr(head,"defined-in","",false);
         std::string grd_str(head.Attribute("defined-in"));
-        return getHandlerFromDocument(grd_str);
+        return getWorkingDocument(grd_str);
     }
 
     void processHeadElement(DataGRD& grd, const TiXmlElement& head) {
