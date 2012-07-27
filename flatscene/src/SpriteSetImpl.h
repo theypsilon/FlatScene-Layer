@@ -112,7 +112,7 @@ private:
 
     }
 
-    void loadAllSprites(DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
+    void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
         if (chipset.w / grd.cellwidth <= 0 || chipset.w % grd.cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
