@@ -1,5 +1,5 @@
 #include "ImagesPrivate.h"
-#include "SpriteSetPolicies.h"
+#include "SpriteSetResource.h"
 
 namespace FlatScene {
 
