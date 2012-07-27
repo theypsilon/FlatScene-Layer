@@ -21,25 +21,10 @@ namespace FlatScene {
     class CanvasResource;
 
     class Canvas {
-    private:
-        std::unique_ptr<CanvasResource> _impl;
-
-        Canvas ( const Canvas& ); //undefined
-        Canvas() ;
-
-        friend class FSTextBox;
-        friend class Sprite;
-        friend class Spriteset;
-        friend class Images;
-        friend class Screen;
-
-        static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
-
     public:
-        ~Canvas( ) ;
 
-    public:
-        Canvas( Canvas&& pSurface ) ;
+        Canvas(Canvas&& pSurface);
+        ~Canvas() ;
 
         template <typename T> 
         static T createCanvas(SDL_Surface* surface, unsigned char mode=ONLY_TEXTURE, GraphicFilter filter=NEAREST);
@@ -58,6 +43,22 @@ namespace FlatScene {
         void scale(Float x, Float y, Float z) const;
         void color(Float red, Float green, Float blue, Float alpha) const;
         void color(const Color& col,Float alpha=1.0) const;
+
+    protected:
+        Canvas(CanvasResource* res);
+    private:
+        std::unique_ptr<CanvasResource> _res;
+
+        Canvas ( const Canvas& ); //undefined
+        Canvas() ;
+
+        friend class FSTextBox;
+        friend class Sprite;
+        friend class Spriteset;
+        friend class Images;
+        friend class Screen;
+
+        static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
     };
 
 } // flatscene

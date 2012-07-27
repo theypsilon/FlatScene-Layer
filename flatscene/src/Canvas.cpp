@@ -6,17 +6,17 @@
 namespace FlatScene {
 
 Canvas::Canvas() 
-    : _impl(new CanvasResource)
+    : _res(new CanvasResource)
 {}
 
 Canvas::Canvas( Canvas&& pSurface ) 
-    : _impl(std::move(pSurface._impl))
+    : _res(std::move(pSurface._res))
 {}
 
 Canvas::~Canvas() {}
 
 unsigned int Canvas::getPixel ( int x , int y ) const {
-    SDL_Surface* sdl_surf = _impl->sdl_surf;
+    SDL_Surface* sdl_surf = _res->sdl_surf;
     if (sdl_surf && sdl_surf->w > x && sdl_surf->h > y) {
         Uint32 color = 0 ;
         int position = y * sdl_surf->pitch + sdl_surf->format->BytesPerPixel * x ;
@@ -28,8 +28,8 @@ unsigned int Canvas::getPixel ( int x , int y ) const {
         return 0;
 }
 
-int Canvas::getWidth  () const { return _impl->w2; }
-int Canvas::getHeight () const { return _impl->h2; }
+int Canvas::getWidth  () const { return _res->w2; }
+int Canvas::getHeight () const { return _res->h2; }
 
 template <typename PointType, typename GraphicMaterial>
 inline void putCanvas ( const PointType& ptDst, unsigned char flags, 
@@ -56,11 +56,11 @@ inline void putCanvas ( const PointType& ptDst, unsigned char flags,
 }
 
 void Canvas::put ( const FloatPoint& ptDst, unsigned char flags) const {
-    putCanvas( ptDst, flags, *_impl, Screen::I()._impl->graphicMaterial );
+    putCanvas( ptDst, flags, *_res, Screen::I()._impl->graphicMaterial );
 }
 
 void Canvas::put ( const Point& ptDst, unsigned char flags) const {
-    putCanvas( ptDst, flags, *_impl, Screen::I()._impl->graphicMaterial );
+    putCanvas( ptDst, flags, *_res, Screen::I()._impl->graphicMaterial );
 }
 
 SDL_Surface* Canvas::scaleSurface( SDL_Surface* s_surf, int factor) {
@@ -114,18 +114,18 @@ SDL_Surface* Canvas::scaleSurface( SDL_Surface* s_surf, int factor) {
 }
 
 void Canvas::rotate(Float angle, Float x, Float y, Float z) const {
-    _impl->initCallbackList.push_back([=](){
+    _res->initCallbackList.push_back([=](){
         Screen::I().rotate(angle,x,y,z);
     });
 }
 void Canvas::translate(Float x, Float y, Float z) const {
-    _impl->initCallbackList.push_back([=](){
+    _res->initCallbackList.push_back([=](){
         Screen::I().translate(x,y,z);
     });
 }
 
 void Canvas::scale(Float x, Float y, Float z) const {
-    _impl->initCallbackList.push_back([=](){
+    _res->initCallbackList.push_back([=](){
         Screen::I().scale(x,y,z);
     });
 }
@@ -137,7 +137,7 @@ void Canvas::color(Float red, Float green, Float blue, Float alpha) const {
     if (blue > 1.0) blue = 1.0;
     if (alpha > 1.0) alpha = 1.0;
 
-    _impl->initCallbackList.push_back([=](){
+    _res->initCallbackList.push_back([=](){
         Screen::I().color(red,green,blue,alpha);
     });
 
@@ -146,7 +146,7 @@ void Canvas::color(Float red, Float green, Float blue, Float alpha) const {
     blue  = Screen::I()._impl->blue ; //2.0 - blue;
     alpha = Screen::I()._impl->alpha; //2.0 - alpha;
 
-    _impl->endCallbackList.push_back([=](){
+    _res->endCallbackList.push_back([=](){
         Screen::I().color(red,green,blue,alpha);
     });
 }
