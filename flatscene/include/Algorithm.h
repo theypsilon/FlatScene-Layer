@@ -32,7 +32,7 @@ namespace FlatScene {
     template <typename Iterable,typename Value>
     inline bool binary_search(const Iterable& c, const Value& val) {
         using namespace std;
-        return binary_search(begin(c),end(c),val);
+        return find(begin(c),end(c),val) != end(c);
     }
 
     template <typename Container>
