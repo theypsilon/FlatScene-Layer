@@ -124,7 +124,7 @@ private:
 
             Sprite spt = loadSprite(src,chipset,mode,grd.sp_scale);
 
-            spt.name = std::move(img.name);
+            spt.setName(std::move(img.name));
 
             _sprites.push_back(std::move(spt));
 

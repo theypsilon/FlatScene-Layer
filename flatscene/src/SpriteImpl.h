@@ -7,7 +7,13 @@
 
 namespace FlatScene {
 
-    class SpriteResource : public CanvasResource {};
+    class SpriteResource : public CanvasResource {
+    public:
+        std::string     name;
+        Point   		cpoint;
+        Sprite::Areas   areas;
+        SpriteOpaque    opaque;
+    };
 
 } // flatscene
 #endif

@@ -19,10 +19,10 @@ namespace FlatScene {
 
     //CSprite--abstracts Image+Control Point.
     class Sprite : public Canvas {
+    public:
         typedef std::vector<Rectangle> RectArea;
         typedef int IndexArea;
         typedef std::map<IndexArea,RectArea> Areas;
-    public:
         //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
 
         Sprite ();
@@ -47,11 +47,6 @@ namespace FlatScene {
     private:
 
         Sprite (const Sprite&); //undefined
-
-        std::string     name;
-        Point           cpoint;
-        Areas           areas;
-        SpriteOpaque    opaque;
 
         friend class Spriteset;
         friend class Screen;

@@ -11,26 +11,22 @@ Sprite::Sprite()
 {}
 
 Sprite::Sprite ( Canvas&& pSurface, Point zerocpSource) 
-    : Canvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
+    : Canvas(std::move(pSurface))
 {}
 
 Sprite::Sprite(Sprite&& spt) 
     : Canvas(std::move(spt))
-    , areas(std::move(spt.areas))
-    , name(std::move(spt.name))
-    , cpoint(std::move(spt.cpoint))
-    , opaque(spt.opaque) 
 {}
 
 Sprite::~Sprite() {}
 
 void Sprite::put (Point ptDst, unsigned char flags) const {
     if (flags & 0x001) {
-        ptDst.y -= cpoint.y;
-        ptDst.x -= getWidth() - cpoint.x;
+        ptDst.y -= getRes().cpoint.y;
+        ptDst.x -= getWidth() - getRes().cpoint.x;
     } else {
-        ptDst.x -= cpoint.x;
-        ptDst.y -= cpoint.y;
+        ptDst.x -= getRes().cpoint.x;
+        ptDst.y -= getRes().cpoint.y;
     }
 
     Canvas::put(ptDst,flags);
@@ -38,17 +34,17 @@ void Sprite::put (Point ptDst, unsigned char flags) const {
 //TODO
 
 void Sprite::setName (const std::string& newName) {
-    name=newName;
+    getRes().name = newName;
 }
 
 const std::string& Sprite::getName() const {
-    return name;
+    return getRes().name;
 }
 
 Sprite::IndexArea Sprite::addArea(RectArea area) {
     for (IndexArea index = std::numeric_limits<IndexArea>::min(); index < std::numeric_limits<IndexArea>::max(); index++) {
-        if (areas.find(index) == areas.end()) {
-            areas[index] = area;
+        if (getRes().areas.find(index) == getRes().areas.end()) {
+            getRes().areas[index] = area;
             return index;
         }
     }
@@ -57,8 +53,8 @@ Sprite::IndexArea Sprite::addArea(RectArea area) {
 
 
 const Sprite::RectArea& Sprite::getArea (IndexArea index) const {
-    std::remove_const<decltype(areas.find(index))>::type it = areas.find(index);
-    if (it != areas.end())
+    std::remove_const<decltype(getRes().areas.find(index))>::type it = getRes().areas.find(index);
+    if (it != getRes().areas.end())
         return it->second;
     std::stringstream ss;
     ss << "no area with the index '" << index << "' has been found";
@@ -66,11 +62,11 @@ const Sprite::RectArea& Sprite::getArea (IndexArea index) const {
 }
 
 const Point& Sprite::getCenter() const {
-    return cpoint;
+    return getRes().cpoint;
 }
 
 void Sprite::replaceCenter(Point c) {
-    cpoint = c;
+    getRes().cpoint = c;
 }
 
 void Sprite::replaceArea(IndexArea index,RectArea area) {
@@ -79,7 +75,7 @@ void Sprite::replaceArea(IndexArea index,RectArea area) {
 }
 
 int Sprite::size() const {
-    return areas.size();
+    return getRes().areas.size();
 }
 
 SpriteOpaque Sprite::isOpaque() {
@@ -98,7 +94,7 @@ SpriteOpaque Sprite::isOpaque() {
                 opaque = SPRITE_TRANSPARENT;
         }
 */
-    return opaque;
+    return getRes().opaque;
 }
 
 } // flatscene
