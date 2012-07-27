@@ -24,47 +24,50 @@ struct Spriteset::SpritesetImpl {
 
     typedef std::vector<Sprite> SpriteCollection;
 
-    SpritesetImpl(std::string c, Uint8 mode) 
-        : mode(mode), name(c) {
+    SpritesetImpl(const std::string& c, unsigned char mode) 
+        : _mode(mode), _name(c) {
             loadChipset(c,mode);
     }
 
-    SpriteCollection m_vecSprites ;
-    std::string      name;
-    Uint8            mode;
-
     Uint8 getMode() {
-        return mode;
+        return _mode;
     }
 
     const std::string& getName() const {
-        return name;
+        return _name;
     }
 
     bool setName(std::string& name) {
-        if (this->name=="") {
-            this->name=name;
+        if (this->_name == "") {
+            this->_name = name;
             return true;
         }
         return false;
     }
 
     void add ( Sprite pspt ) {
-        //m_vecSprites.push_back ( pspt ) ;
+        //_sprites.push_back ( pspt ) ;
     }
 
     const Sprite* get ( unsigned int n ) const {
-        if ( n < m_vecSprites.size()) {
-            return &m_vecSprites.at(n);
+        if ( n < _sprites.size()) {
+            return &_sprites.at(n);
         } else {
             return nullptr;
         }
     }
-    int size ( ) const {
-        return ( m_vecSprites.size ( ) ) ;
+
+    int size () const {
+        return _sprites.size();
     }
 
-    void loadChipset(std::string& c,Uint8 mode=ONLY_TEXTURE,std::string* cPrev=NULL) {
+private:
+
+    SpriteCollection _sprites;
+    std::string      _name;
+    unsigned char    _mode;
+
+    void loadChipset(const std::string& c,unsigned char mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
         auto names = getNameFile(c);
 
         auto chipset = IMG_Load(names.second.c_str());
@@ -121,7 +124,7 @@ struct Spriteset::SpritesetImpl {
 
             spt.name = std::move(img.name);
 
-            m_vecSprites.push_back(std::move(spt));
+            _sprites.push_back(std::move(spt));
 
             src.x += grd.cellwidth;
             if (src.x + grd.cellwidth > (unsigned int) chipset.w) {
