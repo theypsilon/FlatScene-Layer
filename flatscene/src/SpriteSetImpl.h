@@ -13,7 +13,7 @@
 
 #include "TinyXMLHelper.h"
 #include "CanvasFactory.h"
-#include "SpriteImpl.h"
+#include "SpriteResource.h"
 
 #include "GraphicResourceDescriptor.h"
 

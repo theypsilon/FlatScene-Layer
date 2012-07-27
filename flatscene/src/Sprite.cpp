@@ -1,4 +1,4 @@
-#include "SpriteImpl.h"
+#include "SpriteResource.h"
 #include "Screen.h"
 #include "Exception.h"
 #include <limits>
