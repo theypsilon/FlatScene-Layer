@@ -1,5 +1,5 @@
 #include "ImagesPrivate.h"
-#include "SpriteSetImpl.h"
+#include "SpriteSetResource.h"
 //#include "ScreenImpl.h"
 
 #include <iostream>

@@ -1,5 +1,5 @@
 #include "ImagesPrivate.h"
-#include "SpriteSetImpl.h"
+#include "SpriteSetResource.h"
 
 namespace std {
     template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs) { 

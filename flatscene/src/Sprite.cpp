@@ -21,7 +21,6 @@ void Sprite::put (Point ptDst, unsigned char flags) const {
 
     Canvas::put(ptDst,flags);
 }
-//TODO
 
 void Sprite::setName (const std::string& newName) {
     getRes<SpriteResource>().name = newName;
