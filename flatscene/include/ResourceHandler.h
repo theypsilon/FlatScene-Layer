@@ -27,10 +27,10 @@ namespace FlatScene {
 			return *this;
 		}
 
-		void swap(const ResourceHandler& rhs) {
-			ResourceHandler&& aux = std::move(rhs);
-			rhs = std::move(*this);
-			*this = std::move(aux);
+		void swap(ResourceHandler& rhs) {
+			auto aux = std::move(rhs._res);
+			rhs._res = std::move(_res);
+			_res = std::move(aux);
 		}
 
 	protected:
@@ -44,5 +44,9 @@ namespace FlatScene {
 	};
 
 } // FlatScene
+
+namespace std {
+    template<> void swap(FlatScene::ResourceHandler& lhs, FlatScene::ResourceHandler& rhs) { lhs.swap(rhs); }
+} // std
 
 #endif

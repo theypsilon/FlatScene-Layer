@@ -42,7 +42,7 @@ namespace FlatScene {
 } // flatscene
 
 namespace std {
-    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs);
+    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs) { lhs.swap(rhs); }
 } // std
 
 #endif // FS__SPRITESET_H__

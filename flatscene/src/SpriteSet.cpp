@@ -1,12 +1,6 @@
 #include "ImagesPrivate.h"
 #include "SpriteSetImpl.h"
 
-namespace std {
-    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs) {
-        lhs.swap(rhs);
-    }
-} // std
-
 namespace FlatScene {
 
     Spriteset::Spriteset(std::string c, unsigned char mode) 
