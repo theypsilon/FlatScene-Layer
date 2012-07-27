@@ -36,9 +36,9 @@ namespace FlatScene {
         const Areas&        getAllAreas () const;
         const RectArea&     getArea(IndexArea index) const;
         const Point&        getCenter() const;
-        void                replaceCenter(Point c);
+        void                setCenter(Point c);
         IndexArea           addArea(RectArea area);
-        void                replaceArea(IndexArea n,RectArea area);
+        void                setArea(IndexArea n,RectArea area);
         int                 size() const;
         SpriteOpaque        isOpaque();
 

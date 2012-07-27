@@ -12,7 +12,9 @@ Sprite::Sprite()
 
 Sprite::Sprite ( Canvas&& pSurface, Point zerocpSource) 
     : Canvas(std::move(pSurface))
-{}
+{
+    setCenter(zerocpSource);
+}
 
 Sprite::Sprite(Sprite&& spt) 
     : Canvas(std::move(spt))
@@ -65,11 +67,11 @@ const Point& Sprite::getCenter() const {
     return getRes().cpoint;
 }
 
-void Sprite::replaceCenter(Point c) {
+void Sprite::setCenter(Point c) {
     getRes().cpoint = c;
 }
 
-void Sprite::replaceArea(IndexArea index,RectArea area) {
+void Sprite::setArea(IndexArea index,RectArea area) {
     auto old = const_cast<std::remove_const<decltype(this->getArea(index))>::type>(this->getArea(index));
     std::swap(old,area);
 }
