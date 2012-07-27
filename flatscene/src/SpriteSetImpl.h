@@ -107,19 +107,9 @@ struct Spriteset::SpritesetImpl {
 
     }
 
-    void loadAllSprites(DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
-        unsigned int columns = chipset.w / grd.cellwidth;
-        if (columns <= 0 || chipset.w % grd.cellwidth != 0)
-            throw Exception("the grd doesn't fit with the chipset",__LINE__);
-
-        if (grd.simple) {
-            DataGRD::Sprite spt;
-            spt.dim.set( grd.cellwidth, grd.cellheight );
-            spt.cp.set(0,0);
-
-            for (decltype(grd.num_img) i = 0; i < grd.num_img ; i++)
-                grd.images.push_back(spt);
-        }
+    void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
+        if (chipset.w / grd.cellwidth <= 0 || chipset.w % grd.cellwidth != 0)
+            throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
         SDL_Rect src = {0,0,0,0};
         for (const auto& img : grd.images) {

@@ -33,7 +33,15 @@ namespace FlatScene {
         std::map<int,bool>  ga_isRel;
 
         DataGRD(const SDL_Surface& chipset)
-        	: sp_scale(1.0), num_img(1), simple(true), cellwidth(chipset.w), cellheight(chipset.h) {}
+        	: sp_scale(1.0), num_img(1), simple(true), cellwidth(chipset.w), cellheight(chipset.h) {
+
+            DataGRD::Sprite spt;
+            spt.dim.set( cellwidth, cellheight );
+            spt.cp.set(0,0);
+
+            for (decltype(num_img) i = 0; i < num_img ; i++)
+                images.push_back(std::move(spt));
+        }
 
     	DataGRD(const std::string& grd_str) {
 	        TiXmlDocument doc = getLoadedDocument(grd_str);
