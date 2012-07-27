@@ -2,23 +2,57 @@
 #define FS_RESOURCE_HANDLER__
 
 #include <memory>
+#include <type_traits>
 
 namespace FlatScene {
 
 	template <typename Resource>
-	class ResourceHandler {
+	struct DefaultMemoryPolicy {
+		typedef std::unique_ptr<Resource> Holder;
+		static bool isSame(Holder lhs, Holder rhs) {
+			return false;
+		}
+
+		static Holder clone(const Holder& res) {
+			return new Resource(*res);
+		}
+
+		static void destroy(Holder& res) {
+			res.reset(nullptr);
+		}
+	};
+
+	template <
+		typename Resource, 
+		typename MemoryPolicy = DefaultMemoryPolicy<Resource>
+	> class ResourceHandler {
 	public:
+		// ResourceHandler(const ResourceHandler& handler) 
+		// 	: _res(new Resource(*handler._res))
+		// {}
 		ResourceHandler(const ResourceHandler& handler) 
-			: _res(new Resource(*handler._res))
+			: _res(MemoryPolicy::clone(handler._res))
 		{}
 
 		ResourceHandler(ResourceHandler&& handler)
 			: _res(std::move(handler._res))
 		{}
 
+		~ResourceHandler() {
+			MemoryPolicy::destroy(_res);
+		}
+
+		// ResourceHandler& operator=(const ResourceHandler& rhs) {
+		// 	if (this != &rhs && &getRes() != &rhs.getRes())
+		// 		this->_res.reset(new ResourceHandler(*rhs._res));
+		// 	return *this;
+		// }
+
 		ResourceHandler& operator=(const ResourceHandler& rhs) {
-			if (this != &rhs)
-				this->_res.reset(new ResourceHandler(*rhs._res));
+			if (this != &rhs && !MemoryPolicy::isSame(_res,rhs._res)) {
+				MemoryPolicy::destroy(_res);
+				_res = MemoryPolicy::clone(rhs._res);
+			}
 			return *this;
 		}
 
@@ -40,7 +74,7 @@ namespace FlatScene {
             return static_cast<ReturnResource&>(*_res);
         }
 	private:
-		std::unique_ptr<Resource> _res;
+		typename MemoryPolicy::Holder _res;
 	};
 
 } // FlatScene

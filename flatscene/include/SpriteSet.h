@@ -2,28 +2,28 @@
 #define FS__SPRITESET_H__
 
 #include "Sprite.h"
-#include <memory>
+#include "ResourceHandler.h"
 
 namespace FlatScene {
 
     class SpritesetResource;
 
-    class Spriteset {
+    struct SpritesetMemoryPolicy {
+        typedef SpritesetResource* Holder;
+
+        static bool isSame(Holder lhs, Holder rhs);
+        static Holder clone(Holder res);
+        static void destroy(Holder res);
+    };
+
+    class Spriteset : public ResourceHandler<SpritesetResource,SpritesetMemoryPolicy> {
     public:
         Spriteset(
             std::string     c    = "",
             unsigned char   mode = ONLY_TEXTURE
         );
-        Spriteset(const Spriteset& rhs);
-        Spriteset(Spriteset&& rhs);
-
-        ~Spriteset();
-
-        Spriteset& operator=(const Spriteset& rhs);
-        Spriteset& operator=(Spriteset&& rhs);
         
-        void                    swap(Spriteset& rhs);
-        bool                    isNull () const { return nullptr == _impl; };
+        bool                    isNull () const { return nullptr == &getRes(); };
         // Following methods yield Undefined Behavior when IsNull returns true, aka the object has been moved
 
         const Sprite*           get    ( unsigned int n ) const;
@@ -32,18 +32,11 @@ namespace FlatScene {
         unsigned char           getMode() const;
 
     private :
-        SpritesetResource*          _impl;
-        friend void             doTheRemove(SpritesetResource* impl);
-
         friend class Screen;
         friend class Images;
         friend class ImagesPrivate;
     };
 
 } // flatscene
-
-namespace std {
-    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs);
-} // std
 
 #endif // FS__SPRITESET_H__
