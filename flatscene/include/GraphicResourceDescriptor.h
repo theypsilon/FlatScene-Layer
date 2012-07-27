@@ -37,12 +37,8 @@ namespace FlatScene {
         DataGRD(const SDL_Surface& chipset)
         : sp_scale(1.0), num_img(1), simple(true), cellwidth(chipset.w), cellheight(chipset.h) {
 
-        	// TODO Activate this here
-            // for (decltype(num_img) i = 0; i < num_img ; i++)
-            //     images.push_back(DataGRD::Sprite(
-            //         DataGRD::DimPoint(cellwidth, cellheight),
-            //         DataGRD::CPoint  (0,0)
-            //     ));
+        	processSimpleSpriteValues();
+        	assert(("DataGRD construction by chipset must be wrong", areConsistentValues()));
         }
 
     	DataGRD(const std::string& grd_str) {
@@ -57,12 +53,14 @@ namespace FlatScene {
 	        }
 
 	        processHeadElement(*input.Element());
-	        if (!simple) {
+	        if (simple) {
+	            processSimpleSpriteValues();
+	        } else {
 		        processGlobalValues(input);
 		        processSpriteValues(input);
-
-		        ensureConsistentValues();
 	    	}
+
+	    	assert(("DataGRD construction by file must be wrong", areConsistentValues()));
     	}
 
 	    TiXmlDocument getLoadedDocument(const std::string& str) {
@@ -141,6 +139,14 @@ namespace FlatScene {
 	        );
 	    }
 
+	    void processSimpleSpriteValues() {
+			for (decltype(num_img) i = 0; i < num_img ; i++)
+                images.push_back(DataGRD::Sprite(
+                    DataGRD::DimPoint(cellwidth, cellheight),
+                    DataGRD::CPoint  (0,0)
+                ));
+	    }
+
 	    void processSpriteValues(const TiXmlHandle& doc) {
 	        for (auto pImg = doc.FirstChildElement("img").ToElement(); 
 	            pImg ; pImg = pImg->NextSiblingElement()) {
@@ -170,15 +176,15 @@ namespace FlatScene {
 	        }
 	    }
 	        
-	    void ensureConsistentValues() {
-	        if (simple) return;
-
+	    bool areConsistentValues() {
 	        if (num_img != images.size())
-	            throw Exception("image count doesn't match in grd file",__LINE__);
+	            return false;
 
 	        for (auto& img : images) for (auto& ar : img.areas) for (auto& rc : ar.second)
 	            if (rc.x < 0 || rc.y < 0 || rc.w > (decltype(rc.w))img.dim.x || rc.h > (decltype(rc.h))img.dim.y)
-	                throw Exception("areas not defined within the sprite domain",__LINE__);
+	                return false;
+
+	        return true;
 	    }
     };
 

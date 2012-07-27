@@ -114,13 +114,6 @@ private:
         if (chipset.w / grd.cellwidth <= 0 || chipset.w % grd.cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
-        if (grd.simple)
-            for (decltype(grd.num_img) i = 0; i < grd.num_img ; i++)
-                grd.images.push_back(DataGRD::Sprite(
-                    DataGRD::DimPoint(grd.cellwidth, grd.cellheight),
-                    DataGRD::CPoint  (0,0)
-                ));
-
         SDL_Rect src = {0,0,0,0};
         for (const auto& img : grd.images) {
 
