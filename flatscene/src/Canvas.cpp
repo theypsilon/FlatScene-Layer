@@ -15,7 +15,7 @@ Canvas::Canvas( Canvas&& pSurface )
 
 Canvas::~Canvas() {}
 
-Uint32 Canvas::getPixel ( int x , int y ) const {
+unsigned int Canvas::getPixel ( int x , int y ) const {
     SDL_Surface* sdl_surf = _impl->sdl_surf;
     if (sdl_surf && sdl_surf->w > x && sdl_surf->h > y) {
         Uint32 color = 0 ;
@@ -32,7 +32,7 @@ int Canvas::getWidth  () const { return _impl->w2; }
 int Canvas::getHeight () const { return _impl->h2; }
 
 template <typename PointType, typename GraphicMaterial>
-inline void putCanvas ( const PointType& ptDst, Uint8 flags, 
+inline void putCanvas ( const PointType& ptDst, unsigned char flags, 
                         const Canvas::CanvasImpl& impl, GraphicMaterial& gm ) {
 
     Screen::I().pushMatrix();
@@ -55,11 +55,11 @@ inline void putCanvas ( const PointType& ptDst, Uint8 flags,
     Screen::I().popMatrix();
 }
 
-void Canvas::put ( const FloatPoint& ptDst, Uint8 flags) const {
+void Canvas::put ( const FloatPoint& ptDst, unsigned char flags) const {
     putCanvas( ptDst, flags, *_impl, Screen::I()._impl->graphicMaterial );
 }
 
-void Canvas::put ( const Point& ptDst, Uint8 flags) const {
+void Canvas::put ( const Point& ptDst, unsigned char flags) const {
     putCanvas( ptDst, flags, *_impl, Screen::I()._impl->graphicMaterial );
 }
 
@@ -70,7 +70,7 @@ SDL_Surface* Canvas::scaleSurface( SDL_Surface* s_surf, int factor) {
     if (s_surf == NULL || factor <= 1)
         return ret;
 
-    Uint8 bpp = s_surf->format->BytesPerPixel;
+    unsigned char bpp = s_surf->format->BytesPerPixel;
 
     if (bpp == 4) // 32 bits
         ret = SDL_CreateRGBSurface(s_surf->flags, s_surf->w * factor, s_surf->h * factor, bpp*8,

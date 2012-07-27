@@ -40,16 +40,17 @@ namespace FlatScene {
     public:
         Canvas( Canvas&& pSurface ) ;
 
-        template <class T> static T createCanvas(SDL_Surface* surface, Uint8 mode=ONLY_TEXTURE, GraphicFilter filter=NEAREST);
+        template <typename T> 
+        static T createCanvas(SDL_Surface* surface, unsigned char mode=ONLY_TEXTURE, GraphicFilter filter=NEAREST);
         // Funciona s�lo si hay SDL_Surface
-        Uint32 getPixel ( int x , int y ) const;
+        unsigned int getPixel ( int x , int y ) const;
 
         int getWidth ( ) const;
         int getHeight ( ) const;
 
         //render image
-        void put ( const Point& ptDst , Uint8 flags=0) const;
-        void put ( const FloatPoint& ptDst , Uint8 flags=0) const;
+        void put ( const Point& ptDst , unsigned char flags=0) const;
+        void put ( const FloatPoint& ptDst , unsigned char flags=0) const;
 
         void rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
         void translate(Float x, Float y, Float z) const;
