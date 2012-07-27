@@ -14,6 +14,11 @@ namespace FlatScene {
         return ImagesPrivate::I().add(res->getName(),res->getMode());
     }
 
+    void SpritesetMemoryPolicy::reset(SpritesetMemoryPolicy::Holder& res,SpritesetMemoryPolicy::Holder newval) {
+    	destroy(res);
+    	res = newval;
+    }
+
     void SpritesetMemoryPolicy::destroy(SpritesetMemoryPolicy::Holder res) {
         ImagesPrivate::I().remove(res);
     }

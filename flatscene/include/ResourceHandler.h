@@ -20,12 +20,14 @@ namespace FlatScene {
 		static void destroy(Holder& res) {
 			res.reset(nullptr);
 		}
+
+		static void reset(Holder& res,const Holder& newval) {
+			res.reset(new Resource(*newval));
+		}
 	};
 
-	template <
-		typename Resource, 
-		typename MemoryPolicy = DefaultMemoryPolicy<Resource>
-	> class ResourceHandler {
+	template < typename Resource, typename MemoryPolicy = DefaultMemoryPolicy<Resource>	> 
+	class ResourceHandler {
 	public:
 		// ResourceHandler(const ResourceHandler& handler) 
 		// 	: _res(new Resource(*handler._res))
@@ -49,10 +51,8 @@ namespace FlatScene {
 		// }
 
 		ResourceHandler& operator=(const ResourceHandler& rhs) {
-			if (this != &rhs && !MemoryPolicy::isSame(_res,rhs._res)) {
-				MemoryPolicy::destroy(_res);
-				_res = MemoryPolicy::clone(rhs._res);
-			}
+			if (this != &rhs && !MemoryPolicy::isSame(_res,rhs._res))
+				MemoryPolicy::reset(_res);
 			return *this;
 		}
 
