@@ -6,7 +6,7 @@
 
 namespace FlatScene {
 
-    struct Sprite::SpriteImpl {};
+    struct SpriteResource {};
 
 } // flatscene
 #endif

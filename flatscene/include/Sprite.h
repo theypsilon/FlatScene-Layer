@@ -15,25 +15,13 @@ namespace FlatScene {
         SPRITE_OPAQUE_TRANSFORMED
     };
 
+    class SpriteResource;
+
     //CSprite--abstracts Image+Control Point.
     class Sprite : public Canvas {
         typedef std::vector<Rectangle> RectArea;
         typedef int IndexArea;
         typedef std::map<IndexArea,RectArea> Areas;
-    private:
-
-        Sprite ( const Sprite& ); //undefined
-        //Nombre
-        std::string name;
-        //Lista de Control points
-        Point cpoint;
-        Areas areas;
-
-        friend class Spriteset;
-        friend class Screen;
-
-        SpriteOpaque opaque;
-
     public:
         //lo crea de una imagen fuente, a�adi�ndole el punto de control 0 si existe.
 
@@ -67,9 +55,22 @@ namespace FlatScene {
 
         //renderiza el gr�fico.
         void put ( Point ptDst , Uint8 flags=0) const;
+
     private:
-        struct SpriteImpl;
-        std::unique_ptr<SpriteImpl> _impl;
+
+        Sprite ( const Sprite& ); //undefined
+        //Nombre
+        std::string name;
+        //Lista de Control points
+        Point cpoint;
+        Areas areas;
+
+        friend class Spriteset;
+        friend class Screen;
+
+        SpriteOpaque opaque;
+
+        std::unique_ptr<SpriteResource> _res;
     };
 
 } // flatscene
