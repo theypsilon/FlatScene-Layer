@@ -9,6 +9,10 @@ Canvas::Canvas()
     : _res(new CanvasResource)
 {}
 
+Canvas::Canvas(CanvasResource* res) 
+    : _res(res)
+{}
+
 Canvas::Canvas( Canvas&& pSurface ) 
     : _res(std::move(pSurface._res))
 {}
