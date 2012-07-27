@@ -18,10 +18,11 @@ namespace FlatScene {
         LINEAR
     };
 
+    class CanvasResource;
+
     class Canvas {
     private:
-        struct CanvasImpl;
-        std::unique_ptr<CanvasImpl> _impl;
+        std::unique_ptr<CanvasResource> _impl;
 
         Canvas ( const Canvas& ); //undefined
         Canvas() ;

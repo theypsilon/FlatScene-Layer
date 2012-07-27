@@ -22,7 +22,7 @@ namespace FlatScene {
         if (pow2(mode) != mode)
             throw Exception("CCanvas::LoadIMG -> modo erroneo.",__LINE__);
 
-        CanvasImpl& pSurface = * static_cast<Canvas&>(newCanvas)._impl;
+        CanvasResource& pSurface = * static_cast<Canvas&>(newCanvas)._impl;
 
         SDL_Surface* image;
         SDL_Rect area;

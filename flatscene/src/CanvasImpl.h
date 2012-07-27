@@ -5,7 +5,8 @@
 
 namespace FlatScene {
 
-    struct Canvas::CanvasImpl {
+    class CanvasResource {
+    public:
 
         GLuint tex;
         Uint32 w, h;                /* Read-only */
@@ -21,7 +22,7 @@ namespace FlatScene {
         mutable std::list<std::function<void(void)>> initCallbackList;
         mutable std::list<std::function<void(void)>> endCallbackList;
 
-        ~CanvasImpl() {
+        ~CanvasResource() {
             if (sdl_surf)
                 SDL_FreeSurface(sdl_surf);
 

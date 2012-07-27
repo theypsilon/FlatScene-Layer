@@ -6,7 +6,7 @@
 namespace FlatScene {
 
 Canvas::Canvas() 
-    : _impl(new CanvasImpl)
+    : _impl(new CanvasResource)
 {}
 
 Canvas::Canvas( Canvas&& pSurface ) 
@@ -33,7 +33,7 @@ int Canvas::getHeight () const { return _impl->h2; }
 
 template <typename PointType, typename GraphicMaterial>
 inline void putCanvas ( const PointType& ptDst, unsigned char flags, 
-                        const Canvas::CanvasImpl& impl, GraphicMaterial& gm ) {
+                        const CanvasResource& impl, GraphicMaterial& gm ) {
 
     Screen::I().pushMatrix();
     Screen::I().translate(ptDst.x,ptDst.y,0);
