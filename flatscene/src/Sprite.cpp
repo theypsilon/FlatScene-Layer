@@ -16,12 +16,6 @@ Sprite::Sprite ( Canvas&& pSurface, Point zerocpSource)
     setCenter(zerocpSource);
 }
 
-Sprite::Sprite(Sprite&& spt) 
-    : Canvas(std::move(spt))
-{}
-
-Sprite::~Sprite() {}
-
 void Sprite::put (Point ptDst, unsigned char flags) const {
     if (flags & 0x001) {
         ptDst.y -= getRes().cpoint.y;

@@ -28,9 +28,6 @@ namespace FlatScene {
         Sprite ();
         Sprite ( Canvas&& pSurface, Point zerocpSource = Point(0,0)) ;
 
-        Sprite (Sprite&& sprite);
-        ~Sprite();
-
         void                setName(const std::string& newName);
         const std::string&  getName() const;
         const Areas&        getAllAreas () const;
@@ -45,9 +42,6 @@ namespace FlatScene {
         void                put (Point ptDst, unsigned char flags=0) const;
 
     private:
-
-        Sprite (const Sprite&); //undefined
-
         friend class Spriteset;
         friend class Screen;
 

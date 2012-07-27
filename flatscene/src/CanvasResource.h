@@ -22,7 +22,7 @@ namespace FlatScene {
         mutable std::list<std::function<void(void)>> initCallbackList;
         mutable std::list<std::function<void(void)>> endCallbackList;
 
-        ~CanvasResource() {
+        virtual ~CanvasResource() {
             if (sdl_surf)
                 SDL_FreeSurface(sdl_surf);
 

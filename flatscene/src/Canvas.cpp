@@ -6,18 +6,12 @@
 namespace FlatScene {
 
 Canvas::Canvas() 
-    : _res(new CanvasResource)
+    : ResourceHandler(new CanvasResource)
 {}
 
 Canvas::Canvas(CanvasResource* res) 
-    : _res(res)
+    : ResourceHandler(res)
 {}
-
-Canvas::Canvas( Canvas&& pSurface ) 
-    : _res(std::move(pSurface._res))
-{}
-
-Canvas::~Canvas() {}
 
 unsigned int Canvas::getPixel ( int x , int y ) const {
     SDL_Surface* sdl_surf = getRes().sdl_surf;
@@ -60,11 +54,11 @@ inline void putCanvas ( const PointType& ptDst, unsigned char flags,
 }
 
 void Canvas::put ( const FloatPoint& ptDst, unsigned char flags) const {
-    putCanvas( ptDst, flags, *_res, Screen::I()._impl->graphicMaterial );
+    putCanvas( ptDst, flags, getRes(), Screen::I()._impl->graphicMaterial );
 }
 
 void Canvas::put ( const Point& ptDst, unsigned char flags) const {
-    putCanvas( ptDst, flags, *_res, Screen::I()._impl->graphicMaterial );
+    putCanvas( ptDst, flags, getRes(), Screen::I()._impl->graphicMaterial );
 }
 
 SDL_Surface* Canvas::scaleSurface( SDL_Surface* s_surf, int factor) {

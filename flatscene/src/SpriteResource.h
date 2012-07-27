@@ -13,6 +13,8 @@ namespace FlatScene {
         Point   		cpoint;
         Sprite::Areas   areas;
         SpriteOpaque    opaque;
+
+        virtual ~SpriteResource() {}
     };
 
 } // flatscene

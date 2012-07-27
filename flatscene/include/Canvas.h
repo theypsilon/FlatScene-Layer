@@ -9,7 +9,7 @@
 #include <functional>
 #include <map>
 
-#include "Pimpl.h"
+#include "ResourceHandler.h"
 
 namespace FlatScene {
 
@@ -20,11 +20,8 @@ namespace FlatScene {
 
     class CanvasResource;
 
-    class Canvas {
+    class Canvas : public ResourceHandler<CanvasResource> {
     public:
-
-        Canvas(Canvas&& pSurface);
-        ~Canvas() ;
 
         template <typename T> 
         static T createCanvas(SDL_Surface* surface, unsigned char mode=ONLY_TEXTURE, GraphicFilter filter=NEAREST);
@@ -46,14 +43,7 @@ namespace FlatScene {
 
     protected:
         Canvas(CanvasResource* res);
-
-        template <typename Resource = CanvasResource> inline Resource& getRes() const {
-            return static_cast<Resource&>(*_res);
-        }
     private:
-        std::unique_ptr<CanvasResource> _res;
-
-        Canvas ( const Canvas& ); //undefined
         Canvas() ;
 
         friend class FSTextBox;
