@@ -122,7 +122,7 @@ struct Spriteset::SpritesetImpl {
         }
 
         SDL_Rect src = {0,0,0,0};
-        for (auto& img : grd.images) {
+        for (const auto& img : grd.images) {
 
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
