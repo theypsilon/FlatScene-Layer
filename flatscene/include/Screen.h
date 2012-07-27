@@ -72,6 +72,8 @@ namespace FlatScene {
         friend class Sprite;
         friend class Canvas;
 
+        friend struct SRenderLocation;
+
         friend class Images;
         friend class Writer;
         friend class FSTextBox;

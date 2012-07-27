@@ -79,7 +79,7 @@ SpriteOpaque Sprite::isOpaque() {
             for (int y = 0; y < getHeight() && opaque == SPRITE_OPAQUE; y++ )
                 if ((getPixel(x,y) & 0xFF000000) != 0xFF000000)
                     opaque = SPRITE_TRANSPARENT;
-    } catch(Exception& e) {
+    } catch(Exception&) {
         throw Exception("This sprite doesn't contain accessible pixels for looking up the opacity");
     }
 

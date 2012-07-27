@@ -1,5 +1,6 @@
 #include "ScreenImpl.h"
 #include "Engine.h"
+#include "Renders.h"
 #include "glAdapter.h"
 #include "Exception.h"
 
@@ -151,10 +152,10 @@ int Screen::render() {
 
     _impl->beginRenderMode(RENDER_TEXTURE_STANDARD);
 
-    std::list<ScreenImpl::SRender*>& graphicMaterial = _impl->graphicMaterial;
+    std::list<SRender*>& graphicMaterial = _impl->graphicMaterial;
 
-    for (std::list<ScreenImpl::SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
-        ScreenImpl::SRender* r = *it;
+    for (std::list<SRender*>::iterator it = graphicMaterial.begin(), jt = graphicMaterial.end(); it != jt ; ++it) {
+        SRender* r = *it;
         (*r)();
     }
 
@@ -220,7 +221,7 @@ int Screen::locateRenderScene(Float posx, Float posy, Float width, Float height,
     (width <= 0.0f)?  width  = Screen::I()._impl->m_Width  : 0.0f ;
     (height <= 0.0f)? height = Screen::I()._impl->m_Height : 0.0f ;
 
-    ScreenImpl::SRenderLocation* rr = new ScreenImpl::SRenderLocation;
+    SRenderLocation* rr = new SRenderLocation;
     rr->posx = posx;
     rr->posy = posy;
     rr->width = width;
@@ -239,7 +240,7 @@ int Screen::locateRenderScene(Float posx, Float posy, Float width, Float height,
 
 int Screen::rotate(Float angle, Float x, Float y, Float z) {
 
-    ScreenImpl::SRenderRotation* rr = new ScreenImpl::SRenderRotation;
+    SRenderRotation* rr = new SRenderRotation;
     rr->angle = angle;
     rr->x = x;
     rr->y = y;
@@ -256,7 +257,7 @@ int Screen::rotate(Float angle, Float x, Float y, Float z) {
 
 int Screen::translate(Float x, Float y, Float z) {
 
-    ScreenImpl::SRenderTranslation* rr = new ScreenImpl::SRenderTranslation;
+    SRenderTranslation* rr = new SRenderTranslation;
     rr->x = x;
     rr->y = y;
     rr->z = z;
@@ -272,7 +273,7 @@ int Screen::translate(Float x, Float y, Float z) {
 
 int Screen::scale(Float x, Float y, Float z) {
     
-    ScreenImpl::SRenderScalation* rr = new ScreenImpl::SRenderScalation;
+    SRenderScalation* rr = new SRenderScalation;
     rr->x = x;
     rr->y = y;
     rr->z = z;
@@ -288,7 +289,7 @@ int Screen::scale(Float x, Float y, Float z) {
 
 int Screen::color(Float red, Float green, Float blue, Float alpha) {
 
-    ScreenImpl::SRenderColor* rr = new ScreenImpl::SRenderColor;
+    SRenderColor* rr = new SRenderColor;
 
     _impl->red = rr->red = red;
     _impl->green = rr->green = green;
@@ -323,9 +324,9 @@ int Screen::projectionMode(TypeRendeProjection trp, Float zMax) {
 }
 
 int Screen::pushMatrix() {
-    static ScreenImpl::SRenderPushMatrix rr;
+    static SRenderPushMatrix rr;
 #ifdef MAINRENDERLOOP
-    _impl->graphicMaterial.push_back(static_cast<ScreenImpl::SRender*>(&rr));
+    _impl->graphicMaterial.push_back(static_cast<SRender*>(&rr));
 #else
     rr();
 #endif
@@ -335,9 +336,9 @@ int Screen::pushMatrix() {
 }
 
 int Screen::popMatrix() {
-    static ScreenImpl::SRenderPopMatrix rr;
+    static SRenderPopMatrix rr;
 #ifdef MAINRENDERLOOP
-    _impl->graphicMaterial.push_back(static_cast<ScreenImpl::SRender*>(&rr));
+    _impl->graphicMaterial.push_back(static_cast<SRender*>(&rr));
 #else
     rr();
 #endif
@@ -468,130 +469,5 @@ int Screen::setDoublebuffer(bool doublebuff) {
 #ifdef GLOBAL_SINGLETON_REFERENCES
 Screen& FSDraw = Screen::I();
 #endif
-
-void Screen::ScreenImpl::SRenderLocation::operator()() {
-    //glViewport(posx*m_ScaleX,posy*m_ScaleY,width*m_ScaleX,height*m_ScaleY);
-    glViewport((int)posx,(int)posy,(int)width,(int)height);
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-
-    static const TypeRendeProjection& trp = Screen::I()._impl->trp;
-
-    if (trp == TRP_ORTHO) {
-
-        //Opción ortogonal
-        //glOrtho( 0.0, (double)width*m_ScaleX, (double)height*m_ScaleY, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
-
-        glOrtho( 0.0, (double)width, (double)height, 0.0, 0.0, 1.0 ); //Los 2 últimos valores son la profundidad, sustituir por -100.0 y 100.0 para darle algo.
-
-    } else {
-
-        static const Float& m_maxZ = Screen::I()._impl->m_maxZ;
-
-        //Opción de perspectiva 1
-        gluPerspective(90.0f,width/height,1.0,m_maxZ);
-        glTranslate(-width/2,height/2,-240.0);
-        glRotate(180.0,1.0,0.0,0.0);
-
-        //Opción de perspectiva 2
-        //gluPerspective(60.0f,width/height,1.0,400.0);
-        //glTranslatef(0.0,0.0,-205.0);
-        //glTranslatef(0.0,0.0,101.0);
-        //glRotatef(180.0,1.0,0.0,0.0);
-        //glTranslatef(-width/2.0,-height/2.0,0.0);
-
-        //Opción de perspectiva 3
-        //gluPerspective(45.0f,width/height,1.0,400.0);
-        //glTranslatef(0.0,0.0,-290.0);
-        //glRotatef(180.0,1.0,0.0,0.0);
-        //glTranslatef(-width/2.0,-height/2.0,0.0);
-
-        //glRotatef(-45.0,1.0,0.0,0.0); //Ejemplo de rotación del plano en perspectiva
-        //glTranslatef(0.0,-100.0,120.0);
-    }
-    delete this;
-}
-
-void Screen::ScreenImpl::SRenderTranslation::operator()() {
-    glTranslate(x,y,z);
-    delete this;
-}
-
-void Screen::ScreenImpl::SRenderScalation::operator()() {
-    glScale(x,y,z);
-    delete this;
-}
-
-void Screen::ScreenImpl::SRenderRotation::operator()() {
-    glRotate(angle,x,y,z);
-    delete this;
-}
-
-void Screen::ScreenImpl::SRenderColor::operator()() {
-    glColor4(red,green,blue,alpha);
-    delete this;
-}
-
-void Screen::ScreenImpl::SRenderPushMatrix::operator()() {
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-}
-
-void Screen::ScreenImpl::SRenderPopMatrix::operator()() {
-    glPopMatrix();
-}
-
-void Screen::ScreenImpl::SRenderCanvas::operator()() {
-    glBindTexture(GL_TEXTURE_2D, tex);
-
-    glBegin(GL_QUADS);
-    switch(flags) {
-        case 0:
-            glTexCoord2(0.0f, relH);
-            glVertex2(0, h2);
-            glTexCoord2(relW, relH);
-            glVertex2(w2, h2);
-            glTexCoord2(relW, 0.0f);
-            glVertex2(w2, 0);
-            glTexCoord2(0.0f, 0.0f);
-            glVertex2(0,0);
-            break;
-        case 1:
-            glTexCoord2(relW, relH);
-            glVertex2(0, h2);
-            glTexCoord2(0.0f, relH);
-            glVertex2(w2, h2);
-            glTexCoord2(0.0f, 0.0f);
-            glVertex2(w2, 0);
-            glTexCoord2(relW, 0.0f);
-            glVertex2(0,0);
-            break;
-        case 2:
-            glTexCoord2(0.0f, 0.0f);
-            glVertex2(0, h2);
-            glTexCoord2(relW, 0.0f);
-            glVertex2(w2, h2);
-            glTexCoord2(relW, relH);
-            glVertex2(w2, 0);
-            glTexCoord2(0.0f, relH);
-            glVertex2(0,0);
-            break;
-        case 3:
-            glTexCoord2(relW, 0.0f);
-            glVertex2(0, h2);
-            glTexCoord2(0.0f, 0.0f);
-            glVertex2(w2, h2);
-            glTexCoord2(0.0f, relH);
-            glVertex2(w2, 0);
-            glTexCoord2(relW, relH);
-            glVertex2(0,0);
-            break;
-        default:
-            break;
-    }
-    glEnd();
-
-    delete this;
-}
 
 } // flatscene

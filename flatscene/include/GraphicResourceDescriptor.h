@@ -191,7 +191,7 @@ namespace FlatScene {
     inline DataGRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset) {
         try {
             return DataGRD(grd_str);
-        } catch(DocIsNotLoadedException& e) {
+        } catch(DocIsNotLoadedException&) {
             if (!chipset) 
                 throw Exception("grd file invalid and bitmap invalid",__LINE__);
 

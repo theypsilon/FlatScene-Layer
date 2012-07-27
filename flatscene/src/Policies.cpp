@@ -1,6 +1,3 @@
-#ifndef FS_SPRITESET_POLICIES
-#define FS_SPRITESET_POLICIES
-
 #include "SpriteSetResource.h"
 #include "ImagesPrivate.h"
 
@@ -15,8 +12,8 @@ namespace FlatScene {
     }
 
     void SpritesetMemoryPolicy::reset(SpritesetMemoryPolicy::Holder& res,SpritesetMemoryPolicy::Holder newval) {
-    	destroy(res);
-    	res = newval;
+        destroy(res);
+        res = newval;
     }
 
     void SpritesetMemoryPolicy::destroy(SpritesetMemoryPolicy::Holder res) {
@@ -28,5 +25,3 @@ namespace FlatScene {
     {}
 
 } // FlatScene
-
-#endif // FS_SPRITESET_POLICIES

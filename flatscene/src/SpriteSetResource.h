@@ -84,7 +84,7 @@ private:
     }
 
     bool isValidBitmapExtension(const std::string& bitmap) {
-        auto extensions = { ".png", ".bmp", ".jpg" };
+        const char* extensions[] = { ".png", ".bmp", ".jpg" };
         return binary_search(extensions,bitmap);
     }
 

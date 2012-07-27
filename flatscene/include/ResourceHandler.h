@@ -13,7 +13,7 @@ namespace FlatScene {
 			return false;
 		}
 
-		static Holder clone(const Holder& res) {
+		static Resource* clone(const Holder& res) {
 			return new Resource(*res);
 		}
 
@@ -70,8 +70,12 @@ namespace FlatScene {
 	protected:
 		ResourceHandler(Resource* res) : _res(res) {}
 
-        template <typename ReturnResource = Resource> inline ReturnResource& getRes() const {
+        template <typename ReturnResource> inline ReturnResource& getRes() const {
             return static_cast<ReturnResource&>(*_res);
+        }
+
+        inline Resource& getRes() const {
+            return static_cast<Resource&>(*_res);
         }
 	private:
 		typename MemoryPolicy::Holder _res;

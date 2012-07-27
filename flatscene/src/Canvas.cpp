@@ -1,5 +1,6 @@
 #include "CanvasResource.h"
 #include "ScreenImpl.h"
+#include "Renders.h"
 #include "Exception.h"
 #include "Algorithm.h"
 
@@ -18,7 +19,7 @@ unsigned int Canvas::getPixel(unsigned int x, unsigned int y) const {
     if (!sdl_surf)
         throw Exception("Pixel data is not accesible for this configuration.");
 
-    if (x > sdl_surf->w || y > sdl_surf->h)
+    if ((int) x > sdl_surf->w || (int) y > sdl_surf->h)
         throw Exception("Wrong coordinates for getting a pixel from this surface.");
 
     unsigned int color = 0;
@@ -45,7 +46,7 @@ inline void putCanvas ( const PointType& ptDst, unsigned char flags,
     impl.initCallbackList.clear();
 
     gm.push_back(
-        new Screen::ScreenImpl::SRenderCanvas(impl,flags)
+        new SRenderCanvas(impl,flags)
     );
 
     // USER DEFINED EFFECTS OUT
