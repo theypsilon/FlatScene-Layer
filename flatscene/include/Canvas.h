@@ -51,11 +51,11 @@ namespace FlatScene {
         void put ( const Point& ptDst , Uint8 flags=0) const;
         void put ( const FloatPoint& ptDst , Uint8 flags=0) const;
 
-        int rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
-        int translate(Float x, Float y, Float z) const;
-        int scale(Float x, Float y, Float z) const;
-        int color(Float red, Float green, Float blue, Float alpha) const;
-        int color(Color* col,Float alpha=1.0) const;
+        void rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0) const;
+        void translate(Float x, Float y, Float z) const;
+        void scale(Float x, Float y, Float z) const;
+        void color(Float red, Float green, Float blue, Float alpha) const;
+        void color(const Color& col,Float alpha=1.0) const;
     };
 
 } // flatscene

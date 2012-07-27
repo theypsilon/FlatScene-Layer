@@ -33,38 +33,30 @@ std::string& Universe::getName() {
 int Universe::incActor(Actor* act) {
 
     if (!act) {
-        Library::I().Error("Puntero a CActor nulo");
-        return FRACASO;
+        throw Exception("Puntero a CActor nulo");
     }
 
     Universe* u = act->getUniverse();
 
     if (u) 
         for (ActorCollection::iterator it = u->actorBegin(), jt = u->actorEnd();it!=jt;++it)
-            if (act == *it) {
-                Library::I().Error("Actor actualmente incluido en otro Universe");
-                return FRACASO;
-            }
+            if (act == *it) throw Exception("Actor actualmente incluido en otro Universe");
 
     return EXITO;
 }
 
 int Universe::decActor(Actor* act) {
 
-    if (!act) {
-        Library::I().Error("Puntero a CActor nulo");
-        return FRACASO;
-    }
+    if (!act) throw Exception("Puntero a CActor nulo");
 
     for (ActorCollection::iterator it = actorBegin(), jt = actorEnd();it!=jt;++it) 
         if (act == *it) {
-            act->setUniverse(NULL);
+            act->setUniverse(nullptr);
             actor.erase(it);
             return EXITO;
         }
 
-    Library::I().Error("Actor actualmente no incluido en este Universe");
-    return FRACASO;
+    throw Exception("Actor actualmente no incluido en este Universe");
 }
 
 ActorCollection::iterator Universe::actorBegin() {

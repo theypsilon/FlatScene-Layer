@@ -33,23 +33,6 @@
     <ClCompile Include="src\debugfuncs.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\FSActor.cpp" />
-    <ClCompile Include="src\FSCamera.cpp" />
-    <ClCompile Include="src\FSCanvas.cpp" />
-    <ClCompile Include="src\FSColor.cpp" />
-    <ClCompile Include="src\FSEngine.cpp" />
-    <ClCompile Include="src\FSImages.cpp" />
-    <ClCompile Include="src\FSLibrary.cpp" />
-    <ClCompile Include="src\FSMultiverse.cpp" />
-    <ClCompile Include="src\FSScreen.cpp" />
-    <ClCompile Include="src\FSScreenReload.cpp" />
-    <ClCompile Include="src\FSSprite.cpp" />
-    <ClCompile Include="src\FSSpriteSet.cpp" />
-    <ClCompile Include="src\FSText.cpp" />
-    <ClCompile Include="src\FSTextBox.cpp" />
-    <ClCompile Include="src\FSTime.cpp" />
-    <ClCompile Include="src\FSUniverse.cpp" />
-    <ClCompile Include="src\FSWriter.cpp" />
     <ClCompile Include="src\debugfuncs.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -217,7 +200,6 @@
     <ClCompile Include="src\FSEngine.cpp" />
     <ClCompile Include="src\FSImages.cpp" />
     <ClCompile Include="src\FSLibrary.cpp" />
-    <ClCompile Include="src\FSMessageHandler.cpp" />
     <ClCompile Include="src\FSMultiverse.cpp" />
     <ClCompile Include="src\FSScreen.cpp" />
     <ClCompile Include="src\FSScreenReload.cpp" />
@@ -375,12 +357,6 @@
     <ClCompile Include="src\FSTime.cpp" />
     <ClCompile Include="src\FSUniverse.cpp" />
     <ClCompile Include="src\FSWriter.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="src\tinyxml\tinystr.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -616,6 +592,30 @@
     <ClCompile Include="src\tinyxml\tinyxml.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\debugfuncs.h">
@@ -627,27 +627,6 @@
     <ClInclude Include="include\debugfuncs.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSActor.h" />
-    <ClInclude Include="include\FSCamera.h" />
-    <ClInclude Include="include\FSCanvas.h" />
-    <ClInclude Include="include\FSColor.h" />
-    <ClInclude Include="include\FSCoordinate.h" />
-    <ClInclude Include="include\FSdefinitions.h" />
-    <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSImages.h" />
-    <ClInclude Include="include\FSLibrary.h" />
-    <ClInclude Include="include\FSMessageHandler.h" />
-    <ClInclude Include="include\FSMultiverse.h" />
-    <ClInclude Include="include\FSNoncopyable.h" />
-    <ClInclude Include="include\FSPoint.h" />
-    <ClInclude Include="include\FSRectangle.h" />
-    <ClInclude Include="include\FSScreen.h" />
-    <ClInclude Include="include\FSSingleton.h" />
-    <ClInclude Include="include\FSSprite.h" />
-    <ClInclude Include="include\FSSpriteSet.h" />
-    <ClInclude Include="include\FSTime.h" />
-    <ClInclude Include="include\FSUniverse.h" />
-    <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\debugfuncs.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -807,7 +786,6 @@
     <ClInclude Include="include\FSMessageHandler.h" />
     <ClInclude Include="include\FSMultiverse.h" />
     <ClInclude Include="include\FSNoncopyable.h" />
-    <ClInclude Include="include\FSparserXML.h" />
     <ClInclude Include="include\FSPoint.h" />
     <ClInclude Include="include\FSRectangle.h" />
     <ClInclude Include="include\FSScreen.h" />
@@ -1755,7 +1733,6 @@
     <ClInclude Include="include\FSCoordinate.h" />
     <ClInclude Include="include\FSdefinitions.h" />
     <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSException.h" />
     <ClInclude Include="include\FSImages.h" />
     <ClInclude Include="include\FSLibrary.h" />
     <ClInclude Include="include\FSMessageHandler.h" />
@@ -2391,6 +2368,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include=".\src\ImagesImpl.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,7 +10,7 @@ public:
     IScrollCameraObject (const ObjectCollection& objects,Actor* target,FlatScene::Rectangle* area);
     ~IScrollCameraObject();
 
-    virtual int             refresh();
+    virtual void             refresh();
 private:
     const ObjectCollection& _objects;
 };

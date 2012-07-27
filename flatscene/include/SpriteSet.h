@@ -9,8 +9,8 @@ namespace FlatScene {
     class Spriteset {
     public:
         Spriteset(
-            std::string c    = "",
-            Uint8       mode = ONLY_TEXTURE
+            std::string     c    = "",
+            unsigned char   mode = ONLY_TEXTURE
         );
         Spriteset(const Spriteset& rhs);
         Spriteset(Spriteset&& rhs);
@@ -21,7 +21,7 @@ namespace FlatScene {
         Spriteset& operator=(Spriteset&& rhs);
         
         void                    swap(Spriteset& rhs);
-        bool                    isNull () const; // Only may happen if the object has been moved to another
+        bool                    isNull () const { return nullptr == _impl; };
         // Following methods yield Undefined Behavior when IsNull returns true, aka the object has been moved
 
         const Sprite*           get    ( unsigned int n ) const;

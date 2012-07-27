@@ -26,17 +26,6 @@
 
 namespace FlatScene {
 
-    enum TypeError {
-        TE_standard,
-        TE_fileExists,
-        TE_controlViolation,
-        TE_SDL_NOMSG,
-        TE_SDL_MSG,
-        TE_OPENGL_NOMSG,
-        TE_OPENGL_MSG
-    };
-
-
     class Library : private Util::NonCpmvable, public Util::Singleton<Library> {
         friend class Util::Singleton<Library>;
     public:
@@ -65,16 +54,9 @@ namespace FlatScene {
         void changeEngine();
         void killEngine(Engine* engine);
 
-        void Error (const char*,TypeError e=TE_standard);
-        void Error (std::string,TypeError e=TE_standard);
-        void Error (char*,TypeError e=TE_standard);
-
-        std::string readLastError();
-        std::string popError();
-
     #ifdef DEBUGTEST
 
-        void debug(bool startdebug, const char* warning=NULL);
+        void debug(bool startdebug, const char* warning=nullptr);
         bool inDebug();
 
     #endif

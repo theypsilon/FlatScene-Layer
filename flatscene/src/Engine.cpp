@@ -34,9 +34,7 @@ void Engine::onEvent(const SDL_Event& event) {
 //bucle principal
 void Engine::loop() {
 
-    if (!isInitialized()) {
-        throw Exception("Engine not inicialized", __LINE__);
-    }
+    if (!isInitialized()) throw Exception("Engine not inicialized", __LINE__);
 
     auto self = this;
 
@@ -64,9 +62,7 @@ void Engine::deselect() {
 }
 
 void Engine::drawFrame() {
-    if (!isInitialized()) {
-        throw Exception("Motor not inicialized", __LINE__);
-    }
+    if (!isInitialized()) throw Exception("Motor not inicialized", __LINE__);
 }
 
 

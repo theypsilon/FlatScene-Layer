@@ -17,6 +17,17 @@ namespace FlatScene {
         virtual const char* what() const throw();
     };
 
+    typedef Exception FileDoesntExistException;
+    typedef Exception ExternalLibraryException;
+    typedef Exception SDLException;
+    typedef Exception ControlViolationException;
+
+/* TODO FIXME
+
+    class FileDoesntExistException : public Exception {};
+    class ExternalLibraryException : public Exception {};
+    class SDLExcetion : public ExternalLibraryException {};*/
+
 } // flatscene
 
 #endif

@@ -1,11 +1,13 @@
 #include "Camera.h"
 #include "ScreenImpl.h"
-#include "Library.h"
+#include "Universe.h"
+#include "Exception.h"
+#include "Algorithm.h"
 
 namespace FlatScene {
 
 Camera::Camera(Actor* target, Rectangle* area)
-: uni(NULL), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}
+: uni(nullptr), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}
 
 Camera::~Camera() {
     delete area;
@@ -15,41 +17,19 @@ Universe* Camera::getUniverse() {
     return uni;
 }
 
-int Camera::loadUniverse() {
-
-    if (uni != NULL) {
-        Library::I().Error("Universe already loaded");
-        return FRACASO;
-    }
-
-
-    return EXITO;
+void Camera::loadUniverse() {
+    if (uni != nullptr) throw Exception("Universe already loaded");
 }
 
-int Camera::unloadUniverse() {
-    if (uni == NULL) {
-        Library::I().Error("No Universe in focus");
-        return FRACASO;
-    }
-
+void Camera::unloadUniverse() {
+    if (uni == nullptr) throw Exception("No Universe in focus");
 
     uni->decCameras();
-    uni=NULL;
-
-    return EXITO;
-
-}
-
-int Camera::resyncUniverse() {
-
-    if (unloadUniverse() == EXITO)
-        return loadUniverse();
-    else
-        return FRACASO;
+    uni = nullptr;
 }
 
 bool Camera::isOpened() {
-    return (uni!=NULL);
+    return uni != nullptr;
 }
 
 int& Camera::CX() {
@@ -62,59 +42,45 @@ Actor* Camera::Target() {
     return target;
 }
 
-int Camera::setTarget(Actor* newTarget) {
-    if (newTarget == this->target) {
-        Library::I().Error("Actor objetivo ya establecido");
-        return FRACASO;
-    }
+void Camera::setTarget(Actor* newTarget) {
+    if (newTarget == this->target) throw Exception("Actor objetivo ya establecido");
 
     if (newTarget->getUniverse()!= this->target->getUniverse()) {
         this->target=newTarget;
-        resyncUniverse();
+        resyncUniverse(*this);
     } else {
         this->target=newTarget;
     }
 
-    CX()=CY()=-1000; // Usado para forzar una recalibraci�n de las coordenadas de la c�mara en su primer uso.
-    
-    return EXITO;
+    CX() = CY() = -1000; // Usado para forzar una recalibraci�n de las coordenadas de la c�mara en su primer uso.
+
 }
 
 Rectangle* Camera::getArea() {
     return area;
 }
 
-int Camera::render() {
+void Camera::render() {
 
     rendering = true;
 
-    for (std::list<std::function<void()>>::const_iterator iri = initRenderList.begin(), ire = initRenderList.end();iri!=ire;++iri) {
-        (*iri)();
-    }
-
+    call_to_all(initRenderList);
     initRenderList.clear();
 
-    int ret = refresh();
+    refresh();
 
-    for (std::list<std::function<void()>>::const_iterator eri = endRenderList.begin(), ere = endRenderList.end();eri!=ere;++eri) {
-        (*eri)();
-    }
-
+    call_to_all(endRenderList);
     endRenderList.clear();
 
     rendering = false;
-
-    return ret;
 }
 
-int Camera::refresh() {
-    return EXITO;
-}
+void Camera::refresh() {}
 
-int Camera::locateRenderScene( Rectangle* areaSc, Float zoom ) {
-    return locateRenderScene(areaSc->getX(),areaSc->getY(),areaSc->getW(),areaSc->getH(),zoom);
+void Camera::locateRenderScene( Rectangle* areaSc, Float zoom ) {
+    locateRenderScene(areaSc->getX(),areaSc->getY(),areaSc->getW(),areaSc->getH(),zoom);
 }
-int Camera::locateRenderScene( Float posx, Float posy, Float width, Float height, Float zoom ) {
+void Camera::locateRenderScene( Float posx, Float posy, Float width, Float height, Float zoom ) {
 
     if (width == 0 || height == 0) {
         posx = area->getX();
@@ -139,9 +105,8 @@ int Camera::locateRenderScene( Float posx, Float posy, Float width, Float height
         Screen::I().popMatrix();
     });
 
-    return EXITO;
 }
-int Camera::rotate(Float angle, Float x, Float y, Float z) {
+void Camera::rotate(Float angle, Float x, Float y, Float z) {
 
     if (rendering) {
         Screen::I().pushMatrix();
@@ -159,9 +124,8 @@ int Camera::rotate(Float angle, Float x, Float y, Float z) {
         Screen::I().popMatrix();
     });
 
-    return EXITO;
 }
-int Camera::translate(Float x, Float y, Float z) {
+void Camera::translate(Float x, Float y, Float z) {
 
     if (rendering) {
         Screen::I().pushMatrix();
@@ -179,9 +143,8 @@ int Camera::translate(Float x, Float y, Float z) {
         Screen::I().popMatrix();
     });
 
-    return EXITO;
 }
-int Camera::scale(Float x, Float y, Float z) {
+void Camera::scale(Float x, Float y, Float z) {
 
     if (rendering) {
         Screen::I().pushMatrix();
@@ -199,9 +162,8 @@ int Camera::scale(Float x, Float y, Float z) {
         Screen::I().popMatrix();
     });
 
-    return EXITO;
 }
-int Camera::color(Float red, Float green, Float blue, Float alpha) {
+void Camera::color(Float red, Float green, Float blue, Float alpha) {
 
     if (red > 1.0) red = 1.0;
     if (green > 1.0) green = 1.0;
@@ -225,22 +187,16 @@ int Camera::color(Float red, Float green, Float blue, Float alpha) {
         Screen::I().color(red,green,blue,alpha);
     });
 
-    return EXITO;
 }
-int Camera::color(Color* col, Float alpha) {
-    return color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
+void Camera::color(Color* col, Float alpha) {
+    color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
 }
 
-int Camera::reubicate(Rectangle* nArea) {
-    if (area == nArea) {
-        Library::I().Error("Area ya establecida");
-        return FRACASO;
-    }
+void Camera::reubicate(Rectangle* nArea) {
+    if (area == nArea) throw Exception("Area ya establecida");
 
     delete area;
-    area=nArea;
-
-    return EXITO;
+    area = nArea;
 
 }
 
@@ -250,5 +206,11 @@ int Camera::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
     return MessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
 }
 #endif
+
+
+void resyncUniverse(Camera& cam) {
+    cam.unloadUniverse();
+    cam.loadUniverse();
+}
 
 } // flatscene

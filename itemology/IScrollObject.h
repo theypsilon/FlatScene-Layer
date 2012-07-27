@@ -5,15 +5,14 @@
 
 class IScrollObject;
 
-class IScrollObject :
-    public Actor
-{
-private:
+class IScrollObject : public Actor {
+
     std::list<IScrollObject*>* _placeInMA;
 
     friend class IScrollLevel;
 
     static int instances;
+
 public:
 
     Coordinate place;
@@ -23,7 +22,7 @@ public:
     IScrollObject();
 
     // Destructor, ah� deberemos liberar los recursos
-    ~IScrollObject();
+    virtual ~IScrollObject();
 
     // Devuelve un CSprite. Definici�n opcional. Ya tiene la siguiente implementaci�n :
     //
@@ -32,19 +31,19 @@ public:
     //	}
     //
     // S�lo definir si se desea hacer una operaci�n diferente
-    const Sprite* getSprite();
+    virtual const Sprite* getSprite();
 
     // M�todo pensado para ser invocado en CEngine::onIdle.
     // Deber� actualizar el estado del CActor cuando sea necesario.
-    int move();
+    virtual void move();
 
     // Opcional. Deber�a devolver una cadena que identificara de alg�n modo al actor.
     // Su implementaci�n por defecto devuelve la cadena "criature" que debemos introducir 
     // en la implementaci�n del Constructor (ver en la parte de implementaci�n).
-    std::string getCreature();
+    virtual const std::string& getCreature();
 
     // Opcional. Su implementaci�n por defecto es una simple asignaci�n a la variable miembro CUniverse* inUniverse.
-    int setUniverse(Universe* m);
+    virtual void setUniverse(Universe* m);
 
     // Opcional. Por si se quiere implementar una funci�n que facilite la inicializaci�n de muchos actores dle mismo tipo.
     // Si no se le da una implementaci�n y el m�todo es invocado, devuelve NULL y registra un error.

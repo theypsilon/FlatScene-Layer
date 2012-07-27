@@ -9,7 +9,7 @@ namespace std {
 
 namespace FlatScene {
 
-    Spriteset::Spriteset(std::string c, Uint8 mode) 
+    Spriteset::Spriteset(std::string c, unsigned char mode) 
         : _impl (ImagesPrivate::I().add(c,mode))
     {}
 
@@ -51,10 +51,6 @@ namespace FlatScene {
         auto temp = _impl;
         _impl = rhs._impl;
         rhs._impl = temp;
-    }
-
-    bool Spriteset::isNull() const {
-        return nullptr == _impl;
     }
 
     Uint8 Spriteset::getMode() const {

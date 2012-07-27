@@ -22,5 +22,5 @@ int func_fracaso(const char* file, int line) {
 
 void assert_text(std::string cad,int line) {
     if (cad.empty() || cad == "")
-        throw Exception("XML Error : "+line,TE_controlViolation);
+        throw ControlViolationException("XML Error : "+line);
 }
