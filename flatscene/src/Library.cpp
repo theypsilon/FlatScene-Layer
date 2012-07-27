@@ -112,6 +112,7 @@ void Library::LibraryImpl::onExit() {
 Library::~Library() {}
 
 std::vector<std::unique_ptr<Engine>> Library::processEngine(std::unique_ptr<Engine>&& eng) {
+
     std::vector<std::unique_ptr<Engine>> veng;
     veng.push_back(std::move(eng));
     processEngine(veng);

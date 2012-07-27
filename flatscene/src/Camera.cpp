@@ -35,9 +35,11 @@ bool Camera::isOpened() {
 int& Camera::CX() {
     return x;
 }
+
 int& Camera::CY() {
     return y;
 }
+
 Actor* Camera::Target() {
     return target;
 }
@@ -80,6 +82,7 @@ void Camera::refresh() {}
 void Camera::locateRenderScene( Rectangle* areaSc, Float zoom ) {
     locateRenderScene(areaSc->getX(),areaSc->getY(),areaSc->getW(),areaSc->getH(),zoom);
 }
+
 void Camera::locateRenderScene( Float posx, Float posy, Float width, Float height, Float zoom ) {
 
     if (width == 0 || height == 0) {
@@ -106,6 +109,7 @@ void Camera::locateRenderScene( Float posx, Float posy, Float width, Float heigh
     });
 
 }
+
 void Camera::rotate(Float angle, Float x, Float y, Float z) {
 
     if (rendering) {
@@ -125,6 +129,7 @@ void Camera::rotate(Float angle, Float x, Float y, Float z) {
     });
 
 }
+
 void Camera::translate(Float x, Float y, Float z) {
 
     if (rendering) {
@@ -144,6 +149,7 @@ void Camera::translate(Float x, Float y, Float z) {
     });
 
 }
+
 void Camera::scale(Float x, Float y, Float z) {
 
     if (rendering) {
@@ -163,6 +169,7 @@ void Camera::scale(Float x, Float y, Float z) {
     });
 
 }
+
 void Camera::color(Float red, Float green, Float blue, Float alpha) {
 
     if (red > 1.0) red = 1.0;
@@ -188,6 +195,7 @@ void Camera::color(Float red, Float green, Float blue, Float alpha) {
     });
 
 }
+
 void Camera::color(Color* col, Float alpha) {
     color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
 }
@@ -197,7 +205,6 @@ void Camera::reubicate(Rectangle* nArea) {
 
     delete area;
     area = nArea;
-
 }
 
 #ifdef MENSAJES_MSGIDS
