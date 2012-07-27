@@ -41,10 +41,6 @@ namespace FlatScene {
     private:
         friend class Spriteset;
         friend class Screen;
-
-        template <typename Resource = SpriteResource> inline Resource& getRes() const {
-            return Canvas::getRes<Resource>();
-        }
     };
 
 } // flatscene

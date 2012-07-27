@@ -12,11 +12,11 @@ Sprite::Sprite()
 
 void Sprite::put (Point ptDst, unsigned char flags) const {
     if (flags & 0x001) {
-        ptDst.y -= getRes().cpoint.y;
-        ptDst.x -= getWidth() - getRes().cpoint.x;
+        ptDst.y -= getRes<SpriteResource>().cpoint.y;
+        ptDst.x -= getWidth() - getRes<SpriteResource>().cpoint.x;
     } else {
-        ptDst.x -= getRes().cpoint.x;
-        ptDst.y -= getRes().cpoint.y;
+        ptDst.x -= getRes<SpriteResource>().cpoint.x;
+        ptDst.y -= getRes<SpriteResource>().cpoint.y;
     }
 
     Canvas::put(ptDst,flags);
@@ -24,17 +24,17 @@ void Sprite::put (Point ptDst, unsigned char flags) const {
 //TODO
 
 void Sprite::setName (const std::string& newName) {
-    getRes().name = newName;
+    getRes<SpriteResource>().name = newName;
 }
 
 const std::string& Sprite::getName() const {
-    return getRes().name;
+    return getRes<SpriteResource>().name;
 }
 
 Sprite::IndexArea Sprite::addArea(RectArea area) {
     for (IndexArea index = std::numeric_limits<IndexArea>::min(); index < std::numeric_limits<IndexArea>::max(); index++) {
-        if (getRes().areas.find(index) == getRes().areas.end()) {
-            getRes().areas[index] = area;
+        if (getRes<SpriteResource>().areas.find(index) == getRes<SpriteResource>().areas.end()) {
+            getRes<SpriteResource>().areas[index] = area;
             return index;
         }
     }
@@ -43,8 +43,8 @@ Sprite::IndexArea Sprite::addArea(RectArea area) {
 
 
 const Sprite::RectArea& Sprite::getArea (IndexArea index) const {
-    std::remove_const<decltype(getRes().areas.find(index))>::type it = getRes().areas.find(index);
-    if (it != getRes().areas.end())
+    std::remove_const<decltype(getRes<SpriteResource>().areas.find(index))>::type it = getRes<SpriteResource>().areas.find(index);
+    if (it != getRes<SpriteResource>().areas.end())
         return it->second;
     std::stringstream ss;
     ss << "no area with the index '" << index << "' has been found";
@@ -52,11 +52,11 @@ const Sprite::RectArea& Sprite::getArea (IndexArea index) const {
 }
 
 const Point& Sprite::getCenter() const {
-    return getRes().cpoint;
+    return getRes<SpriteResource>().cpoint;
 }
 
 void Sprite::setCenter(Point c) {
-    getRes().cpoint = c;
+    getRes<SpriteResource>().cpoint = c;
 }
 
 void Sprite::setArea(IndexArea index,RectArea area) {
@@ -65,7 +65,7 @@ void Sprite::setArea(IndexArea index,RectArea area) {
 }
 
 int Sprite::size() const {
-    return getRes().areas.size();
+    return getRes<SpriteResource>().areas.size();
 }
 
 SpriteOpaque Sprite::isOpaque() {
@@ -84,7 +84,7 @@ SpriteOpaque Sprite::isOpaque() {
                 opaque = SPRITE_TRANSPARENT;
         }
 */
-    return getRes().opaque;
+    return getRes<SpriteResource>().opaque;
 }
 
 } // flatscene
