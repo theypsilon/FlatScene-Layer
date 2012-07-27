@@ -23,12 +23,24 @@ namespace FlatScene {
     typename result_of::extract< typename Container::value_type >::type
     first(const Container& c) { return extract(*c.begin()); }
 
+    template <typename Iterable,typename Value>
+    inline auto find(const Iterable& c, const Value& val) -> decltype(end(c)) {
+        using namespace std;
+        return find(begin(c),end(c),val);
+    }
+
+    template <typename Iterable,typename Value>
+    inline bool exists(const Iterable& c, const Value& val) {
+        using namespace std;
+        return find(begin(c),end(c),val) != end(c);
+    }
+
     template <typename Container>
     inline typename Container::mapped_type 
     find_assoc(
         Container& container, 
         typename Container::key_type needle, 
-        typename Container::mapped_type def
+        typename Container::mapped_type def = typename Container::mapped_type()
     ) {
         auto it = container.find(needle);
 
@@ -44,6 +56,7 @@ namespace FlatScene {
             callback();
         }
     }
+
 } // FlatScene
 
 #endif // FS_ALGORITHM__

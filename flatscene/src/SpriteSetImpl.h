@@ -3,6 +3,7 @@
 
 #include "SpriteSet.h"
 #include "Exception.h"
+#include "Algorithm.h"
 #include "parserXML.h"
 #include "Library.h"
 #include "debugfuncs.h"
@@ -82,7 +83,8 @@ private:
     }
 
     bool isValidBitmapExtension(const std::string& bitmap) {
-        return bitmap == ".png" || bitmap == ".bmp" || bitmap == ".jpg";
+        auto extensions = { ".png", ".bmp", ".jpg" };
+        return exists(extensions,bitmap);
     }
 
     std::pair<std::string, std::string> getNameFile(const std::string& str) {
