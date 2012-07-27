@@ -24,10 +24,10 @@ void ImagesPrivate::clear() {
     count.clear();
 }
 
-Spriteset::SpritesetImpl* ImagesPrivate::add(const std::string& name,unsigned char mode) {
-    Spriteset::SpritesetImpl* sptset = search(name);
+SpritesetResource* ImagesPrivate::add(const std::string& name,unsigned char mode) {
+    SpritesetResource* sptset = search(name);
     if (nullptr == sptset) {
-        sptset = new Spriteset::SpritesetImpl(name,mode);
+        sptset = new SpritesetResource(name,mode);
         count.insert(std::make_pair(sptset,1));
     } else {
         count.at(sptset)++;
@@ -35,7 +35,7 @@ Spriteset::SpritesetImpl* ImagesPrivate::add(const std::string& name,unsigned ch
     return sptset;
 }
 
-void ImagesPrivate::remove(SpritesetImpl* sptset) {
+void ImagesPrivate::remove(SpritesetResource* sptset) {
     assert(sptset);
     auto it = count.find(sptset);
     assert(it != count.end());
@@ -49,7 +49,7 @@ void ImagesPrivate::remove(SpritesetImpl* sptset) {
     }
 }
 
-Spriteset::SpritesetImpl* ImagesPrivate::search(const std::string& name, unsigned char mode) const {
+SpritesetResource* ImagesPrivate::search(const std::string& name, unsigned char mode) const {
     for (auto& pair : count)
         if (pair.first->getName() == name && pair.first->getMode() == mode  )
             return pair.first;
@@ -61,7 +61,7 @@ std::size_t ImagesPrivate::size() const {
     return count.size();
 }
 
-unsigned int ImagesPrivate::getCount(SpritesetImpl* sptset) const {
+unsigned int ImagesPrivate::getCount(SpritesetResource* sptset) const {
     assert(sptset);
     const auto it = count.find(sptset);
     assert(it != count.end());

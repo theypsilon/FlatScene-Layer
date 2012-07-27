@@ -1,7 +1,15 @@
 #include "ImagesPrivate.h"
 #include "SpriteSetImpl.h"
 
+namespace std {
+    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs) { 
+        lhs.swap(rhs); 
+    }
+} // std;
+
 namespace FlatScene {
+
+    void doTheRemove(SpritesetResource* impl);
 
     Spriteset::Spriteset(std::string c, unsigned char mode) 
         : _impl (ImagesPrivate::I().add(c,mode))
@@ -36,7 +44,7 @@ namespace FlatScene {
         doTheRemove(_impl);
     }
 
-    void doTheRemove(Spriteset::SpritesetImpl* impl) {
+    void doTheRemove(SpritesetResource* impl) {
         if (impl)
             ImagesPrivate::I().remove(impl);
     }

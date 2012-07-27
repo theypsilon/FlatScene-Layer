@@ -21,11 +21,12 @@ namespace FlatScene {
 
 using namespace Util::XML::Tiny;
 
-struct Spriteset::SpritesetImpl {
+class SpritesetResource {
+public:
 
     typedef std::vector<Sprite> SpriteCollection;
 
-    SpritesetImpl(const std::string& c, unsigned char mode) 
+    SpritesetResource(const std::string& c, unsigned char mode) 
         : _mode(mode), _name(c) {
             loadChipset(c,mode);
     }

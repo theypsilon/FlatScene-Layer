@@ -46,7 +46,9 @@ namespace FlatScene {
 } // FlatScene
 
 namespace std {
-    template<> void swap(FlatScene::ResourceHandler& lhs, FlatScene::ResourceHandler& rhs) { lhs.swap(rhs); }
+    template<typename Resource> void swap(
+    	FlatScene::ResourceHandler<Resource>& lhs, FlatScene::ResourceHandler<Resource>& rhs
+    ) { lhs.swap(rhs); }
 } // std
 
 #endif

@@ -6,6 +6,8 @@
 
 namespace FlatScene {
 
+    class SpritesetResource;
+
     class Spriteset {
     public:
         Spriteset(
@@ -30,9 +32,8 @@ namespace FlatScene {
         unsigned char           getMode() const;
 
     private :
-        struct SpritesetImpl;
-        SpritesetImpl*          _impl;
-        friend void             doTheRemove(SpritesetImpl* impl);
+        SpritesetResource*          _impl;
+        friend void             doTheRemove(SpritesetResource* impl);
 
         friend class Screen;
         friend class Images;
@@ -42,7 +43,7 @@ namespace FlatScene {
 } // flatscene
 
 namespace std {
-    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs) { lhs.swap(rhs); }
+    template<> void swap(FlatScene::Spriteset& lhs, FlatScene::Spriteset& rhs);
 } // std
 
 #endif // FS__SPRITESET_H__

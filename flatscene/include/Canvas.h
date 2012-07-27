@@ -48,7 +48,7 @@ namespace FlatScene {
 
         friend class FSTextBox;
         friend class Sprite;
-        friend class Spriteset;
+        friend class SpritesetResource;
         friend class Images;
         friend class Screen;
 

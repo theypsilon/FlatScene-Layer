@@ -12,15 +12,14 @@ namespace FlatScene {
     
     class ImagesPrivate : private Util::NonCpmvable, public Util::Singleton<ImagesPrivate> {
         friend class Util::Singleton<ImagesPrivate>;
-        typedef Spriteset::SpritesetImpl SpritesetImpl;
-        typedef std::map<SpritesetImpl*,unsigned int> SpriteCounter;
+        typedef std::map<SpritesetResource*,unsigned int> SpriteCounter;
     public:
-        SpritesetImpl*      add(const std::string& name,unsigned char mode=ONLY_TEXTURE);
-        void                remove(SpritesetImpl* sptset);
+        SpritesetResource*  add(const std::string& name,unsigned char mode=ONLY_TEXTURE);
+        void                remove(SpritesetResource* sptset);
         void                clear();
-        SpritesetImpl*      search(const std::string& name,unsigned char mode=ONLY_TEXTURE) const;
+        SpritesetResource*  search(const std::string& name,unsigned char mode=ONLY_TEXTURE) const;
         std::size_t         size() const;
-        unsigned int        getCount(SpritesetImpl* sptset) const;
+        unsigned int        getCount(SpritesetResource* sptset) const;
     private:
         ImagesPrivate();
         ~ImagesPrivate();
