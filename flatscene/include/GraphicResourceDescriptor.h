@@ -172,7 +172,7 @@ namespace FlatScene {
 	    }
     };
 
-    inline DataGRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset = nullptr) {
+    inline DataGRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset) {
         try {
             return DataGRD(grd_str);
         } catch(DocIsNotLoadedException& e) {
