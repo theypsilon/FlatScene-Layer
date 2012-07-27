@@ -20,6 +20,8 @@ namespace FlatScene {
             CPoint              cp;
             std::map<int,Area>  areas;
             std::map<int,bool>  a_isRel;
+
+            Sprite(DimPoint ndim = DimPoint(),CPoint ncp = CPoint()) : dim(ndim), cp(ncp) {}
         };
 
         std::vector<Sprite> images;
@@ -33,7 +35,15 @@ namespace FlatScene {
         std::map<int,bool>  ga_isRel;
 
         DataGRD(const SDL_Surface& chipset)
-        	: sp_scale(1.0), num_img(1), simple(true), cellwidth(chipset.w), cellheight(chipset.h) {}
+        : sp_scale(1.0), num_img(1), simple(true), cellwidth(chipset.w), cellheight(chipset.h) {
+
+        	// TODO Activate this here
+            // for (decltype(num_img) i = 0; i < num_img ; i++)
+            //     images.push_back(DataGRD::Sprite(
+            //         DataGRD::DimPoint(cellwidth, cellheight),
+            //         DataGRD::CPoint  (0,0)
+            //     ));
+        }
 
     	DataGRD(const std::string& grd_str) {
 	        TiXmlDocument doc = getLoadedDocument(grd_str);
