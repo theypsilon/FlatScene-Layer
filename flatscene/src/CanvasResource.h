@@ -1,5 +1,5 @@
-#ifndef FS_CANVAS_IMPL__
-#define FS_CANVAS_IMPL__
+#ifndef FS_CANVAS_RES__
+#define FS_CANVAS_RES__
 
 #include "Canvas.h"
 

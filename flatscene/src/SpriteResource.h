@@ -1,5 +1,5 @@
-﻿#ifndef FS_SPRITE_IMPL__
-#define FS_SPRITE_IMPL__
+﻿#ifndef FS_SPRITE_RES__
+#define FS_SPRITE_RES__
 
 #include "Sprite.h"
 #include "CanvasResource.h"
