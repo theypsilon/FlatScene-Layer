@@ -13,17 +13,20 @@ Canvas::Canvas(CanvasResource* res)
     : ResourceHandler(res)
 {}
 
-unsigned int Canvas::getPixel ( int x , int y ) const {
+unsigned int Canvas::getPixel(unsigned int x, unsigned int y) const {
     SDL_Surface* sdl_surf = getRes().sdl_surf;
-    if (sdl_surf && sdl_surf->w > x && sdl_surf->h > y) {
-        Uint32 color = 0 ;
-        int position = y * sdl_surf->pitch + sdl_surf->format->BytesPerPixel * x ;
-        char* buffer = (char*) sdl_surf->pixels ;
-        buffer += position ;
-        memcpy ( &color , buffer , sdl_surf->format->BytesPerPixel ) ;
-        return color;
-    } else 
-        return 0;
+    if (!sdl_surf)
+        throw Exception("Pixel data is not accesible for this configuration.");
+
+    if (x > sdl_surf->w || y > sdl_surf->h)
+        throw Exception("Wrong coordinates for getting a pixel from this surface.");
+
+    unsigned int color = 0;
+    int position = y * sdl_surf->pitch + sdl_surf->format->BytesPerPixel * x ;
+    char* buffer = (char*) sdl_surf->pixels ;
+    buffer += position ;
+    memcpy ( &color , buffer , sdl_surf->format->BytesPerPixel ) ;
+    return color;
 }
 
 int Canvas::getWidth  () const { return getRes().w2; }

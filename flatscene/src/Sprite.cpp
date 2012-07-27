@@ -69,22 +69,22 @@ int Sprite::size() const {
 }
 
 SpriteOpaque Sprite::isOpaque() {
-    /*if (opaque != SPRITE_OPAQUE_NOT_CHEQUED)
-        return opaque;
-
-    if (sdl_surf == NULL)
+    auto& opaque = getRes<SpriteResource>().opaque;
+    if (opaque != SPRITE_OPAQUE_NOT_CHEQUED)
         return opaque;
 
     opaque = SPRITE_OPAQUE;
 
-    for (int x = 0; x < sdl_surf->w && opaque == SPRITE_OPAQUE; x++ )
-        for (int y = 0; y < sdl_surf->h && opaque == SPRITE_OPAQUE; y++ ) {
-            Uint32 pixel = getPixel(x,y);
-            if ((pixel & 0xFF000000) != 0xFF000000)
-                opaque = SPRITE_TRANSPARENT;
-        }
-*/
-    return getRes<SpriteResource>().opaque;
+    try {
+        for (int x = 0; x < getWidth() && opaque == SPRITE_OPAQUE; x++ )
+            for (int y = 0; y < getHeight() && opaque == SPRITE_OPAQUE; y++ )
+                if ((getPixel(x,y) & 0xFF000000) != 0xFF000000)
+                    opaque = SPRITE_TRANSPARENT;
+    } catch(Exception& e) {
+        throw Exception("This sprite doesn't contain accessible pixels for looking up the opacity");
+    }
+
+    return opaque;
 }
 
 } // flatscene
