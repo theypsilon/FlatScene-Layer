@@ -6,11 +6,12 @@
 
 namespace FlatScene {
 
-Sprite::Sprite() {}
+Sprite::Sprite() 
+    : Canvas(new SpriteResource)
+{}
 
 Sprite::Sprite ( Canvas&& pSurface, Point zerocpSource) 
     : Canvas(std::move(pSurface)), opaque(SPRITE_OPAQUE_NOT_CHEQUED), cpoint(zerocpSource)
-    , _res(new SpriteResource)
 {}
 
 Sprite::Sprite(Sprite&& spt) 
@@ -19,12 +20,11 @@ Sprite::Sprite(Sprite&& spt)
     , name(std::move(spt.name))
     , cpoint(std::move(spt.cpoint))
     , opaque(spt.opaque) 
-    , _res(std::move(spt._res))
 {}
 
 Sprite::~Sprite() {}
 
-void Sprite::put (Point ptDst ,Uint8 flags) const {
+void Sprite::put (Point ptDst, unsigned char flags) const {
     if (flags & 0x001) {
         ptDst.y -= cpoint.y;
         ptDst.x -= getWidth() - cpoint.x;

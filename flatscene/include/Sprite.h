@@ -30,47 +30,35 @@ namespace FlatScene {
 
         Sprite (Sprite&& sprite);
         ~Sprite();
-        //asigna nombre
-        void setName(const std::string& newName);
-        //devuelve nombre
-        const std::string& getName() const;
-        //devuelve la lista de puntos de control.
-        const Areas& getAllAreas () const;
-        //devuelve el en�simo punto de control dentro del array de puntos de control.
-        const RectArea& getArea(IndexArea index) const;
 
-        const Point& getCenter() const;
+        void                setName(const std::string& newName);
+        const std::string&  getName() const;
+        const Areas&        getAllAreas () const;
+        const RectArea&     getArea(IndexArea index) const;
+        const Point&        getCenter() const;
+        void                replaceCenter(Point c);
+        IndexArea           addArea(RectArea area);
+        void                replaceArea(IndexArea n,RectArea area);
+        int                 size() const;
+        SpriteOpaque        isOpaque();
 
-        void replaceCenter(Point c);
-        //a�ade al final de la lista el punto cpSource
-        IndexArea addArea(RectArea area);
-
-        //substituye en el punto de control de la posici�n n, por cpSource
-        void replaceArea(IndexArea n,RectArea area);
-        //devuelve el n�mero de Control Points que posee el Sprite.
-
-        int size() const;
-
-        SpriteOpaque isOpaque();
-
-        //renderiza el gr�fico.
-        void put ( Point ptDst , Uint8 flags=0) const;
+        void                put (Point ptDst, unsigned char flags=0) const;
 
     private:
 
-        Sprite ( const Sprite& ); //undefined
-        //Nombre
-        std::string name;
-        //Lista de Control points
-        Point cpoint;
-        Areas areas;
+        Sprite (const Sprite&); //undefined
+
+        std::string     name;
+        Point           cpoint;
+        Areas           areas;
+        SpriteOpaque    opaque;
 
         friend class Spriteset;
         friend class Screen;
 
-        SpriteOpaque opaque;
-
-        std::unique_ptr<SpriteResource> _res;
+        template <typename Resource = SpriteResource> inline Resource& getRes() const {
+            return Canvas::getRes<Resource>();
+        }
     };
 
 } // flatscene

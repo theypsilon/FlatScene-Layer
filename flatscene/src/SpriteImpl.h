@@ -2,11 +2,12 @@
 #define FS_SPRITE_IMPL__
 
 #include "Sprite.h"
+#include "CanvasResource.h"
 #include "Exception.h"
 
 namespace FlatScene {
 
-    struct SpriteResource {};
+    class SpriteResource : public CanvasResource {};
 
 } // flatscene
 #endif

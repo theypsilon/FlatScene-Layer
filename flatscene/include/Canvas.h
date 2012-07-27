@@ -46,8 +46,9 @@ namespace FlatScene {
 
     protected:
         Canvas(CanvasResource* res);
+
         template <typename Resource = CanvasResource> inline Resource& getRes() const {
-            return *static_cast<Resource*>(_res.get());
+            return static_cast<Resource&>(*_res);
         }
     private:
         std::unique_ptr<CanvasResource> _res;
