@@ -2,7 +2,7 @@
 #define FS_CANVAS_FACTORY__
 
 #include "Library.h"
-#include "CanvasImpl.h"
+#include "CanvasResource.h"
 
 namespace FlatScene {
 

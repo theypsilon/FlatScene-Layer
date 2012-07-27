@@ -1,4 +1,4 @@
-#include "CanvasImpl.h"
+#include "CanvasResource.h"
 #include "ScreenImpl.h"
 #include "Exception.h"
 #include "Algorithm.h"
