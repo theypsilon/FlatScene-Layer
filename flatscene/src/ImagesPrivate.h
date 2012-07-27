@@ -6,13 +6,13 @@
 #include "Noncopyable.h"
 #include <deque>
 #include <string>
-#include <map>
+#include <unordered_map>
 
 namespace FlatScene {
     
     class ImagesPrivate : private Util::NonCpmvable, public Util::Singleton<ImagesPrivate> {
         friend class Util::Singleton<ImagesPrivate>;
-        typedef std::map<SpritesetResource*,unsigned int> SpriteCounter;
+        typedef std::unordered_map<SpritesetResource*,unsigned int> SpriteCounter;
     public:
         SpritesetResource*  add(const std::string& name,unsigned char mode=ONLY_TEXTURE);
         void                remove(SpritesetResource* sptset);

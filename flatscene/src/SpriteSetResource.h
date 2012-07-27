@@ -94,7 +94,7 @@ private:
         std::string namefile;
 
         auto res = str.end();
-        for(auto it=str.end(); it != str.begin() ; --it)
+        for(auto it=str.begin(); it != str.end() ; ++it)
             if (*it == '.')
                 res = it;
 
@@ -125,7 +125,7 @@ private:
 
             Sprite spt = loadSprite(src,chipset,mode,grd.sp_scale);
 
-            spt.setName(std::move(img.name));
+            //spt.setName(std::move(img.name));
 
             _sprites.push_back(std::move(spt));
 

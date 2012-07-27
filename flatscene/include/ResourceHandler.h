@@ -9,7 +9,7 @@ namespace FlatScene {
 	template <typename Resource>
 	struct DefaultMemoryPolicy {
 		typedef std::unique_ptr<Resource> Holder;
-		static bool isSame(Holder lhs, Holder rhs) {
+		static bool isSame(Holder& lhs, Holder& rhs) {
 			return false;
 		}
 
