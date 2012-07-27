@@ -38,7 +38,7 @@ namespace FlatScene {
         : sp_scale(1.0), num_img(1), simple(true), cellwidth(chipset.w), cellheight(chipset.h) {
 
         	processSimpleSpriteValues();
-        	assert(("DataGRD construction by chipset must be wrong", areConsistentValues()));
+        	assert(("DataGRD construction by chipset must be wrong", areValuesConsistent()));
         }
 
     	DataGRD(const std::string& grd_str) {
@@ -60,7 +60,7 @@ namespace FlatScene {
 		        processSpriteValues(input);
 	    	}
 
-	    	assert(("DataGRD construction by file must be wrong", areConsistentValues()));
+	    	assert(("DataGRD construction by file must be wrong", areValuesConsistent()));
     	}
 
 	    TiXmlDocument getLoadedDocument(const std::string& str) {
@@ -176,7 +176,7 @@ namespace FlatScene {
 	        }
 	    }
 	        
-	    bool areConsistentValues() {
+	    bool areValuesConsistent() {
 	        if (num_img != images.size())
 	            return false;
 
