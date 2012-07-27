@@ -84,7 +84,7 @@ private:
 
     bool isValidBitmapExtension(const std::string& bitmap) {
         auto extensions = { ".png", ".bmp", ".jpg" };
-        return exists(extensions,bitmap);
+        return binary_search(extensions,bitmap);
     }
 
     std::pair<std::string, std::string> getNameFile(const std::string& str) {
