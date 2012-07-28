@@ -68,7 +68,7 @@ namespace FlatScene {
 		}
 
 	protected:
-		ResourceHandler(Resource* res) : _res(res) {}
+		ResourceHandler(Resource* res) : _res(MemoryPolicy::clone(res)) {}
 
         template <typename ReturnResource> inline ReturnResource& getRes() const {
             return static_cast<ReturnResource&>(*_res);

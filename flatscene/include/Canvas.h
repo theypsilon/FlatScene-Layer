@@ -10,6 +10,7 @@
 #include <map>
 
 #include "ResourceHandler.h"
+#include "RefCountMemoryPolicy.h"
 
 namespace FlatScene {
 
@@ -20,16 +21,7 @@ namespace FlatScene {
 
     class CanvasResource;
 
-    struct CanvasMemoryPolicy {
-        typedef CanvasResource* Holder;
-
-        static bool isSame(Holder lhs, Holder rhs);
-        static Holder clone(Holder res);
-        static void destroy(Holder res);
-        static void reset(Holder& res,Holder newval);
-    };
-
-    class Canvas : public ResourceHandler<CanvasResource,CanvasMemoryPolicy> {
+    class Canvas : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
     public:
 
         template <typename T> 

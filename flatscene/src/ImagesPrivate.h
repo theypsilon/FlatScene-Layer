@@ -16,18 +16,9 @@ namespace FlatScene {
         typedef std::unordered_map< CanvasResource*,unsigned int> SpriteCounter;
     public:
         SpritesetResource*  add(const std::string& name,unsigned char mode=ONLY_TEXTURE);
-        void                remove(SpritesetResource* sptset);
         void                clear();
-        SpritesetResource*  search(const std::string& name,unsigned char mode=ONLY_TEXTURE) const;
-        std::size_t         size() const;
-        unsigned int        getCount(SpritesetResource* sptset) const;
         CanvasResource*     addSprite();
-        CanvasResource*     addSprite(CanvasResource* spt);
-        void                removeSprite(CanvasResource* spt);
     private:
-        ImagesPrivate();
-        ~ImagesPrivate();
-
         SpriteSetCounter    count;
         SpriteCounter       countSprite;
 

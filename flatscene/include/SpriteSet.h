@@ -8,16 +8,7 @@ namespace FlatScene {
 
     class SpritesetResource;
 
-    struct SpritesetMemoryPolicy {
-        typedef SpritesetResource* Holder;
-
-        static bool isSame(Holder lhs, Holder rhs);
-        static Holder clone(Holder res);
-        static void destroy(Holder res);
-        static void reset(Holder& res,Holder newval);
-    };
-
-    class Spriteset : public ResourceHandler<SpritesetResource,SpritesetMemoryPolicy> {
+    class Spriteset : public ResourceHandler<SpritesetResource,RefCountMemoryPolicy<SpritesetResource> > {
     public:
         Spriteset(
             std::string     c    = "",
