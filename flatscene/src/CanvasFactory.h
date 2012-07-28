@@ -99,7 +99,7 @@ namespace FlatScene {
         Point p(src.x,src.y);
 
         for (const auto& pair : Canvas::MemoryPolicyType::getCounts())
-            if (pair.first->xy.x == p.x && pair.first->xy.y == p.y && pair.first->c == &chipset)
+            if (pair.first->xy == p && pair.first->c == &chipset)
                 return T(pair.first);
 
         T newCanvas(p,&chipset);
