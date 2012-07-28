@@ -1,4 +1,3 @@
-#include "ImagesPrivate.h"
 #include "SpriteSetResource.h"
 
 namespace FlatScene {
@@ -6,7 +5,7 @@ namespace FlatScene {
     template class RefCountMemoryPolicy<SpritesetResource>;
 
     Spriteset::Spriteset(std::string c, unsigned char mode) 
-        : ResourceHandler (ImagesPrivate::I().add(c,mode))
+        : ResourceHandler (new SpritesetResource(c,mode))
     {}
 
     Uint8 Spriteset::getMode() const {

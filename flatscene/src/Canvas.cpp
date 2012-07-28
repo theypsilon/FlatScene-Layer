@@ -3,11 +3,14 @@
 #include "Renders.h"
 #include "Exception.h"
 #include "Algorithm.h"
-#include "ImagesPrivate.h"
 
 namespace FlatScene {
 
 template class RefCountMemoryPolicy<CanvasResource>;
+
+Canvas::Canvas()
+    : ResourceHandler(new CanvasResource)
+{}
 
 Canvas::Canvas(CanvasResource* res) 
     : ResourceHandler(res)

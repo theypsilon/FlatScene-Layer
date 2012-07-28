@@ -1,7 +1,6 @@
 #include "SpriteResource.h"
 #include "Screen.h"
 #include "Exception.h"
-#include "ImagesPrivate.h"
 #include <limits>
 #include <sstream>
 
@@ -9,8 +8,8 @@ namespace FlatScene {
 
 template class RefCountMemoryPolicy<SpriteResource>;
 
-Sprite::Sprite(SDL_Surface* surf, unsigned int pos) 
-    : Canvas(ImagesPrivate::I().addSprite())
+Sprite::Sprite() 
+    : Canvas(new SpriteResource)
 {}
 
 void Sprite::put (Point ptDst, unsigned char flags) const {

@@ -42,6 +42,7 @@ namespace FlatScene {
         void color(Float red, Float green, Float blue, Float alpha) const;
         void color(const Color& col,Float alpha=1.0) const;
 
+        Canvas();
     protected:
         Canvas(CanvasResource* res);
     private:
