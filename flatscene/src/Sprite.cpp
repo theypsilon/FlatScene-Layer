@@ -8,8 +8,12 @@ namespace FlatScene {
 
 template class RefCountMemoryPolicy<SpriteResource>;
 
-Sprite::Sprite() 
-    : Canvas(new SpriteResource)
+Sprite::Sprite(const Point& xy, const SDL_Surface *const c) 
+    : Canvas(new SpriteResource(xy,c))
+{}
+
+Sprite::Sprite(CanvasResource* res) 
+    : Canvas(res)
 {}
 
 void Sprite::put (Point ptDst, unsigned char flags) const {

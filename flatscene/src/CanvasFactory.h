@@ -6,8 +6,87 @@
 
 namespace FlatScene {
 
-    template <class T> T Canvas::createCanvas(SDL_Surface* surface, Uint8 mode, GraphicFilter filter) {
-        static_assert(/*std::is_trivially_constructible<T>::value && */std::is_base_of<Canvas,T>::value,"Bad Canvas type");
+    SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor) {
+
+        SDL_Surface* ret = NULL;
+
+        if (s_surf == NULL || factor <= 1)
+            return ret;
+
+        unsigned char bpp = s_surf->format->BytesPerPixel;
+
+        if (bpp == 4) // 32 bits
+            ret = SDL_CreateRGBSurface(s_surf->flags, s_surf->w * factor, s_surf->h * factor, bpp*8,
+                s_surf->format->Rmask, s_surf->format->Gmask,
+                s_surf->format->Bmask, s_surf->format->Amask
+            );
+        else if (bpp == 1) // 8 bits
+            ret = SDL_CreateRGBSurface(s_surf->flags, s_surf->w * factor, s_surf->h * factor, bpp*8, 0,0,0,0 );
+        else 
+            throw SDLException("depth mode not valid");
+
+        
+
+        char* newPixels = (char*) ret->pixels;
+        char* oldPixels = (char*) s_surf->pixels;
+
+        SDL_LockSurface(ret);
+        SDL_LockSurface(s_surf);
+
+        for (int y = 0; y < s_surf->h; y++) {
+            for (int x = 0; x < s_surf->w; x++) {
+
+                int pos_old = y * s_surf->pitch + x * bpp;
+
+                for (int fx = 0; fx < factor; fx++) {
+                    for (int fy = 0; fy < factor; fy++) {
+
+                        int pos_new = (y*factor + fy) * ret->pitch + (x*factor +fx) * bpp;
+
+                        for (int b = 0; b < bpp; b++)
+                            newPixels [pos_new + b] =oldPixels [pos_old + b];
+                    }
+                }
+            }
+        }
+
+        SDL_UnlockSurface(s_surf);
+        SDL_UnlockSurface(ret);
+
+        return ret;
+    }
+
+    SDL_Surface* loadSurface(const SDL_Rect& src, const SDL_Surface& chipset, unsigned char mode, double sp_scale) {
+        auto surf = SDL_CreateRGBSurface(chipset.flags | SDL_SRCALPHA,
+                                         src.w - src.x, src.h - src.y,
+                                         chipset.format->BitsPerPixel,
+                                         chipset.format->Rmask, chipset.format->Gmask,
+                                         chipset.format->Bmask, chipset.format->Amask);
+
+        SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
+        blitcopy(chipset,const_cast<SDL_Rect*>(&src),surf,nullptr);
+
+        if (sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
+            if (auto temp = scaleSurface(surf,(int)sp_scale)) {
+                SDL_FreeSurface(surf);
+                surf=temp;
+            }
+            // Reasignamos los formatos.
+            SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);
+        }
+        return surf;
+    }
+
+    template <class T> 
+    T Canvas::createCanvas(
+        const SDL_Rect& src, const SDL_Surface& chipset, 
+        unsigned char mode, double sp_scale, GraphicFilter filter
+    ) {
+        static_assert(
+            /*std::is_trivially_constructible<T>::value && */
+            std::is_base_of<Canvas,T>::value,
+            "Bad Canvas type"
+        );
 
         auto pow2 = [](unsigned int n) {
             unsigned int c=1;
@@ -17,7 +96,14 @@ namespace FlatScene {
             return c;
         };
 
-        T newCanvas;
+        Point p(src.x,src.y);
+
+        for (const auto& pair : Canvas::MemoryPolicyType::getCounts())
+            if (pair.first->xy.x == p.x && pair.first->xy.y == p.y && pair.first->c == &chipset)
+                return T(pair.first);
+
+        T newCanvas(p,&chipset);
+        SDL_Surface* surface = loadSurface(src,chipset,mode,sp_scale);
 
         if (pow2(mode) != mode)
             throw Exception("CCanvas::LoadIMG -> modo erroneo.",__LINE__);
