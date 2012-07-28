@@ -12,7 +12,11 @@ namespace FlatScene {
     
     class ImagesPrivate : private Util::NonCpmvable, public Util::Singleton<ImagesPrivate> {
         friend class Util::Singleton<ImagesPrivate>;
-        typedef std::unordered_map<SpritesetResource*,unsigned int> SpriteCounter;
+        typedef std::unordered_map<SpritesetResource*,unsigned int> SpriteSetCounter;
+        typedef std::unordered_map< void*,
+            std::unordered_map<unsigned int, SpriteResource*>> SpriteMapper;
+
+        typedef std::unordered_map< SpriteResource*,unsigned int> SpriteCounter;
     public:
         SpritesetResource*  add(const std::string& name,unsigned char mode=ONLY_TEXTURE);
         void                remove(SpritesetResource* sptset);
@@ -20,11 +24,16 @@ namespace FlatScene {
         SpritesetResource*  search(const std::string& name,unsigned char mode=ONLY_TEXTURE) const;
         std::size_t         size() const;
         unsigned int        getCount(SpritesetResource* sptset) const;
+        SpriteResource*     addSprite(SDL_Surface* surf,unsigned int pos, unsigned char mode=ONLY_TEXTURE);
+        SpriteResource*     searchSprite(SDL_Surface* surf,unsigned int pos, unsigned char mode=ONLY_TEXTURE) const;
+        void                removeSprite(SpriteResource* spt);
     private:
         ImagesPrivate();
         ~ImagesPrivate();
 
-        SpriteCounter       count;
+        SpriteSetCounter    count;
+        SpriteCounter       countSprite;
+        SpriteMapper        mapSprite;
 
         friend class Screen;
     };

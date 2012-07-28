@@ -17,7 +17,7 @@ namespace FlatScene {
             return c;
         };
 
-        T newCanvas;
+        T newCanvas(surface,0);
 
         if (pow2(mode) != mode)
             throw Exception("CCanvas::LoadIMG -> modo erroneo.",__LINE__);

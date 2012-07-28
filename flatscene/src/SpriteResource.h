@@ -10,7 +10,7 @@ namespace FlatScene {
     class SpriteResource : public CanvasResource {
     public:
         std::string     name;
-        Point   		cpoint;
+        Point           cpoint;
         Sprite::Areas   areas;
         SpriteOpaque    opaque;
 

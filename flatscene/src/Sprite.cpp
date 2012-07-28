@@ -1,14 +1,19 @@
 #include "SpriteResource.h"
 #include "Screen.h"
 #include "Exception.h"
+#include "ImagesPrivate.h"
 #include <limits>
 #include <sstream>
 
 namespace FlatScene {
 
-Sprite::Sprite() 
-    : Canvas(new SpriteResource)
+Sprite::Sprite(SDL_Surface* surf, unsigned int pos) 
+    : Canvas(ImagesPrivate::I().addSprite(surf,pos,0))
 {}
+
+Sprite::~Sprite() {
+    ImagesPrivate::I().removeSprite(&getRes<SpriteResource>());
+}
 
 void Sprite::put (Point ptDst, unsigned char flags) const {
     if (flags & 0x001) {
