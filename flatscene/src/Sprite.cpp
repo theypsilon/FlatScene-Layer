@@ -7,6 +7,8 @@
 
 namespace FlatScene {
 
+template class RefCountMemoryPolicy<SpriteResource>;
+
 Sprite::Sprite(SDL_Surface* surf, unsigned int pos) 
     : Canvas(ImagesPrivate::I().addSprite())
 {}

@@ -7,6 +7,8 @@
 
 namespace FlatScene {
 
+template class RefCountMemoryPolicy<CanvasResource>;
+
 Canvas::Canvas(CanvasResource* res) 
     : ResourceHandler(res)
 {}

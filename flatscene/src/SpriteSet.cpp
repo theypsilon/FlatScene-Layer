@@ -3,6 +3,8 @@
 
 namespace FlatScene {
 
+    template class RefCountMemoryPolicy<SpritesetResource>;
+
     Spriteset::Spriteset(std::string c, unsigned char mode) 
         : ResourceHandler (ImagesPrivate::I().add(c,mode))
     {}
