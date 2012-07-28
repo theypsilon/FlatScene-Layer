@@ -32,8 +32,7 @@ namespace FlatScene {
 				assert(it != _count.end());
 				it->second--;
 				if (it->second == 0) {
-					_count.erase(res);
-					delete res;
+					destroy(res);
 				}
 			}
 		}
@@ -49,6 +48,12 @@ namespace FlatScene {
 	    }
 
 	private:
+		static void destroy(Holder res) {
+			assert(_count.find(res) != _count.end());
+			_count.erase(res);
+			delete res;
+		}
+
 		static CountMap _count;
 	};
 
