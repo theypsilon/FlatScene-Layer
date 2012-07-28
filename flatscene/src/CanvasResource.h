@@ -2,6 +2,7 @@
 #define FS_CANVAS_RES__
 
 #include "Canvas.h"
+#include "RefCountMemoryPolicyImpl.h"
 
 namespace FlatScene {
 

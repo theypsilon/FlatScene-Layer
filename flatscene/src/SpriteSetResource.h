@@ -14,6 +14,7 @@
 #include "TinyXMLHelper.h"
 #include "CanvasFactory.h"
 #include "SpriteResource.h"
+#include "RefCountMemoryPolicyImpl.h"
 
 #include "GraphicResourceDescriptor.h"
 
