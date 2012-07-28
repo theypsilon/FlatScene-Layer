@@ -41,6 +41,11 @@ namespace FlatScene {
     protected:
         Sprite(CanvasResource* res);
     private:
+        template <typename T> friend T createCanvas(
+            const SDL_Rect& src, const SDL_Surface& chipset, 
+            unsigned char mode, double sp_scale, GraphicFilter filter=NEAREST
+        );
+        
         friend class Canvas;
         friend class Spriteset;
         friend class Screen;

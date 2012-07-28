@@ -26,11 +26,7 @@ namespace FlatScene {
         typedef RefCountMemoryPolicy<CanvasResource>                MemoryPolicyType;
         typedef ResourceHandler<CanvasResource,MemoryPolicyType>    ResourceHandlerType;
 
-        template <typename T> 
-        static T createCanvas(
-            const SDL_Rect& src, const SDL_Surface& chipset, 
-            unsigned char mode, double sp_scale, GraphicFilter filter=NEAREST
-        );
+        Canvas(const Point& xy, const SDL_Surface *const c);    
 
         unsigned int getPixel(unsigned int x, unsigned int y) const;
 
@@ -47,17 +43,26 @@ namespace FlatScene {
         void color(Float red, Float green, Float blue, Float alpha) const;
         void color(const Color& col,Float alpha=1.0) const;
 
-        Canvas(const Point& xy, const SDL_Surface *const c);
     protected:
         Canvas(CanvasResource* res);
     private:
-
+        template <typename T> friend T createCanvas(
+            const SDL_Rect& src, const SDL_Surface& chipset, 
+            unsigned char mode, double sp_scale, GraphicFilter filter=NEAREST
+        );
+        
         friend class FSTextBox;
         friend class Sprite;
         friend class SpritesetResource;
         friend class Images;
         friend class Screen;
     };
+
+    // template <typename T> 
+    // static T createCanvas(
+    //     const SDL_Rect& src, const SDL_Surface& chipset, 
+    //     unsigned char mode, double sp_scale, GraphicFilter filter=NEAREST
+    // );
 
 } // flatscene
 

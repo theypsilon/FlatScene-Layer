@@ -77,8 +77,7 @@ namespace FlatScene {
         return surf;
     }
 
-    template <class T> 
-    T Canvas::createCanvas(
+    template <class T> T createCanvas(
         const SDL_Rect& src, const SDL_Surface& chipset, 
         unsigned char mode, double sp_scale, GraphicFilter filter
     ) {
