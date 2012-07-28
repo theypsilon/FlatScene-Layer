@@ -77,6 +77,14 @@ namespace FlatScene {
         return surf;
     }
 
+    unsigned int pow2(unsigned int n) {
+        unsigned int c = 1;
+        while (c < n) 
+            c <<= 1;
+
+        return c;
+    };
+
     template <class T> T createCanvas(
         const SDL_Rect& src, const SDL_Surface& chipset, 
         unsigned char mode, double sp_scale, GraphicFilter filter
@@ -86,14 +94,6 @@ namespace FlatScene {
             std::is_base_of<Canvas,T>::value,
             "Bad Canvas type"
         );
-
-        auto pow2 = [](unsigned int n) {
-            unsigned int c=1;
-            while (c < n) 
-                c<<=1;
-
-            return c;
-        };
 
         Point p(src.x,src.y);
 
