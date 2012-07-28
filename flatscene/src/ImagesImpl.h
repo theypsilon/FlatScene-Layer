@@ -12,6 +12,13 @@ struct Images::ImagesImpl {
     std::stack<int> lastIndexAdded;
 };
 
+    template <typename Resource, typename CountIndex>
+    void RefCountMemoryPolicy<Resource,CountIndex>::destroy(Holder res) {
+        assert(_count.find(res) != _count.end());
+        _count.erase(res);
+        delete res;
+    }
+
 } // flatscene
 
 #endif

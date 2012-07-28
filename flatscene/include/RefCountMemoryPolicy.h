@@ -49,11 +49,7 @@ namespace FlatScene {
 	    }
 
 	private:
-		static void destroy(Holder res) {
-			assert(_count.find(res) != _count.end());
-			_count.erase(res);
-			delete res;
-		}
+		static void destroy(Holder res);
 
 		static CountMap _count;
 	};
