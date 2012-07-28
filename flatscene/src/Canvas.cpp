@@ -3,12 +3,9 @@
 #include "Renders.h"
 #include "Exception.h"
 #include "Algorithm.h"
+#include "ImagesPrivate.h"
 
 namespace FlatScene {
-
-Canvas::Canvas() 
-    : ResourceHandler(new CanvasResource)
-{}
 
 Canvas::Canvas(CanvasResource* res) 
     : ResourceHandler(res)

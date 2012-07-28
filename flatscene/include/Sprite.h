@@ -24,7 +24,6 @@ namespace FlatScene {
         typedef std::map<IndexArea,RectArea> Areas;
 
         Sprite (SDL_Surface* surf, unsigned int pos);
-        ~Sprite();
 
         void                setName(const std::string& newName);
         const std::string&  getName() const;

@@ -20,8 +20,22 @@ namespace FlatScene {
         ImagesPrivate::I().remove(res);
     }
 
-    Spriteset::Spriteset(std::string c, unsigned char mode) 
-        : ResourceHandler (ImagesPrivate::I().add(c,mode))
-    {}
+
+    bool CanvasMemoryPolicy::isSame(CanvasMemoryPolicy::Holder lhs, CanvasMemoryPolicy::Holder rhs) {
+        return lhs == rhs;
+    }
+
+    CanvasMemoryPolicy::Holder CanvasMemoryPolicy::clone(CanvasMemoryPolicy::Holder res) {
+        return ImagesPrivate::I().addSprite(res);
+    }
+
+    void CanvasMemoryPolicy::reset(CanvasMemoryPolicy::Holder& res,CanvasMemoryPolicy::Holder newval) {
+        destroy(res);
+        res = newval;
+    }
+
+    void CanvasMemoryPolicy::destroy(CanvasMemoryPolicy::Holder res) {
+        ImagesPrivate::I().removeSprite(res);
+    }
 
 } // FlatScene

@@ -20,7 +20,16 @@ namespace FlatScene {
 
     class CanvasResource;
 
-    class Canvas : public ResourceHandler<CanvasResource> {
+    struct CanvasMemoryPolicy {
+        typedef CanvasResource* Holder;
+
+        static bool isSame(Holder lhs, Holder rhs);
+        static Holder clone(Holder res);
+        static void destroy(Holder res);
+        static void reset(Holder& res,Holder newval);
+    };
+
+    class Canvas : public ResourceHandler<CanvasResource,CanvasMemoryPolicy> {
     public:
 
         template <typename T> 
@@ -44,7 +53,6 @@ namespace FlatScene {
     protected:
         Canvas(CanvasResource* res);
     private:
-        Canvas() ;
 
         friend class FSTextBox;
         friend class Sprite;

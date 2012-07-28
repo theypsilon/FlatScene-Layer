@@ -49,47 +49,25 @@ void ImagesPrivate::remove(SpritesetResource* sptset) {
     }
 }
 
-SpriteResource* ImagesPrivate::searchSprite(SDL_Surface* surf,unsigned int pos, unsigned char mode) const {
-    void* ptr = reinterpret_cast<void*>(surf);
-    auto it = mapSprite.find(ptr);
-    if (it == end(mapSprite))
-        return nullptr;
-    auto et = it->second.find(pos);
-    if (et == end(it->second))
-        return nullptr;
-
-    return et->second;
-}
-
-SpriteResource* ImagesPrivate::addSprite(SDL_Surface* surf,unsigned int pos, unsigned char mode) {
-    SpriteResource* ret = searchSprite(surf,pos,mode);
-    if (ret != nullptr) {
-        countSprite[ret]++;
-        return ret;
-    }
-    ret = new SpriteResource();
-    countSprite.emplace(std::make_pair(ret,1));
-    mapSprite[reinterpret_cast<void*>(surf)][pos] = ret;
+CanvasResource* ImagesPrivate::addSprite() {
+    CanvasResource* ret = new SpriteResource();
+    countSprite.insert(std::make_pair(ret,1));
     return ret;
 }
 
-void ImagesPrivate::removeSprite(SpriteResource* sptset) {
+CanvasResource* ImagesPrivate::addSprite(CanvasResource* spt) {
+    countSprite[spt]++;
+    return spt;
+}
+
+void ImagesPrivate::removeSprite(CanvasResource* spt) {
     using namespace std;
-    auto it = countSprite.find(sptset);
+    auto it = countSprite.find(spt);
+    assert(countSprite.end() != it);
+    it->second--;
     if (it->second == 0) {
-        bool found = false;
-        for (auto& pair : mapSprite) {
-            for (auto& subpair : pair.second) {
-                found = subpair.second == sptset;
-                if (found) {
-                    pair.second.erase(subpair.first);
-                    break;
-                }
-            }
-        }
-        assert(found);
-        countSprite.erase(sptset);
-        delete sptset;
+        countSprite.erase(spt);
+        delete spt;
     } else { 
         assert(it->second > 0);
     }

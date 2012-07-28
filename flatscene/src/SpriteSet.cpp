@@ -3,6 +3,10 @@
 
 namespace FlatScene {
 
+    Spriteset::Spriteset(std::string c, unsigned char mode) 
+        : ResourceHandler (ImagesPrivate::I().add(c,mode))
+    {}
+
     Uint8 Spriteset::getMode() const {
         return getRes().getMode();
     }
