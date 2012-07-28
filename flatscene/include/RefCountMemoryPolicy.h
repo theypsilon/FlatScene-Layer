@@ -18,19 +18,23 @@ namespace FlatScene {
 			return _count;
 		}
 
-		static inline Holder clone(Holder res) {
-			_count[res]++;
-			assert(_count[res] != std::numeric_limits<CountIndex>::min());
+		static inline Holder add(Holder res) {
+			if (res) {
+			 	_count[res]++;
+				assert(_count[res] != std::numeric_limits<CountIndex>::min());
+			}
 			return res;
 		}
 
-		static inline void destroy(Holder res) {
-			auto it = _count.find(res);
-			assert(it != _count.end());
-			it->second--;
-			if (it->second == 0) {
-				_count.erase(res);
-				delete res;
+		static inline void remove(Holder res) {
+			if (res) {
+				auto it = _count.find(res);
+				assert(it != _count.end());
+				it->second--;
+				if (it->second == 0) {
+					_count.erase(res);
+					delete res;
+				}
 			}
 		}
 
@@ -38,9 +42,10 @@ namespace FlatScene {
 	        return lhs == rhs;
 	    }
 
-	    static inline void reset(Holder& res,Holder newval) {
-	        destroy(res);
-	        res = newval;
+	    static inline Holder move(Holder& res) {
+	        Holder out = res;
+	        res = nullptr;
+	        return out;
 	    }
 
 	private:
