@@ -68,10 +68,7 @@
     <ClInclude Include="Tile.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="IndexedPointer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include=".\IndexHandler.h">
+    <ClInclude Include="IInclude.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

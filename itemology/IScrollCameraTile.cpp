@@ -2,7 +2,7 @@
 
 
 IScrollCameraTile::IScrollCameraTile(
-    const std::vector<std::vector<Tile>>& tiles, Actor* target,flatscene::Rectangle* area
+    const std::vector<std::vector<Tile>>& tiles, Actor* target,FlatScene::Rectangle* area
 )  // Se ha de llamar a la clase Base para una correcta inicializaci�n
     : Camera(target,area) , tiles(tiles){
 
@@ -30,12 +30,10 @@ IScrollCameraTile::IScrollCameraTile(
 }
 
 
-IScrollCameraTile::~IScrollCameraTile(void)
-{
-}
+IScrollCameraTile::~IScrollCameraTile() {}
 
 
-int IScrollCameraTile::refresh() {
+void IScrollCameraTile::refresh() {
 
     Point p;
 
@@ -67,7 +65,4 @@ int IScrollCameraTile::refresh() {
             } 
         }
     }
-
-    return EXITO; 
-
 }

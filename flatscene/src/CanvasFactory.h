@@ -1,10 +1,10 @@
-#ifndef __FS_CANVAS_FACTORY__
-#define __FS_CANVAS_FACTORY__
+#ifndef FS_CANVAS_FACTORY__
+#define FS_CANVAS_FACTORY__
 
-#include "FSLibrary.h"
-#include "FSCanvasImpl.h"
+#include "Library.h"
+#include "CanvasResource.h"
 
-namespace flatscene {
+namespace FlatScene {
 
     template <class T> T Canvas::createCanvas(SDL_Surface* surface, Uint8 mode, GraphicFilter filter) {
         static_assert(/*std::is_trivially_constructible<T>::value && */std::is_base_of<Canvas,T>::value,"Bad Canvas type");
@@ -22,7 +22,7 @@ namespace flatscene {
         if (pow2(mode) != mode)
             throw Exception("CCanvas::LoadIMG -> modo erroneo.",__LINE__);
 
-        CanvasImpl& pSurface = * static_cast<Canvas&>(newCanvas)._impl;
+        CanvasResource& pSurface = static_cast<Canvas&>(newCanvas).getRes();
 
         SDL_Surface* image;
         SDL_Rect area;

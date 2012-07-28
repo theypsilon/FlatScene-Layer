@@ -8,7 +8,7 @@ Makefile
 flatscene/Makefile
 CMakeCache.txt
 CMakeFiles
-*.cmake
+cmake_install.cmake
 
 #-------------------------#
 # Suggestions from GitHub #

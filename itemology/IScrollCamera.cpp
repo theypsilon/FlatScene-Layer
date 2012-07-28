@@ -5,7 +5,7 @@
 #include "IDebug.h"
 
 
-IScrollCamera::IScrollCamera(Actor* target, flatscene::Rectangle* area) :
+IScrollCamera::IScrollCamera(Actor* target, FlatScene::Rectangle* area) :
     // Se ha de llamar a la clase Base para una correcta inicializaci�n
     Camera(target,area), centro(new Point(area->getW()/2,area->getH()/2)), objetive("objetivo") {
         intraMargenX=intraMargenY=0;
@@ -18,7 +18,7 @@ IScrollCamera::~IScrollCamera() {
 
 }
 
-int IScrollCamera::loadUniverse() {
+void IScrollCamera::loadUniverse() {
 
     if (target->getUniverse() != uni) {
         uni = target->getUniverse();
@@ -28,8 +28,8 @@ int IScrollCamera::loadUniverse() {
 
     IScrollLevel* suni = dynamic_cast<IScrollLevel*>(uni);
 
-    if (suni == NULL) 
-        return FRACASO;
+    if (suni == nullptr) 
+        throw Exception("IScrollLevel cant be extracted by dynamic_cast");
 
     objetive.setUniverse(uni);
 
@@ -45,11 +45,9 @@ int IScrollCamera::loadUniverse() {
         }
     }
 
-    return EXITO;
-
 }
 
-int IScrollCamera::unloadUniverse() {
+void IScrollCamera::unloadUniverse() {
 
     if (uni!=NULL) {
 
@@ -57,26 +55,9 @@ int IScrollCamera::unloadUniverse() {
 
     }
 
-    return EXITO;
-
 }
 
-int IScrollCamera::resyncUniverse() {
-
-    /*		IMPLEMENTACI�N POR DEFECTO	
-    /*
-    if (unloadUniverse() == EXITO)
-    return loadUniverse();
-    else
-    return FRACASO;
-    */
-
-    // TODO
-
-    return EXITO;
-}
-
-int IScrollCamera::setTarget(Actor* newTarget) {
+void IScrollCamera::setTarget(Actor* newTarget) {
 
     /*		IMPLEMENTACI�N POR DEFECTO */
 
@@ -96,11 +77,9 @@ int IScrollCamera::setTarget(Actor* newTarget) {
     */
 
     // TODO
-
-    return EXITO;
 }
 
-int IScrollCamera::refresh() {
+void IScrollCamera::refresh() {
 
     if (!isOpened())
         loadUniverse();
@@ -159,5 +138,4 @@ int IScrollCamera::refresh() {
         (*e)->render();
     }
 
-    return EXITO;
 }

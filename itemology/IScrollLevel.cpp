@@ -1,5 +1,4 @@
 #include "IScrollLevel.h"
-#include "tinyxml/tinyxml.h"
 #include "IDebug.h"
 
 
@@ -42,21 +41,16 @@ void IScrollLevel::load() {
         throw Exception("Estructura XML defectuosa del mapa");
     }
 
-    if (   !node->Attribute("width")        || !node->Attribute("height") 
-        || !node->Attribute("layers")       || !node->Attribute("name")
-        || !node->Attribute("tileWidth")    || !node->Attribute("tileHeight") ) 
-    {
-        throw Exception("Atributos XML defectuosos en el mapa");
-    }
+    using namespace U::XML::Tiny;
 
-    axml ( node->QueryIntAttribute("width",(int*)&_mapWidth) );
-    axml ( node->QueryIntAttribute("height",(int*)&_mapHeight) );
-    axml ( node->QueryIntAttribute("layers",(int*)&_numLayers) );
+    _mapWidth = intFromAttr(*node,"width");
+    _mapHeight = intFromAttr(*node,"height");
+    _numLayers = intFromAttr(*node,"layers");
 
-    axml ( node->QueryIntAttribute("tileWidth",(int*)&_tileWidth) );
-    axml ( node->QueryIntAttribute("tileHeight",(int*)&_tileHeight) );
+    _tileWidth = intFromAttr(*node,"tileWidth");
+    _tileHeight = intFromAttr(*node,"tileHeight");
 
-    _datosTile=node->Attribute("name"); atxml(_datosTile);
+    _datosTile = valFromAttr<std::string>(*node,"name");
 
     /*
     if (node->QueryIntAttribute("precission-plus",&aux) == TIXML_SUCCESS)
@@ -65,20 +59,19 @@ void IScrollLevel::load() {
     precissionPlus=1;*/
 
     node = input.FirstChildElement("Music").FirstChildElement().ToElement();
-    if (node && node->Attribute("name")) {
-        _datosSong = node->Attribute("name");
-    }
+
+    _datosSong = node? valFromAttr<std::string>(*node,"name") : "";
 
     for (node = input.FirstChildElement("TileGraphs").FirstChildElement().ToElement();
          node && node->Attribute("name");   node = node->NextSiblingElement()) 
     {
-        _tilesets.push_back(Spriteset(node->Attribute("name")));
+        _tilesets.push_back(Spriteset(valFromAttr<std::string>(*node,"name")));
     }
 
     for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();
          node && node->Attribute("name");   node = node->NextSiblingElement()) 
     {
-        _collisionsets.push_back(Spriteset(node->Attribute("name"),ONLY_SDL_SURFACE));
+        _collisionsets.push_back(Spriteset(valFromAttr<std::string>(*node,"name"),ONLY_SDL_SURFACE));
     }
 
     if (_collisionsets.empty() || _tilesets.empty()) {
@@ -89,29 +82,26 @@ void IScrollLevel::load() {
     _layerFloor.clear();
 
     for (node = input.FirstChildElement("LayerList").FirstChildElement().ToElement();
-         node && node->Attribute("type") && node->Attribute("floor");
+         node && checkAttr(*node,"type") && checkAttr(*node,"floor");
          node = node->NextSiblingElement()) 
     {
-        const char* auxcad = node->Attribute("type");
+        const std::string auxcad = valFromAttr<std::string>(*node,"type");
 
         int layertype;
 
-        if (strcmp(auxcad,"background")==0) {
+        if (auxcad == "background") {
             layertype = 0;
-        } else if (strcmp(auxcad,"lower")==0) {
+        } else if (auxcad == "lower") {
             layertype = 1;
-        } else if (strcmp(auxcad,"upper")==0) {
+        } else if (auxcad == "upper") {
             layertype = 2;
         } else {
             throw Exception("LayerType invalidado cargando el mapa");
-            return;
         }
 
         _layerType.push_back(layertype);
 
-        int floorattr;
-
-        axml( node->QueryIntAttribute("floor",&floorattr) );
+        int floorattr = intFromAttr(*node,"floor");
         _layerFloor.push_back( floorattr );
     }
 
@@ -121,9 +111,9 @@ void IScrollLevel::load() {
 
     _numGates=0;
     for (node = input.FirstChildElement("GateList").FirstChildElement().ToElement();
-        node && node->Attribute("target")   && node->Attribute("x1")        && node->Attribute("x2") 
-             && node->Attribute("y1")       && node->Attribute("y2")        && node->Attribute("z") 
-             && node->Attribute("target-x") && node->Attribute("target-y")  && node->Attribute("target-z");
+        node && checkAttr(*node,"target")   && checkAttr(*node,"x1")        && checkAttr(*node,"x2") 
+             && checkAttr(*node,"y1")       && checkAttr(*node,"y2")        && checkAttr(*node,"z") 
+             && checkAttr(*node,"target-x") && checkAttr(*node,"target-y")  && checkAttr(*node,"target-z");
         node = node->NextSiblingElement()) 
     {
         _numGates++;
@@ -136,15 +126,16 @@ void IScrollLevel::load() {
     {
         Gate g;
 
-        g.destino = node->Attribute("target"); atxml( g.destino );
-        axml ( node->QueryIntAttribute("x1",(int*) & (g.regionx1)) );
-        axml ( node->QueryIntAttribute("x2",(int*) & (g.regionx2)) );
-        axml ( node->QueryIntAttribute("y1",(int*) & (g.regiony1)) );
-        axml ( node->QueryIntAttribute("y2",(int*) & (g.regiony2)) );
-        axml ( node->QueryIntAttribute("z",(int*) & (g.regionz)) );
-        axml ( node->QueryIntAttribute("target-x",(int*) & (g.destino_scroll_x)) );
-        axml ( node->QueryIntAttribute("target-y",(int*) & (g.destino_scroll_y)) );
-        axml ( node->QueryIntAttribute("target-z",(int*) & (g.destino_scroll_z)) );
+        g.destino = valFromAttr<std::string>(*node,"target");
+
+        g.regionx1 = intFromAttr(*node,"x1");
+        g.regionx2 = intFromAttr(*node,"x2");
+        g.regiony1 = intFromAttr(*node,"y1");
+        g.regiony2 = intFromAttr(*node,"y2");
+        g.regionz = intFromAttr(*node,"z");
+        g.destino_scroll_x = intFromAttr(*node,"target-x");
+        g.destino_scroll_y = intFromAttr(*node,"target-y");
+        g.destino_scroll_z = intFromAttr(*node,"target-z");
 
         _gates.push_back(g);
     }
