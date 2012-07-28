@@ -30,6 +30,7 @@ namespace FlatScene {
 			if (res) {
 				auto it = _count.find(res);
 				assert(it != _count.end());
+				assert(it->second > 0);
 				it->second--;
 				if (it->second == 0) {
 					destroy(res);
