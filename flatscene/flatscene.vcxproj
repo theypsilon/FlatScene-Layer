@@ -108,12 +108,12 @@
     <ClCompile Include="src\SpriteSet.cpp" />
     <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\Universe.cpp" />
-    <ClCompile Include="src\RefCountMemoryPolicy.cpp" />
     <ClCompile Include="src\tinyxml\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\*.h" />
     <ClInclude Include="include\tinyxml\*.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
     <ClInclude Include="src\Renders.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
