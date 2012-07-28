@@ -4,9 +4,9 @@
 #include "IInclude.h"
 
 #include "IScrollObject.h"
-#include "SmallTile.h"
+#include "Tile.h"
 
-typedef SmallTile Tile;
+//typedef SmallTile Tile;
 
 struct TileBG {
     unsigned char   graph;
