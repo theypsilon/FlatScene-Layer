@@ -23,6 +23,8 @@ namespace FlatScene {
 
     SDL_Surface* loadSurface(const SDL_Rect& src, const SDL_Surface& chipset, GraphicMode mode, double sp_scale);
 
+    void storeSurface(CanvasResource& canvas, SDL_Surface* surface, GraphicMode mode, GraphicFilter filter);
+
 }
 
 #endif // FS_SDL_SURFACE_FUNCS__
