@@ -29,9 +29,7 @@ namespace FlatScene {
 
     unsigned int pow2(unsigned int n) {
         unsigned int c = 1;
-        while (c < n) 
-            c <<= 1;
-
+        while (c < n) c <<= 1;
         return c;
     };
 

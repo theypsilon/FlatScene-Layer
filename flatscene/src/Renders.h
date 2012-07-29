@@ -16,7 +16,7 @@ namespace FlatScene {
         Float height;
         Float zoom;
 
-        void operator()();
+        virtual void operator()();
     };
 
     struct SRenderTranslation : SRender { // TRANSLATE && SCALATION
@@ -24,7 +24,7 @@ namespace FlatScene {
         Float y;
         Float z;
 
-        void operator()();
+        virtual void operator()();
     };
 
     struct SRenderScalation : SRender { // TRANSLATE && SCALATION
@@ -32,7 +32,7 @@ namespace FlatScene {
         Float y;
         Float z;
 
-        void operator()();
+        virtual void operator()();
     };
 
     struct SRenderRotation : SRender { // ROTATION
@@ -41,7 +41,7 @@ namespace FlatScene {
         Float y;
         Float z;
 
-        void operator()();
+        virtual void operator()();
     };
 
     struct SRenderColor : SRender { // ROTATION
@@ -50,7 +50,7 @@ namespace FlatScene {
         Float blue;
         Float alpha;
 
-        void operator()();
+        virtual void operator()();
     };
 
     struct SRenderCanvas : SRender {
@@ -63,16 +63,16 @@ namespace FlatScene {
         : relW((Float)(canvas.w2/canvas.w)), relH((Float)(canvas.h2/canvas.h)),
         w2(canvas.w2), h2(canvas.h2), tex(canvas.tex), flags(flags) {}
 
-        void operator()();
+        virtual void operator()();
     };
 
 
     struct SRenderPushMatrix : SRender { // ROTATION
-        void operator()();
+        virtual void operator()();
     };
 
     struct SRenderPopMatrix : SRender { // ROTATION
-        void operator()();
+        virtual void operator()();
     };
 
 } // FlatScene
