@@ -1,7 +1,7 @@
 #ifndef FS_REFCOUNT_MEMORY_POLICY_IMPL__
 #define FS_REFCOUNT_MEMORY_POLICY_IMPL__
 
-#include "RefCountMemoryPolicy.h"
+#include "ResourceMemoryPolicies.h"
 
 namespace FlatScene {
     template <typename Resource, typename CountIndex>

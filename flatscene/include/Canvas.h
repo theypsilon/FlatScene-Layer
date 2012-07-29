@@ -9,7 +9,6 @@
 #include <map>
 
 #include "ResourceHandler.h"
-#include "RefCountMemoryPolicy.h"
 
 namespace FlatScene {
 

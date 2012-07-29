@@ -4,31 +4,14 @@
 #include <memory>
 #include <type_traits>
 
+#include "ResourceMemoryPolicies.h"
+
 namespace FlatScene {
-
-    template <typename Resource>
-    struct DefaultMemoryPolicy {
-        typedef std::unique_ptr<Resource> Holder;
-        static bool isSame(Holder& lhs, Holder& rhs) {
-            return false;
-        }
-
-        static Resource* add(const Holder& res) {
-            return new Resource(*res);
-        }
-
-        static void remove(Holder& res) {
-            res.reset(nullptr);
-        }
-
-        static Holder move(Holder& res) {
-            return std::move(res);
-        }
-    };
 
     template < typename Resource, typename MemoryPolicy = DefaultMemoryPolicy<Resource>	> 
     class ResourceHandler {
     public:
+        typedef Resource ResourceType;
 
         ResourceHandler(const ResourceHandler& handler) 
             : _res(MemoryPolicy::add(handler._res))
