@@ -35,7 +35,7 @@ namespace FlatScene {
 
     template <class T> T createCanvas(
         const SDL_Rect& src, const SDL_Surface& chipset, 
-        unsigned char mode, double sp_scale, GraphicFilter filter
+        GraphicMode mode, double sp_scale, GraphicFilter filter
     ) {
         static_assert(
             /*std::is_trivially_constructible<T>::value && */
@@ -51,9 +51,6 @@ namespace FlatScene {
 
         T newCanvas(p,&chipset);
         SDL_Surface* surface = loadSurface(src,chipset,mode,sp_scale);
-
-        if (pow2(mode) != mode)
-            throw Exception("CCanvas::LoadIMG -> modo erroneo.",__LINE__);
 
         CanvasResource& pSurface = static_cast<Canvas&>(newCanvas).getRes();
 

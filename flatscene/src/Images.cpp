@@ -31,7 +31,7 @@ void Images::clear() {
     }
 }
 
-int Images::add(const char* name,Uint8 mode) {
+int Images::add(const char* name,GraphicMode mode) {
     Spriteset* sptset;
 
     int ret=search(name);

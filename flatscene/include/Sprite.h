@@ -43,7 +43,7 @@ namespace FlatScene {
     private:
         template <typename T> friend T createCanvas(
             const SDL_Rect& src, const SDL_Surface& chipset, 
-            unsigned char mode, double sp_scale, GraphicFilter filter
+            GraphicMode mode, double sp_scale, GraphicFilter filter
         );
         
         friend class Canvas;

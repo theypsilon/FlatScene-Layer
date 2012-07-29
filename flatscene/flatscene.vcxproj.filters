@@ -6316,9 +6316,6 @@
     <ClInclude Include="include\TinyXMLHelper.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
-    <ClInclude Include="include\Actor.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Algorithm.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Canvas.h" />

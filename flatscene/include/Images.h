@@ -16,7 +16,7 @@ namespace FlatScene {
     class Images : private Util::NonCpmvable, public Util::Singleton<Images> {
         friend class Util::Singleton<Images>;
     public:
-        int add(const char* name,Uint8 mode=ONLY_TEXTURE);
+        int add(const char* name,GraphicMode mode=ONLY_TEXTURE);
         int remove(Uint32 n);
         Spriteset* get(Uint32 n);
         int size();

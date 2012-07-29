@@ -4,11 +4,11 @@ namespace FlatScene {
 
     template class RefCountMemoryPolicy<SpritesetResource>;
 
-    Spriteset::Spriteset(std::string c, unsigned char mode) 
+    Spriteset::Spriteset(std::string c, GraphicMode mode) 
         : ResourceHandler (new SpritesetResource(c,mode))
     {}
 
-    Uint8 Spriteset::getMode() const {
+    GraphicMode Spriteset::getMode() const {
         return getRes().getMode();
     }
 

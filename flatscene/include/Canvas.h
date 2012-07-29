@@ -1,7 +1,6 @@
 #ifndef FS_IMAGE_H__
 #define FS_IMAGE_H__
 
-#include "definitions.h"
 #include "Types.h"
 #include "Color.h"
 #include <string>
@@ -13,6 +12,12 @@
 #include "RefCountMemoryPolicy.h"
 
 namespace FlatScene {
+
+    enum GraphicMode {
+        ONLY_TEXTURE,
+        WITH_SDL_SURFACE,
+        ONLY_SDL_SURFACE
+    };
 
     enum GraphicFilter {
         NEAREST,
@@ -48,7 +53,7 @@ namespace FlatScene {
     private:
         template <typename T> friend T createCanvas(
             const SDL_Rect& src, const SDL_Surface& chipset, 
-            unsigned char mode, double sp_scale, GraphicFilter filter=NEAREST
+            GraphicMode mode, double sp_scale, GraphicFilter filter=NEAREST
         );
         
         friend class FSTextBox;

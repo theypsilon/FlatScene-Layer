@@ -8,7 +8,7 @@ namespace FlatScene {
 
 typedef struct { 
     std::string name; 
-    Uint8 mode; 
+    GraphicMode mode; 
     int times;
     int number;
 } SpritesetInfo ;

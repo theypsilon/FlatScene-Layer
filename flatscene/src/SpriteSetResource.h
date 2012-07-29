@@ -26,12 +26,12 @@ public:
 
     typedef std::vector<Sprite> SpriteCollection;
 
-    SpritesetResource(const std::string& c, unsigned char mode) 
+    SpritesetResource(const std::string& c, GraphicMode mode) 
         : _mode(mode), _name(c) {
             loadChipset(c,mode);
     }
 
-    Uint8 getMode() {
+    GraphicMode getMode() {
         return _mode;
     }
 
@@ -67,9 +67,9 @@ private:
 
     SpriteCollection _sprites;
     std::string      _name;
-    unsigned char    _mode;
+    GraphicMode      _mode;
 
-    void loadChipset(const std::string& c,unsigned char mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
+    void loadChipset(const std::string& c,GraphicMode mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
         auto names = getNameFile(c);
 
         auto chipset = IMG_Load(names.second.c_str());
@@ -113,7 +113,7 @@ private:
 
     }
 
-    void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
+    void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, GraphicMode mode) {
         if (chipset.w / grd.cellwidth <= 0 || chipset.w % grd.cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
