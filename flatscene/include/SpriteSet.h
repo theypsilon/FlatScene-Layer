@@ -11,8 +11,8 @@ namespace FlatScene {
     class Spriteset : public ResourceHandler<SpritesetResource,RefCountMemoryPolicy<SpritesetResource> > {
     public:
         Spriteset(
-            std::string     c    = "",
-            unsigned char   mode = ONLY_TEXTURE
+            std::string c    = "",
+            GraphicMode mode = ONLY_TEXTURE
         );
         
         bool                    isNull () const { return nullptr == &getRes(); };
@@ -21,7 +21,7 @@ namespace FlatScene {
         const Sprite*           get    ( unsigned int n ) const;
         int                     size   () const;
         const std::string&      getName() const;
-        unsigned char           getMode() const;
+        GraphicMode             getMode() const;
 
     private :
         friend class Screen;

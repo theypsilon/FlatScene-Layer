@@ -39,6 +39,11 @@ namespace FlatScene {
 
     };
 
+    template <typename T>
+    bool operator==(const Point2D<T>& lhs, const Point2D<T>& rhs) {
+        return lhs.x == rhs.x && lhs.y == rhs.y;
+    }
+
 } // flatscene
 
 #endif

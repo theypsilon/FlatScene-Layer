@@ -2,7 +2,6 @@
 #define __MAINCANVAS_H__
 
 #include "Canvas.h"
-#include "Images.h"
 #include "Color.h"
 #include <list>
 
@@ -73,10 +72,6 @@ namespace FlatScene {
         friend class Canvas;
 
         friend struct SRenderLocation;
-
-        friend class Images;
-        friend class Writer;
-        friend class FSTextBox;
     };
     #ifdef GLOBAL_SINGLETON_REFERENCES
     extern Screen& FSDraw;

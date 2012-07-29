@@ -6,7 +6,6 @@
 #include "Algorithm.h"
 #include "parserXML.h"
 #include "Library.h"
-#include "debugfuncs.h"
 
 #include <algorithm>
 #include <iostream>
@@ -27,12 +26,12 @@ public:
 
     typedef std::vector<Sprite> SpriteCollection;
 
-    SpritesetResource(const std::string& c, unsigned char mode) 
+    SpritesetResource(const std::string& c, GraphicMode mode) 
         : _mode(mode), _name(c) {
             loadChipset(c,mode);
     }
 
-    Uint8 getMode() {
+    GraphicMode getMode() {
         return _mode;
     }
 
@@ -68,9 +67,9 @@ private:
 
     SpriteCollection _sprites;
     std::string      _name;
-    unsigned char    _mode;
+    GraphicMode      _mode;
 
-    void loadChipset(const std::string& c,unsigned char mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
+    void loadChipset(const std::string& c,GraphicMode mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
         auto names = getNameFile(c);
 
         auto chipset = IMG_Load(names.second.c_str());
@@ -114,7 +113,7 @@ private:
 
     }
 
-    void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, unsigned char mode) {
+    void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, GraphicMode mode) {
         if (chipset.w / grd.cellwidth <= 0 || chipset.w % grd.cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
@@ -124,7 +123,7 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt = loadSprite(src,chipset,mode,grd.sp_scale);
+            Sprite spt = createCanvas<Sprite>(src,chipset,mode,grd.sp_scale);
 
             //spt.setName(std::move(img.name));
 
@@ -140,31 +139,6 @@ private:
         }
     }
 
-    Sprite loadSprite(const SDL_Rect& src, const SDL_Surface& chipset, unsigned char mode, double sp_scale) {
-        auto surf = SDL_CreateRGBSurface(chipset.flags | SDL_SRCALPHA,
-                                         src.w - src.x, src.h - src.y,
-                                         chipset.format->BitsPerPixel,
-                                         chipset.format->Rmask, chipset.format->Gmask,
-                                         chipset.format->Bmask, chipset.format->Amask);
-
-        SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
-        blitcopy(chipset,const_cast<SDL_Rect*>(&src),surf,nullptr);
-
-        if (sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
-            if (auto temp = Canvas::scaleSurface(surf,(int)sp_scale)) {
-                SDL_FreeSurface(surf);
-                surf=temp;
-            }
-            // Reasignamos los formatos.
-            SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);
-        }
-
-        Sprite spt = Canvas::createCanvas<Sprite>(surf,mode);
-
-        //Sprite spt(Canvas::toSCanvas(surf,mode),img.cp);
-
-        return spt;
-    }
 };
 
 } // flatscene

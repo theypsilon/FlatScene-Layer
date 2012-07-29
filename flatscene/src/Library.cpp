@@ -12,6 +12,10 @@
 #include "Exception.h"
 #include <algorithm>
 
+#define RESOLUCION_X 320
+#define RESOLUCION_Y 240
+#define BITMODE 32
+
 namespace FlatScene {
 
 void Library::LibraryImpl::sort(std::vector<std::unique_ptr<Engine>>& v) {
@@ -84,7 +88,7 @@ int Library::startLibrary(bool xmlconfig) {
 
     }
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 int Library::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
@@ -177,12 +181,12 @@ std::vector<std::unique_ptr<Engine>> Library::processEngines() {
 int Library::addEngine(std::unique_ptr<Engine> engine,int priority) {
 
     if (engine == nullptr)
-        return FRACASO;
+        return EXIT_FAILURE;
 
     engine->priority = priority;
     (*_impl).engineIn.push_back(std::move(engine));
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 void Library::exit() {
@@ -333,10 +337,6 @@ bool Library::inDebug() {
     return (*_impl).debugging;
 }
 
-#endif
-
-#ifdef GLOBAL_SINGLETON_REFERENCES
-Library& FSLib = Library::I();
 #endif
 
 } // flatscene

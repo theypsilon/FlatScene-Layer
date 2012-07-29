@@ -1,7 +1,6 @@
 #ifndef FS_IMAGE_H__
 #define FS_IMAGE_H__
 
-#include "definitions.h"
 #include "Types.h"
 #include "Color.h"
 #include <string>
@@ -14,6 +13,12 @@
 
 namespace FlatScene {
 
+    enum GraphicMode {
+        ONLY_TEXTURE,
+        WITH_SDL_SURFACE,
+        ONLY_SDL_SURFACE
+    };
+
     enum GraphicFilter {
         NEAREST,
         LINEAR
@@ -23,9 +28,10 @@ namespace FlatScene {
 
     class Canvas : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
     public:
+        typedef RefCountMemoryPolicy<CanvasResource>                MemoryPolicyType;
+        typedef ResourceHandler<CanvasResource,MemoryPolicyType>    ResourceHandlerType;
 
-        template <typename T> 
-        static T createCanvas(SDL_Surface* surface, unsigned char mode=ONLY_TEXTURE, GraphicFilter filter=NEAREST);
+        Canvas(const Point& xy, const SDL_Surface *const c);    
 
         unsigned int getPixel(unsigned int x, unsigned int y) const;
 
@@ -42,18 +48,19 @@ namespace FlatScene {
         void color(Float red, Float green, Float blue, Float alpha) const;
         void color(const Color& col,Float alpha=1.0) const;
 
-        Canvas();
     protected:
         Canvas(CanvasResource* res);
     private:
-
+        template <typename T> friend T createCanvas(
+            const SDL_Rect& src, const SDL_Surface& chipset, 
+            GraphicMode mode, double sp_scale, GraphicFilter filter=NEAREST
+        );
+        
         friend class FSTextBox;
         friend class Sprite;
         friend class SpritesetResource;
         friend class Images;
         friend class Screen;
-
-        static SDL_Surface* scaleSurface( SDL_Surface* s_surf,int factor);
     };
 
 } // flatscene

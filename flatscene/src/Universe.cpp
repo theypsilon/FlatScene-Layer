@@ -42,7 +42,7 @@ int Universe::incActor(Actor* act) {
         for (ActorCollection::iterator it = u->actorBegin(), jt = u->actorEnd();it!=jt;++it)
             if (act == *it) throw Exception("Actor actualmente incluido en otro Universe");
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 int Universe::decActor(Actor* act) {
@@ -53,7 +53,7 @@ int Universe::decActor(Actor* act) {
         if (act == *it) {
             act->setUniverse(nullptr);
             actor.erase(it);
-            return EXITO;
+            return EXIT_SUCCESS;
         }
 
     throw Exception("Actor actualmente no incluido en este Universe");

@@ -2,13 +2,13 @@
 #define FS_SCREEN_IMPL__
 
 #include "Screen.h"
-#include "CanvasResource.h"
+#include "SpriteSetResource.h"
 
 namespace FlatScene {
 
 typedef struct { 
     std::string name; 
-    Uint8 mode; 
+    GraphicMode mode; 
     int times;
     int number;
 } SpritesetInfo ;

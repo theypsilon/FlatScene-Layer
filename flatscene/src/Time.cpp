@@ -29,7 +29,7 @@ unsigned int Time::setFPS(unsigned int fpsInterval) {
 }
 
 int  Time::nextFrame() {
-    int ret = EXITO;
+    int ret = EXIT_SUCCESS;
 
     while ((_msLast + _msInterval) > SDL_GetTicks()) {
         SDL_Delay(1);
@@ -53,10 +53,5 @@ int  Time::nextFrame() {
 void Time::reset(unsigned int tick) {
     _ticks = tick;
 }
-
-// TODO : Liberar los espacios de memoria correspondiente a los engines cuando estos sean eliminados. 
-//              No es prioritario porque la creaci�n y destrucci�n de engines durante la ejecuci�n deber�a ser m�nima, y la memoria reservada es muy peque�a.
-
-Time Chrono;
 
 } // flatscene

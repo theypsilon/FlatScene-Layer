@@ -14,6 +14,7 @@ namespace FlatScene {
         Sprite::Areas   areas;
         SpriteOpaque    opaque;
 
+        SpriteResource(const CanvasResource::PointType& xy,const SDL_Surface *const c) : CanvasResource(xy,c) {}
         virtual ~SpriteResource() {}
     };
 

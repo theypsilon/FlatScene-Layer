@@ -1,7 +1,7 @@
 #include "IDebug.h"
 #include "tinyxml/tinyxml.h"
 
-int func_fracaso(const char* file, int line) {
+int func_EXIT_FAILURE(const char* file, int line) {
 
     std::string d = "";
 
@@ -11,9 +11,9 @@ int func_fracaso(const char* file, int line) {
         d = file[i] + d;
     }
 
-    printf("FRACASO en %s line: %d\n",d.c_str(),line);
+    printf("EXIT_FAILURE en %s line: %d\n",d.c_str(),line);
 
-#ifdef AVOID_FRACASO
+#ifdef AVOID_EXIT_FAILURE
     exit(0);
 #endif
 

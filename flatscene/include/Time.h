@@ -1,13 +1,7 @@
-#ifndef __TIME_H__
-#define __TIME_H__
-
-#include <map>
-#include <memory>
-#include "definitions.h"
+#ifndef FS_TIME_H__
+#define FS_TIME_H__
 
 namespace FlatScene {
-
-    class Engine;
 
     class Time {
     private:
@@ -30,8 +24,6 @@ namespace FlatScene {
         unsigned int getTick() const;
         void reset(unsigned int tick = 0);
     };
-
-    extern Time Chrono;
 
 } // flatscene
 
