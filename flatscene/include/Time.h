@@ -3,7 +3,6 @@
 
 #include <map>
 #include <memory>
-#include "definitions.h"
 
 namespace FlatScene {
 
