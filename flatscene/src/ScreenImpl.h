@@ -2,7 +2,7 @@
 #define FS_SCREEN_IMPL__
 
 #include "Screen.h"
-#include "CanvasResource.h"
+#include "SpriteResource.h"
 
 namespace FlatScene {
 
