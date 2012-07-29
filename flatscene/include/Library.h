@@ -6,10 +6,9 @@
 
 #include "Includes.h"
 
-#include "Screen.h"
+#include "SpriteSet.h"
 #include "Engine.h"
 
-#include "Images.h"
 #include "Time.h"
 
 #include "Camera.h"

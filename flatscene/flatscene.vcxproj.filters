@@ -502,7 +502,6 @@
     <ClCompile Include="src\debugfuncs.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Exception.cpp" />
-    <ClCompile Include="src\Images.cpp" />
     <ClCompile Include="src\Library.cpp" />
     <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="src\ScreenReload.cpp" />
@@ -1269,6 +1268,9 @@
     <ClCompile Include="src\tinyxml\tinyxml.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\debugfuncs.h">
@@ -6523,9 +6525,6 @@
     <ClInclude Include="include\TinyXMLHelper.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
-    <ClInclude Include="include\Actor.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Algorithm.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Canvas.h" />

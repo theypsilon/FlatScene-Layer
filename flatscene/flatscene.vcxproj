@@ -97,11 +97,11 @@
     <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Exception.cpp" />
-    <ClCompile Include="src\Images.cpp" />
     <ClCompile Include="src\Library.cpp" />
     <ClCompile Include="src\Renders.cpp" />
     <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\SpriteSet.cpp" />
     <ClCompile Include="src\Time.cpp" />
@@ -120,7 +120,6 @@
     <ClInclude Include="include\FlatScene.h" />
     <ClInclude Include="include\FS.h" />
     <ClInclude Include="include\GraphicResourceDescriptor.h" />
-    <ClInclude Include="include\Images.h" />
     <ClInclude Include="include\Includes.h" />
     <ClInclude Include="include\IndexedPointer.h" />
     <ClInclude Include="include\IndexHandler.h" />

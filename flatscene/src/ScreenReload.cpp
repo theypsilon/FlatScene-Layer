@@ -1,6 +1,6 @@
 #include "Library.h"
-#include "ImagesImpl.h"
 #include "ScreenImpl.h"
+#include "SpriteSet.h"
 
 namespace FlatScene {
 
@@ -23,7 +23,7 @@ void Screen::ScreenImpl::deleteResources() {
 }
 
 void Screen::ScreenImpl::saveResources(GraphicResources &info) {
-
+    /*
     Images& img = Images::I();
     
     for (SpritesetCollection::iterator it=img._impl->set.begin(),kt=img._impl->set.end();it!=kt;++it)   {
@@ -37,12 +37,12 @@ void Screen::ScreenImpl::saveResources(GraphicResources &info) {
 
     img.clear();
 
-    deleteResources();
+    deleteResources();*/
 
 }
 
 void Screen::ScreenImpl::reloadResources(GraphicResources &info) {
-
+    /*
     Images& img = Images::I();
 
     int number = 0;
@@ -56,7 +56,7 @@ void Screen::ScreenImpl::reloadResources(GraphicResources &info) {
             img._impl->lastIndexAdded.push(number);
         }
         img._impl->count[img.get(it->number)]=it->times;
-    }
+    }*/
 }
 
 } // flatscene
