@@ -8,29 +8,70 @@
 
 namespace FlatScene {
 
+    template <typename Resource,typename HolderTemplate>
+    struct ExplicitHolderPolicy {
+        typedef Resource        ResourceType;
+        typedef HolderTemplate  Holder;
+    };
+
     template <typename Resource>
-    struct DefaultMemoryPolicy {
+    struct PointerHolderPolicy {
+        typedef Resource    ResourceType;
+        typedef Resource*   Holder;
+    };
+
+    template <typename HolderPolicy>
+    struct StandardMovePolicy {
+        static inline typename HolderPolicy::Holder move(typename HolderPolicy::Holder& res) {
+            return std::move(res);
+        }
+    };
+
+    template <typename HolderPolicy>
+    struct PointerAccessPolicy {
+        static inline typename HolderPolicy::ResourceType& access(typename HolderPolicy::Holder& res) {
+            return *res;
+        }
+    };
+
+    template <typename HolderPolicy>
+    struct TrivialComparePolicy {
+        typedef const typename HolderPolicy::Holder& Holder;
+        static inline bool isSame(Holder lhs,Holder rhs) {
+            return lhs == rhs;
+        }
+    };
+
+    template <
+        typename Resource, 
+        typename HolderPolicy = ExplicitHolderPolicy<Resource,std::unique_ptr<Resource> > 
+    >
+    struct DefaultMemoryPolicy
+    : public StandardMovePolicy     <HolderPolicy>
+    , public PointerAccessPolicy    <HolderPolicy> {
         typedef std::unique_ptr<Resource> Holder;
 
         static bool isSame(Holder& lhs, Holder& rhs) {
             return false;
         }
 
-        static Resource* add(const Holder& res) {
+        static Resource* add(const typename HolderPolicy::Holder& res) {
             return new Resource(*res);
         }
 
-        static void remove(Holder& res) {
+        static void remove(typename HolderPolicy::Holder& res) {
             res.reset(nullptr);
-        }
-
-        static Holder move(Holder& res) {
-            return std::move(res);
         }
     };
 
-    template <typename Resource,typename CountIndex = unsigned int>
-    class RefCountMemoryPolicy {
+    template <
+        typename Resource, 
+        typename HolderPolicy = PointerHolderPolicy<Resource>, 
+        typename CountIndex = unsigned int
+    >
+    class RefCountMemoryPolicy 
+    : public PointerAccessPolicy    <HolderPolicy>
+    , public TrivialComparePolicy   <HolderPolicy> {
     public:
         typedef Resource* Holder;
         typedef std::unordered_map<Holder,CountIndex> CountMap;
@@ -56,10 +97,6 @@ namespace FlatScene {
             }
         }
 
-        static inline bool isSame(Holder lhs, Holder rhs) {
-            return lhs == rhs;
-        }
-
         static inline Holder move(Holder& res) {
             Holder out = res;
             res = nullptr;
@@ -76,9 +113,9 @@ namespace FlatScene {
         static CountMap _count;
     };
 
-    template <typename Resource,typename CountIndex>
+    template <typename Resource,typename HolderPolicy, typename CountIndex>
     typename std::unordered_map<Resource*,CountIndex>
-        RefCountMemoryPolicy<Resource,CountIndex>::_count;
+        RefCountMemoryPolicy<Resource,HolderPolicy,CountIndex>::_count;
 
 } // FlatScene
 
