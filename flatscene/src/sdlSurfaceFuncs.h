@@ -21,6 +21,8 @@ namespace FlatScene {
 
     SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor);
 
+    SDL_Surface* loadSurface(const SDL_Rect& src, const SDL_Surface& chipset, GraphicMode mode, double sp_scale);
+
 }
 
 #endif // FS_SDL_SURFACE_FUNCS__
