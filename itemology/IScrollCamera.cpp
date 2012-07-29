@@ -63,7 +63,7 @@ void IScrollCamera::setTarget(Actor* newTarget) {
 
     /*if (newTarget == this->target) {
     CLibrary::Error("Actor objetivo ya establecido");
-    return FRACASO;
+    return EXIT_FAILURE;
     }
 
     if (newTarget->getUniverse()!= this->target->getUniverse()) {

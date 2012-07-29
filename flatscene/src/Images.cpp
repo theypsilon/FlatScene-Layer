@@ -72,7 +72,7 @@ int Images::remove(Uint32 n) {
         (*_impl).lastIndexAdded.push(n);
     }
 
-    return EXITO;
+    return EXIT_SUCCESS;
 
 }
 
@@ -81,7 +81,7 @@ int Images::search(const char* name) {
         if (pair.second->getName() == name)
             return pair.first;
 
-    return FRACASO;
+    return EXIT_FAILURE;
 }
 
 int Images::search(Spriteset* object) {
@@ -89,7 +89,7 @@ int Images::search(Spriteset* object) {
         if (pair.second == object)
             return pair.first;
 
-    return FRACASO;
+    return EXIT_FAILURE;
 }
 
 Spriteset* Images::get(Uint32 n) {

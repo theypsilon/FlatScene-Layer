@@ -279,10 +279,10 @@ int IScrollLevel::incActor(Actor* act) {
                 actscroll->_placeInMA = nullptr;
             }
         }
-        return EXITO;
+        return EXIT_SUCCESS;
     } else {
         throw Exception((std::string("Se ha a�adido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
-        return FRACASO;
+        return EXIT_FAILURE;
     }
 }
 
@@ -308,7 +308,7 @@ int IScrollLevel::decActor(Actor* act) {
     }
     }*/
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 Uint32 IScrollLevel::getPixel(int x, int y,int z) {

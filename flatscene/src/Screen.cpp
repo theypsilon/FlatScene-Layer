@@ -85,7 +85,7 @@ int Screen::start(int width, int height, int bpp, bool fullscreen, bool doublebu
     SDL_ShowCursor( 0 );
     SDL_WM_SetCaption("biblioteca-opengl-2d",nullptr);
 
-    return EXITO;
+    return EXIT_SUCCESS;
 
 }
 
@@ -140,7 +140,7 @@ int Screen::start(int width, int height, int bpp, Float scalex, Float scaley, bo
     SDL_ShowCursor( 0 );
     SDL_WM_SetCaption("biblioteca-opengl-2d",nullptr);
 
-    return EXITO;
+    return EXIT_SUCCESS;
 
 }
 
@@ -176,7 +176,7 @@ int Screen::render() {
 
     _impl->deleteResources();
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 int Screen::clear ( ) 
@@ -199,7 +199,7 @@ int Screen::clear ( )
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
     glLoadIdentity();
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 Float Screen::getA() {
@@ -236,7 +236,7 @@ int Screen::locateRenderScene(Float posx, Float posy, Float width, Float height,
     (*rr)();
 #endif
 
-    return EXITO;
+    return EXIT_SUCCESS;
 
 }
 
@@ -254,7 +254,7 @@ int Screen::rotate(Float angle, Float x, Float y, Float z) {
     (*rr)();
 #endif
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 int Screen::translate(Float x, Float y, Float z) {
@@ -270,7 +270,7 @@ int Screen::translate(Float x, Float y, Float z) {
     (*rr)();
 #endif
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 int Screen::scale(Float x, Float y, Float z) {
@@ -286,7 +286,7 @@ int Screen::scale(Float x, Float y, Float z) {
     (*rr)();
 #endif
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 int Screen::color(Float red, Float green, Float blue, Float alpha) {
@@ -304,7 +304,7 @@ int Screen::color(Float red, Float green, Float blue, Float alpha) {
     (*rr)();
 #endif
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 int Screen::color(Color* col, Float alpha) {
@@ -321,7 +321,7 @@ int Screen::projectionMode(TypeRendeProjection trp, Float zMax) {
     _impl->m_maxZ = zMax;
     _impl->trp = trp;
 
-    return EXITO;
+    return EXIT_SUCCESS;
 
 }
 
@@ -333,7 +333,7 @@ int Screen::pushMatrix() {
     rr();
 #endif
 
-    return EXITO;
+    return EXIT_SUCCESS;
 
 }
 
@@ -345,7 +345,7 @@ int Screen::popMatrix() {
     rr();
 #endif
 
-    return EXITO;
+    return EXIT_SUCCESS;
 
 }
 
@@ -359,7 +359,7 @@ int Screen::ScreenImpl::beginRenderMode(Uint32 flags) {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 int Screen::ScreenImpl::endRenderMode(Uint32 flags) {
@@ -371,7 +371,7 @@ int Screen::ScreenImpl::endRenderMode(Uint32 flags) {
         glDisable(GL_COLOR_MATERIAL);
     }
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 
@@ -383,7 +383,7 @@ int Screen::quit()
     _impl->m_SDL_Surface = nullptr;
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 Uint8 Screen::getBpp() {
@@ -414,12 +414,12 @@ int Screen::changeScreen(int width, int height, int bpp, Float scalex, Float sca
 
     quit();
 
-    if ( start (width,height,bpp,scalex, scaley,fullscreen,_impl->m_Doublebuff) == FRACASO)
-        return FRACASO;
+    if ( start (width,height,bpp,scalex, scaley,fullscreen,_impl->m_Doublebuff) == EXIT_FAILURE)
+        return EXIT_FAILURE;
 
     _impl->reloadResources(info);
 
-    return EXITO;
+    return EXIT_SUCCESS;
     
 }
 
@@ -437,12 +437,12 @@ int Screen::ToggleFullscreen() {
 
     _impl->m_FullScreen = !_impl->m_FullScreen;
 
-    if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,_impl->m_Doublebuff) == FRACASO )
-        return FRACASO;
+    if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,_impl->m_Doublebuff) == EXIT_FAILURE )
+        return EXIT_FAILURE;
 
     _impl->reloadResources(info);
 
-    return EXITO;
+    return EXIT_SUCCESS;
 
 }
 
@@ -459,13 +459,13 @@ int Screen::setDoublebuffer(bool doublebuff) {
 
         quit();
 
-        if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,doublebuff) == FRACASO)
-            return FRACASO;
+        if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,doublebuff) == EXIT_FAILURE)
+            return EXIT_FAILURE;
 
         _impl->reloadResources(info);
     }
 
-    return EXITO;
+    return EXIT_SUCCESS;
 }
 
 } // flatscene

@@ -135,7 +135,7 @@ namespace FlatScene {
         int i=0;
 
         if (values == NULL || surface == NULL || rect == NULL)
-            return FRACASO;
+            return EXIT_FAILURE;
 
         for (int x = rect->x; x < rect->w; x++)
             for (int y = rect->y ; y < rect->h ; y++) {
@@ -148,7 +148,7 @@ namespace FlatScene {
 
             }
 
-        return EXITO;
+        return EXIT_SUCCESS;
 
     }
 
@@ -157,7 +157,7 @@ namespace FlatScene {
         int i=0;
 
         if (values == NULL || surface == NULL)
-            return FRACASO;
+            return EXIT_FAILURE;
 
         for (int x = 0; x < surface->w; x++)
             for (int y = 0 ; y < surface->h ; y++) {
@@ -169,7 +169,7 @@ namespace FlatScene {
 
             }
 
-        return FRACASO;
+        return EXIT_FAILURE;
     }
 
     int blitcopy(const SDL_Surface& ref_src, SDL_Rect* srcrect,SDL_Surface* surface,SDL_Rect* rect) {
@@ -178,7 +178,7 @@ namespace FlatScene {
         SDL_Surface* src = const_cast<SDL_Surface*>(std::addressof(ref_src));
 
         if (src == nullptr || surface == nullptr)
-            return FRACASO;
+            return EXIT_FAILURE;
 
         if (srcrect == nullptr && rect == nullptr) {
             if (src->w > surface->w)
@@ -241,16 +241,16 @@ namespace FlatScene {
         }
 
         if (srcx + ancho > src->w)
-            return FRACASO;
+            return EXIT_FAILURE;
 
         if (dstx + ancho > surface->w)
-            return FRACASO;
+            return EXIT_FAILURE;
 
         if (srcy + alto > src->h)
-            return FRACASO;
+            return EXIT_FAILURE;
 
         if (dsty + alto > surface->h)
-            return FRACASO;
+            return EXIT_FAILURE;
 
         Uint32* pixel = new Uint32[ancho*alto];
 
@@ -278,7 +278,7 @@ namespace FlatScene {
             }
         }
 
-        return EXITO;
+        return EXIT_SUCCESS;
     }
 
     SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor) {

@@ -29,7 +29,7 @@ unsigned int Time::setFPS(unsigned int fpsInterval) {
 }
 
 int  Time::nextFrame() {
-    int ret = EXITO;
+    int ret = EXIT_SUCCESS;
 
     while ((_msLast + _msInterval) > SDL_GetTicks()) {
         SDL_Delay(1);
