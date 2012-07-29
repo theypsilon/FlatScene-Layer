@@ -335,8 +335,4 @@ bool Library::inDebug() {
 
 #endif
 
-#ifdef GLOBAL_SINGLETON_REFERENCES
-Library& FSLib = Library::I();
-#endif
-
 } // flatscene

@@ -11,9 +11,6 @@
 
 
 // LIBRARY
-// instantiate the singletons before the main begins and create global
-// references for his use
-#define GLOBAL_SINGLETON_REFERENCES
 
 #define TEXT_BASE_SCALE 2
 #define BITMODE 32

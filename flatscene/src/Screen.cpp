@@ -466,8 +466,4 @@ int Screen::setDoublebuffer(bool doublebuff) {
     return EXITO;
 }
 
-#ifdef GLOBAL_SINGLETON_REFERENCES
-Screen& FSDraw = Screen::I();
-#endif
-
 } // flatscene

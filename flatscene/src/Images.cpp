@@ -104,8 +104,4 @@ int Images::getCount(Uint32 n) {
     return find_assoc((*_impl).count,get(n),0);
 }
 
-#ifdef GLOBAL_SINGLETON_REFERENCES
-Images& Img = Images::I();
-#endif
-
 } // flatscene
