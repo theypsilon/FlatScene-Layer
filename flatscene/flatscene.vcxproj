@@ -95,7 +95,6 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Canvas.cpp" />
     <ClCompile Include="src\Color.cpp" />
-    <ClCompile Include="src\debugfuncs.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Images.cpp" />
@@ -110,10 +109,42 @@
     <ClCompile Include="src\tinyxml\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\*.h" />
+    <ClInclude Include="include\Actor.h" />
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\definitions.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\Images.h" />
+    <ClInclude Include="include\Includes.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\RefCountMemoryPolicy.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\SpriteSet.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
     <ClInclude Include="include\tinyxml\*.h" />
     <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
     <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

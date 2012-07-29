@@ -1,7 +1,7 @@
 #ifndef FS_CANVAS_FACTORY__
 #define FS_CANVAS_FACTORY__
 
-#include "Library.h"
+#include "sdlSurfaceFuncs.h"
 #include "CanvasResource.h"
 
 namespace FlatScene {

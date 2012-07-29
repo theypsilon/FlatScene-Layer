@@ -6,7 +6,6 @@
 #include "Algorithm.h"
 #include "parserXML.h"
 #include "Library.h"
-#include "debugfuncs.h"
 
 #include <algorithm>
 #include <iostream>
