@@ -58,12 +58,6 @@ namespace FlatScene {
         friend class Screen;
     };
 
-    // template <typename T> 
-    // static T createCanvas(
-    //     const SDL_Rect& src, const SDL_Surface& chipset, 
-    //     unsigned char mode, double sp_scale, GraphicFilter filter=NEAREST
-    // );
-
 } // flatscene
 
 #endif
