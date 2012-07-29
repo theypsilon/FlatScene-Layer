@@ -10,8 +10,4 @@
 #define WITH_SDL_SURFACE 0x02
 #define ONLY_SDL_SURFACE 0x04
 
-#define RESOLUCION_X 320
-#define RESOLUCION_Y 240
-#define BITMODE 32
-
 #endif

@@ -12,6 +12,10 @@
 #include "Exception.h"
 #include <algorithm>
 
+#define RESOLUCION_X 320
+#define RESOLUCION_Y 240
+#define BITMODE 32
+
 namespace FlatScene {
 
 void Library::LibraryImpl::sort(std::vector<std::unique_ptr<Engine>>& v) {

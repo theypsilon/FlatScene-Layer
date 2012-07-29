@@ -4,6 +4,8 @@
 #include "glAdapter.h"
 #include "Exception.h"
 
+#define MAINRENDERLOOP
+
 namespace FlatScene {
 
 Screen::Screen() : _impl(new ScreenImpl) {
