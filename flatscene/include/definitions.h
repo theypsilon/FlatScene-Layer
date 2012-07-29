@@ -103,31 +103,4 @@
 
 #define DEBUGTESTLOGS
 
-#ifndef DEBUGTESTLOGS 
-    #ifdef LOG_MAPAS 
-    	#undef LOG_MAPAS 
-    #endif 
-    #ifdef LOG_JUGADORES 
-    	#undef LOG_JUGADORES 
-    #endif 
-    #ifdef LOG_ACCIONES 
-    	#undef LOG_ACCIONES 
-    #endif 
-#endif
-
-// Nombres de Teclas.
-
-#define PKEY_UP 0
-#define PKEY_DOWN 1
-#define PKEY_LEFT 2
-#define PKEY_RIGHT 3
-#define PKEY_B1 4
-#define PKEY_B2 5
-#define PKEY_B3 6
-#define PKEY_B4 7
-#define PKEY_B5 8
-#define PKEY_B6 9
-#define PKEY_B7 10
-#define PKEY_B8 11
-
 #endif

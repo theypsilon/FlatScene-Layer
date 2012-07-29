@@ -34,6 +34,7 @@ namespace FlatScene {
                 it->second--;
                 if (it->second == 0) {
                     destroy(res);
+                    _count.erase(res);
                 }
             }
         }
