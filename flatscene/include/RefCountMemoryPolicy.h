@@ -11,12 +11,8 @@ namespace FlatScene {
     template <typename Resource,typename CountIndex = unsigned int>
     class RefCountMemoryPolicy {
     public:
-        typedef std::unordered_map<Resource*,CountIndex> CountMap;
         typedef Resource* Holder;
-
-        static inline const CountMap& getCounts() {
-            return _count;
-        }
+        typedef std::unordered_map<Holder,CountIndex> CountMap;
 
         static inline Holder add(Holder res) {
             if (res) {
@@ -47,6 +43,10 @@ namespace FlatScene {
             Holder out = res;
             res = nullptr;
             return out;
+        }
+
+        static inline const CountMap& getCounts() {
+            return _count;
         }
 
     private:
