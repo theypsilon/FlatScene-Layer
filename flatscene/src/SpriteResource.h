@@ -19,6 +19,7 @@ namespace FlatScene {
         virtual ~SpriteResource() {}
 
         friend class Sprite;
+        friend class RefCountMemoryPolicy<SpriteResource>;
         template <class T> friend T* createResource(
             const SDL_Rect& src, const SDL_Surface& chipset, 
             GraphicMode mode, double sp_scale, GraphicFilter filter

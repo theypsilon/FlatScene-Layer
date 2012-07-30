@@ -102,6 +102,7 @@
     <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="src\ScreenReload.cpp" />
     <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\SpriteSet.cpp" />
     <ClCompile Include="src\Time.cpp" />
