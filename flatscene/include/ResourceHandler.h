@@ -11,7 +11,7 @@ namespace FlatScene {
     template < typename Resource, typename MemoryPolicy = DefaultMemoryPolicy<Resource>	> 
     class ResourceHandler : MemoryPolicy {
         typedef typename MemoryPolicy::Holder Holder;
-        
+
         using MemoryPolicy::access;
         using MemoryPolicy::add;
         using MemoryPolicy::remove;
@@ -52,7 +52,7 @@ namespace FlatScene {
         }
 
     protected:
-        ResourceHandler(Resource* res) : _res(add(res)) {}
+        ResourceHandler(Holder res) : _res(add(res)) {}
 
         template <typename ReturnResource> inline ReturnResource& getRes() const {
             return static_cast<ReturnResource&>(access(_res));
@@ -64,6 +64,8 @@ namespace FlatScene {
     private:
         Holder _res;
     };
+
+    class TestResourceHandler : ResourceHandler<int> { public: TestResourceHandler(std::unique_ptr<int> n) : ResourceHandler(std::move(n)) {} };
 
 } // FlatScene
 

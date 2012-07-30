@@ -5,7 +5,7 @@
 
 namespace FlatScene {
     template <typename Resource, typename CountIndex>
-    void RefCountMemoryPolicy<Resource, CountIndex>::destroy(Holder res) {
+    void RefCountMemoryPolicy<Resource, CountIndex>::destroy(Holder res) const {
         delete res;
     }
 }

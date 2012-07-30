@@ -13,23 +13,23 @@ namespace FlatScene {
     protected:
         typedef std::unique_ptr<Resource> Holder;
 
-        static inline bool isSame(Holder& lhs, Holder& rhs) {
+        inline bool isSame(Holder& lhs, Holder& rhs) const {
             return false;
         }
 
-        static inline Resource* add(const Holder& res) {
-            return new Resource(access(res));
+        inline Holder add(Holder& res) const {
+            return Holder(new Resource(access(res)));
         }
 
-        static inline void remove(Holder& res) {
+        inline void remove(Holder& res) const {
             res.reset(nullptr);
         }
 
-        static inline Holder move(Holder& res) {
+        inline Holder move(Holder& res) const {
             return std::move(res);
         }
 
-        static inline Resource& access(const Holder& res) {
+        inline Resource& access(const Holder& res) const {
             return *res;
         }
     };
@@ -45,7 +45,7 @@ namespace FlatScene {
         }
 
     protected:
-        static inline Holder add(Holder res) {
+        inline Holder add(Holder res) const {
             if (res) {
                 _count[res]++;
                 assert(_count[res] != std::numeric_limits<CountIndex>::min());
@@ -53,7 +53,7 @@ namespace FlatScene {
             return res;
         }
 
-        static inline void remove(Holder res) {
+        inline void remove(Holder res) const {
             if (res) {
                 auto it = _count.find(res);
                 assert(it != _count.end());
@@ -66,22 +66,22 @@ namespace FlatScene {
             }
         }
 
-        static inline Holder move(Holder& res) {
+        inline Holder move(Holder& res) const {
             Holder out = res;
             res = nullptr;
             return out;
         }
 
-        static inline Resource& access(const Holder& res) {
+        inline Resource& access(const Holder& res) const {
             return *res;
         }
 
-        static inline bool isSame(Holder& lhs, Holder& rhs) {
+        inline bool isSame(Holder& lhs, Holder& rhs) {
             return lhs == rhs;
         }
 
     private:
-        static void destroy(Holder res);
+        void destroy(Holder res) const;
 
         static CountMap _count;
     };
