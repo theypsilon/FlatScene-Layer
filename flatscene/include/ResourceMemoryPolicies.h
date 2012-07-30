@@ -9,7 +9,8 @@
 namespace FlatScene {
 
     template <typename Resource>
-    struct DefaultMemoryPolicy {
+    class DefaultMemoryPolicy {
+    protected:
         typedef std::unique_ptr<Resource> Holder;
 
         static inline bool isSame(Holder& lhs, Holder& rhs) {
@@ -39,6 +40,11 @@ namespace FlatScene {
         typedef Resource*                               Holder;
         typedef std::unordered_map<Holder,CountIndex>   CountMap;
 
+        static inline const CountMap& getCounts() {
+            return _count;
+        }
+
+    protected:
         static inline Holder add(Holder res) {
             if (res) {
                 _count[res]++;
@@ -70,8 +76,8 @@ namespace FlatScene {
             return *res;
         }
 
-        static inline const CountMap& getCounts() {
-            return _count;
+        static inline bool isSame(Holder& lhs, Holder& rhs) {
+            return lhs == rhs;
         }
 
     private:

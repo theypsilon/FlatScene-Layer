@@ -9,53 +9,60 @@
 namespace FlatScene {
 
     template < typename Resource, typename MemoryPolicy = DefaultMemoryPolicy<Resource>	> 
-    class ResourceHandler {
+    class ResourceHandler : MemoryPolicy {
+        typedef typename MemoryPolicy::Holder Holder;
+        
+        using MemoryPolicy::access;
+        using MemoryPolicy::add;
+        using MemoryPolicy::remove;
+        using MemoryPolicy::move;
+        using MemoryPolicy::isSame;
     public:
         typedef Resource ResourceType;
 
         ResourceHandler(const ResourceHandler& handler) 
-            : _res(MemoryPolicy::add(handler._res))
+            : _res(add(handler._res))
         {}
 
         ResourceHandler(ResourceHandler&& handler)
-            : _res(MemoryPolicy::move(handler._res))
+            : _res(move(handler._res))
         {}
 
         ~ResourceHandler() {
-            MemoryPolicy::remove(_res);
+            remove(_res);
         }
 
         ResourceHandler& operator=(const ResourceHandler& rhs) {
-            if (this != &rhs && !MemoryPolicy::isSame(_res,rhs._res)) {
-                MemoryPolicy::remove(_res);
-                _res = MemoryPolicy::add(rhs._res);
+            if (this != &rhs && !isSame(_res,rhs._res)) {
+                remove(_res);
+                _res = add(rhs._res);
             }
             return *this;
         }
 
         ResourceHandler& operator=(ResourceHandler&& rhs) {
-            this->_res = MemoryPolicy::move(rhs._res);
+            this->_res = move(rhs._res);
             return *this;
         }
 
         void swap(ResourceHandler& rhs) {
-            auto aux = MemoryPolicy::move(rhs._res);
-            rhs._res = MemoryPolicy::move(_res);
-            _res = MemoryPolicy::move(aux);
+            auto aux = move(rhs._res);
+            rhs._res = move(_res);
+            _res = move(aux);
         }
 
     protected:
-        ResourceHandler(Resource* res) : _res(MemoryPolicy::add(res)) {}
+        ResourceHandler(Resource* res) : _res(add(res)) {}
 
         template <typename ReturnResource> inline ReturnResource& getRes() const {
-            return static_cast<ReturnResource&>(MemoryPolicy::access(_res));
+            return static_cast<ReturnResource&>(access(_res));
         }
 
         inline Resource& getRes() const {
-            return static_cast<Resource&>(MemoryPolicy::access(_res));
+            return static_cast<Resource&>(access(_res));
         }
     private:
-        typename MemoryPolicy::Holder _res;
+        Holder _res;
     };
 
 } // FlatScene
