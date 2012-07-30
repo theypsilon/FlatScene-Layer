@@ -9,6 +9,8 @@ namespace FlatScene {
 
     class SpriteResource : public CanvasResource {
     public:
+        typedef Sprite  Handler;
+
         std::string     name;
         Point           cpoint;
         Sprite::Areas   areas;

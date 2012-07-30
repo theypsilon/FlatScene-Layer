@@ -23,8 +23,6 @@ namespace FlatScene {
         typedef int IndexArea;
         typedef std::map<IndexArea,RectArea> Areas;
 
-        Sprite (const Point& id, const SDL_Surface *const c);
-
         void                setName(const std::string& newName);
         const std::string&  getName() const;
         const Areas&        getAllAreas () const;
@@ -39,15 +37,11 @@ namespace FlatScene {
         void                put (Point ptDst, unsigned char flags=0) const;
 
     protected:
-        Sprite(CanvasResource* res);
+        Sprite(SpriteResource* res);
     private:
-        template <typename T> friend T createCanvas(
-            const SDL_Rect& src, const SDL_Surface& chipset, 
-            GraphicMode mode, double sp_scale, GraphicFilter filter
-        );
         
         friend class Canvas;
-        friend class Spriteset;
+        friend class SpritesetResource;
         friend class Screen;
     };
 

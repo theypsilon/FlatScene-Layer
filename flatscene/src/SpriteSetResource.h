@@ -123,9 +123,9 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt = createCanvas<Sprite>(src,chipset,mode,grd.sp_scale);
+            Sprite spt(createResource<SpriteResource>(src,chipset,mode,grd.sp_scale));
 
-            //spt.setName(std::move(img.name));
+            spt.setName(img.name);
 
             _sprites.push_back(std::move(spt));
 

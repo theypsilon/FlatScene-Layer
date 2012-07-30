@@ -18,7 +18,8 @@ namespace FlatScene {
         using MemoryPolicy::move;
         using MemoryPolicy::isSame;
     public:
-        typedef Resource ResourceType;
+        typedef Resource        ResourceType;
+        typedef MemoryPolicy    MemoryPolicyType;
 
         ResourceHandler(const ResourceHandler& handler) 
             : _res(add(handler._res))

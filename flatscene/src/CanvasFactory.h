@@ -2,36 +2,36 @@
 #define FS_CANVAS_FACTORY__
 
 #include "sdlSurfaceFuncs.h"
-#include "CanvasResource.h"
+#include "SpriteResource.h"
 
 namespace FlatScene {
 
-    template <class T> T createCanvas(
+    template <class T> T* createResource(
         const SDL_Rect& src, const SDL_Surface& chipset, 
-        GraphicMode mode, double sp_scale, GraphicFilter filter
+        GraphicMode mode, double sp_scale, GraphicFilter filter = NEAREST
     ) {
         static_assert(
-            /*std::is_trivially_constructible<T>::value && */
-            std::is_base_of<Canvas,T>::value,
+            std::is_base_of<CanvasResource,T>::value,
             "Bad Canvas type"
         );
 
         Point p(src.x,src.y);
 
-        for (const auto& pair : T::MemoryPolicyType::getCounts())
+        for (const auto& pair : T::Handler::MemoryPolicyType::getCounts())
             if (pair.first->xy == p && pair.first->c == &chipset)
-                return T(pair.first);
+                return static_cast<T*>(pair.first);
 
-        T newCanvas(p,&chipset);
+        auto res = new T(p,&chipset);
+        assert(res);
 
         storeSurface(
-            static_cast<Canvas&>(newCanvas).getRes(),
+            *res,
             loadSurface(src,chipset,mode,sp_scale),
             mode,
             filter
         );
         
-        return newCanvas;
+        return res;
     }
 
 } // flatscene

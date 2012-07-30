@@ -9,7 +9,8 @@ namespace FlatScene {
 
     class CanvasResource {
     public:
-        typedef Point PointType;
+        typedef Canvas          Handler;
+        typedef Point           PointType;
 
         CanvasResource (const PointType& nxy, const SDL_Surface *const nc) : xy(nxy), c(nc) {}
 
