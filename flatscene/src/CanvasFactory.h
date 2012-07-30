@@ -8,7 +8,7 @@ namespace FlatScene {
 
     template <class T> T* createResource(
         const SDL_Rect& src, const SDL_Surface& chipset, 
-        GraphicMode mode, double sp_scale, GraphicFilter filter = NEAREST
+        GraphicMode mode, double sp_scale, GraphicFilter filter
     ) {
         static_assert(
             std::is_base_of<CanvasResource,T>::value,

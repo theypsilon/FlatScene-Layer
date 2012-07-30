@@ -8,7 +8,6 @@
 namespace FlatScene {
 
     class CanvasResource {
-    public:
         typedef Canvas          Handler;
         typedef Point           PointType;
 
@@ -40,7 +39,23 @@ namespace FlatScene {
             clearSurface();
         }
 
+        friend class Canvas;
+        friend class SRenderCanvas;
+        friend class RefCountMemoryPolicy<CanvasResource>;
+        friend class SpriteResource;
 
+        template <class T> friend T* createResource(
+            const SDL_Rect& src, const SDL_Surface& chipset, 
+            GraphicMode mode, double sp_scale, GraphicFilter filter = NEAREST
+        );
+
+        template <typename PointType, typename GraphicMaterial>
+        friend void putCanvas ( const PointType& ptDst, unsigned char flags, 
+                                const CanvasResource& impl, GraphicMaterial& gm );
+
+        friend void storeSurface(
+            CanvasResource& canvas, SDL_Surface* surface, GraphicMode mode, GraphicFilter filter
+        );
     };
 
 
