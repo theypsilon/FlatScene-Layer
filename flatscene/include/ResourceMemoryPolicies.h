@@ -29,7 +29,7 @@ namespace FlatScene {
         }
 
         static inline Resource& access(const Holder& res) {
-            return *res.get;
+            return *res;
         }
     };
 
