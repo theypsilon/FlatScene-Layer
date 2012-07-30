@@ -257,6 +257,7 @@ namespace FlatScene {
             return EXIT_FAILURE;
 
         Uint32* pixel = new Uint32[ancho*alto];
+        assert(pixel);
 
         int count = 0;
 

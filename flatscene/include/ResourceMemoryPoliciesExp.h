@@ -1,5 +1,5 @@
-#ifndef FS_RESOURCE_MEMORY_POLICIES
-#define FS_RESOURCE_MEMORY_POLICIES
+#ifndef FS_RESOURCE_MEMORY_POLICIES_EXP
+#define FS_RESOURCE_MEMORY_POLICIES_EXP
 
 #include <unordered_map>
 #include <functional>
@@ -21,28 +21,28 @@ namespace FlatScene {
     };
 
     template <typename HolderPolicy>
-    struct StandardMovePolicy {
+    struct StandardMovePolicy : public HolderPolicy {
         typedef typename HolderPolicy::Holder Holder;
-        static inline Holder move(Holder& res) {
-            return std::move(res);
-        }
+        static inline Holder move(Holder& res) { return std::move(res); }
     };
 
     template <typename HolderPolicy>
-    struct PointerAccessPolicy {
+    struct PointerAccessPolicy : public HolderPolicy {
         typedef typename HolderPolicy::Holder       Holder;
         typedef typename HolderPolicy::ResourceType Resource;
-        static inline Resource& access(Holder& res) {
-            return *res;
-        }
+        static inline Resource& access(const Holder& res) { return *res; }
     };
 
     template <typename HolderPolicy>
-    struct TrivialComparePolicy {
-        typedef const typename HolderPolicy::Holder& Holder;
-        static inline bool isSame(Holder lhs,Holder rhs) {
-            return lhs == rhs;
-        }
+    struct TrivialComparePolicy : public HolderPolicy {
+        typedef typename HolderPolicy::Holder Holder;
+        static inline bool isSame(Holder lhs,Holder rhs) { return lhs == rhs; }
+    };
+
+    template <typename HolderPolicy, bool retIsSame>
+    struct PredefinedComparePolicy : public HolderPolicy {
+        typedef typename HolderPolicy::Holder Holder;
+        static inline bool isSame(Holder& lhs,Holder& rhs) { return retIsSame; }
     };
 
     template <
@@ -50,19 +50,17 @@ namespace FlatScene {
         typename HolderPolicy = ExplicitHolderPolicy<Resource,std::unique_ptr<Resource> > 
     >
     struct DefaultMemoryPolicy
-    : public StandardMovePolicy     <HolderPolicy>
-    , public PointerAccessPolicy    <HolderPolicy> {
+    : public StandardMovePolicy         <HolderPolicy>
+    , public PointerAccessPolicy        <HolderPolicy>
+    , public PredefinedComparePolicy    <HolderPolicy,false> {
+
         typedef typename HolderPolicy::Holder Holder;
 
-        static bool isSame(Holder& lhs, Holder& rhs) {
-            return false;
+        static Holder add(const Holder& res) {
+            return Holder(new Resource(access(res)));
         }
 
-        static Resource* add(const typename HolderPolicy::Holder& res) {
-            return new Resource(*res);
-        }
-
-        static void remove(typename HolderPolicy::Holder& res) {
+        static void remove(Holder& res) {
             res.reset(nullptr);
         }
     };
@@ -116,10 +114,10 @@ namespace FlatScene {
         static CountMap _count;
     };
 
-    template <typename Resource,typename HolderPolicy, typename CountIndex>
-    typename std::unordered_map<Resource*,CountIndex>
-        RefCountMemoryPolicy<Resource,HolderPolicy,CountIndex>::_count;
+    // template <typename Resource,typename HolderPolicy, typename CountIndex>
+    // typename std::unordered_map<Resource*,CountIndex>
+    //     RefCountMemoryPolicy<Resource,HolderPolicy,CountIndex>::_count;
 
 } // FlatScene
 
-#endif
+#endif // FS_RESOURCE_MEMORY_POLICIES_EXP
