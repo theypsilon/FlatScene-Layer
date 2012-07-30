@@ -17,7 +17,7 @@ namespace FlatScene {
             return false;
         }
 
-        inline Holder add(Holder& res) const {
+        inline Holder add(const Holder& res) const {
             return Holder(new Resource(access(res)));
         }
 
