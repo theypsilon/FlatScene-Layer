@@ -54,8 +54,8 @@ namespace FlatScene {
     protected:
         ResourceHandler(Holder res) : _res(add(res)) {}
 
-        template <typename ReturnResource> inline ReturnResource& getRes() const {
-            return static_cast<ReturnResource&>(access(_res));
+        template <typename R> inline R& getRes() const {
+            return static_cast<R&>(access(_res));
         }
 
         inline Resource& getRes() const {
@@ -65,7 +65,9 @@ namespace FlatScene {
         Holder _res;
     };
 
-    class TestResourceHandler : ResourceHandler<int> { public: TestResourceHandler(std::unique_ptr<int> n) : ResourceHandler(std::move(n)) {} };
+    // class TestResourceHandler : ResourceHandler<int> { 
+    //     public: TestResourceHandler(std::unique_ptr<int> n) : ResourceHandler(std::move(n)) {} 
+    // };
 
 } // FlatScene
 
