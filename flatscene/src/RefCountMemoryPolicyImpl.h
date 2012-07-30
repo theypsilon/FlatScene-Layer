@@ -4,8 +4,8 @@
 #include "ResourceMemoryPolicies.h"
 
 namespace FlatScene {
-    template <typename Resource, typename HolderPolicy, typename CountIndex>
-    void RefCountMemoryPolicy<Resource,HolderPolicy, CountIndex>::destroy(Holder res) {
+    template <typename Resource, typename CountIndex>
+    void RefCountMemoryPolicy<Resource, CountIndex>::destroy(Holder res) {
         delete res;
     }
 }

@@ -48,11 +48,11 @@ namespace FlatScene {
         ResourceHandler(Resource* res) : _res(MemoryPolicy::add(res)) {}
 
         template <typename ReturnResource> inline ReturnResource& getRes() const {
-            return static_cast<ReturnResource&>(*_res);
+            return static_cast<ReturnResource&>(MemoryPolicy::access(_res));
         }
 
         inline Resource& getRes() const {
-            return static_cast<Resource&>(*_res);
+            return static_cast<Resource&>(MemoryPolicy::access(_res));
         }
     private:
         typename MemoryPolicy::Holder _res;
