@@ -9,7 +9,6 @@
 #include <map>
 
 #include "ResourceHandler.h"
-#include "RefCountMemoryPolicy.h"
 
 namespace FlatScene {
 
@@ -28,10 +27,6 @@ namespace FlatScene {
 
     class Canvas : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
     public:
-        typedef RefCountMemoryPolicy<CanvasResource>                MemoryPolicyType;
-        typedef ResourceHandler<CanvasResource,MemoryPolicyType>    ResourceHandlerType;
-
-        Canvas(const Point& xy, const SDL_Surface *const c);    
 
         unsigned int getPixel(unsigned int x, unsigned int y) const;
 
@@ -51,10 +46,6 @@ namespace FlatScene {
     protected:
         Canvas(CanvasResource* res);
     private:
-        template <typename T> friend T createCanvas(
-            const SDL_Rect& src, const SDL_Surface& chipset, 
-            GraphicMode mode, double sp_scale, GraphicFilter filter=NEAREST
-        );
         
         friend class FSTextBox;
         friend class Sprite;

@@ -6,12 +6,6 @@
 
 namespace FlatScene {
 
-template class RefCountMemoryPolicy<CanvasResource>;
-
-Canvas::Canvas(const Point& xy,const SDL_Surface *const c)
-    : ResourceHandler(new CanvasResource(xy,c))
-{}
-
 Canvas::Canvas(CanvasResource* res) 
     : ResourceHandler(res)
 {}

@@ -2,8 +2,6 @@
 
 namespace FlatScene {
 
-    template class RefCountMemoryPolicy<SpritesetResource>;
-
     Spriteset::Spriteset(std::string c, GraphicMode mode) 
         : ResourceHandler (new SpritesetResource(c,mode))
     {}

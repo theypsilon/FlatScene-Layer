@@ -4,83 +4,78 @@
 #include <memory>
 #include <type_traits>
 
+#include "ResourceMemoryPolicies.h"
+
 namespace FlatScene {
 
-    template <typename Resource>
-    struct DefaultMemoryPolicy {
-        typedef std::unique_ptr<Resource> Holder;
-        static bool isSame(Holder& lhs, Holder& rhs) {
-            return false;
-        }
-
-        static Resource* add(const Holder& res) {
-            return new Resource(*res);
-        }
-
-        static void remove(Holder& res) {
-            res.reset(nullptr);
-        }
-
-        static Holder move(Holder& res) {
-            return std::move(res);
-        }
-    };
-
     template < typename Resource, typename MemoryPolicy = DefaultMemoryPolicy<Resource>	> 
-    class ResourceHandler {
+    class ResourceHandler : MemoryPolicy {
+        typedef typename MemoryPolicy::Holder Holder;
+
+        using MemoryPolicy::access;
+        using MemoryPolicy::add;
+        using MemoryPolicy::remove;
+        using MemoryPolicy::move;
+        using MemoryPolicy::isSame;
     public:
+        typedef Resource        ResourceType;
+        typedef MemoryPolicy    MemoryPolicyType;
 
         ResourceHandler(const ResourceHandler& handler) 
-            : _res(MemoryPolicy::add(handler._res))
+            : _res(add(handler._res))
         {}
 
         ResourceHandler(ResourceHandler&& handler)
-            : _res(MemoryPolicy::move(handler._res))
+            : _res(move(handler._res))
         {}
 
         ~ResourceHandler() {
-            MemoryPolicy::remove(_res);
+            remove(_res);
         }
 
         ResourceHandler& operator=(const ResourceHandler& rhs) {
-            if (this != &rhs && !MemoryPolicy::isSame(_res,rhs._res)) {
-                MemoryPolicy::remove(_res);
-                _res = MemoryPolicy::add(rhs._res);
+            if (this != &rhs && !isSame(_res,rhs._res)) {
+                remove(_res);
+                _res = add(rhs._res);
             }
             return *this;
         }
 
         ResourceHandler& operator=(ResourceHandler&& rhs) {
-            this->_res = MemoryPolicy::move(rhs._res);
+            this->_res = move(rhs._res);
             return *this;
         }
 
         void swap(ResourceHandler& rhs) {
-            auto aux = MemoryPolicy::move(rhs._res);
-            rhs._res = MemoryPolicy::move(_res);
-            _res = MemoryPolicy::move(aux);
+            auto aux = move(rhs._res);
+            rhs._res = move(_res);
+            _res = move(aux);
         }
 
     protected:
-        ResourceHandler(Resource* res) : _res(MemoryPolicy::add(res)) {}
+        ResourceHandler(Holder res) : _res(add(res)) {}
 
-        template <typename ReturnResource> inline ReturnResource& getRes() const {
-            return static_cast<ReturnResource&>(*_res);
+        template <typename R> inline R& getRes() const {
+            return static_cast<R&>(access(_res));
         }
 
         inline Resource& getRes() const {
-            return static_cast<Resource&>(*_res);
+            return static_cast<Resource&>(access(_res));
         }
     private:
-        typename MemoryPolicy::Holder _res;
+        Holder _res;
     };
+
+    // class TestResourceHandler : ResourceHandler<int> { 
+    //     public: TestResourceHandler(std::unique_ptr<int> n) : ResourceHandler(std::move(n)) {} 
+    // };
 
 } // FlatScene
 
 namespace std {
     template<typename Resource> void swap(
         FlatScene::ResourceHandler<Resource>& lhs, FlatScene::ResourceHandler<Resource>& rhs
-        ) { lhs.swap(rhs); }
+    ) { lhs.swap(rhs); }
 } // std
 
 #endif
