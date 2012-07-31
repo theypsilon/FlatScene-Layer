@@ -2,24 +2,23 @@
 #define FS_CANVAS_RES__
 
 #include "Canvas.h"
-#include "Point.h"
 #include "RefCountMemoryPolicyImpl.h"
+#include "GraphicResourceDescriptor.h"
+#include "ImageId.h"
 
 namespace FlatScene {
 
     class CanvasResource {
         typedef Canvas          Handler;
-        typedef Point           PointType;
 
-        CanvasResource (const PointType& nxy, const SDL_Surface *const nc) : xy(nxy), c(nc) {}
+        CanvasResource (ImageId nid) : id(std::move(nid)) {}
 
-        GLuint                      tex;
-        Uint32                      w, h;                /* Read-only */
-        int                         w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
-        Uint8                       bpp;
-        SDL_Surface*                sdl_surf; // NULL or not null, thats the question.
-        const PointType             xy;
-        const SDL_Surface* const    c;
+        GLuint              tex;
+        Uint32              w, h;                /* Read-only */
+        int                 w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
+        Uint8               bpp;
+        SDL_Surface*        sdl_surf; // NULL or not null, thats the question.
+        const ImageId       id;
 
         void clearSurface () {
             bpp = h = h2 = w = w2 = tex = 0;
@@ -45,8 +44,8 @@ namespace FlatScene {
         friend class SpriteResource;
 
         template <class T> friend T* createResource(
-            const SDL_Rect& src, const SDL_Surface& chipset, 
-            GraphicMode mode, double sp_scale, GraphicFilter filter = NEAREST
+            const SDL_Rect& src, const SDL_Surface& chipset, GraphicMode mode,
+            const DataGRD& grd, unsigned int n, GraphicFilter filter = NEAREST
         );
 
         template <typename PointType, typename GraphicMaterial>

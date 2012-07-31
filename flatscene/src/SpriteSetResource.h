@@ -69,6 +69,17 @@ private:
     std::string      _name;
     GraphicMode      _mode;
 
+    DataGRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset) {
+        try {
+            return DataGRD(grd_str);
+        } catch(DocIsNotLoadedException&) {
+            if (!chipset) 
+                throw Exception("grd file invalid and bitmap invalid",__LINE__);
+
+            return DataGRD(chipset->w, chipset->h, grd_str);
+        }
+    }
+
     void loadChipset(const std::string& c,GraphicMode mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
         auto names = getNameFile(c);
 
@@ -117,13 +128,14 @@ private:
         if (chipset.w / grd.cellwidth <= 0 || chipset.w % grd.cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
-        SDL_Rect src = {0,0,0,0};
+        SDL_Rect     src = {0,0,0,0};
+        unsigned int i = 0;
         for (const auto& img : grd.images) {
 
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt(createResource<SpriteResource>(src,chipset,mode,grd.sp_scale));
+            Sprite spt(createResource<SpriteResource>(src,chipset,mode,grd,i++));
 
             spt.setName(img.name);
 
