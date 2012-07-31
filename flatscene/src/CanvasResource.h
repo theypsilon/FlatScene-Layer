@@ -5,6 +5,7 @@
 #include "RefCountMemoryPolicyImpl.h"
 #include "GraphicResourceDescriptor.h"
 #include "ImageId.h"
+#include "ImageAdapter.h"
 
 namespace FlatScene {
 
@@ -28,15 +29,7 @@ namespace FlatScene {
         mutable std::list<std::function<void(void)>> initCallbackList;
         mutable std::list<std::function<void(void)>> endCallbackList;
 
-        virtual ~CanvasResource() {
-            if (raw)
-                SDL_FreeSurface(raw);
-
-            if (h != 0 || w !=0)
-                glDeleteTextures( 1, &tex );
-
-            clearSurface();
-        }
+        virtual ~CanvasResource(); // defined in ImageAdapter.h
 
         friend class Canvas;
         friend class SRenderCanvas;
@@ -44,7 +37,7 @@ namespace FlatScene {
         friend class SpriteResource;
 
         template <class T> friend T* createResource(
-            const SDL_Rect& src, const SDL_Surface& chipset, GraphicMode mode,
+            const SDL_Rect& src, ConstRawImageResource chipset, GraphicMode mode,
             const DataGRD& grd, unsigned int n, GraphicFilter filter = NEAREST
         );
 
@@ -53,7 +46,7 @@ namespace FlatScene {
                                 const CanvasResource& impl, GraphicMaterial& gm );
 
         friend void storeSurface(
-            CanvasResource& canvas, SDL_Surface* surface, GraphicMode mode, GraphicFilter filter
+            CanvasResource& canvas, RawImageResource surface, GraphicMode mode, GraphicFilter filter
         );
     };
 

@@ -1,11 +1,9 @@
 #ifndef FS_SDL_SURFACE_FUNCS__
 #define FS_SDL_SURFACE_FUNCS__
 
-#include "Library.h"
+#include "CanvasResource.h"
 
 namespace FlatScene {
-
-    typedef SDL_Surface* RawImageResource;
 
     void setpixel ( SDL_Surface* pSurface , int x , int y , Uint32 pixel);
 
@@ -23,7 +21,7 @@ namespace FlatScene {
 
     SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor);
 
-    SDL_Surface* loadSurface(const SDL_Rect& src, const SDL_Surface& chipset, GraphicMode mode, double sp_scale);
+    SDL_Surface* loadSurface(const SDL_Rect& src, ConstRawImageResource chipset, GraphicMode mode, double sp_scale);
 
     void storeSurface(CanvasResource& canvas, SDL_Surface* surface, GraphicMode mode, GraphicFilter filter);
 

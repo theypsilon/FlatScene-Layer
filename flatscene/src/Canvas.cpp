@@ -11,18 +11,18 @@ Canvas::Canvas(CanvasResource* res)
 {}
 
 unsigned int Canvas::getPixel(unsigned int x, unsigned int y) const {
-    SDL_Surface* sdl_surf = getRes().sdl_surf;
-    if (!sdl_surf)
+    SDL_Surface* raw = getRes().raw;
+    if (!raw)
         throw Exception("Pixel data is not accesible for this configuration.");
 
-    if ((int) x > sdl_surf->w || (int) y > sdl_surf->h)
+    if ((int) x > raw->w || (int) y > raw->h)
         throw Exception("Wrong coordinates for getting a pixel from this surface.");
 
     unsigned int color = 0;
-    int position = y * sdl_surf->pitch + sdl_surf->format->BytesPerPixel * x ;
-    char* buffer = (char*) sdl_surf->pixels ;
+    int position = y * raw->pitch + raw->format->BytesPerPixel * x ;
+    char* buffer = (char*) raw->pixels ;
     buffer += position ;
-    memcpy ( &color , buffer , sdl_surf->format->BytesPerPixel ) ;
+    memcpy ( &color , buffer , raw->format->BytesPerPixel ) ;
     return color;
 }
 
