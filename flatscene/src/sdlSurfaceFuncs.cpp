@@ -466,7 +466,7 @@ namespace FlatScene {
             surface=NULL;
         }
 
-        canvas.sdl_surf=surface;
+        canvas.raw=surface;
 
     }
 

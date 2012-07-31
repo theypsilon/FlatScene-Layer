@@ -5,6 +5,8 @@
 
 namespace FlatScene {
 
+    typedef SDL_Surface* RawImageResource;
+
     void setpixel ( SDL_Surface* pSurface , int x , int y , Uint32 pixel);
 
     Uint32 getpixel(SDL_Surface* surface, int x, int y);
