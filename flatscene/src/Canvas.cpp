@@ -3,6 +3,7 @@
 #include "Renders.h"
 #include "Exception.h"
 #include "Algorithm.h"
+#include "ImageAdapter.h"
 
 namespace FlatScene {
 
@@ -11,19 +12,7 @@ Canvas::Canvas(CanvasResource* res)
 {}
 
 unsigned int Canvas::getPixel(unsigned int x, unsigned int y) const {
-    SDL_Surface* raw = getRes().raw;
-    if (!raw)
-        throw Exception("Pixel data is not accesible for this configuration.");
-
-    if ((int) x > raw->w || (int) y > raw->h)
-        throw Exception("Wrong coordinates for getting a pixel from this surface.");
-
-    unsigned int color = 0;
-    int position = y * raw->pitch + raw->format->BytesPerPixel * x ;
-    char* buffer = (char*) raw->pixels ;
-    buffer += position ;
-    memcpy ( &color , buffer , raw->format->BytesPerPixel ) ;
-    return color;
+    return FlatScene::getPixel(x,y,getRes().raw);
 }
 
 int Canvas::getWidth  () const { return getRes().w2; }
