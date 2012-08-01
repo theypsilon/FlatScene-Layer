@@ -112,7 +112,7 @@ private:
         if (!isValidBitmapExtension(tipefile)) 
             throw Exception("graphic bitmap format not valid");
 
-        return std::make_pair(std::move(namefile) + ".grd",std::move(namefile) + std::move(tipefile));
+        return std::make_pair(namefile + ".grd",namefile + tipefile);
 
     }
 
