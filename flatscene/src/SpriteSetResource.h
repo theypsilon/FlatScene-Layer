@@ -26,9 +26,9 @@ public:
 
     typedef std::vector<Sprite> SpriteCollection;
 
-    SpritesetResource(const std::string& c, GraphicMode mode) 
-        : _mode(mode), _name(c) {
-            loadChipset(c,mode);
+    SpritesetResource(std::string c, GraphicMode mode) 
+        : _mode(mode), _name(std::move(c)) {
+            loadChipset(_name,mode);
     }
 
     GraphicMode getMode() {
@@ -100,27 +100,19 @@ private:
     }
 
     std::pair<std::string, std::string> getNameFile(const std::string& str) {
-
-        std::string tipefile;
-        std::string namefile;
-
         auto res = str.end();
-        for(auto it=str.begin(); it != str.end() ; ++it)
-            if (*it == '.')
+        for(auto it = str.begin(); it != str.end() ; ++it)
+            if ('.' == *it)
                 res = it;
 
-        if (res != str.end()) {
-            namefile += std::string(str.begin(),res);
-            tipefile += std::string(res,str.end());
-        } else {
-            namefile += str;
-            tipefile += ".png";
-        }
+        bool foundSomething = res != str.end();
+        std::string namefile = foundSomething? std::string(str.begin(),res) : str;
+        std::string tipefile = foundSomething? std::string(res,str.end())   : ".png";
 
         if (!isValidBitmapExtension(tipefile)) 
             throw Exception("graphic bitmap format not valid");
 
-        return std::make_pair(namefile + ".grd",namefile + tipefile);
+        return std::make_pair(std::move(namefile) + ".grd",std::move(namefile) + std::move(tipefile));
 
     }
 

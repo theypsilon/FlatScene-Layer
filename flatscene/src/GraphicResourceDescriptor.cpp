@@ -28,14 +28,14 @@ namespace FlatScene {
     bool areValuesConsistent(DataGRD& grd);
 
 
-    DataGRD::DataGRD(unsigned int width, unsigned int height, const std::string& grd_str)
-        : sp_scale(1.0), num_img(1), simple(true), cellwidth(width), cellheight(height), grd_str(grd_str)
+    DataGRD::DataGRD(unsigned int width, unsigned int height, std::string file)
+        : sp_scale(1.0), num_img(1), simple(true), cellwidth(width), cellheight(height), grd_str(std::move(file))
     {
         processSimpleSpriteValues(*this);
         assert(("DataGRD construction by size must be wrong", areValuesConsistent(*this)));
     }
 
-    DataGRD::DataGRD(const std::string& grd_str) : grd_str(grd_str) {
+    DataGRD::DataGRD(std::string file) : grd_str(std::move(file)) {
         TiXmlDocument doc = getLoadedDocument(grd_str);
         TiXmlHandle input(doc.FirstChild()); 
 

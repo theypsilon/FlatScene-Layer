@@ -37,8 +37,8 @@ namespace FlatScene {
         std::map<int,bool>  ga_isRel;
         std::string         grd_str;
 
-        DataGRD(unsigned int width, unsigned int height, const std::string& grd_str);
-        DataGRD(const std::string& grd_str); /* @throw DocIsNotLoadedException */
+        DataGRD(unsigned int width, unsigned int height, std::string file);
+        DataGRD(std::string file); /* @throw DocIsNotLoadedException */
 
     };
 

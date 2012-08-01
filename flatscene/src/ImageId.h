@@ -10,7 +10,7 @@ namespace FlatScene {
         typedef unsigned int    Index;
         typedef std::string     Ident;
 
-        ImageId(Index n, Ident file) : _n(n), _file(file) {}
+        ImageId(Index n, Ident file) : _n(n), _file(std::move(file)) {}
 
         Index           getIndex() const { return _n;    }
         const Ident&    getFile () const { return _file; }
