@@ -96,7 +96,6 @@
     <ClCompile Include="src\Canvas.cpp" />
     <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Library.cpp" />
     <ClCompile Include="src\Renders.cpp" />
     <ClCompile Include="src\Screen.cpp" />

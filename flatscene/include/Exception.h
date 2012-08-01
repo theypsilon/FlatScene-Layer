@@ -8,13 +8,18 @@
 namespace FlatScene {
 
     class Exception : public std::exception {
-        struct ExceptionImpl;
-        const std::unique_ptr<ExceptionImpl> _impl;
     public:
-        Exception(std::string describe, int line = -1);
-        Exception(const Exception&);
-        virtual ~Exception() throw();
-        virtual const char* what() const throw();
+        Exception(std::string describe, int line = -1)
+            : _description(std::move(describe)) 
+        {}
+
+        virtual ~Exception() throw() {}
+
+        virtual const char* what() {
+            return _description.c_str();
+        }
+    private:
+        std::string _description;
     };
 
     typedef Exception FileDoesntExistException;
