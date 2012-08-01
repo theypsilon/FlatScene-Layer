@@ -11,7 +11,11 @@ namespace FlatScene {
     public:
         Exception(std::string describe, int line = -1)
             : _description(std::move(describe)) 
-        {}
+        {
+            if (line > -1) {
+                _description += "::line = " + std::to_string(line);
+            }
+        }
 
         virtual ~Exception() throw() {}
 
@@ -22,16 +26,23 @@ namespace FlatScene {
         std::string _description;
     };
 
-    typedef Exception FileDoesntExistException;
-    typedef Exception ExternalLibraryException;
-    typedef Exception SDLException;
-    typedef Exception ControlViolationException;
+    template <typename T>
+    class DerivedException : public Exception {
+    public:
+        DerivedException(std::string describe, int line = -1)
+            : Exception(std::move(describe) + " ::type = "+typeid(T).name(),line)
+        {}
 
-/* TODO FIXME
+        virtual ~DerivedException() throw() {}
+    };
 
-    class FileDoesntExistException : public Exception {};
-    class ExternalLibraryException : public Exception {};
-    class SDLExcetion : public ExternalLibraryException {};*/
+    #define FS_DEF_EXCEPTION(EXCEPTION_NAME) /*struct EXCEPTION_NAME##Type {};*/ \
+        typedef Exception EXCEPTION_NAME;
+
+    FS_DEF_EXCEPTION(FileDoesntExistException);
+    FS_DEF_EXCEPTION(ExternalLibraryException);
+    FS_DEF_EXCEPTION(SDLException);
+    FS_DEF_EXCEPTION(ControlViolationException);
 
 } // flatscene
 
