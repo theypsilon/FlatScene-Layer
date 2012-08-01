@@ -32,7 +32,7 @@ namespace FlatScene {
         virtual ~CanvasResource(); // defined in ImageAdapter.h
 
         friend class Canvas;
-        friend class SRenderCanvas;
+        friend struct SRenderCanvas;
         friend class RefCountMemoryPolicy<CanvasResource>;
         friend class SpriteResource;
 
