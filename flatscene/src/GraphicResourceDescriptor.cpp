@@ -7,57 +7,63 @@ namespace FlatScene {
 
     using namespace Util::XML::Tiny;
 
-    TiXmlDocument getLoadedDocument(const std::string& str);
+    struct GRDProcess {
 
-    bool isDefinedInOtherFile(const TiXmlElement& head);
+        static TiXmlDocument getLoadedDocument(const std::string& str);
 
-    TiXmlDocument getFromOtherFile(const TiXmlElement& head);
+        static bool isDefinedInOtherFile(const TiXmlElement& head);
 
-    template <typename PointType> 
-    void fillAreasFromElement(const TiXmlElement* pArea, std::map<int,DataGRD::Area>& areas, 
-        const PointType& cp, double scale, std::map<int,bool>& rel_m );
+        static TiXmlDocument getFromOtherFile(const TiXmlElement& head);
 
-    void processHeadElement(DataGRD& grd,const TiXmlElement& head);
+        template <typename PointType> 
+        static void fillAreasFromElement(const TiXmlElement* pArea, std::map<int,DataGRD::Area>& areas, 
+            const PointType& cp, double scale, std::map<int,bool>& rel_m );
 
-    void processGlobalValues(DataGRD& grd,const TiXmlHandle& doc);
+        static void processHeadElement(DataGRD& grd,const TiXmlElement& head);
 
-    void processSimpleSpriteValues(DataGRD& grd);
+        static void processGlobalValues(DataGRD& grd,const TiXmlHandle& doc);
 
-    void processSpriteValues(DataGRD& grd,const TiXmlHandle& doc);
+        static void processSimpleSpriteValues(DataGRD& grd);
 
-    bool areValuesConsistent(DataGRD& grd);
+        static void processSpriteValues(DataGRD& grd,const TiXmlHandle& doc);
+
+        static bool areValuesConsistent(DataGRD& grd);
+
+    };
 
 
     DataGRD::DataGRD(unsigned int width, unsigned int height, std::string file)
-        : sp_scale(1.0), num_img(1), simple(true), cellwidth(width), cellheight(height), grd_str(std::move(file))
+        : _sp_scale(1.0), _num_img(1), _simple(true), _cellwidth(width), _cellheight(height), _grd_str(std::move(file))
     {
-        processSimpleSpriteValues(*this);
-        assert(("DataGRD construction by size must be wrong", areValuesConsistent(*this)));
+        typedef GRDProcess p;
+        p::processSimpleSpriteValues(*this);
+        assert(("DataGRD construction by size must be wrong", p::areValuesConsistent(*this)));
     }
 
-    DataGRD::DataGRD(std::string file) : grd_str(std::move(file)) {
-        TiXmlDocument doc = getLoadedDocument(grd_str);
+    DataGRD::DataGRD(std::string file) : _grd_str(std::move(file)) {
+        typedef GRDProcess p;
+        TiXmlDocument doc = p::getLoadedDocument(_grd_str);
         TiXmlHandle input(doc.FirstChild()); 
 
         int i = 0;
-        while (isDefinedInOtherFile(*input.Element())) {
+        while (p::isDefinedInOtherFile(*input.Element())) {
             if (i++ > 100) throw Exception("100 limit cycles exceeded between grd files",__LINE__);
-            doc = getFromOtherFile(*input.Element());
+            doc = p::getFromOtherFile(*input.Element());
             input = TiXmlHandle(doc.FirstChild());
         }
 
-        processHeadElement(*this,*input.Element());
-        if (simple) {
-            processSimpleSpriteValues(*this);
+        p::processHeadElement(*this,*input.Element());
+        if (_simple) {
+            p::processSimpleSpriteValues(*this);
         } else {
-            processGlobalValues(*this,input);
-            processSpriteValues(*this,input);
+            p::processGlobalValues(*this,input);
+            p::processSpriteValues(*this,input);
         }
 
-        assert(("DataGRD construction by file must be wrong", areValuesConsistent(*this)));
+        assert(("DataGRD construction by file must be wrong", p::areValuesConsistent(*this)));
     }
 
-    TiXmlDocument getLoadedDocument(const std::string& str) {
+    TiXmlDocument GRDProcess::getLoadedDocument(const std::string& str) {
         TiXmlDocument doc(str.c_str());
         if (!doc.LoadFile())
             throw DocIsNotLoadedException();
@@ -68,18 +74,18 @@ namespace FlatScene {
         return doc;
     }
 
-    bool isDefinedInOtherFile(const TiXmlElement& head) {
+    bool GRDProcess::isDefinedInOtherFile(const TiXmlElement& head) {
         return checkAttr(head,"defined-in","",false);
     }
 
-    TiXmlDocument getFromOtherFile(const TiXmlElement& head) {
+    TiXmlDocument GRDProcess::getFromOtherFile(const TiXmlElement& head) {
         ensureAttr(head,"defined-in","",false);
         std::string grd_str(head.Attribute("defined-in"));
         return getLoadedDocument(grd_str);
     }
 
     template <typename PointType> 
-    void fillAreasFromElement(const TiXmlElement* pArea, std::map<int,DataGRD::Area>& areas, 
+    void GRDProcess::fillAreasFromElement(const TiXmlElement* pArea, std::map<int,DataGRD::Area>& areas, 
         const PointType& cp, double scale, std::map<int,bool>& rel_m ) {
             for ( ; pArea ; pArea = pArea->NextSiblingElement()) {
                 int id = numFromAttr(*pArea,"id",0);
@@ -99,62 +105,62 @@ namespace FlatScene {
             }
     }
 
-    void processHeadElement(DataGRD& grd, const TiXmlElement& head) {
-        grd.num_img    = numFromAttr<decltype(grd.num_img)   >(head,"sprites");
-        grd.cellwidth  = numFromAttr<decltype(grd.cellwidth) >(head,"cellwidth");
-        grd.cellheight = numFromAttr<decltype(grd.cellheight)>(head,"cellheight");
+    void GRDProcess::processHeadElement(DataGRD& grd, const TiXmlElement& head) {
+        grd._num_img    = numFromAttr<decltype(grd._num_img)   >(head,"sprites");
+        grd._cellwidth  = numFromAttr<decltype(grd._cellwidth) >(head,"cellwidth");
+        grd._cellheight = numFromAttr<decltype(grd._cellheight)>(head,"cellheight");
 
         //if (checkAttr(head,"type","split"))
         //    ; // @TODO return loadChipsetSplit(s_aux,mode);
 
-        grd.simple = checkAttr(head,"simple","true");
+        grd._simple = checkAttr(head,"simple","true");
         if (checkAttr(head,"sp-scale"))
-            grd.sp_scale = numFromAttr<decltype(grd.sp_scale)>(head,"sp-scale", 0.01, 100);
+            grd._sp_scale = numFromAttr<decltype(grd._sp_scale)>(head,"sp-scale", 0.01, 100);
         else
-            grd.sp_scale = 1.0;
+            grd._sp_scale = 1.0;
     }
 
-    void processGlobalValues(DataGRD& grd, const TiXmlHandle& doc) {
+    void GRDProcess::processGlobalValues(DataGRD& grd, const TiXmlHandle& doc) {
         if (auto el = doc.FirstChildElement("globalcpoint").Element()) {
-            grd.globalcp.set(
-                numFromAttr<decltype(grd.globalcp.x)>(*el,"x",0,grd.cellwidth),
-                numFromAttr<decltype(grd.globalcp.y)>(*el,"y",0,grd.cellheight)
+            grd._globalcp.set(
+                numFromAttr<decltype(grd._globalcp.x)>(*el,"x",0,grd._cellwidth),
+                numFromAttr<decltype(grd._globalcp.y)>(*el,"y",0,grd._cellheight)
             );
         } else {
-            grd.globalcp.set(0, 0);
+            grd._globalcp.set(0, 0);
         }
 
         fillAreasFromElement(
             doc.FirstChildElement("globalareas").FirstChildElement("area").ToElement(),
-            grd.globalareas,
-            grd.globalcp,
-            grd.sp_scale,
-            grd.ga_isRel
+            grd._globalareas,
+            grd._globalcp,
+            grd._sp_scale,
+            grd._ga_isRel
         );
     }
 
-    void processSimpleSpriteValues(DataGRD& grd) {
-        for (decltype(grd.num_img) i = 0; i < grd.num_img ; i++)
-            grd.images.push_back(DataGRD::Sprite(
-                DataGRD::DimPoint(grd.cellwidth, grd.cellheight),
+    void GRDProcess::processSimpleSpriteValues(DataGRD& grd) {
+        for (decltype(grd._num_img) i = 0; i < grd._num_img ; i++)
+            grd._images.push_back(DataGRD::Sprite(
+                DataGRD::DimPoint(grd._cellwidth, grd._cellheight),
                 DataGRD::CPoint  (0,0)
             ));
     }
 
-    void processSpriteValues(DataGRD& grd, const TiXmlHandle& doc) {
+    void GRDProcess::processSpriteValues(DataGRD& grd, const TiXmlHandle& doc) {
         for (auto pImg = doc.FirstChildElement("img").ToElement(); 
             pImg ; pImg = pImg->NextSiblingElement()) {
 
                 DataGRD::Sprite spt; const auto& img = *pImg;
                 spt.name = checkAttr(img,"name","",false) ? 
                     valFromAttr<std::string>(img,"name") : "noname" ;
-                spt.dim.set( numFromAttr<decltype(spt.dim.x)>(img,"width",0,grd.cellwidth  ) ,
-                    numFromAttr<decltype(spt.dim.y)>(img,"height",0,grd.cellheight));
+                spt.dim.set( numFromAttr<decltype(spt.dim.x)>(img,"width",0,grd._cellwidth  ) ,
+                    numFromAttr<decltype(spt.dim.y)>(img,"height",0,grd._cellheight));
 
-                spt.cp.set( grd.globalcp.x, grd.globalcp.y );
+                spt.cp.set( grd._globalcp.x, grd._globalcp.y );
                 if (auto el = img.FirstChildElement("cpoint")) {
-                    spt.cp.x += numFromAttr<decltype(spt.cp.x)>(*el,"x",0, spt.dim.x - grd.globalcp.x );
-                    spt.cp.y += numFromAttr<decltype(spt.cp.y)>(*el,"y",0, spt.dim.x - grd.globalcp.y );
+                    spt.cp.x += numFromAttr<decltype(spt.cp.x)>(*el,"x",0, spt.dim.x - grd._globalcp.x );
+                    spt.cp.y += numFromAttr<decltype(spt.cp.y)>(*el,"y",0, spt.dim.x - grd._globalcp.y );
                 } else if (spt.cp.x > spt.dim.x || spt.cp.y > spt.dim.y)
                     throw Exception("the global cp is not valid due to image sizes",__LINE__);
 
@@ -162,19 +168,19 @@ namespace FlatScene {
                     img.FirstChildElement("area"), 
                     spt.areas, 
                     spt.cp, 
-                    grd.sp_scale, 
+                    grd._sp_scale, 
                     spt.a_isRel
                 );
 
-                grd.images.push_back(std::move(spt));
+                grd._images.push_back(std::move(spt));
         }
     }
 
-    bool areValuesConsistent(DataGRD& grd) {
-        if (grd.num_img != grd.images.size())
+    bool GRDProcess::areValuesConsistent(DataGRD& grd) {
+        if (grd._num_img != grd._images.size())
             return false;
 
-        for (auto& img : grd.images) for (auto& ar : img.areas) for (auto& rc : ar.second)
+        for (auto& img : grd._images) for (auto& ar : img.areas) for (auto& rc : ar.second)
             if (rc.x < 0 || rc.y < 0 || rc.w > (decltype(rc.w))img.dim.x || rc.h > (decltype(rc.h))img.dim.y)
                 return false;
 

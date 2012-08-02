@@ -117,12 +117,12 @@ private:
     }
 
     void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, GraphicMode mode) {
-        if (chipset.w / grd.cellwidth <= 0 || chipset.w % grd.cellwidth != 0)
+        if (chipset.w / grd._cellwidth <= 0 || chipset.w % grd._cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
         SDL_Rect     src = {0,0,0,0};
         unsigned int i = 0;
-        for (const auto& img : grd.images) {
+        for (const auto& img : grd._images) {
 
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
@@ -133,11 +133,11 @@ private:
 
             _sprites.push_back(std::move(spt));
 
-            src.x += grd.cellwidth;
-            if (src.x + grd.cellwidth > (unsigned int) chipset.w) {
+            src.x += grd._cellwidth;
+            if (src.x + grd._cellwidth > (unsigned int) chipset.w) {
                 src.x = 0;
-                src.y += grd.cellheight;
-                if (src.y + grd.cellheight > (unsigned int) chipset.h)
+                src.y += grd._cellheight;
+                if (src.y + grd._cellheight > (unsigned int) chipset.h)
                     throw Exception("the grd doesn't fit with the chipset",__LINE__);
             }
         }

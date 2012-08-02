@@ -11,6 +11,8 @@ namespace FlatScene {
 
     struct DocIsNotLoadedException {};
 
+    struct GRDProcess;
+
     struct DataGRD {
         typedef std::vector<Rectangle> Area;
         typedef Point2D<unsigned int>  CPoint;
@@ -26,19 +28,28 @@ namespace FlatScene {
             Sprite(DimPoint ndim = DimPoint(),CPoint ncp = CPoint()) : dim(ndim), cp(ncp) {}
         };
 
-        std::vector<Sprite> images;
-        unsigned int        num_img;
-        unsigned int        cellwidth;
-        unsigned int        cellheight;
-        bool                simple;
-        double              sp_scale;
-        CPoint              globalcp;
-        std::map<int,Area>  globalareas;
-        std::map<int,bool>  ga_isRel;
-        std::string         grd_str;
-
         DataGRD(unsigned int width, unsigned int height, std::string file);
         DataGRD(std::string file); /* @throw DocIsNotLoadedException */
+
+        const std::string&  getDescriptorFile() const { return _grd_str; }
+        const std::string&  getGraphicFile() const { return _grd_str; }
+        double              getSpecialScale() const { return _sp_scale; }
+
+    private:
+
+        std::vector<Sprite> _images;
+        unsigned int        _num_img;
+        unsigned int        _cellwidth;
+        unsigned int        _cellheight;
+        bool                _simple;
+        double              _sp_scale;
+        CPoint              _globalcp;
+        std::map<int,Area>  _globalareas;
+        std::map<int,bool>  _ga_isRel;
+        std::string         _grd_str;
+
+        friend class SpritesetResource;
+        friend struct GRDProcess;
 
     };
 

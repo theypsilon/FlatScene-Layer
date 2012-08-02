@@ -15,7 +15,7 @@ namespace FlatScene {
             "Bad Canvas type"
         );
 
-        ImageId id (n, grd.grd_str);
+        ImageId id (n, grd.getDescriptorFile());
 
         for (const auto& pair : T::Handler::MemoryPolicyType::getCounts())
             if (id == pair.first->id)
@@ -26,7 +26,7 @@ namespace FlatScene {
 
         storeSurface(
             *res,
-            loadSurface(src,chipset,mode,grd.sp_scale),
+            loadSurface(src,chipset,mode,grd.getSpecialScale()),
             mode,
             filter
         );
