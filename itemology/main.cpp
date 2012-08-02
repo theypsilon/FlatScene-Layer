@@ -17,7 +17,11 @@ int main (int argc, char* argv[]) {
     FSLib.startLibrary(false);
     FSDraw.start(640,480,32,1.0,1.0,false);
 
-    FSLib.processEngine(unique_ptr<IFirstEngine>(new IFirstEngine));
+    try {
+        FSLib.processEngine(unique_ptr<IFirstEngine>(new IFirstEngine));
+    } catch (Exception& e) {
+        cout << "Exception catched: " << e.what() << endl;
+    }
 
     cout << "Ending main" << endl;
 
