@@ -12,11 +12,11 @@ namespace FlatScene {
         Exception(std::string describe = "", int line = -1, const char* file = nullptr)
             : _description(std::move(describe)) 
         {
-            if (line > -1) {
-                _description += " ::line = " + std::to_string(line);
-            }
             if (file) {
-                _description += " ::file = " + std::string(file);
+                _description += "\n\t::file " + std::string(file);
+            }
+            if (line > -1) {
+                _description += (file? ":" : "\n\t::line ") + std::to_string(line);
             }
         }
 
