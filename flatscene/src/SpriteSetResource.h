@@ -70,7 +70,9 @@ private:
     std::string      _name;
     GraphicMode      _mode;
 
-    std::pair<GRD,SDL_Surface*> loadGRDandChipset(const std::pair<std::string, std::string>& pair) {
+    typedef std::pair<GRD,decltype(IMGLoadOrThrow(""))> GRDandChipset;
+
+    GRDandChipset loadGRDandChipset(const std::pair<std::string, std::string>& pair) {
         const std::string& name = pair.first;
         const std::string& type = pair.second;
         try {
@@ -118,8 +120,10 @@ private:
 
     }
 
-    void loadAllSprites(const GRD& grd, const SDL_Surface& chipset, GraphicMode mode) {
-        if (chipset.w / grd._cellwidth <= 0 || chipset.w % grd._cellwidth != 0)
+    template <typename T>
+    void loadAllSprites(const GRD& grd, const T& chipset, GraphicMode mode) {
+        unsigned int w = getWidth(chipset), h = getHeight(chipset);
+        if (w / grd._cellwidth <= 0 || w % grd._cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
         SDL_Rect     src = {0,0,0,0};
@@ -136,10 +140,10 @@ private:
             _sprites.push_back(std::move(spt));
 
             src.x += grd._cellwidth;
-            if (src.x + grd._cellwidth > (unsigned int) chipset.w) {
+            if (src.x + grd._cellwidth > (unsigned int) w) {
                 src.x = 0;
                 src.y += grd._cellheight;
-                if (src.y + grd._cellheight > (unsigned int) chipset.h)
+                if (src.y + grd._cellheight > (unsigned int) h)
                     throw Exception("the grd doesn't fit with the chipset",__LINE__);
             }
         }

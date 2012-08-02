@@ -29,6 +29,14 @@ namespace FlatScene {
 
     void IMGFreeOrThrow(SDL_Surface* surface);
 
+    inline unsigned int getWidth(const SDL_Surface& surface) {
+        return surface.w;
+    }
+
+    inline unsigned int getHeight(const SDL_Surface& surface) {
+        return surface.h;
+    }
+
 }
 
 #endif // FS_SDL_SURFACE_FUNCS__
