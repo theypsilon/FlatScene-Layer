@@ -4,6 +4,7 @@
 #include "SpriteSet.h"
 #include "Exception.h"
 #include "Algorithm.h"
+#include "Traits.h"
 #include "parserXML.h"
 #include "Library.h"
 
