@@ -23,7 +23,7 @@ namespace FlatScene {
         typedef int IndexArea;
         typedef std::map<IndexArea,RectArea> Areas;
 
-        void                setName(const std::string& newName);
+        void                setName(std::string newName);
         const std::string&  getName() const;
         const Areas&        getAllAreas () const;
         const RectArea&     getArea(IndexArea index) const;

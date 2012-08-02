@@ -96,7 +96,8 @@
     <ClCompile Include="src\Canvas.cpp" />
     <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\Exception.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageAdapter.cpp" />
     <ClCompile Include="src\Library.cpp" />
     <ClCompile Include="src\Renders.cpp" />
     <ClCompile Include="src\Screen.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="include\SpriteSet.h" />
     <ClInclude Include="include\Time.h" />
     <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
     <ClInclude Include="include\tinyxml\*.h" />

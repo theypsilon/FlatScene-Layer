@@ -5,23 +5,15 @@
 
 namespace FlatScene {
 
-    namespace result_of { // pillaged from Boost ;)
-        template <class Value>
-        struct extract { typedef Value type; };
-
-        template <class First, class Second>
-        struct extract < std::pair<First,Second> > { typedef Second type; };
-    } // result_of
-
     template <class Value>
     Value extract(Value v) { return v; }
 
     template <class First, class Second>
     Second extract(std::pair<First,Second> pair) { return pair.second; }
 
-    template <class Container>
-    typename result_of::extract< typename Container::value_type >::type
-    first(const Container& c) { return extract(*c.begin()); }
+    template <class Container> 
+    auto first(const Container& c) -> decltype(extract(*c.begin()))
+    { return extract(*c.begin()); }
 
     template <typename Iterable,typename Value>
     inline auto find(const Iterable& c, const Value& val) -> decltype(end(c)) {

@@ -3,6 +3,7 @@
 
 #include "Exception.h"
 #include <limits>
+#include <string>
 
 namespace FlatScene { namespace Util { namespace XML { namespace Tiny {
 
@@ -64,6 +65,10 @@ namespace FlatScene { namespace Util { namespace XML { namespace Tiny {
            throw Exception("attribute '"+name+"' not in "+typeid(T).name()+" range",__LINE__);
         return ret;
     }
+
+#if !defined(TINYXML_INCLUDED)
+#undef TIXML_SUCCESS
+#endif
 
 }}}} // FlatScene::Util::xml::tiny
 

@@ -22,8 +22,8 @@ namespace FlatScene {
         Canvas::put(ptDst,flags);
     }
 
-    void Sprite::setName (const std::string& newName) {
-        getRes<SpriteResource>().name = newName;
+    void Sprite::setName (std::string newName) {
+        getRes<SpriteResource>().name = std::move(newName);
     }
 
     const std::string& Sprite::getName() const {

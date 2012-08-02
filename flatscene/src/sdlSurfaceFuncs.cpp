@@ -1,5 +1,5 @@
 #include "sdlSurfaceFuncs.h"
-#include "CanvasResource.h"
+#include "Exception.h"
 
 unsigned int pow2(unsigned int n) {
     unsigned int c = 1;
@@ -449,7 +449,7 @@ namespace FlatScene {
 
             if ( image ) {
                 SDL_FreeSurface( image );
-                image=NULL;
+                image = nullptr;
             }
 
 
@@ -457,17 +457,30 @@ namespace FlatScene {
         }
 
         if (mode & ONLY_SDL_SURFACE) {
-            canvas.h=0;
-            canvas.w=0;
+            canvas.h = 0;
+            canvas.w = 0;
         }
 
         if (mode & ONLY_TEXTURE) {
             SDL_FreeSurface( surface );
-            surface=NULL;
+            surface = nullptr;
         }
 
-        canvas.sdl_surf=surface;
+        canvas.raw = surface;
 
+    }
+
+    SDL_Surface* IMGLoadOrThrow(const std::string& path) {
+        SDL_Surface* chipset = IMG_Load(path.c_str());
+        if (!chipset) 
+            throw Exception("chipset file invalid",__LINE__,__FILE__);
+        return chipset;
+    }
+
+    void IMGFreeOrThrow(SDL_Surface* surface) {
+        if (!surface)
+            throw Exception("chipset pointer invalid",__LINE__,__FILE__);
+        SDL_FreeSurface(surface);
     }
 
 } // FlatScene

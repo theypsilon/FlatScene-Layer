@@ -4,6 +4,7 @@
 #include "SpriteSet.h"
 #include "Exception.h"
 #include "Algorithm.h"
+#include "Traits.h"
 #include "parserXML.h"
 #include "Library.h"
 
@@ -26,9 +27,9 @@ public:
 
     typedef std::vector<Sprite> SpriteCollection;
 
-    SpritesetResource(const std::string& c, GraphicMode mode) 
-        : _mode(mode), _name(c) {
-            loadChipset(c,mode);
+    SpritesetResource(std::string c, GraphicMode mode) 
+        : _mode(mode), _name(std::move(c)) {
+            loadChipset(_name,mode);
     }
 
     GraphicMode getMode() {
@@ -69,18 +70,35 @@ private:
     std::string      _name;
     GraphicMode      _mode;
 
+    typedef std::pair<GRD,decltype(IMGLoadOrThrow(""))> GRDandChipset;
+
+    GRDandChipset loadGRDandChipset(const std::pair<std::string, std::string>& pair) {
+        const std::string& name = pair.first;
+        const std::string& type = pair.second;
+        try {
+            GRD grd(name + ".grd");
+            auto chipset = IMGLoadOrThrow(grd.getGraphicFile());
+            assert(chipset);
+            return std::make_pair(std::move(grd),chipset);
+        } catch(DocIsNotLoadedException&) {
+            std::string graphicFile = name +(
+                type != ".grd"? 
+                     isValidBitmapExtension(type)? type : throw Exception("graphic bitmap format not valid") 
+                     : ".png"
+            );
+            auto chipset = IMGLoadOrThrow(graphicFile);
+            assert(chipset);
+            return std::make_pair(GRD(chipset->w, chipset->h, std::move(graphicFile)),chipset);
+        }
+    }
+
     void loadChipset(const std::string& c,GraphicMode mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
-        auto names = getNameFile(c);
+        auto fGRDsChipset = loadGRDandChipset(getNameFile(c));
 
-        auto chipset = IMG_Load(names.second.c_str());
-        if (!chipset)
-            throw Exception("chipset couldn't load");
+        typedef decltype(fGRDsChipset.second) csType;
+        loadAllSprites(fGRDsChipset.first,to_cref<csType>::from(fGRDsChipset.second),mode);
 
-        auto grd = loadFileGRD(names.first,chipset);
-
-        loadAllSprites(grd,*chipset,mode);
-
-        SDL_FreeSurface(chipset);
+        IMGFreeOrThrow(fGRDsChipset.second);
     }
 
     bool isValidBitmapExtension(const std::string& bitmap) {
@@ -89,51 +107,43 @@ private:
     }
 
     std::pair<std::string, std::string> getNameFile(const std::string& str) {
-
-        std::string tipefile;
-        std::string namefile;
-
         auto res = str.end();
-        for(auto it=str.begin(); it != str.end() ; ++it)
-            if (*it == '.')
+        for(auto it = str.begin(); it != str.end() ; ++it)
+            if ('.' == *it)
                 res = it;
 
-        if (res != str.end()) {
-            namefile += std::string(str.begin(),res);
-            tipefile += std::string(res,str.end());
-        } else {
-            namefile += str;
-            tipefile += ".png";
-        }
+        bool foundSomething = res != str.end();
+        std::string namefile = foundSomething? std::string(str.begin(),res) : str;
+        std::string tipefile = foundSomething? std::string(res,str.end())   : ".grd";
 
-        if (!isValidBitmapExtension(tipefile)) 
-            throw Exception("graphic bitmap format not valid");
-
-        return std::make_pair(namefile + ".grd",namefile + tipefile);
+        return std::make_pair(namefile,tipefile);
 
     }
 
-    void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, GraphicMode mode) {
-        if (chipset.w / grd.cellwidth <= 0 || chipset.w % grd.cellwidth != 0)
+    template <typename T>
+    void loadAllSprites(const GRD& grd, const T& chipset, GraphicMode mode) {
+        unsigned int w = getWidth(chipset), h = getHeight(chipset);
+        if (w / grd._cellwidth <= 0 || w % grd._cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
-        SDL_Rect src = {0,0,0,0};
-        for (const auto& img : grd.images) {
+        SDL_Rect     src = {0,0,0,0};
+        unsigned int i = 0;
+        for (const auto& img : grd._images) {
 
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt(createResource<SpriteResource>(src,chipset,mode,grd.sp_scale));
+            Sprite spt(createResource<SpriteResource>(src,chipset,mode,grd,i++));
 
             spt.setName(img.name);
 
             _sprites.push_back(std::move(spt));
 
-            src.x += grd.cellwidth;
-            if (src.x + grd.cellwidth > (unsigned int) chipset.w) {
+            src.x += grd._cellwidth;
+            if (src.x + grd._cellwidth > (unsigned int) w) {
                 src.x = 0;
-                src.y += grd.cellheight;
-                if (src.y + grd.cellheight > (unsigned int) chipset.h)
+                src.y += grd._cellheight;
+                if (src.y + grd._cellheight > (unsigned int) h)
                     throw Exception("the grd doesn't fit with the chipset",__LINE__);
             }
         }

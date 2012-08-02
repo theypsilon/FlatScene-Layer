@@ -8,25 +8,41 @@
 namespace FlatScene {
 
     class Exception : public std::exception {
-        struct ExceptionImpl;
-        const std::unique_ptr<ExceptionImpl> _impl;
     public:
-        Exception(std::string describe, int line = -1);
-        Exception(const Exception&);
-        virtual ~Exception() throw();
-        virtual const char* what() const throw();
+        Exception(std::string describe = "", int line = -1, const char* file = nullptr)
+            : _description(std::move(describe)) 
+        {
+            if (file) {
+                _description += "\n\t::file " + std::string(file);
+            }
+            if (line > -1) {
+                _description += (file? ":" : "\n\t::line ") + std::to_string(line);
+            }
+        }
+
+        virtual ~Exception() throw() {}
+
+        virtual const char* what() {
+            return _description.c_str();
+        }
+    private:
+        std::string _description;
     };
 
-    typedef Exception FileDoesntExistException;
-    typedef Exception ExternalLibraryException;
-    typedef Exception SDLException;
-    typedef Exception ControlViolationException;
+    template <unsigned int N>
+    class DerivedException : public Exception {
+    public:
+        DerivedException(std::string describe = "", int line = -1, const char* file = nullptr)
+            : Exception(std::move(describe) + " ::type = "+typeid(DerivedException<N>).name(),line,file)
+        {}
 
-/* TODO FIXME
+        virtual ~DerivedException() throw() {}
+    };
 
-    class FileDoesntExistException : public Exception {};
-    class ExternalLibraryException : public Exception {};
-    class SDLExcetion : public ExternalLibraryException {};*/
+    typedef DerivedException<0> FileDoesntExistException;
+    typedef DerivedException<1> ExternalLibraryException;
+    typedef DerivedException<2> SDLException;
+    typedef DerivedException<3> ControlViolationException;
 
 } // flatscene
 

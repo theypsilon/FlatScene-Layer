@@ -7,26 +7,26 @@
 namespace FlatScene {
 
     template <class T> T* createResource(
-        const SDL_Rect& src, const SDL_Surface& chipset, 
-        GraphicMode mode, double sp_scale, GraphicFilter filter
+        const SDL_Rect& src, ConstRawImageResource chipset, GraphicMode    mode,
+        const GRD&  grd, unsigned int       n      , GraphicFilter  filter
     ) {
         static_assert(
             std::is_base_of<CanvasResource,T>::value,
             "Bad Canvas type"
         );
 
-        Point p(src.x,src.y);
+        ImageId id (n, grd.getDescriptorFile());
 
         for (const auto& pair : T::Handler::MemoryPolicyType::getCounts())
-            if (pair.first->xy == p && pair.first->c == &chipset)
+            if (id == pair.first->id)
                 return static_cast<T*>(pair.first);
 
-        auto res = new T(p,&chipset);
+        auto res = new T(std::move(id));
         assert(res);
 
         storeSurface(
             *res,
-            loadSurface(src,chipset,mode,sp_scale),
+            loadSurface(src,chipset,mode,grd.getSpecialScale()),
             mode,
             filter
         );

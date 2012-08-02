@@ -15,14 +15,14 @@ namespace FlatScene {
         Sprite::Areas   areas;
         SpriteOpaque    opaque;
 
-        SpriteResource(const CanvasResource::PointType& xy,const SDL_Surface *const c) : CanvasResource(xy,c) {}
+        SpriteResource(ImageId id) : CanvasResource(std::move(id)) {}
         virtual ~SpriteResource() {}
 
         friend class Sprite;
         friend class RefCountMemoryPolicy<SpriteResource>;
         template <class T> friend T* createResource(
-            const SDL_Rect& src, const SDL_Surface& chipset, 
-            GraphicMode mode, double sp_scale, GraphicFilter filter
+            const SDL_Rect& src, ConstRawImageResource chipset, GraphicMode   mode,
+            const GRD& grd,  unsigned int n,             GraphicFilter filter
         );
     };
 
