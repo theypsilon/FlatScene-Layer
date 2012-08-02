@@ -22,7 +22,7 @@ namespace FlatScene {
         friend class RefCountMemoryPolicy<SpriteResource>;
         template <class T> friend T* createResource(
             const SDL_Rect& src, ConstRawImageResource chipset, GraphicMode   mode,
-            const DataGRD& grd,  unsigned int n,             GraphicFilter filter
+            const GRD& grd,  unsigned int n,             GraphicFilter filter
         );
     };
 

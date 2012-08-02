@@ -38,7 +38,7 @@ namespace FlatScene {
 
         template <class T> friend T* createResource(
             const SDL_Rect& src, ConstRawImageResource chipset, GraphicMode mode,
-            const DataGRD& grd, unsigned int n, GraphicFilter filter = NEAREST
+            const GRD& grd, unsigned int n, GraphicFilter filter = NEAREST
         );
 
         template <typename PointType, typename GraphicMaterial>
