@@ -32,7 +32,7 @@ public:
             loadChipset(_name,mode);
     }
 
-    GraphicMode getMode() {
+    GraphicMode getMode() const {
         return _mode;
     }
 
