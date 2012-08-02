@@ -70,16 +70,15 @@ private:
     std::string      _name;
     GraphicMode      _mode;
 
-    typedef std::pair<GRD,decltype(IMGLoadOrThrow(""))> GRDandChipset;
+    typedef decltype(IMGLoadOrThrow("")) csType;
 
-    GRDandChipset loadGRDandChipset(const std::pair<std::string, std::string>& pair) {
+    std::pair<GRD,csType> loadGRDandChipset(const std::pair<std::string, std::string>& pair) {
         const std::string& name = pair.first;
         const std::string& type = pair.second;
         try {
             GRD grd(name + ".grd");
             auto chipset = IMGLoadOrThrow(grd.getGraphicFile());
-            assert(chipset);
-            return std::make_pair(std::move(grd),chipset);
+            return std::make_pair(std::move(grd),std::move(chipset));
         } catch(DocIsNotLoadedException&) {
             std::string graphicFile = name +(
                 type != ".grd"? 
@@ -87,15 +86,17 @@ private:
                      : ".png"
             );
             auto chipset = IMGLoadOrThrow(graphicFile);
-            assert(chipset);
-            return std::make_pair(GRD(chipset->w, chipset->h, std::move(graphicFile)),chipset);
+            auto cs = to_cref<csType>::from(chipset);
+            return std::make_pair(
+                GRD(getWidth(cs), getHeight(cs), std::move(graphicFile)),
+                std::move(chipset)
+            );
         }
     }
 
     void loadChipset(const std::string& c,GraphicMode mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
         auto fGRDsChipset = loadGRDandChipset(getNameFile(c));
 
-        typedef decltype(fGRDsChipset.second) csType;
         loadAllSprites(fGRDsChipset.first,to_cref<csType>::from(fGRDsChipset.second),mode);
 
         IMGFreeOrThrow(fGRDsChipset.second);
