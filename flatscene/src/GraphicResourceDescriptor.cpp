@@ -3,8 +3,6 @@
 #include "TinyXMLHelper.h"
 #include "parserXML.h"
 
-#include <regex>
-
 namespace FlatScene {
 
     using namespace Util::XML::Tiny;
