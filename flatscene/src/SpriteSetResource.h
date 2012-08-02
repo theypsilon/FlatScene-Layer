@@ -94,7 +94,7 @@ private:
         }
     }
 
-    void loadChipset(const std::string& c,GraphicMode mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
+    void loadChipset(const std::string& c,GraphicMode mode) {
         auto fGRDsChipset = loadGRDandChipset(getNameFile(c));
 
         loadAllSprites(fGRDsChipset.first,to_cref<csType>::from(fGRDsChipset.second),mode);
