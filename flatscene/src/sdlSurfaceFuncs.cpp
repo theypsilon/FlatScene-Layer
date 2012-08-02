@@ -470,4 +470,17 @@ namespace FlatScene {
 
     }
 
+    SDL_Surface* IMGLoadOrThrow(const std::string& path) {
+        SDL_Surface* chipset = IMG_Load(path.c_str());
+        if (!chipset) 
+            throw Exception("chipset file invalid",__LINE__,__FILE__);
+        return chipset;
+    }
+
+    void IMGFreeOrThrow(SDL_Surface* surface) {
+        if (!surface)
+            throw Exception("chipset pointer invalid",__LINE__,__FILE__);
+        SDL_FreeSurface(surface);
+    }
+
 } // FlatScene

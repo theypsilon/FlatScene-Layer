@@ -3,6 +3,8 @@
 #include "TinyXMLHelper.h"
 #include "parserXML.h"
 
+#include <regex>
+
 namespace FlatScene {
 
     using namespace Util::XML::Tiny;
@@ -29,6 +31,12 @@ namespace FlatScene {
 
         static bool areValuesConsistent(GRD& grd);
 
+        static void deduceGraphicString(GRD& grd) {
+            grd._gr_file = grd._grd_str;
+            assert(grd._gr_file.size() > 4);
+            grd._gr_file.replace(grd._gr_file.size() - 4,grd._gr_file.size(),".png");
+        }
+
     };
 
 
@@ -37,6 +45,7 @@ namespace FlatScene {
     {
         typedef GRDProcess p;
         p::processSimpleSpriteValues(*this);
+        p::deduceGraphicString(*this);
         assert(("GRD construction by size must be wrong", p::areValuesConsistent(*this)));
     }
 
@@ -59,6 +68,7 @@ namespace FlatScene {
             p::processGlobalValues(*this,input);
             p::processSpriteValues(*this,input);
         }
+        p::deduceGraphicString(*this);
 
         assert(("GRD construction by file must be wrong", p::areValuesConsistent(*this)));
     }

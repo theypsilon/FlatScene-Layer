@@ -32,7 +32,7 @@ namespace FlatScene {
         GRD(std::string file); /* @throw DocIsNotLoadedException */
 
         const std::string&  getDescriptorFile() const { return _grd_str; }
-        const std::string&  getGraphicFile() const { return _grd_str; }
+        const std::string&  getGraphicFile() const { return _gr_file; }
         double              getSpecialScale() const { return _sp_scale; }
 
     private:
@@ -47,6 +47,7 @@ namespace FlatScene {
         std::map<int,Area>  _globalareas;
         std::map<int,bool>  _ga_isRel;
         std::string         _grd_str;
+        std::string         _gr_file;
 
         friend class SpritesetResource;
         friend struct GRDProcess;

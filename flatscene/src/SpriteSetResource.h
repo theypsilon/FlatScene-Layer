@@ -69,29 +69,33 @@ private:
     std::string      _name;
     GraphicMode      _mode;
 
-    GRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset) {
+    std::pair<GRD,SDL_Surface*> loadGRDandChipset(const std::pair<std::string, std::string>& pair) {
+        const std::string& name = pair.first;
+        const std::string& type = pair.second;
         try {
-            return GRD(grd_str);
+            GRD grd(name + ".grd");
+            auto chipset = IMGLoadOrThrow(grd.getGraphicFile());
+            assert(chipset);
+            return std::make_pair(std::move(grd),chipset);
         } catch(DocIsNotLoadedException&) {
-            if (!chipset) 
-                throw Exception("grd file invalid and bitmap invalid",__LINE__);
-
-            return GRD(chipset->w, chipset->h, grd_str);
+            std::string graphicFile = name +(
+                type != ".grd"? 
+                     isValidBitmapExtension(type)? type : throw Exception("graphic bitmap format not valid") 
+                     : ".png"
+            );
+            auto chipset = IMGLoadOrThrow(graphicFile);
+            assert(chipset);
+            return std::make_pair(GRD(chipset->w, chipset->h, std::move(graphicFile)),chipset);
         }
     }
 
     void loadChipset(const std::string& c,GraphicMode mode=ONLY_TEXTURE,std::string* cPrev=nullptr) {
-        auto names = getNameFile(c);
+        auto fGRDsChipset = loadGRDandChipset(getNameFile(c));
 
-        auto chipset = IMG_Load(names.second.c_str());
-        if (!chipset)
-            throw Exception("chipset couldn't load");
+        typedef decltype(fGRDsChipset.second) csType;
+        loadAllSprites(fGRDsChipset.first,to_cref<csType>::from(fGRDsChipset.second),mode);
 
-        auto grd = loadFileGRD(names.first,chipset);
-
-        loadAllSprites(grd,*chipset,mode);
-
-        SDL_FreeSurface(chipset);
+        IMGFreeOrThrow(fGRDsChipset.second);
     }
 
     bool isValidBitmapExtension(const std::string& bitmap) {
@@ -107,12 +111,9 @@ private:
 
         bool foundSomething = res != str.end();
         std::string namefile = foundSomething? std::string(str.begin(),res) : str;
-        std::string tipefile = foundSomething? std::string(res,str.end())   : ".png";
+        std::string tipefile = foundSomething? std::string(res,str.end())   : ".grd";
 
-        if (!isValidBitmapExtension(tipefile)) 
-            throw Exception("graphic bitmap format not valid");
-
-        return std::make_pair(namefile + ".grd",namefile + tipefile);
+        return std::make_pair(namefile,tipefile);
 
     }
 

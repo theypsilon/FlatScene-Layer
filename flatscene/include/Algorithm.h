@@ -57,6 +57,28 @@ namespace FlatScene {
         }
     }
 
+    template <typename T>
+    struct to_cref {
+    private:
+        typedef typename std::remove_cv<
+            typename std::conditional<std::is_pointer<T>::value,
+                typename std::remove_pointer<T>::type, T
+            >::type 
+        >::type npcvType;
+    public:
+        typedef const npcvType& type;
+        typedef npcvType* pointer;
+
+        static type from(pointer p) {
+            assert(p);
+            return *p;
+        }
+
+        static type from(type v) {
+            return v;
+        }
+    };
+
 } // FlatScene
 
 #endif // FS_ALGORITHM__
