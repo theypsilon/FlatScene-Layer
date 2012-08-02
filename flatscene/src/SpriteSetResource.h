@@ -69,14 +69,14 @@ private:
     std::string      _name;
     GraphicMode      _mode;
 
-    DataGRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset) {
+    GRD loadFileGRD(const std::string& grd_str, const SDL_Surface *const chipset) {
         try {
-            return DataGRD(grd_str);
+            return GRD(grd_str);
         } catch(DocIsNotLoadedException&) {
             if (!chipset) 
                 throw Exception("grd file invalid and bitmap invalid",__LINE__);
 
-            return DataGRD(chipset->w, chipset->h, grd_str);
+            return GRD(chipset->w, chipset->h, grd_str);
         }
     }
 
@@ -116,7 +116,7 @@ private:
 
     }
 
-    void loadAllSprites(const DataGRD& grd, const SDL_Surface& chipset, GraphicMode mode) {
+    void loadAllSprites(const GRD& grd, const SDL_Surface& chipset, GraphicMode mode) {
         if (chipset.w / grd._cellwidth <= 0 || chipset.w % grd._cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 

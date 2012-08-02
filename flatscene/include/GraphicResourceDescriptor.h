@@ -13,7 +13,7 @@ namespace FlatScene {
 
     struct GRDProcess;
 
-    struct DataGRD {
+    struct GRD {
         typedef std::vector<Rectangle> Area;
         typedef Point2D<unsigned int>  CPoint;
         typedef Point2D<unsigned int>  DimPoint;
@@ -28,8 +28,8 @@ namespace FlatScene {
             Sprite(DimPoint ndim = DimPoint(),CPoint ncp = CPoint()) : dim(ndim), cp(ncp) {}
         };
 
-        DataGRD(unsigned int width, unsigned int height, std::string file);
-        DataGRD(std::string file); /* @throw DocIsNotLoadedException */
+        GRD(unsigned int width, unsigned int height, std::string file);
+        GRD(std::string file); /* @throw DocIsNotLoadedException */
 
         const std::string&  getDescriptorFile() const { return _grd_str; }
         const std::string&  getGraphicFile() const { return _grd_str; }

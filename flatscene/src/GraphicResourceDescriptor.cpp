@@ -16,31 +16,31 @@ namespace FlatScene {
         static TiXmlDocument getFromOtherFile(const TiXmlElement& head);
 
         template <typename PointType> 
-        static void fillAreasFromElement(const TiXmlElement* pArea, std::map<int,DataGRD::Area>& areas, 
+        static void fillAreasFromElement(const TiXmlElement* pArea, std::map<int,GRD::Area>& areas, 
             const PointType& cp, double scale, std::map<int,bool>& rel_m );
 
-        static void processHeadElement(DataGRD& grd,const TiXmlElement& head);
+        static void processHeadElement(GRD& grd,const TiXmlElement& head);
 
-        static void processGlobalValues(DataGRD& grd,const TiXmlHandle& doc);
+        static void processGlobalValues(GRD& grd,const TiXmlHandle& doc);
 
-        static void processSimpleSpriteValues(DataGRD& grd);
+        static void processSimpleSpriteValues(GRD& grd);
 
-        static void processSpriteValues(DataGRD& grd,const TiXmlHandle& doc);
+        static void processSpriteValues(GRD& grd,const TiXmlHandle& doc);
 
-        static bool areValuesConsistent(DataGRD& grd);
+        static bool areValuesConsistent(GRD& grd);
 
     };
 
 
-    DataGRD::DataGRD(unsigned int width, unsigned int height, std::string file)
+    GRD::GRD(unsigned int width, unsigned int height, std::string file)
         : _sp_scale(1.0), _num_img(1), _simple(true), _cellwidth(width), _cellheight(height), _grd_str(std::move(file))
     {
         typedef GRDProcess p;
         p::processSimpleSpriteValues(*this);
-        assert(("DataGRD construction by size must be wrong", p::areValuesConsistent(*this)));
+        assert(("GRD construction by size must be wrong", p::areValuesConsistent(*this)));
     }
 
-    DataGRD::DataGRD(std::string file) : _grd_str(std::move(file)) {
+    GRD::GRD(std::string file) : _grd_str(std::move(file)) {
         typedef GRDProcess p;
         TiXmlDocument doc = p::getLoadedDocument(_grd_str);
         TiXmlHandle input(doc.FirstChild()); 
@@ -60,7 +60,7 @@ namespace FlatScene {
             p::processSpriteValues(*this,input);
         }
 
-        assert(("DataGRD construction by file must be wrong", p::areValuesConsistent(*this)));
+        assert(("GRD construction by file must be wrong", p::areValuesConsistent(*this)));
     }
 
     TiXmlDocument GRDProcess::getLoadedDocument(const std::string& str) {
@@ -85,7 +85,7 @@ namespace FlatScene {
     }
 
     template <typename PointType> 
-    void GRDProcess::fillAreasFromElement(const TiXmlElement* pArea, std::map<int,DataGRD::Area>& areas, 
+    void GRDProcess::fillAreasFromElement(const TiXmlElement* pArea, std::map<int,GRD::Area>& areas, 
         const PointType& cp, double scale, std::map<int,bool>& rel_m ) {
             for ( ; pArea ; pArea = pArea->NextSiblingElement()) {
                 int id = numFromAttr(*pArea,"id",0);
@@ -105,7 +105,7 @@ namespace FlatScene {
             }
     }
 
-    void GRDProcess::processHeadElement(DataGRD& grd, const TiXmlElement& head) {
+    void GRDProcess::processHeadElement(GRD& grd, const TiXmlElement& head) {
         grd._num_img    = numFromAttr<decltype(grd._num_img)   >(head,"sprites");
         grd._cellwidth  = numFromAttr<decltype(grd._cellwidth) >(head,"cellwidth");
         grd._cellheight = numFromAttr<decltype(grd._cellheight)>(head,"cellheight");
@@ -120,7 +120,7 @@ namespace FlatScene {
             grd._sp_scale = 1.0;
     }
 
-    void GRDProcess::processGlobalValues(DataGRD& grd, const TiXmlHandle& doc) {
+    void GRDProcess::processGlobalValues(GRD& grd, const TiXmlHandle& doc) {
         if (auto el = doc.FirstChildElement("globalcpoint").Element()) {
             grd._globalcp.set(
                 numFromAttr<decltype(grd._globalcp.x)>(*el,"x",0,grd._cellwidth),
@@ -139,19 +139,19 @@ namespace FlatScene {
         );
     }
 
-    void GRDProcess::processSimpleSpriteValues(DataGRD& grd) {
+    void GRDProcess::processSimpleSpriteValues(GRD& grd) {
         for (decltype(grd._num_img) i = 0; i < grd._num_img ; i++)
-            grd._images.push_back(DataGRD::Sprite(
-                DataGRD::DimPoint(grd._cellwidth, grd._cellheight),
-                DataGRD::CPoint  (0,0)
+            grd._images.push_back(GRD::Sprite(
+                GRD::DimPoint(grd._cellwidth, grd._cellheight),
+                GRD::CPoint  (0,0)
             ));
     }
 
-    void GRDProcess::processSpriteValues(DataGRD& grd, const TiXmlHandle& doc) {
+    void GRDProcess::processSpriteValues(GRD& grd, const TiXmlHandle& doc) {
         for (auto pImg = doc.FirstChildElement("img").ToElement(); 
             pImg ; pImg = pImg->NextSiblingElement()) {
 
-                DataGRD::Sprite spt; const auto& img = *pImg;
+                GRD::Sprite spt; const auto& img = *pImg;
                 spt.name = checkAttr(img,"name","",false) ? 
                     valFromAttr<std::string>(img,"name") : "noname" ;
                 spt.dim.set( numFromAttr<decltype(spt.dim.x)>(img,"width",0,grd._cellwidth  ) ,
@@ -176,7 +176,7 @@ namespace FlatScene {
         }
     }
 
-    bool GRDProcess::areValuesConsistent(DataGRD& grd) {
+    bool GRDProcess::areValuesConsistent(GRD& grd) {
         if (grd._num_img != grd._images.size())
             return false;
 
