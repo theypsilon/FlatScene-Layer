@@ -28,6 +28,10 @@ namespace FlatScene {
         }
     };
 
+    template <typename T> inline typename to_cref<T>::type toCRef(T var) {
+        return to_cref<T>::from(var);
+    }
+
 }
 
 #endif // FS_TRAITS__

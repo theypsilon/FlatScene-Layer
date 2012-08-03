@@ -77,19 +77,18 @@ private:
         const std::string& type = pair.second;
         try {
             GRD grd(name + ".grd");
-            auto chipset = IMGLoadOrThrow(grd.getGraphicFile());
-            return std::make_pair(std::move(grd),std::move(chipset));
+            auto cs = IMGLoadOrThrow(grd.getGraphicFile());
+            return std::make_pair(std::move(grd),std::move(cs));
         } catch(DocIsNotLoadedException&) {
             std::string graphicFile = name +(
                 type != ".grd"? 
                      isValidBitmapExtension(type)? type : throw Exception("graphic bitmap format not valid") 
                      : ".png"
             );
-            auto chipset = IMGLoadOrThrow(graphicFile);
-            auto cs = to_cref<csType>::from(chipset);
+            auto cs = IMGLoadOrThrow(graphicFile);
             return std::make_pair(
-                GRD(getWidth(cs), getHeight(cs), std::move(graphicFile)),
-                std::move(chipset)
+                GRD(getWidth(toCRef(cs)), getHeight(toCRef(cs)), std::move(graphicFile)),
+                std::move(cs)
             );
         }
     }
@@ -97,7 +96,7 @@ private:
     void loadChipset(const std::string& c,GraphicMode mode) {
         auto fGRDsChipset = loadGRDandChipset(getNameFile(c));
 
-        loadAllSprites(fGRDsChipset.first,to_cref<csType>::from(fGRDsChipset.second),mode);
+        loadAllSprites(fGRDsChipset.first,toCRef(fGRDsChipset.second),mode);
 
         IMGFreeOrThrow(fGRDsChipset.second);
     }
