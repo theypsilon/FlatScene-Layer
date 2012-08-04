@@ -126,8 +126,8 @@ private:
         if (w / grd._cellwidth <= 0 || w % grd._cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
-        SDL_Rect     src = {0,0,0,0};
-        unsigned int i = 0;
+        RectangleImage  src = {0,0,0,0};
+        unsigned int    i = 0;
         for (const auto& img : grd._images) {
 
             src.w = src.x + img.dim.x;
