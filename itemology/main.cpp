@@ -19,7 +19,7 @@ int main (int argc, char* argv[]) {
 
     try {
         FSLib.processEngine(unique_ptr<IFirstEngine>(new IFirstEngine));
-    } catch (Exception& e) {
+    } catch (std::exception& e) {
         cout << "Exception catched: " << e.what() << endl;
     }
 
