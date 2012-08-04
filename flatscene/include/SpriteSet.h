@@ -12,7 +12,7 @@ namespace FlatScene {
     public:
         Spriteset(
             std::string c    = "",
-            GraphicMode mode = ONLY_TEXTURE
+            GraphicMode mode = ONLY_GPU
         );
         
         bool                    isNull () const { return nullptr == &getRes(); };

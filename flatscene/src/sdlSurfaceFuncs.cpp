@@ -346,7 +346,7 @@ namespace FlatScene {
         SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
         blitcopy(chipset,const_cast<SDL_Rect*>(&src),surf,nullptr);
 
-        if (sp_scale != 1.0 && mode != ONLY_SDL_SURFACE) {
+        if (sp_scale != 1.0 && mode != ONLY_CPU) {
             if (auto temp = scaleSurface(surf,(int)sp_scale)) {
                 SDL_FreeSurface(surf);
                 surf=temp;
@@ -371,7 +371,7 @@ namespace FlatScene {
         canvas.h = pow2((Uint32)surface->h);
         canvas.bpp = surface->format->BytesPerPixel;
 
-        if (mode == ONLY_TEXTURE ||     mode == WITH_SDL_SURFACE) {
+        if (mode == ONLY_GPU ||     mode == BOTH) {
             int saved_flags;
             int  saved_alpha;
       
@@ -456,12 +456,12 @@ namespace FlatScene {
 
         }
 
-        if (mode & ONLY_SDL_SURFACE) {
+        if (mode & ONLY_CPU) {
             canvas.h = 0;
             canvas.w = 0;
         }
 
-        if (mode & ONLY_TEXTURE) {
+        if (mode & ONLY_GPU) {
             SDL_FreeSurface( surface );
             surface = nullptr;
         }
