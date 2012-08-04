@@ -118,6 +118,7 @@
     <ClInclude Include="include\Color.h" />
     <ClInclude Include="include\Coordinate.h" />
     <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Events.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\FlatScene.h" />
     <ClInclude Include="include\FS.h" />
