@@ -358,8 +358,6 @@ namespace FlatScene {
     }
 
     void storeSurface(CanvasResource& canvas, SDL_Surface* surface, GraphicMode mode, GraphicFilter filter) {
-        SDL_Surface* image;
-        SDL_Rect area;
 
         if (surface == nullptr)
             throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
@@ -371,11 +369,9 @@ namespace FlatScene {
         canvas.h = pow2((Uint32)surface->h);
         canvas.bpp = surface->format->BytesPerPixel;
 
-        if (mode == ONLY_GPU ||     mode == BOTH) {
+        if (mode == ONLY_GPU || mode == BOTH) {
             storeSurfaceInGPU(surface, canvas.w, canvas.h, canvas.tex, filter);
-        }
-
-        if (mode & ONLY_CPU) {
+        } else {
             canvas.h = 0;
             canvas.w = 0;
         }
