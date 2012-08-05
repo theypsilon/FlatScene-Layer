@@ -372,88 +372,7 @@ namespace FlatScene {
         canvas.bpp = surface->format->BytesPerPixel;
 
         if (mode == ONLY_GPU ||     mode == BOTH) {
-            int saved_flags;
-            int  saved_alpha;
-      
-            #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-                  image = SDL_CreateRGBSurface(
-                      SDL_SWSURFACE |SDL_SRCALPHA,
-                      canvas.w,
-                      canvas.h,
-                      surface->format->BitsPerPixel,
-                      0x000000ff,
-                      0x0000ff00,
-                      0x00ff0000,
-                      0xff000000);
-            #else
-                  image = SDL_CreateRGBSurface(
-                      SDL_SWSURFACE |SDL_SRCALPHA,
-                      canvas.w,
-                      canvas.h,
-                      surface->format->BitsPerPixel,
-                      0xff000000,
-                      0x00ff0000,
-                      0x0000ff00,
-                      0x000000ff);
-            #endif
-            if (image == NULL)
-                throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
-
-
-            saved_flags = surface->flags&(SDL_SRCALPHA|SDL_RLEACCELOK);
-            saved_alpha = surface->format->alpha;
-            if ( (saved_flags & SDL_SRCALPHA)   == SDL_SRCALPHA ) {
-              SDL_SetAlpha(surface, 0, 0);
-            }
-
-
-
-            area.x = 0;
-            area.y = 0;
-            area.w = surface->w;
-            area.h = surface->h;
-
-            SDL_BlitSurface(surface, &area, image, &area);
-
-        
-            if ( (saved_flags & SDL_SRCALPHA)== SDL_SRCALPHA )  {
-                SDL_SetAlpha(surface, saved_flags, saved_alpha);
-            }
-
-            if(SDL_MUSTLOCK(image))
-                SDL_UnlockSurface(image);
-
-            // Have OpenGL generate a texture object handle for us
-            glGenTextures(1, &canvas.tex );
-
-            // Bind the texture object
-            glBindTexture( GL_TEXTURE_2D,canvas.tex );
-
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST);
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
-        
-            // Edit the texture object's surface data using the information SDL_Surface gives us
-            glTexImage2D( GL_TEXTURE_2D,
-                                    0,
-                                    GL_RGBA,
-                                    canvas.w,
-                                    canvas.h,
-                                    0,
-                                    GL_RGBA,
-                                    GL_UNSIGNED_BYTE,
-                                    image->pixels );
-
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-
-            if ( image ) {
-                SDL_FreeSurface( image );
-                image = nullptr;
-            }
-
-
-
+            storeSurfaceInGPU(surface, canvas.w, canvas.h, canvas.tex, filter);
         }
 
         if (mode & ONLY_CPU) {
@@ -468,6 +387,84 @@ namespace FlatScene {
 
         canvas.raw = surface;
 
+    }
+
+    void storeSurfaceInGPU(
+        SDL_Surface* surface, unsigned int width, unsigned int height, 
+        GLuint& tex, GraphicFilter filter
+    ) {
+  
+        SDL_Surface* image = SDL_CreateRGBSurface(
+            SDL_SWSURFACE |SDL_SRCALPHA,
+            width,
+            height,
+            surface->format->BitsPerPixel,
+        #if SDL_BYTEORDER == SDL_LIL_ENDIAN
+            0x000000ff,
+            0x0000ff00,
+            0x00ff0000,
+            0xff000000
+        #else
+            0xff000000,
+            0x00ff0000,
+            0x0000ff00,
+            0x000000ff
+        #endif
+        );
+
+        if (image == nullptr)
+            throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
+
+        int saved_flags = surface->flags&(SDL_SRCALPHA|SDL_RLEACCELOK);
+        int saved_alpha = surface->format->alpha;
+        if ( (saved_flags & SDL_SRCALPHA)   == SDL_SRCALPHA ) {
+          SDL_SetAlpha(surface, 0, 0);
+        }
+
+
+        SDL_Rect area = {0, 0, (Sint16) surface->w, (Sint16) surface->h};
+
+        SDL_BlitSurface(surface, &area, image, &area);
+    
+        if ( (saved_flags & SDL_SRCALPHA)== SDL_SRCALPHA )  {
+            SDL_SetAlpha(surface, saved_flags, saved_alpha);
+        }
+
+        if(SDL_MUSTLOCK(image))
+            SDL_UnlockSurface(image);
+
+        storeTexture(tex,surface->pixels,width,height,filter);
+
+        SDL_FreeSurface( image );
+    }
+
+    void storeTexture(GLuint& tex, void* pixels, unsigned int width, unsigned int height, GraphicFilter filter) {
+
+        // Have OpenGL generate a texture object handle for us
+        glGenTextures(1, &tex);
+
+        // Bind the texture object
+        glBindTexture( GL_TEXTURE_2D, tex );
+
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
+    
+        // Edit the texture object's surface data using the information SDL_Surface gives us
+        glTexImage2D( 
+            GL_TEXTURE_2D,
+            0,
+            GL_RGBA,
+            width,
+            height,
+            0,
+            GL_RGBA,
+            GL_UNSIGNED_BYTE,
+            pixels 
+        );
+
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
     }
 
     SDL_Surface* IMGLoadOrThrow(const std::string& path) {

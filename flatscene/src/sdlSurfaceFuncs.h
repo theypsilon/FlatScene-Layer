@@ -25,6 +25,11 @@ namespace FlatScene {
 
     void storeSurface(CanvasResource& canvas, SDL_Surface* surface, GraphicMode mode, GraphicFilter filter);
 
+    void storeSurfaceInGPU(SDL_Surface* surface, unsigned int width, unsigned int height, 
+        GLuint& tex, GraphicFilter filter);
+
+    void storeTexture(GLuint& tex, void* pixels, unsigned int width, unsigned int height, GraphicFilter filter);
+
     SDL_Surface* IMGLoadOrThrow(const std::string& path);
 
     void IMGFreeOrThrow(SDL_Surface* surface);

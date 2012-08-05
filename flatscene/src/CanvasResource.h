@@ -14,11 +14,11 @@ namespace FlatScene {
 
         CanvasResource (ImageId nid) : id(std::move(nid)) {}
 
-        GLuint              tex;
-        Uint32              w, h;                /* Read-only */
-        int                 w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
+        mutable GLuint      tex;
+        Uint32              w, h;
+        int                 w2,h2; /* previous value shifted to the very next bigger value which form is X^2 */
         Uint8               bpp;
-        RawImageResource    raw; // NULL or not null, thats the question.
+        RawImageResource    raw;
         const ImageId       id;
 
         void clearSurface () {
