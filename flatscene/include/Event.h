@@ -13,7 +13,6 @@ namespace FlatScene {
         EventType::EventType getType() const;
         Key::Key getSymbol() const;
     private:
-        Event(EventBridge* ev);
         Event();
         friend class Engine;
         friend std::vector<Event> PollEvents();
