@@ -4,6 +4,8 @@
 #include "ResourceHandler.h"
 #include "EventInfo.h"
 
+#include <vector>
+
 namespace FlatScene {
 
     class EventBridge;

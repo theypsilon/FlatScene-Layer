@@ -4,6 +4,7 @@
 #include "Exception.h"
 #include <limits>
 #include <string>
+#include <cstring>
 
 namespace FlatScene { namespace Util { namespace XML { namespace Tiny {
 
