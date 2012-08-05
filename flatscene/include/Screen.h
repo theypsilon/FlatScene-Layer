@@ -40,7 +40,7 @@ namespace FlatScene {
 
         int locateRenderScene ( Float posx=0.0, Float posy=0.0, Float width=0.0, Float height=0.0, Float zoom = 1.0) ;
 
-        Uint8 getBpp();
+        unsigned char getBpp();
 
         int changeScreen( int width , int height , int bpp ,  Float scalex=1.0, Float scaley=1.0, bool fullscreen = false) ;
 

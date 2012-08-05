@@ -12,10 +12,10 @@
 
 namespace FlatScene {
 
-    enum GraphicMode {
-        ONLY_TEXTURE,
-        WITH_SDL_SURFACE,
-        ONLY_SDL_SURFACE
+    enum GraphicMode {  // Changes the memory used for containing the image data
+        ONLY_CPU,       // -The image can not be rendered
+        ONLY_GPU,       // -The pixel data can't be readed, getPixel now throws
+        BOTH            // -No drawbacks in features, but it uses double memory
     };
 
     enum GraphicFilter {

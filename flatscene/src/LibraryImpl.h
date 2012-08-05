@@ -26,8 +26,6 @@ struct Library::LibraryImpl {
 
     void setActualEngine(Engine* newEngineActive);
 
-    std::string toStringErrorGL(GLenum e);
-
     static void onExit();
 
     void sort(std::vector<std::unique_ptr<Engine>>& v);

@@ -1,8 +1,6 @@
 #ifndef FS_TYPES__
 #define FS_TYPES__
 
-#include "Includes.h"
-
 #include "Coordinate.h"
 #include "Rectangle.h"
 

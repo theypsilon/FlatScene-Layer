@@ -2,6 +2,8 @@
 #include "Screen.h"
 #include "Library.h"
 
+#include "Includes.h"
+
 namespace FlatScene {
 
 Time::Time() {

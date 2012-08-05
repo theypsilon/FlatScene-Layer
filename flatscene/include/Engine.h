@@ -1,7 +1,8 @@
 #ifndef __EVENTHANDLER_H__
 #define __EVENTHANDLER_H__
 
-#include "Includes.h"
+#include "Event.h"
+
 #include <map>
 #include <functional>
 #include <memory>
@@ -16,7 +17,7 @@ namespace FlatScene {
     protected:
         int priority;
 
-        virtual void onEvent(const SDL_Event& event);
+        virtual void onEvent(const Event& event);
         virtual void onInit();
         virtual void onExit();
         virtual void loop();

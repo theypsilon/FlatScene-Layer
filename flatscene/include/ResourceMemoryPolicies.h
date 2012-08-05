@@ -76,7 +76,7 @@ namespace FlatScene {
             return *res;
         }
 
-        inline bool isSame(Holder& lhs, Holder& rhs) {
+        inline bool isSame(const Holder& lhs, const Holder& rhs) {
             return lhs == rhs;
         }
 

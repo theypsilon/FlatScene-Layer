@@ -8,6 +8,8 @@ namespace FlatScene {
     typedef SDL_Surface*        RawImageResource;
     typedef const SDL_Surface&  ConstRawImageResource;
 
+    typedef SDL_Rect            RectangleImage;
+
     unsigned int getPixel(unsigned int x, unsigned int y, RawImageResource raw);
 
 } // FlatScene;

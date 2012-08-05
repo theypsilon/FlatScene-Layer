@@ -1,5 +1,6 @@
 #include "IFirstEngine.h"
 #include "Exception.h"
+#include "Event.h"
 #include <iostream>
 
 IFirstEngine::IFirstEngine() {
@@ -13,29 +14,29 @@ IFirstEngine::IFirstEngine() {
 
 IFirstEngine::~IFirstEngine()	{}
 
-void IFirstEngine::onEvent(const SDL_Event& e) {
+void IFirstEngine::onEvent(const Event& e) {
 
     Engine::onEvent(e);
 
-    if ( SDLK_ESCAPE == e.key.keysym.sym ) {
+    if ( Key::ESCAPE == e.getSymbol() ) {
         Library::I().exit();
     }
     
     bool turn = true;
     
-    if (e.type == SDL_KEYUP)
+    if (e.getType() == EventType::KEYUP)
         turn = false;
     
-    if ( e.key.keysym.sym == SDLK_LEFT )
+    if ( e.getSymbol() == Key::LEFT )
         move[i_left] = turn;
     
-    if ( e.key.keysym.sym == SDLK_DOWN )
+    if ( e.getSymbol() == Key::DOWN )
         move[i_down] = turn;
     
-    if ( e.key.keysym.sym == SDLK_UP )
+    if ( e.getSymbol() == Key::UP )
         move[i_up] = turn;
     
-    if ( e.key.keysym.sym == SDLK_RIGHT )
+    if ( e.getSymbol() == Key::RIGHT )
         move[i_right] = turn;
     
 }

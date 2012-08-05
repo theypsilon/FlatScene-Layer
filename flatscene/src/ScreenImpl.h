@@ -1,6 +1,7 @@
 #ifndef FS_SCREEN_IMPL__
 #define FS_SCREEN_IMPL__
 
+#include "Includes.h"
 #include "Screen.h"
 #include "SpriteSetResource.h"
 

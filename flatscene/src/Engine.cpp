@@ -5,6 +5,8 @@
 #include "Engine.h"
 #include "LibraryImpl.h"
 #include "Exception.h"
+#include "EventBridge.h"
+#include "EventAdapter.h"
 
 namespace FlatScene {
 
@@ -25,8 +27,8 @@ void Engine::onInit() {
     initialized = true;
 }
 
-void Engine::onEvent(const SDL_Event& event) {
-    if(event.type==SDL_QUIT) {
+void Engine::onEvent(const Event& event) {
+    if(event.getType() == EventType::QUIT) {
         Library::I().exit();
     }
 }
@@ -39,26 +41,23 @@ void Engine::loop() {
     auto self = this;
 
     Library::I()._impl->setActualEngine(self);
-    
-    SDL_Event event;
 
-    while (SDL_PollEvent(&event)==1);
+    FreeAllEvents();
 
     while (Library::I().getActualEngine() == self) {
 
-        if(SDL_PollEvent(&event)==1) {
+        for (const auto& event : PollEvents()) {
             onEvent(event);
-        } else {
-            onIdle();
-            drawFrame();
         }
+
+        onIdle();
+        drawFrame();
     }
 }
 
 void Engine::deselect() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)==1) { }
-    Library::I()._impl->setActualEngine(NULL);
+    FreeAllEvents();
+    Library::I()._impl->setActualEngine(nullptr);
 }
 
 void Engine::drawFrame() {

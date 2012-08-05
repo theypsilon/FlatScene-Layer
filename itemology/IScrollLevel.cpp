@@ -71,7 +71,7 @@ void IScrollLevel::load() {
     for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();
          node && node->Attribute("name");   node = node->NextSiblingElement()) 
     {
-        _collisionsets.push_back(Spriteset(valFromAttr<std::string>(*node,"name"),ONLY_SDL_SURFACE));
+        _collisionsets.push_back(Spriteset(valFromAttr<std::string>(*node,"name"),ONLY_CPU));
     }
 
     if (_collisionsets.empty() || _tilesets.empty()) {
@@ -311,7 +311,7 @@ int IScrollLevel::decActor(Actor* act) {
     return EXIT_SUCCESS;
 }
 
-Uint32 IScrollLevel::getPixel(int x, int y,int z) {
+unsigned int IScrollLevel::getPixel(int x, int y,int z) {
     unsigned int j=x / getTileW(),
                  i=y / getTileH();
     if (j >= 0 && i >= 0 && j < getW() && i < getH()) {

@@ -32,7 +32,7 @@ public:
             loadChipset(_name,mode);
     }
 
-    GraphicMode getMode() {
+    GraphicMode getMode() const {
         return _mode;
     }
 
@@ -77,19 +77,18 @@ private:
         const std::string& type = pair.second;
         try {
             GRD grd(name + ".grd");
-            auto chipset = IMGLoadOrThrow(grd.getGraphicFile());
-            return std::make_pair(std::move(grd),std::move(chipset));
+            auto cs = IMGLoadOrThrow(grd.getGraphicFile());
+            return std::make_pair(std::move(grd),std::move(cs));
         } catch(DocIsNotLoadedException&) {
             std::string graphicFile = name +(
                 type != ".grd"? 
                      isValidBitmapExtension(type)? type : throw Exception("graphic bitmap format not valid") 
                      : ".png"
             );
-            auto chipset = IMGLoadOrThrow(graphicFile);
-            auto cs = to_cref<csType>::from(chipset);
+            auto cs = IMGLoadOrThrow(graphicFile);
             return std::make_pair(
-                GRD(getWidth(cs), getHeight(cs), std::move(graphicFile)),
-                std::move(chipset)
+                GRD(getWidth(toCRef(cs)), getHeight(toCRef(cs)), std::move(graphicFile)),
+                std::move(cs)
             );
         }
     }
@@ -97,7 +96,7 @@ private:
     void loadChipset(const std::string& c,GraphicMode mode) {
         auto fGRDsChipset = loadGRDandChipset(getNameFile(c));
 
-        loadAllSprites(fGRDsChipset.first,to_cref<csType>::from(fGRDsChipset.second),mode);
+        loadAllSprites(fGRDsChipset.first,toCRef(fGRDsChipset.second),mode);
 
         IMGFreeOrThrow(fGRDsChipset.second);
     }
@@ -127,8 +126,8 @@ private:
         if (w / grd._cellwidth <= 0 || w % grd._cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
-        SDL_Rect     src = {0,0,0,0};
-        unsigned int i = 0;
+        RectangleImage  src = {0,0,0,0};
+        unsigned int    i = 0;
         for (const auto& img : grd._images) {
 
             src.w = src.x + img.dim.x;
