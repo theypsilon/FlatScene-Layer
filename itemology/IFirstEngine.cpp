@@ -38,6 +38,10 @@ void IFirstEngine::onEvent(const Event& e) {
     
     if ( e.getSymbol() == Key::RIGHT )
         move[i_right] = turn;
+
+    if ( e.getSymbol() == Key::F2 && turn) {
+        FSDraw.ToggleFullscreen();
+    }
     
 }
 

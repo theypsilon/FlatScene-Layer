@@ -21,20 +21,18 @@ namespace FlatScene {
         RawImageResource    raw;
         const ImageId       id;
 
-        void clearSurface () {
-            bpp = h = h2 = w = w2 = tex = 0;
-            raw = nullptr;
-        }
-
         mutable std::list<std::function<void(void)>> initCallbackList;
         mutable std::list<std::function<void(void)>> endCallbackList;
 
         virtual ~CanvasResource(); // defined in ImageAdapter.h
+        void cleanResourcesGPU();
+        void cleanResourcesCPU();
 
         friend class Canvas;
         friend struct SRenderCanvas;
         friend class RefCountMemoryPolicy<CanvasResource>;
         friend class SpriteResource;
+        friend struct ScreenImpl;
 
         template <class T> friend T* createResource(
             const RectangleImage& src, ConstRawImageResource chipset, GraphicMode mode,
@@ -48,6 +46,8 @@ namespace FlatScene {
         friend void storeSurface(
             CanvasResource& canvas, RawImageResource surface, GraphicMode mode, GraphicFilter filter
         );
+
+        friend void reloadSurface(CanvasResource& canvas);
     };
 
 

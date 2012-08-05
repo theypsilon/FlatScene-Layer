@@ -4,8 +4,11 @@
 #include <functional>
 #include <iostream>
 
+#include "Noncopyable.h"
+
 namespace FlatScene {
-    class ScopedGuard {
+
+    class ScopedGuard : private Util::NonCpmvable {
     public:
 
         ScopedGuard(std::function<void(void)> f) : _f(std::move(f)), _dismissed(false) {}

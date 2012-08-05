@@ -349,7 +349,7 @@ int Screen::popMatrix() {
 
 }
 
-int Screen::ScreenImpl::beginRenderMode(Uint32 flags) {
+int ScreenImpl::beginRenderMode(Uint32 flags) {
     if (!m_SDL_Surface) throw Exception("Video context not inicialized");
     
     if (flags & RENDER_TEXTURE_STANDARD) {
@@ -362,7 +362,7 @@ int Screen::ScreenImpl::beginRenderMode(Uint32 flags) {
     return EXIT_SUCCESS;
 }
 
-int Screen::ScreenImpl::endRenderMode(Uint32 flags) {
+int ScreenImpl::endRenderMode(Uint32 flags) {
     if (!m_SDL_Surface) throw Exception("Video context not inicialized");
 
     if (flags & RENDER_TEXTURE_STANDARD) {
@@ -432,13 +432,13 @@ int Screen::ToggleFullscreen() {
     GraphicResources info;
 
     _impl->saveResources(info);
-
+/*
     quit();
 
     _impl->m_FullScreen = !_impl->m_FullScreen;
 
     if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,_impl->m_Doublebuff) == EXIT_FAILURE )
-        return EXIT_FAILURE;
+        return EXIT_FAILURE;*/
 
     _impl->reloadResources(info);
 

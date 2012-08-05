@@ -480,6 +480,13 @@ namespace FlatScene {
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
     }
 
+    void reloadSurface(CanvasResource& canvas) {
+        if (canvas.raw) {
+            storeTexture(canvas.tex,canvas.raw->pixels,canvas.w,canvas.h, NEAREST);
+            //storeSurfaceInGPU(canvas.raw, canvas.w, canvas.h, canvas.tex, NEAREST);
+        }
+    }
+
     SDL_Surface* IMGLoadOrThrow(const std::string& path) {
         SDL_Surface* chipset = IMG_Load(path.c_str());
         if (!chipset) 

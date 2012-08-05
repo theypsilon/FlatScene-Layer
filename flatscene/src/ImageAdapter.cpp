@@ -4,13 +4,20 @@
 namespace FlatScene {
 
     CanvasResource::~CanvasResource() {
+        cleanResourcesCPU();
+        cleanResourcesGPU();
+    }
+
+    void CanvasResource::cleanResourcesGPU() {
+        if (h != 0 || w !=0) /* FIXME this is not the right way for checking a texture */
+            glDeleteTextures( 1, &tex );
+        tex = 0;
+    }
+
+    void CanvasResource::cleanResourcesCPU() {
         if (raw)
             SDL_FreeSurface(raw);
-
-        if (h != 0 || w !=0)
-            glDeleteTextures( 1, &tex );
-
-        clearSurface();
+        raw = nullptr;
     }
 
 
