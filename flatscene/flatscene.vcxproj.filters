@@ -1259,6 +1259,12 @@
     <ClCompile Include="src\tinyxml\tinyxml.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\Event.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EventAdapter.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\debugfuncs.h">
@@ -2766,7 +2772,6 @@
     <ClInclude Include="include\FlatScene.h" />
     <ClInclude Include="include\FS.h" />
     <ClInclude Include="include\GraphicResourceDescriptor.h" />
-    <ClInclude Include="include\Includes.h" />
     <ClInclude Include="include\IndexedPointer.h" />
     <ClInclude Include="include\IndexHandler.h" />
     <ClInclude Include="include\Library.h" />
@@ -7132,8 +7137,18 @@
     <ClInclude Include="include\Traits.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\Events.h">
+    <ClInclude Include=".\include\EventInfo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="include\Event.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EventBridge.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EventAdapter.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include=".\src\Includes.h" />
   </ItemGroup>
 </Project>

@@ -386,7 +386,7 @@ int Screen::quit()
     return EXIT_SUCCESS;
 }
 
-Uint8 Screen::getBpp() {
+unsigned char Screen::getBpp() {
     return _impl->m_Bpp;
 }
 

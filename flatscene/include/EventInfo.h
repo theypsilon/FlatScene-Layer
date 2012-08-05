@@ -1,5 +1,5 @@
-#ifndef FSEVENTS
-#define FSEVENTS
+#ifndef FS_EVENT_INFO
+#define FS_EVENT_INFO
 
 namespace FlatScene { 
     
@@ -318,4 +318,4 @@ namespace FlatScene {
 
 } // FlatScene
 
-#endif // FSEVENTS
+#endif // FS_EVENT_INFO

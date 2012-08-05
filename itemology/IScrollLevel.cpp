@@ -311,7 +311,7 @@ int IScrollLevel::decActor(Actor* act) {
     return EXIT_SUCCESS;
 }
 
-Uint32 IScrollLevel::getPixel(int x, int y,int z) {
+unsigned int IScrollLevel::getPixel(int x, int y,int z) {
     unsigned int j=x / getTileW(),
                  i=y / getTileH();
     if (j >= 0 && i >= 0 && j < getW() && i < getH()) {

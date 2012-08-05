@@ -24,7 +24,7 @@ namespace FlatScene {
 
         int file;
         int graph;
-        Uint8 flags;
+        unsigned char flags;
 
         Actor(const char* creature);
         virtual ~Actor();

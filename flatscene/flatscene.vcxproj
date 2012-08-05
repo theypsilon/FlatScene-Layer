@@ -96,6 +96,8 @@
     <ClCompile Include="src\Canvas.cpp" />
     <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
     <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
     <ClCompile Include="src\ImageAdapter.cpp" />
     <ClCompile Include="src\Library.cpp" />
@@ -118,12 +120,13 @@
     <ClInclude Include="include\Color.h" />
     <ClInclude Include="include\Coordinate.h" />
     <ClInclude Include="include\Engine.h" />
-    <ClInclude Include="include\Events.h" />
+    <ClInclude Include=".\include\EventInfo.h" />
+    <ClInclude Include="include\Event.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\FlatScene.h" />
     <ClInclude Include="include\FS.h" />
     <ClInclude Include="include\GraphicResourceDescriptor.h" />
-    <ClInclude Include="include\Includes.h" />
+    <ClInclude Include=".\src\Includes.h" />
     <ClInclude Include="include\IndexedPointer.h" />
     <ClInclude Include="include\IndexHandler.h" />
     <ClInclude Include="include\Library.h" />
@@ -144,6 +147,8 @@
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
     <ClInclude Include="include\tinyxml\*.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
     <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
     <ClInclude Include="src\Renders.h" />
     <ClInclude Include="src\sdlSurfaceFuncs.h" />

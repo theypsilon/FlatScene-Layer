@@ -71,7 +71,7 @@ bool Universe::isLoaded() {
     return loaded;
 }
 
-int Universe::changeUniverse(std::string newName,Uint8 slot) {
+int Universe::changeUniverse(std::string newName,unsigned char slot) {
     if (!isLoaded()) {
         name=newName;
         this->slot = slot;
@@ -91,11 +91,11 @@ void Universe::decCameras() {
             unload();
 }
 
-Uint32 Universe::numActors() {
+unsigned int Universe::numActors() {
     return actor.size();
 }
 
-Uint8 Universe::camaras() {
+unsigned char Universe::camaras() {
     return numCameras;
 }
 
