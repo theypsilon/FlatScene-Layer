@@ -3,6 +3,8 @@
 
 #include "Includes.h"
 
+#include <vector>
+
 namespace FlatScene {
 
     class EventBridge {
