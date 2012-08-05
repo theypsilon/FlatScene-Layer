@@ -1,5 +1,6 @@
 #include "sdlSurfaceFuncs.h"
 #include "Exception.h"
+#include "ScopedGuard.h"
 
 unsigned int pow2(unsigned int n) {
     unsigned int c = 1;
@@ -288,9 +289,9 @@ namespace FlatScene {
 
     SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor) {
 
-        SDL_Surface* ret = NULL;
+        SDL_Surface* ret = nullptr;
 
-        if (s_surf == NULL || factor <= 1)
+        if (s_surf == nullptr || factor <= 1)
             return ret;
 
         unsigned char bpp = s_surf->format->BytesPerPixel;
@@ -305,7 +306,12 @@ namespace FlatScene {
         else 
             throw SDLException("depth mode not valid");
 
-        
+        if (nullptr == ret)
+            throw Exception("SDL_Surface not created in scaleSurface");
+
+        ScopedGuard guard([=]{
+            SDL_FreeSurface( ret );
+        });
 
         char* newPixels = (char*) ret->pixels;
         char* oldPixels = (char*) s_surf->pixels;
@@ -332,7 +338,7 @@ namespace FlatScene {
 
         SDL_UnlockSurface(s_surf);
         SDL_UnlockSurface(ret);
-
+        guard.dismiss();
         return ret;
     }
 
@@ -342,6 +348,13 @@ namespace FlatScene {
                                          chipset.format->BitsPerPixel,
                                          chipset.format->Rmask, chipset.format->Gmask,
                                          chipset.format->Bmask, chipset.format->Amask);
+
+        if (nullptr == surf)
+            throw Exception("surf not created in loadSurface");
+
+        ScopedGuard guard([=]{
+            SDL_FreeSurface( surf );
+        });
 
         SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
         blitcopy(chipset,const_cast<SDL_Rect*>(&src),surf,nullptr);
@@ -354,6 +367,7 @@ namespace FlatScene {
             // Reasignamos los formatos.
             SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);
         }
+        guard.dismiss();
         return surf;
     }
 
@@ -361,6 +375,10 @@ namespace FlatScene {
 
         if (surface == nullptr)
             throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
+
+        ScopedGuard guard([=]{
+            SDL_FreeSurface( surface );
+        });
     
         canvas.w2 = surface->w;
         canvas.h2 = surface->h;
@@ -376,13 +394,13 @@ namespace FlatScene {
             canvas.w = 0;
         }
 
-        if (mode & ONLY_GPU) {
+        if (mode == ONLY_GPU) {
             SDL_FreeSurface( surface );
             surface = nullptr;
         }
 
         canvas.raw = surface;
-
+        guard.dismiss();
     }
 
     void storeSurfaceInGPU(
@@ -411,6 +429,10 @@ namespace FlatScene {
         if (image == nullptr)
             throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
 
+        ScopedGuard guard([=]{
+            SDL_FreeSurface( image );
+        });
+
         int saved_flags = surface->flags&(SDL_SRCALPHA|SDL_RLEACCELOK);
         int saved_alpha = surface->format->alpha;
         if ( (saved_flags & SDL_SRCALPHA)   == SDL_SRCALPHA ) {
@@ -426,12 +448,7 @@ namespace FlatScene {
             SDL_SetAlpha(surface, saved_flags, saved_alpha);
         }
 
-        if(SDL_MUSTLOCK(image))
-            SDL_UnlockSurface(image);
-
         storeTexture(tex,surface->pixels,width,height,filter);
-
-        SDL_FreeSurface( image );
     }
 
     void storeTexture(GLuint& tex, void* pixels, unsigned int width, unsigned int height, GraphicFilter filter) {

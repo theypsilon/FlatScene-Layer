@@ -136,6 +136,7 @@
     <ClInclude Include="include\Rectangle.h" />
     <ClInclude Include="include\RefCountMemoryPolicy.h" />
     <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include=".\include\ScopedGuard.h" />
     <ClInclude Include="include\Screen.h" />
     <ClInclude Include="include\SharedHandler.h" />
     <ClInclude Include="include\Singleton.h" />
