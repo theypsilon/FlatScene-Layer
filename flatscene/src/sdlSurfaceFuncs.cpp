@@ -2,6 +2,8 @@
 #include "Exception.h"
 #include "ScopedGuard.h"
 
+#include <sstream>
+
 unsigned int pow2(unsigned int n) {
     unsigned int c = 1;
     while (c < n) c <<= 1;
@@ -455,6 +457,8 @@ namespace FlatScene {
 
         // Have OpenGL generate a texture object handle for us
         glGenTextures(1, &tex);
+        if (!tex)
+            throw Exception("Texture can not be generated in storeTexture");
 
         // Bind the texture object
         glBindTexture( GL_TEXTURE_2D, tex );
@@ -482,8 +486,10 @@ namespace FlatScene {
 
     void reloadSurface(CanvasResource& canvas) {
         if (canvas.raw) {
-            storeTexture(canvas.tex,canvas.raw->pixels,canvas.w,canvas.h, NEAREST);
-            //storeSurfaceInGPU(canvas.raw, canvas.w, canvas.h, canvas.tex, NEAREST);
+            //storeTexture(canvas.tex,canvas.raw->pixels,canvas.w,canvas.h, NEAREST);
+            //std::cout << "reload tex:" << canvas.tex << std::endl;
+            storeSurfaceInGPU(canvas.raw, canvas.w, canvas.h, canvas.tex, NEAREST);
+            //canvas.tex = rand() % 43;
         }
     }
 
@@ -498,6 +504,15 @@ namespace FlatScene {
         if (!surface)
             throw Exception("chipset pointer invalid",__LINE__,__FILE__);
         SDL_FreeSurface(surface);
+    }
+
+    std::string printGLErrors() {
+        std::stringstream reader;
+        for (GLenum currError = glGetError(); currError != GL_NO_ERROR; currError = glGetError()) {
+            auto s = gluErrorString(currError);
+            reader << "error " << currError << ": " << s << std::endl;
+        }
+        return reader.str();
     }
 
 } // FlatScene

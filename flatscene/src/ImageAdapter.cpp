@@ -1,5 +1,6 @@
 #include "CanvasResource.h"
 #include "Exception.h"
+#include <iostream>
 
 namespace FlatScene {
 
@@ -9,8 +10,9 @@ namespace FlatScene {
     }
 
     void CanvasResource::cleanResourcesGPU() {
-        if (h != 0 || w !=0) /* FIXME this is not the right way for checking a texture */
+        if (tex) {
             glDeleteTextures( 1, &tex );
+        }
         tex = 0;
     }
 

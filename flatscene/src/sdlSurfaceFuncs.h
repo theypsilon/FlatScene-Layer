@@ -3,6 +3,8 @@
 
 #include "CanvasResource.h"
 
+#include <string>
+
 namespace FlatScene {
 
     void setpixel ( SDL_Surface* pSurface , int x , int y , Uint32 pixel);
@@ -43,6 +45,8 @@ namespace FlatScene {
     inline unsigned int getHeight(const SDL_Surface& surface) {
         return surface.h;
     }
+
+    std::string printGLErrors();
 
 }
 
