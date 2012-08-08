@@ -21,6 +21,8 @@ int main (int argc, char* argv[]) {
         FSLib.processEngine(unique_ptr<IFirstEngine>(new IFirstEngine));
     } catch (std::exception& e) {
         cout << "Exception catched: " << e.what() << endl;
+    } catch (...) {
+        cout << "The exception catched is unknown." << endl;
     }
 
     cout << "Ending main" << endl;

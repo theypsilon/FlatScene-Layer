@@ -486,10 +486,9 @@ namespace FlatScene {
 
     void reloadSurface(CanvasResource& canvas) {
         if (canvas.raw) {
-            //storeTexture(canvas.tex,canvas.raw->pixels,canvas.w,canvas.h, NEAREST);
-            //std::cout << "reload tex:" << canvas.tex << std::endl;
-            storeSurfaceInGPU(canvas.raw, canvas.w, canvas.h, canvas.tex, NEAREST);
-            //canvas.tex = rand() % 43;
+            storeTexture(canvas.tex,canvas.raw->pixels,canvas.w,canvas.h, NEAREST);
+        } else {
+            throw Exception("There is no implementation for reloading a GPU only surface");
         }
     }
 
