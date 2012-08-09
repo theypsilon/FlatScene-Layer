@@ -484,7 +484,7 @@ namespace FlatScene {
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
     }
 
-    void reloadSurface(CanvasResource& canvas) {
+    void reloadResourcesGPU(CanvasResource& canvas) {
         if (canvas.raw) {
             storeTexture(canvas.tex,canvas.raw->pixels,canvas.w,canvas.h, NEAREST);
         } else {

@@ -32,7 +32,7 @@ void ScreenImpl::saveResources(GraphicResources &info) {
 
 void ScreenImpl::reloadResources(GraphicResources &info) {
     for (auto fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts())
-        reloadSurface(*fCanvas.first);
+        reloadResourcesGPU(*fCanvas.first);
 }
 
 } // flatscene
