@@ -1,4 +1,4 @@
-#include "sdlSurfaceFuncs.h"
+﻿#include "sdlSurfaceFuncs.h"
 #include "Exception.h"
 #include "ScopedGuard.h"
 
@@ -468,17 +468,17 @@ namespace FlatScene {
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
     
-        // Edit the texture object's surface data using the information SDL_Surface gives us
+        // http://www.opengl.org/wiki/GLAPI/glTexImage2D specify a two-dimensional texture image
         glTexImage2D( 
-            GL_TEXTURE_2D,
-            0,
-            GL_RGBA,
-            width,
-            height,
-            0,
-            GL_RGBA,
-            GL_UNSIGNED_BYTE,
-            pixels 
+            GL_TEXTURE_2D,    /* GLenum target​ */
+            0,                /* GLint level​​ */
+            GL_RGBA,          /* GLint internalFormat​​ */
+            width,            /* GLsizei width​​ */
+            height,           /* GLsizei height​ */
+            0,                /* GLint border​​ */
+            GL_RGBA,          /* GLenum format​ */
+            GL_UNSIGNED_BYTE, /* GLenum type​ */
+            pixels            /* const GLvoid * data​ */
         );
 
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);

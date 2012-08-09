@@ -32,7 +32,7 @@ namespace FlatScene {
 
     void storeTexture(GLuint& tex, void* pixels, unsigned int width, unsigned int height, GraphicFilter filter);
 
-    void reloadSurface(CanvasResource& canvas);
+    void reloadResourcesGPU(CanvasResource& canvas);
 
     SDL_Surface* IMGLoadOrThrow(const std::string& path);
 

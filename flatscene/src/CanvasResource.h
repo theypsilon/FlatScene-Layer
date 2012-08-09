@@ -47,7 +47,7 @@ namespace FlatScene {
             CanvasResource& canvas, RawImageResource surface, GraphicMode mode, GraphicFilter filter
         );
 
-        friend void reloadSurface(CanvasResource& canvas);
+        friend void reloadResourcesGPU(CanvasResource& canvas);
     };
 
 
