@@ -4,7 +4,7 @@
 
 #include <sstream>
 
-unsigned int pow2(unsigned int n) {
+inline unsigned int pow2(unsigned int n) {
     unsigned int c = 1;
     while (c < n) c <<= 1;
     return c;
@@ -470,15 +470,15 @@ namespace FlatScene {
     
         // http://www.opengl.org/wiki/GLAPI/glTexImage2D specify a two-dimensional texture image
         glTexImage2D( 
-            GL_TEXTURE_2D,    /* GLenum target​ */
-            0,                /* GLint level​​ */
+            GL_TEXTURE_2D,    /* GLenum target​        */
+            0,                /* GLint level​​          */
             GL_RGBA,          /* GLint internalFormat​​ */
-            width,            /* GLsizei width​​ */
-            height,           /* GLsizei height​ */
-            0,                /* GLint border​​ */
-            GL_RGBA,          /* GLenum format​ */
-            GL_UNSIGNED_BYTE, /* GLenum type​ */
-            pixels            /* const GLvoid * data​ */
+            width,            /* GLsizei width​​        */
+            height,           /* GLsizei height​       */
+            0,                /* GLint border​​         */
+            GL_RGBA,          /* GLenum format​        */
+            GL_UNSIGNED_BYTE, /* GLenum type​          */
+            pixels            /* const GLvoid* data​   */
         );
 
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);

@@ -21,7 +21,9 @@ namespace FlatScene {
             if (id == pair.first->id)
                 return static_cast<T*>(pair.first);
 
-        auto res = new T(std::move(id));
+        auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
+
+        auto res = new T(std::move(id),BitmapGPU(source));
         assert(res);
 
         storeSurface(

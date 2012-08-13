@@ -12,7 +12,9 @@ namespace FlatScene {
     class CanvasResource {
         typedef Canvas          Handler;
 
-        CanvasResource (ImageId nid) : id(std::move(nid)) {}
+        CanvasResource (ImageId nid, BitmapGPU gpu) : id(std::move(nid)), _gpu(std::move(gpu)) {}
+
+        BitmapGPU _gpu;
 
         mutable GLuint      tex;
         Uint32              w, h;

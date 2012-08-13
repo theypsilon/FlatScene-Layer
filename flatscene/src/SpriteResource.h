@@ -15,7 +15,7 @@ namespace FlatScene {
         Sprite::Areas   areas;
         SpriteOpaque    opaque;
 
-        SpriteResource(ImageId id) : CanvasResource(std::move(id)) {}
+        SpriteResource(ImageId id, BitmapGPU gpu) : CanvasResource(std::move(id), std::move(gpu)) {}
         virtual ~SpriteResource() {}
 
         friend class Sprite;
