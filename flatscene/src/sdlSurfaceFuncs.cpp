@@ -484,15 +484,6 @@ namespace FlatScene {
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
     }
 
-    void reloadResourcesGPU(CanvasResource& canvas) {
-        canvas._gpu.reload();
-        if (canvas._gpu.loaded()) {
-            ;
-        } else {
-            throw Exception("There is no implementation for reloading a GPU only surface");
-        }
-    }
-
     SDL_Surface* IMGLoadOrThrow(const std::string& path) {
         SDL_Surface* chipset = IMG_Load(path.c_str());
         if (!chipset) 

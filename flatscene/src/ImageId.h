@@ -15,13 +15,15 @@ namespace FlatScene {
         Index           getIndex() const { return _n;    }
         const Ident&    getFile () const { return _file; }
 
-        bool            operator==(const ImageId& rhs) const {
-            return _n == rhs._n && _file == rhs._file;
-        }
     private:
         Index _n;
         Ident _file;
     };
+
+    inline bool operator==(const ImageId& lhs, const ImageId& rhs) {
+        return lhs.getIndex() == rhs.getIndex() && 
+               lhs.getFile () == rhs.getFile ();
+    }
 
 } // FlatScene
 

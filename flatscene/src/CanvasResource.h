@@ -51,12 +51,6 @@ namespace FlatScene {
         template <typename PointType, typename GraphicMaterial>
         friend void putCanvas ( const PointType& ptDst, unsigned char flags, 
                                 const CanvasResource& impl, GraphicMaterial& gm );
-
-        friend void storeSurface(
-            CanvasResource& canvas, RawImageResource surface, GraphicMode mode, GraphicFilter filter
-        );
-
-        friend void reloadResourcesGPU(CanvasResource& canvas);
     };
 
 
