@@ -6,36 +6,40 @@
 
 namespace FlatScene {
 
-    template <class T> T* createResource(
+    template <class Res> Res* createResource(
         const RectangleImage& src, ConstRawImageResource chipset, GraphicMode    mode,
         const GRD&  grd, unsigned int       n      , GraphicFilter  filter
     ) {
         static_assert(
-            std::is_base_of<CanvasResource,T>::value,
+            std::is_base_of<CanvasResource,Res>::value,
             "Bad Canvas type"
         );
 
         ImageId id (n, grd.getDescriptorFile());
 
-        for (const auto& pair : T::Handler::MemoryPolicyType::getCounts())
+        for (const auto& pair : Res::Handler::MemoryPolicyType::getCounts())
             if (id == pair.first->id)
-                return static_cast<T*>(pair.first);
+                return static_cast<Res*>(pair.first);
 
         auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
 
-        auto res = new T(std::move(id),BitmapGPU(source->pixels,source->w,source->h));
+        auto res = new Res(std::move(id),BitmapGPU(source->pixels,source->w,source->h));
         assert(res);
 
         IMGFreeOrThrow(source);
-        /* //TODO change store surface, to BitmapGPU constructor
-        storeSurface(
-            *res,
-            loadSurface(src,chipset,mode,grd.getSpecialScale()),
-            mode,
-            filter
-        );*/
         
         return res;
+    }
+
+    template <class Res, class T1, class T2>
+    Res* createResource(T1&& imageId, T2&& bitmapGPU) {
+        static_assert(std::is_base_of<CanvasResource,Res>::value &&
+                      std::is_same   <ImageId  ,T1      >::value &&
+                      std::is_same   <BitmapGPU,T2      >::value,
+                      "Res, T1 and/or T2 are not acceptable types (check impl)"
+        );
+
+        return new Res(std::forward<T1>(imageId),std::forward<T2>(bitmapGPU));
     }
 
 } // flatscene
