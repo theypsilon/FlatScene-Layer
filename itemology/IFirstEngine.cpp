@@ -47,8 +47,8 @@ void IFirstEngine::onEvent(const Event& e) {
 
 void IFirstEngine::drawFrame() {
     
-    for (auto i = cams.begin(); i != cams.end(); ++i) {
-        (*i)->render();
+    for (auto camera : cams) {
+        camera->render();
     }
     
     Screen::I().render();

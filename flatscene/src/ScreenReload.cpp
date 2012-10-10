@@ -25,14 +25,17 @@ void ScreenImpl::deleteResources() {
 
 void ScreenImpl::saveResources(GraphicResources &info) {
 
-    for (auto fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts())
-        fCanvas.first->cleanResourcesGPU();
+    for (auto fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
+        fCanvas.first->_gpu.save();
+        fCanvas.first->_gpu.unload();
+    }
 
 }
 
 void ScreenImpl::reloadResources(GraphicResources &info) {
-    for (auto fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts())
-        reloadResourcesGPU(*fCanvas.first);
+    for (auto fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
+        fCanvas.first->_gpu.reload();
+    }
 }
 
 } // flatscene

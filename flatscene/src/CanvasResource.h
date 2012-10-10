@@ -31,9 +31,7 @@ namespace FlatScene {
         mutable std::list<std::function<void(void)>> initCallbackList;
         mutable std::list<std::function<void(void)>> endCallbackList;
 
-        virtual ~CanvasResource(); // defined in ImageAdapter.h
-        void cleanResourcesGPU();
-        void cleanResourcesCPU();
+        virtual ~CanvasResource() {}
 
         //render image
         void put(const Point& ptDst, unsigned char flags=0) const;

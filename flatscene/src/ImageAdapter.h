@@ -10,8 +10,6 @@ namespace FlatScene {
 
     typedef SDL_Rect            RectangleImage;
 
-    unsigned int getPixel(unsigned int x, unsigned int y, RawImageResource raw);
-
     class BitmapGPU {
     public:
         typedef GLuint            TexType;

@@ -13,17 +13,6 @@ inline unsigned int pow2(unsigned int n) {
 
 namespace FlatScene {
 
-    CanvasResource::~CanvasResource() {
-        cleanResourcesCPU();
-        cleanResourcesGPU();
-    }
-
-    void CanvasResource::cleanResourcesGPU() {
-    }
-
-    void CanvasResource::cleanResourcesCPU() {
-    }
-
     template <typename PointType, typename GraphicMaterial>
     inline void putCanvas ( const PointType& ptDst, unsigned char flags, 
                             const CanvasResource& impl, GraphicMaterial& gm ) {
@@ -56,38 +45,13 @@ namespace FlatScene {
         putCanvas( ptDst, flags, *this, Screen::I()._impl->graphicMaterial );
     }
 
-
-    unsigned int getPixel(unsigned int x, unsigned int y, RawImageResource raw) {
-        if (!raw)
-            throw Exception("Pixel data is not accesible for this configuration.");
-
-        if ((int) x > raw->w || (int) y > raw->h)
-            throw Exception("Wrong coordinates for getting a pixel from this surface.");
-
-        unsigned int color = 0;
-        int position = y * raw->pitch + raw->format->BytesPerPixel * x ;
-        char* buffer = (char*) raw->pixels ;
-        buffer += position ;
-        memcpy ( &color , buffer , raw->format->BytesPerPixel ) ;
-        return color;
-    }
-
-
     // class BitmapGPU
-
-    BitmapGPU::BitmapGPU(SDL_Surface* source)
-        : _pixels(source), _tex(0), _w(0), _h(0)
-    {}
 
     BitmapGPU::BitmapGPU(const void* pixels, GLuint w, GLuint h)
         : _pixels(nullptr), _tex(0), _w(pow2(w)), _h(pow2(h)), _relW(_w/w), _relH(_h/h)
     {
         load(pixels);
     }
-
-    BitmapGPU::BitmapGPU()
-        : _pixels(nullptr), _tex(0), _w(0), _h(0)
-    {}
 
     BitmapGPU::~BitmapGPU() {
         destroyPixels();
