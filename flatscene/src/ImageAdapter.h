@@ -18,8 +18,9 @@ namespace FlatScene {
         typedef unsigned int    PixelType;
 
         BitmapGPU(const void* pixels, GLuint w, GLuint h);
-        BitmapGPU(SDL_Surface* source);
-        BitmapGPU();
+        BitmapGPU(BitmapGPU&& that);
+        BitmapGPU& operator=(BitmapGPU&& that);
+
         ~BitmapGPU();
 
         GLuint          getTex() const      { return _tex;               }
@@ -46,6 +47,9 @@ namespace FlatScene {
         void            load(const void* pixels);
         void            destroyPixels() const;
         void            destroyTexture();
+
+        BitmapGPU(const BitmapGPU&);
+        BitmapGPU& operator=(const BitmapGPU&);
     };
 } // FlatScene;
 

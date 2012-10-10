@@ -25,6 +25,8 @@ namespace FlatScene {
 
         auto res = new T(std::move(id),BitmapGPU(source->pixels,source->w,source->h));
         assert(res);
+
+        IMGFreeOrThrow(source);
         /* //TODO change store surface, to BitmapGPU constructor
         storeSurface(
             *res,

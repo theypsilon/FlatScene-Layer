@@ -53,6 +53,28 @@ namespace FlatScene {
         load(pixels);
     }
 
+    BitmapGPU::BitmapGPU(BitmapGPU&& that) 
+        : _pixels(that._pixels), _w(that._w), _h(that._h)
+        , _tex(that._tex), _relW(that._relW), _relH(that._relH)
+    {
+        that._tex    = 0;
+        that._pixels = nullptr;
+    }
+
+    BitmapGPU& BitmapGPU::operator=(BitmapGPU&& that) {
+        this->_tex    = that._tex;
+        this->_pixels = that._pixels;
+        this->_w      = that._w;
+        this->_h      = that._h;
+        this->_relW   = that._relW;
+        this->_relH   = that._relH;
+
+        that._tex    = 0;
+        that._pixels = nullptr;
+
+        return *this;
+    }
+
     BitmapGPU::~BitmapGPU() {
         destroyPixels();
         destroyTexture();
