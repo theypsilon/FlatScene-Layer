@@ -71,6 +71,7 @@ namespace FlatScene {
         friend class Spriteset;
         friend class Sprite;
         friend class Canvas;
+        friend class CanvasResource;
 
         friend struct SRenderLocation;
     };

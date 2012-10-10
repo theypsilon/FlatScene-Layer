@@ -2,12 +2,16 @@
 	"folders":
 	[
 		{
-			"path": "flatscene",
-			"folder_exclude_patterns": ["CMakeFiles","resources","."]
+			"path": "."
 		},
 		{
-			"path": "itemology",
-			"folder_exclude_patterns": ["CMakeFiles","resources"]
+			"path": "flatscene/include"
+		},
+		{
+			"path": "flatscene/src"
+		},
+		{
+			"path": "itemology"
 		}
 	]
 }

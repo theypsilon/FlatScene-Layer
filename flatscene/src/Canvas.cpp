@@ -1,6 +1,5 @@
 #include "CanvasResource.h"
 #include "ScreenImpl.h"
-#include "Renders.h"
 #include "Exception.h"
 #include "Algorithm.h"
 #include "ImageAdapter.h"
@@ -12,42 +11,18 @@ Canvas::Canvas(CanvasResource* res)
 {}
 
 unsigned int Canvas::getPixel(unsigned int x, unsigned int y) const {
-    return FlatScene::getPixel(x,y,getRes().raw);
+    return getRes().getPixel(x,y);
 }
 
-int Canvas::getWidth  () const { return getRes().w2; }
-int Canvas::getHeight () const { return getRes().h2; }
-
-template <typename PointType, typename GraphicMaterial>
-inline void putCanvas ( const PointType& ptDst, unsigned char flags, 
-                        const CanvasResource& impl, GraphicMaterial& gm ) {
-
-    Screen::I().pushMatrix();
-    Screen::I().translate(ptDst.x,ptDst.y,0);
-
-    // USER DEFINED EFFECTS IN
-
-    call_to_all(impl.initCallbackList);
-    impl.initCallbackList.clear();
-
-    gm.push_back(
-        new SRenderCanvas(impl,flags)
-    );
-
-    // USER DEFINED EFFECTS OUT
-
-    call_to_all(impl.endCallbackList);
-    impl.endCallbackList.clear();
-
-    Screen::I().popMatrix();
-}
+int Canvas::getWidth  () const { return getRes().getW(); }
+int Canvas::getHeight () const { return getRes().getH(); }
 
 void Canvas::put ( const FloatPoint& ptDst, unsigned char flags) const {
-    putCanvas( ptDst, flags, getRes(), Screen::I()._impl->graphicMaterial );
+    getRes().put(ptDst,flags);
 }
 
 void Canvas::put ( const Point& ptDst, unsigned char flags) const {
-    putCanvas( ptDst, flags, getRes(), Screen::I()._impl->graphicMaterial );
+    getRes().put(ptDst,flags);
 }
 
 void Canvas::rotate(Float angle, Float x, Float y, Float z) const {

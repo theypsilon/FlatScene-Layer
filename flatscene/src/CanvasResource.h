@@ -12,16 +12,21 @@ namespace FlatScene {
     class CanvasResource {
         typedef Canvas          Handler;
 
-        CanvasResource (ImageId nid, BitmapGPU gpu) : id(std::move(nid)), _gpu(std::move(gpu)) {}
+        template <class TImageId, class TBitmapGPU>
+        CanvasResource (TImageId&& nid, TBitmapGPU&& gpu) 
+            : id(std::forward<TImageId>(nid)), _gpu(std::forward<TBitmapGPU>(gpu)) {}
 
-        BitmapGPU _gpu;
+        BitmapGPU       _gpu;
+        const ImageId   id;
 
-        mutable GLuint      tex;
-        Uint32              w, h;
-        int                 w2,h2; /* previous value shifted to the very next bigger value which form is X^2 */
-        Uint8               bpp;
-        RawImageResource    raw;
-        const ImageId       id;
+        BitmapGPU::SizeType  getW() const    { return _gpu.getW();    };
+        BitmapGPU::SizeType  getH() const    { return _gpu.getH();    };
+        BitmapGPU::RelType   getRelW() const { return _gpu.getRelW(); };
+        BitmapGPU::RelType   getRelH() const { return _gpu.getRelH(); };
+
+        BitmapGPU::PixelType getPixel(BitmapGPU::SizeType x, BitmapGPU::SizeType y) {
+            return _gpu.getPixel(x,y);
+        }
 
         mutable std::list<std::function<void(void)>> initCallbackList;
         mutable std::list<std::function<void(void)>> endCallbackList;
@@ -29,6 +34,10 @@ namespace FlatScene {
         virtual ~CanvasResource(); // defined in ImageAdapter.h
         void cleanResourcesGPU();
         void cleanResourcesCPU();
+
+        //render image
+        void put(const Point& ptDst, unsigned char flags=0) const;
+        void put(const FloatPoint& ptDst, unsigned char flags=0) const;
 
         friend class Canvas;
         friend struct SRenderCanvas;

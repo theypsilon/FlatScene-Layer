@@ -54,14 +54,11 @@ namespace FlatScene {
     };
 
     struct SRenderCanvas : SRender {
-        Float relW, relH;
-        int w2, h2;
-        GLuint tex;
+        const BitmapGPU& bm;
         Uint8 flags;
 
         SRenderCanvas(const CanvasResource& canvas, Uint8 flags)
-        : relW((Float)(canvas.w2/canvas.w)), relH((Float)(canvas.h2/canvas.h)),
-        w2(canvas.w2), h2(canvas.h2), tex(canvas.tex), flags(flags) {}
+        : bm(canvas._gpu), flags(flags) {}
 
         virtual void operator()();
     };

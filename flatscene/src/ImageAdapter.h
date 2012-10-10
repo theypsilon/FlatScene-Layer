@@ -14,27 +14,35 @@ namespace FlatScene {
 
     class BitmapGPU {
     public:
-        typedef std::function<unsigned int(unsigned int, unsigned int)> PixelGetter;
+        typedef GLuint            TexType;
+        typedef GLuint           SizeType;
+        typedef Float             RelType;
+        typedef unsigned int    PixelType;
 
-        BitmapGPU(const SDL_Surface* source);
+        BitmapGPU(const void* pixels, GLuint w, GLuint h);
+        BitmapGPU(SDL_Surface* source);
         BitmapGPU();
         ~BitmapGPU();
 
         GLuint          getTex() const      { return _tex;               }
         GLuint          getW() const        { return _w;                 }
         GLuint          getH() const        { return _h;                 }
+        Float           getRelW() const     { return _relW;              }
+        Float           getRelH() const     { return _relH;              }
 
         bool            loaded() const      { return _tex != 0;          }
         bool            saved() const       { return _pixels != nullptr; }
+        bool            isSoftware() const  { return false;              }
 
         void            save() const;
         void            unload();
         void            reload();
 
-        PixelGetter     getPixelGetter() const;
+        unsigned int    getPixel(unsigned int x, unsigned int y) const;
 
     private:
         GLuint          _tex, _w, _h;
+        Float           _relW, _relH;
         mutable void*   _pixels;
 
         void            load(const void* pixels);

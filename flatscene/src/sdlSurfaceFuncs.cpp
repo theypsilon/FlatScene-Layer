@@ -372,7 +372,7 @@ namespace FlatScene {
         guard.dismiss();
         return surf;
     }
-
+/*
     void storeSurface(CanvasResource& canvas, SDL_Surface* surface, GraphicMode mode, GraphicFilter filter) {
 
         if (surface == nullptr)
@@ -452,7 +452,7 @@ namespace FlatScene {
 
         storeTexture(tex,surface->pixels,width,height,filter);
     }
-
+*/
     void storeTexture(GLuint& tex, void* pixels, unsigned int width, unsigned int height, GraphicFilter filter) {
 
         // Have OpenGL generate a texture object handle for us
@@ -485,8 +485,9 @@ namespace FlatScene {
     }
 
     void reloadResourcesGPU(CanvasResource& canvas) {
-        if (canvas.raw) {
-            storeTexture(canvas.tex,canvas.raw->pixels,canvas.w,canvas.h, NEAREST);
+        canvas._gpu.reload();
+        if (canvas._gpu.loaded()) {
+            ;
         } else {
             throw Exception("There is no implementation for reloading a GPU only surface");
         }

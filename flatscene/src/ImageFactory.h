@@ -23,15 +23,15 @@ namespace FlatScene {
 
         auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
 
-        auto res = new T(std::move(id),BitmapGPU(source));
+        auto res = new T(std::move(id),BitmapGPU(source->pixels,source->w,source->h));
         assert(res);
-
+        /* //TODO change store surface, to BitmapGPU constructor
         storeSurface(
             *res,
             loadSurface(src,chipset,mode,grd.getSpecialScale()),
             mode,
             filter
-        );
+        );*/
         
         return res;
     }
