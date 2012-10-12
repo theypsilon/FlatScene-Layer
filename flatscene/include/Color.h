@@ -5,9 +5,13 @@
 
 namespace FlatScene {
 
+    namespace RGBA {
+        enum RGBA { r, g, b, a };
+    }
+
     class Color {
     private:
-        Byte mr, mg, mb, ma;
+        unsigned int _color;
     public:
 
         Color(Byte r=0,Byte g=0,Byte b=0, Byte a=0);

@@ -2,12 +2,46 @@
 
 namespace FlatScene {
 
+
+template <RGBA::RGBA C = RGBA::a>
+constexpr unsigned int mask() {
+    {
+        enum {
+            i = true;
+        }
+        if (i) {
+            
+        }
+    }
+    return  C == RGBA::r? 0xFF << 6 :
+            C == RGBA::g? 0xFF << 4 :
+            C == RGBA::b? 0xFF << 2 :
+            C == RGBA::a? 0xFF << 0 ;
+}
+
+template <RGBA::RGBA C>
+inline unsigned int getBC(unsigned int intensity) {
+    return  intensity & mask() << 
+           (C == RGBA::r? 6 :
+            C == RGBA::g? 4 :
+            C == RGBA::b? 2 :
+            C == RGBA::a? 0);
+}
+
+template <RGBA::RGBA C>
+inline unsigned int getC(unsigned int color) {
+    return  C == RGBA::r? (color & mask<C>()) >> 6 :
+            C == RGBA::g? (color & mask<C>()) >> 4 :
+            C == RGBA::b? (color & mask<C>()) >> 2 :
+            C == RGBA::a? (color & mask<C>()) >> 0 ;
+}
+
 Color::Color(Byte r,Byte g,Byte b, Byte a)
-    : mr(r), mg(g), mb(b), ma(a)
+    : _color(getBC<RGBA::r>(r) | getBC<RGBA::g>(g) | getBC<RGBA::b>(b) | getBC<RGBA::a>(a))
 {}
 
 Color::Color(const Color& color)
-    : mr(color.mr), mg(color.mg), mb(color.mb), ma(color.ma)
+    : _color(color._color)
 {}
 
 Color::~Color() {}
