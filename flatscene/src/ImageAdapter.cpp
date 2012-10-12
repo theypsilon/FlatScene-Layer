@@ -1,43 +1,9 @@
-#include "CanvasResource.h"
 #include "Exception.h"
-#include "Renders.h"
-#include "ScreenImpl.h"
 #include "sdlSurfaceFuncs.h"
+#include "ImageAdapter.h"
 #include <iostream>
 
 namespace FlatScene {
-
-    template <typename PointType, typename GraphicMaterial>
-    inline void putCanvas ( const PointType& ptDst, unsigned char flags, 
-                            const CanvasResource& impl, GraphicMaterial& gm ) {
-
-        Screen::I().pushMatrix();
-        Screen::I().translate(ptDst.x,ptDst.y,0);
-
-        // USER DEFINED EFFECTS IN
-
-        call_to_all(impl.initCallbackList);
-        impl.initCallbackList.clear();
-
-        gm.push_back(
-            new SRenderCanvas(impl,flags)
-        );
-
-        // USER DEFINED EFFECTS OUT
-
-        call_to_all(impl.endCallbackList);
-        impl.endCallbackList.clear();
-
-        Screen::I().popMatrix();
-    }
-
-    void CanvasResource::put ( const FloatPoint& ptDst, unsigned char flags) const {
-        putCanvas( ptDst, flags, *this, Screen::I()._impl->graphicMaterial );
-    }
-
-    void CanvasResource::put ( const Point& ptDst, unsigned char flags) const {
-        putCanvas( ptDst, flags, *this, Screen::I()._impl->graphicMaterial );
-    }
 
     // class BitmapGPU
 
@@ -86,15 +52,6 @@ namespace FlatScene {
             GL_UNSIGNED_BYTE,
             _pixels
         );
-
-
-        static int i = 0;
-        if (i == 0) {
-            for(;i< _w * _h;i++) {
-                std::cout << static_cast<const unsigned int*>(_pixels)[i];
-            }
-            std::cout << std::endl << "end" << std::endl;
-        }
     }
 
     void BitmapGPU::unload() {
@@ -104,14 +61,6 @@ namespace FlatScene {
     void BitmapGPU::load(const void* pixels) {
         assert(pixels);
         assert(!_tex);
-
-        static int i = 0;
-        if (i == 0) {
-            for(;i< _w * _h;i++) {
-                std::cout << static_cast<const unsigned int*>(pixels)[i];
-            }
-            std::cout << std::endl << "end" << std::endl;
-        }
 
         GraphicFilter filter = NEAREST;
 

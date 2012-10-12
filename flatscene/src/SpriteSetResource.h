@@ -12,7 +12,7 @@
 #include <iostream>
 
 #include "TinyXMLHelper.h"
-#include "ImageFactory.h"
+#include "CanvasResourceFactory.h"
 #include "SpriteResource.h"
 #include "RefCountMemoryPolicyImpl.h"
 
@@ -133,7 +133,7 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt(createResource<SpriteResource>(src,chipset,mode,grd,i++));
+            Sprite spt(CanvasResource::create<SpriteResource>(src,chipset,mode,grd,i++));
 
             spt.setName(img.name);
 

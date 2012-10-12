@@ -2,6 +2,7 @@
 #define FS_IMAGE_ADAPTER__
 
 #include "Includes.h"
+#include "Types.h"
 
 namespace FlatScene {
 

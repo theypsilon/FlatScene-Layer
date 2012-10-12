@@ -17,27 +17,23 @@ unsigned int Canvas::getPixel(unsigned int x, unsigned int y) const {
 int Canvas::getWidth  () const { return getRes().getW(); }
 int Canvas::getHeight () const { return getRes().getH(); }
 
-void Canvas::put ( const FloatPoint& ptDst, unsigned char flags) const {
-    getRes().put(ptDst,flags);
-}
-
-void Canvas::put ( const Point& ptDst, unsigned char flags) const {
-    getRes().put(ptDst,flags);
+void Canvas::put (Float x, Float y, unsigned char flags) const {
+    getRes().put(x,y,flags);
 }
 
 void Canvas::rotate(Float angle, Float x, Float y, Float z) const {
-    getRes().initCallbackList.push_back([=](){
+    getRes()._initCallbackList.push_back([=](){
         Screen::I().rotate(angle,x,y,z);
     });
 }
 void Canvas::translate(Float x, Float y, Float z) const {
-    getRes().initCallbackList.push_back([=](){
+    getRes()._initCallbackList.push_back([=](){
         Screen::I().translate(x,y,z);
     });
 }
 
 void Canvas::scale(Float x, Float y, Float z) const {
-    getRes().initCallbackList.push_back([=](){
+    getRes()._initCallbackList.push_back([=](){
         Screen::I().scale(x,y,z);
     });
 }
@@ -49,7 +45,7 @@ void Canvas::color(Float red, Float green, Float blue, Float alpha) const {
     if (blue > 1.0) blue = 1.0;
     if (alpha > 1.0) alpha = 1.0;
 
-    getRes().initCallbackList.push_back([=](){
+    getRes()._initCallbackList.push_back([=](){
         Screen::I().color(red,green,blue,alpha);
     });
 
@@ -58,7 +54,7 @@ void Canvas::color(Float red, Float green, Float blue, Float alpha) const {
     blue  = Screen::I()._impl->blue ; //2.0 - blue;
     alpha = Screen::I()._impl->alpha; //2.0 - alpha;
 
-    getRes().endCallbackList.push_back([=](){
+    getRes()._endCallbackList.push_back([=](){
         Screen::I().color(red,green,blue,alpha);
     });
 }

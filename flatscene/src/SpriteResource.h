@@ -20,10 +20,7 @@ namespace FlatScene {
 
         friend class Sprite;
         friend class RefCountMemoryPolicy<SpriteResource>;
-        template <class T> friend T* createResource(
-            const RectangleImage& src, ConstRawImageResource chipset, GraphicMode   mode,
-            const GRD& grd,  unsigned int n,             GraphicFilter filter
-        );
+        friend class CanvasResource;
     };
 
 } // flatscene

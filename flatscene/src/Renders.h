@@ -1,9 +1,11 @@
 #ifndef FS_RENDERS__
 #define FS_RENDERS__
 
-#include "CanvasResource.h"
+#include "Types.h"
 
 namespace FlatScene {
+
+    struct BitmapGPU;
 
     struct SRender {
         virtual void operator()()=0;
@@ -55,10 +57,10 @@ namespace FlatScene {
 
     struct SRenderCanvas : SRender {
         const BitmapGPU& bm;
-        Uint8 flags;
+        unsigned char flags;
 
-        SRenderCanvas(const CanvasResource& canvas, Uint8 flags)
-        : bm(canvas._gpu), flags(flags) {}
+        SRenderCanvas(const BitmapGPU& bm, unsigned char flags)
+        : bm(bm), flags(flags) {}
 
         virtual void operator()();
     };

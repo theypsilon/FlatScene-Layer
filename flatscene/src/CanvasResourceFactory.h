@@ -6,9 +6,9 @@
 
 namespace FlatScene {
 
-    template <class Res> Res* createResource(
-        const RectangleImage& src, ConstRawImageResource chipset, GraphicMode    mode,
-        const GRD&  grd, unsigned int       n      , GraphicFilter  filter
+    template <class Res> Res* CanvasResource::create(
+        const RectangleImage& src, ConstRawImageResource chipset, 
+        GraphicMode mode, const GRD& grd, unsigned int n
     ) {
         static_assert(
             std::is_base_of<CanvasResource,Res>::value,
@@ -32,7 +32,7 @@ namespace FlatScene {
     }
 
     template <class Res, class T1, class T2>
-    Res* createResource(T1&& imageId, T2&& bitmapGPU) {
+    Res* CanvasResource::create(T1&& imageId, T2&& bitmapGPU) {
         static_assert(std::is_base_of<CanvasResource,Res>::value &&
                       std::is_same   <ImageId  ,T1      >::value &&
                       std::is_same   <BitmapGPU,T2      >::value,
