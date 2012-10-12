@@ -1,4 +1,4 @@
-#include "CanvasResource.h"
+#include "CanvasResourceRendering.h"
 #include "ScreenImpl.h"
 #include "Exception.h"
 #include "Algorithm.h"
@@ -22,41 +22,18 @@ void Canvas::put (Float x, Float y, unsigned char flags) const {
 }
 
 void Canvas::rotate(Float angle, Float x, Float y, Float z) const {
-    getRes()._initCallbackList.push_back([=](){
-        Screen::I().rotate(angle,x,y,z);
-    });
+    getRes().rotate(angle,x,y,z);
 }
 void Canvas::translate(Float x, Float y, Float z) const {
-    getRes()._initCallbackList.push_back([=](){
-        Screen::I().translate(x,y,z);
-    });
+    getRes().translate(x,y,z);
 }
 
 void Canvas::scale(Float x, Float y, Float z) const {
-    getRes()._initCallbackList.push_back([=](){
-        Screen::I().scale(x,y,z);
-    });
+    getRes().scale(x,y,z);
 }
 
 void Canvas::color(Float red, Float green, Float blue, Float alpha) const {
-
-    if (red > 1.0) red = 1.0;
-    if (green > 1.0) green = 1.0;
-    if (blue > 1.0) blue = 1.0;
-    if (alpha > 1.0) alpha = 1.0;
-
-    getRes()._initCallbackList.push_back([=](){
-        Screen::I().color(red,green,blue,alpha);
-    });
-
-    red   = Screen::I()._impl->red  ; //2.0 - red;
-    green = Screen::I()._impl->green; //2.0 - green;
-    blue  = Screen::I()._impl->blue ; //2.0 - blue;
-    alpha = Screen::I()._impl->alpha; //2.0 - alpha;
-
-    getRes()._endCallbackList.push_back([=](){
-        Screen::I().color(red,green,blue,alpha);
-    });
+    getRes().color(red,green,blue,alpha);
 }
 
 void Canvas::color(const Color& col, Float alpha) const {

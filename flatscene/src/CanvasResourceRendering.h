@@ -6,10 +6,6 @@
 
 namespace FlatScene {
 
-    inline void CanvasResource::put(Float x, Float y, unsigned char flags) const {
-        put(x,y,flags);
-    }
-
     inline void CanvasResource::rotate(Float angle, Float x, Float y, Float z) const {
         _initCallbackList.push_back([=](){
             Screen::I().rotate(angle,x,y,z);
