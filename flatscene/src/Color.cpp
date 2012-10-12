@@ -2,38 +2,42 @@
 
 namespace FlatScene {
 
+using namespace FlatScene::RGBA;
+
 namespace D {
 
-    template <RGBA::RGBA C> Byte constexpr bsh() {
-        return  (C == RGBA::r)? 24 :
-                (C == RGBA::g)? 16 :
-                (C == RGBA::b)? 8  :
+    typedef FlatScene::RGBA::RGBA RGBA;
+
+    template <RGBA C> Byte constexpr bsh() {
+        return  (C == r)? 24 :
+                (C == g)? 16 :
+                (C == b)? 8  :
                                 0  ;
     }
 
-    template <RGBA::RGBA C> Byte constexpr bad() {
-        return  (C == RGBA::r)? 3 :
-                (C == RGBA::g)? 2 :
-                (C == RGBA::b)? 1 :
+    template <RGBA C> Byte constexpr bad() {
+        return  (C == r)? 3 :
+                (C == g)? 2 :
+                (C == b)? 1 :
                                 0 ;
     }
 
-    template <RGBA::RGBA C = RGBA::a> constexpr unsigned int mask() {
-        return  (C == RGBA::r)? 0xFF << bsh<C>() :
-                (C == RGBA::g)? 0xFF << bsh<C>() :
-                (C == RGBA::b)? 0xFF << bsh<C>() :
+    template <RGBA C = a> constexpr unsigned int mask() {
+        return  (C == r)? 0xFF << bsh<C>() :
+                (C == g)? 0xFF << bsh<C>() :
+                (C == b)? 0xFF << bsh<C>() :
                                 0xFF << bsh<C>() ;
     }
 
-    template <RGBA::RGBA C> constexpr inline Byte gcol(unsigned int color) {
+    template <RGBA C> constexpr inline Byte gcol(unsigned int color) {
         return (Byte)((color & mask<C>()) >> bsh<C>());
     }
 
-    template <RGBA::RGBA C> constexpr inline unsigned int scol(unsigned int color, Byte c) {
+    template <RGBA C> constexpr inline unsigned int scol(unsigned int color, Byte c) {
         return (color & ~mask<C>()) | c << bsh<C>();
     }
 
-    template <RGBA::RGBA C> inline Byte& rcol(unsigned int& color) {
+    template <RGBA C> inline Byte& rcol(unsigned int& color) {
         return *(reinterpret_cast<Byte*>(&color)+bad<C>());
     }
 
@@ -45,32 +49,32 @@ Color::Color(unsigned int hex)
     : _color(hex)
 {}
 
-Color::Color(Byte r,Byte g,Byte b, Byte a)
-    : _color((r << bsh<RGBA::r>()) | 
-             (g << bsh<RGBA::g>()) | 
-             (b << bsh<RGBA::b>()) | 
-             (a << bsh<RGBA::a>()) )
+Color::Color(Byte nr,Byte ng,Byte nb, Byte na)
+    : _color((nr << bsh<r>()) | 
+             (ng << bsh<g>()) | 
+             (nb << bsh<b>()) | 
+             (na << bsh<a>()) )
 {}
 
 Color::Color(const Color& color)
     : _color(color._color)
 {}
 
-Byte Color::getR() const { return gcol<RGBA::r>(_color); }
-Byte Color::getG() const { return gcol<RGBA::g>(_color); }
-Byte Color::getB() const { return gcol<RGBA::b>(_color); }
-Byte Color::getA() const { return gcol<RGBA::a>(_color); }
+Byte Color::getR() const { return gcol<r>(_color); }
+Byte Color::getG() const { return gcol<g>(_color); }
+Byte Color::getB() const { return gcol<b>(_color); }
+Byte Color::getA() const { return gcol<a>(_color); }
 unsigned int Color::getHex() const { return _color; }
 
-void Color::setR(Byte c) { _color = scol<RGBA::r>(_color,c); }
-void Color::setG(Byte c) { _color = scol<RGBA::g>(_color,c); }
-void Color::setB(Byte c) { _color = scol<RGBA::b>(_color,c); }
-void Color::setA(Byte c) { _color = scol<RGBA::a>(_color,c); }
+void Color::setR(Byte c) { _color = scol<r>(_color,c); }
+void Color::setG(Byte c) { _color = scol<g>(_color,c); }
+void Color::setB(Byte c) { _color = scol<b>(_color,c); }
+void Color::setA(Byte c) { _color = scol<a>(_color,c); }
 
-Byte& Color::R() { return rcol<RGBA::r>(_color); }
-Byte& Color::G() { return rcol<RGBA::g>(_color); }
-Byte& Color::B() { return rcol<RGBA::b>(_color); }
-Byte& Color::A() { return rcol<RGBA::a>(_color); }
+Byte& Color::R() { return rcol<r>(_color); }
+Byte& Color::G() { return rcol<g>(_color); }
+Byte& Color::B() { return rcol<b>(_color); }
+Byte& Color::A() { return rcol<a>(_color); }
 
 Color& Color::operator=(const Color& color) {
     _color = color._color;
