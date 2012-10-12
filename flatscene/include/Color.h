@@ -15,13 +15,14 @@ namespace FlatScene {
     public:
 
         Color(Byte r=0,Byte g=0,Byte b=0, Byte a=0);
+        explicit Color(unsigned int hex);
         Color(const Color& color);
-        virtual ~Color();
 
         Byte getR() const;
         Byte getG() const;
         Byte getB() const;
         Byte getA() const;
+        unsigned int getHex() const;
 
         void setR(Byte r);
         void setG(Byte g);

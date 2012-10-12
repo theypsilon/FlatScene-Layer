@@ -13,6 +13,17 @@ int main (int argc, char* argv[]) {
 
     cout << "Starting main" << endl;
 
+    // Color c(0xAA,0xBB,0xCC,0xDD);
+
+    // c.setR(0xAA);
+    // c.setG(0x11);
+    // c.setB(0x22);
+    // c.setA(0x33);
+
+    // cout << hex << c.getHex() << '.' << 
+    // (int) c.R() << (int) c.G() << (int) c.B() << (int) c.A() <<'.' << 
+    // (int) c.getR() << (int) c.getG() << (int) c.getB() << (int) c.getA() << endl;
+
     //run the application
     FSLib.startLibrary(false);
     FSDraw.start(640,480,32,1.0,1.0,false);
