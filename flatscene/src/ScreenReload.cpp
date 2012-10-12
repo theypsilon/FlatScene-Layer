@@ -25,7 +25,7 @@ void ScreenImpl::deleteResources() {
 
 void ScreenImpl::saveResources(GraphicResources &info) {
 
-    for (auto fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
+    for (auto& fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
         fCanvas.first->_gpu.save();
         fCanvas.first->_gpu.unload();
     }
@@ -33,7 +33,7 @@ void ScreenImpl::saveResources(GraphicResources &info) {
 }
 
 void ScreenImpl::reloadResources(GraphicResources &info) {
-    for (auto fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
+    for (auto& fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
         fCanvas.first->_gpu.reload();
     }
 }

@@ -5,12 +5,6 @@
 #include "sdlSurfaceFuncs.h"
 #include <iostream>
 
-inline unsigned int pow2(unsigned int n) {
-    unsigned int c = 1;
-    while (c < n) c <<= 1;
-    return c;
-};
-
 namespace FlatScene {
 
     template <typename PointType, typename GraphicMaterial>
@@ -46,12 +40,6 @@ namespace FlatScene {
     }
 
     // class BitmapGPU
-
-    BitmapGPU::BitmapGPU(const void* pixels, GLuint w, GLuint h)
-        : _pixels(nullptr), _tex(0), _w(pow2(w)), _h(pow2(h)), _relW(_w/w), _relH(_h/h)
-    {
-        load(pixels);
-    }
 
     BitmapGPU::BitmapGPU(BitmapGPU&& that) 
         : _pixels(that._pixels), _w(that._w), _h(that._h)
@@ -90,7 +78,23 @@ namespace FlatScene {
         assert(!_pixels);
         _pixels = new unsigned int[_w*_h];
         assert(_pixels);
-        //TODO: glGetTexture
+
+        glGetTexImage(
+            GL_TEXTURE_2D,
+            0,
+            GL_RGBA,
+            GL_UNSIGNED_BYTE,
+            _pixels
+        );
+
+
+        static int i = 0;
+        if (i == 0) {
+            for(;i< _w * _h;i++) {
+                std::cout << static_cast<const unsigned int*>(_pixels)[i];
+            }
+            std::cout << std::endl << "end" << std::endl;
+        }
     }
 
     void BitmapGPU::unload() {
@@ -100,6 +104,14 @@ namespace FlatScene {
     void BitmapGPU::load(const void* pixels) {
         assert(pixels);
         assert(!_tex);
+
+        static int i = 0;
+        if (i == 0) {
+            for(;i< _w * _h;i++) {
+                std::cout << static_cast<const unsigned int*>(pixels)[i];
+            }
+            std::cout << std::endl << "end" << std::endl;
+        }
 
         GraphicFilter filter = NEAREST;
 

@@ -5,6 +5,14 @@
 
 namespace FlatScene {
 
+    namespace detail {
+        inline unsigned int pow2(unsigned int n) {
+            unsigned int c = 1;
+            while (c < n) c <<= 1;
+            return c;
+        };
+    } 
+
     typedef SDL_Surface*        RawImageResource;
     typedef const SDL_Surface&  ConstRawImageResource;
 
@@ -17,7 +25,15 @@ namespace FlatScene {
         typedef Float             RelType;
         typedef unsigned int    PixelType;
 
-        BitmapGPU(const void* pixels, GLuint w, GLuint h);
+        template <bool software = false>
+        BitmapGPU(const void* pixels, GLuint w, GLuint h) 
+        : _pixels(nullptr), _tex(0), _w(detail::pow2(w)), _h(detail::pow2(h))
+        , _relW(software? 0 : _w/w), _relH(software? 0 : _h/h) {
+            if (!software)
+                load(pixels);
+            else
+                ;
+        }
         BitmapGPU(BitmapGPU&& that);
         BitmapGPU& operator=(BitmapGPU&& that);
 
@@ -31,7 +47,7 @@ namespace FlatScene {
 
         bool            loaded() const      { return _tex != 0;          }
         bool            saved() const       { return _pixels != nullptr; }
-        bool            isSoftware() const  { return false;              }
+        bool            isSoftware() const  { return _relW == 0;         }
 
         void            save() const;
         void            unload();
