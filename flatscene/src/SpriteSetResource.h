@@ -25,13 +25,9 @@ using namespace Util::XML::Tiny;
 class SpritesetResource {
 public:
 
-    SpritesetResource(std::string c, GraphicMode mode) 
-        : _mode(mode), _name(std::move(c)) {
-            loadChipset(_name,mode);
-    }
-
-    GraphicMode getMode() const {
-        return _mode;
+    SpritesetResource(std::string c) 
+        : _name(std::move(c)) {
+            loadChipset(_name);
     }
 
     const std::string& getName() const {
@@ -66,7 +62,6 @@ private:
 
     std::vector<Sprite> _sprites;
     std::string         _name;
-    GraphicMode         _mode;
 
     typedef decltype(IMGLoadOrThrow("")) csType;
 
@@ -91,10 +86,10 @@ private:
         }
     }
 
-    void loadChipset(const std::string& c,GraphicMode mode) {
+    void loadChipset(const std::string& c) {
         auto fGRDsChipset = loadGRDandChipset(getNameFile(c));
 
-        loadAllSprites(fGRDsChipset.first,toCRef(fGRDsChipset.second),mode);
+        loadAllSprites(fGRDsChipset.first,toCRef(fGRDsChipset.second));
 
         IMGFreeOrThrow(fGRDsChipset.second);
     }
@@ -119,7 +114,7 @@ private:
     }
 
     template <typename T>
-    void loadAllSprites(const GRD& grd, const T& chipset, GraphicMode mode) {
+    void loadAllSprites(const GRD& grd, const T& chipset) {
         unsigned int w = getWidth(chipset), h = getHeight(chipset);
         if (w / grd._cellwidth <= 0 || w % grd._cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
@@ -131,7 +126,7 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt(CanvasResource::create<SpriteResource>(src,chipset,mode,grd,i++));
+            Sprite spt(CanvasResource::create<SpriteResource>(src,chipset,grd,i++));
 
             spt.setName(img.name);
 

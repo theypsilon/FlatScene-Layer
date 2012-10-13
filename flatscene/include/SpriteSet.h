@@ -8,20 +8,19 @@ namespace FlatScene {
 
     class SpritesetResource;
 
-    class Spriteset : public ResourceHandler<SpritesetResource,RefCountMemoryPolicy<SpritesetResource> > {
+    class Spriteset 
+    : public ResourceHandler<SpritesetResource,RefCountMemoryPolicy<SpritesetResource> > {
     public:
-        Spriteset(
-            std::string c    = "",
-            GraphicMode mode = ONLY_GPU
-        );
+        Spriteset(std::string c    = "");
         
         bool                    isNull () const { return nullptr == &getRes(); };
-        // Following methods yield Undefined Behavior when IsNull returns true, aka the object has been moved
+        
+        /* Following methods yield Undefined Behavior when IsNull returns true, *
+         * aka the object has been moved                                        */
 
         const Sprite*           get    ( unsigned int n ) const;
         int                     size   () const;
         const std::string&      getName() const;
-        GraphicMode             getMode() const;
 
     private :
         friend class Screen;

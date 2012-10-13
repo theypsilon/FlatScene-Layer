@@ -2,13 +2,9 @@
 
 namespace FlatScene {
 
-    Spriteset::Spriteset(std::string c, GraphicMode mode) 
-        : ResourceHandler (new SpritesetResource(std::move(c),mode))
+    Spriteset::Spriteset(std::string c) 
+        : ResourceHandler (new SpritesetResource(std::move(c)))
     {}
-
-    GraphicMode Spriteset::getMode() const {
-        return getRes().getMode();
-    }
 
     const std::string& Spriteset::getName() const {
         return getRes().getName();

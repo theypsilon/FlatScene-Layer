@@ -15,13 +15,14 @@ namespace FlatScene {
         SPRITE_OPAQUE_TRANSFORMED
     };
 
+    typedef std::vector<Rectangle> RectArea;
+    typedef int IndexArea;
+    typedef std::map<IndexArea,RectArea> Areas;
+
     class SpriteResource;
 
     class Sprite : public Canvas {
     public:
-        typedef std::vector<Rectangle> RectArea;
-        typedef int IndexArea;
-        typedef std::map<IndexArea,RectArea> Areas;
 
         void                setName(std::string newName);
         const std::string&  getName() const;
@@ -38,6 +39,28 @@ namespace FlatScene {
 
     protected:
         Sprite(SpriteResource* res);
+    private:
+        
+        friend class Canvas;
+        friend class SpritesetResource;
+        friend class Screen;
+    };
+
+    class SoftwareSprite : public SoftwareCanvas {
+    public:
+        void                setName(std::string newName);
+        const std::string&  getName() const;
+        const Areas&        getAllAreas () const;
+        const RectArea&     getArea(IndexArea index) const;
+        const Point&        getCenter() const;
+        void                setCenter(Point c);
+        IndexArea           addArea(RectArea area);
+        void                setArea(IndexArea n,RectArea area);
+        int                 size() const;
+        SpriteOpaque        isOpaque();
+
+    protected:
+        SoftwareSprite(SpriteResource* res);
     private:
         
         friend class Canvas;

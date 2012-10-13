@@ -15,7 +15,7 @@ namespace FlatScene {
 
         template <class Res = CanvasResource> 
         static Res*             create(const RectangleImage& src, ConstRawImageResource chipset, 
-                                       GraphicMode mode, const GRD&  grd, unsigned int n       );
+                                       const GRD&  grd, unsigned int n       );
 
         template <class Res, class T1, class T2>
         static Res*             create(T1&& imageId, T2&& bitmapGPU);

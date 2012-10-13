@@ -71,7 +71,7 @@ void IScrollLevel::load() {
     for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();
          node && node->Attribute("name");   node = node->NextSiblingElement()) 
     {
-        _collisionsets.push_back(Spriteset(valFromAttr<std::string>(*node,"name"),ONLY_CPU));
+        _collisionsets.push_back(Spriteset(valFromAttr<std::string>(*node,"name")/*,ONLY_CPU*/));
     }
 
     if (_collisionsets.empty() || _tilesets.empty()) {
