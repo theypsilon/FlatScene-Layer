@@ -88,9 +88,9 @@ namespace FlatScene {
     Color operator/(Color color,int Divisor);
 
     constexpr Color operator|(Color color1,const Color& color2);
+    constexpr Color operator~(Color color);
     Color operator&(Color color1,const Color& color2);
     Color operator^(Color color1,const Color& color2);
-    Color operator~(Color color);
 
     constexpr bool operator==(const Color& color1,const Color& color2);
     constexpr bool operator!=(const Color& color1,const Color& color2);
