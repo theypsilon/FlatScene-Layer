@@ -132,42 +132,42 @@ constexpr inline Color FColor(Float nr,Float ng,Float nb, Float na) {
     return Color(detail::ftob(nr), detail::ftob(ng), detail::ftob(nb), detail::ftob(na));
 }
 
-constexpr inline Color Red(Byte shade)        { return Color(shade,0,0); }
-constexpr inline Color Green(Byte shade)      { return Color(0,shade,0); }
-constexpr inline Color Blue(Byte shade)       { return Color(0,0,shade); }
+constexpr inline Color Red         (Byte shade)           { return Color(shade,0,0); }
+constexpr inline Color Green       (Byte shade)           { return Color(0,shade,0); }
+constexpr inline Color Blue        (Byte shade)           { return Color(0,0,shade); }
 
-constexpr inline Color Yellow(Byte shade)     { return Red(shade)   |Green(shade); }
-constexpr inline Color Cyan(Byte shade)       { return Green(shade) |Blue(shade); }
-constexpr inline Color Magenta(Byte shade)    { return Red(shade)   |Blue(shade); }
+constexpr inline Color Yellow      (Byte shade)           { return Red  (shade) |Green(shade); }
+constexpr inline Color Cyan        (Byte shade)           { return Green(shade) |Blue (shade); }
+constexpr inline Color Magenta     (Byte shade)           { return Red  (shade) |Blue (shade); }
 
-constexpr inline Color DarkRed(Byte shade)        { return Red(shade); }
-constexpr inline Color DarkGreen(Byte shade)      { return Green(shade); }
-constexpr inline Color DarkBlue(Byte shade)       { return Blue(shade); }
-constexpr inline Color DarkYellow(Byte shade)     { return Yellow(shade); }
-constexpr inline Color DarkCyan(Byte shade)       { return Cyan(shade); }
-constexpr inline Color DarkMagenta(Byte shade)    { return Magenta(shade); }
+constexpr inline Color DarkRed     (Byte shade)           { return Red    (shade); }
+constexpr inline Color DarkGreen   (Byte shade)           { return Green  (shade); }
+constexpr inline Color DarkBlue    (Byte shade)           { return Blue   (shade); }
+constexpr inline Color DarkYellow  (Byte shade)           { return Yellow (shade); }
+constexpr inline Color DarkCyan    (Byte shade)           { return Cyan   (shade); }
+constexpr inline Color DarkMagenta (Byte shade)           { return Magenta(shade); }
 
-constexpr inline Color LightRed(Byte gray,Byte shade)     { return Red(shade)     | White(gray); }
-constexpr inline Color LightGreen(Byte gray,Byte shade)   { return Green(shade)   | White(gray); }
-constexpr inline Color LightBlue(Byte gray,Byte shade)    { return Blue(shade)    | White(gray); }
-constexpr inline Color LightYellow(Byte gray,Byte shade)  { return Yellow(shade)  | White(gray); }
-constexpr inline Color LightCyan(Byte gray,Byte shade)    { return Cyan(shade)    | White(gray); }
+constexpr inline Color LightRed    (Byte gray,Byte shade) { return Red(shade)     | White(gray); }
+constexpr inline Color LightGreen  (Byte gray,Byte shade) { return Green(shade)   | White(gray); }
+constexpr inline Color LightBlue   (Byte gray,Byte shade) { return Blue(shade)    | White(gray); }
+constexpr inline Color LightYellow (Byte gray,Byte shade) { return Yellow(shade)  | White(gray); }
+constexpr inline Color LightCyan   (Byte gray,Byte shade) { return Cyan(shade)    | White(gray); }
 constexpr inline Color LightMagenta(Byte gray,Byte shade) { return Magenta(shade) | White(gray); }
 
-constexpr inline Color White(Byte shade)      { return Color(shade,shade,shade); }
-constexpr inline Color Gray(Byte shade)       { return White(shade); }
-constexpr inline Color DarkGray(Byte shade)   { return White(shade); }
-constexpr inline Color Black(Byte shade)      { return White(shade); }
+constexpr inline Color White       (Byte shade)           { return Color(shade,shade,shade); }
+constexpr inline Color Gray        (Byte shade)           { return White(shade); }
+constexpr inline Color DarkGray    (Byte shade)           { return White(shade); }
+constexpr inline Color Black       (Byte shade)           { return White(shade); }
 
 
-inline Color operator+(Color color1,const Color& color2) { return color1 += color2; }
-inline Color operator-(Color color1,const Color& color2) { return color1 -= color2; }
-inline Color operator&(Color color1,const Color& color2) { return color1 &= color2; }
-inline Color operator^(Color color1,const Color& color2) { return color1 ^= color2; }
+inline Color operator+(Color color1,const Color& color2)  { return color1 += color2; }
+inline Color operator-(Color color1,const Color& color2)  { return color1 -= color2; }
+inline Color operator&(Color color1,const Color& color2)  { return color1 &= color2; }
+inline Color operator^(Color color1,const Color& color2)  { return color1 ^= color2; }
 
-constexpr inline Color operator~(const Color& color) { return Color(~color.getHex()); }
-constexpr inline Color operator|
-(const Color& color1,const Color& color2) { return Color(color1.getHex() | color2.getHex()); }
+constexpr inline Color operator~(const Color& color)      { return Color(~color.getHex()); }
+constexpr inline Color operator|(const Color& color1,const Color& color2)
+                                { return Color(color1.getHex() | color2.getHex()); }
 
 constexpr inline bool operator!=(const Color& color1,const Color& color2) { return !(color1==color2); }
 constexpr inline bool operator==(const Color& color1,const Color& color2) {
