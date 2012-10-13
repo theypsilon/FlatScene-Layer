@@ -75,6 +75,9 @@ namespace FlatScene {
         friend class Screen;
     };
 
+    Canvas         modify(const Canvas& origin);
+    SoftwareCanvas modify(const SoftwareCanvas& origin);
+
 } // flatscene
 
 #endif

@@ -8,14 +8,12 @@
 namespace FlatScene {
 
 class SpriteResource : public CanvasResource {
+public:
+    SpriteResource(ImageId id, BitmapGPU gpu) : CanvasResource(std::move(id), std::move(gpu)) {}
+    virtual ~SpriteResource() {}
+    
     typedef Sprite  Handler;
 
-    std::string     _name;
-    Point           _cpoint;
-    Areas           _areas;
-    SpriteOpaque    _opaque;
-
-public:
     void                setName(std::string newName) {
         _name = std::move(newName);
     }
@@ -76,12 +74,11 @@ public:
         return _opaque;
     }
 
-    SpriteResource(ImageId id, BitmapGPU gpu) : CanvasResource(std::move(id), std::move(gpu)) {}
-    virtual ~SpriteResource() {}
-
-    friend class Sprite;
-    friend class RefCountMemoryPolicy<SpriteResource>;
-    friend class CanvasResource;
+private:
+    std::string     _name;
+    Point           _cpoint;
+    Areas           _areas;
+    SpriteOpaque    _opaque;
 };
 
 } // flatscene

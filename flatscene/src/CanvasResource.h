@@ -28,11 +28,11 @@ namespace FlatScene {
         BitmapGPU::PixelType    getPixel(BitmapGPU::SizeType x, BitmapGPU::SizeType y) 
                                                 {   return _gpu.getPixel(x,y);  }
 
-        void                    put(Float x, Float y, unsigned char flags) const;
-        void                    rotate(Float angle, Float x, Float y, Float z) const;
-        void                    translate(Float x, Float y, Float z) const;
-        void                    scale(Float x, Float y, Float z) const;
-        void                    color(Float red, Float green, Float blue, Float alpha) const;
+        void                    put         (Float x, Float y, unsigned char flags) const;
+        void                    translate   (Float x, Float y, Float z) const;
+        void                    scale       (Float x, Float y, Float z) const;
+        void                    rotate      (Float angle, Float x, Float y, Float z) const;
+        void                    color       (Float red, Float green, Float blue, Float alpha) const;
 
         virtual ~CanvasResource() {}
 
@@ -46,11 +46,8 @@ namespace FlatScene {
         mutable std::list<std::function<void(void)>> _initCallbackList;
         mutable std::list<std::function<void(void)>> _endCallbackList;
 
-        friend class Canvas;
-        friend class RefCountMemoryPolicy<CanvasResource>;
         friend class SpriteResource;
-        friend struct ScreenImpl;
-    
+        friend class ScreenImpl;
     };
 
 

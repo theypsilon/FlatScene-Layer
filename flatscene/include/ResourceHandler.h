@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <type_traits>
+#include <iostream>
 
 #include "ResourceMemoryPolicies.h"
 
@@ -29,7 +30,7 @@ namespace FlatScene {
             : _res(move(handler._res))
         {}
 
-        ~ResourceHandler() {
+        virtual ~ResourceHandler() {
             remove(_res);
         }
 

@@ -41,7 +41,6 @@ namespace FlatScene {
         Sprite(SpriteResource* res);
     private:
         
-        friend class Canvas;
         friend class SpritesetResource;
         friend class Screen;
     };
@@ -63,10 +62,12 @@ namespace FlatScene {
         SoftwareSprite(SpriteResource* res);
     private:
         
-        friend class Canvas;
         friend class SpritesetResource;
         friend class Screen;
     };
+
+    Sprite         modify(const Sprite& origin);
+    SoftwareSprite modify(const SoftwareSprite& origin);
 
 } // flatscene
 
