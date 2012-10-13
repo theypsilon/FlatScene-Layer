@@ -16,11 +16,12 @@ namespace FlatScene {
         unsigned int _color;
     public:
 
-        constexpr Color(Byte nr, Byte ng, Byte nb, Byte na=0);
-        constexpr explicit Color(unsigned int hex, bool alpha = true);
+        constexpr Color() noexcept : _color(0x00000000) {}
+        constexpr Color(Byte nr, Byte ng, Byte nb, Byte na=0) noexcept;
+        constexpr explicit Color(unsigned int hex, bool alpha = true) noexcept;
         template <std::size_t N> constexpr explicit Color(const char(&a)[N]);
         explicit Color(const std::string& a);
-        constexpr Color(const Color& color);
+        constexpr Color(const Color& color) noexcept;
 
         template <RGBA::RGBA component> constexpr Byte get() const;
         constexpr Byte getR() const;
@@ -41,12 +42,10 @@ namespace FlatScene {
         Byte& B();
         Byte& A();
 
-        Color& operator=(const Color& color);
+        Color& operator=(const Color& color) noexcept;
+
         Color& operator+=(const Color& color);
         Color& operator-=(const Color& color);
-        Color& operator*=(const Color& color);
-        Color& operator*=(int Multiplier);
-        Color& operator/=(int Divisor);
         Color& operator|=(const Color& color);
         Color& operator&=(const Color& color);
         Color& operator^=(const Color& color);
@@ -83,12 +82,8 @@ namespace FlatScene {
 
     Color operator+(Color color1,const Color& color2);
     Color operator-(Color color1,const Color& color2);
-    Color operator*(Color color1,const Color& color2);
-    Color operator*(Color color,int Multiplier);
-    Color operator/(Color color,int Divisor);
-
-    constexpr Color operator|(Color color1,const Color& color2);
-    constexpr Color operator~(Color color);
+    constexpr Color operator|(const Color& color1,const Color& color2);
+    constexpr Color operator~(const Color& color);
     Color operator&(Color color1,const Color& color2);
     Color operator^(Color color1,const Color& color2);
 
