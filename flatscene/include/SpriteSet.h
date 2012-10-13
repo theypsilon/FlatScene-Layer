@@ -18,7 +18,7 @@ namespace FlatScene {
         /* Following methods yield Undefined Behavior when IsNull returns true, *
          * aka the object has been moved                                        */
 
-        const Sprite*           get    ( unsigned int n ) const;
+        const Sprite&           get    ( unsigned int n ) const;
         int                     size   () const;
         const std::string&      getName() const;
 

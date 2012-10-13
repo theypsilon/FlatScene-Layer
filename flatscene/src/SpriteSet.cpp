@@ -10,8 +10,8 @@ namespace FlatScene {
         return getRes().getName();
     }
 
-    const Sprite* Spriteset::get ( unsigned int n ) const {
-        return getRes().get(n);
+    const Sprite& Spriteset::get ( unsigned int n ) const {
+        return *getRes().get(n);
     }
 
     int Spriteset::size() const {

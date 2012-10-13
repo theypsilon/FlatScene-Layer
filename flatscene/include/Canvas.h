@@ -25,7 +25,8 @@ namespace FlatScene {
 
     class CanvasResource;
 
-    class Canvas : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
+    class Canvas 
+    : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
     public:
         int             getWidth() const;
         int             getHeight() const;
@@ -54,7 +55,10 @@ namespace FlatScene {
         friend class Screen;
     };
 
-    class SoftwareCanvas : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
+    /* This class is the same as Canvas, but it can't be rendered. *
+     * You may use this as a memory optimization                   */
+    class SoftwareCanvas 
+    : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
     public:
         int             getWidth() const;
         int             getHeight() const;

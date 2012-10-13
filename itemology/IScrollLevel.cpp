@@ -181,8 +181,8 @@ void IScrollLevel::load() {
                 for  (unsigned int k=0; k < getW(); k++) {
                     fread(&tileData, sizeof(TileBG),1,f_map);
                     tilsublayer.push_back( Tile(
-                        tileData.graph > 0 ? _tilesets     [tileData.fileGraph].get(tileData.graph -1) : nullptr,
-                        tileData.dur   > 0 ? _collisionsets[tileData.fileDur  ].get(tileData.dur - 1 ) : nullptr,
+                        tileData.graph > 0 ? &_tilesets     [tileData.fileGraph].get(tileData.graph -1) : nullptr,
+                        tileData.dur   > 0 ? &_collisionsets[tileData.fileDur  ].get(tileData.dur - 1 ) : nullptr,
                         (unsigned short) tileData.flags
                     ));
                 }
