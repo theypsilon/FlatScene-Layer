@@ -3,19 +3,19 @@
 namespace FlatScene {
 
     Spriteset::Spriteset(std::string c) 
-        : ResourceHandler (new SpritesetResource(std::move(c)))
+        : ResourceHandler (SpritesetResource<ONLY_GPU>::create(std::move(c)))
     {}
 
     const std::string& Spriteset::getName() const {
         return getRes().getName();
     }
 
-    const Sprite& Spriteset::get ( unsigned int n ) const {
-        return *getRes().get(n);
+    const std::vector<Sprite>& Spriteset::get() const {
+        return getRes().get();
     }
 
-    int Spriteset::size() const {
-        return getRes().size();
+    const std::vector<Sprite>* const Spriteset::operator->() const {
+        return &getRes().get();
     }
 
 } // flatscene

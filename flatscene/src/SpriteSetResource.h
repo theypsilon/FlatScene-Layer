@@ -22,8 +22,19 @@ namespace FlatScene {
 
 using namespace Util::XML::Tiny;
 
+template <GraphicMode mode>
 class SpritesetResource {
 public:
+
+    template <class T>
+    static SpritesetResource<mode>*const create(T&& c) {
+        typedef RefCountMemoryPolicy<SpritesetResource<mode>> MemoryPolicyType;
+        for(auto& set : MemoryPolicyType::getCounts()) {
+            if (set.first->getName() == c)
+                return set.first;
+        }
+        return new SpritesetResource<mode>(std::forward<T>(c));
+    }
 
     SpritesetResource(std::string c) 
         : _name(std::move(c)) {
@@ -44,6 +55,10 @@ public:
 
     void add ( Sprite pspt ) {
         //_sprites.push_back ( pspt ) ;
+    }
+
+    const std::vector<Sprite>& get() const {
+        return _sprites;
     }
 
     const Sprite* get ( unsigned int n ) const {
@@ -126,7 +141,7 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt(CanvasResource::create<SpriteResource>(src,chipset,grd,i++));
+            Sprite spt(CanvasResource::create<SpriteResource,mode>(src,chipset,grd,i++));
 
             spt.setName(img.name);
 

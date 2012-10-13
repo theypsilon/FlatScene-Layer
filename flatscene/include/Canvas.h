@@ -9,19 +9,9 @@
 #include <map>
 
 #include "ResourceHandler.h"
+#include "GraphicTypes.h"
 
 namespace FlatScene {
-
-    enum GraphicMode {  // Changes the memory used for containing the image data
-        ONLY_CPU,       // -The image can not be rendered
-        ONLY_GPU,       // -The pixel data can't be readed, getPixel now throws
-        BOTH            // -No drawbacks in features, but it uses double memory
-    };
-
-    enum GraphicFilter {
-        NEAREST,
-        LINEAR
-    };
 
     class CanvasResource;
 
@@ -50,7 +40,7 @@ namespace FlatScene {
         
         friend class FSTextBox;
         friend class Sprite;
-        friend class SpritesetResource;
+        template <GraphicMode mode> friend class SpritesetResource;
         friend class Images;
         friend class Screen;
     };
@@ -70,7 +60,7 @@ namespace FlatScene {
         
         friend class FSTextBox;
         friend class Sprite;
-        friend class SpritesetResource;
+        template <GraphicMode mode> friend class SpritesetResource;
         friend class Images;
         friend class Screen;
     };

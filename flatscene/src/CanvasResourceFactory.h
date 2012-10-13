@@ -6,7 +6,7 @@
 
 namespace FlatScene {
 
-    template <class Res> Res* CanvasResource::create(
+    template <class Res, GraphicMode mode> Res* CanvasResource::create(
         const RectangleImage& src, ConstRawImageResource chipset, 
         const GRD& grd, unsigned int n
     ) {
@@ -20,8 +20,6 @@ namespace FlatScene {
         for (const auto& pair : Res::Handler::MemoryPolicyType::getCounts())
             if (id == pair.first->id)
                 return static_cast<Res*>(pair.first);
-
-        static const GraphicMode mode = ONLY_GPU; //TODO this has to be a template parameter
 
         auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
 

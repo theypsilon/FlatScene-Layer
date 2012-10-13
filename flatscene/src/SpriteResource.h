@@ -7,6 +7,10 @@
 
 namespace FlatScene {
 
+    namespace detail {
+        constexpr unsigned int alphaMask = 0xFF000000;
+    } // detail
+
 class SpriteResource : public CanvasResource {
 public:
     SpriteResource(ImageId id, BitmapGPU gpu) : CanvasResource(std::move(id), std::move(gpu)) {}
@@ -14,15 +18,13 @@ public:
     
     typedef Sprite  Handler;
 
-    void                setName(std::string newName) {
-        _name = std::move(newName);
-    }
-    const std::string&  getName() const {
-        return _name;
-    }
-    const Areas&        getAllAreas () const {
-        return _areas;
-    }
+    void                setName(std::string name) { _name   = std::move(name); }
+    void                setCenter(Point c)        { _cpoint = std::move(c);    }
+    const std::string&  getName() const           { return _name;              }
+    const Areas&        getAllAreas () const      { return _areas;             }
+    const Point&        getCenter() const         { return _cpoint;            }
+    int                 size() const              { return _areas.size();      }
+
     const RectArea&     getArea(IndexArea index) const {
         auto it = _areas.find(index);
         if (it == _areas.end())
@@ -30,12 +32,7 @@ public:
                            +std::to_string(index)+"' has been found",__LINE__);
         return it->second;
     }
-    const Point&        getCenter() const {
-        return _cpoint;
-    }
-    void                setCenter(Point c) {
-        _cpoint = std::move(c);
-    }
+
     IndexArea           addArea(RectArea area) {
         typedef std::numeric_limits<IndexArea> limit;
         for (IndexArea index = limit::min(); index < limit::max(); index++) {
@@ -46,6 +43,7 @@ public:
         }
         throw Exception("no index available for new area",__LINE__);
     }
+
     void                setArea(IndexArea n,RectArea area) {
         auto it = _areas.find(n);
         if (it != _areas.end())
@@ -53,9 +51,7 @@ public:
         else
             throw Exception("::setArea, index not found");
     }
-    int                 size() const {
-        return _areas.size();
-    }
+
     SpriteOpaque        isOpaque() {
         if (_opaque != SPRITE_OPAQUE_NOT_CHEQUED)
             return _opaque;
@@ -65,7 +61,7 @@ public:
         try {
             for (int x = 0; x < getW() && _opaque == SPRITE_OPAQUE; x++ )
                 for (int y = 0; y < getH() && _opaque == SPRITE_OPAQUE; y++ )
-                    if ((getPixel(x,y) & 0xFF000000) != 0xFF000000)
+                    if ((getPixel(x,y) & detail::alphaMask) != detail::alphaMask)
                         _opaque = SPRITE_TRANSPARENT;
         } catch(Exception&) {
             throw Exception("This sprite doesn't contain accessible pixels for looking up the opacity");

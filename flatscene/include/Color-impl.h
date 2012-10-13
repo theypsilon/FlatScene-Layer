@@ -54,13 +54,14 @@ namespace detail {
                throw std::logic_error("color string contain wrong symbols.");
     }
 
-    constexpr inline unsigned int fstr(std::size_t n,const char a[]) {
-        return 
-        n == 10? a[0] == '#'? fstr(9,a+1)
-            : throw std::logic_error("color str may only contain the char '#' at beginning") :
-        n == 9? fchar(a[0]) << 28 | fchar(a[1]) << 24 | fchar(a[2]) << 20 | fchar(a[3]) << 16 | 
-                fchar(a[4]) << 12 | fchar(a[5]) <<  8 | fchar(a[6]) <<  4 | fchar(a[7]) <<  0 :
-        throw std::logic_error("color str may only be 8 symbols");
+    constexpr inline unsigned int fstr(std::size_t n,const char a[]) { 
+        return  n == 10                                                          || 
+                n == 8? a[0] == '#'? fstr(n-1,a+1)                                :
+                        throw std::logic_error("color str is ill-formed, use hex"):
+                n == 9? fstr(7,a)         | fchar(a[6]) <<  4 | fchar(a[7]) <<  0 :
+                n == 7? fchar(a[0]) << 28 | fchar(a[1]) << 24 | fchar(a[2]) << 20 |  
+                        fchar(a[3]) << 16 | fchar(a[4]) << 12 | fchar(a[5]) <<  8 :
+                throw std::logic_error("color str may only be 8/6 symbols")       ;
     }
 
 } //detail

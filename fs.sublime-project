@@ -1,9 +1,10 @@
 {
 	"folders":
 	[
-		{
-			"path": "."
-		},
+		// {
+		// 	"path": ".",
+		// 	"folder_exclude_patterns": ["flatscene/src","flatscene/include"]
+		// },
 		{
 			"path": "flatscene/include"
 		},
@@ -11,7 +12,8 @@
 			"path": "flatscene/src"
 		},
 		{
-			"path": "itemology"
+			"path": "itemology",
+		    "folder_exclude_patterns": ["CMakeFiles"]
 		}
 	]
 }

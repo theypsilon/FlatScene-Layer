@@ -13,7 +13,7 @@ namespace FlatScene {
     public:
         typedef Canvas          Handler;
 
-        template <class Res = CanvasResource> 
+        template <class Res = CanvasResource, GraphicMode mode = ONLY_GPU> 
         static Res*             create(const RectangleImage& src, ConstRawImageResource chipset, 
                                        const GRD&  grd, unsigned int n       );
 
