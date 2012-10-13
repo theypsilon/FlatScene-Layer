@@ -43,4 +43,17 @@ void Canvas::color(const Color& col, Float alpha) const {
             alpha );
 }
 
+
+SoftwareCanvas::SoftwareCanvas(CanvasResource* res) 
+    : ResourceHandler(res)
+{}
+
+unsigned int SoftwareCanvas::getPixel(unsigned int x, unsigned int y) const {
+    return getRes().getPixel(x,y);
+}
+
+int SoftwareCanvas::getWidth  () const { return getRes().getW(); }
+int SoftwareCanvas::getHeight () const { return getRes().getH(); }
+
+
 } // flatscene

@@ -25,8 +25,6 @@ using namespace Util::XML::Tiny;
 class SpritesetResource {
 public:
 
-    typedef std::vector<Sprite> SpriteCollection;
-
     SpritesetResource(std::string c, GraphicMode mode) 
         : _mode(mode), _name(std::move(c)) {
             loadChipset(_name,mode);
@@ -66,9 +64,9 @@ public:
 
 private:
 
-    SpriteCollection _sprites;
-    std::string      _name;
-    GraphicMode      _mode;
+    std::vector<Sprite> _sprites;
+    std::string         _name;
+    GraphicMode         _mode;
 
     typedef decltype(IMGLoadOrThrow("")) csType;
 
