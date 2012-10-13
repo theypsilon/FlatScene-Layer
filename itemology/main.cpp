@@ -20,7 +20,7 @@ int main (int argc, char* argv[]) {
     // c.setB(0x22);
     // c.setA(0x33);
 
-    cout << hex << Yellow().getHex() << '.' << endl;
+    // cout << hex << c.getHex() << '.' << 
     // (int) c.R() << (int) c.G() << (int) c.B() << (int) c.A() <<'.' << 
     // (int) c.getR() << (int) c.getG() << (int) c.getB() << (int) c.getA() << endl;
 
