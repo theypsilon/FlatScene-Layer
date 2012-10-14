@@ -68,7 +68,6 @@ namespace FlatScene {
 
         friend class Camera;
 
-        friend class Spriteset;
         friend class Sprite;
         friend class Canvas;
         friend class CanvasResource;

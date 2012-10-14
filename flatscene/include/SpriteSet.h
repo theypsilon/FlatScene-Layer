@@ -8,17 +8,23 @@ namespace FlatScene {
 
     template <GraphicMode mode> class SpritesetResource;
 
-    class Spriteset 
+    template <class ImageType>
+    class ImageSet 
     : public ResourceHandler<
         SpritesetResource<ONLY_GPU>,
         RefCountMemoryPolicy<SpritesetResource<ONLY_GPU>> > {
     public:
-        Spriteset(std::string c    = "");
+        ImageSet(std::string c    = "");
 
         const std::string&         getName() const;
-        const std::vector<Sprite>& get    () const;
-        const std::vector<Sprite>* const operator->() const;
+        const std::vector<ImageType>& get    () const;
+        const std::vector<ImageType>* const operator->() const;
     };
+
+    typedef ImageSet<Sprite> Spriteset;
+    typedef ImageSet<Canvas> Canvasset;
+    typedef ImageSet<SoftwareSprite> SoftSpriteset;
+    typedef ImageSet<SoftwareCanvas> SoftCanvasset;
 
 } // flatscene
 

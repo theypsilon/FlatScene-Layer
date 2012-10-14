@@ -1,21 +1,26 @@
 #include "SpriteSetResource.h"
 
 namespace FlatScene {
-
-    Spriteset::Spriteset(std::string c) 
+    template <class ImageType>
+    ImageSet<ImageType>::ImageSet(std::string c) 
         : ResourceHandler (SpritesetResource<ONLY_GPU>::create(std::move(c)))
     {}
-
-    const std::string& Spriteset::getName() const {
+    template <class ImageType>
+    const std::string& ImageSet<ImageType>::getName() const {
         return getRes().getName();
     }
-
-    const std::vector<Sprite>& Spriteset::get() const {
+    template <class ImageType>
+    const std::vector<ImageType>& ImageSet<ImageType>::get() const {
         return getRes().get();
     }
-
-    const std::vector<Sprite>* const Spriteset::operator->() const {
+    template <class ImageType>
+    const std::vector<ImageType>* const ImageSet<ImageType>::operator->() const {
         return &getRes().get();
     }
+
+    template class ImageSet<Sprite>;
+    // template class ImageSet<Canvas>;
+    // template class ImageSet<SoftwareSprite>;
+    // template class ImageSet<SoftwareCanvas>;
 
 } // flatscene
