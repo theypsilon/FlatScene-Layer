@@ -4,24 +4,33 @@
 
 namespace FlatScene {
 
+    namespace detail {
+        template <class T> struct res_set { 
+            typedef ResourceHandler<
+                SpritesetResource<T>,
+                RefCountMemoryPolicy<SpritesetResource<T> >
+            > type;
+        };
+    } //detail
+
     template <class ImageType>
     ImageSet<ImageType>::ImageSet(std::string c) 
-        : Handler (SpritesetResource<ImageType>::create(std::move(c)))
+        : detail::res_set<ImageType>::type (SpritesetResource<ImageType>::create(std::move(c)))
     {}
 
     template <class ImageType>
     const std::string& ImageSet<ImageType>::getName() const {
-        return Handler::getRes().getName();
+        return detail::res_set<ImageType>::type::getRes().getName();
     }
 
     template <class ImageType>
     const std::vector<ImageType>& ImageSet<ImageType>::get() const {
-        return Handler::getRes().get();
+        return detail::res_set<ImageType>::type::getRes().get();
     }
 
     template <class ImageType>
     const std::vector<ImageType>* const ImageSet<ImageType>::operator->() const {
-        return &Handler::getRes().get();
+        return &detail::res_set<ImageType>::type::getRes().get();
     }
 
     template class ImageSet<Sprite>;

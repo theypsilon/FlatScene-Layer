@@ -13,10 +13,6 @@ namespace FlatScene {
     : public ResourceHandler<
         SpritesetResource<ImageType>,
         RefCountMemoryPolicy<SpritesetResource<ImageType>> > {
-        typedef ResourceHandler<
-            SpritesetResource<ImageType>,
-            RefCountMemoryPolicy<SpritesetResource<ImageType> >
-        > Handler;
     public:
         ImageSet(std::string c    = "");
 
