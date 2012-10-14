@@ -1,7 +1,7 @@
 #ifndef FS_SPRITESET_IMPL__
 #define FS_SPRITESET_IMPL__
 
-#include "SpriteSet.h"
+#include "ImageSet.h"
 #include "Exception.h"
 #include "Algorithm.h"
 #include "Traits.h"
@@ -12,7 +12,7 @@
 #include <iostream>
 
 #include "TinyXMLHelper.h"
-#include "ImageFactory.h"
+#include "CanvasResourceFactory.h"
 #include "SpriteResource.h"
 #include "RefCountMemoryPolicyImpl.h"
 
@@ -20,20 +20,40 @@
 
 namespace FlatScene {
 
+namespace detail {
+
+    template <class Res> struct to_graphic_mode {
+        static const GraphicMode value = ONLY_GPU;
+    };
+
+    template <> struct to_graphic_mode<SoftwareSprite> {
+        static const GraphicMode value = ONLY_CPU;
+    };
+
+    template <> struct to_graphic_mode<SoftwareCanvas> {
+        static const GraphicMode value = ONLY_CPU;
+    };
+} // detail
+
 using namespace Util::XML::Tiny;
 
-class SpritesetResource {
+template <class Res>
+class ImageSetResource {
 public:
 
-    typedef std::vector<Sprite> SpriteCollection;
-
-    SpritesetResource(std::string c, GraphicMode mode) 
-        : _mode(mode), _name(std::move(c)) {
-            loadChipset(_name,mode);
+    template <class T>
+    static ImageSetResource<Res>*const create(T&& c) {
+        typedef RefCountMemoryPolicy<ImageSetResource<Res>> MemoryPolicyType;
+        for(auto& set : MemoryPolicyType::getCounts()) {
+            if (set.first->getName() == c)
+                return set.first;
+        }
+        return new ImageSetResource<Res/*detail::to_graphic_mode<Res>::value*/>(std::forward<T>(c));
     }
 
-    GraphicMode getMode() const {
-        return _mode;
+    ImageSetResource(std::string c) 
+        : _name(std::move(c)) {
+            loadChipset(_name);
     }
 
     const std::string& getName() const {
@@ -48,11 +68,15 @@ public:
         return false;
     }
 
-    void add ( Sprite pspt ) {
+    void add ( Res pspt ) {
         //_sprites.push_back ( pspt ) ;
     }
 
-    const Sprite* get ( unsigned int n ) const {
+    const std::vector<Res>& get() const {
+        return _sprites;
+    }
+
+    const Res* get ( unsigned int n ) const {
         if ( n < _sprites.size()) {
             return &_sprites.at(n);
         } else {
@@ -66,9 +90,8 @@ public:
 
 private:
 
-    SpriteCollection _sprites;
-    std::string      _name;
-    GraphicMode      _mode;
+    std::vector<Res> _sprites;
+    std::string         _name;
 
     typedef decltype(IMGLoadOrThrow("")) csType;
 
@@ -93,10 +116,10 @@ private:
         }
     }
 
-    void loadChipset(const std::string& c,GraphicMode mode) {
+    void loadChipset(const std::string& c) {
         auto fGRDsChipset = loadGRDandChipset(getNameFile(c));
 
-        loadAllSprites(fGRDsChipset.first,toCRef(fGRDsChipset.second),mode);
+        loadAllSprites(fGRDsChipset.first,toCRef(fGRDsChipset.second));
 
         IMGFreeOrThrow(fGRDsChipset.second);
     }
@@ -121,7 +144,7 @@ private:
     }
 
     template <typename T>
-    void loadAllSprites(const GRD& grd, const T& chipset, GraphicMode mode) {
+    void loadAllSprites(const GRD& grd, const T& chipset) {
         unsigned int w = getWidth(chipset), h = getHeight(chipset);
         if (w / grd._cellwidth <= 0 || w % grd._cellwidth != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
@@ -133,11 +156,10 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt(createResource<SpriteResource>(src,chipset,mode,grd,i++));
+            auto r = CanvasResource::create<typename Res::ResourceType>(src,chipset,grd,i++);
+            r->applyMetadata(img);
 
-            spt.setName(img.name);
-
-            _sprites.push_back(std::move(spt));
+            _sprites.push_back(Res(r));
 
             src.x += grd._cellwidth;
             if (src.x + grd._cellwidth > (unsigned int) w) {

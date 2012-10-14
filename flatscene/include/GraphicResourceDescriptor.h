@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Types.h"
+#include "GraphicTypes.h"
 
 namespace FlatScene {
 
@@ -49,7 +50,7 @@ namespace FlatScene {
         std::string         _grd_str;
         std::string         _gr_file;
 
-        friend class SpritesetResource;
+        template <class Res> friend class ImageSetResource;
         friend struct GRDProcess;
 
     };

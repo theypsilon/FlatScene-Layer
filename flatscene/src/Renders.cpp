@@ -77,6 +77,13 @@ void SRenderPopMatrix::operator()() {
 }
 
 void SRenderCanvas::operator()() {
+    auto tex  = bm.getTex(),
+         h2   = bm.getH(),
+         w2   = bm.getW();
+
+    auto relH = bm.getRelH(),
+         relW = bm.getRelW();
+         
     glBindTexture(GL_TEXTURE_2D, tex);
 
     glBegin(GL_QUADS);

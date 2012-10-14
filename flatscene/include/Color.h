@@ -1,86 +1,97 @@
-#ifndef __COLOR_H__
-#define __COLOR_H__
+#ifndef FS_COLOR_H__
+#define FS_COLOR_H__
 
+#include <cstddef>
+#include <string>
 #include "Types.h"
 
 namespace FlatScene {
 
+    namespace RGBA {
+        enum RGBA { r, g, b, a };
+    }
+
     class Color {
     private:
-        Byte mr, mg, mb, ma;
+        unsigned int _color;
     public:
 
-        Color(Byte r=0,Byte g=0,Byte b=0, Byte a=0);
-        Color(const Color& color);
-        virtual ~Color();
+        constexpr Color() noexcept : _color(0x00000000) {}
+        constexpr Color(Byte nr, Byte ng, Byte nb, Byte na=0) noexcept;
+        constexpr explicit Color(unsigned int hex, bool alpha = true) noexcept;
+        template <std::size_t N> constexpr explicit Color(const char(&a)[N]);
+        explicit Color(const std::string& a);
+        constexpr Color(const Color& color) noexcept;
 
-        Byte getR() const;
-        Byte getG() const;
-        Byte getB() const;
-        Byte getA() const;
+        template <RGBA::RGBA component> constexpr Byte get() const;
+        constexpr Byte getR() const;
+        constexpr Byte getG() const;
+        constexpr Byte getB() const;
+        constexpr Byte getA() const;
+        constexpr unsigned int getHex() const;
 
-        void setR(Byte r);
-        void setG(Byte g);
-        void setB(Byte b);
-        void setA(Byte a);
+        template <RGBA::RGBA component> Color& set(Byte c);
+        Color& setR(Byte c);
+        Color& setG(Byte c);
+        Color& setB(Byte c);
+        Color& setA(Byte c);
 
+        template <RGBA::RGBA component> Byte& ref();
         Byte& R();
         Byte& G();
         Byte& B();
         Byte& A();
 
-        Color& operator=(const Color& color);
+        Color& operator=(const Color& color) noexcept;
+
         Color& operator+=(const Color& color);
         Color& operator-=(const Color& color);
-        Color& operator*=(const Color& color);
-        Color& operator*=(int Multiplier);
-        Color& operator/=(int Divisor);
         Color& operator|=(const Color& color);
         Color& operator&=(const Color& color);
         Color& operator^=(const Color& color);
-
-        static Color Red(Byte shade=255);
-        static Color Green(Byte shade=255);
-        static Color Blue(Byte shade=255);
-
-        static Color Yellow(Byte shade=255);
-        static Color Cyan(Byte shade=255);
-        static Color Magenta(Byte shade=255);
-
-        static Color DarkRed(Byte shade=128)        { return Red(shade); }
-        static Color DarkGreen(Byte shade=128)      { return Green(shade); }
-        static Color DarkBlue(Byte shade=128)       { return Blue(shade); }
-        static Color DarkYellow(Byte shade=128)     { return Yellow(shade); }
-        static Color DarkCyan(Byte shade=128)       { return Cyan(shade); }
-        static Color DarkMagenta(Byte shade=128)    { return Magenta(shade); }
-
-        static Color LightRed(Byte gray=128,Byte shade=255);
-        static Color LightGreen(Byte gray=128,Byte shade=255);
-        static Color LightBlue(Byte gray=128,Byte shade=255);
-        static Color LightYellow(Byte gray=128,Byte shade=255);
-        static Color LightCyan(Byte gray=128,Byte shade=255);
-        static Color LightMagenta(Byte gray=128,Byte shade=255);
-
-        static Color White(Byte shade=255);
-        static Color Gray(Byte shade=192);
-        static Color DarkGray(Byte shade=128);
-        static Color Black(Byte shade=0);
     };
+
+    constexpr Color FColor(Float nr, Float ng, Float nb, Float na=0);
+
+    constexpr Color Red(Byte shade=255);
+    constexpr Color Green(Byte shade=255);
+    constexpr Color Blue(Byte shade=255);
+
+    constexpr Color Yellow(Byte shade=255);
+    constexpr Color Cyan(Byte shade=255);
+    constexpr Color Magenta(Byte shade=255);
+
+    constexpr Color DarkRed(Byte shade=128);
+    constexpr Color DarkGreen(Byte shade=128);
+    constexpr Color DarkBlue(Byte shade=128);
+    constexpr Color DarkYellow(Byte shade=128);
+    constexpr Color DarkCyan(Byte shade=128);
+    constexpr Color DarkMagenta(Byte shade=128);
+
+    constexpr Color LightRed(Byte gray=128,Byte shade=255);
+    constexpr Color LightGreen(Byte gray=128,Byte shade=255);
+    constexpr Color LightBlue(Byte gray=128,Byte shade=255);
+    constexpr Color LightYellow(Byte gray=128,Byte shade=255);
+    constexpr Color LightCyan(Byte gray=128,Byte shade=255);
+    constexpr Color LightMagenta(Byte gray=128,Byte shade=255);
+
+    constexpr Color White(Byte shade=255);
+    constexpr Color Gray(Byte shade=192);
+    constexpr Color DarkGray(Byte shade=128);
+    constexpr Color Black(Byte shade=0);
 
     Color operator+(Color color1,const Color& color2);
     Color operator-(Color color1,const Color& color2);
-    Color operator*(Color color1,const Color& color2);
-    Color operator*(Color color,int Multiplier);
-    Color operator/(Color color,int Divisor);
-
-    Color operator|(Color color1,const Color& color2);
+    constexpr Color operator|(const Color& color1,const Color& color2);
+    constexpr Color operator~(const Color& color);
     Color operator&(Color color1,const Color& color2);
     Color operator^(Color color1,const Color& color2);
-    Color operator~(Color color);
 
-    bool operator==(const Color& color1,const Color& color2);
-    bool operator!=(const Color& color1,const Color& color2);
+    constexpr bool operator==(const Color& color1,const Color& color2);
+    constexpr bool operator!=(const Color& color1,const Color& color2);
 
 } // flatscene
+
+#include "Color-impl.h"
 
 #endif //#ifndef __COLOR_H__

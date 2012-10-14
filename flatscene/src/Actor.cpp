@@ -1,7 +1,7 @@
 #include "Actor.h"
 #include "Exception.h"
 #include "Universe.h"
-#include "SpriteSet.h"
+#include "ImageSet.h"
 
 namespace FlatScene {
 

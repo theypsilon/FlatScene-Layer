@@ -71,7 +71,7 @@ void IScrollLevel::load() {
     for (node = input.FirstChildElement("TileCollisions").FirstChildElement().ToElement();
          node && node->Attribute("name");   node = node->NextSiblingElement()) 
     {
-        _collisionsets.push_back(Spriteset(valFromAttr<std::string>(*node,"name"),ONLY_CPU));
+        _collisionsets.push_back(Spriteset(valFromAttr<std::string>(*node,"name")/*,ONLY_CPU*/));
     }
 
     if (_collisionsets.empty() || _tilesets.empty()) {
@@ -181,8 +181,8 @@ void IScrollLevel::load() {
                 for  (unsigned int k=0; k < getW(); k++) {
                     fread(&tileData, sizeof(TileBG),1,f_map);
                     tilsublayer.push_back( Tile(
-                        tileData.graph > 0 ? _tilesets     [tileData.fileGraph].get(tileData.graph -1) : nullptr,
-                        tileData.dur   > 0 ? _collisionsets[tileData.fileDur  ].get(tileData.dur - 1 ) : nullptr,
+                        tileData.graph > 0 ? &_tilesets     [tileData.fileGraph]->at(tileData.graph -1) : nullptr,
+                        tileData.dur   > 0 ? &_collisionsets[tileData.fileDur  ]->at(tileData.dur - 1 ) : nullptr,
                         (unsigned short) tileData.flags
                     ));
                 }

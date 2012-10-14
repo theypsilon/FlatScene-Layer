@@ -10,44 +10,48 @@
 namespace FlatScene {
 
     class CanvasResource {
+    public:
         typedef Canvas          Handler;
 
-        CanvasResource (ImageId nid) : id(std::move(nid)) {}
-
-        GLuint              tex;
-        Uint32              w, h;                /* Read-only */
-        int                 w2,h2;          /* Valor previo desplazado a la potencia de 2 superior o igual m�s pr�xima. */
-        Uint8               bpp;
-        RawImageResource    raw; // NULL or not null, thats the question.
-        const ImageId       id;
-
-        void clearSurface () {
-            bpp = h = h2 = w = w2 = tex = 0;
-            raw = nullptr;
+        void                applyMetadata(const GRD::Sprite& img) {
+            
         }
 
-        mutable std::list<std::function<void(void)>> initCallbackList;
-        mutable std::list<std::function<void(void)>> endCallbackList;
+        template <class Res = CanvasResource, GraphicMode mode = ONLY_GPU> 
+        static Res*             create(const RectangleImage& src, ConstRawImageResource chipset, 
+                                       const GRD&  grd, unsigned int n       );
 
-        virtual ~CanvasResource(); // defined in ImageAdapter.h
+        template <class Res, class T1, class T2>
+        static Res*             create(T1&& imageId, T2&& bitmapGPU);
 
-        friend class Canvas;
-        friend struct SRenderCanvas;
-        friend class RefCountMemoryPolicy<CanvasResource>;
+        BitmapGPU::SizeType     getW() const       { return _gpu.getW();    }
+        BitmapGPU::SizeType     getH() const       { return _gpu.getH();    }
+        BitmapGPU::RelType      getRelW() const    { return _gpu.getRelW(); }
+        BitmapGPU::RelType      getRelH() const    { return _gpu.getRelH(); }
+
+        BitmapGPU::PixelType    getPixel(BitmapGPU::SizeType x, BitmapGPU::SizeType y) 
+                                                {   return _gpu.getPixel(x,y);  }
+
+        void                    put         (Float x, Float y, unsigned char flags) const;
+        void                    translate   (Float x, Float y, Float z) const;
+        void                    scale       (Float x, Float y, Float z) const;
+        void                    rotate      (Float angle, Float x, Float y, Float z) const;
+        void                    color       (Float red, Float green, Float blue, Float alpha) const;
+
+        virtual ~CanvasResource() {}
+
+        const ImageId   id;
+    private:
+        template <class TImageId, class TBitmapGPU>
+        CanvasResource (TImageId&& nid, TBitmapGPU&& gpu) 
+            : id(std::forward<TImageId>(nid)), _gpu(std::forward<TBitmapGPU>(gpu)) {}
+
+        BitmapGPU                                    _gpu;
+        mutable std::list<std::function<void(void)>> _initCallbackList;
+        mutable std::list<std::function<void(void)>> _endCallbackList;
+
         friend class SpriteResource;
-
-        template <class T> friend T* createResource(
-            const RectangleImage& src, ConstRawImageResource chipset, GraphicMode mode,
-            const GRD& grd, unsigned int n, GraphicFilter filter = NEAREST
-        );
-
-        template <typename PointType, typename GraphicMaterial>
-        friend void putCanvas ( const PointType& ptDst, unsigned char flags, 
-                                const CanvasResource& impl, GraphicMaterial& gm );
-
-        friend void storeSurface(
-            CanvasResource& canvas, RawImageResource surface, GraphicMode mode, GraphicFilter filter
-        );
+        friend class ScreenImpl;
     };
 
 

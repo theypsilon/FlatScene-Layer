@@ -1,13 +1,19 @@
 {
 	"folders":
 	[
+		// {
+		// 	"path": ".",
+		// 	"folder_exclude_patterns": ["flatscene/src","flatscene/include"]
+		// },
 		{
-			"path": "flatscene",
-			"folder_exclude_patterns": ["CMakeFiles","resources","."]
+			"path": "flatscene/include"
 		},
 		{
-			"path": "itemology",
-			"folder_exclude_patterns": ["CMakeFiles","resources"]
-		}
+			"path": "flatscene/src"
+		}//,
+		// {
+		// 	"path": "itemology",
+		//     "folder_exclude_patterns": ["CMakeFiles"]
+		// }
 	]
 }

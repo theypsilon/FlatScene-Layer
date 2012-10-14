@@ -1,7 +1,10 @@
-#include "sdlSurfaceFuncs.h"
+﻿#include "sdlSurfaceFuncs.h"
 #include "Exception.h"
+#include "ScopedGuard.h"
 
-unsigned int pow2(unsigned int n) {
+#include <sstream>
+
+inline unsigned int pow2(unsigned int n) {
     unsigned int c = 1;
     while (c < n) c <<= 1;
     return c;
@@ -288,9 +291,9 @@ namespace FlatScene {
 
     SDL_Surface* scaleSurface( SDL_Surface* s_surf, int factor) {
 
-        SDL_Surface* ret = NULL;
+        SDL_Surface* ret = nullptr;
 
-        if (s_surf == NULL || factor <= 1)
+        if (s_surf == nullptr || factor <= 1)
             return ret;
 
         unsigned char bpp = s_surf->format->BytesPerPixel;
@@ -305,7 +308,12 @@ namespace FlatScene {
         else 
             throw SDLException("depth mode not valid");
 
-        
+        if (nullptr == ret)
+            throw Exception("SDL_Surface not created in scaleSurface");
+
+        ScopedGuard guard([=]{
+            SDL_FreeSurface( ret );
+        });
 
         char* newPixels = (char*) ret->pixels;
         char* oldPixels = (char*) s_surf->pixels;
@@ -332,7 +340,7 @@ namespace FlatScene {
 
         SDL_UnlockSurface(s_surf);
         SDL_UnlockSurface(ret);
-
+        guard.dismiss();
         return ret;
     }
 
@@ -342,6 +350,13 @@ namespace FlatScene {
                                          chipset.format->BitsPerPixel,
                                          chipset.format->Rmask, chipset.format->Gmask,
                                          chipset.format->Bmask, chipset.format->Amask);
+
+        if (nullptr == surf)
+            throw Exception("surf not created in loadSurface");
+
+        ScopedGuard guard([=]{
+            SDL_FreeSurface( surf );
+        });
 
         SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
         blitcopy(chipset,const_cast<SDL_Rect*>(&src),surf,nullptr);
@@ -354,15 +369,18 @@ namespace FlatScene {
             // Reasignamos los formatos.
             SDL_SetColorKey(surf,SDL_SRCCOLORKEY,chipset.format->colorkey);
         }
+        guard.dismiss();
         return surf;
     }
-
+/*
     void storeSurface(CanvasResource& canvas, SDL_Surface* surface, GraphicMode mode, GraphicFilter filter) {
-        SDL_Surface* image;
-        SDL_Rect area;
 
         if (surface == nullptr)
             throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
+
+        ScopedGuard guard([=]{
+            SDL_FreeSurface( surface );
+        });
     
         canvas.w2 = surface->w;
         canvas.h2 = surface->h;
@@ -371,103 +389,99 @@ namespace FlatScene {
         canvas.h = pow2((Uint32)surface->h);
         canvas.bpp = surface->format->BytesPerPixel;
 
-        if (mode == ONLY_GPU ||     mode == BOTH) {
-            int saved_flags;
-            int  saved_alpha;
-      
-            #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-                  image = SDL_CreateRGBSurface(
-                      SDL_SWSURFACE |SDL_SRCALPHA,
-                      canvas.w,
-                      canvas.h,
-                      surface->format->BitsPerPixel,
-                      0x000000ff,
-                      0x0000ff00,
-                      0x00ff0000,
-                      0xff000000);
-            #else
-                  image = SDL_CreateRGBSurface(
-                      SDL_SWSURFACE |SDL_SRCALPHA,
-                      canvas.w,
-                      canvas.h,
-                      surface->format->BitsPerPixel,
-                      0xff000000,
-                      0x00ff0000,
-                      0x0000ff00,
-                      0x000000ff);
-            #endif
-            if (image == NULL)
-                throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
-
-
-            saved_flags = surface->flags&(SDL_SRCALPHA|SDL_RLEACCELOK);
-            saved_alpha = surface->format->alpha;
-            if ( (saved_flags & SDL_SRCALPHA)   == SDL_SRCALPHA ) {
-              SDL_SetAlpha(surface, 0, 0);
-            }
-
-
-
-            area.x = 0;
-            area.y = 0;
-            area.w = surface->w;
-            area.h = surface->h;
-
-            SDL_BlitSurface(surface, &area, image, &area);
-
-        
-            if ( (saved_flags & SDL_SRCALPHA)== SDL_SRCALPHA )  {
-                SDL_SetAlpha(surface, saved_flags, saved_alpha);
-            }
-
-            if(SDL_MUSTLOCK(image))
-                SDL_UnlockSurface(image);
-
-            // Have OpenGL generate a texture object handle for us
-            glGenTextures(1, &canvas.tex );
-
-            // Bind the texture object
-            glBindTexture( GL_TEXTURE_2D,canvas.tex );
-
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST);
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
-        
-            // Edit the texture object's surface data using the information SDL_Surface gives us
-            glTexImage2D( GL_TEXTURE_2D,
-                                    0,
-                                    GL_RGBA,
-                                    canvas.w,
-                                    canvas.h,
-                                    0,
-                                    GL_RGBA,
-                                    GL_UNSIGNED_BYTE,
-                                    image->pixels );
-
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-
-            if ( image ) {
-                SDL_FreeSurface( image );
-                image = nullptr;
-            }
-
-
-
-        }
-
-        if (mode & ONLY_CPU) {
+        if (mode == ONLY_GPU || mode == BOTH) {
+            storeSurfaceInGPU(surface, canvas.w, canvas.h, canvas.tex, filter);
+        } else {
             canvas.h = 0;
             canvas.w = 0;
         }
 
-        if (mode & ONLY_GPU) {
+        if (mode == ONLY_GPU) {
             SDL_FreeSurface( surface );
             surface = nullptr;
         }
 
         canvas.raw = surface;
+        guard.dismiss();
+    }
 
+    void storeSurfaceInGPU(
+        SDL_Surface* surface, unsigned int width, unsigned int height, 
+        GLuint& tex, GraphicFilter filter
+    ) {
+  
+        SDL_Surface* image = SDL_CreateRGBSurface(
+            SDL_SWSURFACE |SDL_SRCALPHA,
+            width,
+            height,
+            surface->format->BitsPerPixel,
+        #if SDL_BYTEORDER == SDL_LIL_ENDIAN
+            0x000000ff,
+            0x0000ff00,
+            0x00ff0000,
+            0xff000000
+        #else
+            0xff000000,
+            0x00ff0000,
+            0x0000ff00,
+            0x000000ff
+        #endif
+        );
+
+        if (image == nullptr)
+            throw Exception("CCanvas::LoadIMG -> image Null.",__LINE__);
+
+        ScopedGuard guard([=]{
+            SDL_FreeSurface( image );
+        });
+
+        int saved_flags = surface->flags&(SDL_SRCALPHA|SDL_RLEACCELOK);
+        int saved_alpha = surface->format->alpha;
+        if ( (saved_flags & SDL_SRCALPHA)   == SDL_SRCALPHA ) {
+          SDL_SetAlpha(surface, 0, 0);
+        }
+
+
+        SDL_Rect area = {0, 0, (Sint16) surface->w, (Sint16) surface->h};
+
+        SDL_BlitSurface(surface, &area, image, &area);
+    
+        if ( (saved_flags & SDL_SRCALPHA)== SDL_SRCALPHA )  {
+            SDL_SetAlpha(surface, saved_flags, saved_alpha);
+        }
+
+        storeTexture(tex,surface->pixels,width,height,filter);
+    }
+*/
+    void storeTexture(GLuint& tex, void* pixels, unsigned int width, unsigned int height, GraphicFilter filter) {
+
+        // Have OpenGL generate a texture object handle for us
+        glGenTextures(1, &tex);
+        if (!tex)
+            throw Exception("Texture can not be generated in storeTexture");
+
+        // Bind the texture object
+        glBindTexture( GL_TEXTURE_2D, tex );
+
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
+    
+        // http://www.opengl.org/wiki/GLAPI/glTexImage2D specify a two-dimensional texture image
+        glTexImage2D( 
+            GL_TEXTURE_2D,    /* GLenum target​        */
+            0,                /* GLint level​​          */
+            GL_RGBA,          /* GLint internalFormat​​ */
+            width,            /* GLsizei width​​        */
+            height,           /* GLsizei height​       */
+            0,                /* GLint border​​         */
+            GL_RGBA,          /* GLenum format​        */
+            GL_UNSIGNED_BYTE, /* GLenum type​          */
+            pixels            /* const GLvoid* data​   */
+        );
+
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
     }
 
     SDL_Surface* IMGLoadOrThrow(const std::string& path) {
@@ -481,6 +495,15 @@ namespace FlatScene {
         if (!surface)
             throw Exception("chipset pointer invalid",__LINE__,__FILE__);
         SDL_FreeSurface(surface);
+    }
+
+    std::string printGLErrors() {
+        std::stringstream reader;
+        for (GLenum currError = glGetError(); currError != GL_NO_ERROR; currError = glGetError()) {
+            auto s = gluErrorString(currError);
+            reader << "error " << currError << ": " << s << std::endl;
+        }
+        return reader.str();
     }
 
 } // FlatScene

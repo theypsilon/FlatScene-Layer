@@ -4,7 +4,7 @@
 
 //include message handler(base class)
 
-#include "SpriteSet.h"
+#include "ImageSet.h"
 #include "Engine.h"
 
 #include "Time.h"

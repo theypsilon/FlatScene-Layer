@@ -3,7 +3,7 @@
 
 #include "Includes.h"
 #include "Screen.h"
-#include "SpriteSetResource.h"
+#include "ImageSetResource.h"
 
 namespace FlatScene {
 
@@ -18,7 +18,7 @@ typedef std::list<SpritesetInfo> GraphicResources;
 
 struct SRender;
 
-struct Screen::ScreenImpl {
+struct ScreenImpl {
 
     SDL_Surface* m_SDL_Surface;
 
@@ -48,6 +48,7 @@ struct Screen::ScreenImpl {
     int beginRenderMode(Uint32 flags);
     int endRenderMode(Uint32 flags);
 
+    friend class Screen;
 };
 
 } // flatscene

@@ -17,6 +17,8 @@ namespace FlatScene {
         TRP_PERSPECTIVE
     };
 
+    struct ScreenImpl;
+
     class Screen : private Util::NonCpmvable, public Util::Singleton<Screen> {
         friend class Util::Singleton<Screen>;
     public:
@@ -59,7 +61,6 @@ namespace FlatScene {
         Float getR(),getG(),getB(),getA();
 
     private:
-        struct ScreenImpl;
         ScreenImpl* _impl;
 
         Screen();
@@ -67,9 +68,9 @@ namespace FlatScene {
 
         friend class Camera;
 
-        friend class Spriteset;
         friend class Sprite;
         friend class Canvas;
+        friend class CanvasResource;
 
         friend struct SRenderLocation;
     };

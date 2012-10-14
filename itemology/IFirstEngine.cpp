@@ -38,13 +38,17 @@ void IFirstEngine::onEvent(const Event& e) {
     
     if ( e.getSymbol() == Key::RIGHT )
         move[i_right] = turn;
+
+    if ( e.getSymbol() == Key::F2 && turn) {
+        FSDraw.ToggleFullscreen();
+    }
     
 }
 
 void IFirstEngine::drawFrame() {
     
-    for (auto i = cams.begin(); i != cams.end(); ++i) {
-        (*i)->render();
+    for (auto camera : cams) {
+        camera->render();
     }
     
     Screen::I().render();
