@@ -18,7 +18,7 @@ public:
     
     typedef Sprite  Handler;
 
-    void                applyMetadata(const GRD::Sprite& img) {
+    void                applyMetadata(const GRD::Image& img) {
         setName(img.name);
     }
 

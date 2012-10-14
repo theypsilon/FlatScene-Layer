@@ -13,7 +13,7 @@ namespace FlatScene {
     public:
         typedef Canvas          Handler;
 
-        void                applyMetadata(const GRD::Sprite& img) {
+        void                applyMetadata(const GRD::Image& img) {
             
         }
 
