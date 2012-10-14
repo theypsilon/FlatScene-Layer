@@ -156,11 +156,10 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Res spt(CanvasResource::create<typename Res::ResourceType>(src,chipset,grd,i++));
+            auto r = CanvasResource::create<typename Res::ResourceType>(src,chipset,grd,i++);
+            r->applyMetadata(img);
 
-            spt.setName(img.name);
-
-            _sprites.push_back(std::move(spt));
+            _sprites.push_back(Res(r));
 
             src.x += grd._cellwidth;
             if (src.x + grd._cellwidth > (unsigned int) w) {

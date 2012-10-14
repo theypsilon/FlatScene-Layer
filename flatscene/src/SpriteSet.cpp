@@ -25,7 +25,7 @@ namespace FlatScene {
     }
 
     template class ImageSet<Sprite>;
-    // template class ImageSet<Canvas>;
+    template class ImageSet<Canvas>;
     // template class ImageSet<SoftwareSprite>;
     // template class ImageSet<SoftwareCanvas>;
 

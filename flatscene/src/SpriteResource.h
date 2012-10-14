@@ -18,6 +18,10 @@ public:
     
     typedef Sprite  Handler;
 
+    void                applyMetadata(const GRD::Sprite& img) {
+        setName(img.name);
+    }
+
     void                setName(std::string name) { _name   = std::move(name); }
     void                setCenter(Point c)        { _cpoint = std::move(c);    }
     const std::string&  getName() const           { return _name;              }
