@@ -48,11 +48,12 @@ public:
             if (set.first->getName() == c)
                 return set.first;
         }
-        return new ImageSetResource<Res/*detail::to_graphic_mode<Res>::value*/>(std::forward<T>(c));
+        return new ImageSetResource<Res>(std::forward<T>(c));
     }
 
-    ImageSetResource(std::string c) 
-        : _name(std::move(c)) {
+    template <class T>
+    ImageSetResource(T&& c) 
+        : _name(std::forward<T>(c)) {
             loadChipset(_name);
     }
 
