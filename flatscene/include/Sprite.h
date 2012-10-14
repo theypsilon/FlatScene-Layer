@@ -23,6 +23,7 @@ namespace FlatScene {
 
     class Sprite : public Canvas {
     public:
+        typedef SpriteResource ResourceType;
 
         void                setName(std::string newName);
         const std::string&  getName() const;
@@ -41,7 +42,7 @@ namespace FlatScene {
         Sprite(SpriteResource* res);
     private:
         
-        template <GraphicMode mode> friend class SpritesetResource;
+        template <class Res> friend class SpritesetResource;
         friend class Screen;
     };
 
@@ -62,7 +63,7 @@ namespace FlatScene {
         SoftwareSprite(SpriteResource* res);
     private:
         
-        template <GraphicMode mode> friend class SpritesetResource;
+        template <class Res> friend class SpritesetResource;
         friend class Screen;
     };
 

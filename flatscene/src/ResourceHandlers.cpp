@@ -3,8 +3,8 @@
 
 namespace FlatScene {
 
-	template class RefCountMemoryPolicy<SpritesetResource<ONLY_GPU>>;
-    template class RefCountMemoryPolicy<SpritesetResource<ONLY_CPU>>;
+	template class RefCountMemoryPolicy<SpritesetResource<Sprite>>;
+    //template class RefCountMemoryPolicy<SpritesetResource<Canvas>>;
 	template class RefCountMemoryPolicy<CanvasResource>;
     template class RefCountMemoryPolicy<EventBridge>;
 

@@ -20,20 +20,35 @@
 
 namespace FlatScene {
 
+namespace detail {
+
+    template <class Res> struct to_graphic_mode {
+        static const GraphicMode value = ONLY_GPU;
+    };
+
+    template <> struct to_graphic_mode<SoftwareSprite> {
+        static const GraphicMode value = ONLY_CPU;
+    };
+
+    template <> struct to_graphic_mode<SoftwareCanvas> {
+        static const GraphicMode value = ONLY_CPU;
+    };
+} // detail
+
 using namespace Util::XML::Tiny;
 
-template <GraphicMode mode>
+template <class Res>
 class SpritesetResource {
 public:
 
     template <class T>
-    static SpritesetResource<mode>*const create(T&& c) {
-        typedef RefCountMemoryPolicy<SpritesetResource<mode>> MemoryPolicyType;
+    static SpritesetResource<Res>*const create(T&& c) {
+        typedef RefCountMemoryPolicy<SpritesetResource<Res>> MemoryPolicyType;
         for(auto& set : MemoryPolicyType::getCounts()) {
             if (set.first->getName() == c)
                 return set.first;
         }
-        return new SpritesetResource<mode>(std::forward<T>(c));
+        return new SpritesetResource<Res/*detail::to_graphic_mode<Res>::value*/>(std::forward<T>(c));
     }
 
     SpritesetResource(std::string c) 
@@ -53,15 +68,15 @@ public:
         return false;
     }
 
-    void add ( Sprite pspt ) {
+    void add ( Res pspt ) {
         //_sprites.push_back ( pspt ) ;
     }
 
-    const std::vector<Sprite>& get() const {
+    const std::vector<Res>& get() const {
         return _sprites;
     }
 
-    const Sprite* get ( unsigned int n ) const {
+    const Res* get ( unsigned int n ) const {
         if ( n < _sprites.size()) {
             return &_sprites.at(n);
         } else {
@@ -75,7 +90,7 @@ public:
 
 private:
 
-    std::vector<Sprite> _sprites;
+    std::vector<Res> _sprites;
     std::string         _name;
 
     typedef decltype(IMGLoadOrThrow("")) csType;
@@ -141,7 +156,7 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            Sprite spt(CanvasResource::create<SpriteResource,mode>(src,chipset,grd,i++));
+            Res spt(CanvasResource::create<typename Res::ResourceType>(src,chipset,grd,i++));
 
             spt.setName(img.name);
 

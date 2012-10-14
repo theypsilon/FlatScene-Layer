@@ -40,7 +40,7 @@ namespace FlatScene {
         
         friend class FSTextBox;
         friend class Sprite;
-        template <GraphicMode mode> friend class SpritesetResource;
+        template <class Res> friend class SpritesetResource;
         friend class Images;
         friend class Screen;
     };
@@ -60,7 +60,7 @@ namespace FlatScene {
         
         friend class FSTextBox;
         friend class Sprite;
-        template <GraphicMode mode> friend class SpritesetResource;
+        template <class Res> friend class SpritesetResource;
         friend class Images;
         friend class Screen;
     };
