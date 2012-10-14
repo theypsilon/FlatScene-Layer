@@ -13,7 +13,7 @@ namespace FlatScene {
 
 class SpriteResource : public CanvasResource {
 public:
-    SpriteResource(ImageId id, BitmapGPU gpu) : CanvasResource(std::move(id), std::move(gpu)) {}
+    SpriteResource(ImageId id, BitmapHandler gpu) : CanvasResource(std::move(id), std::move(gpu)) {}
     virtual ~SpriteResource() {}
     
     typedef Sprite  Handler;
