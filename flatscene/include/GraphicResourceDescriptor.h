@@ -50,7 +50,7 @@ namespace FlatScene {
         std::string         _grd_str;
         std::string         _gr_file;
 
-        template <class Res> friend class SpritesetResource;
+        template <class Res> friend class ImageSetResource;
         friend struct GRDProcess;
 
     };

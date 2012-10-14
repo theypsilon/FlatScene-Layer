@@ -1,4 +1,4 @@
-#include "SpriteSetResource.h"
+#include "ImageSetResource.h"
 #include "SpriteResource.h"
 #include "CanvasResource.h"
 
@@ -7,15 +7,15 @@ namespace FlatScene {
     namespace detail {
         template <class T> struct res_set { 
             typedef ResourceHandler<
-                SpritesetResource<T>,
-                RefCountMemoryPolicy<SpritesetResource<T> >
+                ImageSetResource<T>,
+                RefCountMemoryPolicy<ImageSetResource<T> >
             > type;
         };
     } //detail
 
     template <class ImageType>
     ImageSet<ImageType>::ImageSet(std::string c) 
-        : detail::res_set<ImageType>::type (SpritesetResource<ImageType>::create(std::move(c)))
+        : detail::res_set<ImageType>::type (ImageSetResource<ImageType>::create(std::move(c)))
     {}
 
     template <class ImageType>

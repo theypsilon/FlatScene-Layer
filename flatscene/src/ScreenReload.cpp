@@ -1,6 +1,6 @@
 #include "Library.h"
 #include "ScreenImpl.h"
-#include "SpriteSet.h"
+#include "ImageSet.h"
 #include "sdlSurfaceFuncs.h"
 
 namespace FlatScene {

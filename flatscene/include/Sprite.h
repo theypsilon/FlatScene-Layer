@@ -42,7 +42,7 @@ namespace FlatScene {
         Sprite(SpriteResource* res);
     private:
         
-        template <class Res> friend class SpritesetResource;
+        template <class Res> friend class ImageSetResource;
         friend class Screen;
     };
 
@@ -65,7 +65,7 @@ namespace FlatScene {
         SoftwareSprite(SpriteResource* res);
     private:
         
-        template <class Res> friend class SpritesetResource;
+        template <class Res> friend class ImageSetResource;
         friend class Screen;
     };
 

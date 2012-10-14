@@ -1,7 +1,7 @@
 #ifndef FS_SPRITESET_IMPL__
 #define FS_SPRITESET_IMPL__
 
-#include "SpriteSet.h"
+#include "ImageSet.h"
 #include "Exception.h"
 #include "Algorithm.h"
 #include "Traits.h"
@@ -38,20 +38,20 @@ namespace detail {
 using namespace Util::XML::Tiny;
 
 template <class Res>
-class SpritesetResource {
+class ImageSetResource {
 public:
 
     template <class T>
-    static SpritesetResource<Res>*const create(T&& c) {
-        typedef RefCountMemoryPolicy<SpritesetResource<Res>> MemoryPolicyType;
+    static ImageSetResource<Res>*const create(T&& c) {
+        typedef RefCountMemoryPolicy<ImageSetResource<Res>> MemoryPolicyType;
         for(auto& set : MemoryPolicyType::getCounts()) {
             if (set.first->getName() == c)
                 return set.first;
         }
-        return new SpritesetResource<Res/*detail::to_graphic_mode<Res>::value*/>(std::forward<T>(c));
+        return new ImageSetResource<Res/*detail::to_graphic_mode<Res>::value*/>(std::forward<T>(c));
     }
 
-    SpritesetResource(std::string c) 
+    ImageSetResource(std::string c) 
         : _name(std::move(c)) {
             loadChipset(_name);
     }

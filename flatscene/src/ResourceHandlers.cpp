@@ -1,12 +1,12 @@
-#include "SpriteSetResource.h"
+#include "ImageSetResource.h"
 #include "EventBridge.h"
 
 namespace FlatScene {
 
-	template class RefCountMemoryPolicy<SpritesetResource<Sprite>>;
-    template class RefCountMemoryPolicy<SpritesetResource<Canvas>>;
-    template class RefCountMemoryPolicy<SpritesetResource<SoftwareSprite>>;
-    template class RefCountMemoryPolicy<SpritesetResource<SoftwareCanvas>>;
+	template class RefCountMemoryPolicy<ImageSetResource<Sprite>>;
+    template class RefCountMemoryPolicy<ImageSetResource<Canvas>>;
+    template class RefCountMemoryPolicy<ImageSetResource<SoftwareSprite>>;
+    template class RefCountMemoryPolicy<ImageSetResource<SoftwareCanvas>>;
 	template class RefCountMemoryPolicy<CanvasResource>;
     template class RefCountMemoryPolicy<EventBridge>;
 

@@ -6,13 +6,13 @@
 
 namespace FlatScene {
 
-    template <class Res> class SpritesetResource;
+    template <class Res> class ImageSetResource;
 
     template <class ImageType>
     class ImageSet 
     : public ResourceHandler<
-        SpritesetResource<ImageType>,
-        RefCountMemoryPolicy<SpritesetResource<ImageType>> > {
+        ImageSetResource<ImageType>,
+        RefCountMemoryPolicy<ImageSetResource<ImageType>> > {
     public:
         ImageSet(std::string c    = "");
 

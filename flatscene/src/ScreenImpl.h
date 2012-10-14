@@ -3,7 +3,7 @@
 
 #include "Includes.h"
 #include "Screen.h"
-#include "SpriteSetResource.h"
+#include "ImageSetResource.h"
 
 namespace FlatScene {
 
