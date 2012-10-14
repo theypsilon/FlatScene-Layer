@@ -87,7 +87,7 @@ void IFirstEngine::onIdle()	{
     if (move[i_left])  mainactor->place.x += -6;
     if (move[i_right]) mainactor->place.x += +6;
     
-    std::cout << "place.y" << mainactor->place.y << "place.x" << mainactor->place.x << "\r";
+    //std::cout << "place.y" << mainactor->place.y << "place.x" << mainactor->place.x << "\r";
     
     
     //setIfTrue(mainactor->place.x,cams[0]->getArea()->x + cams[0]->getArea()->w / 2 +32,LambdaLess);

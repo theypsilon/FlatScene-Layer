@@ -42,7 +42,9 @@ namespace FlatScene {
         assert(_pixels.capacity() == 0);
         _pixels.resize(_w * _h);
         assert(_pixels.capacity() == _w * _h);
+        assert(_tex);
 
+        glBindTexture( GL_TEXTURE_2D, _tex );
         glGetTexImage(
             GL_TEXTURE_2D,
             0,
