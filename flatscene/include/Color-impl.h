@@ -153,11 +153,11 @@ constexpr inline Color DarkYellow  (Byte shade)           { return Yellow (shade
 constexpr inline Color DarkCyan    (Byte shade)           { return Cyan   (shade); }
 constexpr inline Color DarkMagenta (Byte shade)           { return Magenta(shade); }
 
-constexpr inline Color LightRed    (Byte gray,Byte shade) { return Red(shade)     | White(gray); }
-constexpr inline Color LightGreen  (Byte gray,Byte shade) { return Green(shade)   | White(gray); }
-constexpr inline Color LightBlue   (Byte gray,Byte shade) { return Blue(shade)    | White(gray); }
-constexpr inline Color LightYellow (Byte gray,Byte shade) { return Yellow(shade)  | White(gray); }
-constexpr inline Color LightCyan   (Byte gray,Byte shade) { return Cyan(shade)    | White(gray); }
+constexpr inline Color LightRed    (Byte gray,Byte shade) { return Red    (shade) | White(gray); }
+constexpr inline Color LightGreen  (Byte gray,Byte shade) { return Green  (shade) | White(gray); }
+constexpr inline Color LightBlue   (Byte gray,Byte shade) { return Blue   (shade) | White(gray); }
+constexpr inline Color LightYellow (Byte gray,Byte shade) { return Yellow (shade) | White(gray); }
+constexpr inline Color LightCyan   (Byte gray,Byte shade) { return Cyan   (shade) | White(gray); }
 constexpr inline Color LightMagenta(Byte gray,Byte shade) { return Magenta(shade) | White(gray); }
 
 constexpr inline Color White       (Byte shade)           { return Color(shade,shade,shade); }
