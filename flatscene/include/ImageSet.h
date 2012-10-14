@@ -14,7 +14,7 @@ namespace FlatScene {
         ImageSetResource<ImageType>,
         RefCountMemoryPolicy<ImageSetResource<ImageType>> > {
     public:
-        ImageSet(std::string pathToLoadTheFile);
+        ImageSet(std::string pathToFile);
 
         const std::string&                  getName   () const;
         const std::vector<ImageType>&       get       () const;
