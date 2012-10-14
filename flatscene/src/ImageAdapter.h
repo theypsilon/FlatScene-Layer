@@ -21,14 +21,15 @@ namespace FlatScene {
 
     class BitmapGPU {
     public:
-        typedef GLuint            TexType;
-        typedef GLuint           SizeType;
-        typedef Float             RelType;
-        typedef unsigned int    PixelType;
+        typedef GLuint                  TexType;
+        typedef GLuint                  SizeType;
+        typedef Float                   RelType;
+        typedef unsigned int            PixelType;
+        typedef std::vector<PixelType>  PAType;
 
         template <bool software = false>
         BitmapGPU(const void* pixels, GLuint w, GLuint h) 
-        : _pixels(nullptr), _tex(0), _w(detail::pow2(w)), _h(detail::pow2(h))
+        : _tex(0), _w(detail::pow2(w)), _h(detail::pow2(h))
         , _relW(software? 0 : _w/w), _relH(software? 0 : _h/h) {
             if (!software)
                 load(pixels);
@@ -40,15 +41,15 @@ namespace FlatScene {
 
         ~BitmapGPU();
 
-        GLuint          getTex() const      { return _tex;               }
-        GLuint          getW() const        { return _w;                 }
-        GLuint          getH() const        { return _h;                 }
-        Float           getRelW() const     { return _relW;              }
-        Float           getRelH() const     { return _relH;              }
+        GLuint          getTex() const      { return _tex;             }
+        GLuint          getW() const        { return _w;               }
+        GLuint          getH() const        { return _h;               }
+        Float           getRelW() const     { return _relW;            }
+        Float           getRelH() const     { return _relH;            }
 
-        bool            loaded() const      { return _tex != 0;          }
-        bool            saved() const       { return _pixels != nullptr; }
-        bool            isSoftware() const  { return _relW == 0;         }
+        bool            loaded() const      { return _tex != 0;        }
+        bool            saved() const       { return !_pixels.empty(); }
+        bool            isSoftware() const  { return _relW == 0;       }
 
         void            save() const;
         void            unload();
@@ -59,7 +60,7 @@ namespace FlatScene {
     private:
         GLuint          _tex, _w, _h;
         Float           _relW, _relH;
-        mutable void*   _pixels;
+        mutable PAType  _pixels;
 
         void            load(const void* pixels);
         void            destroyPixels() const;

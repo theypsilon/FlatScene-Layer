@@ -30,6 +30,8 @@ int main (int argc, char* argv[]) {
 
     try {
         FSLib.processEngine(unique_ptr<IFirstEngine>(new IFirstEngine));
+    } catch (FlatScene::Exception &e) {
+        cout << "Exception catched: " << e.what() << endl;
     } catch (std::exception& e) {
         cout << "Exception catched: " << e.what() << endl;
     } catch (...) {

@@ -8,24 +8,22 @@ namespace FlatScene {
     // class BitmapGPU
 
     BitmapGPU::BitmapGPU(BitmapGPU&& that) 
-        : _pixels(that._pixels), _w(that._w), _h(that._h)
+        : _pixels(std::move(that._pixels)), _w(that._w), _h(that._h)
         , _tex(that._tex), _relW(that._relW), _relH(that._relH)
     {
         that._tex    = 0;
-        that._pixels = nullptr;
     }
 
-    BitmapGPU& BitmapGPU::operator=(BitmapGPU&& that) {
-        this->_tex    = that._tex;
-        this->_pixels = that._pixels;
-        this->_w      = that._w;
-        this->_h      = that._h;
-        this->_relW   = that._relW;
-        this->_relH   = that._relH;
+    BitmapGPU& BitmapGPU::operator=(BitmapGPU&& rhs) {
+        this->_pixels = std::move(rhs._pixels);
 
-        that._tex    = 0;
-        that._pixels = nullptr;
+        this->_tex    = rhs._tex;
+        this->_w      = rhs._w;
+        this->_h      = rhs._h;
+        this->_relW   = rhs._relW;
+        this->_relH   = rhs._relH;
 
+        rhs._tex    = 0;
         return *this;
     }
 
@@ -41,16 +39,16 @@ namespace FlatScene {
         if (saved())
             destroyPixels();
 
-        assert(!_pixels);
-        _pixels = new unsigned int[_w*_h];
-        assert(_pixels);
+        assert(_pixels.capacity() == 0);
+        _pixels.resize(_w * _h);
+        assert(_pixels.capacity() == _w * _h);
 
         glGetTexImage(
             GL_TEXTURE_2D,
             0,
             GL_RGBA,
             GL_UNSIGNED_BYTE,
-            _pixels
+            _pixels.data()
         );
     }
 
@@ -105,8 +103,8 @@ namespace FlatScene {
         } else if(!saved())
             throw Exception("No texture info for rebuilding bitmap");
 
-        assert(_pixels);
-        load(_pixels);
+        assert(!_pixels.empty());
+        load(_pixels.data());
     }
 
     unsigned int BitmapGPU::getPixel(unsigned int x, unsigned int y) const {
@@ -115,15 +113,11 @@ namespace FlatScene {
         else if (!saved())
             save();
 
-        auto pixels = isSoftware()? static_cast<SDL_Surface*>(_pixels)->pixels : _pixels;
-
-        assert(pixels);
+        assert(!_pixels.empty());
 
         unsigned int color    = 0, 
                      position = y * _w * 4 + x * 4;
-        char* buffer = static_cast<char*>(_pixels);
-        buffer += position ;
-        memcpy ( &color , buffer , 4 ) ;
+        memcpy ( &color , _pixels.data() + position , 4 ) ;
         return color;
 
     }
@@ -131,11 +125,11 @@ namespace FlatScene {
     void BitmapGPU::destroyPixels() const {
         if (saved())
             if (isSoftware())
-                SDL_FreeSurface(static_cast<SDL_Surface*>(_pixels));
-            else
-                delete[] _pixels;
-
-        _pixels = nullptr;
+                ;
+            else  {
+                _pixels.clear();
+                _pixels.shrink_to_fit();
+            }
     }
 
     void BitmapGPU::destroyTexture() {
