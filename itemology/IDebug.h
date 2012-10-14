@@ -14,4 +14,6 @@ int func_EXIT_FAILURE(const char* file, int line);
 
 void assert_text(std::string cad,int line);
 
+#define ONCE(A) {static int _debug_i = 0; if (_debug_i ++ == 1) { A; }}
+
 #endif

@@ -116,12 +116,7 @@ namespace FlatScene {
             save();
 
         assert(!_pixels.empty());
-
-        unsigned int color    = 0, 
-                     position = y * _w * 4 + x * 4;
-        memcpy ( &color , _pixels.data() + position , 4 ) ;
-        return color;
-
+        return _pixels[y*_w + x];
     }
 
     void BitmapGPU::destroyPixels() const {
