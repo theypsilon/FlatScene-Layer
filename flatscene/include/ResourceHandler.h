@@ -56,7 +56,7 @@ namespace FlatScene {
     protected:
         ResourceHandler(Holder res) : _res(add(res)) {}
 
-        template <typename R> inline R& getResy() const {
+        template <typename R> inline R& getRes() const {
             return static_cast<R&>(access(_res));
         }
 

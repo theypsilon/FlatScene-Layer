@@ -48,6 +48,8 @@ namespace FlatScene {
 
     class SoftwareSprite : public SoftwareCanvas {
     public:
+        typedef SpriteResource ResourceType;
+        
         void                setName(std::string newName);
         const std::string&  getName() const;
         const Areas&        getAllAreas () const;
