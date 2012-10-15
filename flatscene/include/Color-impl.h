@@ -18,7 +18,7 @@ namespace detail {
         return  (C == RGB::r)? 2 :
                 (C == RGB::g)? 1 :
                 (C == RGB::b)? 0 :
-                /*          a*/ 3 ;
+                /*         a*/ 3 ;
     }
 
     template <RGB::RGB C = RGB::a> constexpr unsigned int mask() {
@@ -57,7 +57,7 @@ namespace detail {
                         throw std::logic_error("color str is ill-formed, use hex"):
                 n == 7? fchar(a[0]) << 20 | fchar(a[1]) << 16 | fchar(a[2]) << 12 |  
                         fchar(a[3]) <<  8 | fchar(a[4]) <<  4 | fchar(a[5]) <<  0 :
-                n == 9? fstr(7,a)         | fchar(a[6]) << 28 | fchar(a[7]) << 24 :
+                n == 9? fstr(7,a+2)       | fchar(a[0]) << 28 | fchar(a[1]) << 24 :
                 throw std::logic_error("color str may only be 8/6 symbols")       ;
     }
 

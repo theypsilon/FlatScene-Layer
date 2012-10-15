@@ -13,7 +13,7 @@ int main (int argc, char* argv[]) {
 
     cout << "Starting main" << endl;
 
-    constexpr auto c = Color("AABBCC");
+    constexpr auto c = Color("FFAABBCC");
 
     // c.setR(0xAA);
     // c.setG(0x11);
