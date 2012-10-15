@@ -7,8 +7,8 @@
 
 namespace FlatScene {
 
-    namespace RGBA {
-        enum RGBA { r, g, b, a };
+    namespace RGB {
+        enum RGB { r, g, b, a };
     }
 
     class Color {
@@ -24,20 +24,20 @@ namespace FlatScene {
         explicit Color(const std::string& a, bool ceroalpha = false);
         constexpr Color(const Color& color) noexcept;
 
-        template <RGBA::RGBA component> constexpr Byte get() const;
+        template <RGB::RGB component> constexpr Byte get() const;
         constexpr Byte getR() const;
         constexpr Byte getG() const;
         constexpr Byte getB() const;
         constexpr Byte getA() const;
         constexpr unsigned int getHex() const;
 
-        template <RGBA::RGBA component> Color& set(Byte c);
+        template <RGB::RGB component> Color& set(Byte c);
         Color& setR(Byte c);
         Color& setG(Byte c);
         Color& setB(Byte c);
         Color& setA(Byte c);
 
-        template <RGBA::RGBA component> Byte& ref();
+        template <RGB::RGB component> Byte& ref();
         Byte& R();
         Byte& G();
         Byte& B();
@@ -52,7 +52,8 @@ namespace FlatScene {
         Color& operator^=(const Color& color);
     };
 
-    constexpr Color FColor(Float nr, Float ng, Float nb, Float na=0);
+    constexpr Color FColor(Float nr, Float ng, Float nb, Float na=1.0) noexcept;
+    constexpr Color RGBA(Byte nr, Byte ng, Byte nb, Float na=1.0) noexcept;
 
     constexpr Color Red(Byte shade=255);
     constexpr Color Green(Byte shade=255);

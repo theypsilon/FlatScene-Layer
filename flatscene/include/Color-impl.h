@@ -7,21 +7,21 @@ namespace FlatScene {
 
 namespace detail {
 
-    template <RGBA::RGBA C> Byte constexpr bsh() {
-        return  (C == RGBA::r)? 16 :
-                (C == RGBA::g)?  8 :
-                (C == RGBA::b)?  0 :
+    template <RGB::RGB C> Byte constexpr bsh() {
+        return  (C == RGB::r)? 16 :
+                (C == RGB::g)?  8 :
+                (C == RGB::b)?  0 :
                 /*          a*/ 24 ;
     }
 
-    template <RGBA::RGBA C> Byte constexpr bad() {
-        return  (C == RGBA::r)? 2 :
-                (C == RGBA::g)? 1 :
-                (C == RGBA::b)? 0 :
+    template <RGB::RGB C> Byte constexpr bad() {
+        return  (C == RGB::r)? 2 :
+                (C == RGB::g)? 1 :
+                (C == RGB::b)? 0 :
                 /*          a*/ 3 ;
     }
 
-    template <RGBA::RGBA C = RGBA::a> constexpr unsigned int mask() {
+    template <RGB::RGB C = RGB::a> constexpr unsigned int mask() {
         return  0xFF << bsh<C>();
     }
 
@@ -62,7 +62,7 @@ namespace detail {
     }
 
     constexpr inline unsigned int falpha(unsigned int hex, bool ceroalpha) {
-        return ceroalpha || hex & mask<RGBA::a>()? hex : hex | mask<RGBA::a>();
+        return ceroalpha || hex & mask<RGB::a>()? hex : hex | mask<RGB::a>();
     }
 
 } //detail
@@ -72,10 +72,10 @@ constexpr Color::Color(unsigned int hex, bool ceroalpha) noexcept
 {}
 
 constexpr Color::Color(Byte nr,Byte ng,Byte nb, Byte na) noexcept
-    : _color((nr << detail::bsh<RGBA::r>()) | 
-             (ng << detail::bsh<RGBA::g>()) | 
-             (nb << detail::bsh<RGBA::b>()) | 
-             (na << detail::bsh<RGBA::a>()) )
+    : _color((nr << detail::bsh<RGB::r>()) | 
+             (ng << detail::bsh<RGB::g>()) | 
+             (nb << detail::bsh<RGB::b>()) | 
+             (na << detail::bsh<RGB::a>()) )
 {}
 
 template <std::size_t N> constexpr Color::Color(const char(&a)[N], bool ceroalpha)
@@ -90,34 +90,34 @@ constexpr Color::Color(const Color& color) noexcept
     : _color(color._color)
 {}
 
-template <RGBA::RGBA C> constexpr inline Byte Color::get() const {
+template <RGB::RGB C> constexpr inline Byte Color::get() const {
     return (Byte)((_color & detail::mask<C>()) >> detail::bsh<C>());
 }
 
-template <RGBA::RGBA C> inline Color& Color::set(Byte c) {
+template <RGB::RGB C> inline Color& Color::set(Byte c) {
     _color = (_color & ~detail::mask<C>()) | (c << detail::bsh<C>());
     return *this;
 }
 
-template <RGBA::RGBA C> inline Byte& Color::ref() {
+template <RGB::RGB C> inline Byte& Color::ref() {
     return *(reinterpret_cast<Byte*>(&_color)+detail::bad<C>());
 }
 
-constexpr inline Byte  Color::getR() const { return get<RGBA::r>(); }
-constexpr inline Byte  Color::getG() const { return get<RGBA::g>(); }
-constexpr inline Byte  Color::getB() const { return get<RGBA::b>(); }
-constexpr inline Byte  Color::getA() const { return get<RGBA::a>(); }
+constexpr inline Byte  Color::getR() const { return get<RGB::r>(); }
+constexpr inline Byte  Color::getG() const { return get<RGB::g>(); }
+constexpr inline Byte  Color::getB() const { return get<RGB::b>(); }
+constexpr inline Byte  Color::getA() const { return get<RGB::a>(); }
 constexpr inline unsigned int Color::getHex() const { return _color; }
 
-inline Color& Color::setR(Byte c) { return set<RGBA::r>(c); }
-inline Color& Color::setG(Byte c) { return set<RGBA::g>(c); }
-inline Color& Color::setB(Byte c) { return set<RGBA::b>(c); }
-inline Color& Color::setA(Byte c) { return set<RGBA::a>(c); }
+inline Color& Color::setR(Byte c) { return set<RGB::r>(c); }
+inline Color& Color::setG(Byte c) { return set<RGB::g>(c); }
+inline Color& Color::setB(Byte c) { return set<RGB::b>(c); }
+inline Color& Color::setA(Byte c) { return set<RGB::a>(c); }
 
-inline Byte& Color::R() { return ref<RGBA::r>(); }
-inline Byte& Color::G() { return ref<RGBA::g>(); }
-inline Byte& Color::B() { return ref<RGBA::b>(); }
-inline Byte& Color::A() { return ref<RGBA::a>(); }
+inline Byte& Color::R() { return ref<RGB::r>(); }
+inline Byte& Color::G() { return ref<RGB::g>(); }
+inline Byte& Color::B() { return ref<RGB::b>(); }
+inline Byte& Color::A() { return ref<RGB::a>(); }
 
 inline Color& Color::operator=(const Color& color) noexcept {
     _color = color._color;
@@ -130,8 +130,12 @@ inline Color& Color::operator&=(const Color& color) { _color &=  color.getHex();
 inline Color& Color::operator^=(const Color& color) { _color ^=  color.getHex(); return *this; }
 inline Color& Color::operator+=(const Color& color) { return operator|=(color); }
 
-constexpr inline Color FColor(Float nr,Float ng,Float nb, Float na) {
+constexpr inline Color FColor(Float nr, Float ng, Float nb, Float na) noexcept {
     return Color(detail::ftob(nr), detail::ftob(ng), detail::ftob(nb), detail::ftob(na));
+}
+
+constexpr inline Color RGBA(Byte nr, Byte ng, Byte nb, Float na) noexcept {
+    return Color(nr, ng, nb, detail::ftob(na));
 }
 
 constexpr inline Color Red         (Byte shade)           { return Color(shade,0,0); }
