@@ -10,10 +10,10 @@
 		},
 		{
 			"path": "flatscene/src"
-		}//,
-		// {
-		// 	"path": "itemology",
-		//     "folder_exclude_patterns": ["CMakeFiles"]
-		// }
+		},
+		{
+			"path": "itemology",
+		    "folder_exclude_patterns": ["CMakeFiles"]
+		}
 	]
 }

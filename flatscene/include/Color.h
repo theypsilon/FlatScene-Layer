@@ -17,10 +17,11 @@ namespace FlatScene {
     public:
 
         constexpr Color() noexcept : _color(0x00000000) {}
-        constexpr Color(Byte nr, Byte ng, Byte nb, Byte na=0) noexcept;
-        constexpr explicit Color(unsigned int hex, bool alpha = true) noexcept;
-        template <std::size_t N> constexpr explicit Color(const char(&a)[N]);
-        explicit Color(const std::string& a);
+        constexpr Color(Byte nr, Byte ng, Byte nb, Byte na=255) noexcept;
+        constexpr explicit Color(unsigned int hex, bool ceroalpha = false) noexcept;
+        template <std::size_t N> 
+        constexpr explicit Color(const char(&a)[N], bool ceroalpha = false);
+        explicit Color(const std::string& a, bool ceroalpha = false);
         constexpr Color(const Color& color) noexcept;
 
         template <RGBA::RGBA component> constexpr Byte get() const;

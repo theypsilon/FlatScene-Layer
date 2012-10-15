@@ -8,24 +8,21 @@ namespace FlatScene {
 namespace detail {
 
     template <RGBA::RGBA C> Byte constexpr bsh() {
-        return  (C == RGBA::r)? 24 :
-                (C == RGBA::g)? 16 :
-                (C == RGBA::b)? 8  :
-                /*          a*/ 0  ;
+        return  (C == RGBA::r)? 16 :
+                (C == RGBA::g)?  8 :
+                (C == RGBA::b)?  0 :
+                /*          a*/ 24 ;
     }
 
     template <RGBA::RGBA C> Byte constexpr bad() {
-        return  (C == RGBA::r)? 3 :
-                (C == RGBA::g)? 2 :
-                (C == RGBA::b)? 1 :
-                /*          a*/ 0 ;
+        return  (C == RGBA::r)? 2 :
+                (C == RGBA::g)? 1 :
+                (C == RGBA::b)? 0 :
+                /*          a*/ 3 ;
     }
 
     template <RGBA::RGBA C = RGBA::a> constexpr unsigned int mask() {
-        return  (C == RGBA::r)? 0xFF << bsh<C>() :
-                (C == RGBA::g)? 0xFF << bsh<C>() :
-                (C == RGBA::b)? 0xFF << bsh<C>() :
-                /*          a*/ 0xFF << bsh<C>() ;
+        return  0xFF << bsh<C>();
     }
 
     constexpr inline Byte ftob(Float n) {
@@ -58,16 +55,20 @@ namespace detail {
         return  n == 10                                                          || 
                 n == 8? a[0] == '#'? fstr(n-1,a+1)                                :
                         throw std::logic_error("color str is ill-formed, use hex"):
-                n == 7? fchar(a[0]) << 28 | fchar(a[1]) << 24 | fchar(a[2]) << 20 |  
-                        fchar(a[3]) << 16 | fchar(a[4]) << 12 | fchar(a[5]) <<  8 :
-                n == 9? fstr(7,a)         | fchar(a[6]) <<  4 | fchar(a[7]) <<  0 :
+                n == 7? fchar(a[0]) << 20 | fchar(a[1]) << 16 | fchar(a[2]) << 12 |  
+                        fchar(a[3]) <<  8 | fchar(a[4]) <<  4 | fchar(a[5]) <<  0 :
+                n == 9? fstr(7,a)         | fchar(a[6]) << 28 | fchar(a[7]) << 24 :
                 throw std::logic_error("color str may only be 8/6 symbols")       ;
+    }
+
+    constexpr inline unsigned int falpha(unsigned int hex, bool ceroalpha) {
+        return ceroalpha || hex & mask<RGBA::a>()? hex : hex | mask<RGBA::a>();
     }
 
 } //detail
 
-constexpr Color::Color(unsigned int hex, bool alpha) noexcept
-    : _color(alpha? hex : hex << 8)
+constexpr Color::Color(unsigned int hex, bool ceroalpha) noexcept
+    : _color(detail::falpha(hex,ceroalpha))
 {}
 
 constexpr Color::Color(Byte nr,Byte ng,Byte nb, Byte na) noexcept
@@ -77,12 +78,12 @@ constexpr Color::Color(Byte nr,Byte ng,Byte nb, Byte na) noexcept
              (na << detail::bsh<RGBA::a>()) )
 {}
 
-template <std::size_t N> constexpr Color::Color(const char(&a)[N])
-    : _color(detail::fstr(N,a))
+template <std::size_t N> constexpr Color::Color(const char(&a)[N], bool ceroalpha)
+    : _color(detail::falpha(detail::fstr(N,a),ceroalpha))
 {}
 
-inline Color::Color(const std::string& a)
-    : _color(detail::fstr(a.size()+1,a.c_str()))
+inline Color::Color(const std::string& a, bool ceroalpha)
+    : _color(detail::falpha(detail::fstr(a.size()+1,a.c_str()),ceroalpha))
 {}
 
 constexpr Color::Color(const Color& color) noexcept
