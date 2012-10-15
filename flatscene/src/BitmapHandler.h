@@ -54,6 +54,7 @@ namespace FlatScene {
         bool            isHardware() const   { return !inCPU() &&  inGPU(); }
         bool            isBoth () const      { return  inCPU() &&  inGPU(); }
         bool            isEmpty() const      { return !inCPU() && !inGPU(); }
+        bool            isSynchronized() const;
 
         void            setCPUTex(TexType t) { if (t) _tex = t;             }
         PAType&         setCPUBuffer()       { return _pixels;              }

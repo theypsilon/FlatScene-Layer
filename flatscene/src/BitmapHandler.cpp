@@ -8,6 +8,21 @@ namespace FlatScene {
 
     // class BitmapHandler with OpenGL
 
+    namespace detail {
+
+        void glFillVectorFromTexture(std::vector<unsigned int>& v,unsigned int tex) {
+            glBindTexture( GL_TEXTURE_2D, tex );
+            glGetTexImage(
+                GL_TEXTURE_2D,
+                0,
+                GL_RGBA,
+                GL_UNSIGNED_BYTE,
+                v.data()
+            );
+        }
+
+    } //detail
+
     BitmapHandler::BitmapHandler(BitmapHandler&& that) 
         : _pixels(std::move(that._pixels)), _w(that._w), _h(that._h)
         , _tex(that._tex), _relW(that._relW), _relH(that._relH)
@@ -69,6 +84,15 @@ namespace FlatScene {
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
     }
 
+    bool BitmapHandler::isSynchronized() const {
+        if (!isBoth())
+            return false;
+
+        std::vector<unsigned int> v(_pixels.size());
+        detail::glFillVectorFromTexture(v,_tex);
+        return std::equal(begin(v),end(v),begin(_pixels));
+    }
+
     void BitmapHandler::copyToCPU() const {
         if (isSoftware())
             return;
@@ -81,14 +105,7 @@ namespace FlatScene {
         assert(_pixels.capacity() == _w * _h);
         assert(_tex);
 
-        glBindTexture( GL_TEXTURE_2D, _tex );
-        glGetTexImage(
-            GL_TEXTURE_2D,
-            0,
-            GL_RGBA,
-            GL_UNSIGNED_BYTE,
-            _pixels.data()
-        );
+        detail::glFillVectorFromTexture(_pixels,_tex);
         assert(inCPU());
     }
 

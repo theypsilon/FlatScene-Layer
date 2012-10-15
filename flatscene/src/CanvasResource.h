@@ -30,14 +30,21 @@ namespace FlatScene {
         BitmapHandler::RelType      getRelW() const    { return _gpu.getRelW(); }
         BitmapHandler::RelType      getRelH() const    { return _gpu.getRelH(); }
 
-        BitmapHandler::PixelType    getPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y) 
-                                                {   return _gpu.getPixel(x,y);  }
-
         void                    put         (Float x, Float y, unsigned char flags) const;
         void                    translate   (Float x, Float y, Float z) const;
         void                    scale       (Float x, Float y, Float z) const;
         void                    rotate      (Float angle, Float x, Float y, Float z) const;
         void                    color       (Float red, Float green, Float blue, Float alpha) const;
+
+        BitmapHandler::PixelType        getPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y) const 
+                                        {   return _gpu.getPixel(x,y);  }
+        const BitmapHandler::PAType&    getPixelBuffer() const
+                                        { return _gpu.getCPUBuffer(); }
+
+        void    setPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y, BitmapHandler::PixelType p);
+
+        void    modifyPixels(std::function<void(BitmapHandler::PAType&)> pred, bool flushchanges = true);
+        void    modifyPixels(const BitmapHandler::PAType& buf, bool flushchanges = true);
 
         virtual ~CanvasResource() {}
 

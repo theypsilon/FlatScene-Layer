@@ -25,4 +25,31 @@ namespace FlatScene {
 
         Screen::I().popMatrix();
     }
+
+    void CanvasResource::setPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y, BitmapHandler::PixelType p) {
+        _gpu.setCPUBuffer()[y*getW() + x] = p;
+        if (_gpu.inGPU())
+            _gpu.copyToGPU();
+    }
+
+    void CanvasResource::modifyPixels(std::function<void(BitmapHandler::PAType&)> pred, bool flushchanges) {
+        assert(_gpu.setCPUBuffer().size() != getW()*getH());
+        pred(_gpu.setCPUBuffer());
+        if (_gpu.setCPUBuffer().size() != getW()*getH())
+            throw Exception("You can not modify the size of the pixel buffer");
+
+        if (flushchanges && _gpu.inGPU())
+            _gpu.copyToGPU();
+    }
+
+    void CanvasResource::modifyPixels(const BitmapHandler::PAType& buf, bool flushchanges) {
+        assert(_gpu.setCPUBuffer().size() != getW()*getH());
+        if (buf.size() != getW()*getH())
+            throw Exception("You can not modify the size of the pixel buffer");
+            
+        _gpu.setCPUBuffer() = buf;
+
+        if (flushchanges && _gpu.inGPU())
+            _gpu.copyToGPU();
+    }
 } // FlatScene
