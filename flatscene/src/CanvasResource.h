@@ -39,12 +39,12 @@ namespace FlatScene {
         BitmapHandler::PixelType        getPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y) const 
                                         {   return _gpu.getPixel(x,y);  }
         const BitmapHandler::PAType&    getPixelBuffer() const
-                                        { return _gpu.getCPUBuffer(); }
+                                        {   return _gpu.getCPUBuffer(); }
 
         void    setPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y, BitmapHandler::PixelType p);
 
         void    modifyPixels(std::function<void(BitmapHandler::PAType&)> pred, bool flushchanges = true);
-        void    modifyPixels(const BitmapHandler::PAType& buf, bool flushchanges = true);
+        void    replacePixels(const BitmapHandler::PAType& buf, bool flushchanges = true);
 
         virtual ~CanvasResource() {}
 

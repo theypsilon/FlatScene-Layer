@@ -42,7 +42,7 @@ namespace FlatScene {
             _gpu.copyToGPU();
     }
 
-    void CanvasResource::modifyPixels(const BitmapHandler::PAType& buf, bool flushchanges) {
+    void CanvasResource::replacePixels(const BitmapHandler::PAType& buf, bool flushchanges) {
         assert(_gpu.setCPUBuffer().size() != getW()*getH());
         if (buf.size() != getW()*getH())
             throw Exception("You can not modify the size of the pixel buffer");
