@@ -2,7 +2,6 @@
 #include "sdlSurfaceFuncs.h"
 #include "BitmapHandler.h"
 #include <iostream>
-#include <cmath>
 
 namespace FlatScene {
 

@@ -25,8 +25,8 @@ namespace FlatScene {
         template <class Res, class T1, class T2>
         static Res*             create(T1&& imageId, T2&& BitmapHandler);
 
-        BitmapHandler::SizeType     getW() const       { return _gpu.getW();    }
-        BitmapHandler::SizeType     getH() const       { return _gpu.getH();    }
+        BitmapHandler::SizeType     getW() const       { return _gpu.inGPU()? _gpu.getTexW() : _gpu.getW(); } //TODO this shouldn't be necessary, hidden bug in rendering?
+        BitmapHandler::SizeType     getH() const       { return _gpu.inGPU()? _gpu.getTexH() : _gpu.getH(); }
         BitmapHandler::RelType      getRelW() const    { return _gpu.getRelW(); }
         BitmapHandler::RelType      getRelH() const    { return _gpu.getRelH(); }
 
@@ -39,7 +39,7 @@ namespace FlatScene {
         BitmapHandler::PixelType        getPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y) const 
                                         {   return _gpu.getPixel(x,y);  }
         const BitmapHandler::PAType&    getPixelBuffer() const
-                                        {   return _gpu.getCPUBuffer(); }
+                                        {   if (!_gpu.inCPU()) _gpu.copyToCPU(); return _gpu.getCPUBuffer(); }
 
         void    setPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y, BitmapHandler::PixelType p);
 

@@ -3,6 +3,7 @@
 
 #include "Includes.h"
 #include "Types.h"
+#include <cmath>
 
 namespace FlatScene {
 
@@ -41,12 +42,14 @@ namespace FlatScene {
 
         ~BitmapHandler();
 
-        TexType         getGPUTex   () const { return _tex;                 }
-        const PAType&   getCPUBuffer() const { return _pixels;              }
-        SizeType        getW() const         { return _w;                   }
-        SizeType        getH() const         { return _h;                   }
+        SizeType        getW() const    { return _relW > 0? std::round((_w / _relW)+0.5) : _w; }
+        SizeType        getH() const    { return _relH > 0? std::round((_h / _relH)+0.5) : _h; }
+        SizeType        getTexW() const      { return _w;                   }
+        SizeType        getTexH() const      { return _h;                   }
         RelType         getRelW() const      { return _relW;                }
         RelType         getRelH() const      { return _relH;                }
+        TexType         getGPUTex   () const { return _tex;                 }
+        const PAType&   getCPUBuffer() const { return _pixels;              }
 
         bool            inGPU() const        { return _tex != 0;            }
         bool            inCPU() const        { return !_pixels.empty();     }
