@@ -33,7 +33,7 @@ namespace FlatScene {
         : _tex(0), _w(software? w : detail::pow2(w)), _h(software? h : detail::pow2(h))
         , _relW(software? 0 : _w/w), _relH(software? 0 : _h/h) {
             if (!software)
-                load(pixels);
+                copyExternalBufferToGPU(pixels);
             else
                 _pixels = std::move(detail::copyPixels(pixels));
         }
@@ -42,14 +42,14 @@ namespace FlatScene {
 
         ~BitmapHandler();
 
-        SizeType        getW() const    { return _relW > 0? std::round((_w / _relW)+0.5) : _w; }
-        SizeType        getH() const    { return _relH > 0? std::round((_h / _relH)+0.5) : _h; }
+        SizeType        getW() const    { return _relW > 0? std::ceil(_w / _relW) : _w; }
+        SizeType        getH() const    { return _relH > 0? std::ceil(_h / _relH) : _h; }
         SizeType        getTexW() const      { return _w;                   }
         SizeType        getTexH() const      { return _h;                   }
         RelType         getRelW() const      { return _relW;                }
         RelType         getRelH() const      { return _relH;                }
-        TexType         getGPUTex   () const { return _tex;                 }
-        const PAType&   getCPUBuffer() const { return _pixels;              }
+        TexType         getGPUTex   () const { if (!inGPU()) copyToGPU(); return _tex;    }
+        const PAType&   getCPUBuffer() const { if (!inCPU()) copyToCPU(); return _pixels; }
 
         bool            inGPU() const        { return _tex != 0;            }
         bool            inCPU() const        { return !_pixels.empty();     }
@@ -75,7 +75,7 @@ namespace FlatScene {
         mutable RelType  _relW, _relH;
         mutable PAType   _pixels;
 
-        void            load(const void*const pixels) const;
+        void            copyExternalBufferToGPU(const void*const pixels) const;
         void            clearCPUMemory() const;
         void            clearGPUMemory() const;
 

@@ -47,9 +47,11 @@ namespace FlatScene {
         clearGPUMemory();
     }
 
-    void BitmapHandler::load(const void*const pixels) const {
+    void BitmapHandler::copyExternalBufferToGPU(const void*const pixels) const {
         assert(pixels);
         assert(!_tex);
+
+        std::cout << std::dec << getW() << " wload " << _w << std::endl;
 
         GraphicFilter filter = NEAREST;
 
@@ -125,7 +127,7 @@ namespace FlatScene {
         } else throw Exception("No texture info saved for rebuilding bitmap");
 
         assert(inCPU());
-        load(_pixels.data());
+        copyExternalBufferToGPU(_pixels.data());
         assert(inGPU());
     }
 
@@ -135,8 +137,8 @@ namespace FlatScene {
         clearGPUMemory();
 
         assert(inCPU());
-        _w = std::round((_w / _relW)+0.5);
-        _h = std::round((_h / _relH)+0.5);
+        _w = std::ceil(_w / _relW);
+        _h = std::ceil(_h / _relH);
         _relW = _relH = 0;
         assert(isSoftware());
     }
