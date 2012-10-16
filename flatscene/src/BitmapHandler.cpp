@@ -47,7 +47,7 @@ namespace FlatScene {
         clearGPUMemory();
     }
 
-    void BitmapHandler::load(const void*const pixels) {
+    void BitmapHandler::load(const void*const pixels) const {
         assert(pixels);
         assert(!_tex);
 
@@ -108,7 +108,7 @@ namespace FlatScene {
         assert(inCPU());
     }
 
-    void BitmapHandler::copyToGPU() {
+    void BitmapHandler::copyToGPU() const {
         if (isHardware())
             return;
 
@@ -121,7 +121,7 @@ namespace FlatScene {
             _relW/= tempw;
             _relH/= temph;
         } else if (inGPU()) { /* true for isBoth */
-            removeFromGPU();
+            clearGPUMemory();
         } else throw Exception("No texture info saved for rebuilding bitmap");
 
         assert(inCPU());
@@ -156,7 +156,7 @@ namespace FlatScene {
         }
     }
 
-    void BitmapHandler::clearGPUMemory() {
+    void BitmapHandler::clearGPUMemory() const {
         if (inGPU())
             glDeleteTextures( 1, &_tex );
         _tex = 0;

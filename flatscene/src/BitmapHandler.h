@@ -63,21 +63,21 @@ namespace FlatScene {
         PAType&         setCPUBuffer()       { return _pixels;              }
 
         void            copyToCPU() const;
-        void            copyToGPU();
+        void            copyToGPU() const;
         void            removeFromGPU();
         void            removeFromCPU();
 
         unsigned int    getPixel(unsigned int x, unsigned int y) const;
 
     private:
-        TexType         _tex;
-        SizeType        _w, _h;
-        RelType         _relW, _relH;
-        mutable PAType  _pixels;
+        mutable TexType  _tex;
+        mutable SizeType _w, _h;
+        mutable RelType  _relW, _relH;
+        mutable PAType   _pixels;
 
-        void            load(const void*const pixels);
+        void            load(const void*const pixels) const;
         void            clearCPUMemory() const;
-        void            clearGPUMemory();
+        void            clearGPUMemory() const;
 
         BitmapHandler(const BitmapHandler&);
         BitmapHandler& operator=(const BitmapHandler&);
