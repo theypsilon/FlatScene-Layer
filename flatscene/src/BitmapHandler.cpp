@@ -137,8 +137,8 @@ namespace FlatScene {
         clearGPUMemory();
 
         assert(inCPU());
-        _w = std::ceil(_w / _relW);
-        _h = std::ceil(_h / _relH);
+        _w = (SizeType) std::ceil(_w / _relW);
+        _h = (SizeType) std::ceil(_h / _relH);
         _relW = _relH = 0;
         assert(isSoftware());
     }

@@ -1,11 +1,26 @@
 #ifndef FS_COLOR_H__
 #define FS_COLOR_H__
 
+
 #include <cstddef>
 #include <string>
 #include "Types.h"
 
 namespace FlatScene {
+
+#ifdef _WIN32
+    class Color {
+    private:
+        Byte _r,_g,_b,_a;
+    public:
+        Color(Byte r,Byte g, Byte b, Byte a) : _r(r), _b(b), _g(g), _a(a) {}
+        Byte getR() const { return _r; }
+        Byte getG() const { return _g; }
+        Byte getB() const { return _b; }
+        Byte getA() const { return _a; }
+
+    };
+#else
 
     namespace RGB {
         enum RGB { r, g, b, a };
@@ -92,8 +107,13 @@ namespace FlatScene {
     constexpr bool operator==(const Color& color1,const Color& color2);
     constexpr bool operator!=(const Color& color1,const Color& color2);
 
+    #endif // _MFC_VER
+
 } // flatscene
 
+#ifndef _WIN32
 #include "Color-impl.h"
+#endif
+
 
 #endif //#ifndef __COLOR_H__

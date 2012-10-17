@@ -18,9 +18,9 @@ namespace FlatScene {
             
         }
 
-        template <class Res = CanvasResource, GraphicMode mode = ONLY_GPU> 
+        template <class Res, GraphicMode mode> 
         static Res*             create(const RectangleImage& src, ConstRawImageResource chipset, 
-                                       const GRD&  grd, unsigned int n       );
+                                       const GRD&  grd, unsigned int n, bool software = false );
 
         template <class Res, class T1, class T2>
         static Res*             create(T1&& imageId, T2&& BitmapHandler);
@@ -59,7 +59,7 @@ namespace FlatScene {
         mutable std::list<std::function<void(void)>> _endCallbackList;
 
         friend class SpriteResource;
-        friend class ScreenImpl;
+        friend struct ScreenImpl;
     };
 
 

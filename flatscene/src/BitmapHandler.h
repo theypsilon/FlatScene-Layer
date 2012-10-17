@@ -28,8 +28,7 @@ namespace FlatScene {
         typedef unsigned int            PixelType;
         typedef std::vector<PixelType>  PAType;
 
-        template <bool software = false>
-        BitmapHandler(const void*const pixels, SizeType w, SizeType h) 
+        BitmapHandler(const bool software, const void*const pixels, SizeType w, SizeType h) 
         : _tex(0), _w(software? w : detail::pow2(w)), _h(software? h : detail::pow2(h))
         , _relW(software? 0 : _w/w), _relH(software? 0 : _h/h) {
             if (!software)
@@ -42,8 +41,8 @@ namespace FlatScene {
 
         ~BitmapHandler();
 
-        SizeType        getW() const    { return _relW > 0? std::ceil(_w / _relW) : _w; }
-        SizeType        getH() const    { return _relH > 0? std::ceil(_h / _relH) : _h; }
+        SizeType        getW() const    { return _relW > 0? (SizeType) std::ceil(_w / _relW) : _w; }
+        SizeType        getH() const    { return _relH > 0? (SizeType) std::ceil(_h / _relH) : _h; }
         SizeType        getTexW() const      { return _w;                   }
         SizeType        getTexH() const      { return _h;                   }
         RelType         getRelW() const      { return _relW;                }

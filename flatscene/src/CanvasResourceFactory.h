@@ -8,7 +8,7 @@ namespace FlatScene {
 
     template <class Res, GraphicMode mode> Res* CanvasResource::create(
         const RectangleImage& src, ConstRawImageResource chipset, 
-        const GRD& grd, unsigned int n
+        const GRD& grd, unsigned int n, bool software
     ) {
         static_assert(
             std::is_base_of<CanvasResource,Res>::value,
@@ -23,8 +23,10 @@ namespace FlatScene {
 
         auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
 
-        auto res = new Res(std::move(id),BitmapHandler(source->pixels,source->w,source->h));
-        assert(res);
+        Res* res = new Res(
+            std::move(id),
+            BitmapHandler(software,source->pixels,source->w,source->h)
+        );
 
         IMGFreeOrThrow(source);
         

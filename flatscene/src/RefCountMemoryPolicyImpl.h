@@ -2,6 +2,7 @@
 #define FS_REFCOUNT_MEMORY_POLICY_IMPL__
 
 #include "ResourceMemoryPolicies.h"
+#include "EventBridge.h"
 
 namespace FlatScene {
     template <typename Resource, typename CountIndex>

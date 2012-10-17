@@ -1,10 +1,10 @@
 {
 	"folders":
 	[
-		// {
-		// 	"path": ".",
-		// 	"folder_exclude_patterns": ["flatscene/src","flatscene/include"]
-		// },
+		{
+			"path": ".",
+			"folder_exclude_patterns": ["flatscene/src","flatscene/include"]
+		},
 		{
 			"path": "flatscene/include"
 		},

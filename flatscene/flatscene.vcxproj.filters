@@ -113,58 +113,6 @@
     <ClCompile Include="src\FSTime.cpp" />
     <ClCompile Include="src\FSUniverse.cpp" />
     <ClCompile Include="src\FSWriter.cpp" />
-    <ClCompile Include="src\debugfuncs.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FSActor.cpp" />
-    <ClCompile Include="src\FSCamera.cpp" />
-    <ClCompile Include="src\FSCanvas.cpp" />
-    <ClCompile Include="src\FSColor.cpp" />
-    <ClCompile Include="src\FSEngine.cpp" />
-    <ClCompile Include="src\FSImages.cpp" />
-    <ClCompile Include="src\FSLibrary.cpp" />
-    <ClCompile Include="src\FSMultiverse.cpp" />
-    <ClCompile Include="src\FSScreen.cpp" />
-    <ClCompile Include="src\FSScreenReload.cpp" />
-    <ClCompile Include="src\FSSprite.cpp" />
-    <ClCompile Include="src\FSSpriteSet.cpp" />
-    <ClCompile Include="src\FSText.cpp" />
-    <ClCompile Include="src\FSTextBox.cpp" />
-    <ClCompile Include="src\FSTime.cpp" />
-    <ClCompile Include="src\FSUniverse.cpp" />
-    <ClCompile Include="src\FSWriter.cpp" />
-    <ClCompile Include="src\debugfuncs.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FSActor.cpp" />
-    <ClCompile Include="src\FSCamera.cpp" />
-    <ClCompile Include="src\FSCanvas.cpp" />
-    <ClCompile Include="src\FSColor.cpp" />
-    <ClCompile Include="src\FSEngine.cpp" />
-    <ClCompile Include="src\FSImages.cpp" />
-    <ClCompile Include="src\FSLibrary.cpp" />
-    <ClCompile Include="src\FSMultiverse.cpp" />
-    <ClCompile Include="src\FSScreen.cpp" />
-    <ClCompile Include="src\FSScreenReload.cpp" />
-    <ClCompile Include="src\FSSprite.cpp" />
-    <ClCompile Include="src\FSSpriteSet.cpp" />
-    <ClCompile Include="src\FSText.cpp" />
-    <ClCompile Include="src\FSTextBox.cpp" />
-    <ClCompile Include="src\FSTime.cpp" />
-    <ClCompile Include="src\FSUniverse.cpp" />
-    <ClCompile Include="src\FSWriter.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="src\tinyxml\tinystr.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -334,6 +282,22 @@
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="src\debugfuncs.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\Color.cpp" />
+    <ClCompile Include="src\debugfuncs.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\SpriteSet.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
     <ClCompile Include="src\Actor.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -548,6 +512,30 @@
     <ClCompile Include="src\SpriteSet.cpp" />
     <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="src\Actor.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -566,48 +554,6 @@
     <ClCompile Include="src\SpriteSet.cpp" />
     <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\Universe.cpp" />
-    <ClCompile Include="src\Actor.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\Canvas.cpp" />
-    <ClCompile Include="src\Color.cpp" />
-    <ClCompile Include="src\debugfuncs.cpp" />
-    <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\Exception.cpp" />
-    <ClCompile Include="src\Images.cpp" />
-    <ClCompile Include="src\ImagesPrivate.cpp" />
-    <ClCompile Include="src\Library.cpp" />
-    <ClCompile Include="src\Screen.cpp" />
-    <ClCompile Include="src\ScreenReload.cpp" />
-    <ClCompile Include="src\Sprite.cpp" />
-    <ClCompile Include="src\SpriteSet.cpp" />
-    <ClCompile Include="src\Time.cpp" />
-    <ClCompile Include="src\Universe.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="src\Actor.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -809,27 +755,6 @@
     <ClCompile Include="src\Images.cpp" />
     <ClCompile Include="src\ImagesPrivate.cpp" />
     <ClCompile Include="src\Library.cpp" />
-    <ClCompile Include="src\Policies.cpp" />
-    <ClCompile Include="src\Renders.cpp" />
-    <ClCompile Include="src\Screen.cpp" />
-    <ClCompile Include="src\ScreenReload.cpp" />
-    <ClCompile Include="src\Sprite.cpp" />
-    <ClCompile Include="src\SpriteSet.cpp" />
-    <ClCompile Include="src\Time.cpp" />
-    <ClCompile Include="src\Universe.cpp" />
-    <ClCompile Include="src\Actor.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\Canvas.cpp" />
-    <ClCompile Include="src\Color.cpp" />
-    <ClCompile Include="src\debugfuncs.cpp" />
-    <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\Exception.cpp" />
-    <ClCompile Include="src\Images.cpp" />
-    <ClCompile Include="src\ImagesPrivate.cpp" />
-    <ClCompile Include="src\Library.cpp" />
-    <ClCompile Include="src\Policies.cpp" />
     <ClCompile Include="src\Renders.cpp" />
     <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="src\ScreenReload.cpp" />
@@ -1085,42 +1010,6 @@
     <ClCompile Include="src\tinyxml\tinyxml.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\sdlSurfaceFuncs.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ResourceHandlers.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\tinyxml\tinystr.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
-    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\GraphicResourceDescriptor.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ImageAdapter.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="src\tinyxml\tinystr.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -1169,12 +1058,6 @@
     <ClCompile Include="src\tinyxml\tinyxml.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\Event.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EventAdapter.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="src\tinyxml\tinystr.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -1223,9 +1106,6 @@
     <ClCompile Include="src\tinyxml\tinyxml.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
-    <ClCompile Include="src\DebugLibrary.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="src\tinyxml\tinystr.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -1250,6 +1130,506 @@
     <ClCompile Include="src\tinyxml\tinyxml.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BitmapHandler.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Canvas.cpp" />
+    <ClCompile Include="src\CanvasResource.cpp" />
+    <ClCompile Include="src\DebugLibrary.cpp" />
+    <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Event.cpp" />
+    <ClCompile Include="src\EventAdapter.cpp" />
+    <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
+    <ClCompile Include="src\ImageSet.cpp" />
+    <ClCompile Include="src\Library.cpp" />
+    <ClCompile Include="src\Renders.cpp" />
+    <ClCompile Include="src\ResourceHandlers.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
+    <ClCompile Include="src\ScreenReload.cpp" />
+    <ClCompile Include="src\sdlSurfaceFuncs.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Universe.cpp" />
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\debugfuncs.h">
@@ -2354,9 +2734,6 @@
     <ClInclude Include="include\FSTime.h" />
     <ClInclude Include="include\FSUniverse.h" />
     <ClInclude Include="include\FSWriter.h" />
-    <ClInclude Include="include\debugfuncs.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\FSActor.h" />
     <ClInclude Include="include\FSCamera.h" />
     <ClInclude Include="include\FSCanvas.h" />
@@ -2382,29 +2759,6 @@
     <ClInclude Include="include\debugfuncs.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\FSActor.h" />
-    <ClInclude Include="include\FSCamera.h" />
-    <ClInclude Include="include\FSCanvas.h" />
-    <ClInclude Include="include\FSColor.h" />
-    <ClInclude Include="include\FSCoordinate.h" />
-    <ClInclude Include="include\FSdefinitions.h" />
-    <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSException.h" />
-    <ClInclude Include="include\FSImages.h" />
-    <ClInclude Include="include\FSLibrary.h" />
-    <ClInclude Include="include\FSMessageHandler.h" />
-    <ClInclude Include="include\FSMultiverse.h" />
-    <ClInclude Include="include\FSNoncopyable.h" />
-    <ClInclude Include="include\FSparserXML.h" />
-    <ClInclude Include="include\FSPoint.h" />
-    <ClInclude Include="include\FSRectangle.h" />
-    <ClInclude Include="include\FSScreen.h" />
-    <ClInclude Include="include\FSSingleton.h" />
-    <ClInclude Include="include\FSSprite.h" />
-    <ClInclude Include="include\FSSpriteSet.h" />
-    <ClInclude Include="include\FSTime.h" />
-    <ClInclude Include="include\FSUniverse.h" />
-    <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\FSActor.h" />
     <ClInclude Include="include\FSCamera.h" />
     <ClInclude Include="include\FSCanvas.h" />
@@ -2636,35 +2990,10 @@
     <ClInclude Include="include\FSTime.h" />
     <ClInclude Include="include\FSUniverse.h" />
     <ClInclude Include="include\FSWriter.h" />
-    <ClInclude Include="include\debugfuncs.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="include\FSActor.h" />
-    <ClInclude Include="include\FSCamera.h" />
-    <ClInclude Include="include\FSCanvas.h" />
-    <ClInclude Include="include\FSColor.h" />
-    <ClInclude Include="include\FSCoordinate.h" />
-    <ClInclude Include="include\FSdefinitions.h" />
-    <ClInclude Include="include\FSEngine.h" />
-    <ClInclude Include="include\FSException.h" />
-    <ClInclude Include="include\FSImages.h" />
-    <ClInclude Include="include\FSLibrary.h" />
-    <ClInclude Include="include\FSMessageHandler.h" />
-    <ClInclude Include="include\FSMultiverse.h" />
-    <ClInclude Include="include\FSNoncopyable.h" />
-    <ClInclude Include="include\FSparserXML.h" />
-    <ClInclude Include="include\FSPoint.h" />
-    <ClInclude Include="include\FSRectangle.h" />
-    <ClInclude Include="include\FSScreen.h" />
-    <ClInclude Include="include\FSSingleton.h" />
-    <ClInclude Include="include\FSSprite.h" />
-    <ClInclude Include="include\FSSpriteSet.h" />
-    <ClInclude Include="include\FSTime.h" />
-    <ClInclude Include="include\FSUniverse.h" />
-    <ClInclude Include="include\FSWriter.h" />
     <ClInclude Include="include\debugfuncs.h" />
     <ClInclude Include="include\debugfuncs.h" />
     <ClInclude Include="include\debugfuncs.h" />
+    <ClInclude Include="include\debugfuncs.h" />
     <ClInclude Include="include\Actor.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -2803,7 +3132,6 @@
     <ClInclude Include="include\FlatScene.h" />
     <ClInclude Include="include\FS.h" />
     <ClInclude Include="include\GraphicResourceDescriptor.h" />
-    <ClInclude Include="include\Includes.h" />
     <ClInclude Include="include\IndexedPointer.h" />
     <ClInclude Include="include\IndexHandler.h" />
     <ClInclude Include="include\Library.h" />
@@ -2862,13 +3190,11 @@
     <ClInclude Include="include\Color.h" />
     <ClInclude Include="include\Coordinate.h" />
     <ClInclude Include="include\debugfuncs.h" />
-    <ClInclude Include="include\definitions.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\FlatScene.h" />
     <ClInclude Include="include\FS.h" />
     <ClInclude Include="include\GraphicResourceDescriptor.h" />
-    <ClInclude Include="include\Images.h" />
     <ClInclude Include="include\Includes.h" />
     <ClInclude Include="include\IndexedPointer.h" />
     <ClInclude Include="include\IndexHandler.h" />
@@ -3635,9 +3961,6 @@
     <ClInclude Include="include\TinyXMLHelper.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
-    <ClInclude Include="src\Renders.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Actor.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -5880,9 +6203,6 @@
     <ClInclude Include="include\TinyXMLHelper.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
-    <ClInclude Include="src\RefCountMemoryPolicyImpl.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Actor.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -6058,9 +6378,6 @@
     <ClInclude Include="include\TinyXMLHelper.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
-    <ClInclude Include="include\Actor.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Algorithm.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Canvas.h" />
@@ -6125,6 +6442,9 @@
     <ClInclude Include="include\TinyXMLHelper.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="include\Algorithm.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Canvas.h" />
@@ -6297,9 +6617,6 @@
     <ClInclude Include="include\TinyXMLHelper.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
-    <ClInclude Include="include\Actor.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="include\Algorithm.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Canvas.h" />
@@ -6332,6 +6649,9 @@
     <ClInclude Include="include\TinyXMLHelper.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="include\Algorithm.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Canvas.h" />
@@ -7000,17 +7320,19 @@
     <ClInclude Include="include\Algorithm.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
     <ClInclude Include="include\Color.h" />
     <ClInclude Include="include\Coordinate.h" />
-    <ClInclude Include="include\debugfuncs.h" />
-    <ClInclude Include="include\definitions.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
     <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\FlatScene.h" />
     <ClInclude Include="include\FS.h" />
     <ClInclude Include="include\GraphicResourceDescriptor.h" />
-    <ClInclude Include="include\Images.h" />
-    <ClInclude Include="include\Includes.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
     <ClInclude Include="include\IndexedPointer.h" />
     <ClInclude Include="include\IndexHandler.h" />
     <ClInclude Include="include\Library.h" />
@@ -7018,40 +7340,1826 @@
     <ClInclude Include="include\Pimpl.h" />
     <ClInclude Include="include\Point.h" />
     <ClInclude Include="include\Rectangle.h" />
-    <ClInclude Include="include\RefCountMemoryPolicy.h" />
     <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
     <ClInclude Include="include\Screen.h" />
     <ClInclude Include="include\SharedHandler.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\Sprite.h" />
-    <ClInclude Include="include\SpriteSet.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
     <ClInclude Include="include\Time.h" />
     <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
     <ClInclude Include="include\Types.h" />
     <ClInclude Include="include\Universe.h" />
-    <ClInclude Include="src\sdlSurfaceFuncs.h">
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="include\Actor.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Algorithm.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Canvas.h" />
+    <ClInclude Include="include\Color-impl.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\Coordinate.h" />
+    <ClInclude Include="include\DebugLibrary.h" />
+    <ClInclude Include="include\Engine.h" />
+    <ClInclude Include="include\Event.h" />
+    <ClInclude Include="include\EventInfo.h" />
+    <ClInclude Include="include\Exception.h" />
+    <ClInclude Include="include\FlatScene.h" />
+    <ClInclude Include="include\FS.h" />
+    <ClInclude Include="include\GraphicResourceDescriptor.h" />
+    <ClInclude Include="include\GraphicTypes.h" />
+    <ClInclude Include="include\ImageSet.h" />
+    <ClInclude Include="include\IndexedPointer.h" />
+    <ClInclude Include="include\IndexHandler.h" />
+    <ClInclude Include="include\Library.h" />
+    <ClInclude Include="include\Noncopyable.h" />
+    <ClInclude Include="include\Pimpl.h" />
+    <ClInclude Include="include\Point.h" />
+    <ClInclude Include="include\Rectangle.h" />
+    <ClInclude Include="include\ResourceHandler.h" />
+    <ClInclude Include="include\ResourceMemoryPolicies.h" />
+    <ClInclude Include="include\ResourceMemoryPoliciesExp.h" />
+    <ClInclude Include="include\ScopedGuard.h" />
+    <ClInclude Include="include\Screen.h" />
+    <ClInclude Include="include\SharedHandler.h" />
+    <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\Sprite.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\TinyXMLHelper.h" />
+    <ClInclude Include="include\Traits.h" />
+    <ClInclude Include="include\Types.h" />
+    <ClInclude Include="include\Universe.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\Traits.h">
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include=".\include\EventInfo.h">
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\Event.h">
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\EventBridge.h">
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\EventAdapter.h">
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\BitmapHandler.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include=".\src\Includes.h" />
-    <ClInclude Include=".\include\ScopedGuard.h">
+    <ClInclude Include="src\CanvasResource.h" />
+    <ClInclude Include="src\CanvasResourceFactory.h" />
+    <ClInclude Include="src\CanvasResourceRendering.h" />
+    <ClInclude Include="src\EventAdapter.h" />
+    <ClInclude Include="src\EventBridge.h" />
+    <ClInclude Include="src\glAdapter.h" />
+    <ClInclude Include="src\ImageAdapter.h" />
+    <ClInclude Include="src\ImageId.h" />
+    <ClInclude Include="src\ImageSetResource.h" />
+    <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\LibraryImpl.h" />
+    <ClInclude Include="src\parserXML.h" />
+    <ClInclude Include="src\RefCountMemoryPolicyImpl.h" />
+    <ClInclude Include="src\Renders.h" />
+    <ClInclude Include="src\ScreenImpl.h" />
+    <ClInclude Include="src\sdlSurfaceFuncs.h" />
+    <ClInclude Include="src\SpriteResource.h" />
+    <ClInclude Include="src\SpriteSetFactory.h" />
+    <ClInclude Include="src\tinyxml\tinystr.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="include\DebugLibrary.h">
+    <ClInclude Include="src\tinyxml\tinyxml.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
