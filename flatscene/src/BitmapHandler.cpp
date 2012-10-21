@@ -51,8 +51,6 @@ namespace FlatScene {
         assert(pixels);
         assert(!_tex);
 
-        std::cout << std::dec << getW() << " wload " << _w << std::endl;
-
         GraphicFilter filter = NEAREST;
 
         // Have OpenGL generate a texture object handle for us

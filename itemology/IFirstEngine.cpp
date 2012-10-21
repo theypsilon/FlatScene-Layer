@@ -87,7 +87,7 @@ void IFirstEngine::onIdle()	{
     if (move[i_left])  mainactor->place.x += -6;
     if (move[i_right]) mainactor->place.x += +6;
 
-    ONCE( std::cout << "pixel 0: " << std::hex << level->getTileset()[0]->at(2).getPixel(0,0) << std::endl )
+    //ONCE( std::cout << "pixel 0: " << std::hex << level->getTileset()[0]->at(2).getPixel(0,0) << std::endl )
     
     //std::cout << "place.y" << mainactor->place.y << "place.x" << mainactor->place.x << "\r";
     

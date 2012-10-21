@@ -24,19 +24,11 @@ void ScreenImpl::deleteResources() {
 }
 
 void ScreenImpl::saveResources(GraphicResources &info) {
-        using namespace std;
     for (auto& fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
         auto& gpu = fCanvas.first->_gpu;
 
-        cout << dec << "p" << gpu.getPixel(0,0) << " w" << gpu.getW() << " rW" << gpu.getRelW() << endl;
-
         gpu.copyToCPU();
         gpu.removeFromGPU();
-
-        cout << "p" << gpu.getPixel(0,0) << " w" << gpu.getW() << " rW" << gpu.getRelW() << endl;
-
-        break;
-
     }
 
 }
@@ -44,12 +36,8 @@ void ScreenImpl::saveResources(GraphicResources &info) {
 void ScreenImpl::reloadResources(GraphicResources &info) {
     for (auto& fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
         auto& gpu = fCanvas.first->_gpu;
-        gpu.copyToGPU();
-
-        using namespace std;
-
-        cout << "p" << gpu.getPixel(0,0) << " w" << gpu.getW() << " rW" << gpu.getRelW() << endl;
-        break;        
+        
+        gpu.copyToGPU();     
     }
 }
 
