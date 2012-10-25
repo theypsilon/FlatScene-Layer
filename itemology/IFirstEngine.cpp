@@ -16,7 +16,7 @@ IFirstEngine::~IFirstEngine()	{}
 
 void IFirstEngine::onEvent(const Event& e) {
 
-    Engine::onEvent(e);
+    Cinema::CompleteEngine::onEvent(e);
 
     if ( Key::ESCAPE == e.getSymbol() ) {
         Library::I().exit();
@@ -57,7 +57,7 @@ void IFirstEngine::drawFrame() {
 
 void  IFirstEngine::onInit() {
     
-    Engine::onInit();
+    Cinema::CompleteEngine::onInit();
     
     
     level.reset( new IScrollLevel("resources/mapa1") );
@@ -109,13 +109,13 @@ void IFirstEngine::onExit() {
     
     cams.clear();
     
-    Engine::onExit();
+    Cinema::CompleteEngine::onExit();
 }
 
 void IFirstEngine::deselect() {
-    Engine::deselect();
+    Cinema::CompleteEngine::deselect();
 }
 
 void IFirstEngine::loop() {
-    Engine::loop();
+    Cinema::CompleteEngine::loop();
 }

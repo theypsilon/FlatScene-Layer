@@ -6,32 +6,32 @@
 
 namespace Cinema {
 
-    inline Engine::Engine() {
+    inline CompleteEngine::CompleteEngine() {
         initialized = false;
         priority = 100;
         done = true;
     }
 
-    inline Engine::~Engine() {}
+    inline CompleteEngine::~CompleteEngine() {}
 
-    inline bool Engine::isInitialized() {
+    inline bool CompleteEngine::isInitialized() {
         return initialized;
     }
 
-    inline void Engine::onInit() {
+    inline void CompleteEngine::onInit() {
         initialized = true;
     }
 
-    inline void Engine::onEvent(const FlatScene::Event& event) {
+    inline void CompleteEngine::onEvent(const FlatScene::Event& event) {
         if(event.getType() == FlatScene::EventType::QUIT) {
             FlatScene::Library::I().exit();
         }
     }
 
     //bucle principal
-    inline void Engine::loop() {
+    inline void CompleteEngine::loop() {
 
-        if (!isInitialized()) throw FlatScene::Exception("Engine not inicialized", __LINE__);
+        if (!isInitialized()) throw FlatScene::Exception("CompleteEngine not inicialized", __LINE__);
 
         auto self = this;
 
@@ -50,20 +50,20 @@ namespace Cinema {
         }
     }
 
-    inline void Engine::deselect() {
+    inline void CompleteEngine::deselect() {
         FlatScene::FreeAllEvents();
         FlatScene::Library::I().setActualEngine(nullptr);
     }
 
-    inline void Engine::drawFrame() {
+    inline void CompleteEngine::drawFrame() {
         if (!isInitialized()) throw FlatScene::Exception("Motor not inicialized", __LINE__);
     }
 
 
-    inline void Engine::onIdle() {}
+    inline void CompleteEngine::onIdle() {}
 
 
-    inline void Engine::onExit() {
+    inline void CompleteEngine::onExit() {
         initialized = false;
     }
 } // Cinema

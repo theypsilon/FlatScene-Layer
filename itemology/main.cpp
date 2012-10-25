@@ -29,7 +29,10 @@ int main (int argc, char* argv[]) {
     FSDraw.start(640,480,32,1.0,1.0,false);
 
     try {
-        FSLib.processEngine(unique_ptr<IFirstEngine>(new IFirstEngine));
+        IFirstEngine e;
+        e.onInit();
+        e.loop();
+        e.onExit();
     } catch (FlatScene::Exception &e) {
         cout << "Exception catched: " << e.what() << endl;
     } catch (std::exception& e) {

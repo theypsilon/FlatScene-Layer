@@ -10,7 +10,7 @@
 namespace Cinema {
     class Library;
 
-    class Engine : public std::enable_shared_from_this<Engine> {
+    class CompleteEngine : public FlatScene::Engine {
         friend class Library;
         bool initialized;
     protected:
@@ -26,8 +26,8 @@ namespace Cinema {
     public:
         bool done;
 
-        Engine();
-        virtual ~Engine();
+        CompleteEngine();
+        virtual ~CompleteEngine();
 
         bool isInitialized();
 

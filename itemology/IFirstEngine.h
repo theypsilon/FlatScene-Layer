@@ -6,7 +6,7 @@
 #include "IScrollCamera.h"
 #include "IScrollLevel.h"
 
-class IFirstEngine : public Engine
+class IFirstEngine : public Cinema::CompleteEngine
 {
 private:
     std::vector<IScrollCamera*> cams;
