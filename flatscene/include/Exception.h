@@ -22,7 +22,7 @@ namespace FlatScene {
 
         virtual ~Exception() throw() {}
 
-        virtual const char* what() {
+        virtual const char* what() const throw() {
             return _description.c_str();
         }
     private:
