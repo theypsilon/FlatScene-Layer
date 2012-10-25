@@ -1,0 +1,71 @@
+#ifndef CINEMA_ENGINE_IMPL__
+#define CINEMA_ENGINE_IMPL__
+
+#include "Engine.h"
+#include "Exception.h"
+
+namespace Cinema {
+
+    inline Engine::Engine() {
+        initialized = false;
+        priority = 100;
+        done = true;
+    }
+
+    inline Engine::~Engine() {}
+
+    inline bool Engine::isInitialized() {
+        return initialized;
+    }
+
+    inline void Engine::onInit() {
+        initialized = true;
+    }
+
+    inline void Engine::onEvent(const FlatScene::Event& event) {
+        if(event.getType() == FlatScene::EventType::QUIT) {
+            FlatScene::Library::I().exit();
+        }
+    }
+
+    //bucle principal
+    inline void Engine::loop() {
+
+        if (!isInitialized()) throw FlatScene::Exception("Engine not inicialized", __LINE__);
+
+        auto self = this;
+
+        FlatScene::Library::I().setActualEngine(self);
+
+        FlatScene::FreeAllEvents();
+
+        while (reinterpret_cast<void*>(FlatScene::Library::I().getActualEngine()) == reinterpret_cast<void*>(self)) {
+
+            for (const auto& event : FlatScene::PollEvents()) {
+                onEvent(event);
+            }
+
+            onIdle();
+            drawFrame();
+        }
+    }
+
+    inline void Engine::deselect() {
+        FlatScene::FreeAllEvents();
+        FlatScene::Library::I().setActualEngine(nullptr);
+    }
+
+    inline void Engine::drawFrame() {
+        if (!isInitialized()) throw FlatScene::Exception("Motor not inicialized", __LINE__);
+    }
+
+
+    inline void Engine::onIdle() {}
+
+
+    inline void Engine::onExit() {
+        initialized = false;
+    }
+} // Cinema
+
+#endif // CINEMA_ENGINE_IMPL__

@@ -40,7 +40,9 @@ namespace FlatScene {
             return I();
         }
 
-        const Engine *const getActualEngine();
+        Engine* getActualEngine();
+
+        void setActualEngine(void* newEngineActive);
 
         int addEngine(std::unique_ptr<Engine> engine,int priority);
 

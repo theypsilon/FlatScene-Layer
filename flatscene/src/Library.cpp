@@ -29,7 +29,7 @@ void Library::LibraryImpl::setActualEngine(Engine* newEngineActive) {
     actualEngine = newEngineActive;
 }
 
-const Engine *const Library::getActualEngine() {
+Engine* Library::getActualEngine() {
     return _impl->actualEngine;
 }
 
@@ -48,6 +48,10 @@ Library::Library() {
 
     atexit(SDL_Quit);
 
+}
+
+void Library::setActualEngine(void* newEngineActive) {
+    _impl->setActualEngine(reinterpret_cast<Engine*>(newEngineActive));
 }
 
 int Library::startLibrary(bool xmlconfig) {
