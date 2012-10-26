@@ -19,7 +19,7 @@ void IFirstEngine::onEvent(const Event& e) {
     Cinema::CompleteEngine::onEvent(e);
 
     if ( Key::ESCAPE == e.getSymbol() ) {
-        Library::I().exit();
+        done = false;
     }
     
     bool turn = true;

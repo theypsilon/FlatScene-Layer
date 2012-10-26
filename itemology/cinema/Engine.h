@@ -10,7 +10,7 @@
 namespace Cinema {
     class Library;
 
-    class CompleteEngine : public FlatScene::Engine {
+    class CompleteEngine {
         friend class Library;
         bool initialized;
     protected:

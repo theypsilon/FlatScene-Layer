@@ -5,7 +5,6 @@
 //include message handler(base class)
 
 #include "ImageSet.h"
-#include "Engine.h"
 
 #include "Time.h"
 
@@ -31,27 +30,11 @@ namespace FlatScene {
 
         int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
 
-        std::vector<std::unique_ptr<Engine>> processEngines();
-        void processEngine(std::vector<std::unique_ptr<Engine>>& veng);
-        std::vector<std::unique_ptr<Engine>> processEngine(std::unique_ptr<Engine>&& eng);
-
 
         inline Library& getLibrary() {
             return I();
         }
 
-        Engine* getActualEngine();
-
-        void setActualEngine(void* newEngineActive);
-
-        int addEngine(std::unique_ptr<Engine> engine,int priority);
-
-        void exit();
-        void restart();
-        void runEngine(Engine* engine);
-        void reloadEngine(Engine* engine);
-        void changeEngine();
-        void killEngine(Engine* engine);
 
     #ifdef DEBUGTEST
 
@@ -67,8 +50,6 @@ namespace FlatScene {
 
         struct LibraryImpl;
         Util::Pimpl<LibraryImpl> _impl;
-
-        friend class Engine;
     };
     #ifdef GLOBAL_SINGLETON_REFERENCES
     extern Library& FSLib;

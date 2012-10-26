@@ -24,7 +24,7 @@ namespace Cinema {
 
     inline void CompleteEngine::onEvent(const FlatScene::Event& event) {
         if(event.getType() == FlatScene::EventType::QUIT) {
-            FlatScene::Library::I().exit();
+            done = false;
         }
     }
 
@@ -35,11 +35,9 @@ namespace Cinema {
 
         auto self = this;
 
-        FlatScene::Library::I().setActualEngine(self);
-
         FlatScene::FreeAllEvents();
 
-        while (reinterpret_cast<void*>(FlatScene::Library::I().getActualEngine()) == reinterpret_cast<void*>(self)) {
+        while (done) {
 
             for (const auto& event : FlatScene::PollEvents()) {
                 onEvent(event);
@@ -52,7 +50,6 @@ namespace Cinema {
 
     inline void CompleteEngine::deselect() {
         FlatScene::FreeAllEvents();
-        FlatScene::Library::I().setActualEngine(nullptr);
     }
 
     inline void CompleteEngine::drawFrame() {

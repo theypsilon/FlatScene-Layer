@@ -18,21 +18,6 @@
 
 namespace FlatScene {
 
-void Library::LibraryImpl::sort(std::vector<std::unique_ptr<Engine>>& v) {
-    typedef const std::unique_ptr<Engine>& pEngine;
-    std::sort(v.begin(),v.end(),[](pEngine p1, pEngine p2) {
-        return (p1->priority > p2->priority);
-    });
-}
-
-void Library::LibraryImpl::setActualEngine(Engine* newEngineActive) {
-    actualEngine = newEngineActive;
-}
-
-Engine* Library::getActualEngine() {
-    return _impl->actualEngine;
-}
-
 Library::Library() {
 #ifdef IN_FILE_ERROR
     (*_impl).errorsInSession = false;
@@ -42,16 +27,10 @@ Library::Library() {
     (*_impl).debugticks=Chrono.getTick();
 #endif
 
-    (*_impl).actualEngine = nullptr;
-
     if(SDL_Init(SDL_INIT_TIMER)==-1) throw SDLException("Failed to Init SDL:");
 
     atexit(SDL_Quit);
 
-}
-
-void Library::setActualEngine(void* newEngineActive) {
-    _impl->setActualEngine(reinterpret_cast<Engine*>(newEngineActive));
 }
 
 int Library::startLibrary(bool xmlconfig) {
@@ -102,9 +81,6 @@ int Library::startLibrary( int width , int height , int bpp , bool fullscreen, b
 void Library::LibraryImpl::onExit() {
 
     auto& _impl = Library::I()._impl;
-    (*_impl).engineIn.clear();
-
-    _impl->setActualEngine(nullptr);
 
 #ifdef IN_FILE_ERROR
     if ((*_impl).errorsInSession) {
@@ -119,6 +95,7 @@ void Library::LibraryImpl::onExit() {
 
 Library::~Library() {}
 
+/*
 std::vector<std::unique_ptr<Engine>> Library::processEngine(std::unique_ptr<Engine>&& eng) {
 
     std::vector<std::unique_ptr<Engine>> veng;
@@ -316,7 +293,7 @@ void Library::killEngine(Engine* engine) {
             }
         }
     });
-}
+}*/
 
 #ifdef DEBUGTEST
 

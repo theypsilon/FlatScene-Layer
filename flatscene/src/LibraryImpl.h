@@ -6,10 +6,6 @@
 namespace FlatScene {
 
 struct Library::LibraryImpl {
-    Engine* actualEngine;
-
-    // Lista de motores a�adidas por el usuario
-    std::vector<std::unique_ptr<Engine>> engineIn;
 
 #ifdef IN_FILE_ERROR
     bool errorsInSession;
@@ -24,11 +20,7 @@ struct Library::LibraryImpl {
     int debugticks;
 #endif
 
-    void setActualEngine(Engine* newEngineActive);
-
     static void onExit();
-
-    void sort(std::vector<std::unique_ptr<Engine>>& v);
 };
 
 } // flatscene
