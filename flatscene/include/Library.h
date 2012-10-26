@@ -8,10 +8,6 @@
 
 #include "Time.h"
 
-#include "Camera.h"
-#include "Universe.h"
-#include "Actor.h"
-
 #include "Exception.h"
 
 #include "Pimpl.h"
