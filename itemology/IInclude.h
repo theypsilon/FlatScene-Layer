@@ -6,7 +6,7 @@
 #include "cinema/Cinema.h"
 
 using namespace FS;
-//using namespace CINE;
+using namespace CINE;
 
 extern Library& FSLib;
 extern Screen& FSDraw;

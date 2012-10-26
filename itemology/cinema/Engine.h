@@ -8,11 +8,10 @@
 #include <memory>
 
 namespace Cinema {
-    class Library;
 
     class CompleteEngine {
-        friend class Library;
         bool initialized;
+        bool done;
     protected:
         int priority;
 
@@ -24,7 +23,6 @@ namespace Cinema {
         virtual void deselect();
 
     public:
-        bool done;
 
         CompleteEngine();
         virtual ~CompleteEngine();

@@ -6,11 +6,8 @@
 
 namespace Cinema {
 
-    inline CompleteEngine::CompleteEngine() {
-        initialized = false;
-        priority = 100;
-        done = true;
-    }
+    inline CompleteEngine::CompleteEngine() : initialized(false), priority(100), done(true)
+    {}
 
     inline CompleteEngine::~CompleteEngine() {}
 
@@ -19,6 +16,7 @@ namespace Cinema {
     }
 
     inline void CompleteEngine::onInit() {
+        FlatScene::FreeAllEvents();
         initialized = true;
     }
 
@@ -50,6 +48,7 @@ namespace Cinema {
 
     inline void CompleteEngine::deselect() {
         FlatScene::FreeAllEvents();
+        done = false;
     }
 
     inline void CompleteEngine::drawFrame() {
