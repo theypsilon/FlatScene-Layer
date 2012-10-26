@@ -6,6 +6,9 @@
 #include <limits>
 #include <cassert>
 
+#include "Exception.h"
+#include "Noncopyable.h"
+
 namespace FlatScene { namespace Util {
 
     template <typename IndexType, typename CounterType = unsigned int>
