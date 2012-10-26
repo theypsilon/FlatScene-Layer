@@ -1,14 +1,29 @@
 #ifndef FS_COLOR_H__
 #define FS_COLOR_H__
 
+
 #include <cstddef>
 #include <string>
 #include "Types.h"
 
 namespace FlatScene {
 
-    namespace RGBA {
-        enum RGBA { r, g, b, a };
+#ifdef _WIN32
+    class Color {
+    private:
+        Byte _r,_g,_b,_a;
+    public:
+        Color(Byte r,Byte g, Byte b, Byte a) : _r(r), _b(b), _g(g), _a(a) {}
+        Byte getR() const { return _r; }
+        Byte getG() const { return _g; }
+        Byte getB() const { return _b; }
+        Byte getA() const { return _a; }
+
+    };
+#else
+
+    namespace RGB {
+        enum RGB { r, g, b, a };
     }
 
     class Color {
@@ -17,26 +32,27 @@ namespace FlatScene {
     public:
 
         constexpr Color() noexcept : _color(0x00000000) {}
-        constexpr Color(Byte nr, Byte ng, Byte nb, Byte na=0) noexcept;
-        constexpr explicit Color(unsigned int hex, bool alpha = true) noexcept;
-        template <std::size_t N> constexpr explicit Color(const char(&a)[N]);
-        explicit Color(const std::string& a);
+        constexpr Color(Byte nr, Byte ng, Byte nb, Byte na=255) noexcept;
+        constexpr explicit Color(unsigned int hex, bool ceroalpha = false) noexcept;
+        template <std::size_t N> 
+        constexpr explicit Color(const char(&a)[N], bool ceroalpha = false);
+        explicit Color(const std::string& a, bool ceroalpha = false);
         constexpr Color(const Color& color) noexcept;
 
-        template <RGBA::RGBA component> constexpr Byte get() const;
+        template <RGB::RGB component> constexpr Byte get() const;
         constexpr Byte getR() const;
         constexpr Byte getG() const;
         constexpr Byte getB() const;
         constexpr Byte getA() const;
         constexpr unsigned int getHex() const;
 
-        template <RGBA::RGBA component> Color& set(Byte c);
+        template <RGB::RGB component> Color& set(Byte c);
         Color& setR(Byte c);
         Color& setG(Byte c);
         Color& setB(Byte c);
         Color& setA(Byte c);
 
-        template <RGBA::RGBA component> Byte& ref();
+        template <RGB::RGB component> Byte& ref();
         Byte& R();
         Byte& G();
         Byte& B();
@@ -51,7 +67,8 @@ namespace FlatScene {
         Color& operator^=(const Color& color);
     };
 
-    constexpr Color FColor(Float nr, Float ng, Float nb, Float na=0);
+    constexpr Color FColor(Float nr, Float ng, Float nb, Float na=1.0) noexcept;
+    constexpr Color RGBA(Byte nr, Byte ng, Byte nb, Float na=1.0) noexcept;
 
     constexpr Color Red(Byte shade=255);
     constexpr Color Green(Byte shade=255);
@@ -90,8 +107,13 @@ namespace FlatScene {
     constexpr bool operator==(const Color& color1,const Color& color2);
     constexpr bool operator!=(const Color& color1,const Color& color2);
 
+    #endif // _MFC_VER
+
 } // flatscene
 
+#ifndef _WIN32
 #include "Color-impl.h"
+#endif
+
 
 #endif //#ifndef __COLOR_H__

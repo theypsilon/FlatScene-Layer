@@ -16,10 +16,10 @@ IFirstEngine::~IFirstEngine()	{}
 
 void IFirstEngine::onEvent(const Event& e) {
 
-    Engine::onEvent(e);
+    CompleteEngine::onEvent(e);
 
     if ( Key::ESCAPE == e.getSymbol() ) {
-        Library::I().exit();
+        deselect();
     }
     
     bool turn = true;
@@ -57,7 +57,7 @@ void IFirstEngine::drawFrame() {
 
 void  IFirstEngine::onInit() {
     
-    Engine::onInit();
+    CompleteEngine::onInit();
     
     
     level.reset( new IScrollLevel("resources/mapa1") );
@@ -86,8 +86,10 @@ void IFirstEngine::onIdle()	{
     if (move[i_down])  mainactor->place.y += +6;
     if (move[i_left])  mainactor->place.x += -6;
     if (move[i_right]) mainactor->place.x += +6;
+
+    //ONCE( std::cout << "pixel 0: " << std::hex << level->getTileset()[0]->at(2).getPixel(0,0) << std::endl )
     
-    std::cout << "place.y" << mainactor->place.y << "place.x" << mainactor->place.x << "\r";
+    //std::cout << "place.y" << mainactor->place.y << "place.x" << mainactor->place.x << "\r";
     
     
     //setIfTrue(mainactor->place.x,cams[0]->getArea()->x + cams[0]->getArea()->w / 2 +32,LambdaLess);
@@ -107,13 +109,13 @@ void IFirstEngine::onExit() {
     
     cams.clear();
     
-    Engine::onExit();
+    CompleteEngine::onExit();
 }
 
 void IFirstEngine::deselect() {
-    Engine::deselect();
+    CompleteEngine::deselect();
 }
 
 void IFirstEngine::loop() {
-    Engine::loop();
+    CompleteEngine::loop();
 }

@@ -37,7 +37,7 @@ struct Gate {
 
 
 
-class IScrollLevel : public Universe {
+class IScrollLevel : public Cinema::Universe {
     friend class IScrollCamera;
 
     unsigned int                    _mapHeight;
@@ -78,8 +78,8 @@ public:
     virtual void                    load();
     virtual void                    unload();
 
-    virtual int                     incActor(Actor* act);
-    virtual int                     decActor(Actor* act);
+    virtual int                     incActor(Cinema::Actor* act);
+    virtual int                     decActor(Cinema::Actor* act);
 
     virtual unsigned int            getPixel(int x, int y, int z);
 

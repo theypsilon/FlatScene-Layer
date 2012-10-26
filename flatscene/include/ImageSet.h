@@ -14,17 +14,17 @@ namespace FlatScene {
         ImageSetResource<ImageType>,
         RefCountMemoryPolicy<ImageSetResource<ImageType>> > {
     public:
-        ImageSet(std::string c    = "");
+        ImageSet(std::string pathToFile);
 
-        const std::string&         getName() const;
-        const std::vector<ImageType>& get    () const;
-        const std::vector<ImageType>* const operator->() const;
+        const std::string&                  getName   () const;
+        const std::vector<ImageType>&       get       () const;
+        const std::vector<ImageType>*const  operator->() const;
     };
 
-    typedef ImageSet<Sprite> Spriteset;
-    typedef ImageSet<Canvas> Canvasset;
-    typedef ImageSet<SoftwareSprite> SoftSpriteset;
-    typedef ImageSet<SoftwareCanvas> SoftCanvasset;
+    typedef ImageSet<Sprite>            Spriteset;
+    typedef ImageSet<Canvas>            Canvasset;
+    typedef ImageSet<SoftwareSprite>    SoftSpriteset;
+    typedef ImageSet<SoftwareCanvas>    SoftCanvasset;
 
 } // flatscene
 

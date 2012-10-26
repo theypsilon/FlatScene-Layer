@@ -5,9 +5,9 @@
 #include "IDebug.h"
 
 
-IScrollCamera::IScrollCamera(Actor* target, FlatScene::Rectangle* area) :
+IScrollCamera::IScrollCamera(Cinema::Actor* target, FlatScene::Rectangle* area) :
     // Se ha de llamar a la clase Base para una correcta inicializaci�n
-    Camera(target,area), centro(new Point(area->getW()/2,area->getH()/2)), objetive("objetivo") {
+    Cinema::Camera(target,area), centro(new Point(area->getW()/2,area->getH()/2)), objetive("objetivo") {
         intraMargenX=intraMargenY=0;
         loadUniverse();
 }
@@ -57,7 +57,7 @@ void IScrollCamera::unloadUniverse() {
 
 }
 
-void IScrollCamera::setTarget(Actor* newTarget) {
+void IScrollCamera::setTarget(Cinema::Actor* newTarget) {
 
     /*		IMPLEMENTACI�N POR DEFECTO */
 

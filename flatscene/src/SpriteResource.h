@@ -8,17 +8,17 @@
 namespace FlatScene {
 
     namespace detail {
-        constexpr unsigned int alphaMask = 0xFF000000;
+        const unsigned int alphaMask = 0xFF000000;
     } // detail
 
 class SpriteResource : public CanvasResource {
 public:
-    SpriteResource(ImageId id, BitmapGPU gpu) : CanvasResource(std::move(id), std::move(gpu)) {}
+    SpriteResource(ImageId id, BitmapHandler gpu) : CanvasResource(std::move(id), std::move(gpu)) {}
     virtual ~SpriteResource() {}
     
     typedef Sprite  Handler;
 
-    void                applyMetadata(const GRD::Sprite& img) {
+    void                applyMetadata(const GRD::Image& img) {
         setName(img.name);
     }
 
@@ -63,8 +63,8 @@ public:
         _opaque = SPRITE_OPAQUE;
 
         try {
-            for (int x = 0; x < getW() && _opaque == SPRITE_OPAQUE; x++ )
-                for (int y = 0; y < getH() && _opaque == SPRITE_OPAQUE; y++ )
+            for (unsigned int x = 0; x < getW() && _opaque == SPRITE_OPAQUE; x++ )
+                for (unsigned int y = 0; y < getH() && _opaque == SPRITE_OPAQUE; y++ )
                     if ((getPixel(x,y) & detail::alphaMask) != detail::alphaMask)
                         _opaque = SPRITE_TRANSPARENT;
         } catch(Exception&) {

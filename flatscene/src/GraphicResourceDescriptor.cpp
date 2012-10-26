@@ -149,7 +149,7 @@ namespace FlatScene {
 
     void GRDProcess::processSimpleSpriteValues(GRD& grd) {
         for (decltype(grd._num_img) i = 0; i < grd._num_img ; i++)
-            grd._images.push_back(GRD::Sprite(
+            grd._images.push_back(GRD::Image(
                 GRD::DimPoint(grd._cellwidth, grd._cellheight),
                 GRD::CPoint  (0,0)
             ));
@@ -159,7 +159,7 @@ namespace FlatScene {
         for (auto pImg = doc.FirstChildElement("img").ToElement(); 
             pImg ; pImg = pImg->NextSiblingElement()) {
 
-                GRD::Sprite spt; const auto& img = *pImg;
+                GRD::Image spt; const auto& img = *pImg;
                 spt.name = checkAttr(img,"name","",false) ? 
                     valFromAttr<std::string>(img,"name") : "noname" ;
                 spt.dim.set( numFromAttr<decltype(spt.dim.x)>(img,"width",0,grd._cellwidth  ) ,

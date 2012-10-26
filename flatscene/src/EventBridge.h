@@ -2,6 +2,7 @@
 #define FS_EVENT_BRIDGE
 
 #include "Includes.h"
+#include "Event.h"
 
 #include <vector>
 

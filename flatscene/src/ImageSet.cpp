@@ -11,6 +11,11 @@ namespace FlatScene {
                 RefCountMemoryPolicy<ImageSetResource<T> >
             > type;
         };
+
+        // template <class T> using res_set = ResourceHandler<
+        //     ImageSetResource<T>,
+        //     RefCountMemoryPolicy<ImageSetResource<T> >
+        // >;
     } //detail
 
     template <class ImageType>

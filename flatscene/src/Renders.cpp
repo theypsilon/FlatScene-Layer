@@ -77,9 +77,9 @@ void SRenderPopMatrix::operator()() {
 }
 
 void SRenderCanvas::operator()() {
-    auto tex  = bm.getTex(),
-         h2   = bm.getH(),
-         w2   = bm.getW();
+    auto tex  = bm.getGPUTex(),
+         h2   = bm.getTexH(),
+         w2   = bm.getTexW();
 
     auto relH = bm.getRelH(),
          relW = bm.getRelW();

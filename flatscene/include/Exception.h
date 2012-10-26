@@ -9,7 +9,7 @@ namespace FlatScene {
 
     class Exception : public std::exception {
     public:
-        Exception(std::string describe = "", int line = -1, const char* file = nullptr)
+        Exception(std::string describe = "FlatScene::Exception", int line = -1, const char* file = nullptr)
             : _description(std::move(describe)) 
         {
             if (file) {
@@ -22,7 +22,7 @@ namespace FlatScene {
 
         virtual ~Exception() throw() {}
 
-        virtual const char* what() {
+        virtual const char* what() const throw() {
             return _description.c_str();
         }
     private:

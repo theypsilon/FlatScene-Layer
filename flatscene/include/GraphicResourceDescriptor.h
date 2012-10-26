@@ -19,38 +19,44 @@ namespace FlatScene {
         typedef Point2D<unsigned int>  CPoint;
         typedef Point2D<unsigned int>  DimPoint;
 
-        struct Sprite {
+        struct Image {
             std::string         name;
             DimPoint            dim;
             CPoint              cp;
             std::map<int,Area>  areas;
             std::map<int,bool>  a_isRel;
 
-            Sprite(DimPoint ndim = DimPoint(),CPoint ncp = CPoint()) : dim(ndim), cp(ncp) {}
+            Image(DimPoint ndim = DimPoint(),CPoint ncp = CPoint()) : dim(ndim), cp(ncp) {}
         };
 
         GRD(unsigned int width, unsigned int height, std::string file);
         GRD(std::string file); /* @throw DocIsNotLoadedException */
 
-        const std::string&  getDescriptorFile() const { return _grd_str; }
-        const std::string&  getGraphicFile() const { return _gr_file; }
-        double              getSpecialScale() const { return _sp_scale; }
-
+        const std::string&          getDescriptorFile() const { return _grd_str;     }
+        const std::string&          getGraphicFile   () const { return _gr_file;     }
+        double                      getSpecialScale  () const { return _sp_scale;    }
+        const std::vector<Image>&   getImages        () const { return _images;      }
+        unsigned int                getTeoricQuantity() const { return _num_img;     }
+        unsigned int                getCellWidth     () const { return _cellwidth;   }
+        unsigned int                getCellHeight    () const { return _cellheight;  }
+        bool                        isSimple         () const { return _simple;      }
+        const CPoint&               getGlobalCP      () const { return _globalcp;    }
+        const std::map<int,Area>&   getGlobalAreas   () const { return _globalareas; }
+        const std::map<int,bool>&   getRelativeAreas () const { return _ga_isRel;    }  
     private:
 
-        std::vector<Sprite> _images;
-        unsigned int        _num_img;
-        unsigned int        _cellwidth;
-        unsigned int        _cellheight;
-        bool                _simple;
-        double              _sp_scale;
-        CPoint              _globalcp;
-        std::map<int,Area>  _globalareas;
-        std::map<int,bool>  _ga_isRel;
-        std::string         _grd_str;
-        std::string         _gr_file;
+        std::vector<Image>          _images;
+        unsigned int                _num_img;
+        unsigned int                _cellwidth;
+        unsigned int                _cellheight;
+        bool                        _simple;
+        double                      _sp_scale;
+        CPoint                      _globalcp;
+        std::map<int,Area>          _globalareas;
+        std::map<int,bool>          _ga_isRel;
+        std::string                 _grd_str;
+        std::string                 _gr_file;
 
-        template <class Res> friend class ImageSetResource;
         friend struct GRDProcess;
 
     };

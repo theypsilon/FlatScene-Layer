@@ -5,7 +5,7 @@
 
 class IScrollObject;
 
-class IScrollObject : public Actor {
+class IScrollObject : public Cinema::Actor {
 
     std::list<IScrollObject*>* _placeInMA;
 
@@ -43,11 +43,11 @@ public:
     virtual const std::string& getCreature();
 
     // Opcional. Su implementaci�n por defecto es una simple asignaci�n a la variable miembro CUniverse* inUniverse.
-    virtual void setUniverse(Universe* m);
+    virtual void setUniverse(Cinema::Universe* m);
 
     // Opcional. Por si se quiere implementar una funci�n que facilite la inicializaci�n de muchos actores dle mismo tipo.
     // Si no se le da una implementaci�n y el m�todo es invocado, devuelve NULL y registra un error.
-    virtual Actor* clone();
+    virtual Cinema::Actor* clone();
 
 
     static int getInstances() { return instances; };

@@ -20,6 +20,9 @@ namespace FlatScene {
         friend std::vector<Event> PollEvents();
     };
 
+    void FreeAllEvents();
+    std::vector<Event> PollEvents();
+
 } // FlatScene
 
 #endif // FS_EVENT__

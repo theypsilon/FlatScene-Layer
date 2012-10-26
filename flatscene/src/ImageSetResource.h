@@ -24,14 +24,17 @@ namespace detail {
 
     template <class Res> struct to_graphic_mode {
         static const GraphicMode value = ONLY_GPU;
+        static const bool software = false;
     };
 
     template <> struct to_graphic_mode<SoftwareSprite> {
         static const GraphicMode value = ONLY_CPU;
+        static const bool software = true;
     };
 
     template <> struct to_graphic_mode<SoftwareCanvas> {
         static const GraphicMode value = ONLY_CPU;
+        static const bool software = true;
     };
 } // detail
 
@@ -48,11 +51,12 @@ public:
             if (set.first->getName() == c)
                 return set.first;
         }
-        return new ImageSetResource<Res/*detail::to_graphic_mode<Res>::value*/>(std::forward<T>(c));
+        return new ImageSetResource<Res>(std::forward<T>(c));
     }
 
-    ImageSetResource(std::string c) 
-        : _name(std::move(c)) {
+    template <class T>
+    ImageSetResource(T&& c) 
+        : _name(std::forward<T>(c)) {
             loadChipset(_name);
     }
 
@@ -146,26 +150,27 @@ private:
     template <typename T>
     void loadAllSprites(const GRD& grd, const T& chipset) {
         unsigned int w = getWidth(chipset), h = getHeight(chipset);
-        if (w / grd._cellwidth <= 0 || w % grd._cellwidth != 0)
+        if (w / grd.getCellWidth() <= 0 || w % grd.getCellWidth() != 0)
             throw Exception("the grd file doesn't fit with the chipset",__LINE__);
 
         RectangleImage  src = {0,0,0,0};
         unsigned int    i = 0;
-        for (const auto& img : grd._images) {
+        for (const auto& img : grd.getImages()) {
 
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            auto r = CanvasResource::create<typename Res::ResourceType>(src,chipset,grd,i++);
+            auto r = CanvasResource::create<typename Res::ResourceType,ONLY_GPU>
+                     (src,chipset,grd,i++,detail::to_graphic_mode<Res>::software);
             r->applyMetadata(img);
 
             _sprites.push_back(Res(r));
 
-            src.x += grd._cellwidth;
-            if (src.x + grd._cellwidth > (unsigned int) w) {
+            src.x += grd.getCellWidth();
+            if (src.x + grd.getCellWidth() > (unsigned int) w) {
                 src.x = 0;
-                src.y += grd._cellheight;
-                if (src.y + grd._cellheight > (unsigned int) h)
+                src.y += grd.getCellHeight();
+                if (src.y + grd.getCellHeight() > (unsigned int) h)
                     throw Exception("the grd doesn't fit with the chipset",__LINE__);
             }
         }

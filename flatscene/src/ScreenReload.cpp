@@ -24,17 +24,20 @@ void ScreenImpl::deleteResources() {
 }
 
 void ScreenImpl::saveResources(GraphicResources &info) {
-
     for (auto& fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
-        fCanvas.first->_gpu.save();
-        fCanvas.first->_gpu.unload();
+        auto& gpu = fCanvas.first->_gpu;
+
+        gpu.copyToCPU();
+        gpu.removeFromGPU();
     }
 
 }
 
 void ScreenImpl::reloadResources(GraphicResources &info) {
     for (auto& fCanvas : RefCountMemoryPolicy<CanvasResource>::getCounts()) {
-        fCanvas.first->_gpu.reload();
+        auto& gpu = fCanvas.first->_gpu;
+        
+        gpu.copyToGPU();     
     }
 }
 

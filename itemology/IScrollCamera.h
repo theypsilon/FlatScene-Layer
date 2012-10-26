@@ -4,15 +4,15 @@
 #include "IScrollLevel.h"
 
 class IScrollCamera :
-    public Camera
+    public Cinema::Camera
 {
 private:
     Point* centro;
     int intraMargenX, intraMargenY;
 
-    std::vector<Camera*> layerset;
+    std::vector<Cinema::Camera*> layerset;
 
-    Actor objetive;
+    Cinema::Actor objetive;
 
     // TODO : funciones y variables privadas
 
@@ -22,7 +22,7 @@ public:
 
     // Constructor, se recomienda que se establezcan los siguientes par�metros.
     // Pueden ser necesarios para inicializar la clase base.
-    IScrollCamera(Actor* target,FlatScene::Rectangle* area);
+    IScrollCamera(Cinema::Actor* target,FlatScene::Rectangle* area);
 
     // Destructor, ah� deberemos liberar los recursos
     virtual ~IScrollCamera();
@@ -35,7 +35,7 @@ public:
 
     // Opcional. Fija el objetivo de la c�mara. La implementaci�n por defecto est� comentada
     // junto al resto de la implementaci�n de la clase.
-    virtual void setTarget(Actor* newTarget);
+    virtual void setTarget(Cinema::Actor* newTarget);
 
     // M�todo que se llama desde el m�todo de la clase base "render". Se debe encargar de actualizar los elementos gr�ficos.
     virtual void refresh();

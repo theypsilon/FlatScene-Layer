@@ -4,7 +4,7 @@
 #include "IScrollCamera.h"
 
 class IScrollCameraTile :
-    public Camera
+    public Cinema::Camera
 {
 private:
     int pix_w;
@@ -18,7 +18,7 @@ private:
 
     const std::vector<std::vector<Tile>>& tiles;
 public:
-    IScrollCameraTile(const std::vector<std::vector<Tile>>& tiles,Actor* target,FlatScene::Rectangle* area);
+    IScrollCameraTile(const std::vector<std::vector<Tile>>& tiles,Cinema::Actor* target,FlatScene::Rectangle* area);
     ~IScrollCameraTile(void);
 
     virtual void refresh();

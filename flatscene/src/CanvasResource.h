@@ -6,6 +6,7 @@
 #include "GraphicResourceDescriptor.h"
 #include "ImageId.h"
 #include "ImageAdapter.h"
+#include "BitmapHandler.h"
 
 namespace FlatScene {
 
@@ -13,24 +14,21 @@ namespace FlatScene {
     public:
         typedef Canvas          Handler;
 
-        void                applyMetadata(const GRD::Sprite& img) {
+        void                applyMetadata(const GRD::Image& img) {
             
         }
 
-        template <class Res = CanvasResource, GraphicMode mode = ONLY_GPU> 
+        template <class Res, GraphicMode mode> 
         static Res*             create(const RectangleImage& src, ConstRawImageResource chipset, 
-                                       const GRD&  grd, unsigned int n       );
+                                       const GRD&  grd, unsigned int n, bool software = false );
 
         template <class Res, class T1, class T2>
-        static Res*             create(T1&& imageId, T2&& bitmapGPU);
+        static Res*             create(T1&& imageId, T2&& BitmapHandler);
 
-        BitmapGPU::SizeType     getW() const       { return _gpu.getW();    }
-        BitmapGPU::SizeType     getH() const       { return _gpu.getH();    }
-        BitmapGPU::RelType      getRelW() const    { return _gpu.getRelW(); }
-        BitmapGPU::RelType      getRelH() const    { return _gpu.getRelH(); }
-
-        BitmapGPU::PixelType    getPixel(BitmapGPU::SizeType x, BitmapGPU::SizeType y) 
-                                                {   return _gpu.getPixel(x,y);  }
+        BitmapHandler::SizeType     getW() const       { return _gpu.inGPU()? _gpu.getTexW() : _gpu.getW(); } //TODO this shouldn't be necessary, hidden bug in rendering?
+        BitmapHandler::SizeType     getH() const       { return _gpu.inGPU()? _gpu.getTexH() : _gpu.getH(); }
+        BitmapHandler::RelType      getRelW() const    { return _gpu.getRelW(); }
+        BitmapHandler::RelType      getRelH() const    { return _gpu.getRelH(); }
 
         void                    put         (Float x, Float y, unsigned char flags) const;
         void                    translate   (Float x, Float y, Float z) const;
@@ -38,20 +36,30 @@ namespace FlatScene {
         void                    rotate      (Float angle, Float x, Float y, Float z) const;
         void                    color       (Float red, Float green, Float blue, Float alpha) const;
 
+        BitmapHandler::PixelType        getPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y) const 
+                                        {   return _gpu.getPixel(x,y);  }
+        const BitmapHandler::PAType&    getPixelBuffer() const
+                                        {   if (!_gpu.inCPU()) _gpu.copyToCPU(); return _gpu.getCPUBuffer(); }
+
+        void    setPixel(BitmapHandler::SizeType x, BitmapHandler::SizeType y, BitmapHandler::PixelType p);
+
+        void    modifyPixels(std::function<void(BitmapHandler::PAType&)> pred, bool flushchanges = true);
+        void    replacePixels(const BitmapHandler::PAType& buf, bool flushchanges = true);
+
         virtual ~CanvasResource() {}
 
         const ImageId   id;
     private:
-        template <class TImageId, class TBitmapGPU>
-        CanvasResource (TImageId&& nid, TBitmapGPU&& gpu) 
-            : id(std::forward<TImageId>(nid)), _gpu(std::forward<TBitmapGPU>(gpu)) {}
+        template <class TImageId, class TBitmapHandler>
+        CanvasResource (TImageId&& nid, TBitmapHandler&& gpu) 
+            : id(std::forward<TImageId>(nid)), _gpu(std::forward<TBitmapHandler>(gpu)) {}
 
-        BitmapGPU                                    _gpu;
+        BitmapHandler                                    _gpu;
         mutable std::list<std::function<void(void)>> _initCallbackList;
         mutable std::list<std::function<void(void)>> _endCallbackList;
 
         friend class SpriteResource;
-        friend class ScreenImpl;
+        friend struct ScreenImpl;
     };
 
 

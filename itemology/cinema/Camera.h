@@ -1,5 +1,5 @@
-#ifndef ___CAMERA___
-#define ___CAMERA___
+#ifndef CINEMA_CAMERA__
+#define CINEMA_CAMERA__
 
 #include "Actor.h"
  
@@ -9,23 +9,24 @@
 #include <vector>
 #include <string>
 
-namespace FlatScene {
-
+namespace Cinema {
     class Camera {
     protected:
         int x,y;
         Actor* target;
         Universe* uni;
-        Rectangle* area;
+        FlatScene::Rectangle* area;
 
         bool rendering;
 
         std::list<std::function<void()>> initRenderList;
         std::list<std::function<void()>> endRenderList;
 
+        typedef FlatScene::Float Float;
+
     public:
     
-        Camera(Actor* target,Rectangle* area);
+        Camera(Actor* target,FlatScene::Rectangle* area);
         virtual ~Camera();
         virtual void loadUniverse();
         virtual Universe* getUniverse();
@@ -36,20 +37,20 @@ namespace FlatScene {
         int& CY();
         Actor* Target();
         virtual void setTarget(Actor* newTarget);
-        Rectangle* getArea();
+        FlatScene::Rectangle* getArea();
 
         virtual void refresh();
         void render();
-        virtual void reubicate(Rectangle* nArea);
+        virtual void reubicate(FlatScene::Rectangle* nArea);
 
         void rotate(Float angle, Float x=0.0, Float y=0.0, Float z=1.0);
         void translate(Float x, Float y, Float z);
         void scale(Float x, Float y, Float z);
         void color(Float red, Float green, Float blue, Float alpha);
-        void color(Color* col,Float alpha=1.0);
+        void color(FlatScene::Color* col,Float alpha=1.0);
     
         void locateRenderScene ( Float posx=0, Float posy=0, Float width=0, Float height=0, Float zoom = 1.0);
-        void locateRenderScene ( Rectangle* areaSc, Float zoom = 1.0);
+        void locateRenderScene ( FlatScene::Rectangle* areaSc, Float zoom = 1.0);
 
         #ifdef MENSAJES_MSGIDS
         void SendMessage(Uint32 MsgID,MSGPARM ParmMsg=NULL);
@@ -57,7 +58,8 @@ namespace FlatScene {
     };
 
     void resyncUniverse(Camera& cam);
+} // Cinema
 
-} // flatscene
+#include "Camera-impl.h"
 
 #endif

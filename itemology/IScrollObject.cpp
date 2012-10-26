@@ -3,7 +3,7 @@
 int IScrollObject::instances = 0;
 
 IScrollObject::IScrollObject() 
-    : _placeInMA(nullptr), Actor("IScrollObject") {
+    : _placeInMA(nullptr), Cinema::Actor("IScrollObject") {
 
         instances++;
 
@@ -35,7 +35,7 @@ const std::string& IScrollObject::getCreature() {
     // CActor::getCreature() accede al valor que hemos configurado en el Constructor.
 }
 
-void IScrollObject::setUniverse(Universe* m) {
+void IScrollObject::setUniverse(Cinema::Universe* m) {
 
     // TODO
 
@@ -53,7 +53,7 @@ const Sprite* IScrollObject::getSprite() {
     return spt;
 }
 
-Actor* IScrollObject::clone() {
+Cinema::Actor* IScrollObject::clone() {
     Actor* act = nullptr;
 
     // TODO

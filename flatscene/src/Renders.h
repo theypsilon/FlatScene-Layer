@@ -5,7 +5,7 @@
 
 namespace FlatScene {
 
-    struct BitmapGPU;
+    class BitmapHandler;
 
     struct SRender {
         virtual void operator()()=0;
@@ -56,10 +56,10 @@ namespace FlatScene {
     };
 
     struct SRenderCanvas : SRender {
-        const BitmapGPU& bm;
+        const BitmapHandler& bm;
         unsigned char flags;
 
-        SRenderCanvas(const BitmapGPU& bm, unsigned char flags)
+        SRenderCanvas(const BitmapHandler& bm, unsigned char flags)
         : bm(bm), flags(flags) {}
 
         virtual void operator()();

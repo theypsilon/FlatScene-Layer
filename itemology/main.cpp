@@ -13,7 +13,7 @@ int main (int argc, char* argv[]) {
 
     cout << "Starting main" << endl;
 
-    // constexpr auto c = Color("#AABBCC");
+    // constexpr auto c = Color("FFAABBCC");
 
     // c.setR(0xAA);
     // c.setG(0x11);
@@ -21,15 +21,20 @@ int main (int argc, char* argv[]) {
     // c.setA(0x33);
 
     // cout << hex << c.getHex() << '.' << 
-    // // (int) c.R() << (int) c.G() << (int) c.B() << (int) c.A() <<'.' << 
-    // (int) c.getR() << (int) c.getG() << (int) c.getB() << (int) c.getA() << endl;
+    // (int) c.R() << (int) c.G() << (int) c.B() << (int) c.A() <<'.' << 
+    // (int) c.getA() << (int) c.getR() << (int) c.getG() << (int) c.getB() << endl;
 
     //run the application
     FSLib.startLibrary(false);
     FSDraw.start(640,480,32,1.0,1.0,false);
 
     try {
-        FSLib.processEngine(unique_ptr<IFirstEngine>(new IFirstEngine));
+        IFirstEngine e;
+        e.onInit();
+        e.loop();
+        e.onExit();
+    } catch (FlatScene::Exception &e) {
+        cout << "Exception catched: " << e.what() << endl;
     } catch (std::exception& e) {
         cout << "Exception catched: " << e.what() << endl;
     } catch (...) {

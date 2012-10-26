@@ -2,7 +2,6 @@
 #include "ScreenImpl.h"
 #include "Exception.h"
 #include "Algorithm.h"
-#include "ImageAdapter.h"
 
 namespace FlatScene {
 
