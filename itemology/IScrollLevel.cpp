@@ -262,7 +262,7 @@ void IScrollLevel::unload() {
     loaded=false;
 }
 
-int IScrollLevel::incActor(Actor* act) {
+int IScrollLevel::incActor(Cinema::Actor* act) {
     IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
     if (actscroll && act->getUniverse()==nullptr) {
@@ -286,7 +286,7 @@ int IScrollLevel::incActor(Actor* act) {
     }
 }
 
-int IScrollLevel::decActor(Actor* act) {
+int IScrollLevel::decActor(Cinema::Actor* act) {
     IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
     for (auto i=actor.begin();i!=actor.end();++i) {
