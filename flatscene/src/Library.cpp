@@ -1,12 +1,6 @@
-#ifdef WIN32
-#ifdef VISUAL_LEAKS
-    #include "vld.h"
-    #include "vldapi.h"
-#endif
-#endif
-
-#include "LibraryImpl.h"
-#include "ScreenImpl.h"
+#include "Library.h"
+#include "Includes.h"
+#include "Screen.h"
 #include "parserXML.h"
 
 #include "Exception.h"
@@ -18,22 +12,18 @@
 
 namespace FlatScene {
 
-Library::Library() {
-#ifdef IN_FILE_ERROR
-    (*_impl).errorsInSession = false;
-#endif
-#ifdef DEBUGTEST
-    (*_impl).debugging=false;
-    (*_impl).debugticks=Chrono.getTick();
-#endif
+    namespace detail {
+        void initLibrary() {
+            if(SDL_Init(SDL_INIT_TIMER)==-1) throw SDLException("Failed to Init SDL:");
 
-    if(SDL_Init(SDL_INIT_TIMER)==-1) throw SDLException("Failed to Init SDL:");
+            atexit(SDL_Quit);
+        }
+    }
 
-    atexit(SDL_Quit);
 
-}
+int startLibrary(bool xmlconfig) {
 
-int Library::startLibrary(bool xmlconfig) {
+    detail::initLibrary();
 
     if (xmlconfig) {
 
@@ -74,26 +64,10 @@ int Library::startLibrary(bool xmlconfig) {
     return EXIT_SUCCESS;
 }
 
-int Library::startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
+int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
+    detail::initLibrary();
     return Screen::I().start(width,height,bpp,fullscreen,doublebuff);
 }
-
-void Library::LibraryImpl::onExit() {
-
-    auto& _impl = Library::I()._impl;
-
-#ifdef IN_FILE_ERROR
-    if ((*_impl).errorsInSession) {
-        FILE* f=fopen("error.log","a+");
-        if (f) {
-            fprintf(f,"Session with errors finished without runtime collapse.\n");
-            fclose(f);
-        }
-    }
-#endif
-}
-
-Library::~Library() {}
 
 /*
 std::vector<std::unique_ptr<Engine>> Library::processEngine(std::unique_ptr<Engine>&& eng) {
@@ -294,30 +268,5 @@ void Library::killEngine(Engine* engine) {
         }
     });
 }*/
-
-#ifdef DEBUGTEST
-
-void Library::debug(bool startdebug,const char* warning) {
-    if (startdebug) {
-        if (!(*_impl).debugging) {
-            debugticks=Chrono.getTick();
-            fprintf(stderr,"\n** (+) La aplicacion ha entrado en estado de debug **\n");
-        }
-        if (warning)
-            fprintf(stderr,"DEBUG: %s\n",warning);
-        (*_impl).debugging = true;    // Siempre debe haber aqu� un Breakpoint para el Visual Studio.
-    }
-}
-
-bool Library::inDebug() {
-    if ((*_impl).debugging)
-        if (Chrono.getTick() > debugticks + DEBUGTESTTICKS) {
-            fprintf(stderr,"\n** (-) La aplicacion ha salido del estado de debug **\n");
-            (*_impl).debugging=false;
-        }
-    return (*_impl).debugging;
-}
-
-#endif
 
 } // flatscene

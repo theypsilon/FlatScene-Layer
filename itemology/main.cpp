@@ -4,8 +4,6 @@
 #include <iostream>
 #include <memory>
 
-
-Library& FSLib = Library::I();
 Screen& FSDraw = Screen::I();
 
 int main (int argc, char* argv[]) {
@@ -25,7 +23,7 @@ int main (int argc, char* argv[]) {
     // (int) c.getA() << (int) c.getR() << (int) c.getG() << (int) c.getB() << endl;
 
     //run the application
-    FSLib.startLibrary(false);
+    startLibrary(false);
     FSDraw.start(640,480,32,1.0,1.0,false);
 
     try {

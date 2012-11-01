@@ -8,7 +8,6 @@
 using namespace FS;
 using namespace CINE;
 
-extern Library& FSLib;
 extern Screen& FSDraw;
 
 #endif //ITEMOLOGY_INCLUDE

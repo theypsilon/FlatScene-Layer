@@ -31,18 +31,23 @@ unsigned int Time::setFPS(unsigned int fpsInterval) {
 }
 
 int  Time::nextFrame() {
+    using std::chrono::duration_cast;
+    using std::chrono::nanoseconds;
+    typedef std::chrono::clock clock;
+
+
     int ret = EXIT_SUCCESS;
 
-    while ((_msLast + _msInterval) > SDL_GetTicks()) {
+    while ((_msLast + _msInterval) > clock::now()) {
         SDL_Delay(1);
     }
-    _msLast = SDL_GetTicks();
+    _msLast = clock::now();
     _ticks++;
 
 #ifdef MENSAJES_FPS
     _fps++;
-    if (SDL_GetTicks() > _auxTimer + 1000) {
-        _auxTimer=SDL_GetTicks();
+    if (clock::now() > _auxTimer + 1000) {
+        _auxTimer=clock::now();
         //Writer::I().erase(Writer::I().line(0,5,5,"FPS: %d ",_fps),true);
         _fps=0;
     }
