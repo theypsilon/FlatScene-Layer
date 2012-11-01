@@ -41,6 +41,7 @@ int Screen::start(int width, int height, int bpp, bool fullscreen, bool doublebu
     if (0 == (initSDL & SDL_INIT_VIDEO)) {
         auto initFunc = !initSDL? SDL_Init : SDL_InitSubSystem;
         if (initFunc(SDL_INIT_VIDEO)==-1) throw SDLException("SDL_Init fails : ");
+        if (initFunc == SDL_Init) atexit(SDL_Quit);
     }
 
 #ifdef LOG_SISTEMA

@@ -1,16 +1,19 @@
 //include guards
-#ifndef __APPLICATION_H__
-#define __APPLICATION_H__
+#ifndef FS_LIBRARY_H__
+#define FS_LIBRARY_H__
 
-//include message handler(base class)
+#include "Screen.h"
 
 namespace FlatScene {
 
-    int startLibrary(bool xmlconfig);
+    namespace Library {
 
-    int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff=true ) ;
+        inline int init( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
+            return Screen::I().start(width,height,bpp,fullscreen,doublebuff);
+        }
 
+    }
 
 } // flatscene
 
-#endif //#ifndef __APPLICATION_H__
+#endif //#ifndef FS_LIBRARY_H__

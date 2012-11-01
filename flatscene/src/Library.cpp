@@ -12,62 +12,47 @@
 
 namespace FlatScene {
 
-    namespace detail {
-        void initLibrary() {
-            if(SDL_Init(SDL_INIT_TIMER)==-1) throw SDLException("Failed to Init SDL:");
 
-            atexit(SDL_Quit);
-        }
-    }
+// int startLibrary(bool xmlconfig) {
 
+//     if (xmlconfig) {
 
-int startLibrary(bool xmlconfig) {
+//         bool fullscreen= false;
 
-    detail::initLibrary();
-
-    if (xmlconfig) {
-
-        bool fullscreen= false;
-
-        int res_x = RESOLUCION_X;
-        int res_y = RESOLUCION_Y;
-        int bpp = BITMODE;
+//         int res_x = RESOLUCION_X;
+//         int res_y = RESOLUCION_Y;
+//         int bpp = BITMODE;
 
 
-        TiXmlDocument xmldoc("config.xml");
-        if (!xmldoc.LoadFile()) throw FileDoesntExistException("config.xml");
+//         TiXmlDocument xmldoc("config.xml");
+//         if (!xmldoc.LoadFile()) throw FileDoesntExistException("config.xml");
 
-        TiXmlHandle input(xmldoc.FirstChildElement("System")); TiXmlElement* node;
-        node = input.FirstChildElement("fullscreen").ToElement();
-        if (node) {
-            if (node->Attribute("option") && strcmp(node->Attribute("option"),"yes")==0)
-                fullscreen = true;
-        }
-        node = input.FirstChildElement("mode").ToElement();
-        if (node) {
-            if (node->Attribute("width"))
-                node->QueryIntAttribute("width",&res_x);
-            if (node->Attribute("height"))
-                node->QueryIntAttribute("height",&res_y);
-            if (node->Attribute("bpp"))
-                node->QueryIntAttribute("bpp",&bpp);
-        }
+//         TiXmlHandle input(xmldoc.FirstChildElement("System")); TiXmlElement* node;
+//         node = input.FirstChildElement("fullscreen").ToElement();
+//         if (node) {
+//             if (node->Attribute("option") && strcmp(node->Attribute("option"),"yes")==0)
+//                 fullscreen = true;
+//         }
+//         node = input.FirstChildElement("mode").ToElement();
+//         if (node) {
+//             if (node->Attribute("width"))
+//                 node->QueryIntAttribute("width",&res_x);
+//             if (node->Attribute("height"))
+//                 node->QueryIntAttribute("height",&res_y);
+//             if (node->Attribute("bpp"))
+//                 node->QueryIntAttribute("bpp",&bpp);
+//         }
 
-        bool doublebuff=true;
+//         bool doublebuff=true;
 
-        srand(rand());
+//         srand(rand());
 
-        return Screen::I().start(res_x,res_y,bpp,fullscreen,doublebuff);
+//         return Screen::I().start(res_x,res_y,bpp,fullscreen,doublebuff);
 
-    }
+//     }
 
-    return EXIT_SUCCESS;
-}
-
-int startLibrary( int width , int height , int bpp , bool fullscreen, bool doublebuff ) {
-    detail::initLibrary();
-    return Screen::I().start(width,height,bpp,fullscreen,doublebuff);
-}
+//     return EXIT_SUCCESS;
+// }
 
 /*
 std::vector<std::unique_ptr<Engine>> Library::processEngine(std::unique_ptr<Engine>&& eng) {
