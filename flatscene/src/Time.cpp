@@ -3,6 +3,7 @@
 #include "Library.h"
 
 #include "Includes.h"
+#include <chrono>
 
 #include <chrono>
 
@@ -36,15 +37,18 @@ unsigned int Time::setFPS(unsigned int fpsInterval) {
 int  Time::nextFrame() {
     using std::chrono::duration_cast;
     using std::chrono::nanoseconds;
-    typedef std::chrono::steady_clock clock;
+    typedef std::chrono::system_clock clock;
+    typedef std::chrono::time_point<std::chrono::system_clock> time;
 
 
     int ret = EXIT_SUCCESS;
 
-    while ((_msLast + _msInterval) > clock::now().time_since_epoch().count()) {
+    auto ms = clock::now() + std::chrono::milliseconds(_msLast + _msInterval);
+
+    while (ms > clock::now()) {
         SDL_Delay(1);
     }
-    _msLast = (unsigned int) clock::now().time_since_epoch().count();
+    _msLast = clock::now().time_since_epoch().count();
     _ticks++;
 
 #ifdef MENSAJES_FPS

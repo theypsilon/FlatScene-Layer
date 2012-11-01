@@ -36,7 +36,12 @@ int Screen::start(int width, int height, int bpp, bool fullscreen, bool doublebu
 
     if (_impl->m_SDL_Surface) throw Exception("Video ya inicializado, orden imposible 'start'\n");
 
-    if (SDL_InitSubSystem(SDL_INIT_VIDEO)==-1) throw SDLException("SDL_InitSubSystem(SDL_INIT_VIDEO) falla : ");
+    unsigned int initSDL = SDL_WasInit(SDL_INIT_EVERYTHING);
+
+    if (0 == (initSDL & SDL_INIT_VIDEO)) {
+        auto initFunc = !initSDL? SDL_Init : SDL_InitSubSystem;
+        if (initFunc(SDL_INIT_VIDEO)==-1) throw SDLException("SDL_Init fails : ");
+    }
 
 #ifdef LOG_SISTEMA
     printf("Iniciando Video Mode...\n");
