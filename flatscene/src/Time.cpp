@@ -32,7 +32,7 @@ int  Time::nextFrame() {
     auto ms = clock::now() + std::chrono::milliseconds(_msLast + _msInterval);
 
     while (ms > clock::now()) {
-        std::this_thread::sleep_for(std::chrono::nanoseconds(1));
+        std::this_thread::yield();
     }
     _msLast = clock::now().time_since_epoch().count();
     _ticks++;
