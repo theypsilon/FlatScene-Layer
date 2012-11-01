@@ -10,11 +10,6 @@ namespace FlatScene {
         unsigned int _msLast;
         unsigned int _ticks;
 
-    #ifdef MENSAJES_FPS
-        unsigned int _fps;
-        unsigned int _auxTimer;
-    #endif
-
     public:
         Time();
         ~Time();
