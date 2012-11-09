@@ -19,6 +19,7 @@ Time::~Time() {}
 
 unsigned int Time::getTick() const {
     return _ticks;
+
 }
 
 unsigned int Time::setInterval(unsigned int msInterval) {

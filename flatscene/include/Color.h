@@ -13,7 +13,7 @@ namespace FlatScene {
     private:
         Byte _r,_g,_b,_a;
     public:
-        Color(Byte r,Byte g, Byte b, Byte a) : _r(r), _b(b), _g(g), _a(a) {}
+        Color(Byte r,Byte g, Byte b, Byte a) : _r{r}, _b{b}, _g{g}, _a{a} {}
         Byte getR() const { return _r; }
         Byte getG() const { return _g; }
         Byte getB() const { return _b; }
@@ -31,7 +31,7 @@ namespace FlatScene {
         unsigned int _color;
     public:
 
-        constexpr Color() noexcept : _color(0x00000000) {}
+        constexpr Color() noexcept : _color{0x00000000} {}
         constexpr Color(Byte nr, Byte ng, Byte nb, Byte na=255) noexcept;
         constexpr explicit Color(unsigned int hex, bool ceroalpha = false) noexcept;
         template <std::size_t N> 

@@ -43,8 +43,8 @@ namespace FlatScene {
     }
 
     template <class Container>
-    inline void call_to_all( const Container& container ) {
-        for (const auto& callback : container) {
+    inline void call_to_all( Container&& container ) {
+        for (auto& callback : container) {
             callback();
         }
     }
