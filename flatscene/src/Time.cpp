@@ -4,6 +4,8 @@
 
 #include "Includes.h"
 
+#include <chrono>
+
 namespace FlatScene {
 
 Time::Time() {
@@ -33,15 +35,15 @@ unsigned int Time::setFPS(unsigned int fpsInterval) {
 int  Time::nextFrame() {
     using std::chrono::duration_cast;
     using std::chrono::nanoseconds;
-    typedef std::chrono::clock clock;
+    typedef std::chrono::steady_clock clock;
 
 
     int ret = EXIT_SUCCESS;
 
-    while ((_msLast + _msInterval) > clock::now()) {
+    while ((_msLast + _msInterval) > clock::now().time_since_epoch().count()) {
         SDL_Delay(1);
     }
-    _msLast = clock::now();
+    _msLast = (unsigned int) clock::now().time_since_epoch().count();
     _ticks++;
 
 #ifdef MENSAJES_FPS
