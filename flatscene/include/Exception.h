@@ -10,7 +10,7 @@ namespace FlatScene {
     class Exception : public std::exception {
     public:
         Exception(std::string describe = "FlatScene::Exception", int line = -1, const char* file = nullptr)
-            : _description(std::move(describe)) 
+            : _description{std::move(describe)} 
         {
             if (file) {
                 _description += "\n\t::file " + std::string(file);
@@ -22,7 +22,7 @@ namespace FlatScene {
 
         virtual ~Exception() throw() {}
 
-        virtual const char* what() const throw() {
+        virtual const char* what() const throw() override {
             return _description.c_str();
         }
     private:
@@ -33,7 +33,7 @@ namespace FlatScene {
     class DerivedException : public Exception {
     public:
         DerivedException(std::string describe = "", int line = -1, const char* file = nullptr)
-            : Exception(std::move(describe) + " ::type = "+typeid(DerivedException<N>).name(),line,file)
+            : Exception{std::move(describe) + " ::type = "+typeid(DerivedException<N>).name(),line,file}
         {}
 
         virtual ~DerivedException() throw() {}

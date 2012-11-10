@@ -13,6 +13,7 @@ namespace FlatScene { namespace Util {
 
     template <class IndexType, class PointerType, bool CreationBoost=true, int Instance=0>
     class IndexedPointer {
+        static_assert(std::is_convertible<IndexType,long long>::value,"Index type invalid for IndexedPointer.");
 
         typedef IndexedPointer<IndexType,PointerType,CreationBoost,Instance>    Type;
         typedef std::numeric_limits<IndexType>                                  IndexLimit;
@@ -24,7 +25,7 @@ namespace FlatScene { namespace Util {
 
         IndexType _storePointer(PointerType* ptr) {
             if (ptr) {
-                //static if (CreationBoost) { //@TODO Optimization for C++11 compilers
+                //static if (CreationBoost) { //@TODO Optimization for C++17 compilers
                 auto it = _indexMap.find(ptr);
                 //} else {
                 //    auto it = std::find_if(_ptrMap.begin(),_ptrMap.end(),[&](const decltype(*_ptrMap.end())& value) {
@@ -68,20 +69,19 @@ namespace FlatScene { namespace Util {
     public:
 
         IndexedPointer(PointerType* ptr) 
-            : _index(_storePointer(ptr)) 
+            : _index{_storePointer(ptr)} 
         {
-            static_assert(std::is_convertible<IndexType,long long>::value,"Index type invalid for IndexedPointer.");
             _increaseIndexCount();
         }
 
         IndexedPointer(const Type& rhs)
-            : _index(rhs._index)
+            : _index{rhs._index}
         {
             _increaseIndexCount();
         }
 
         IndexedPointer(Type&& rhs) 
-            : _index(rhs._index) 
+            : _index{rhs._index} 
         {
             rhs._index = _indexCounter.getInvalid();
         }

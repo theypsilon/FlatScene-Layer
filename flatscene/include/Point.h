@@ -5,17 +5,15 @@
 
 namespace FlatScene {
 
-    template <class T=int>
+    template <class T>
     struct Point2D {
         T x ;
         T y ;
 
-        Point2D ( T x = 0 , T y  = 0 ) 
-        : x(x), y(y) {}
-
-        template <class U>
-        Point2D ( const U& pt )
-        : x(pt.x), y(pt.y) {}
+        Point2D ( T nx , T ny ) : x{nx}, y{ny} {}
+         
+        template <class U> Point2D ( U&& pt )
+            : Point2D{pt.x, pt.y} {}
 
         inline T getX() const { return x; }
         inline T getY() const { return y; }

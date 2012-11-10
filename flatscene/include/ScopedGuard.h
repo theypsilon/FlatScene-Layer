@@ -11,7 +11,7 @@ namespace FlatScene {
     class ScopedGuard : private Util::NonCpmvable {
     public:
 
-        ScopedGuard(std::function<void(void)> f) : _f(std::move(f)), _dismissed(false) {}
+        ScopedGuard(std::function<void(void)> f) : _f{std::move(f)}, _dismissed{false} {}
 
         ~ScopedGuard() { 
             if (!_dismissed) {
@@ -19,12 +19,12 @@ namespace FlatScene {
             }
         }
 
-        void dismiss() {
+        void dismiss() nothrow {
             _dismissed = true;
         }
 
     private:
-        void execute() {
+        void execute() nothrow {
             using namespace std;
             try {
                 _f();

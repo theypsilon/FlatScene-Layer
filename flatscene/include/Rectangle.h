@@ -19,15 +19,15 @@ namespace FlatScene {
         T x,y,w,h;
 
         Rect (T x=0, T y=0, T w=0, T h=0)
-        : x(x), y(y), w(w), h(h) {}
+            : x{x}, y{y}, w{w}, h{h} {}
 
         template <class U>
         Rect (const U& rc)
-        : x((T)rc.x), y((T)rc.y), w((T)rc.w), h((T)rc.h) {}
+            : Rect{(T)rc.x, (T)rc.y, (T)rc.w, (T)rc.h} {}
 
         template <class U1,class U2>
         Rect (const U1& p1,const U2& p2)
-        : x((T)p1.x), y((T)p1.y), w((T)p2.x), h((T)p2.y) {}
+            : Rect{(T)p1.x, (T)p1.y, (T)p2.x, (T)p2.y} {}
 
         inline T getX() const { return x; }
         inline T getY() const { return y; }

@@ -11,18 +11,16 @@ namespace FlatScene { namespace Util {
         std::shared_ptr<DataType> _data;
     public:
         SharedDataHandler(DataType* ptr) 
-            : _data(ptr) 
+            : _data{ptr}
         {}
 
         SharedDataHandler(const SharedDataHandler& rhs) 
-            : _data(rhs._data) 
+            : _data{rhs._data}
         {}
 
         SharedDataHandler(SharedDataHandler&& rhs)
-            : _data(std::move(rhs._data))
-        {
-            rhs._data.reset(nullptr);
-        }
+            : _data{std::move(rhs._data)}
+        {}
         
         SharedDataHandler& operator=(const SharedDataHandler& rhs) {
             if (&rhs == this) return *this;

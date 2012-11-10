@@ -12,15 +12,11 @@ namespace FlatScene {
 
         T z;
 
-        Point3D(T x=0,T y=0,T z=0)
-        : Point2D<T>::Point2D(x,y), z(z) {}
+        Point3D(T nx=0,T ny=0,T nz=0)
+        : Point2D<T>::Point2D{nx,ny}, z{nz} {}
 
         template <class U>
-        Point3D(const U& coord) {
-            x = coord.x;
-            y = coord.y;
-            z = coord.z;
-        }
+        Point3D(const U& coord) Point3D{coord.x,coord.y,coord.z} {}
 
         inline T getZ() const { return z; }
         void setZ(T nz) { z = nz; }

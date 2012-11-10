@@ -35,7 +35,7 @@ namespace FlatScene { namespace Util {
             return IndexLimit::max();
         }
 
-        IndexHandler() : _nextIndex(IndexLimit::min()) {}
+        IndexHandler() : _nextIndex{IndexLimit::min()} {}
         ~IndexHandler() {}
 
         bool remove(IndexType index) {

@@ -12,7 +12,7 @@ namespace FlatScene {
 
     #define RENDER_TEXTURE_STANDARD 0x00000001
 
-    enum TypeRendeProjection {
+    enum class TypeRendeProjection {
         TRP_ORTHO,
         TRP_PERSPECTIVE
     };

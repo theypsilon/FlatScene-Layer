@@ -26,7 +26,7 @@ namespace FlatScene {
             std::map<int,Area>  areas;
             std::map<int,bool>  a_isRel;
 
-            Image(DimPoint ndim = DimPoint(),CPoint ncp = CPoint()) : dim(ndim), cp(ncp) {}
+            Image(DimPoint ndim = DimPoint(),CPoint ncp = CPoint()) : dim{ndim}, cp{ncp} {}
         };
 
         GRD(unsigned int width, unsigned int height, std::string file);

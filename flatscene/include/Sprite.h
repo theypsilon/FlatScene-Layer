@@ -8,7 +8,7 @@
 
 namespace FlatScene {
 
-    enum SpriteOpaque {
+    enum class SpriteOpaque {
         SPRITE_OPAQUE_NOT_CHEQUED,
         SPRITE_OPAQUE,
         SPRITE_TRANSPARENT,

@@ -23,11 +23,11 @@ namespace FlatScene {
         typedef MemoryPolicy    MemoryPolicyType;
 
         ResourceHandler(const ResourceHandler& handler) 
-            : _res(add(handler._res))
+            : _res{add(handler._res)}
         {}
 
         ResourceHandler(ResourceHandler&& handler)
-            : _res(move(handler._res))
+            : _res{move(handler._res)}
         {}
 
         virtual ~ResourceHandler() {
