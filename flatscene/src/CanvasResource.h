@@ -8,7 +8,11 @@
 #include "ImageAdapter.h"
 #include "BitmapHandler.h"
 
+#include <unordered_set>
+
 namespace FlatScene {
+
+    extern std::unordered_set<CanvasResource*> cresSet;
 
     class CanvasResource {
     public:
@@ -46,13 +50,18 @@ namespace FlatScene {
         void    modifyPixels(std::function<void(BitmapHandler::PAType&)> pred, bool flushchanges = true);
         void    replacePixels(const BitmapHandler::PAType& buf, bool flushchanges = true);
 
-        virtual ~CanvasResource() {}
+        virtual ~CanvasResource() {
+            cresSet.erase(this);
+        }
 
         const ImageId   id;
     private:
         template <class TImageId, class TBitmapHandler>
         CanvasResource (TImageId&& nid, TBitmapHandler&& gpu) 
-            : id(std::forward<TImageId>(nid)), _gpu(std::forward<TBitmapHandler>(gpu)) {}
+            : id(std::forward<TImageId>(nid)), _gpu(std::forward<TBitmapHandler>(gpu)) 
+        {
+            cresSet.insert(this);
+        }
 
         BitmapHandler                                    _gpu;
         mutable std::list<std::function<void(void)>> _initCallbackList;
