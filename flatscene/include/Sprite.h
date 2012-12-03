@@ -4,7 +4,7 @@
 #include "Canvas.h"
 #include <string>
 #include <vector>
-#include <memory>
+#include <map>
 
 namespace FlatScene {
 
