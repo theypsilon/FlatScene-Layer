@@ -64,18 +64,10 @@ namespace FlatScene {
         unsigned int    getPixel(unsigned int x, unsigned int y) const;
     protected:
         SoftwareCanvas(std::shared_ptr<CanvasResource> res) : _res(res) {}
-
-        template <class Res = CanvasResource> Res& getRes() const {
-            return *std::static_pointer_cast<Res>(_res);
-        }
-    private:
-
         std::shared_ptr<CanvasResource> _res;
+    private:
         
-        friend class FSTextBox;
-        friend class Sprite;
         template <class Res> friend class ImageSetResource;
-        friend class Images;
         friend class Screen;
     };
 

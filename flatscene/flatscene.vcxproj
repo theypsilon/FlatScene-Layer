@@ -102,7 +102,6 @@
     <ClCompile Include="src\EventAdapter.cpp" />
     <ClCompile Include="src\GraphicResourceDescriptor.cpp" />
     <ClCompile Include="src\ImageSet.cpp" />
-    <ClCompile Include="src\Library.cpp" />
     <ClCompile Include="src\Renders.cpp" />
     <ClCompile Include="src\ResourceHandlers.cpp" />
     <ClCompile Include="src\Screen.cpp" />
