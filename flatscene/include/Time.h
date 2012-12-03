@@ -15,7 +15,7 @@ namespace FlatScene {
         ~Time();
         unsigned int setInterval(unsigned int msInterval );
         unsigned int setFPS(unsigned int fpsInterval );
-        int nextFrame();
+        void nextFrame();
         unsigned int getTick() const;
         void reset(unsigned int tick = 0);
     };

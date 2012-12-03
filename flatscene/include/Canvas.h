@@ -15,9 +15,10 @@ namespace FlatScene {
 
     class CanvasResource;
 
-    class Canvas 
-    : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
+    class Canvas {
     public:
+        typedef CanvasResource ResourceType;
+
         int             getWidth() const;
         int             getHeight() const;
 
@@ -35,8 +36,14 @@ namespace FlatScene {
         void            color(const Color& col,Float alpha=1.0) const;
 
     protected:
-        Canvas(CanvasResource* res);
+        Canvas(std::shared_ptr<CanvasResource> res) : _res(res) {}
+
+        template <class Res = CanvasResource> Res& getRes() const {
+            return *std::static_pointer_cast<Res>(_res);
+        }
     private:
+
+        std::shared_ptr<CanvasResource> _res;
         
         friend class FSTextBox;
         friend class Sprite;
@@ -47,16 +54,23 @@ namespace FlatScene {
 
     /* This class is the same as Canvas, but it can't be rendered. *
      * You may use this as a memory optimization                   */
-    class SoftwareCanvas 
-    : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
+    class SoftwareCanvas {
     public:
+        typedef CanvasResource ResourceType;
+        
         int             getWidth() const;
         int             getHeight() const;
 
         unsigned int    getPixel(unsigned int x, unsigned int y) const;
     protected:
-        SoftwareCanvas(CanvasResource* res);
+        SoftwareCanvas(std::shared_ptr<CanvasResource> res) : _res(res) {}
+
+        template <class Res = CanvasResource> Res& getRes() const {
+            return *std::static_pointer_cast<Res>(_res);
+        }
     private:
+
+        std::shared_ptr<CanvasResource> _res;
         
         friend class FSTextBox;
         friend class Sprite;

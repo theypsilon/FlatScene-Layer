@@ -20,7 +20,8 @@ namespace FlatScene {
 
     template <class ImageType>
     ImageSet<ImageType>::ImageSet(std::string c) 
-        : detail::res_set<ImageType>::type (ImageSetResource<ImageType>::create(std::move(c)))
+        : detail::res_set<ImageType>::type (
+            ImageSetResource<ImageType>::create(std::move(c)))
     {}
 
     template <class ImageType>

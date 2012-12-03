@@ -6,10 +6,9 @@
 
 namespace FlatScene {
 
-    Sprite::Sprite(SpriteResource* res) 
-        : Canvas(res)
-    {}
-
+    Sprite::Sprite(std::shared_ptr<SpriteResource> res) 
+        : Canvas(std::static_pointer_cast<CanvasResource>(res)) {}
+    
     void Sprite::put (Point ptDst, unsigned char flags) const {
         if (flags & 0x001) {
             ptDst.y -= getRes<SpriteResource>().getCenter().y;
@@ -59,9 +58,8 @@ namespace FlatScene {
     }
 
 
-    SoftwareSprite::SoftwareSprite(SpriteResource* res) 
-        : SoftwareCanvas(res)
-    {}
+    SoftwareSprite::SoftwareSprite(std::shared_ptr<SpriteResource> res) 
+        : SoftwareCanvas(std::static_pointer_cast <CanvasResource>(res)) {}
 
     void SoftwareSprite::setName (std::string newName) {
         getRes<SpriteResource>().setName(std::move(newName));

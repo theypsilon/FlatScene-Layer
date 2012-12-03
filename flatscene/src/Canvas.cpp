@@ -5,10 +5,6 @@
 
 namespace FlatScene {
 
-Canvas::Canvas(CanvasResource* res) 
-    : ResourceHandler(res)
-{}
-
 unsigned int Canvas::getPixel(unsigned int x, unsigned int y) const {
     return getRes().getPixel(x,y);
 }
@@ -42,10 +38,6 @@ void Canvas::color(const Color& col, Float alpha) const {
             alpha );
 }
 
-
-SoftwareCanvas::SoftwareCanvas(CanvasResource* res) 
-    : ResourceHandler(res)
-{}
 
 unsigned int SoftwareCanvas::getPixel(unsigned int x, unsigned int y) const {
     return getRes().getPixel(x,y);

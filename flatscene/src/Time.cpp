@@ -26,7 +26,7 @@ unsigned int Time::setFPS(unsigned int fpsInterval) {
     return (1000 / aux);
 }
 
-int  Time::nextFrame() {
+void  Time::nextFrame() {
     typedef std::chrono::system_clock clock;
 
     auto ms = clock::now() + std::chrono::milliseconds(_msLast + _msInterval);
@@ -36,8 +36,6 @@ int  Time::nextFrame() {
     }
     _msLast = clock::now().time_since_epoch().count();
     _ticks++;
-
-    return EXIT_SUCCESS;
 }
 
 void Time::reset(unsigned int tick) {
