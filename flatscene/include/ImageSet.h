@@ -1,24 +1,22 @@
-#ifndef FS__SPRITESET_H__
-#define FS__SPRITESET_H__
+#ifndef FS_IMAGESET_H__
+#define FS_IMAGESET_H__
 
 #include "Sprite.h"
-#include "ResourceHandler.h"
 
 namespace FlatScene {
 
     template <class Res> class ImageSetResource;
 
     template <class ImageType>
-    class ImageSet 
-    : public ResourceHandler<
-        ImageSetResource<ImageType>,
-        RefCountMemoryPolicy<ImageSetResource<ImageType>> > {
+    class ImageSet {
     public:
         ImageSet(std::string pathToFile);
 
         const std::string&                  getName   () const;
         const std::vector<ImageType>&       get       () const;
         const std::vector<ImageType>*const  operator->() const;
+    private:
+        std::shared_ptr<ImageSetResource<ImageType>> _res;
     };
 
     typedef ImageSet<Sprite>            Spriteset;
@@ -28,4 +26,4 @@ namespace FlatScene {
 
 } // flatscene
 
-#endif // FS__SPRITESET_H__
+#endif // FS_IMAGESET_H__

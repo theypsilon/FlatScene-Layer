@@ -1,5 +1,5 @@
-#ifndef FS_SPRITESET_IMPL__
-#define FS_SPRITESET_IMPL__
+#ifndef FS_IMAGESET_RESOURCE_H__
+#define FS_IMAGESET_RESOURCE_H__
 
 #include "ImageSet.h"
 #include "Exception.h"
@@ -14,7 +14,6 @@
 #include "TinyXMLHelper.h"
 #include "CanvasResourceFactory.h"
 #include "SpriteResource.h"
-#include "RefCountMemoryPolicyImpl.h"
 
 #include "GraphicResourceDescriptor.h"
 
@@ -45,13 +44,23 @@ class ImageSetResource {
 public:
 
     template <class T>
-    static ImageSetResource<Res>*const create(T&& c) {
-        typedef RefCountMemoryPolicy<ImageSetResource<Res>> MemoryPolicyType;
-        for(auto& set : MemoryPolicyType::getCounts()) {
+    static std::shared_ptr<ImageSetResource<Res>> create(T&& c) {
+        static std::unordered_map<ImageSetResource<Res>*,std::weak_ptr<ImageSetResource<Res>>> setsInUse;
+        for(auto& set : setsInUse) {
             if (set.first->getName() == c)
-                return set.first;
+                return set.second.lock();
         }
-        return new ImageSetResource<Res>(std::forward<T>(c));
+        auto res = std::shared_ptr<ImageSetResource<Res>>(
+            new ImageSetResource<Res>(std::forward<T>(c)),
+            [&] (ImageSetResource<Res>* p) {
+                assert(setsInUse.find(p)  != setsInUse.end());
+                assert(setsInUse.find(p)->second.expired());
+                setsInUse.erase(p);
+                delete p;
+            }
+        );
+        setsInUse.emplace(res.get(),res);
+        return res;
     }
 
     template <class T>
@@ -180,4 +189,4 @@ private:
 
 } // flatscene
 
-#endif // FS_SPRITESET_IMPL__
+#endif // FS_IMAGESET_RESOURCE_H__
