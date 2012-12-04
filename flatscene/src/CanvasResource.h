@@ -63,8 +63,8 @@ namespace FlatScene {
     private:
 
         BitmapHandler                                    _gpu;
-        mutable std::list<std::function<void(void)>> _initCallbackList;
-        mutable std::list<std::function<void(void)>> _endCallbackList;
+        mutable std::vector<std::function<void(void)>> _initCallbackList;
+        mutable std::vector<std::function<void(void)>> _endCallbackList;
 
         friend class SpriteResource;
         friend struct ScreenImpl;
