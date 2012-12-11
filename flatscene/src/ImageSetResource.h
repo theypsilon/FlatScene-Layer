@@ -43,23 +43,24 @@ template <class Res>
 class ImageSetResource {
 public:
 
-    template <class T>
-    static std::shared_ptr<ImageSetResource<Res>> create(T&& c) {
-        static std::unordered_map<ImageSetResource<Res>*,std::weak_ptr<ImageSetResource<Res>>> setsInUse;
-        for(auto& set : setsInUse) {
-            if (set.first->getName() == c)
-                return set.second.lock();
-        }
+    static std::shared_ptr<ImageSetResource<Res>> create(std::string c) {
+        static std::unordered_map<std::string,std::weak_ptr<ImageSetResource<Res>>> setsInUse;
+
+        if (auto it = setsInUse.find(c) != setsInUse.end())
+            return setsInUse[c].lock();
+
         auto res = std::shared_ptr<ImageSetResource<Res>>(
-            new ImageSetResource<Res>(std::forward<T>(c)),
-            [&] (ImageSetResource<Res>* p) {
-                assert(setsInUse.find(p)  != setsInUse.end());
-                assert(setsInUse.find(p)->second.expired());
-                setsInUse.erase(p);
+            new ImageSetResource<Res>(c),
+            [] (ImageSetResource<Res>* p) {
+                assert(p);
+                auto name = p->getName();
+                assert(setsInUse.find(name)  != setsInUse.end());
+                assert(setsInUse.find(name)->second.expired());
+                setsInUse.erase(name);
                 delete p;
             }
         );
-        setsInUse.emplace(res.get(),res);
+        setsInUse.emplace(c,res);
         return res;
     }
 

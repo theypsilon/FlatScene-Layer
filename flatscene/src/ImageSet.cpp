@@ -29,4 +29,9 @@ namespace FlatScene {
     template class ImageSet<SoftwareSprite>;
     template class ImageSet<SoftwareCanvas>;
 
+    std::unordered_map<std::string,std::weak_ptr<ImageSetResource<Sprite>>> setsInUse;
+    // std::unordered_map<std::string,std::weak_ptr<ImageSetResource<Canvas>>> setsInUse;
+    // std::unordered_map<std::string,std::weak_ptr<ImageSetResource<SoftwareSprite>>> setsInUse;
+    // std::unordered_map<std::string,std::weak_ptr<ImageSetResource<SoftwareCanvas>>> setsInUse;
+
 } // flatscene
