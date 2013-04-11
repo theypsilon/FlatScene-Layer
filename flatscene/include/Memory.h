@@ -64,9 +64,6 @@ namespace FlatScene {
 
     template <typename T>
     bool operator==(const std::weak_ptr<T>& lhs, const std::weak_ptr<T>& rhs) {
-        if (lhs.expired() || rhs.expired()) {
-            return false;
-        }
         auto s1 = lhs.lock();
         auto s2 = rhs.lock();
         return s1.get() == s2.get();
