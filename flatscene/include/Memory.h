@@ -27,6 +27,7 @@ namespace FlatScene {
             if (auto it = _kvmap.find(k) != _kvmap.end())
                 return _kvmap[k].lock();
 
+            assert(factory);
             auto res = std::shared_ptr<V>(
                 factory(),
                 [&] (V* p) {
