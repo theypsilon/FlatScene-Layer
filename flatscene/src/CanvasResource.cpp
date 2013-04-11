@@ -4,7 +4,7 @@
 
 namespace FlatScene {
 
-    SetCRes cresSet;
+    CanvasResourceMonitor gCRMonitor;
     
     void CanvasResource::put(Float x, Float y, unsigned char flags) const {
         auto& gm = Screen::I()._impl->graphicMaterial;

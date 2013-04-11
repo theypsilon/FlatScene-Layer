@@ -12,10 +12,9 @@
 
 namespace FlatScene {
 
-    typedef std::weak_ptr<CanvasResource> SetCResElement;
-    typedef std::unordered_set<SetCResElement> SetCRes;
+    typedef std::unordered_set<std::weak_ptr<CanvasResource>> CanvasResourceMonitor;
 
-    extern SetCRes cresSet;
+    extern CanvasResourceMonitor gCRMonitor;
 
     class CanvasResource {
     public:

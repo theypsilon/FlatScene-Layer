@@ -44,10 +44,6 @@ template <class Res>
 class ImageSetResource {
 public:
 
-    static std::shared_ptr<ImageSetResource<Res>> create(std::string c) {
-        return make_cached_shared<ImageSetResource<Res>>(c);
-    }
-
     template <class T>
     ImageSetResource(T&& c) 
         : _name(std::forward<T>(c)) {
