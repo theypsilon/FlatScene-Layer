@@ -1,23 +1,20 @@
-#ifndef FS_IMAGE_H__
-#define FS_IMAGE_H__
+#ifndef FS_CANVAS_H__
+#define FS_CANVAS_H__
 
 #include "Types.h"
 #include "Color.h"
-#include <string>
-#include <list>
-#include <functional>
-#include <map>
-
-#include "ResourceHandler.h"
 #include "GraphicTypes.h"
+
+#include <memory>
 
 namespace FlatScene {
 
     class CanvasResource;
 
-    class Canvas 
-    : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
+    class Canvas {
     public:
+        typedef CanvasResource ResourceType;
+
         int             getWidth() const;
         int             getHeight() const;
 
@@ -35,33 +32,30 @@ namespace FlatScene {
         void            color(const Color& col,Float alpha=1.0) const;
 
     protected:
-        Canvas(CanvasResource* res);
+        Canvas(std::shared_ptr<CanvasResource> res) : _res(res) {}
+        std::shared_ptr<CanvasResource> _res;
     private:
         
-        friend class FSTextBox;
-        friend class Sprite;
         template <class Res> friend class ImageSetResource;
-        friend class Images;
         friend class Screen;
     };
 
     /* This class is the same as Canvas, but it can't be rendered. *
      * You may use this as a memory optimization                   */
-    class SoftwareCanvas 
-    : public ResourceHandler<CanvasResource,RefCountMemoryPolicy<CanvasResource> > {
+    class SoftwareCanvas {
     public:
+        typedef CanvasResource ResourceType;
+        
         int             getWidth() const;
         int             getHeight() const;
 
         unsigned int    getPixel(unsigned int x, unsigned int y) const;
     protected:
-        SoftwareCanvas(CanvasResource* res);
+        SoftwareCanvas(std::shared_ptr<CanvasResource> res) : _res(res) {}
+        std::shared_ptr<CanvasResource> _res;
     private:
         
-        friend class FSTextBox;
-        friend class Sprite;
         template <class Res> friend class ImageSetResource;
-        friend class Images;
         friend class Screen;
     };
 

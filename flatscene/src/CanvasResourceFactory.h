@@ -6,7 +6,8 @@
 
 namespace FlatScene {
 
-    template <class Res, GraphicMode mode> Res* CanvasResource::create(
+    template <class Res, GraphicMode mode> 
+    std::shared_ptr<Res> CanvasResource::create(
         const RectangleImage& src, ConstRawImageResource chipset, 
         const GRD& grd, unsigned int n, bool software
     ) {
@@ -17,20 +18,50 @@ namespace FlatScene {
 
         ImageId id (n, grd.getDescriptorFile());
 
-        for (const auto& pair : Res::Handler::MemoryPolicyType::getCounts())
-            if (id == pair.first->id)
-                return static_cast<Res*>(pair.first);
-
-        auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
-
-        Res* res = new Res(
-            std::move(id),
-            BitmapHandler(software,source->pixels,source->w,source->h)
+        auto ptr = std::static_pointer_cast<Res>(
+            make_cached_shared<CanvasResource>(id,[&]{
+                auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
+                auto res = new Res(
+                    id, 
+                    BitmapHandler(software,source->pixels,source->w,source->h)
+                );
+                IMGFreeOrThrow(source);
+                return res;
+            })
         );
 
-        IMGFreeOrThrow(source);
+        cresSet.emplace(ptr);
+
+        return ptr;
+
+
+
+
+
+        // for (const auto& cres : cresSet) {
+        //     auto shared = cres.second.lock();
+        //     if (id == shared->id)
+        //         return std::static_pointer_cast<Res>(shared);
+        // }
+
+        // auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
+
+        // auto res = std::shared_ptr<Res>(new Res(
+        //         std::move(id),
+        //         BitmapHandler(software,source->pixels,source->w,source->h)
+        //     ),[&](CanvasResource* p) {
+        //         assert(cresSet.find(p)  != cresSet.end());
+        //         assert(cresSet.find(p)->second.expired());
+        //         cresSet.erase(p);
+        //         delete p;
+        //     }
+        // );
+
+        // cresSet.emplace(res.get(),std::static_pointer_cast<CanvasResource>(res));
+
+        // IMGFreeOrThrow(source);
         
-        return res;
+        // return res;
     }
 
     // template <class Res, class T1, class T2>

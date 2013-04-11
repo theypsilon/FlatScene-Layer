@@ -1,22 +1,18 @@
 #include "Time.h"
-#include "Screen.h"
-#include "Library.h"
+#include <chrono>
+#include <thread>
 
-#include "Includes.h"
+#include <chrono>
 
 namespace FlatScene {
 
-Time::Time() {
-#ifdef MENSAJES_FPS
-        _fps=0;
-        _auxTimer=0;
-#endif
-}
+Time::Time() {}
 
 Time::~Time() {}
 
 unsigned int Time::getTick() const {
     return _ticks;
+
 }
 
 unsigned int Time::setInterval(unsigned int msInterval) {
@@ -30,31 +26,16 @@ unsigned int Time::setFPS(unsigned int fpsInterval) {
     return (1000 / aux);
 }
 
-int  Time::nextFrame() {
-    using std::chrono::duration_cast;
-    using std::chrono::nanoseconds;
-    typedef std::chrono::clock clock;
+void  Time::nextFrame() {
+    typedef std::chrono::system_clock clock;
 
+    auto ms = clock::now() + std::chrono::milliseconds(_msLast + _msInterval);
 
-    int ret = EXIT_SUCCESS;
-
-    while ((_msLast + _msInterval) > clock::now()) {
-        SDL_Delay(1);
+    while (ms > clock::now()) {
+        std::this_thread::yield();
     }
-    _msLast = clock::now();
+    _msLast = clock::now().time_since_epoch().count();
     _ticks++;
-
-#ifdef MENSAJES_FPS
-    _fps++;
-    if (clock::now() > _auxTimer + 1000) {
-        _auxTimer=clock::now();
-        //Writer::I().erase(Writer::I().line(0,5,5,"FPS: %d ",_fps),true);
-        _fps=0;
-    }
-    
-#endif
-
-    return ret;
 }
 
 void Time::reset(unsigned int tick) {

@@ -1,6 +1,7 @@
-#ifndef FS_SPRITESET_IMPL__
-#define FS_SPRITESET_IMPL__
+#ifndef FS_IMAGESET_RESOURCE_H__
+#define FS_IMAGESET_RESOURCE_H__
 
+#include "Memory.h"
 #include "ImageSet.h"
 #include "Exception.h"
 #include "Algorithm.h"
@@ -14,7 +15,6 @@
 #include "TinyXMLHelper.h"
 #include "CanvasResourceFactory.h"
 #include "SpriteResource.h"
-#include "RefCountMemoryPolicyImpl.h"
 
 #include "GraphicResourceDescriptor.h"
 
@@ -44,14 +44,8 @@ template <class Res>
 class ImageSetResource {
 public:
 
-    template <class T>
-    static ImageSetResource<Res>*const create(T&& c) {
-        typedef RefCountMemoryPolicy<ImageSetResource<Res>> MemoryPolicyType;
-        for(auto& set : MemoryPolicyType::getCounts()) {
-            if (set.first->getName() == c)
-                return set.first;
-        }
-        return new ImageSetResource<Res>(std::forward<T>(c));
+    static std::shared_ptr<ImageSetResource<Res>> create(std::string c) {
+        return make_cached_shared<ImageSetResource<Res>>(c);
     }
 
     template <class T>
@@ -180,4 +174,4 @@ private:
 
 } // flatscene
 
-#endif // FS_SPRITESET_IMPL__
+#endif // FS_IMAGESET_RESOURCE_H__

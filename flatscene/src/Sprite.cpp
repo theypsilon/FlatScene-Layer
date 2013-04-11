@@ -6,97 +6,104 @@
 
 namespace FlatScene {
 
-    Sprite::Sprite(SpriteResource* res) 
-        : Canvas(res)
-    {}
+    inline SpriteResource& _getSR(std::shared_ptr<CanvasResource>& p) {
+        return static_cast<SpriteResource&>(*p);
+    }
 
+    inline const SpriteResource& _getSR(const std::shared_ptr<CanvasResource>& p) {
+        return static_cast<const SpriteResource&>(*p);
+    }
+
+    Sprite::Sprite(std::shared_ptr<SpriteResource> res) 
+        : Canvas(std::static_pointer_cast<CanvasResource>(res)) {}
+    
     void Sprite::put (Point ptDst, unsigned char flags) const {
+        auto& sr = _getSR(_res);
         if (flags & 0x001) {
-            ptDst.y -= getRes<SpriteResource>().getCenter().y;
-            ptDst.x -= getWidth() - getRes<SpriteResource>().getCenter().x;
+            ptDst.y -= sr.getCenter().y;
+            ptDst.x -= getWidth() - sr.getCenter().x;
         } else {
-            ptDst.x -= getRes<SpriteResource>().getCenter().x;
-            ptDst.y -= getRes<SpriteResource>().getCenter().y;
+            ptDst.x -= sr.getCenter().x;
+            ptDst.y -= sr.getCenter().y;
         }
 
         Canvas::put(ptDst,flags);
     }
 
     void Sprite::setName (std::string newName) {
-        getRes<SpriteResource>().setName(std::move(newName));
+        _getSR(_res).setName(std::move(newName));
     }
 
     const std::string& Sprite::getName() const {
-        return getRes<SpriteResource>().getName();
+        return _getSR(_res).getName();
     }
 
     IndexArea Sprite::addArea(RectArea area) {
-        return getRes<SpriteResource>().addArea(area);
+        return _getSR(_res).addArea(area);
     }
 
     const RectArea& Sprite::getArea (IndexArea index) const {
-        return getRes<SpriteResource>().getArea(index);
+        return _getSR(_res).getArea(index);
     }
 
     const Point& Sprite::getCenter() const {
-        return getRes<SpriteResource>().getCenter();
+        return _getSR(_res).getCenter();
     }
 
     void Sprite::setCenter(Point c) {
-        getRes<SpriteResource>().setCenter(c);
+        _getSR(_res).setCenter(c);
     }
 
     void Sprite::setArea(IndexArea index,RectArea area) {
-        getRes<SpriteResource>().setArea(index,area);
+        _getSR(_res).setArea(index,area);
     }
 
     int Sprite::size() const {
-        return getRes<SpriteResource>().size();
+        return _getSR(_res).size();
     }
 
     SpriteOpaque Sprite::isOpaque() {
-        return getRes<SpriteResource>().isOpaque();
+        return _getSR(_res).isOpaque();
     }
 
 
-    SoftwareSprite::SoftwareSprite(SpriteResource* res) 
-        : SoftwareCanvas(res)
-    {}
+    SoftwareSprite::SoftwareSprite(std::shared_ptr<SpriteResource> res) 
+        : SoftwareCanvas(std::static_pointer_cast <CanvasResource>(res)) {}
 
     void SoftwareSprite::setName (std::string newName) {
-        getRes<SpriteResource>().setName(std::move(newName));
+        _getSR(_res).setName(std::move(newName));
     }
 
     const std::string& SoftwareSprite::getName() const {
-        return getRes<SpriteResource>().getName();
+        return _getSR(_res).getName();
     }
 
     IndexArea SoftwareSprite::addArea(RectArea area) {
-        return getRes<SpriteResource>().addArea(area);
+        return _getSR(_res).addArea(area);
     }
 
     const RectArea& SoftwareSprite::getArea (IndexArea index) const {
-        return getRes<SpriteResource>().getArea(index);
+        return _getSR(_res).getArea(index);
     }
 
     const Point& SoftwareSprite::getCenter() const {
-        return getRes<SpriteResource>().getCenter();
+        return _getSR(_res).getCenter();
     }
 
     void SoftwareSprite::setCenter(Point c) {
-        getRes<SpriteResource>().setCenter(c);
+        _getSR(_res).setCenter(c);
     }
 
     void SoftwareSprite::setArea(IndexArea index,RectArea area) {
-        getRes<SpriteResource>().setArea(index,area);
+        _getSR(_res).setArea(index,area);
     }
 
     int SoftwareSprite::size() const {
-        return getRes<SpriteResource>().size();
+        return _getSR(_res).size();
     }
 
     SpriteOpaque SoftwareSprite::isOpaque() {
-        return getRes<SpriteResource>().isOpaque();
+        return _getSR(_res).isOpaque();
     }
 
 } // flatscene

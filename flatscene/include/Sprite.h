@@ -4,7 +4,7 @@
 #include "Canvas.h"
 #include <string>
 #include <vector>
-#include <memory>
+#include <map>
 
 namespace FlatScene {
 
@@ -39,8 +39,7 @@ namespace FlatScene {
         void                put (Point ptDst, unsigned char flags=0) const;
 
     protected:
-        Sprite(SpriteResource* res);
-    private:
+        Sprite(std::shared_ptr<SpriteResource> res);
         
         template <class Res> friend class ImageSetResource;
         friend class Screen;
@@ -62,7 +61,7 @@ namespace FlatScene {
         SpriteOpaque        isOpaque();
 
     protected:
-        SoftwareSprite(SpriteResource* res);
+        SoftwareSprite(std::shared_ptr<SpriteResource> res);
     private:
         
         template <class Res> friend class ImageSetResource;

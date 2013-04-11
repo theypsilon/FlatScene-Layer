@@ -5,34 +5,30 @@
 
 namespace FlatScene {
 
-Canvas::Canvas(CanvasResource* res) 
-    : ResourceHandler(res)
-{}
-
 unsigned int Canvas::getPixel(unsigned int x, unsigned int y) const {
-    return getRes().getPixel(x,y);
+    return _res->getPixel(x,y);
 }
 
-int Canvas::getWidth  () const { return getRes().getW(); }
-int Canvas::getHeight () const { return getRes().getH(); }
+int Canvas::getWidth  () const { return _res->getW(); }
+int Canvas::getHeight () const { return _res->getH(); }
 
 void Canvas::put (Float x, Float y, unsigned char flags) const {
-    getRes().put(x,y,flags);
+    _res->put(x,y,flags);
 }
 
 void Canvas::rotate(Float angle, Float x, Float y, Float z) const {
-    getRes().rotate(angle,x,y,z);
+    _res->rotate(angle,x,y,z);
 }
 void Canvas::translate(Float x, Float y, Float z) const {
-    getRes().translate(x,y,z);
+    _res->translate(x,y,z);
 }
 
 void Canvas::scale(Float x, Float y, Float z) const {
-    getRes().scale(x,y,z);
+    _res->scale(x,y,z);
 }
 
 void Canvas::color(Float red, Float green, Float blue, Float alpha) const {
-    getRes().color(red,green,blue,alpha);
+    _res->color(red,green,blue,alpha);
 }
 
 void Canvas::color(const Color& col, Float alpha) const {
@@ -43,16 +39,12 @@ void Canvas::color(const Color& col, Float alpha) const {
 }
 
 
-SoftwareCanvas::SoftwareCanvas(CanvasResource* res) 
-    : ResourceHandler(res)
-{}
-
 unsigned int SoftwareCanvas::getPixel(unsigned int x, unsigned int y) const {
-    return getRes().getPixel(x,y);
+    return _res->getPixel(x,y);
 }
 
-int SoftwareCanvas::getWidth  () const { return getRes().getW(); }
-int SoftwareCanvas::getHeight () const { return getRes().getH(); }
+int SoftwareCanvas::getWidth  () const { return _res->getW(); }
+int SoftwareCanvas::getHeight () const { return _res->getH(); }
 
 
 } // flatscene

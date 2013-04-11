@@ -7,46 +7,37 @@
 
 namespace FlatScene {
 
-typedef struct { 
-    std::string name; 
-    GraphicMode mode; 
-    int times;
-    int number;
-} SpritesetInfo ;
-
-typedef std::list<SpritesetInfo> GraphicResources;
-
 struct SRender;
 
 struct ScreenImpl {
 
-    SDL_Surface* m_SDL_Surface;
+    SDL_Surface*            m_SDL_Surface;
 
-    bool rendering;
-    TypeRendeProjection trp;
+    bool                    rendering;
+    TypeRendeProjection     trp;
 
-    Float m_maxZ;
+    Float                   m_maxZ;
 
-    bool m_FullScreen,m_Doublebuff;
+    bool                    m_FullScreen, m_Doublebuff;
 
-    int m_Width,m_Height,m_Bpp;
+    int                     m_Width, m_Height,m_Bpp;
 
-    std::list<SRender*> graphicMaterial;
+    std::list<SRender  *>   graphicMaterial;
 
-    std::list<Sprite*> spriteToDelete;
-    std::list<Spriteset*> spritesetToDelete;
-    std::list<Canvas*> imageToDelete;
+    std::list<Sprite   *>   spriteToDelete;
+    std::list<Spriteset*>   spritesetToDelete;
+    std::list<Canvas   *>   imageToDelete;
 
-    void deleteResources();
+    Float                   red, green, blue, alpha;
 
-    void saveResources(GraphicResources& info);
-    void reloadResources(GraphicResources& info);
+    void                    deleteResources();
 
+    void                    goOnAllGPUs(std::function<void(BitmapHandler&)> process);
+    void                    saveResources  ();
+    void                    reloadResources();
 
-    Float red,green,blue,alpha;
-
-    int beginRenderMode(Uint32 flags);
-    int endRenderMode(Uint32 flags);
+    int                     beginRenderMode(unsigned flags);
+    int                     endRenderMode  (unsigned flags);
 
     friend class Screen;
 };

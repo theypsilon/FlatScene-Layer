@@ -8,7 +8,14 @@
 #include "ImageAdapter.h"
 #include "BitmapHandler.h"
 
+#include <unordered_set>
+
 namespace FlatScene {
+
+    typedef std::weak_ptr<CanvasResource> SetCResElement;
+    typedef std::unordered_set<SetCResElement> SetCRes;
+
+    extern SetCRes cresSet;
 
     class CanvasResource {
     public:
@@ -19,11 +26,11 @@ namespace FlatScene {
         }
 
         template <class Res, GraphicMode mode> 
-        static Res*             create(const RectangleImage& src, ConstRawImageResource chipset, 
+        static std::shared_ptr<Res> create(const RectangleImage& src, ConstRawImageResource chipset, 
                                        const GRD&  grd, unsigned int n, bool software = false );
 
         template <class Res, class T1, class T2>
-        static Res*             create(T1&& imageId, T2&& BitmapHandler);
+        static Res*                 create(T1&& imageId, T2&& BitmapHandler);
 
         BitmapHandler::SizeType     getW() const       { return _gpu.inGPU()? _gpu.getTexW() : _gpu.getW(); } //TODO this shouldn't be necessary, hidden bug in rendering?
         BitmapHandler::SizeType     getH() const       { return _gpu.inGPU()? _gpu.getTexH() : _gpu.getH(); }
@@ -48,15 +55,16 @@ namespace FlatScene {
 
         virtual ~CanvasResource() {}
 
-        const ImageId   id;
-    private:
         template <class TImageId, class TBitmapHandler>
         CanvasResource (TImageId&& nid, TBitmapHandler&& gpu) 
             : id(std::forward<TImageId>(nid)), _gpu(std::forward<TBitmapHandler>(gpu)) {}
 
+        const ImageId   id;
+    private:
+
         BitmapHandler                                    _gpu;
-        mutable std::list<std::function<void(void)>> _initCallbackList;
-        mutable std::list<std::function<void(void)>> _endCallbackList;
+        mutable std::vector<std::function<void(void)>> _initCallbackList;
+        mutable std::vector<std::function<void(void)>> _endCallbackList;
 
         friend class SpriteResource;
         friend struct ScreenImpl;

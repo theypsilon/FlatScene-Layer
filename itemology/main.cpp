@@ -23,8 +23,7 @@ int main (int argc, char* argv[]) {
     // (int) c.getA() << (int) c.getR() << (int) c.getG() << (int) c.getB() << endl;
 
     //run the application
-    startLibrary(false);
-    FSDraw.start(640,480,32,1.0,1.0,false);
+    Library::init(640,480,32,false,true);
 
     try {
         IFirstEngine e;
