@@ -23,6 +23,6 @@ int func_EXIT_FAILURE(const char* file, int line) {
 void assert_text(std::string cad,int line) {
     if (cad.empty() || cad == "")
         throw ControlViolationException(
-            std::string("XML Error : ")+std::to_string(line)
+            std::string("XML Error : ") + std::to_string(line)
         );
 }
