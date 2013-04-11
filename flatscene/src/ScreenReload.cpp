@@ -24,8 +24,8 @@ void ScreenImpl::deleteResources() {
 }
 
 void ScreenImpl::goOnAllGPUs(std::function<void(BitmapHandler&)> process) {
-    std::vector<decltype(cresSet)::key_type> toDelete;
-    for (auto& wpCanvas : cresSet) {
+    std::vector<decltype(gCRMonitor)::key_type> toDelete;
+    for (auto& wpCanvas : gCRMonitor) {
         if (wpCanvas.expired()) {
             toDelete.push_back(wpCanvas);
             continue;
@@ -34,7 +34,7 @@ void ScreenImpl::goOnAllGPUs(std::function<void(BitmapHandler&)> process) {
         process(pCanvas->_gpu);
     }
     for (auto& wpCanvas : toDelete) {
-        cresSet.erase(wpCanvas);
+        gCRMonitor.erase(wpCanvas);
     }
 }
 
