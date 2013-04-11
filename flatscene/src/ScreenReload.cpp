@@ -23,22 +23,32 @@ void ScreenImpl::deleteResources() {
     imageToDelete.clear();
 }
 
-void ScreenImpl::saveResources(GraphicResources &info) {
-    for (auto& fCanvas : cresSet) {
-        auto& gpu = fCanvas.first->_gpu;
-
-        gpu.copyToCPU();
-        gpu.removeFromGPU();
+void ScreenImpl::goOnAllGPUs(std::function<void(BitmapHandler&)> process) {
+    std::vector<decltype(cresSet)::key_type> toDelete;
+    for (auto& wpCanvas : cresSet) {
+        if (wpCanvas.expired()) {
+            toDelete.push_back(wpCanvas);
+            continue;
+        }
+        auto pCanvas = wpCanvas.lock();
+        process(pCanvas->_gpu);
     }
-
+    for (auto& wpCanvas : toDelete) {
+        cresSet.erase(wpCanvas);
+    }
 }
 
-void ScreenImpl::reloadResources(GraphicResources &info) {
-    for (auto& fCanvas : cresSet) {
-        auto& gpu = fCanvas.first->_gpu;
-        
-        gpu.copyToGPU();     
-    }
+void ScreenImpl::saveResources() {
+    goOnAllGPUs([](BitmapHandler& gpu){
+        gpu.copyToCPU();
+        gpu.removeFromGPU();
+    });
+}
+
+void ScreenImpl::reloadResources() {
+    goOnAllGPUs([](BitmapHandler& gpu){
+        gpu.copyToGPU();  
+    });
 }
 
 } // flatscene

@@ -63,7 +63,7 @@ int Screen::start(int width, int height, int bpp, bool fullscreen, bool doublebu
         SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
     }
 
-    Uint32 flags = SDL_OPENGL;
+    unsigned flags = SDL_OPENGL;
 
     if (fullscreen) 
         flags |= SDL_FULLSCREEN;
@@ -119,7 +119,7 @@ int Screen::start(int width, int height, int bpp, Float scalex, Float scaley, bo
         SDL_GL_SetAttribute( SDL_GL_SWAP_CONTROL, 1 );
     }
 
-    Uint32 flags = SDL_OPENGL;
+    unsigned flags = SDL_OPENGL;
 
     if (fullscreen) 
         flags |= SDL_FULLSCREEN;
@@ -354,7 +354,7 @@ int Screen::popMatrix() {
 
 }
 
-int ScreenImpl::beginRenderMode(Uint32 flags) {
+int ScreenImpl::beginRenderMode(unsigned flags) {
     if (!m_SDL_Surface) throw Exception("Video context not inicialized");
     
     if (flags & RENDER_TEXTURE_STANDARD) {
@@ -367,7 +367,7 @@ int ScreenImpl::beginRenderMode(Uint32 flags) {
     return EXIT_SUCCESS;
 }
 
-int ScreenImpl::endRenderMode(Uint32 flags) {
+int ScreenImpl::endRenderMode(unsigned flags) {
     if (!m_SDL_Surface) throw Exception("Video context not inicialized");
 
     if (flags & RENDER_TEXTURE_STANDARD) {
@@ -412,17 +412,15 @@ int Screen::changeScreen(int width, int height, int bpp, Float scalex, Float sca
     if (!_impl->m_SDL_Surface) throw Exception("Video context not inicialized");
 
     clear();
-    
-    GraphicResources info;
 
-    _impl->saveResources(info);
+    _impl->saveResources();
 
     quit();
 
     if ( start (width,height,bpp,scalex, scaley,fullscreen,_impl->m_Doublebuff) == EXIT_FAILURE)
         return EXIT_FAILURE;
 
-    _impl->reloadResources(info);
+    _impl->reloadResources();
 
     return EXIT_SUCCESS;
     
@@ -434,9 +432,7 @@ int Screen::ToggleFullscreen() {
 
     clear();
 
-    GraphicResources info;
-
-    _impl->saveResources(info);
+    _impl->saveResources();
 
     quit();
 
@@ -445,7 +441,7 @@ int Screen::ToggleFullscreen() {
     if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,_impl->m_Doublebuff) == EXIT_FAILURE )
         return EXIT_FAILURE;
 
-    _impl->reloadResources(info);
+    _impl->reloadResources();
 
     return EXIT_SUCCESS;
 
@@ -458,16 +454,14 @@ int Screen::setDoublebuffer(bool doublebuff) {
     if (doublebuff!=_impl->m_Doublebuff) {
         clear();
 
-        GraphicResources info;
-
-        _impl->saveResources(info);
+        _impl->saveResources();
 
         quit();
 
         if ( start (_impl->m_Width,_impl->m_Height,_impl->m_Bpp,_impl->m_FullScreen,doublebuff) == EXIT_FAILURE)
             return EXIT_FAILURE;
 
-        _impl->reloadResources(info);
+        _impl->reloadResources();
     }
 
     return EXIT_SUCCESS;

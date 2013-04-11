@@ -8,12 +8,12 @@
 #include "ImageAdapter.h"
 #include "BitmapHandler.h"
 
-#include <unordered_map>
+#include <unordered_set>
 
 namespace FlatScene {
 
     typedef std::weak_ptr<CanvasResource> SetCResElement;
-    typedef std::unordered_map<CanvasResource*,SetCResElement> SetCRes;
+    typedef std::unordered_set<SetCResElement> SetCRes;
 
     extern SetCRes cresSet;
 

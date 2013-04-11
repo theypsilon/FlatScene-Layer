@@ -1,7 +1,7 @@
 project ( itemology )
 
 cmake_minimum_required ( VERSION 2.6 )
-set (CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++0x")
+set (CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -g -std=c++0x")
 
 find_package ( OpenGL )
 
