@@ -1,6 +1,7 @@
 #ifndef FS_IMAGESET_RESOURCE_H__
 #define FS_IMAGESET_RESOURCE_H__
 
+#include "Memory.h"
 #include "ImageSet.h"
 #include "Exception.h"
 #include "Algorithm.h"
@@ -44,24 +45,7 @@ class ImageSetResource {
 public:
 
     static std::shared_ptr<ImageSetResource<Res>> create(std::string c) {
-        static std::unordered_map<std::string,std::weak_ptr<ImageSetResource<Res>>> setsInUse;
-
-        if (auto it = setsInUse.find(c) != setsInUse.end())
-            return setsInUse[c].lock();
-
-        auto res = std::shared_ptr<ImageSetResource<Res>>(
-            new ImageSetResource<Res>(c),
-            [] (ImageSetResource<Res>* p) {
-                assert(p);
-                auto name = p->getName();
-                assert(setsInUse.find(name)  != setsInUse.end());
-                assert(setsInUse.find(name)->second.expired());
-                setsInUse.erase(name);
-                delete p;
-            }
-        );
-        setsInUse.emplace(c,res);
-        return res;
+        return make_cached_shared<ImageSetResource<Res>>(c);
     }
 
     template <class T>
