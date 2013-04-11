@@ -314,7 +314,7 @@ int IScrollLevel::decActor(Cinema::Actor* act) {
 unsigned int IScrollLevel::getPixel(int x, int y,int z) {
     unsigned int j=x / getTileW(),
                  i=y / getTileH();
-    if (j >= 0 && i >= 0 && j < getW() && i < getH()) {
+    if (j < getW() && i < getH()) {
         const Tile& durtile = (*_linktodur[z])[i][j];
 
         if (durtile.getCollision()) {
