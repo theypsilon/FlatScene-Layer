@@ -51,7 +51,7 @@ namespace FlatScene {
         assert(pixels);
         assert(!_tex);
 
-        GraphicFilter filter = NEAREST;
+        GraphicFilter filter = GraphicFilter::NEAREST;
 
         // Have OpenGL generate a texture object handle for us
         glGenTextures(1, &_tex);
@@ -62,8 +62,8 @@ namespace FlatScene {
         // Bind the texture object
         glBindTexture( GL_TEXTURE_2D, _tex );
 
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == GraphicFilter::LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == GraphicFilter::LINEAR ? GL_LINEAR : GL_NEAREST);
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
     

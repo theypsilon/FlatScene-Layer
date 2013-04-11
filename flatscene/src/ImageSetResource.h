@@ -23,17 +23,17 @@ namespace FlatScene {
 namespace detail {
 
     template <class Res> struct to_graphic_mode {
-        static const GraphicMode value = ONLY_GPU;
+        static const GraphicMode value = GraphicMode::ONLY_GPU;
         static const bool software = false;
     };
 
     template <> struct to_graphic_mode<SoftwareSprite> {
-        static const GraphicMode value = ONLY_CPU;
+        static const GraphicMode value = GraphicMode::ONLY_CPU;
         static const bool software = true;
     };
 
     template <> struct to_graphic_mode<SoftwareCanvas> {
-        static const GraphicMode value = ONLY_CPU;
+        static const GraphicMode value = GraphicMode::ONLY_CPU;
         static const bool software = true;
     };
 } // detail
@@ -150,7 +150,7 @@ private:
             src.w = src.x + img.dim.x;
             src.h = src.y + img.dim.y;
 
-            auto r = CanvasResource::create<typename Res::ResourceType,ONLY_GPU>
+            auto r = CanvasResource::create<typename Res::ResourceType,GraphicMode::ONLY_GPU>
                      (src,chipset,grd,i++,detail::to_graphic_mode<Res>::software);
             r->applyMetadata(img);
 

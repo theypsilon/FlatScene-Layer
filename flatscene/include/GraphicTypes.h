@@ -3,13 +3,13 @@
 
 namespace FlatScene {
 
-    enum GraphicMode {  // Changes the memory used for containing the image data
+    enum class GraphicMode {  // Changes the memory used for containing the image data
         ONLY_CPU,       // -The image can not be rendered
         ONLY_GPU,       // -The pixel data can't be readed, getPixel now throws
         BOTH            // -No drawbacks in features, but it uses double memory
     };
 
-    enum GraphicFilter {
+    enum class GraphicFilter {
         NEAREST,
         LINEAR
     };
