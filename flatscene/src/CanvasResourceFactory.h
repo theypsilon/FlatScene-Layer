@@ -25,9 +25,7 @@ namespace FlatScene {
                 id, 
                 BitmapHandler(software,source->pixels,source->w,source->h)
             );
-            ScopedGuard guard([&]{
-                delete res;
-            });
+            ScopedGuard guard([&]{ delete res; });
             IMGFreeOrThrow(source);
             guard.dismiss();
             return res;
