@@ -34,7 +34,7 @@ namespace FlatScene {
                     assert(p);
                     auto   it  = _delmap.find(p);
                     assert(it != _delmap.end ());
-                    assert(it->second.expired());
+                    //assert(it->second.expired()); @TODO uncomment it when available in libstdc++
                     _kvmap .erase(it->second);
                     _delmap.erase(it);
                     delete p;
