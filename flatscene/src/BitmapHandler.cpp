@@ -7,7 +7,7 @@ namespace FlatScene {
 
     // class BitmapHandler with OpenGL
 
-    namespace detail {
+    namespace {
 
         void glFillVectorFromTexture(std::vector<unsigned int>& v,unsigned int tex) {
             glBindTexture( GL_TEXTURE_2D, tex );
@@ -20,7 +20,7 @@ namespace FlatScene {
             );
         }
 
-    } //detail
+    } //anom
 
     BitmapHandler::BitmapHandler(BitmapHandler&& that) 
         : _pixels(std::move(that._pixels)), _w(that._w), _h(that._h)
@@ -88,7 +88,7 @@ namespace FlatScene {
             return false;
 
         std::vector<unsigned int> v(_pixels.size());
-        detail::glFillVectorFromTexture(v,_tex);
+        glFillVectorFromTexture(v,_tex);
         return std::equal(begin(v),end(v),begin(_pixels));
     }
 
@@ -104,7 +104,7 @@ namespace FlatScene {
         assert(_pixels.capacity() == _w * _h);
         assert(_tex);
 
-        detail::glFillVectorFromTexture(_pixels,_tex);
+        glFillVectorFromTexture(_pixels,_tex);
         assert(inCPU());
     }
 
@@ -116,8 +116,8 @@ namespace FlatScene {
             unsigned int
             tempw = _w,
             temph = _h;
-            _relW =(_w = detail::pow2(_w));
-            _relH =(_h = detail::pow2(_h));
+            _relW =(_w = pow2(_w));
+            _relH =(_h = pow2(_h));
             _relW/= tempw;
             _relH/= temph;
         } else if (inGPU()) { /* true for isBoth */
