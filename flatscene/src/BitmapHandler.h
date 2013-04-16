@@ -7,15 +7,20 @@
 
 namespace FlatScene {
 
-    namespace detail {
+    namespace {
         inline unsigned int pow2(unsigned int n) {
             unsigned int c = 1;
             while (c < n) c <<= 1;
             return c;
         };
 
-        inline std::vector<unsigned int> copyPixels(const void*const pixels) {
+        inline std::vector<unsigned int> copyPixels(
+            unsigned size, const unsigned*const pixels
+        ) {
             std::vector<unsigned int> v;
+            v.reserve(size);
+            for (unsigned i = 0; i < size; i++)
+                v[i] = pixels[i];
             return v;
         };
     } 
@@ -29,12 +34,12 @@ namespace FlatScene {
         typedef std::vector<PixelType>  PAType;
 
         BitmapHandler(const bool software, const void*const pixels, SizeType w, SizeType h) 
-        : _tex(0), _w(software? w : detail::pow2(w)), _h(software? h : detail::pow2(h))
+        : _tex(0), _w(software? w : pow2(w)), _h(software? h : pow2(h))
         , _relW(software? 0 : _w/w), _relH(software? 0 : _h/h) {
             if (!software)
                 copyExternalBufferToGPU(pixels);
             else
-                _pixels = std::move(detail::copyPixels(pixels));
+                _pixels = std::move(copyPixels(w*h, (unsigned*)pixels));
         }
         BitmapHandler(BitmapHandler&& that);
         BitmapHandler& operator=(BitmapHandler&& that);

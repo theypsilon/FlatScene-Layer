@@ -3,7 +3,12 @@
 	[
 		{
 			"path": ".",
-			"folder_exclude_patterns": ["flatscene/src","flatscene/include"]
+			"folder_exclude_patterns": [
+				"flatscene/src",
+				"flatscene/include",
+				"fs.sublime-workspace",
+				"Makefile"
+			]
 		},
 		{
 			"path": "flatscene/include"

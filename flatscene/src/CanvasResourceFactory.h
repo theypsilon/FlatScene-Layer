@@ -3,6 +3,7 @@
 
 #include "sdlSurfaceFuncs.h"
 #include "SpriteResource.h"
+#include "ScopedGuard.h"
 
 namespace FlatScene {
 
@@ -18,21 +19,21 @@ namespace FlatScene {
 
         ImageId id (n, grd.getDescriptorFile());
 
-        auto ptr = std::static_pointer_cast<Res>(
-            make_cached_shared<CanvasResource>(id,[&]{
-                auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
-                auto res = new Res(
-                    id, 
-                    BitmapHandler(software,source->pixels,source->w,source->h)
-                );
-                IMGFreeOrThrow(source);
-                return res;
-            })
-        );
+        auto ptr = make_cached_shared<CanvasResource>(id,[&]{
+            auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
+            auto res = new Res(
+                id, 
+                BitmapHandler(software,source->pixels,source->w,source->h)
+            );
+            ScopedGuard guard([&]{ delete res; });
+            IMGFreeOrThrow(source);
+            guard.dismiss();
+            return res;
+        });
 
         gCRMonitor.emplace(ptr);
 
-        return ptr;
+        return std::static_pointer_cast<Res>(ptr);
     }
 
 } // flatscene

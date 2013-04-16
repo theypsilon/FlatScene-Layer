@@ -361,7 +361,7 @@ namespace FlatScene {
         SDL_SetColorKey(surf,SDL_SRCCOLORKEY, chipset.format->colorkey);
         blitcopy(chipset,const_cast<SDL_Rect*>(&src),surf,nullptr);
 
-        if (sp_scale != 1.0 && mode != ONLY_CPU) {
+        if (sp_scale != 1.0 && mode != GraphicMode::ONLY_CPU) {
             if (auto temp = scaleSurface(surf,(int)sp_scale)) {
                 SDL_FreeSurface(surf);
                 surf=temp;
@@ -463,8 +463,8 @@ namespace FlatScene {
         // Bind the texture object
         glBindTexture( GL_TEXTURE_2D, tex );
 
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == LINEAR ? GL_LINEAR : GL_NEAREST);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,filter == GraphicFilter::LINEAR ? GL_LINEAR : GL_NEAREST); //FIXME Provide more filters choices
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,filter == GraphicFilter::LINEAR ? GL_LINEAR : GL_NEAREST);
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
     
