@@ -44,14 +44,14 @@ namespace FlatScene {
                 return _kvmap[k].lock();
 
             auto res   = intern_make_shared(
-                [&] { return factory(); },
+                factory,
                 [&] (V* p) {
                     assert(p);
                     auto   it  = _delmap.find(p);
                     assert(it != _delmap.end ());
                     //assert(it->second.expired()); @TODO uncomment it when available in libstdc++
                     _kvmap .erase(it->second);
-                    _delmap.erase(it);
+                    _deleterlmap.erase(it);
                     _deleter(p);
                 });
             auto delit = _kvmap.emplace(k,res).first;
@@ -74,6 +74,7 @@ namespace FlatScene {
         }
 
         std::shared_ptr<V> get(const K& k, std::function<V*()> factory) {
+            assert(factory);
             return inner_get(k,factory);
         }
 
