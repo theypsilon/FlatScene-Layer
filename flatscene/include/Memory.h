@@ -61,8 +61,8 @@ namespace FlatScene {
 
     public:
 
-        Cache(std::function<void(V*)> _deleter = {}) : 
-            _deleter(_deleter? _deleter : std::default_delete<V>())
+        Cache(std::function<void(V*)> deleter = {}) : 
+            _deleter(deleter? deleter : std::default_delete<V>())
         {}
 
         bool has(const K& k) const {
