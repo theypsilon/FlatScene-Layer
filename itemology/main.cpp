@@ -30,12 +30,12 @@ int main (int argc, char* argv[]) {
         e.onInit();
         e.loop();
         e.onExit();
-    } catch (FlatScene::Exception &e) {
-        cout << "Exception catched: " << e.what() << endl;
+    } catch (FlatScene::Exception& e) {
+        cout << "FlatScene::Exception catched: " << e.what() << endl;
     } catch (std::exception& e) {
-        cout << "Exception catched: " << e.what() << endl;
+        cout <<       "std::exception catched: " << e.what() << endl;
     } catch (...) {
-        cout << "The exception catched is unknown." << endl;
+        cout << "The exception catched is unknown."          << endl;
     }
 
     cout << "Ending main" << endl;

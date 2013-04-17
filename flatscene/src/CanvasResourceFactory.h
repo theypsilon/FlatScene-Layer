@@ -17,9 +17,14 @@ namespace FlatScene {
             "Bad Canvas type"
         );
 
-        ImageId id (n, grd.getDescriptorFile());
+        static Cache<ImageId,CanvasResource> cache([](CanvasResource* p){
+            gCRMonitor.erase(p);
+            delete p;
+        });
 
-        auto ptr = make_cached_shared<CanvasResource>(id,[&]{
+        ImageId id(n, grd.getDescriptorFile());
+
+        auto ptr = cache.get(id,[&]{
             auto source = loadSurface(src,chipset,mode,grd.getSpecialScale());
             auto res = new Res(
                 id, 
@@ -27,11 +32,11 @@ namespace FlatScene {
             );
             ScopedGuard guard([&]{ delete res; });
             IMGFreeOrThrow(source);
+            gCRMonitor.insert(res);
             guard.dismiss();
+            
             return res;
         });
-
-        gCRMonitor.emplace(ptr);
 
         return std::static_pointer_cast<Res>(ptr);
     }
