@@ -12,7 +12,7 @@
 
 namespace FlatScene {
 
-    typedef std::unordered_set<std::weak_ptr<CanvasResource>> CanvasResourceMonitor;
+    typedef std::unordered_set<CanvasResource*> CanvasResourceMonitor;
 
     extern CanvasResourceMonitor gCRMonitor;
 

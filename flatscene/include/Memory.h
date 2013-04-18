@@ -4,17 +4,67 @@
 #include <memory>
 #include <unordered_map>
 #include <cassert>
+#include <type_traits>
 
 namespace FlatScene {
 
-    template <typename K, typename V>
+    template <typename K, typename V, typename Allocator = std::allocator<V>>
     class Cache {
-        typedef std::unordered_map<K, std::weak_ptr<V>> KeyValMap;
-        typedef std::unordered_map<V*, typename KeyValMap::iterator>       DeleteMap;
+        using KeyValMap = std::unordered_map<K, std::weak_ptr<V>>;
+        using DeleteMap = std::unordered_map<V*, typename KeyValMap::iterator>;
 
-        KeyValMap _kvmap;
-        DeleteMap _delmap;
+        template <typename T>
+        using is_key_constructible = typename std::enable_if
+            <std::is_constructible <V,const T&>  ::value>  ::type;
+
+
+        KeyValMap                   _kvmap;
+        DeleteMap                   _delmap;
+
+        std::function<void(V*)>     _deleter;
+
+        template <typename T = V> std::shared_ptr<V> intern_make_shared(
+            std::function<V*(void)> create_object, 
+            std::function<void(V*)> final_deleter,
+            typename std::enable_if< std::is_same<Allocator,std::allocator<T>>::value>::type* p = 0
+        ) {
+            return std::shared_ptr<V>(create_object(), final_deleter);
+        }
+
+        template <typename T = V> std::shared_ptr<V> intern_make_shared(
+            std::function<V*(void)> create_object, 
+            std::function<void(V*)> final_deleter,
+            typename std::enable_if<!std::is_same<Allocator,std::allocator<T>>::value>::type* p = 0
+        ) {
+            return std::shared_ptr<V>(create_object(), final_deleter, Allocator());
+        }
+
+        std::shared_ptr<V> inner_get(const K& k, std::function<V*()> factory) {
+            if (auto it = _kvmap.find(k) != _kvmap.end())
+                return _kvmap[k].lock();
+
+            auto res   = intern_make_shared(
+                factory,
+                [&] (V* p) {
+                    assert(p);
+                    auto   it  = _delmap.find(p);
+                    assert(it != _delmap.end ());
+                    //assert(it->second.expired()); @TODO uncomment it when available in libstdc++
+                    _kvmap .erase(it->second);
+                    _delmap.erase(it);
+                    _deleter(p);
+                });
+            auto delit = _kvmap.emplace(k,res).first;
+            _delmap.emplace(res.get(), delit);
+            return res;
+        }
+
     public:
+
+        Cache(std::function<void(V*)> deleter = {}) : 
+            _deleter(deleter? deleter : std::default_delete<V>())
+        {}
+
         bool has(const K& k) const {
             return _kvmap.find(k) != _kvmap.end();
         }
@@ -24,42 +74,26 @@ namespace FlatScene {
         }
 
         std::shared_ptr<V> get(const K& k, std::function<V*()> factory) {
-            if (auto it = _kvmap.find(k) != _kvmap.end())
-                return _kvmap[k].lock();
-
             assert(factory);
-            auto res = std::shared_ptr<V>(
-                factory(),
-                [&] (V* p) {
-                    assert(p);
-                    auto   it  = _delmap.find(p);
-                    assert(it != _delmap.end ());
-                    //assert(it->second.expired()); @TODO uncomment it when available in libstdc++
-                    _kvmap .erase(it->second);
-                    _delmap.erase(it);
-                    delete p;
-                }
-            );
-            auto delit = _kvmap.emplace(k,res).first;
-            _delmap.emplace(res.get(), delit);
-            return res;
+            return inner_get(k,factory);
         }
 
-        std::shared_ptr<V> get(const K& k) {
-            return get(k,[&]{ return new V(k); });
+        template <typename... Dummy, typename T = K>
+        std::shared_ptr<V> get(const K& k, is_key_constructible<T>* = 0) {
+            static_assert(sizeof...(Dummy) == 0, "Do not specify template arguments!");
+            return inner_get(k,[&]{ return new V(k); });
         }
+
+        static Cache<K,V>& instance() {
+            static Cache<K,V> cache;
+            return cache;
+        }    
+
     };
 
     template <typename T, typename CacheIndex>
     std::shared_ptr<T> make_cached_shared(const CacheIndex& index) {
-        static Cache<CacheIndex,T> cache;
-        return cache.get(index);
-    }
-
-    template <typename T, typename CacheIndex>
-    std::shared_ptr<T> make_cached_shared(const CacheIndex& index, std::function<T*()> factory) {
-        static Cache<CacheIndex,T> cache;
-        return cache.get(index, factory);
+        return Cache<CacheIndex,T>::instance().get(index);
     }
 
     template <typename T>
@@ -70,7 +104,6 @@ namespace FlatScene {
     }
 
 } // FlatScene
-
 
 namespace std {
     template <typename T> struct hash<std::weak_ptr<T>> {
