@@ -22,7 +22,7 @@ public:
 
     // Constructor, se recomienda que se establezcan los siguientes par�metros.
     // Pueden ser necesarios para inicializar la clase base.
-    IScrollCamera(Cinema::Actor* target,FlatScene::Rectangle* area);
+    IScrollCamera(Cinema::Actor* target,FlatScene::Rectangle area);
 
     // Destructor, ah� deberemos liberar los recursos
     virtual ~IScrollCamera();

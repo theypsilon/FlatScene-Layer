@@ -41,11 +41,10 @@ namespace Cinema {
             throw FlatScene::Exception("Puntero a CActor nulo");
         }
 
-        Universe* u = act->getUniverse();
-
-        if (u) 
-            for (ActorCollection::iterator it = u->actorBegin(), jt = u->actorEnd();it!=jt;++it)
-                if (act == *it) throw FlatScene::Exception("Actor actualmente incluido en otro Universe");
+        Universe& u = const_cast<Universe&>(act->getUniverse());
+ 
+        for (auto it = u.actorBegin(), jt = u.actorEnd();it!=jt;++it)
+            if (act == *it) throw FlatScene::Exception("Actor actualmente incluido en otro Universe");
 
         return EXIT_SUCCESS;
     }
@@ -54,7 +53,7 @@ namespace Cinema {
 
         if (!act) throw FlatScene::Exception("Puntero a CActor nulo");
 
-        for (ActorCollection::iterator it = actorBegin(), jt = actorEnd();it!=jt;++it) 
+        for (auto it = actorBegin(), jt = actorEnd();it!=jt;++it) 
             if (act == *it) {
                 act->setUniverse(nullptr);
                 actor.erase(it);

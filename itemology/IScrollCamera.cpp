@@ -5,9 +5,9 @@
 #include "IDebug.h"
 
 
-IScrollCamera::IScrollCamera(Cinema::Actor* target, FlatScene::Rectangle* area) :
+IScrollCamera::IScrollCamera(Cinema::Actor* target, FlatScene::Rectangle area) :
     // Se ha de llamar a la clase Base para una correcta inicializaci�n
-    Cinema::Camera(target,area), centro(new Point(area->getW()/2,area->getH()/2)), objetive("objetivo") {
+    Cinema::Camera(target,std::move(area)), centro(new Point(area.getW()/2,area.getH()/2)), objetive("objetivo") {
         intraMargenX=intraMargenY=0;
         loadUniverse();
 }
@@ -20,8 +20,8 @@ IScrollCamera::~IScrollCamera() {
 
 void IScrollCamera::loadUniverse() {
 
-    if (target->getUniverse() != uni) {
-        uni = target->getUniverse();
+    if (&target->getUniverse() != uni) {
+        uni = &target->getUniverse();
         CX()=-1000;
         CY()=-1000;
     }
@@ -98,10 +98,10 @@ void IScrollCamera::refresh() {
 
         if ( CX() < centro->getX() + (int) map->getTileW()) { // La camara no enfoca los bordes del map.
             CX() = centro->getX()+ map->getTileW();
-        } else 	if ( CX() > (int) (map->getW()*map->getTileW() - area->getW() + centro->getX() - map->getTileW())) {
+        } else 	if ( CX() > (int) (map->getW()*map->getTileW() - area.getW() + centro->getX() - map->getTileW())) {
             // Quizás sería más apropiado restarle adicionalmente 1 unidad a 
             // los margenes exteriores del map (derecha y abajo).
-            CX() = map->getW()*map->getTileW() - area->getW() + centro->getX() - map->getTileW() ;
+            CX() = map->getW()*map->getTileW() - area.getW() + centro->getX() - map->getTileW() ;
         }
     }
 
@@ -116,20 +116,20 @@ void IScrollCamera::refresh() {
 
         if ( CY() < centro->getY() + (int) map->getTileH() ) {
             CY() = centro->getY() + map->getTileH();
-        } else	if ( CY() > (int) (map->getH()*map->getTileH()- area->getH() + centro->getY() - map->getTileH())) {
-            CY() = map->getH()*map->getTileH() - area->getH() + centro->getY() - map->getTileH() ;   
+        } else	if ( CY() > (int) (map->getH()*map->getTileH()- area.getH() + centro->getY() - map->getTileH())) {
+            CY() = map->getH()*map->getTileH() - area.getH() + centro->getY() - map->getTileH() ;   
         }
     }
 
-    scrolltarget->renderPoint.x = scrolltarget->place.x -(CX() - (area->getW()/2));  
-    scrolltarget->renderPoint.y = scrolltarget->place.y -(CY() - (area->getH()/2));
+    scrolltarget->renderPoint.x = scrolltarget->place.x -(CX() - (area.getW()/2));  
+    scrolltarget->renderPoint.y = scrolltarget->place.y -(CY() - (area.getH()/2));
 
     objetive.renderPoint.x = CX() - centro->getX();
     objetive.renderPoint.y = CY() - centro->getY();
 
     // GRAPHIC CALLS
 
-    locateRenderScene(area->x*2,area->y*2,area->w*2,area->h*2);
+    locateRenderScene(area.x*2,area.y*2,area.w*2,area.h*2);
 
     scale(2.0,2.0,1.0);
 

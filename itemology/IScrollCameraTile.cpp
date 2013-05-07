@@ -2,31 +2,23 @@
 
 
 IScrollCameraTile::IScrollCameraTile(
-    const std::vector<std::vector<Tile>>& tiles, Cinema::Actor* target,FlatScene::Rectangle* area
+    const std::vector<std::vector<Tile>>& tiles, Cinema::Actor* target,FlatScene::Rectangle area
 )  // Se ha de llamar a la clase Base para una correcta inicializaci�n
-    : Camera(target,area) , tiles(tiles){
+    : Camera(target,std::move(area)) , tiles(tiles){
 
-        IScrollLevel * uni = dynamic_cast<IScrollLevel*>(target->getUniverse());
+        IScrollLevel& uni = dynamic_cast<IScrollLevel&>(target->getUniverse());
 
-        if (!uni) {
+        tiles_h = uni.getH();
+        tiles_w = uni.getW();
 
-            throw Exception("CameraTile : Mala definici�n del nivel");
+        pix_w = uni.getTileW();
+        pix_h = uni.getTileH();
 
-        } else {
+        Float aux_w=floor(((Float)area.getW())/((Float)pix_w)/1.0 + 0.9);
+        Float aux_h=floor(((Float)area.getH())/((Float)pix_h)/1.0 + 0.9);
 
-            tiles_h = uni->getH();
-            tiles_w = uni->getW();
-
-            pix_w = uni->getTileW();
-            pix_h = uni->getTileH();
-
-            Float aux_w=floor(((Float)area->getW())/((Float)pix_w)/1.0 + 0.9);
-            Float aux_h=floor(((Float)area->getH())/((Float)pix_h)/1.0 + 0.9);
-
-            tam_w=  ((int)aux_w)+1;
-            tam_h= ((int)aux_h)+1;
-
-        }
+        tam_w=  ((int)aux_w)+1;
+        tam_h= ((int)aux_h)+1;
 }
 
 

@@ -2,8 +2,8 @@
 
 
 IScrollCameraObject::IScrollCameraObject( 
-    const ObjectCollection& objects, Cinema::Actor* target, FlatScene::Rectangle* area
-)   : Camera(target, area) , _objects(objects) 
+    const ObjectCollection& objects, Cinema::Actor* target, FlatScene::Rectangle area
+)   : Camera(target, std::move(area)) , _objects(objects) 
 {}
 
 

@@ -265,7 +265,7 @@ void IScrollLevel::unload() {
 int IScrollLevel::incActor(Cinema::Actor* act) {
     IScrollObject* actscroll = dynamic_cast<IScrollObject*>(act);
 
-    if (actscroll && act->getUniverse()==nullptr) {
+    if (actscroll) {
         act->setUniverse(this);
         actor.push_back(act);
         if (isLoaded()) {
@@ -281,7 +281,7 @@ int IScrollLevel::incActor(Cinema::Actor* act) {
         }
         return EXIT_SUCCESS;
     } else {
-        throw Exception((std::string("Se ha a�adido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse()->getName()).c_str());
+        throw Exception((std::string("Se ha a�adido un actor al mapa ")+getName()+std::string(" perteneciendo actualmente a ")+act->getUniverse().getName()).c_str());
         return EXIT_FAILURE;
     }
 }

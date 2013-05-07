@@ -44,9 +44,9 @@ void IScrollObject::setUniverse(Cinema::Universe* m) {
     // CActor::setUniverse(m) realiza la asignaci�n : inUniverse=m;
 }
 
-const Sprite* IScrollObject::getSprite() {
+const Sprite& IScrollObject::getSprite() {
 
-    auto spt = Actor::getSprite();
+    static auto spt = Actor::getSprite();
 
     // TODO
 

@@ -7,16 +7,16 @@
 #include "ImageSet.h"
 
 namespace Cinema {
-    inline Actor::Actor(const char* creature) 
-        : file(0), graph(0), flags(0), inUniverse(nullptr), creature(creature) 
+    inline Actor::Actor(std::string creature) 
+        : file(0), graph(0), flags(0), inUniverse(nullptr), creature(std::move(creature)) 
     {}
 
     inline Actor::~Actor() {}
 
     inline void Actor::move() {}
 
-    inline Universe* Actor::getUniverse() {
-        return inUniverse;
+    inline Universe& Actor::getUniverse() {
+        return *inUniverse;
     }
 
     inline const std::string& Actor::getCreature() {
@@ -32,9 +32,9 @@ namespace Cinema {
         this->graph = graph;
     }
 
-    inline const FlatScene::Sprite* Actor::getSprite() {
-        throw FlatScene::Exception("FIXME");
-        return nullptr;
+    inline const FlatScene::Sprite& Actor::getSprite() {
+        static auto spt = FlatScene::ImageSet<FlatScene::Sprite>("FIXME");
+        return spt.get()[0];
     }
 
     inline Actor* Actor::clone() {

@@ -31,7 +31,7 @@ public:
     //	}
     //
     // S�lo definir si se desea hacer una operaci�n diferente
-    virtual const Sprite* getSprite();
+    virtual const Sprite& getSprite();
 
     // M�todo pensado para ser invocado en CEngine::onIdle.
     // Deber� actualizar el estado del CActor cuando sea necesario.

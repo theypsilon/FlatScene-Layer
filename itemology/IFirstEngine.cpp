@@ -70,7 +70,7 @@ void  IFirstEngine::onInit() {
     
     level->incActor(mainactor);
     
-    cams.push_back( new IScrollCamera(mainactor,new FlatScene::Rectangle(0,0,320,240)) );
+    cams.push_back( new IScrollCamera(mainactor,FlatScene::Rectangle(0,0,320,240)) );
     
 }
 
@@ -99,7 +99,7 @@ void IFirstEngine::onIdle()	{
 void IFirstEngine::onExit() {
     
     for (auto i = cams.begin(); i != cams.end(); ++i) {
-        auto actor = dynamic_cast<IScrollObject*>((*i)->Target());
+        auto actor = dynamic_cast<IScrollObject&>((*i)->Target());
         delete *i;
     }
     

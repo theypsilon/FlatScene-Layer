@@ -26,16 +26,16 @@ namespace Cinema {
         int graph;
         unsigned char flags;
 
-        Actor(const char* creature);
+        Actor(std::string creature);
         virtual ~Actor();
 
         void setSprite(int file,int graph);
-        virtual const FlatScene::Sprite* getSprite();
+        virtual const FlatScene::Sprite& getSprite();
 
         virtual void move();
 
         virtual const std::string& getCreature();
-        Universe* getUniverse();
+        Universe& getUniverse();
         virtual void setUniverse(Universe* m);
         FlatScene::Point renderPoint;
 

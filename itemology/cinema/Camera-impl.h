@@ -8,15 +8,11 @@
 
 namespace Cinema {
 
-    inline Camera::Camera(Actor* target, FlatScene::Rectangle* area)
-    : uni(nullptr), target(target), area(area) , rendering(false), x(-1000),y(-1000) {}
+    inline Camera::Camera(Actor* target, FlatScene::Rectangle area)
+    : uni(nullptr), target(target), area(std::move(area)) , rendering(false), x(-1000),y(-1000) {}
 
-    inline Camera::~Camera() {
-        delete area;
-    }
-
-    inline Universe* Camera::getUniverse() {
-        return uni;
+    inline Universe& Camera::getUniverse() {
+        return *uni;
     }
 
     inline void Camera::loadUniverse() {
@@ -30,7 +26,7 @@ namespace Cinema {
         uni = nullptr;
     }
 
-    inline bool Camera::isOpened() {
+    inline bool Camera::isOpened() const {
         return uni != nullptr;
     }
 
@@ -42,14 +38,16 @@ namespace Cinema {
         return y;
     }
 
-    inline Actor* Camera::Target() {
-        return target;
+    inline Actor& Camera::Target() {
+        return *target;
     }
 
     inline void Camera::setTarget(Actor* newTarget) {
         if (newTarget == this->target) throw FlatScene::Exception("Actor objetivo ya establecido");
 
-        if (newTarget->getUniverse()!= this->target->getUniverse()) {
+        if (std::addressof(newTarget->getUniverse()) != 
+            std::addressof(this->target->getUniverse())
+        ) {
             this->target=newTarget;
             resyncUniverse(*this);
         } else {
@@ -60,7 +58,7 @@ namespace Cinema {
 
     }
 
-    inline FlatScene::Rectangle* Camera::getArea() {
+    inline const FlatScene::Rectangle& Camera::getArea() const {
         return area;
     }
 
@@ -88,10 +86,10 @@ namespace Cinema {
     inline void Camera::locateRenderScene( Float posx, Float posy, Float width, Float height, Float zoom ) {
 
         if (width == 0 || height == 0) {
-            posx = area->getX();
-            posy = area->getY();
-            width = area->getW();
-            height = area->getH();
+            posx = area.getX();
+            posy = area.getY();
+            width = area.getW();
+            height = area.getH();
         }
 
         if (rendering) {
@@ -174,9 +172,9 @@ namespace Cinema {
 
     inline void Camera::color(Float red, Float green, Float blue, Float alpha) {
 
-        if (red > 1.0) red = 1.0;
+        if (red   > 1.0) red   = 1.0;
         if (green > 1.0) green = 1.0;
-        if (blue > 1.0) blue = 1.0;
+        if (blue  > 1.0) blue  = 1.0;
         if (alpha > 1.0) alpha = 1.0;
 
         if (rendering) {
@@ -198,20 +196,17 @@ namespace Cinema {
 
     }
 
-    inline void Camera::color(FlatScene::Color* col, Float alpha) {
-        color(((Float)col->getR())/255.0,((Float)col->getG())/255.0,((Float)col->getB())/255.0,alpha);
+    inline void Camera::color(const FlatScene::Color& col, Float alpha) {
+        color(((Float)col.getR())/255.0,((Float)col.getG())/255.0,((Float)col.getB())/255.0,alpha);
     }
 
-    inline void Camera::reubicate(FlatScene::Rectangle* nArea) {
-        if (area == nArea) throw FlatScene::Exception("Area ya establecida");
-
-        delete area;
+    inline void Camera::reubicate(const FlatScene::Rectangle& nArea) {
         area = nArea;
     }
 
     #ifdef MENSAJES_MSGIDS
     inline int Camera::SendMessage(Uint32 MsgID,MSGPARM ParmMsg) {
-        printf("Camera %d.%d :: ",area->getX(),area->getY());
+        printf("Camera %d.%d :: ",area.getX(),area.getY());
         return MessageHandler::SendMessage(MsgID,ParmMsg,Parm2);
     }
     #endif
