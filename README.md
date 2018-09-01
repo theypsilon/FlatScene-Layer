@@ -23,3 +23,12 @@ In this demo, input keys are :
 * Into first test, press **u** to stress *change map* test.
 
 * Into double cam test, press **a** to kill the grey enemies.
+
+# Compilation
+
+First, install gcc, cmake, and the dev libraries for opengl, sdl1.2 and boost (maybe boost is not really needed).
+
+Then type on the root folde: 
+```bash
+/run.sh
+```
