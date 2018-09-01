@@ -1,10 +1,10 @@
-#FlatScene
+# FlatScene
 
 **FlatScene** is a high abstraction layer designed to create *2D interactive applications* in a rapid and easy way. This library uses **OpenGL** to render 2D graphics supporting *hardware acceleration*, and **SDL** to manipulate I/O events. 
 
 Actually, the library is ready for use in **C++**. It benefits from the *portability* inherited from **SDL** and **OpenGL**, thus allowing to the user the managing of *multiplattform projects* without so much concerns.
 
-#DemoArk
+# DemoArk
 
 This is a **test application** created to show the features of **FlatScene**.
 
@@ -28,7 +28,7 @@ In this demo, input keys are :
 
 First, install gcc, cmake, and the dev libraries for opengl, sdl1.2 and boost (maybe boost is not really needed).
 
-Then type on the root folde: 
+Then type on console: 
 ```bash
-/run.sh
+./run.sh
 ```
